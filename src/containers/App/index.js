@@ -37,12 +37,12 @@ class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("componentWillReceiveProps: ", nextProps.token);
     if (nextProps.token) {
       axios.defaults.headers.common['Authorization'] = "Bearer " + nextProps.token;
     }
-    if (nextProps.token && !nextProps.authUser) {
+    if (nextProps.token) {
       this.props.onGetUser()
-
     }
   }
 
@@ -79,9 +79,9 @@ class App extends Component {
 }
 
 const mapStateToProps = ({settings, auth}) => {
-  const {locale, navStyle, themeType, layoutType} = settings;
+  const {locale} = settings;
   const {token, initURL} = auth;
-  return {locale, token, navStyle, themeType, layoutType, initURL}
+  return {locale, token, initURL}
 };
 export default connect(mapStateToProps, {
   setInitUrl,

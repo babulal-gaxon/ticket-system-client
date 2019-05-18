@@ -16,7 +16,6 @@ class InfoView extends React.Component {
 
   render() {
     const {error, loading, displayMessage} = this.props;
-    console.log("error, loading, displayMessage", error, loading, displayMessage)
 
     return (
       <Auxiliary>

@@ -15,7 +15,6 @@ export default (state = INIT_STATE, action) => {
       return {...state, error: '', message: '', loading: false};
     }
     case SHOW_MESSAGE: {
-      console.log("SHOW_MESSAGE", action)
       return {...state, error: '', message: action.payload, loading: false};
     }
     case FETCH_ERROR: {
