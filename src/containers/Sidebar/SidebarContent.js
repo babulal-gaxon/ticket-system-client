@@ -16,6 +16,9 @@ import {
 } from "../../constants/ThemeSetting";
 import IntlMessages from "../../util/IntlMessages";
 
+const SubMenu = Menu.SubMenu;
+
+
 class SidebarContent extends Component {
 
   getNoHeaderClass = (navStyle) => {
@@ -50,10 +53,16 @@ class SidebarContent extends Component {
               theme={themeType === THEME_TYPE_LITE ? 'lite' : 'dark'}
               mode="inline">
 
+              <SubMenu key="dashboard"
+                       title={<span> <i className="icon icon-dasbhoard"/>
+                         <IntlMessages id="sidebar.dashboard"/></span>}>
+
               <Menu.Item key="dashboard">
                 <Link to="/dashboard"><i className="icon icon-widgets"/>
                   <IntlMessages id="sidebar.dashboard"/></Link>
               </Menu.Item>
+
+              </SubMenu>
 
             </Menu>
           </CustomScrollbars>

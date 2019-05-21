@@ -46,9 +46,10 @@ export const onUserSignUp = ({email, password, name}) => {
 };
 
 export const onUserSignIn = ({email, password}) => {
+  console.log(email, password);
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post('auth/login', {
+    axios.post('/login', {
         email: email,
         password: password,
       }
