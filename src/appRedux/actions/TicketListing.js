@@ -4,7 +4,6 @@ import {SHOW_TICKETS} from "../../constants/TicketListing";
 export const onGetTickets = () =>{
   return dispatch => {
 axios.get("/tickets").then(response => {
-  console.log(response);
   dispatch(onShowTickets(response.data))
 })
   }
