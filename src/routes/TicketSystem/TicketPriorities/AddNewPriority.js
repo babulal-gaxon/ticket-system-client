@@ -8,14 +8,13 @@ class AddNewPriority extends Component {
       name: "",
       color_code: "",
       desc: "",
-      priority_value: "",
       status: "",
       value: 0
     }
   }
 
   render() {
-    const {name, color_code, value, desc, priority_value, status} = this.state;
+    const {name, color_code, value, desc, status} = this.state;
     const {showAddPriority, onToggleAddPriority, onAddTicketPriority} = this.props;
     const {Option} = Select;
 
@@ -53,14 +52,14 @@ class AddNewPriority extends Component {
             </Form.Item>
 
             <Form.Item label="Priority Value">
-              <Input className="gx-form-control-lg" type="textarea" value={desc} onChange={(e) => {
-                this.setState({desc: e.target.value})
+              <Input className="gx-form-control-lg" type="textarea" value={value} onChange={(e) => {
+                this.setState({value: e.target.value})
               }}/>
             </Form.Item>
 
             <Form.Item label="Status">
-              <Radio.Group value={value} onChange={(e) => {
-                this.setState({value: e.target.value})
+              <Radio.Group value={status} onChange={(e) => {
+                this.setState({status: e.target.value})
               }}>
                 <Radio value={1}>Active</Radio>
                 <Radio value={0}>Disabled</Radio>
