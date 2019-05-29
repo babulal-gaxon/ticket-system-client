@@ -35,7 +35,10 @@ export default function asyncComponent(importComponent) {
     }
 
     render() {
-      const Component = this.state.component || <CircularProgress/>;
+      const Component = this.state.component ||
+        <div className="gx-loader-view gx-h-100">
+          <CircularProgress className=""/>
+        </div>;
       return (
         <ReactPlaceholder type="text" rows={7} ready={Component !== null}>
           {Component}

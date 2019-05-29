@@ -31,11 +31,11 @@ export const onToggleAddTicket = () => {
   return {
     type: TOGGLE_ADD_TICKET_BOX
   }
-}
+};
 
 
 export const onAddTickets = (ticket) => {
-  console.log("onAddTickets", ticket)
+  console.log("onAddTickets", ticket);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/tickets', ticket).then(({data}) => {
@@ -79,7 +79,7 @@ export const onSelectTicket = (ticket) => {
     type: SELECT_CURRENT_TICKET,
     payload: ticket
   }
-}
+};
 
 
 export const onUpdateTickets = (ticket) => {

@@ -35,10 +35,6 @@ export class Sidebar extends Component {
 
     if (navStyle === NAV_STYLE_FIXED) {
       drawerStyle = "";
-    } else if (navStyle === NAV_STYLE_NO_HEADER_MINI_SIDEBAR) {
-      drawerStyle = "gx-mini-sidebar gx-mini-custom-sidebar";
-    } else if (navStyle === NAV_STYLE_NO_HEADER_EXPANDED_SIDEBAR) {
-      drawerStyle = "gx-custom-sidebar"
     } else if (navStyle === NAV_STYLE_MINI_SIDEBAR) {
       drawerStyle = "gx-mini-sidebar";
     } else if (navStyle === NAV_STYLE_DRAWER) {

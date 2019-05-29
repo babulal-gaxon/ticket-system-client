@@ -11,7 +11,7 @@ import SignUp from "../SignUp";
 import {setInitUrl} from "appRedux/actions/Auth";
 import {onLayoutTypeChange, onNavStyleChange, setThemeType} from "appRedux/actions/Setting";
 import axios from 'util/Api';
-import {onGetUser} from "../../appRedux/actions/Auth";
+import {onGetUserInfo} from "../../appRedux/actions/Auth";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
   <Route
@@ -34,12 +34,17 @@ class App extends Component {
     if (this.props.initURL === '') {
       this.props.setInitUrl(this.props.history.location.pathname);
     }
+    if (this.props.token) {
+      axios.defaults.headers.common['Authorization'] = "Bearer " + this.props.token;
+      this.props.onGetUserInfo(this.props.history)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     console.log("componentWillReceiveProps: ", nextProps.token);
-    if (nextProps.token) {
+    if (nextProps.token !== this.props.token) {
       axios.defaults.headers.common['Authorization'] = "Bearer " + nextProps.token;
+      this.props.onGetUserInfo(this.props.history)
     }
   }
 
@@ -66,8 +71,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/signin' component={SignIn}/>
             <Route exact path='/signup' component={SignUp}/>
-            <RestrictedRoute path={`${match.url}`} token={token}
-                             component={MainApp}/>
+            <RestrictedRoute path={`${match.url}`} token={token} component={MainApp}/>
           </Switch>
         </IntlProvider>
       </LocaleProvider>
@@ -80,9 +84,11 @@ const mapStateToProps = ({settings, auth}) => {
   const {token, initURL} = auth;
   return {locale, token, initURL}
 };
+
 export default connect(mapStateToProps, {
   setInitUrl,
   setThemeType,
   onNavStyleChange,
-  onLayoutTypeChange
+  onLayoutTypeChange,
+  onGetUserInfo
 })(App);

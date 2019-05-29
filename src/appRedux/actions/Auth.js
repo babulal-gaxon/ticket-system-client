@@ -3,7 +3,6 @@ import {
   FETCH_START,
   FETCH_SUCCESS,
   INIT_URL,
-  SHOW_MESSAGE,
   SIGNOUT_USER_SUCCESS,
   USER_DATA,
   USER_TOKEN_SET
@@ -72,19 +71,19 @@ export const onUserSignIn = ({email, password}) => {
   }
 };
 
-export const onGetUser = () => {
-  console.info("onGetUser: ");
+export const onGetUserInfo = (history) => {
+  console.log("onGetUserInfo")
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post('auth/me',
+    axios.get('/role/permissions',
     ).then(({data}) => {
       console.log("onGetUser: ", data);
       if (data.success) {
-        dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "Welcome " + data.user.name});
-        dispatch({type: USER_DATA, payload: data.user});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
+        history.push("/signin");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
