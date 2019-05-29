@@ -1,7 +1,8 @@
 import React, {Component} from "react"
-import {Button, Form, Input, Modal, Radio, Select} from "antd";
+import {Button, Checkbox, Form, Input, Modal, Radio, Select} from "antd";
 
-class AddNewPriority extends Component {
+
+class AddNewStatus extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -9,13 +10,25 @@ class AddNewPriority extends Component {
       color_code: "",
       desc: "",
       status: "",
-      value: 1
+      is_default: 0,
+      checked: false
+    }
+  }
+
+  onCheckBoxChange = (e) => {
+
+    this.setState({checked: e.target.checked})
+    if(e.target.checked) {
+      this.setState({is_default: 1})
+    }
+    else {
+      this.setState({is_default:0})
     }
   }
 
   render() {
-    const {name, color_code, value, desc, status} = this.state;
-    const {showAddPriority, onToggleAddPriority, onAddTicketPriority} = this.props;
+    const {name, color_code, is_default, desc, status} = this.state;
+    const {showAddStatus, onToggleAddStatus, onAddTicketStatus} = this.props;
     const {Option} = Select;
 
     return (
@@ -23,16 +36,16 @@ class AddNewPriority extends Component {
       <div>
 
         <Modal
-          visible={showAddPriority}
-          title="Add New Priority"
-          onCancel={onToggleAddPriority}
+          visible={showAddStatus}
+          title="Add New Ticket Status"
+          onCancel={onToggleAddStatus}
           footer={[
             <Button key="submit" type="primary" onClick={() => {
-              onAddTicketPriority(this.state)
+              onAddTicketStatus(this.state)
             }}>
               Add
             </Button>,
-            <Button key="cancel" onClick={onToggleAddPriority}>
+            <Button key="cancel" onClick={onToggleAddStatus}>
               Cancel
             </Button>,
           ]}
@@ -51,10 +64,10 @@ class AddNewPriority extends Component {
               }}/>
             </Form.Item>
 
-            <Form.Item label="Priority Value">
-              <Input className="gx-form-control-lg" type="text" value={value} onChange={(e) => {
-                this.setState({value: e.target.value})
-              }}/>
+            <Form.Item >
+              <Checkbox className="gx-form-control-lg" checked={this.state.checked} onChange ={this.onCheckBoxChange}>
+                Set as Default
+              </Checkbox>
             </Form.Item>
 
             <Form.Item label="Status">
@@ -72,4 +85,4 @@ class AddNewPriority extends Component {
   }
 }
 
-export default AddNewPriority
+export default AddNewStatus

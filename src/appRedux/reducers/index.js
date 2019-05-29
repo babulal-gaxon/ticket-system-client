@@ -9,6 +9,7 @@ import SupportStaff from "./SupportStaff";
 import Departments from "./Departments";
 import CannedResponses from "./CannedResponses";
 import TicketPriorities from "./TicketPriorities";
+import TicketStatuses from "./TicketStatuses";
 
 
 const reducers = combineReducers({
@@ -21,7 +22,8 @@ const reducers = combineReducers({
   supportStaff:SupportStaff,
   departments: Departments,
   cannedResponses: CannedResponses,
-  ticketPriorities: TicketPriorities
+  ticketPriorities: TicketPriorities,
+  ticketStatuses: TicketStatuses
 
 });
 
