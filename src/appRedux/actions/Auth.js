@@ -28,7 +28,7 @@ export const onUserSignUp = ({email, password, name}) => {
       }
     ).then(({data}) => {
       console.info("data:", data);
-      if (data.result) {
+      if (data.success) {
         localStorage.setItem("token", JSON.stringify(data.token.access_token));
         axios.defaults.headers.common['access-token'] = "Bearer " + data.token.access_token;
         dispatch({type: FETCH_SUCCESS});
@@ -55,11 +55,13 @@ export const onUserSignIn = ({email, password}) => {
       }
     ).then(({data}) => {
       console.info("userSignIn: ", data);
-      if (data.result) {
-        localStorage.setItem("token", JSON.stringify(data.token.access_token));
-        axios.defaults.headers.common['access-token'] = "Bearer " + data.token.access_token;
+      if (data.success) {
+        localStorage.setItem("token", JSON.stringify(data.token));
+        localStorage.setItem("user", JSON.stringify(data.data));
+        axios.defaults.headers.common['access-token'] = "Bearer " + data.token;
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: USER_TOKEN_SET, payload: data.token.access_token});
+        dispatch({type: USER_TOKEN_SET, payload: data.token});
+        dispatch({type: USER_DATA, payload: data.data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }
@@ -77,7 +79,7 @@ export const onGetUser = () => {
     axios.post('auth/me',
     ).then(({data}) => {
       console.log("onGetUser: ", data);
-      if (data.result) {
+      if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "Welcome " + data.user.name});
         dispatch({type: USER_DATA, payload: data.user});

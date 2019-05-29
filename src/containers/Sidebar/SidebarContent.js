@@ -59,10 +59,66 @@ class SidebarContent extends Component {
 
               <Menu.Item key="dashboard">
                 <Link to="/dashboard"><i className="icon icon-widgets"/>
-                  <IntlMessages id="sidebar.dashboard"/></Link>
+                  <IntlMessages id="sidebar.dashboard.tickets"/></Link>
               </Menu.Item>
 
               </SubMenu>
+
+              <SubMenu key ="ManageTickets"
+                       title={<span><i className="icon icon-widgets"/>
+                       <IntlMessages id="sidebar.dashboard.manage.tickets"/></span>}>
+
+                <Menu.Item key="allTickets">
+                  <Link to ="/manage-tickets/all-tickets"><i className="icon icon-tickets"/>
+                    <IntlMessages id="sidebar.dashboard.all.tickets"/></Link>
+                </Menu.Item>
+
+                <Menu.Item key="addNewTicket">
+                  <Link to ="/manage-tickets/add-new-ticket"><i className="icon icon-ticket-new"/>
+                    <IntlMessages id="sidebar.dashboard.add.new.ticket"/></Link>
+                </Menu.Item>
+              </SubMenu>
+
+              {/*<SubMenu key ="Staff"*/}
+                       {/*title={<span><i className="icon icon-widgets"/>*/}
+                       {/*<IntlMessages id="sidebar.dashboard.manage.tickets"/></span>}>*/}
+
+              <SubMenu key ="TicketSystem"
+                       title={<span><i className="icon icon-ticket-new"/>
+                       <IntlMessages id="sidebar.dashboard.ticket.system"/></span>}>
+
+                <Menu.Item key="Departments">
+                  <Link to ="/ticket-system/departments"><i className="icon icon-company"/>
+                    <IntlMessages id="sidebar.dashboard.departments"/></Link>
+                </Menu.Item>
+
+                <Menu.Item key="CannedResponses">
+                  <Link to ="/ticket-system/canned-responses"><i className="icon icon-chat-bubble"/>
+                    <IntlMessages id="sidebar.dashboard.canned.responses"/></Link>
+                </Menu.Item>
+
+                <Menu.Item key="TicketPriorities">
+                  <Link to ="/ticket-system/ticket-priorities"><i className="icon icon-attendance"/>
+                    <IntlMessages id="sidebar.dashboard.ticket.priorities"/></Link>
+                </Menu.Item>
+
+                <Menu.Item key="TicketStatuses">
+                  <Link to ="/ticket-system/ticket-statuses"><i className="icon icon-assignment"/>
+                    <IntlMessages id="sidebar.dashboard.ticket.statuses"/></Link>
+                </Menu.Item>
+
+                <Menu.Item key="EmailTemplates">
+                  <Link to ="/ticket-system/email-templates"><i className="icon icon-email-template"/>
+                    <IntlMessages id="sidebar.dashboard.email.templates"/></Link>
+                </Menu.Item>
+
+                <Menu.Item key="TicketSettings">
+                  <Link to ="/ticket-system/ticket-settings"><i className="icon icon-customizer"/>
+                    <IntlMessages id="sidebar.dashboard.ticket.settings"/></Link>
+                </Menu.Item>
+
+              </SubMenu>
+
 
             </Menu>
           </CustomScrollbars>

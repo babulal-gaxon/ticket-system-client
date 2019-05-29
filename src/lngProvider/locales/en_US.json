@@ -304,5 +304,24 @@
   "sidebar.extensions.shuffle": "Shuffle",
   "sidebar.extensions.profile": "Profile",
   "sidebar.social": "Social Apps",
-  "sidebar.dashboard.tickets": "Tickets"
+  "sidebar.dashboard.tickets": "Tickets",
+  "sidebar.dashboard.manage.tickets": "Manage Tickets",
+  "sidebar.dashboard.all.tickets": "All Tickets",
+  "sidebar.dashboard.add.new.ticket": "Add New Ticket",
+  "sidebar.dashboard.snoozes": "Snoozes",
+  "sidebar.dashboard.jumbo.react": "Jumbo React",
+  "sidebar.dashboard.mouldify": "Mouldify",
+  "sidebar.dashboard.cisr.wp.theme": "CISR WP theme",
+  "sidebar.dashboard.jumbo.html": "Jumbo HTML",
+  "sidebar.dashboard.critical": "Critical",
+  "sidebar.dashboard.moderate": "Moderate",
+  "sidebar.dashboard.default": "Default",
+  "sidebar.dashboard.ticket.system": "Ticket System",
+  "sidebar.dashboard.departments": "Departments",
+  "sidebar.dashboard.canned.responses": "Canned Responses",
+  "sidebar.dashboard.ticket.priorities": "Ticket Priorities",
+  "sidebar.dashboard.ticket.statuses": "Ticket Statuses",
+  "sidebar.dashboard.email.templates": "Email Templates",
+  "sidebar.dashboard.ticket.settings": "Ticket Settings"
+
 }
