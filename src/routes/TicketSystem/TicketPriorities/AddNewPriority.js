@@ -7,14 +7,15 @@ class AddNewPriority extends Component {
     this.state = {
       name: "",
       color_code: "",
-      message: "",
+      desc: "",
       priority_value: "",
-      status: ""
+      status: "",
+      value: 0
     }
   }
 
   render() {
-    const {name, short_code, color_code, message, priority_value, status} = this.state;
+    const {name, color_code, value, desc, priority_value, status} = this.state;
     const {showAddPriority, onToggleAddPriority, onAddTicketPriority} = this.props;
     const {Option} = Select;
 
@@ -28,7 +29,8 @@ class AddNewPriority extends Component {
           onCancel={onToggleAddPriority}
           footer={[
             <Button key="submit" type="primary" onClick={() => {
-              onAddTicketPriority(this.state)}}>
+              onAddTicketPriority(this.state)
+            }}>
               Add
             </Button>,
             <Button key="cancel" onClick={onToggleAddPriority}>
@@ -37,33 +39,28 @@ class AddNewPriority extends Component {
           ]}
         >
           <Form layout="vertical">
-            <Form.Item label="Short Title">
+            <Form.Item label="Name">
               <Input type="text" value={name} onChange={(e) => {
                 this.setState({name: e.target.value})
               }}/>
             </Form.Item>
 
-            {/*<Form.Item label="Short Code">*/}
-              {/*<Input type="text" value={short_code} onChange={(e) => {*/}
-                {/*this.setState({short_code: e.target.value})*/}
-              {/*}}/>*/}
-            {/*</Form.Item>*/}
 
             <Form.Item label="Description">
-              <Input className="gx-form-control-lg" type="textarea" value={message} onChange={(e) => {
-                this.setState({message: e.target.value})
+              <Input className="gx-form-control-lg" type="textarea" value={desc} onChange={(e) => {
+                this.setState({desc: e.target.value})
               }}/>
             </Form.Item>
 
             <Form.Item label="Priority Value">
-              <Input className="gx-form-control-lg" type="textarea" value={message} onChange={(e) => {
-                this.setState({message: e.target.value})
+              <Input className="gx-form-control-lg" type="textarea" value={desc} onChange={(e) => {
+                this.setState({desc: e.target.value})
               }}/>
             </Form.Item>
 
             <Form.Item label="Status">
-              <Radio.Group value={status} onChange={(e) => {
-                this.setState({status: e.target.value})
+              <Radio.Group value={value} onChange={(e) => {
+                this.setState({value: e.target.value})
               }}>
                 <Radio value={1}>Active</Radio>
                 <Radio value={0}>Disabled</Radio>

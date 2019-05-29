@@ -8,6 +8,7 @@ import RecentCustomers from "./RecentCustomers";
 import SupportStaff from "./SupportStaff";
 import Departments from "./Departments";
 import CannedResponses from "./CannedResponses";
+import TicketPriorities from "./TicketPriorities";
 
 
 const reducers = combineReducers({
@@ -19,7 +20,8 @@ const reducers = combineReducers({
   recentCustomers: RecentCustomers,
   supportStaff:SupportStaff,
   departments: Departments,
-  cannedResponses: CannedResponses
+  cannedResponses: CannedResponses,
+  ticketPriorities: TicketPriorities
 
 });
 

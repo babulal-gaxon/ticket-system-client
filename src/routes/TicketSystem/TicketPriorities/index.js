@@ -2,6 +2,11 @@ import React, {Component} from "react"
 import Widget from "../../../components/Widget/index";
 import {Button, Icon, Input, Table,Badge} from "antd";
 import {connect} from "react-redux";
+import {
+  onAddTicketPriority, onDeleteTicketPriority, onGetTicketPriorities,
+  onToggleAddPriority
+} from "../../../appRedux/actions/TicketPriorities";
+import AddNewPriority from "./AddNewPriority";
 
 
 class TicketPriorities extends Component {
@@ -54,7 +59,7 @@ class TicketPriorities extends Component {
         dataIndex: 'description',
         key:'description',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.description}</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc}</span>
         },
 
       },
@@ -102,7 +107,7 @@ class TicketPriorities extends Component {
       <Widget
         title={<div>
           <Button type="primary" className="h4 gx-text-capitalize gx-mb-0" onClick = {this.props.onToggleAddPriority}>
-            Add New Response</Button>
+            Add New Priority</Button>
 
 
           {this.props.showAddPriority ?
