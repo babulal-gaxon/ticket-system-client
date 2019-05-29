@@ -4,6 +4,7 @@ import {
   FETCH_SUCCESS,
   INIT_URL,
   SIGNOUT_USER_SUCCESS,
+  UPDATE_USER_PERMISSION_DATA,
   USER_DATA,
   USER_TOKEN_SET
 } from "../../constants/ActionTypes";
@@ -16,14 +17,14 @@ export const setInitUrl = (url) => {
   };
 };
 
-export const onUserSignUp = ({email, password, name}) => {
+export const onUserSignUp = ({email, password, first_name, last_name}) => {
   console.info(email, password);
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post('auth/register', {
+    axios.post('/signup', {
         email: email,
         password: password,
-        name: name
+      first_name: first_name, last_name: last_name
       }
     ).then(({data}) => {
       console.info("data:", data);
@@ -33,9 +34,12 @@ export const onUserSignUp = ({email, password, name}) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_TOKEN_SET, payload: data.token.access_token});
         dispatch({type: USER_DATA, payload: data.user});
+      } else if (data.message) {
+        console.info("payload: data.error", data.message);
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
-        console.info("payload: data.error", data.error);
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        console.info("payload: data.error", data.errors[0]);
+        dispatch({type: FETCH_ERROR, payload: data.errors.email});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -62,7 +66,7 @@ export const onUserSignIn = ({email, password}) => {
         dispatch({type: USER_TOKEN_SET, payload: data.token});
         dispatch({type: USER_DATA, payload: data.data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.message});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -72,22 +76,30 @@ export const onUserSignIn = ({email, password}) => {
 };
 
 export const onGetUserInfo = (history) => {
-  console.log("onGetUserInfo")
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get('/role/permissions',
     ).then(({data}) => {
       console.log("onGetUser: ", data);
       if (data.success) {
+        dispatch({type: UPDATE_USER_PERMISSION_DATA, payload: data.data})
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
         history.push("/signin");
         localStorage.removeItem("token");
         localStorage.removeItem("user");
       }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.log("Error****:", error.message);
+    }).catch((error) => {
+      if (error.response.status === 401) {
+        history.push("/signin");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        dispatch({type: FETCH_ERROR, payload: error.response.data.message});
+      } else {
+        console.log("error: ", JSON.stringify(error));
+        dispatch({type: FETCH_ERROR, payload: error.message});
+        console.log("Error****:", error.message);
+      }
     });
   }
 };
