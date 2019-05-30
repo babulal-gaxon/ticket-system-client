@@ -3,6 +3,10 @@ export const TOGGLE_COLLAPSED_NAV = 'TOGGLE_COLLAPSE_MENU';
 export const WINDOW_WIDTH = 'WINDOW-WIDTH';
 export const SWITCH_LANGUAGE = 'SWITCH-LANGUAGE';
 
+export const FETCH_USER_INFO_START = 'fetch_user_info_start';
+export const FETCH_USER_INFO_SUCCESS = 'fetch_user_info_success';
+export const FETCH_USER_INFO_ERROR = 'fetch_user_info_error';
+
 //Contact Module const
 export const FETCH_START = 'fetch_start';
 export const FETCH_SUCCESS = 'fetch_success';

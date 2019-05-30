@@ -9,7 +9,7 @@ import {
   onToggleAddTicket,
   onUpdateTickets
 } from "../../../appRedux/actions/TicketListing";
-import {Avatar, Badge, Button, DatePicker, Icon, Input, Layout, Select, Sider, Table, Tooltip} from "antd";
+import {Avatar, Badge, Button, DatePicker, Icon, Input, Layout, Select, Table, Tooltip} from "antd";
 import Widget from "../../../components/Widget/index";
 import {connect} from "react-redux";
 import DropdownButton from "./DropdownButton";
@@ -17,9 +17,14 @@ import AddNewTicket from "../AddNewTicket/index";
 import {onSupportStaff} from "../../../appRedux/actions/SupportStaff";
 import IntlMessages from "../../../util/IntlMessages";
 import TicketDetail from "./TicketDetail";
-import {canAdd} from "../../../util/Utills";
 import InfoView from 'components/InfoView'
 import Auxiliary from "../../../util/Auxiliary";
+import Permissions from "../../../util/Permissions";
+
+
+const ButtonGroup = Button.Group;
+const Option = Select.Option;
+const {Sider} = Layout;
 
 class AllTickets extends Component {
 
@@ -35,6 +40,14 @@ class AllTickets extends Component {
     }
   }
 
+  componentWillMount() {
+    if (Permissions.canTicketView()) {
+      this.props.onGetTickets();
+    }
+    this.props.onGetPriorities();
+    this.props.onSupportStaff();
+  }
+
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
   };
@@ -45,47 +58,108 @@ class AllTickets extends Component {
 
   onCurrentIncrement = () => {
     this.setState({current: this.state.current++})
-  }
+  };
 
   onCurrentDecrement = () => {
     this.setState({current: this.state.current--})
-  }
+  };
 
   onSideBarActive = () => {
     this.setState({sideBarActive: !this.state.sideBarActive})
-  }
+  };
 
   onStartDateChange = value => {
     this.setState({startDate: value})
-  }
+  };
 
   onEndDateChange = value => {
     this.setState({endDate: value})
-  }
+  };
 
+  getSidebar = () => {
+    return <Sider className="gx-module-sidenav gx-d-none gx-d-lg-flex">
+      <div className="gx-module-side">
+        <div className="gx-module-side-content">
+          <h2>Filter Tickets</h2>
+        </div>
+        <div className="gx-module-nav">
+          <h5>Date</h5>
+          <div>
+            <DatePicker
+              showTime
+              format="YYYY-MM-DD HH:mm:ss"
+              value={this.state.startDate}
+              placeholder="Start Date"
+              onChange={this.onStartDateChange}
+            />
+            <DatePicker
+              showTime
+              format="YYYY-MM-DD HH:mm:ss"
+              value={this.state.endDate}
+              placeholder="End Date"
+              onChange={this.onEndDateChange}
+            />
+          </div>
+          <ul className="gx-module-nav">
+            <h5>Category</h5>
+            <li className="gx-module-nav-label">
+              <i className="icon icon-tickets"/>
+              <IntlMessages id="sidebar.dashboard.all.tickets"/>
+            </li>
+            <li className="gx-module-nav-label">
+              <i className="icon icon-ticket-new"/>
+              <IntlMessages id="sidebar.dashboard.add.new.ticket"/>
+            </li>
+            <li className="gx-module-nav-label">
+              <i className="icon icon-schedule"/>
+              <IntlMessages id="sidebar.dashboard.snoozes"/>
+            </li>
+          </ul>
+          <ul>
+            <h5>Products</h5>
+            <li>
+              <i className="icon icon-tag-o"/>
+              <IntlMessages id="sidebar.dashboard.jumbo.react"/>
+            </li>
+            <li>
+              <i className="icon icon-tag-o"/>
+              <IntlMessages id="sidebar.dashboard.mouldify"/>
+            </li>
+            <li>
+              <i className="icon icon-tag-o"/>
+              <IntlMessages id="sidebar.dashboard.cisr.wp.theme"/>
+            </li>
+            <li>
+              <i className="icon icon-tag-o"/>
+              <IntlMessages id="sidebar.dashboard.jumbo.react"/>
+            </li>
+          </ul>
+          <ul>
+            <h5>Priority</h5>
+            <li>
+              <i className="icon icon-tag-new"/>
+              <span> <IntlMessages id="sidebar.dashboard.critical"/></span>
+            </li>
+            <li>
+              <i className="icon icon-tag-new"/>
+              <IntlMessages id="sidebar.dashboard.moderate"/>
+            </li>
+            <li>
+              <i className="icon icon-tag-new"/>
+              <IntlMessages id="sidebar.dashboard.default"/>
+            </li>
+          </ul>
+          <Button style={{backgroundColor: "green"}} block>
+            Apply Filter
+          </Button>
+        </div>
+      </div>
+    </Sider>
+  };
 
-  componentWillMount() {
-    this.props.onGetTickets();
-    this.props.onGetPriorities();
-    this.props.onSupportStaff();
-  }
-
-  render() {
-    console.log("in tableListing", this.props.tickets);
-    console.log("Priorities list", this.props.priorities);
-    console.log("staff list", this.props.staff)
-    console.log("current ticket", this.props.currentTicket)
-    const totalTickets = this.props.tickets.length;
-    const {selectedRowKeys} = this.state;
+  getTicketItem = () => {
     const buttonWidth = 100;
-
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange,
-    };
-
-    const columns = [
-
+    return [
       {
         title: 'ID',
         dataIndex: 'id',
@@ -175,106 +249,36 @@ class AllTickets extends Component {
         },
       },
     ];
+  };
 
-    const ButtonGroup = Button.Group;
-    const Option = Select.Option;
-
-    let selectButton = <Select defaultValue={10} onChange={this.onDropdownChange}>
+  getTicketShowOptions = () => {
+    return <Select defaultValue={10} onChange={this.onDropdownChange}>
       <Option value={10}>10</Option>
       <Option value={25}>25</Option>
       <Option value={50}>50</Option>
     </Select>
-    const {Sider, Content} = Layout;
+  };
+
+  render() {
+    const {selectedRowKeys} = this.state;
+
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange,
+    };
 
 
     return (
       <Auxiliary>
-        {this.state.sideBarActive ? <Sider className="gx-module-sidenav gx-d-none gx-d-lg-flex">
-          <div className="gx-module-side">
-            <div className="gx-module-side-content">
-              <h2>Filter Tickets</h2>
-            </div>
-            <div className="gx-module-nav">
-              <h5>Date</h5>
-              <div>
-                <DatePicker
-                  showTime
-                  format="YYYY-MM-DD HH:mm:ss"
-                  value={this.state.startDate}
-                  placeholder="Start Date"
-                  onChange={this.onStartDateChange}
-                />
-                <DatePicker
-                  showTime
-                  format="YYYY-MM-DD HH:mm:ss"
-                  value={this.state.endDate}
-                  placeholder="End Date"
-                  onChange={this.onEndDateChange}
-                />
-              </div>
-              <ul className="gx-module-nav">
-                <h5>Category</h5>
-                <li className="gx-module-nav-label">
-                  <i className="icon icon-tickets"/>
-                  <IntlMessages id="sidebar.dashboard.all.tickets"/>
-                </li>
-                <li className="gx-module-nav-label">
-                  <i className="icon icon-ticket-new"/>
-                  <IntlMessages id="sidebar.dashboard.add.new.ticket"/>
-                </li>
-                <li className="gx-module-nav-label">
-                  <i className="icon icon-schedule"/>
-                  <IntlMessages id="sidebar.dashboard.snoozes"/>
-                </li>
-              </ul>
-              <ul>
-                <h5>Products</h5>
-                <li>
-                  <i className="icon icon-tag-o"/>
-                  <IntlMessages id="sidebar.dashboard.jumbo.react"/>
-                </li>
-                <li>
-                  <i className="icon icon-tag-o"/>
-                  <IntlMessages id="sidebar.dashboard.mouldify"/>
-                </li>
-                <li>
-                  <i className="icon icon-tag-o"/>
-                  <IntlMessages id="sidebar.dashboard.cisr.wp.theme"/>
-                </li>
-                <li>
-                  <i className="icon icon-tag-o"/>
-                  <IntlMessages id="sidebar.dashboard.jumbo.react"/>
-                </li>
-              </ul>
-              <ul>
-                <h5>Priority</h5>
-                <li>
-                  <i className="icon icon-tag-new"/>
-                  <span> <IntlMessages id="sidebar.dashboard.critical"/></span>
-                </li>
-                <li>
-                  <i className="icon icon-tag-new"/>
-                  <IntlMessages id="sidebar.dashboard.moderate"/>
-                </li>
-                <li>
-                  <i className="icon icon-tag-new"/>
-                  <IntlMessages id="sidebar.dashboard.default"/>
-                </li>
-              </ul>
-              <Button style={{backgroundColor: "green"}} block>
-                Apply Filter
-              </Button>
-            </div>
-          </div>
-        </Sider> : null}
+        {this.state.sideBarActive ? this.getSidebar() : null}
         <Auxiliary>
           <Widget
             title={<div>
               <Button type="default" shape="round" onClick={this.onSideBarActive}>
                 <i className="icon icon-long-arrow-left"/>
               </Button>
-              {canAdd() ? <Button type="primary" className="h4 gx-text-capitalize gx-mb-0"
-                                  onClick={this.props.onToggleAddTicket}>
+              {Permissions.canTicketAdd() ? <Button type="primary" className="h4 gx-text-capitalize gx-mb-0"
+                                                    onClick={this.props.onToggleAddTicket}>
                 Add New
               </Button> : null}
 
@@ -291,7 +295,7 @@ class AllTickets extends Component {
                 placeholder="Enter keywords to search tickets"
                 prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
               />
-              {selectButton}
+              {this.getTicketShowOptions()}
               <ButtonGroup>
                 <Button type="default" onClick={this.onCurrentDecrement}>
                   <i className="icon icon-long-arrow-left"/>
@@ -305,16 +309,21 @@ class AllTickets extends Component {
 
             {this.props.currentTicket ?
               <TicketDetail ticket={this.props.currentTicket} onUpdateTickets={this.props.onUpdateTickets}/> :
-              <Table key={Math.random()} rowSelection={rowSelection} columns={columns} dataSource={this.props.tickets}
+              <Table key={Math.random()} rowSelection={rowSelection} columns={this.getTicketItem()}
+                     dataSource={this.props.tickets}
                      pagination={{pageSize: this.state.itemNumbers}}
                      className="gx-mb-4"
                      onRow={(record) => ({
-                       onClick: (e) => this.props.onSelectTicket(record)
+                       onClick: (e) => {
+                         if (Permissions.canViewTicketDetail()) {
+                           this.props.onSelectTicket(record)
+                         }
+                       }
                      })}/>}
 
             <div className="gx-d-flex gx-flex-row">
 
-              {selectButton}
+              {this.getTicketShowOptions()}
             </div>
             <div>
 

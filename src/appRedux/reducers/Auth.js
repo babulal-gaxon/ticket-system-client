@@ -1,4 +1,7 @@
 import {
+  FETCH_USER_INFO_ERROR,
+  FETCH_USER_INFO_START,
+  FETCH_USER_INFO_SUCCESS,
   INIT_URL,
   SIGNOUT_USER_SUCCESS,
   UPDATE_USER_PERMISSION_DATA,
@@ -10,7 +13,8 @@ const INIT_STATE = {
   token: JSON.parse(localStorage.getItem('token')),
   initURL: '',
   authUser: JSON.parse(localStorage.getItem('user')),
-  userPermissions: []
+  userPermissions: [],
+  loadingUser: false,
 };
 
 export default (state = INIT_STATE, action) => {
@@ -19,6 +23,18 @@ export default (state = INIT_STATE, action) => {
 
     case INIT_URL: {
       return {...state, initURL: action.payload};
+    }
+
+    case FETCH_USER_INFO_START: {
+      return {...state, loadingUser: true};
+    }
+
+    case FETCH_USER_INFO_SUCCESS: {
+      return {...state, loadingUser: false};
+    }
+
+    case FETCH_USER_INFO_ERROR: {
+      return {...state, loadingUser: false};
     }
 
     case SIGNOUT_USER_SUCCESS: {
