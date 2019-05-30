@@ -89,4 +89,9 @@ class AddNewTicket extends Component {
   }
 }
 
+AddNewTicket.defaultProps = {
+  staff: [],
+  priorities: []
+};
+
 export default AddNewTicket
