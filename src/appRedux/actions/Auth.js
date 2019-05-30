@@ -94,6 +94,8 @@ export const onGetUserInfo = (history) => {
         history.push("/signin");
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+        dispatch({type: USER_TOKEN_SET, payload: ''});
+        dispatch({type: USER_DATA, payload: null});
         dispatch({type: FETCH_ERROR, payload: error.response.data.message});
       } else {
         console.log("error: ", JSON.stringify(error));
