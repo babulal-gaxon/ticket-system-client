@@ -2,7 +2,7 @@ import React from "react";
 import {Tag} from "antd";
 
 function PropertiesItemCard({data}) {
-  const {image, title, subTitle, name, date, isFeatured, prize, sqft, bedrooms, baths, area, more} = data;
+  const {image, title, subTitle, name, date, isFeatured, price, sqft, bedrooms, baths, area, more} = data;
   return (
     <div className="gx-media gx-featured-item">
       {isFeatured === true ? <Tag color="orange"><span className="gx-text-uppercase">featured</span></Tag> : null}
@@ -35,7 +35,7 @@ function PropertiesItemCard({data}) {
         </div>
         <div className="gx-featured-content-right">
           <div>
-            <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">{prize}</h2>
+            <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">{price}</h2>
             <p className="gx-text-grey gx-fs-sm">{sqft}</p>
           </div>
           <p className="gx-text-primary gx-text-truncate gx-mt-auto gx-mb-0 gx-pointer">Check in detail <i

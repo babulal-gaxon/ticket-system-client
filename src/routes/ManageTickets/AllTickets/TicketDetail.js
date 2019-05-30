@@ -2,6 +2,7 @@ import React, {Component} from "react"
 import CustomScrollbars from "../../../util/CustomScrollbars";
 import {Avatar, Badge, Col, Input, Row} from "antd";
 
+
 class TicketDetail extends Component {
   constructor(props) {
     super(props);
@@ -31,6 +32,7 @@ class TicketDetail extends Component {
       <div className="gx-module-detail gx-module-list">
         <CustomScrollbars className="gx-todo-detail-content-scroll">
           <div className="gx-module-detail-item gx-module-detail-header">
+            <i className="gx-icon-btn icon icon-arrow-left" onClick ={this.props.onBackToList}/>
             <Row>
               <Col xs={24} sm={12} md={17} lg={12} xl={17}>
                 <div className="gx-flex-row">

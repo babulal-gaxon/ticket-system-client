@@ -1,6 +1,5 @@
-import React from "react"
+import React from "react";
 import Widget from "../../../components/Widget/index";
-import {Button} from "antd";
 
 const Statistics = () => {
   return (
@@ -9,9 +8,8 @@ const Statistics = () => {
         <h2 className="h4 gx-text-capitalize gx-mb-0">
           Data</h2>
       }>
-
-  </Widget>
-);
-}
+    </Widget>
+  );
+};
 
 export default Statistics

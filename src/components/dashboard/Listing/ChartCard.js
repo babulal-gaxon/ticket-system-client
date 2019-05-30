@@ -8,7 +8,7 @@ class ChartCard extends React.Component {
     isHide: false,
     children: '',
     chartProperties: {
-      prize: '',
+      price: '',
       title: '',
       bgColor: '',
       styleName: '',
@@ -33,7 +33,7 @@ class ChartCard extends React.Component {
 
   render() {
     const {chartProperties, isHide, children} = this.state;
-    const {prize, title, styleName, desc, bgColor, percent} = chartProperties;
+    const {price, title, styleName, desc, bgColor, percent} = chartProperties;
     return (
       <Widget styleName={`gx-card-full`}>
         <div
@@ -43,7 +43,7 @@ class ChartCard extends React.Component {
           {children}
           <div className="gx-fillchart-content">
             <div className="ant-card-head-title gx-mb-3">{title}</div>
-            <h2 className="gx-mb-2 gx-fs-xxxl gx-font-weight-medium">{prize}</h2>
+            <h2 className="gx-mb-2 gx-fs-xxxl gx-font-weight-medium">{price}</h2>
             {percent > 0}
             <p className="gx-mb-0 gx-fs-sm"><span
               className={`gx-font-weight-medium gx-fs-md gx-chart-${styleName}`}>{percent}

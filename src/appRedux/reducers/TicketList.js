@@ -1,11 +1,11 @@
 import {
-  ADD_TICKETS,
+  ADD_TICKETS, BACK_TO_LIST,
   GET_PRIORITIES,
   GET_TICKETS,
   SELECT_CURRENT_TICKET,
   TOGGLE_ADD_TICKET_BOX,
   UPDATE_TICKET
-} from "../../constants/TicketListing";
+} from "../../constants/TicketList";
 
 const initialState = {
   tickets: [],
@@ -49,6 +49,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentTicket: action.payload
+      }
+
+    case BACK_TO_LIST:
+      return {
+        ...state,
+        currentTicket: null
       }
 
     case UPDATE_TICKET:

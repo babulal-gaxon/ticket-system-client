@@ -1,14 +1,12 @@
 import React, {Component} from "react"
 import {
-  onAddTickets,
+  onAddTickets, onBackToList,
   onGetPriorities,
-  onGetStaffList,
   onGetTickets,
   onSelectTicket,
-  onShowAddTicket,
   onToggleAddTicket,
   onUpdateTickets
-} from "../../../appRedux/actions/TicketListing";
+} from "../../../appRedux/actions/TicketList";
 import {Avatar, Badge, Button, DatePicker, Icon, Input, Layout, Select, Table, Tooltip} from "antd";
 import Widget from "../../../components/Widget/index";
 import {connect} from "react-redux";
@@ -308,7 +306,7 @@ class AllTickets extends Component {
           }>
 
             {this.props.currentTicket ?
-              <TicketDetail ticket={this.props.currentTicket} onUpdateTickets={this.props.onUpdateTickets}/> :
+              <TicketDetail ticket={this.props.currentTicket} onUpdateTickets={this.props.onUpdateTickets} onBackToList ={this.props.onBackToList}/> :
               <Table key={Math.random()} rowSelection={rowSelection} columns={this.getTicketItem()}
                      dataSource={this.props.tickets}
                      pagination={{pageSize: this.state.itemNumbers}}
@@ -339,8 +337,8 @@ class AllTickets extends Component {
 }
 
 
-const mapStateToProps = ({ticketListing, supportStaff}) => {
-  const {tickets, showAddTicket, priorities, currentTicket} = ticketListing;
+const mapStateToProps = ({ticketList, supportStaff}) => {
+  const {tickets, showAddTicket, priorities, currentTicket} = ticketList;
   const {staff} = supportStaff;
   return {tickets, showAddTicket, priorities, staff, currentTicket};
 
@@ -353,5 +351,6 @@ export default connect(mapStateToProps, {
   onGetPriorities,
   onSupportStaff,
   onSelectTicket,
-  onUpdateTickets
+  onUpdateTickets,
+  onBackToList
 })(AllTickets);

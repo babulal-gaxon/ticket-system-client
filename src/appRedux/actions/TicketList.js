@@ -1,12 +1,12 @@
 import axios from 'util/Api'
 import {
-  ADD_TICKETS,
+  ADD_TICKETS, BACK_TO_LIST,
   GET_PRIORITIES,
   GET_TICKETS,
   SELECT_CURRENT_TICKET,
   TOGGLE_ADD_TICKET_BOX,
   UPDATE_TICKET
-} from "../../constants/TicketListing";
+} from "../../constants/TicketList";
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
 import {showErrorMessage} from "./Auth";
 
@@ -85,6 +85,12 @@ export const onSelectTicket = (ticket) => {
     payload: ticket
   }
 };
+
+export const onBackToList = () => {
+  return {
+    type:BACK_TO_LIST
+  }
+}
 
 
 export const onUpdateTickets = (ticket) => {
