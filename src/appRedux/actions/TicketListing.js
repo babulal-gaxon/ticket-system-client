@@ -1,9 +1,14 @@
 import axios from 'util/Api'
 import {
-  ADD_TICKETS, GET_PRIORITIES, GET_TICKETS, SELECT_CURRENT_TICKET,
-  TOGGLE_ADD_TICKET_BOX, UPDATE_TICKET
+  ADD_TICKETS,
+  GET_PRIORITIES,
+  GET_TICKETS,
+  SELECT_CURRENT_TICKET,
+  TOGGLE_ADD_TICKET_BOX,
+  UPDATE_TICKET
 } from "../../constants/TicketListing";
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
+import {showErrorMessage} from "./Auth";
 
 
 export const onGetTickets = () => {
@@ -20,7 +25,7 @@ export const onGetTickets = () => {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }
     }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
+      dispatch(showErrorMessage(error));
       console.info("Error****:", error.message);
     });
   }

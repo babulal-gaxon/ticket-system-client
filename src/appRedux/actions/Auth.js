@@ -2,6 +2,9 @@ import {
   FETCH_ERROR,
   FETCH_START,
   FETCH_SUCCESS,
+  FETCH_USER_INFO_ERROR,
+  FETCH_USER_INFO_START,
+  FETCH_USER_INFO_SUCCESS,
   INIT_URL,
   SIGNOUT_USER_SUCCESS,
   UPDATE_USER_PERMISSION_DATA,
@@ -9,6 +12,7 @@ import {
   USER_TOKEN_SET
 } from "../../constants/ActionTypes";
 import axios from 'util/Api'
+import Permissions from "../../util/Permissions";
 
 export const setInitUrl = (url) => {
   return {
@@ -76,15 +80,20 @@ export const onUserSignIn = ({email, password}) => {
 };
 
 export const onGetUserInfo = (history) => {
+  console.log("onGetUserInfo");
   return (dispatch) => {
-    dispatch({type: FETCH_START});
+    dispatch({type: FETCH_USER_INFO_START});
     axios.get('/role/permissions',
     ).then(({data}) => {
-      console.log("onGetUser: ", data);
+      console.log("onGetUserInfo: ", data);
       if (data.success) {
-        dispatch({type: UPDATE_USER_PERMISSION_DATA, payload: data.data})
+        dispatch({type: FETCH_USER_INFO_SUCCESS});
+        dispatch({type: UPDATE_USER_PERMISSION_DATA, payload: data.data});
+        Permissions.setPermissions(data.data);
+        localStorage.setItem("permission", JSON.stringify(data.token));
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_USER_INFO_ERROR, payload: data.error});
         history.push("/signin");
         localStorage.removeItem("token");
         localStorage.removeItem("user");
@@ -97,9 +106,11 @@ export const onGetUserInfo = (history) => {
         dispatch({type: USER_TOKEN_SET, payload: ''});
         dispatch({type: USER_DATA, payload: null});
         dispatch({type: FETCH_ERROR, payload: error.response.data.message});
+        dispatch({type: FETCH_USER_INFO_ERROR, payload: error.response.data.message});
       } else {
         console.log("error: ", JSON.stringify(error));
         dispatch({type: FETCH_ERROR, payload: error.message});
+        dispatch({type: FETCH_USER_INFO_ERROR, payload: error.message});
         console.log("Error****:", error.message);
       }
     });
@@ -115,5 +126,14 @@ export const onUserSignOut = () => {
       dispatch({type: FETCH_SUCCESS});
       dispatch({type: SIGNOUT_USER_SUCCESS});
     }, 2000);
+  }
+};
+
+export const showErrorMessage = (error) => {
+  if (error.response.status === 401) {
+    return ({type: FETCH_ERROR, payload: error.response.data.message});
+  } else {
+    console.log("Error****:", error.message);
+    return ({type: FETCH_ERROR, payload: error.message});
   }
 };

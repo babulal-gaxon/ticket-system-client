@@ -12,6 +12,7 @@ import {setInitUrl} from "appRedux/actions/Auth";
 import {onLayoutTypeChange, onNavStyleChange, setThemeType} from "appRedux/actions/Setting";
 import axios from 'util/Api';
 import {onGetUserInfo} from "../../appRedux/actions/Auth";
+import CircularProgress from "../../components/CircularProgress/index";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
   <Route
@@ -34,6 +35,7 @@ class App extends Component {
     if (this.props.initURL === '') {
       this.props.setInitUrl(this.props.history.location.pathname);
     }
+    console.log("this.props.token", this.props.token);
     if (this.props.token) {
       axios.defaults.headers.common['Authorization'] = "Bearer " + this.props.token;
       this.props.onGetUserInfo(this.props.history)
@@ -49,7 +51,7 @@ class App extends Component {
   }
 
   render() {
-    const {match, location, locale, token, initURL} = this.props;
+    const {match, location, locale, token, initURL, loadingUser} = this.props;
 
     if (location.pathname === '/') {
       if (token === null) {
@@ -61,6 +63,11 @@ class App extends Component {
       }
     }
 
+    if (loadingUser) {
+      return <div className="gx-loader-view gx-h-100">
+        <CircularProgress className=""/>
+      </div>
+    }
     const currentAppLocale = AppLocale[locale.locale];
     return (
       <LocaleProvider locale={currentAppLocale.antd}>
@@ -81,8 +88,8 @@ class App extends Component {
 
 const mapStateToProps = ({settings, auth}) => {
   const {locale} = settings;
-  const {token, initURL} = auth;
-  return {locale, token, initURL}
+  const {token, initURL, loadingUser} = auth;
+  return {locale, token, initURL, loadingUser}
 };
 
 export default connect(mapStateToProps, {
