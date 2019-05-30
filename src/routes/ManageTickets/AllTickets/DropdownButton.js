@@ -3,45 +3,44 @@ import {Dropdown, Menu} from "antd";
 
 
 class DropdownButton extends Component {
-  state= {
-    items : ""
-  }
+  state = {
+    items: ""
+  };
 
   selectHeaderOptionMenu = (menu) => {
     switch (menu) {
       case '10': {
-        this.setState({items: menu})
+        this.setState({items: menu});
         break;
       }
 
       case '25': {
-        this.setState({items: menu})
+        this.setState({items: menu});
         break;
       }
       case '50': {
-        this.setState({items: menu})
+        this.setState({items: menu});
         break;
       }
       case '100': {
-        this.setState({items: menu})
+        this.setState({items: menu});
         break;
       }
       default:
         return null;
     }
-  }
+  };
+
   render() {
 
     const menu = (
-      <Menu >
+      <Menu>
         {this.props.options.map(option => {
           return (
-            <Menu.Item key={option.id} onClick={() => this.selectHeaderOptionMenu(option.value)
-            }>
+            <Menu.Item key={option.id} onClick={() => this.selectHeaderOptionMenu(option.value)}>
               {option.value}
             </Menu.Item>
           )
-
         })}
       </Menu>
     );
@@ -56,4 +55,8 @@ class DropdownButton extends Component {
   }
 }
 
-export default DropdownButton
+export default DropdownButton;
+
+DropdownButton.defaultProps = {
+  options: []
+};
