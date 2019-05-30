@@ -2,7 +2,7 @@ import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
 import {
   ADD_DEPARTMENT,
-  DELETE_DEPARTMENT,
+  DELETE_DEPARTMENT, EDIT_DEPARTMENT,
   GET_DEPARTMENTS,
   TOGGLE_ADD_DEPARTMENT_BOX
 } from "../../constants/Departments";
@@ -60,6 +60,26 @@ export const onDeleteDepartment = (departmentId) => {
       console.info("data:", data);
       if (data.success) {
         dispatch({type: DELETE_DEPARTMENT, payload: departmentId});
+        dispatch({type: FETCH_SUCCESS});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+}
+
+export const onEditDepartment = (department) => {
+  console.log("onEditDepartment", department)
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.put(`/setup/departments/${department.id}`, department).then(({data}) => {
+      console.info("data:", data);
+      if (data.success) {
+        console.log(" sending data", data.data)
+        dispatch({type: EDIT_DEPARTMENT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});

@@ -1,13 +1,12 @@
 import React, {Component} from "react"
 import {Button, Checkbox, Form, Input, Modal, Radio, Select} from "antd";
 import {ChromePicker, SketchPicker} from "react-color";
-import reactCSS from 'reactcss'
 
 
 class AddNewStatus extends Component {
   constructor(props) {
     super(props);
-
+if(this.props.statusId === 0) {
     this.state = {
       name: "",
       desc: "",
@@ -17,6 +16,22 @@ class AddNewStatus extends Component {
       displayColorPicker: false,
       color_code: "",
     }
+  }
+  else {
+  const selectedStatus = this.props.statuses.find(status => status.id === this.props.statusId)
+  console.log("selectedstatus",selectedStatus)
+const {name,desc,status,is_default,color_code} = selectedStatus
+  this.state = {
+    name: name,
+    desc: desc,
+    status: status,
+    is_default: is_default,
+    checked: false,
+    displayColorPicker: false,
+    color_code: color_code,
+    checked: is_default
+  }
+}
   }
 
   handleColorClick = () => {
@@ -28,10 +43,37 @@ class AddNewStatus extends Component {
   };
 
   handleColorChange = (color) => {
-    this.setState({ color_code: color.hex })
+    this.setState({ color_code: color.hex.toUpperCase() })
   };
 
-  
+  onStatusAdd = () => {
+    if(this.props.statusId === 0) {
+      const newStatus = {
+        name: this.state.name,
+        desc: this.state.desc,
+        status: this.state.status,
+        is_default: this.state.is_default,
+        color_code: this.state.color_code,
+      }
+      this.props.onAddTicketStatus(newStatus)
+    }
+
+    else {
+      const newStatus = {
+        name: this.state.name,
+        desc: this.state.desc,
+        status: this.state.status,
+        is_default: this.state.is_default,
+        color_code: this.state.color_code,
+        id: this.props.statusId
+      }
+      this.props.onEditTicketStatus(newStatus)
+    }
+
+
+  }
+
+
 
   onCheckBoxChange = (e) => {
 
@@ -46,7 +88,7 @@ class AddNewStatus extends Component {
 
   render() {
     const {name, color_code, is_default, desc, status} = this.state;
-    const {showAddStatus, onToggleAddStatus, onAddTicketStatus} = this.props;
+    const {showAddStatus, onToggleAddStatus, onAddTicketStatus, onEditTicketStatus} = this.props;
     const {Option} = Select;
 
     const popover = {
@@ -61,6 +103,8 @@ class AddNewStatus extends Component {
       left: '0px',
     }
 
+
+
     return (
 
       <div>
@@ -70,11 +114,13 @@ class AddNewStatus extends Component {
           title="Add New Ticket Status"
           onCancel={onToggleAddStatus}
           footer={[
-            <Button key="submit" type="primary" onClick={() => {
-              onAddTicketStatus(this.state)
-            }}>
-              Add
-            </Button>,
+            this.props.statusId === 0   ?
+              <Button key="submit" type="primary" onClick={this.onStatusAdd}>
+                Add
+              </Button> :
+              <Button key="submit" type="primary" onClick={this.onStatusAdd}>
+                Edit
+              </Button>,
             <Button key="cancel" onClick={onToggleAddStatus}>
               Cancel
             </Button>,

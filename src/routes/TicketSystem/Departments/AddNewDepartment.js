@@ -4,17 +4,49 @@ import {Button, Form, Input, Modal, Radio, Select} from "antd";
 class AddNewDepartment extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: "",
-      desc: "",
-      status: ""
+    if (this.props.departmentId === 0) {
+      this.state = {
+        name: "",
+        desc: "",
+        status: ""
+      }
+    }
+    else {
+      const selectedDept = this.props.dept.find(department => department.id === this.props.departmentId)
+      console.log("selectedDepartmen", selectedDept)
+      const {name, desc, status} = selectedDept;
+      this.state = {
+        name: name,
+        desc: desc,
+        status: status
+      }
+    }
+  }
 
+  onDepartmentAdd = () => {
+    if (this.props.departmentId === 0) {
+      const newDepartment = {
+        name: this.state.name,
+        desc: this.state.desc,
+        status: this.state.status,
+      }
+      this.props.onAddDepartment(newDepartment)
+    }
+
+    else {
+      const newDepartment = {
+        name: this.state.name,
+        desc: this.state.desc,
+        status: this.state.status,
+        id: this.props.departmentId
+      }
+      this.props.onEditDepartment(newDepartment)
     }
   }
 
   render() {
     const {name, desc, status} = this.state;
-    const {showAddDepartment, onToggleAddDepartment, onAddDepartment} = this.props;
+    const {showAddDepartment, onToggleAddDepartment} = this.props;
     const {Option} = Select;
     return (
 
@@ -25,11 +57,13 @@ class AddNewDepartment extends Component {
           title="Add New Department"
           onCancel={onToggleAddDepartment}
           footer={[
-            <Button key="submit" type="primary" onClick={() => {
-              onAddDepartment(this.state)
-            }}>
-              Add Ticket
-            </Button>,
+            this.props.departmentId === 0   ?
+              <Button key="submit" type="primary" onClick={this.onDepartmentAdd}>
+                Add
+              </Button> :
+              <Button key="submit" type="primary" onClick={this.onDepartmentAdd}>
+                Edit
+              </Button>,
             <Button key="cancel" onClick={onToggleAddDepartment}>
               Cancel
             </Button>,

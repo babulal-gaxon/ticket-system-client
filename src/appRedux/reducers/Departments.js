@@ -1,7 +1,7 @@
 
 
 import {
-  ADD_DEPARTMENT, DELETE_DEPARTMENT, GET_DEPARTMENTS,
+  ADD_DEPARTMENT, DELETE_DEPARTMENT, EDIT_DEPARTMENT, GET_DEPARTMENTS,
   TOGGLE_ADD_DEPARTMENT_BOX
 } from "../../constants/Departments";
 
@@ -28,6 +28,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         dept: state.dept.concat(action.payload),
+        showAddDepartment: false
+      }
+
+    case EDIT_DEPARTMENT:
+      const updateDepartments = state.dept.map((department) => department.id === action.payload.id ? action.payload : department)
+      return {
+        ...state,
+        dept:updateDepartments,
         showAddDepartment: false
       }
 

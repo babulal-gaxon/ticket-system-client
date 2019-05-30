@@ -9,20 +9,20 @@ class DropdownButton extends Component {
 
   selectHeaderOptionMenu = (menu) => {
     switch (menu) {
-      case '10': {
+      case '1': {
         this.setState({items: menu})
         break;
       }
 
-      case '25': {
+      case '2': {
         this.setState({items: menu})
         break;
       }
-      case '50': {
+      case '3': {
         this.setState({items: menu})
         break;
       }
-      case '100': {
+      case '4': {
         this.setState({items: menu})
         break;
       }
