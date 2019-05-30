@@ -37,13 +37,13 @@ class AddNewResponses extends Component {
         >
           <Form layout="vertical">
             <Form.Item label="Short Title">
-              <Input type="text" value={short_title} onChange={(e) => {
+              <Input type="text"  value={short_title} onChange={(e) => {
                 this.setState({short_title: e.target.value})
               }}/>
             </Form.Item>
 
             <Form.Item label="Short Code">
-              <Input type="text" value={short_code} onChange={(e) => {
+              <Input type="text"  value={short_code} onChange={(e) => {
                 this.setState({short_code: e.target.value})
               }}/>
             </Form.Item>

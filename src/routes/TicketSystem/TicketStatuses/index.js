@@ -105,7 +105,7 @@ class TicketStatuses extends Component {
         dataIndex: '',
         key:'empty',
         render: (text, record) => {
-          return <span> <i className="icon icon-edit gx-mr-3" onClick = {() => this.props.onDeleteTicketStatus(record.id)}/>
+          return <span> <i className="icon icon-edit gx-mr-3" onClick = {() => this.props.onToggleAddStatus()}/>
             <i className="icon icon-trash" onClick = {() => this.props.onDeleteTicketStatus(record.id)}/>
           </span>
         },
