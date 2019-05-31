@@ -28,6 +28,7 @@
   &-submenu-title:active {
     background: @menu-item-active-bg;
   }
+
   &-item .icon {
     min-width: 14px;
     margin-right: 20px;
@@ -577,8 +578,9 @@
     margin-right: 12px;
   }
 
-  .ant-menu-submenu-title span {
+  & .ant-menu-submenu-title span {
     display: flex;
+    align-items: center;
   }
 }
 
@@ -882,4 +884,3 @@
     .border-radius(@border-radius-sm);
   }
 }
-

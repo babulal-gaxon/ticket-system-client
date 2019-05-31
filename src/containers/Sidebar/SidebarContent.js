@@ -54,7 +54,7 @@ class SidebarContent extends Component {
               mode="inline">
 
               <SubMenu key="dashboard"
-                       title={<span> <i className="icon icon-dasbhoard"/>
+                       title={<span> <i className="icon icon-dashboard"/>
                          <IntlMessages id="sidebar.dashboard"/></span>}>
 
               <Menu.Item key="dashboard">
