@@ -1,9 +1,7 @@
 import React, {Component} from "react"
-import {Button, Checkbox, Form, Input, Modal, Radio, Select} from "antd";
+import {Button, Checkbox, Form, Input, Modal, Radio} from "antd";
 import {ChromePicker} from "react-color";
 import PropTypes from "prop-types";
-
-const {Option} = Select;
 
 class AddNewStatus extends Component {
   constructor(props) {
@@ -18,8 +16,7 @@ class AddNewStatus extends Component {
         displayColorPicker: false,
         color_code: "",
       };
-    }
-    else {
+    } else {
       const selectedStatus = this.props.statuses.find(status => status.id === this.props.statusId)
       console.log("selectedstatus", selectedStatus)
       const {name, desc, status, is_default, color_code} = selectedStatus
@@ -34,6 +31,7 @@ class AddNewStatus extends Component {
       };
     }
   };
+
   handleColorClick = () => {
     this.setState({displayColorPicker: !this.state.displayColorPicker});
   };
@@ -53,8 +51,7 @@ class AddNewStatus extends Component {
         color_code: this.state.color_code,
       };
       this.props.onAddTicketStatus(newStatus);
-    }
-    else {
+    } else {
       const newStatus = {
         name: this.state.name,
         desc: this.state.desc,
@@ -74,6 +71,7 @@ class AddNewStatus extends Component {
       this.setState({is_default: 0})
     }
   };
+
   render() {
     const {name, color_code, desc, status} = this.state;
     const {showAddStatus, onToggleAddStatus} = this.props;

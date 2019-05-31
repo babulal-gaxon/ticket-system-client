@@ -41,7 +41,7 @@ class Permissions {
     return false;
   };
 
-  // Department
+// Departments
   static canDepartmentAdd = () => {
     if (this.permissions.departments) {
       return this.permissions.departments.filter((key) => key.name === "departments.store").length > 0
@@ -58,7 +58,7 @@ class Permissions {
 
   static canDepartmentView = () => {
     if (this.permissions.departments) {
-      return this.permissions.departments.filter((key) => key.name === "departments.show").length > 0
+      return this.permissions.departments.filter((key) => key.name === "departments.index").length > 0
     }
     return false;
   };
@@ -67,8 +67,100 @@ class Permissions {
     if (this.permissions.departments) {
       return this.permissions.departments.filter((key) => key.name === "departments.destroy").length > 0
     }
+    return false;
+  };
 
+
+  // CannedResponse
+  static canResponseAdd = () => {
+    if (this.permissions.responses) {
+      return this.permissions.responses.filter((key) => key.name === "responses.store").length > 0
+    }
+    return false;
+  };
+
+  static canResponseEdit = () => {
+    if (this.permissions.responses) {
+      return this.permissions.responses.filter((key) => key.name === "responses.update").length > 0
+    }
+    return false;
+  };
+
+  static canResponseView = () => {
+    if (this.permissions.responses) {
+      return this.permissions.responses.filter((key) => key.name === "responses.index").length > 0
+    }
+    return false;
+  };
+
+  static canResponseDelete = () => {
+    if (this.permissions.responses) {
+      return this.permissions.responses.filter((key) => key.name === "responses.destroy").length > 0
+    }
+    return false;
+  };
+
+
+  // TicketPriorities
+  static canPriorityAdd = () => {
+    if (this.permissions.priorities) {
+      return this.permissions.priorities.filter((key) => key.name === "priorities.store").length > 0
+    }
+    return false;
+  };
+
+  static canPriorityEdit = () => {
+    if (this.permissions.priorities) {
+      return this.permissions.priorities.filter((key) => key.name === "priorities.update").length > 0
+    }
+    return false;
+  };
+
+  static canPriorityView = () => {
+    if (this.permissions.priorities) {
+      return this.permissions.priorities.filter((key) => key.name === "priorities.index").length > 0
+    }
+    return false;
+  };
+
+  static canPriorityDelete = () => {
+    if (this.permissions.priorities) {
+      return this.permissions.priorities.filter((key) => key.name === "priorities.destroy").length > 0
+    }
+    return false;
+  };
+
+  // TicketStatuses
+  static canStatusAdd= () => {
+    if (this.permissions.status) {
+      return this.permissions.status.filter((key) => key.name === "status.store").length > 0
+    }
+    return false;
+  };
+
+  static canStatusEdit = () => {
+    if (this.permissions.status) {
+      return this.permissions.status.filter((key) => key.name === "status.update").length > 0
+    }
+    return false;
+  };
+
+  static canStatusView = () => {
+    if (this.permissions.status) {
+      return this.permissions.status.filter((key) => key.name === "status.index").length > 0
+    }
+    return false;
+  };
+
+  static canStatusDelete = () => {
+    if (this.permissions.status) {
+      return this.permissions.status.filter((key) => key.name === "status.destroy").length > 0
+    }
     return false;
   };
 }
+
+
+
+
 export default Permissions;

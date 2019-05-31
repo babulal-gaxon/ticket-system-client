@@ -1,8 +1,7 @@
 import React, {Component} from "react"
-import {Button, Form, Input, Modal, Radio, Select} from "antd";
+import {Button, Form, Input, Modal, Radio} from "antd";
 import PropTypes from "prop-types";
 
-const {Option} = Select;
 
 class AddNewResponses extends Component {
   constructor(props) {
@@ -14,6 +13,7 @@ class AddNewResponses extends Component {
       status: ""
     };
   };
+
   render() {
     const {short_title, short_code, message, status} = this.state;
     const {showAddCanned, onToggleAddCanned, onAddCannedResponse} = this.props;

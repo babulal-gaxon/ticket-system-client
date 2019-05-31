@@ -11,6 +11,7 @@ import {
 import AddNewResponses from "./AddNewResponses";
 import Widget from "../../../components/Widget/index";
 import PropTypes from "prop-types";
+import Permissions from "../../../util/Permissions";
 
 const ButtonGroup = Button.Group;
 
@@ -88,8 +89,9 @@ class CannedResponses extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <span> <i className="icon icon-edit gx-mr-3"/>
-            <i className="icon icon-trash" onClick={() => this.props.onDeleteCannedResponse(record.id)}/>
+          return <span> {Permissions.canResponseEdit() ? <i className="icon icon-edit gx-mr-3"/> : null }
+            {Permissions.canResponseDelete() ? <i className="icon icon-trash"
+                                                  onClick={() => this.props.onDeleteCannedResponse(record.id)}/> : null}
           </span>
         },
       },
@@ -105,8 +107,9 @@ class CannedResponses extends Component {
     return (
       <Widget
         title={<div>
-          <Button type="primary" className="h4 gx-text-capitalize gx-mb-0" onClick={this.props.onToggleAddCanned}>
-            Add New Response</Button>
+          {Permissions.canResponseAdd() ? <Button type="primary" className="h4 gx-text-capitalize gx-mb-0"
+                                                onClick={this.props.onToggleAddCanned}>
+            Add New Response</Button> : null}
           {this.props.showAddCanned ?
             <AddNewResponses showAddCanned={this.props.showAddCanned}
                              onToggleAddCanned={this.props.onToggleAddCanned}
@@ -127,8 +130,9 @@ class CannedResponses extends Component {
           </ButtonGroup>
         </div>
       }>
+        {Permissions.canResponseView() ?
         <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={this.props.responses}
-               className="gx-mb-4"/>
+               className="gx-mb-4"/> : null}
         <div className="gx-d-flex gx-flex-row">
         </div>
         <div>

@@ -30,9 +30,9 @@ class SupportStaff extends Component {
                 <div className="gx-task-item-content-left">
                   <h5 className="gx-text-truncate gx-task-item-title">{employee.staff_name}</h5>
                   <i className="icon icon-forward-o gx-mr-1  gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
-                  <span className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1">{employee.assigned_tickets_count + " " + "assigned"}</span>
+                  <span className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1">{employee.assigned_tickets_count + " assigned"}</span>
                   <i className="icon icon-check-circle-o gx-mr-1 gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
-                  <span className="gx-text-grey gx-fs-sm gx-mb-0">{employee.resolved_tickets_count + " " + "resolved"}</span>
+                  <span className="gx-text-grey gx-fs-sm gx-mb-0">{employee.resolved_tickets_count + " resolved"}</span>
                 </div>
                 <div className="gx-task-item-content-right">
                   <span className={`gx-badge gx-mb-0 gx-text-white gx-badge-red`}>

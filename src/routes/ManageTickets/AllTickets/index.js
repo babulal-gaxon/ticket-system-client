@@ -38,6 +38,7 @@ class AllTickets extends Component {
       endDate: null
     };
   };
+
   componentWillMount() {
     if (Permissions.canTicketView()) {
       this.props.onGetTickets();
@@ -45,6 +46,7 @@ class AllTickets extends Component {
     this.props.onGetPriorities();
     this.props.onSupportStaff();
   };
+
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
   };
@@ -52,10 +54,10 @@ class AllTickets extends Component {
     this.setState({itemNumbers: value});
   };
   onCurrentIncrement = () => {
-    this.setState({current: this.state.current++});
+    this.setState({current: this.state.current + 1});
   };
   onCurrentDecrement = () => {
-    this.setState({current: this.state.current--});
+    this.setState({current: this.state.current - 1});
   };
   onSideBarActive = () => {
     this.setState({sideBarActive: !this.state.sideBarActive});
@@ -151,6 +153,7 @@ class AllTickets extends Component {
       <Option value={50}>50</Option>
     </Select>
   };
+
   render() {
     const {selectedRowKeys} = this.state;
     const rowSelection = {
@@ -178,35 +181,36 @@ class AllTickets extends Component {
                               staff={this.props.staff}/> : null}
             </div>}
             extra={
-            <div className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
-              <Input
-                placeholder="Enter keywords to search tickets"
-                prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}/>
-              {this.getTicketShowOptions()}
-              <ButtonGroup>
-                <Button type="default" onClick={this.onCurrentDecrement}>
-                  <i className="icon icon-long-arrow-left"/>
-                </Button>
-                <Button type="default" onClick={this.onCurrentIncrement}>
-                  <i className="icon icon-long-arrow-right"/>
-                </Button>
-              </ButtonGroup>
-            </div> }>
+              <div className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
+                <Input
+                  placeholder="Enter keywords to search tickets"
+                  prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}/>
+                {this.getTicketShowOptions()}
+                <ButtonGroup>
+                  <Button type="default" onClick={this.onCurrentDecrement}>
+                    <i className="icon icon-long-arrow-left"/>
+                  </Button>
+                  <Button type="default" onClick={this.onCurrentIncrement}>
+                    <i className="icon icon-long-arrow-right"/>
+                  </Button>
+                </ButtonGroup>
+              </div>}>
             {this.props.currentTicket ?
               <TicketDetail ticket={this.props.currentTicket} onUpdateTickets={this.props.onUpdateTickets}
                             onBackToList={this.props.onBackToList}/> :
-              <Table key={Math.random()} rowSelection={rowSelection} columns={ticketColumn}
-                     dataSource={this.props.tickets}
-                     pagination={{pageSize: this.state.itemNumbers}}
-                     className="gx-mb-4"
-                     onRow={(record) => ({
-                       onClick: (e) => {
-                         if (Permissions.canViewTicketDetail()) {
-                           this.props.onSelectTicket(record)
+              (Permissions.canTicketView()) ?
+                <Table key={Math.random()} rowSelection={rowSelection} columns={ticketColumn}
+                       dataSource={this.props.tickets}
+                       pagination={{pageSize: this.state.itemNumbers}}
+                       className="gx-mb-4"
+                       onRow={(record) => ({
+                         onClick: (e) => {
+                           if (Permissions.canViewTicketDetail()) {
+                             this.props.onSelectTicket(record)
+                           }
                          }
-                       }
-                     })}
-              />}
+                       })}
+                /> : null}
             <div className="gx-d-flex gx-flex-row">
               {this.getTicketShowOptions()}
             </div>
@@ -238,11 +242,11 @@ export default connect(mapStateToProps, {
 })(AllTickets);
 
 AllTickets.defaultProps = {
-  showAddTicket: "",
+  showAddTicket: false,
   currentTicket: ""
 };
 
 AllTickets.propTypes = {
-  currentTicket: PropTypes.bool,
+  currentTicket: PropTypes.object,
   showAddTicket: PropTypes.bool,
 };

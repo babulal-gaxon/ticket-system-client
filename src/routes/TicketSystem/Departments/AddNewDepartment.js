@@ -1,8 +1,6 @@
 import React, {Component} from "react"
-import {Button, Form, Input, Modal, Radio, Select} from "antd";
+import {Button, Form, Input, Modal, Radio} from "antd";
 import PropTypes from "prop-types";
-
-const {Option} = Select;
 
 class AddNewDepartment extends Component {
   constructor(props) {
@@ -13,8 +11,7 @@ class AddNewDepartment extends Component {
         desc: "",
         status: ""
       };
-    }
-    else {
+    } else {
       const selectedDept = this.props.dept.find(department => department.id === this.props.departmentId)
       console.log("selectedDepartment", selectedDept)
       const {name, desc, status} = selectedDept;
@@ -25,6 +22,7 @@ class AddNewDepartment extends Component {
       };
     }
   };
+
   onDepartmentAdd = () => {
     if (this.props.departmentId === 0) {
       const newDepartment = {
@@ -33,8 +31,7 @@ class AddNewDepartment extends Component {
         status: this.state.status,
       };
       this.props.onAddDepartment(newDepartment)
-    }
-    else {
+    } else {
       const newDepartment = {
         name: this.state.name,
         desc: this.state.desc,
@@ -44,6 +41,7 @@ class AddNewDepartment extends Component {
       this.props.onEditDepartment(newDepartment)
     }
   };
+
   render() {
     const {name, desc, status} = this.state;
     const {showAddDepartment, onToggleAddDepartment} = this.props;
@@ -54,7 +52,7 @@ class AddNewDepartment extends Component {
           title="Add New Department"
           onCancel={onToggleAddDepartment}
           footer={[
-            this.props.departmentId === 0   ?
+            this.props.departmentId === 0 ?
               <Button key="submit" type="primary" onClick={this.onDepartmentAdd}>
                 Add
               </Button> :
@@ -80,7 +78,7 @@ class AddNewDepartment extends Component {
               <Radio.Group value={status} onChange={(e) => {
                 this.setState({status: e.target.value})
               }}>
-                  <Radio value={1}>Active</Radio>
+                <Radio value={1}>Active</Radio>
                 <Radio value={0}>Disabled</Radio>
               </Radio.Group>
             </Form.Item>

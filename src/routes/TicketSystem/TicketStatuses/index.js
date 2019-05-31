@@ -12,6 +12,7 @@ import {
 } from "../../../appRedux/actions/TicketStatuses";
 import AddNewStatus from "./AddNewStatus";
 import Widget from "../../../components/Widget/index";
+import Permissions from "../../../util/Permissions";
 
 const ButtonGroup = Button.Group;
 
@@ -102,8 +103,10 @@ class TicketStatuses extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <span> <i className="icon icon-edit gx-mr-3" onClick={() => this.onEditStatus(record.id)}/>
-            <i className="icon icon-trash" onClick={() => this.props.onDeleteTicketStatus(record.id)}/>
+          return <span> {Permissions.canStatusEdit() ? <i className="icon icon-edit gx-mr-3"
+                                                         onClick={() => this.onEditStatus(record.id)}/> : null}
+            {Permissions.canStatusDelete() ? <i className="icon icon-trash"
+                                              onClick={() => this.props.onDeleteTicketStatus(record.id)}/> : null}
           </span>
         },
       },
@@ -119,8 +122,9 @@ class TicketStatuses extends Component {
     return (
       <Widget
         title={<div>
+          {Permissions.canStatusAdd() ?
           <Button type="primary" className="h4 gx-text-capitalize gx-mb-0" onClick={this.onAddButtonClick}>
-            Add New Status</Button>
+            Add New Status</Button> : null}
           {this.props.showAddStatus ?
             <AddNewStatus showAddStatus={this.props.showAddStatus}
                           onToggleAddStatus={this.props.onToggleAddStatus}
@@ -144,8 +148,9 @@ class TicketStatuses extends Component {
           </ButtonGroup>
         </div>
       }>
+        {Permissions.canStatusView() ?
         <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={this.props.statuses}
-               className="gx-mb-4"/>
+               className="gx-mb-4"/> : null }
         <div className="gx-d-flex gx-flex-row">
         </div>
         <div>

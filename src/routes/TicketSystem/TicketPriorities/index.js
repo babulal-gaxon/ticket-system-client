@@ -11,6 +11,7 @@ import {
 import Widget from "../../../components/Widget/index";
 import AddNewPriority from "./AddNewPriority";
 import PropTypes from "prop-types";
+import Permissions from "../../../util/Permissions";
 
 const ButtonGroup = Button.Group;
 
@@ -85,8 +86,9 @@ class TicketPriorities extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <span> <i className="icon icon-edit gx-mr-3"/>
-            <i className="icon icon-trash" onClick={() => this.props.onDeleteTicketPriority(record.id)}/>
+          return <span>{Permissions.canPriorityEdit() ? <i className="icon icon-edit gx-mr-3"/> : null}
+            {Permissions.canPriorityDelete() ? <i className="icon icon-trash"
+                                                  onClick={() => this.props.onDeleteTicketPriority(record.id)}/> : null}
           </span>
         },
       },
@@ -102,9 +104,10 @@ class TicketPriorities extends Component {
     return (
       <Widget
         title={<div>
-          <Button type="primary" className="h4 gx-text-capitalize gx-mb-0" onClick={this.props.onToggleAddPriority}>
+          {Permissions.canPriorityAdd() ? <Button type="primary" className="h4 gx-text-capitalize gx-mb-0"
+                                                  onClick={this.props.onToggleAddPriority}>
             Add New Priority
-          </Button>
+          </Button> : null}
           {this.props.showAddPriority ?
             <AddNewPriority showAddPriority={this.props.showAddPriority}
                             onToggleAddPriority={this.props.onToggleAddPriority}
@@ -125,8 +128,9 @@ class TicketPriorities extends Component {
           </ButtonGroup>
         </div>
       }>
+        {Permissions.canPriorityView() ?
         <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={this.props.priorities}
-               className="gx-mb-4"/>
+               className="gx-mb-4"/> : null}
         <div>
         </div>
       </Widget>
