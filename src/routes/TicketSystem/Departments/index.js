@@ -1,7 +1,9 @@
 import React, {Component} from "react"
-import Widget from "../../../components/Widget/index";
 import {Badge, Button, Icon, Input, Table} from "antd";
 import {connect} from "react-redux";
+import PropTypes from "prop-types";
+
+import Widget from "../../../components/Widget/index";
 import {
   onAddDepartment,
   onDeleteDepartment,
@@ -11,6 +13,7 @@ import {
 } from "../../../appRedux/actions/Departments";
 import AddNewDepartment from "./AddNewDepartment";
 
+const ButtonGroup = Button.Group;
 
 class Departments extends Component {
   constructor(props) {
@@ -19,43 +22,29 @@ class Departments extends Component {
       selectedRowKeys: [],
       departmentId: 0
     }
-  }
-
+  };
+  componentWillMount() {
+    this.props.onGetDepartments();
+  };
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
   };
-
   onAddButtonClick = () => {
     this.setState({departmentId: 0});
     this.props.onToggleAddDepartment()
-  }
-
+  };
   onEditDepartment = (id) => {
     this.setState({departmentId: id})
     this.props.onToggleAddDepartment()
-  }
-
-  componentWillMount() {
-    this.props.onGetDepartments();
-  }
-
-  render() {
-    const ButtonGroup = Button.Group;
-    const {selectedRowKeys} = this.state;
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange
-    };
-
-    const columns = [
-
+  };
+  onGetTableColumns = () => {
+    return [
       {
         title: 'ID',
         dataIndex: 'id',
         key: 'id',
         render: (text, record) => {
           return <span className="gx-text-grey">{record.id}</span>
-
         },
       },
       {
@@ -65,7 +54,6 @@ class Departments extends Component {
         render: (text, record) => {
           return <span className="gx-email gx-d-inline-block gx-mr-2">{record.name}</span>
         },
-
       },
       {
         title: 'Description',
@@ -103,15 +91,19 @@ class Departments extends Component {
           </span>
         },
       },
-    ]
+    ];
+  };
+  render() {
+    const {selectedRowKeys} = this.state;
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange
+    };
     return (
-
       <Widget
         title={<div>
           <Button type="primary" className="h4 gx-text-capitalize gx-mb-0" onClick={this.onAddButtonClick}>
             Add New Department</Button>
-
-
           {this.props.showAddDepartment ?
             <AddNewDepartment showAddDepartment={this.props.showAddDepartment}
                               onToggleAddDepartment={this.props.onToggleAddDepartment}
@@ -119,12 +111,12 @@ class Departments extends Component {
                               departmentId= {this.state.departmentId}
                               onEditDepartment={this.props.onEditDepartment}
                               dept={this.props.dept}/> : null}
-        </div>} extra={
+        </div>}
+        extra={
         <div className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
           <Input
             placeholder="Enter keywords to search tickets"
-            prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
-          />
+            prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}/>
           <ButtonGroup>
             <Button type="default">
               <i className="icon icon-long-arrow-left"/>
@@ -134,15 +126,12 @@ class Departments extends Component {
             </Button>
           </ButtonGroup>
         </div>
-      }>
-        <Table rowSelection={rowSelection} columns={columns} dataSource={this.props.dept}
+        }>
+        <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={this.props.dept}
                className="gx-mb-4"/>
-
         <div className="gx-d-flex gx-flex-row">
         </div>
         <div>
-
-
         </div>
       </Widget>
     );
@@ -154,7 +143,6 @@ const mapStateToProps = ({departments}) => {
   return {dept, showAddDepartment};
 };
 
-
 export default connect(mapStateToProps, {
   onGetDepartments,
   onToggleAddDepartment,
@@ -162,3 +150,15 @@ export default connect(mapStateToProps, {
   onDeleteDepartment,
   onEditDepartment
 })(Departments);
+
+
+Departments.defaultProps = {
+  dept: [],
+  showAddDepartment: false
+};
+
+Departments.propTypes = {
+  dept: PropTypes.array,
+  showAddDepartment: PropTypes.bool
+};
+

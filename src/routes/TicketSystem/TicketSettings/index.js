@@ -7,6 +7,6 @@ const TicketSettings = () => {
       <p>Data will come soon, please wait</p>
     </div>
   )
-}
+};
 
-export default TicketSettings
+export default TicketSettings;

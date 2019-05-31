@@ -1,5 +1,8 @@
 import React, {Component} from "react"
 import {Button, Form, Input, Modal, Radio, Select} from "antd";
+import PropTypes from "prop-types";
+
+const {Option} = Select;
 
 class AddNewDepartment extends Component {
   constructor(props) {
@@ -9,49 +12,43 @@ class AddNewDepartment extends Component {
         name: "",
         desc: "",
         status: ""
-      }
+      };
     }
     else {
       const selectedDept = this.props.dept.find(department => department.id === this.props.departmentId)
-      console.log("selectedDepartmen", selectedDept)
+      console.log("selectedDepartment", selectedDept)
       const {name, desc, status} = selectedDept;
       this.state = {
         name: name,
         desc: desc,
         status: status
-      }
+      };
     }
-  }
-
+  };
   onDepartmentAdd = () => {
     if (this.props.departmentId === 0) {
       const newDepartment = {
         name: this.state.name,
         desc: this.state.desc,
         status: this.state.status,
-      }
+      };
       this.props.onAddDepartment(newDepartment)
     }
-
     else {
       const newDepartment = {
         name: this.state.name,
         desc: this.state.desc,
         status: this.state.status,
         id: this.props.departmentId
-      }
+      };
       this.props.onEditDepartment(newDepartment)
     }
-  }
-
+  };
   render() {
     const {name, desc, status} = this.state;
     const {showAddDepartment, onToggleAddDepartment} = this.props;
-    const {Option} = Select;
     return (
-
       <div>
-
         <Modal
           visible={showAddDepartment}
           title="Add New Department"
@@ -67,8 +64,7 @@ class AddNewDepartment extends Component {
             <Button key="cancel" onClick={onToggleAddDepartment}>
               Cancel
             </Button>,
-          ]}
-        >
+          ]}>
           <Form layout="vertical">
             <Form.Item label="Name">
               <Input type="text" value={name} onChange={(e) => {
@@ -80,7 +76,6 @@ class AddNewDepartment extends Component {
                 this.setState({desc: e.target.value})
               }}/>
             </Form.Item>
-
             <Form.Item label="Status">
               <Radio.Group value={status} onChange={(e) => {
                 this.setState({status: e.target.value})
@@ -96,4 +91,17 @@ class AddNewDepartment extends Component {
   }
 }
 
-export default AddNewDepartment
+export default AddNewDepartment;
+
+
+AddNewDepartment.defaultProps = {
+  dept: [],
+  departmentId: '',
+  showAddDepartment: true,
+};
+
+AddNewDepartment.propTypes = {
+  dept: PropTypes.array,
+  departmentId: PropTypes.number,
+  showAddDepartment: PropTypes.bool
+};

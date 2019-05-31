@@ -135,5 +135,5 @@ TicketDetail.defaultProps = {
 
 TicketDetail.propTypes = {
   onUpdateTickets: PropTypes.func,
-  onBackToList: PropTypes.func,
+  onBackToList: PropTypes.func
 };

@@ -7,6 +7,6 @@ const EmailTemplates = () => {
       <p>Data will come soon, please wait</p>
     </div>
   )
-}
+};
 
 export default EmailTemplates

@@ -1,44 +1,38 @@
 import React, {Component} from "react"
-import Widget from "../../../components/Widget/index";
-import {Button, Icon, Input, Table,Badge} from "antd";
+import {Badge, Button, Icon, Input, Table} from "antd";
 import {connect} from "react-redux";
+
 import {
-  onAddCannedResponse, onDeleteCannedResponse, onGetCannedResponses,
+  onAddCannedResponse,
+  onDeleteCannedResponse,
+  onGetCannedResponses,
   onToggleAddCanned
 } from "../../../appRedux/actions/CannedResponses";
 import AddNewResponses from "./AddNewResponses";
+import Widget from "../../../components/Widget/index";
+import PropTypes from "prop-types";
 
+const ButtonGroup = Button.Group;
 
 class CannedResponses extends Component {
   constructor(props) {
     super(props);
-    this.state= {
+    this.state = {
       selectedRowKeys: []
-    }
-  }
-
+    };
+  };
+  componentWillMount() {
+    this.props.onGetCannedResponses();
+  };
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
   };
-
-  componentWillMount() {
-    this.props.onGetCannedResponses();
-  }
-
-  render() {
-    const ButtonGroup = Button.Group;
-    const {selectedRowKeys} = this.state;
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange
-    };
-
-    const columns = [
-
+  onGetTableColumns = () => {
+    return [
       {
         title: 'ID',
         dataIndex: 'id',
-        key:'id',
+        key: 'id',
         render: (text, record) => {
           return <span className="gx-text-grey">{record.id}</span>
 
@@ -47,7 +41,7 @@ class CannedResponses extends Component {
       {
         title: 'Short Title',
         dataIndex: 'shortTitle',
-        key:'shortTitle',
+        key: 'shortTitle',
         render: (text, record) => {
           return <span className="gx-email gx-d-inline-block gx-mr-2">{record.short_title}</span>
         },
@@ -57,7 +51,7 @@ class CannedResponses extends Component {
       {
         title: 'Short Code',
         dataIndex: 'shortCode',
-        key:'shortCode',
+        key: 'shortCode',
         render: (text, record) => {
           return <span className="gx-email gx-d-inline-block gx-mr-2">{record.short_code}</span>
         },
@@ -66,7 +60,7 @@ class CannedResponses extends Component {
       {
         title: 'Message',
         dataIndex: 'message',
-        key:'message',
+        key: 'message',
         render: (text, record) => {
           return <span className="gx-email gx-d-inline-block gx-mr-2">{record.message}</span>
         },
@@ -74,7 +68,7 @@ class CannedResponses extends Component {
       {
         title: 'Created By',
         dataIndex: 'createdBy',
-        key:'createdBy',
+        key: 'createdBy',
         render: (text, record) => {
           return <span className="gx-email gx-d-inline-block gx-mr-2">{record.user_id}</span>
         },
@@ -82,7 +76,7 @@ class CannedResponses extends Component {
       {
         title: 'Status',
         dataIndex: 'status_id',
-        key:'Status',
+        key: 'Status',
         render: (text, record) => {
           return <Badge>
             {record.status}
@@ -92,28 +86,31 @@ class CannedResponses extends Component {
       {
         title: '',
         dataIndex: '',
-        key:'empty',
+        key: 'empty',
         render: (text, record) => {
           return <span> <i className="icon icon-edit gx-mr-3"/>
-            <i className="icon icon-trash" onClick = {() => this.props.onDeleteCannedResponse(record.id)}/>
+            <i className="icon icon-trash" onClick={() => this.props.onDeleteCannedResponse(record.id)}/>
           </span>
         },
       },
-    ]
-
-    console.log("in Show Responses",this.props.responses)
+    ];
+  };
+  render() {
+    const {selectedRowKeys} = this.state;
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange
+    };
+    console.log("in Show Responses", this.props.responses);
     return (
-
       <Widget
         title={<div>
-          <Button type="primary" className="h4 gx-text-capitalize gx-mb-0" onClick = {this.props.onToggleAddCanned}>
+          <Button type="primary" className="h4 gx-text-capitalize gx-mb-0" onClick={this.props.onToggleAddCanned}>
             Add New Response</Button>
-
-
           {this.props.showAddCanned ?
-            <AddNewResponses showAddCanned ={this.props.showAddCanned}
-                           onToggleAddCanned={this.props.onToggleAddCanned}
-                           onAddCannedResponse={this.props.onAddCannedResponse}/> : null}
+            <AddNewResponses showAddCanned={this.props.showAddCanned}
+                             onToggleAddCanned={this.props.onToggleAddCanned}
+                             onAddCannedResponse={this.props.onAddCannedResponse}/> : null}
         </div>} extra={
         <div className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
           <Input
@@ -121,23 +118,20 @@ class CannedResponses extends Component {
             prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
           />
           <ButtonGroup>
-            <Button type="default" >
+            <Button type="default">
               <i className="icon icon-long-arrow-left"/>
             </Button>
-            <Button type="default" >
+            <Button type="default">
               <i className="icon icon-long-arrow-right"/>
             </Button>
           </ButtonGroup>
         </div>
-      } >
-        <Table  rowSelection={rowSelection} columns={columns} dataSource={this.props.responses}
-                className="gx-mb-4"/>
-
+      }>
+        <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={this.props.responses}
+               className="gx-mb-4"/>
         <div className="gx-d-flex gx-flex-row">
         </div>
         <div>
-
-
         </div>
       </Widget>
     );
@@ -147,7 +141,7 @@ class CannedResponses extends Component {
 const mapStateToProps = ({cannedResponses}) => {
   const {responses, showAddCanned} = cannedResponses;
   return {responses, showAddCanned};
-}
+};
 
 
 export default connect(mapStateToProps, {
@@ -156,3 +150,13 @@ export default connect(mapStateToProps, {
   onAddCannedResponse,
   onDeleteCannedResponse
 })(CannedResponses);
+
+CannedResponses.defaultProps = {
+  responses: [],
+  showAddCanned: false
+};
+
+CannedResponses.propTypes = {
+  responses: PropTypes.array,
+  showAddCanned: PropTypes.bool
+};
