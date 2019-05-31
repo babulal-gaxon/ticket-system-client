@@ -1,19 +1,17 @@
 import React, {Component} from "react"
 import {Dropdown, Menu} from "antd";
-
+import PropTypes from "prop-types";
 
 class DropdownButton extends Component {
   state= {
     items : ""
-  }
-
+  };
   selectHeaderOptionMenu = (menu) => {
     switch (menu) {
       case '1': {
         this.setState({items: menu})
         break;
       }
-
       case '2': {
         this.setState({items: menu})
         break;
@@ -29,31 +27,33 @@ class DropdownButton extends Component {
       default:
         return null;
     }
-  }
+  };
   render() {
-
     const menu = (
       <Menu >
         {this.props.options.map(option => {
           return (
-            <Menu.Item key={option.id} onClick={() => this.selectHeaderOptionMenu(option.value)
-            }>
+            <Menu.Item key={option.id} onClick={() => this.selectHeaderOptionMenu(option.value)}>
               {option.value}
             </Menu.Item>
           )
-
         })}
       </Menu>
     );
-
     return (
-
-      <Dropdown overlay={menu} trigger={['click']}>
+      <Dropdown overlay={menu} trigger={['click']} >
         {this.props.children}
       </Dropdown>
-
     )
   }
 }
 
 export default DropdownButton
+
+DropdownButton.defaultProps = {
+  options: []
+};
+
+DropdownButton.propTypes = {
+  option: PropTypes.array
+};

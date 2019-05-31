@@ -32,8 +32,8 @@ const Dashboard = () => {
                       <stop offset="95%" stopColor="#FE9E15" stopOpacity={0.9}/>
                     </linearGradient>
                   </defs>
-                  <Area dataKey='price' strokeWidth={0} stackId="2" stroke='#4D95F3' fill="url(#color3)"
-                        fillOpacity={1}/>
+                  <Area dataKey='price' strokeWidth={0} stackId="2" stroke='#4D95F3'
+                        fill="url(#color3)" fillOpacity={1}/>
                 </AreaChart>
               </ResponsiveContainer>
             </ChartCard>
@@ -71,8 +71,8 @@ const Dashboard = () => {
                       <stop offset="95%" stopColor="#FEEADA" stopOpacity={0.8}/>
                     </linearGradient>
                   </defs>
-                  <Area dataKey='price' strokeWidth={0} stackId="2" stroke='#FEEADA' fill="url(#color5)"
-                        fillOpacity={1}/>
+                  <Area dataKey='price' strokeWidth={0} stackId="2" stroke='#FEEADA'
+                        fill="url(#color5)" fillOpacity={1}/>
                 </AreaChart>
               </ResponsiveContainer>
             </ChartCard>
@@ -91,8 +91,7 @@ const Dashboard = () => {
                     </linearGradient>
                   </defs>
                   <Area dataKey='price' type='monotone' strokeWidth={0} stackId="2" stroke='#4D95F3'
-                        fill="url(#color4)"
-                        fillOpacity={1}/>
+                        fill="url(#color4)" fillOpacity={1}/>
                 </AreaChart>
               </ResponsiveContainer>
             </ChartCard>
@@ -113,8 +112,8 @@ const Dashboard = () => {
                       <stop offset="95%" stopColor="#FE9E15" stopOpacity={0.9}/>
                     </linearGradient>
                   </defs>
-                  <Area dataKey='price' strokeWidth={0} stackId="2" stroke='#4D95F3' fill="url(#color3)"
-                        fillOpacity={1}/>
+                  <Area dataKey='price' strokeWidth={0} stackId="2" stroke='#4D95F3'
+                        fill="url(#color3)" fillOpacity={1}/>
                 </AreaChart>
               </ResponsiveContainer>
             </TicketData>
@@ -133,8 +132,7 @@ const Dashboard = () => {
                     </linearGradient>
                   </defs>
                   <Area dataKey='price' type='monotone' strokeWidth={0} stackId="2" stroke='#4D95F3'
-                        fill="url(#color4)"
-                        fillOpacity={1}/>
+                        fill="url(#color4)" fillOpacity={1}/>
                 </AreaChart>
               </ResponsiveContainer>
             </TicketData>
@@ -152,8 +150,8 @@ const Dashboard = () => {
                       <stop offset="95%" stopColor="#FEEADA" stopOpacity={0.8}/>
                     </linearGradient>
                   </defs>
-                  <Area dataKey='price' strokeWidth={0} stackId="2" stroke='#FEEADA' fill="url(#color5)"
-                        fillOpacity={1}/>
+                  <Area dataKey='price' strokeWidth={0} stackId="2" stroke='#FEEADA'
+                        fill="url(#color5)" fillOpacity={1}/>
                 </AreaChart>
               </ResponsiveContainer>
             </TicketData>
@@ -172,8 +170,7 @@ const Dashboard = () => {
                     </linearGradient>
                   </defs>
                   <Area dataKey='price' type='monotone' strokeWidth={0} stackId="2" stroke='#4D95F3'
-                        fill="url(#color4)"
-                        fillOpacity={1}/>
+                        fill="url(#color4)" fillOpacity={1}/>
                 </AreaChart>
               </ResponsiveContainer>
             </TicketData>

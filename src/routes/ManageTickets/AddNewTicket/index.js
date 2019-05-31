@@ -1,5 +1,6 @@
 import React, {Component} from "react"
 import {Button, Form, Input, Modal, Radio, Select} from "antd";
+import PropTypes from "prop-types";
 
 class AddNewTicket extends Component {
   constructor(props) {
@@ -7,20 +8,17 @@ class AddNewTicket extends Component {
     this.state = {
       title: "",
       message: "",
-      // product: "",
+      product: "",
       priority_id: "",
       user_id: ""
-    }
-  }
-
+    };
+  };
   render() {
     const {title, message, product, priority_id, user_id} = this.state;
     const {showAddTicket, onToggleAddTicket, onAddTickets, priorities, staff} = this.props;
     const {Option} = Select;
     return (
-
       <div>
-
         <Modal
           visible={showAddTicket}
           title="Add New Ticket"
@@ -34,8 +32,7 @@ class AddNewTicket extends Component {
             <Button key="cancel" onClick={onToggleAddTicket}>
               Cancel
             </Button>,
-          ]}
-        >
+          ]}>
           <Form layout="vertical">
             <Form.Item label="Subject">
               <Input type="text" value={title} onChange={(e) => {
@@ -47,19 +44,16 @@ class AddNewTicket extends Component {
                 this.setState({message: e.target.value})
               }}/>
             </Form.Item>
-
-            {/*<Form.Item label="Select Product">*/}
-              {/*<Select defaultValue={product} onChange={(value) => {*/}
-                {/*this.setState({product: value})*/}
-              {/*}}>*/}
-                {/*<Option value="demo1">Demo 1</Option>*/}
-                {/*<Option value="demo2">Demo 2</Option>*/}
-                {/*<Option value="demo3">Demo 3</Option>*/}
-                {/*<Option value="demo4">Demo 4</Option>*/}
-              {/*</Select>*/}
-
-            {/*</Form.Item>*/}
-
+            <Form.Item label="Select Product">
+              <Select defaultValue={product} onChange={(value) => {
+                this.setState({product: value})
+              }}>
+                <Option value="demo1">Demo 1</Option>
+                <Option value="demo2">Demo 2</Option>
+                <Option value="demo3">Demo 3</Option>
+                <Option value="demo4">Demo 4</Option>
+              </Select>
+            </Form.Item>
             <Form.Item label="Set Priority">
               <Radio.Group value={priority_id} onChange={(e) => {
                 this.setState({priority_id: e.target.value})
@@ -69,17 +63,13 @@ class AddNewTicket extends Component {
                 )}
               </Radio.Group>
             </Form.Item>
-
             <Form.Item label="Assign Ticket To">
               <Select value={user_id} style={{ width: 250}} onChange={(value) => {
                 this.setState({user_id: value})
               }}>
                 {staff.map(member => {
-              return    <Option value={member.id} key ={member.id}>{member.staff_name}</Option>
+              return <Option value={member.id} key ={member.id}>{member.staff_name}</Option>
                 })}
-
-
-
               </Select>
             </Form.Item>
           </Form>
@@ -89,9 +79,19 @@ class AddNewTicket extends Component {
   }
 }
 
+export default AddNewTicket
+
+
 AddNewTicket.defaultProps = {
   staff: [],
-  priorities: []
+  priorities: [],
+  showAddTicket: true
 };
 
-export default AddNewTicket
+AddNewTicket.propTypes = {
+  staff: PropTypes.array,
+  priorities: PropTypes.array,
+  onToggleAddTicket: PropTypes.func,
+  onAddTickets: PropTypes.func,
+  showAddTicket: PropTypes.bool
+};

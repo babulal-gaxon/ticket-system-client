@@ -20,8 +20,7 @@ class SupportStaff extends Component {
           <div className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1">last update 2 hours ago</div>
         </div>}
               styleName="gx-card-ticketlist"
-              extra={<span><i
-                className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
+              extra={<span><i className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
             </span>}>
         {this.props.staff.map(employee => {
           return (

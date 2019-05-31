@@ -1,7 +1,8 @@
 import React, {Component} from "react"
-import CustomScrollbars from "../../../util/CustomScrollbars";
 import {Avatar, Badge, Col, Input, Row} from "antd";
+import PropTypes from "prop-types";
 
+import CustomScrollbars from "../../../util/CustomScrollbars";
 
 class TicketDetail extends Component {
   constructor(props) {
@@ -10,10 +11,8 @@ class TicketDetail extends Component {
       ticket: this.props.ticket,
       editTitle: false,
       title: "",
-
     }
-  }
-
+  };
   onEditTitle = () => {
     if (this.state.editTitle) {
       const ticket = this.state.ticket;
@@ -24,15 +23,13 @@ class TicketDetail extends Component {
       editTitle: !this.state.editTitle
     });
   };
-
-
   render() {
     const {ticket, editTitle} = this.state;
     return (
       <div className="gx-module-detail gx-module-list">
         <CustomScrollbars className="gx-todo-detail-content-scroll">
           <div className="gx-module-detail-item gx-module-detail-header">
-            <i className="gx-icon-btn icon icon-arrow-left" onClick ={this.props.onBackToList}/>
+            <i className="gx-icon-btn icon icon-arrow-left" onClick={this.props.onBackToList}/>
             <Row>
               <Col xs={24} sm={12} md={17} lg={12} xl={17}>
                 <div className="gx-flex-row">
@@ -44,7 +41,6 @@ class TicketDetail extends Component {
                   </div>
                 </div>
               </Col>
-
               <Col xs={24} sm={12} md={7} lg={12} xl={7}>
                 <div className="gx-flex-row gx-justify-content-between">
                   <i className="gx-icon-btn icon icon-trash"/>
@@ -61,15 +57,12 @@ class TicketDetail extends Component {
               </Col>
             </Row>
           </div>
-
           <div className="gx-module-detail-item">
-
             <div className="gx-mb-md-4 gx-mb-2">
               <Badge style={ticket.priority_color_code}>
                 {ticket.priority_name}
               </Badge>
             </div>
-
             <div className="gx-form-group gx-flex-row gx-align-items-center gx-mb-0 gx-flex-nowrap">
               <div>
                 <span
@@ -88,8 +81,7 @@ class TicketDetail extends Component {
                       onChange={(event) => this.setState({title: event.target.value})}
                       defaultValue={ticket.title}/>
                   </div>
-                  <span className="gx-d-block gx-size-40 gx-text-center gx-pointer"
-                        onClick={this.onEditTitle}>
+                  <span className="gx-d-block gx-size-40 gx-text-center gx-pointer" onClick={this.onEditTitle}>
                     <i className="gx-icon-btn icon icon-edit"/>
                   </span>
                 </div> :
@@ -97,14 +89,11 @@ class TicketDetail extends Component {
                   <div className="gx-task-title gx-col">
                     {ticket.title}
                   </div>
-                  <span className="gx-d-block gx-size-40 gx-text-center gx-pointer"
-                        onClick={this.onEditTitle}>
+                  <span className="gx-d-block gx-size-40 gx-text-center gx-pointer" onClick={this.onEditTitle}>
                     <i className="gx-icon-btn icon icon-edit"/>
                   </span>
-
                 </div>}
             </div>
-
             <div className="gx-module-detail-item gx-mb-md-4 gx-mb-2">
               <div className="gx-flex-row gx-align-items-center gx-justify-content-between gx-flex-1 gx-flex-nowrap">
                 <div className="gx-task-input gx-col">
@@ -138,3 +127,13 @@ class TicketDetail extends Component {
 }
 
 export default TicketDetail
+
+TicketDetail.defaultProps = {
+  onUpdateTickets: "",
+  onBackToList: ""
+};
+
+TicketDetail.propTypes = {
+  onUpdateTickets: PropTypes.func,
+  onBackToList: PropTypes.func,
+};
