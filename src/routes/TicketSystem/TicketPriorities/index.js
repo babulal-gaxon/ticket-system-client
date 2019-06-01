@@ -22,11 +22,18 @@ class TicketPriorities extends Component {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      priorityId: 0
+      priorityId: 0,
+      filterText: ""
     };
   };
   componentWillMount() {
     this.props.onGetTicketPriorities();
+  };
+  onFilterTextChange = (e) => {
+    this.setState({filterText:e.target.value});
+  };
+  onFilterData = () => {
+    return this.props.priorities.filter(priority => priority.name.indexOf(this.state.filterText) !== -1);
   };
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
@@ -107,6 +114,7 @@ class TicketPriorities extends Component {
     ];
   };
   render() {
+    const priorities = this.onFilterData();
     const {selectedRowKeys} = this.state;
     const rowSelection = {
       selectedRowKeys,
@@ -126,7 +134,8 @@ class TicketPriorities extends Component {
               <Input
                 placeholder="Enter keywords to search tickets"
                 prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
-              />
+                value ={this.state.filterText}
+                onChange={this.onFilterTextChange}/>
               <ButtonGroup>
                 <Button type="default">
                   <i className="icon icon-long-arrow-left"/>
@@ -138,7 +147,7 @@ class TicketPriorities extends Component {
             </div>
           }>
           {Permissions.canPriorityView() ?
-            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={this.props.priorities}
+            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={priorities}
                    className="gx-mb-4"/> : null}
           <div>
           </div>
@@ -149,7 +158,7 @@ class TicketPriorities extends Component {
                           onAddTicketPriority={this.props.onAddTicketPriority}
                           priorityId={this.state.priorityId}
                           onEditTicketPriority={this.props.onEditTicketPriority}
-                          priorities={this.props.priorities}/> : null}
+                          priorities={priorities}/> : null}
       </Auxiliary>
     );
   }
