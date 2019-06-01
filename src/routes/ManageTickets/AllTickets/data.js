@@ -4,24 +4,23 @@ import React from "react";
 import DropdownButton from "./DropdownButton";
 
 const buttonWidth = 100;
-function ColorLuminance(hex, lum) {
+function lighten(color, luminosity) {
 
   // validate hex string
-  hex = String(hex).replace(/[^0-9a-f]/gi, '');
-  if (hex.length < 6) {
-    hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  color = new String(color).replace(/[^0-9a-f]/gi, '');
+  if (color.length < 6) {
+    color = color[0]+ color[0]+ color[1]+ color[1]+ color[2]+ color[2];
   }
-  lum = lum || 0;
+  luminosity = luminosity || 0;
 
   // convert to decimal and change luminosity
-  var rgb = "#", c, i;
+  var newColor = "#", c, i, black = 0, white = 255;
   for (i = 0; i < 3; i++) {
-    c = parseInt(hex.substr(i*2,2), 16);
-    c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-    rgb += ("00"+c).substr(c.length);
+    c = parseInt(color.substr(i*2,2), 16);
+    c = Math.round(Math.min(Math.max(black, c + (luminosity * white)), white)).toString(16);
+    newColor += ("00"+c).substr(c.length);
   }
-
-  return rgb;
+  return newColor;
 }
 
 export const ticketColumn = [
@@ -81,7 +80,7 @@ export const ticketColumn = [
     title: 'Status',
     dataIndex: 'status_id',
     render: (text, record) => {
-      return <span className="gx-badge gx-border gx-text-uppercase" style={{backgroundColor: ColorLuminance(record.status_color_code, 2.5), borderColor: record.status_color_code, color: record.status_color_code}}>
+      return <span className="gx-badge gx-border gx-text-uppercase" style={{backgroundColor: lighten(record.status_color_code, 0.66), borderColor: record.status_color_code, color: record.status_color_code}}>
         {record.status_name}
       </span>
     },

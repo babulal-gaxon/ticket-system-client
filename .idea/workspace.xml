@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="72ebf97e-8970-4775-8ec5-0b0606640859" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/containers/SignIn.js" afterPath="$PROJECT_DIR$/src/containers/SignIn.js" />
       <change beforePath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/data.js" afterPath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/data.js" />
-      <change beforePath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js" afterPath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js" />
-      <change beforePath="$PROJECT_DIR$/src/styles/global/colors-class.less" afterPath="$PROJECT_DIR$/src/styles/global/colors-class.less" />
-      <change beforePath="$PROJECT_DIR$/src/styles/layout/ant-layout.less" afterPath="$PROJECT_DIR$/src/styles/layout/ant-layout.less" />
-      <change beforePath="$PROJECT_DIR$/src/styles/ui/button.less" afterPath="$PROJECT_DIR$/src/styles/ui/button.less" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -36,8 +31,8 @@
       <file leaf-file-name="data.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/data.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="83" column="137" lean-forward="false" selection-start-line="83" selection-start-column="137" selection-end-line="83" selection-end-column="137" />
+            <state relative-caret-position="221">
+              <caret line="82" column="131" lean-forward="false" selection-start-line="82" selection-start-column="131" selection-end-line="82" selection-end-column="131" />
               <folding />
             </state>
           </provider>
@@ -137,8 +132,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>prize</find>
-      <find>ButtonGroup</find>
       <find>currentTicket</find>
       <find>icon-menu-fold</find>
       <find>layout-sider-header</find>
@@ -167,6 +160,8 @@
       <find>border-radius</find>
       <find>login</find>
       <find>border-</find>
+      <find>ColorLuminance</find>
+      <find>lighten</find>
     </findStrings>
     <replaceStrings>
       <replace>price</replace>
@@ -589,7 +584,7 @@
       <workItem from="1559191078874" duration="16942000" />
       <workItem from="1559211285480" duration="11784000" />
       <workItem from="1559277438647" duration="9142000" />
-      <workItem from="1559364030366" duration="23214000" />
+      <workItem from="1559364030366" duration="24182000" />
     </task>
     <task id="LOCAL-00001" summary="add api">
       <created>1558429986835</created>
@@ -703,11 +698,18 @@
       <option name="project" value="LOCAL" />
       <updated>1559380955215</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="working on Filter Tickets">
+      <created>1559395714794</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1559395714794</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="311061000" />
+    <option name="totallyTimeSpent" value="312029000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1166,8 +1168,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/data.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="83" column="137" lean-forward="false" selection-start-line="83" selection-start-column="137" selection-end-line="83" selection-end-column="137" />
+        <state relative-caret-position="221">
+          <caret line="82" column="131" lean-forward="false" selection-start-line="82" selection-start-column="131" selection-end-line="82" selection-end-column="131" />
           <folding />
         </state>
       </provider>
