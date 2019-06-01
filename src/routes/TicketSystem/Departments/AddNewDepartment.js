@@ -22,7 +22,6 @@ class AddNewDepartment extends Component {
       };
     }
   };
-
   onDepartmentAdd = () => {
     if (this.props.departmentId === 0) {
       const newDepartment = {
@@ -41,7 +40,6 @@ class AddNewDepartment extends Component {
       this.props.onEditDepartment(newDepartment)
     }
   };
-
   render() {
     const {name, desc, status} = this.state;
     const {showAddDepartment, onToggleAddDepartment} = this.props;
@@ -52,13 +50,9 @@ class AddNewDepartment extends Component {
           title="Add New Department"
           onCancel={onToggleAddDepartment}
           footer={[
-            this.props.departmentId === 0 ?
-              <Button key="submit" type="primary" onClick={this.onDepartmentAdd}>
-                Add
-              </Button> :
-              <Button key="submit" type="primary" onClick={this.onDepartmentAdd}>
-                Edit
-              </Button>,
+            <Button key="submit" type="primary" onClick={this.onDepartmentAdd}>
+              {this.props.departmentId === 0 ? "Add" : "Edit"}
+            </Button>,
             <Button key="cancel" onClick={onToggleAddDepartment}>
               Cancel
             </Button>,
@@ -101,5 +95,8 @@ AddNewDepartment.defaultProps = {
 AddNewDepartment.propTypes = {
   dept: PropTypes.array,
   departmentId: PropTypes.number,
-  showAddDepartment: PropTypes.bool
+  showAddDepartment: PropTypes.bool,
+  onToggleAddDepartment: PropTypes.func,
+  onAddDepartment: PropTypes.func,
+  onEditDepartment: PropTypes.func
 };

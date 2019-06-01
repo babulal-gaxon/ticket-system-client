@@ -13,6 +13,7 @@ import {
 import AddNewStatus from "./AddNewStatus";
 import Widget from "../../../components/Widget/index";
 import Permissions from "../../../util/Permissions";
+import Auxiliary from "../../../util/Auxiliary";
 
 const ButtonGroup = Button.Group;
 
@@ -104,9 +105,9 @@ class TicketStatuses extends Component {
         key: 'empty',
         render: (text, record) => {
           return <span> {Permissions.canStatusEdit() ? <i className="icon icon-edit gx-mr-3"
-                                                         onClick={() => this.onEditStatus(record.id)}/> : null}
+                                                          onClick={() => this.onEditStatus(record.id)}/> : null}
             {Permissions.canStatusDelete() ? <i className="icon icon-trash"
-                                              onClick={() => this.props.onDeleteTicketStatus(record.id)}/> : null}
+                                                onClick={() => this.props.onDeleteTicketStatus(record.id)}/> : null}
           </span>
         },
       },
@@ -120,42 +121,44 @@ class TicketStatuses extends Component {
     };
     console.log("in Show TicketStatuses", this.props.statuses);
     return (
-      <Widget
-        title={<div>
-          {Permissions.canStatusAdd() ?
-          <Button type="primary" className="h4 gx-text-capitalize gx-mb-0" onClick={this.onAddButtonClick}>
-            Add New Status</Button> : null}
-          {this.props.showAddStatus ?
-            <AddNewStatus showAddStatus={this.props.showAddStatus}
-                          onToggleAddStatus={this.props.onToggleAddStatus}
-                          onAddTicketStatus={this.props.onAddTicketStatus}
-                          statusId={this.state.statusId}
-                          onEditTicketStatus={this.props.onEditTicketStatus}
-                          statuses={this.props.statuses}/> : null}
-        </div>} extra={
-        <div className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
-          <Input
-            placeholder="Enter keywords to search tickets"
-            prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
-          />
-          <ButtonGroup>
-            <Button type="default">
-              <i className="icon icon-long-arrow-left"/>
-            </Button>
-            <Button type="default">
-              <i className="icon icon-long-arrow-right"/>
-            </Button>
-          </ButtonGroup>
-        </div>
-      }>
-        {Permissions.canStatusView() ?
-        <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={this.props.statuses}
-               className="gx-mb-4"/> : null }
-        <div className="gx-d-flex gx-flex-row">
-        </div>
-        <div>
-        </div>
-      </Widget>
+      <Auxiliary>
+        <Widget
+          title={
+            Permissions.canStatusAdd() ?
+              <Button type="primary" className="h4 gx-text-capitalize gx-mb-0" onClick={this.onAddButtonClick}>
+                Add New Status</Button> : null}
+          extra={
+            <div className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
+              <Input
+                placeholder="Enter keywords to search tickets"
+                prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              />
+              <ButtonGroup>
+                <Button type="default">
+                  <i className="icon icon-long-arrow-left"/>
+                </Button>
+                <Button type="default">
+                  <i className="icon icon-long-arrow-right"/>
+                </Button>
+              </ButtonGroup>
+            </div>
+          }>
+          {Permissions.canStatusView() ?
+            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={this.props.statuses}
+                   className="gx-mb-4"/> : null}
+          <div className="gx-d-flex gx-flex-row">
+          </div>
+          <div>
+          </div>
+        </Widget>
+        {this.props.showAddStatus ?
+          <AddNewStatus showAddStatus={this.props.showAddStatus}
+                        onToggleAddStatus={this.props.onToggleAddStatus}
+                        onAddTicketStatus={this.props.onAddTicketStatus}
+                        statusId={this.state.statusId}
+                        onEditTicketStatus={this.props.onEditTicketStatus}
+                        statuses={this.props.statuses}/> : null}
+      </Auxiliary>
     );
   }
 }

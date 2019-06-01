@@ -16,10 +16,11 @@ class AddNewStatus extends Component {
         displayColorPicker: false,
         color_code: "",
       };
-    } else {
-      const selectedStatus = this.props.statuses.find(status => status.id === this.props.statusId)
-      console.log("selectedstatus", selectedStatus)
-      const {name, desc, status, is_default, color_code} = selectedStatus
+    }
+    else {
+      const selectedStatus = this.props.statuses.find(status => status.id === this.props.statusId);
+      console.log("selectedstatus", selectedStatus);
+      const {name, desc, status, is_default, color_code} = selectedStatus;
       this.state = {
         name: name,
         desc: desc,
@@ -31,7 +32,6 @@ class AddNewStatus extends Component {
       };
     }
   };
-
   handleColorClick = () => {
     this.setState({displayColorPicker: !this.state.displayColorPicker});
   };
@@ -71,7 +71,6 @@ class AddNewStatus extends Component {
       this.setState({is_default: 0})
     }
   };
-
   render() {
     const {name, color_code, desc, status} = this.state;
     const {showAddStatus, onToggleAddStatus} = this.props;
@@ -93,13 +92,9 @@ class AddNewStatus extends Component {
           title="Add New Ticket Status"
           onCancel={onToggleAddStatus}
           footer={[
-            this.props.statusId === 0 ?
-              <Button key="submit" type="primary" onClick={this.onStatusAdd}>
-                Add
-              </Button> :
-              <Button key="submit" type="primary" onClick={this.onStatusAdd}>
-                Edit
-              </Button>,
+            <Button key="submit" type="primary" onClick={this.onStatusAdd}>
+              {this.props.statusId === 0 ? "Add" : "Edit"}
+            </Button>,
             <Button key="cancel" onClick={onToggleAddStatus}>
               Cancel
             </Button>,
@@ -156,5 +151,8 @@ AddNewStatus.defaultProps = {
 AddNewStatus.propTypes = {
   statuses: PropTypes.array,
   statusId: PropTypes.number,
-  showAddStatus: PropTypes.bool
+  showAddStatus: PropTypes.bool,
+  onToggleAddStatus: PropTypes.func,
+  onAddTicketStatus: PropTypes.func,
+  onEditTicketStatus: PropTypes.func
 };

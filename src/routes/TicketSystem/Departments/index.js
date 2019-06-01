@@ -15,7 +15,6 @@ import AddNewDepartment from "./AddNewDepartment";
 import Auxiliary from "../../../util/Auxiliary";
 import Permissions from "../../../util/Permissions";
 
-
 const ButtonGroup = Button.Group;
 
 class Departments extends Component {
@@ -26,11 +25,9 @@ class Departments extends Component {
       departmentId: 0
     }
   };
-
   componentWillMount() {
     this.props.onGetDepartments();
   };
-
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
   };
@@ -100,7 +97,6 @@ class Departments extends Component {
       },
     ];
   };
-
   render() {
     const {selectedRowKeys} = this.state;
     const rowSelection = {

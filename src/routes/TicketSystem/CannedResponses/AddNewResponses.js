@@ -6,17 +6,49 @@ import PropTypes from "prop-types";
 class AddNewResponses extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      short_title: "",
-      short_code: "",
-      message: "",
-      status: ""
-    };
+    if(this.props.responseId === 0 ) {
+      this.state = {
+        short_title: "",
+        short_code: "",
+        message: "",
+        status: ""
+      };
+    }
+    else {
+        const selectedResponse = this.props.responses.find(response => response.id === this.props.responseId);
+        console.log("SelectedResponse", selectedResponse);
+        const {short_title, short_code, message, status} = selectedResponse;
+      this.state = {
+        short_title: short_title,
+        short_code: short_code,
+        message: message,
+        status: status
+      };
+    }
   };
-
+  onResponseAdd = () => {
+    if (this.props.responseId === 0) {
+      const newResponse = {
+        short_title: this.state.short_title,
+        short_code: this.state.short_code,
+        message: this.state.message,
+        status: this.state.status
+      };
+      this.props.onAddCannedResponse(newResponse);
+    } else {
+      const newResponse = {
+        short_title: this.state.short_title,
+        short_code: this.state.short_code,
+        message: this.state.message,
+        status: this.state.status,
+        id: this.props.responseId
+      };
+      this.props.onEditCannedResponse(newResponse);
+    }
+  };
   render() {
     const {short_title, short_code, message, status} = this.state;
-    const {showAddCanned, onToggleAddCanned, onAddCannedResponse} = this.props;
+    const {showAddCanned, onToggleAddCanned} = this.props;
     return (
       <div>
         <Modal
@@ -24,10 +56,8 @@ class AddNewResponses extends Component {
           title="Add New Response"
           onCancel={onToggleAddCanned}
           footer={[
-            <Button key="submit" type="primary" onClick={() => {
-              onAddCannedResponse(this.state)
-            }}>
-              Add
+            <Button key="submit" type="primary" onClick={this.onResponseAdd}>
+              {this.props.responseId === 0 ? "Add" : "Edit"}
             </Button>,
             <Button key="cancel" onClick={onToggleAddCanned}>
               Cancel
@@ -68,9 +98,16 @@ export default AddNewResponses;
 
 
 AddNewResponses.defaultProps = {
-  showAddCanned: true
+  showAddCanned: true,
+  responseId: 0,
+  responses: []
 };
 
 AddNewResponses.propTypes = {
-  showAddCanned: PropTypes.bool
+  showAddCanned: PropTypes.bool,
+  responseId: PropTypes.number,
+  responses: PropTypes.array,
+  onToggleAddCanned: PropTypes.func,
+  onAddCannedResponse: PropTypes.func,
+  onEditCannedResponse: PropTypes.func
 };

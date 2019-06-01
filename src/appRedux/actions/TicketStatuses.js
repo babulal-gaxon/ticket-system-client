@@ -72,13 +72,13 @@ export const onDeleteTicketStatus = (statusId) => {
 
 
 export const onEditTicketStatus = (status) => {
-  console.log("onEditTicketStatus", status)
+  console.log("onEditTicketStatus", status);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/status/${status.id}`, status).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data)
+        console.log(" sending data", data.data);
         dispatch({type: EDIT_TICKET_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
       } else {

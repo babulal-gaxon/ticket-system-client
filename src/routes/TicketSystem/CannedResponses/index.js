@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {
   onAddCannedResponse,
   onDeleteCannedResponse,
+  onEditCannedResponse,
   onGetCannedResponses,
   onToggleAddCanned
 } from "../../../appRedux/actions/CannedResponses";
@@ -12,6 +13,7 @@ import AddNewResponses from "./AddNewResponses";
 import Widget from "../../../components/Widget/index";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
+import Auxiliary from "../../../util/Auxiliary";
 
 const ButtonGroup = Button.Group;
 
@@ -19,7 +21,9 @@ class CannedResponses extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRowKeys: []
+      selectedRowKeys: [],
+      responseId: 0,
+      filterText: ""
     };
   };
   componentWillMount() {
@@ -28,6 +32,18 @@ class CannedResponses extends Component {
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
   };
+  onFilterTextChange = (e) => {
+    this.setState({filterText: e.target.value})
+  };
+  onAddButtonClick = () => {
+    this.setState({responseId: 0});
+    this.props.onToggleAddCanned();
+  };
+  onEditResponse = (id) => {
+    this.setState({responseId: id});
+    this.props.onToggleAddCanned();
+  };
+
   onGetTableColumns = () => {
     return [
       {
@@ -89,7 +105,8 @@ class CannedResponses extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <span> {Permissions.canResponseEdit() ? <i className="icon icon-edit gx-mr-3"/> : null }
+          return <span> {Permissions.canResponseEdit() ? <i className="icon icon-edit gx-mr-3"
+                                                            onClick={() => this.onEditResponse(record.id)}/> : null}
             {Permissions.canResponseDelete() ? <i className="icon icon-trash"
                                                   onClick={() => this.props.onDeleteCannedResponse(record.id)}/> : null}
           </span>
@@ -98,6 +115,7 @@ class CannedResponses extends Component {
     ];
   };
   render() {
+
     const {selectedRowKeys} = this.state;
     const rowSelection = {
       selectedRowKeys,
@@ -105,39 +123,48 @@ class CannedResponses extends Component {
     };
     console.log("in Show Responses", this.props.responses);
     return (
-      <Widget
-        title={<div>
-          {Permissions.canResponseAdd() ? <Button type="primary" className="h4 gx-text-capitalize gx-mb-0"
-                                                onClick={this.props.onToggleAddCanned}>
-            Add New Response</Button> : null}
-          {this.props.showAddCanned ?
-            <AddNewResponses showAddCanned={this.props.showAddCanned}
-                             onToggleAddCanned={this.props.onToggleAddCanned}
-                             onAddCannedResponse={this.props.onAddCannedResponse}/> : null}
-        </div>} extra={
-        <div className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
-          <Input
-            placeholder="Enter keywords to search tickets"
-            prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
-          />
-          <ButtonGroup>
-            <Button type="default">
-              <i className="icon icon-long-arrow-left"/>
-            </Button>
-            <Button type="default">
-              <i className="icon icon-long-arrow-right"/>
-            </Button>
-          </ButtonGroup>
-        </div>
-      }>
-        {Permissions.canResponseView() ?
-        <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={this.props.responses}
-               className="gx-mb-4"/> : null}
-        <div className="gx-d-flex gx-flex-row">
-        </div>
-        <div>
-        </div>
-      </Widget>
+      <Auxiliary>
+        {console.log("in return",this.state.filterText)}
+        <Widget
+          title={
+            Permissions.canResponseAdd() ? <Button type="primary" className="h4 gx-text-capitalize gx-mb-0"
+                                                   onClick={this.onAddButtonClick}>
+              Add New Response</Button> : null}
+          extra={
+            <div className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
+              <Input
+                placeholder="Enter keywords to search tickets"
+                prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}
+                value = {this.state.filterText}
+                onChange={this.onFilterTextChange}/>}
+              />
+              <ButtonGroup>
+                <Button type="default">
+                  <i className="icon icon-long-arrow-left"/>
+                </Button>
+                <Button type="default">
+                  <i className="icon icon-long-arrow-right"/>
+                </Button>
+              </ButtonGroup>
+            </div>
+          }>
+          {Permissions.canResponseView() ?
+            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={this.props.responses}
+                   className="gx-mb-4"/> : null}
+          <div className="gx-d-flex gx-flex-row">
+          </div>
+          <div>
+          </div>
+        </Widget>
+        {this.props.showAddCanned ?
+          <AddNewResponses showAddCanned={this.props.showAddCanned}
+                           onToggleAddCanned={this.props.onToggleAddCanned}
+                           onAddCannedResponse={this.props.onAddCannedResponse}
+                           responseId={this.state.responseId}
+                           onEditCannedResponse={this.props.onEditCannedResponse}
+                           responses={this.props.responses}
+          /> : null}
+      </Auxiliary>
     );
   }
 }
@@ -152,7 +179,8 @@ export default connect(mapStateToProps, {
   onGetCannedResponses,
   onToggleAddCanned,
   onAddCannedResponse,
-  onDeleteCannedResponse
+  onDeleteCannedResponse,
+  onEditCannedResponse
 })(CannedResponses);
 
 CannedResponses.defaultProps = {

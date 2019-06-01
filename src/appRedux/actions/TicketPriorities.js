@@ -1,7 +1,7 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
 import {
-  ADD_TICKET_PRIORITY, DELETE_TICKET_PRIORITY, GET_TICKET_PRIORITIES,
+  ADD_TICKET_PRIORITY, DELETE_TICKET_PRIORITY, EDIT_TICKET_PRIORITY, GET_TICKET_PRIORITIES,
   TOGGLE_ADD_PRIORITY_BOX
 } from "../../constants/TicketPriorities";
 
@@ -41,6 +41,26 @@ export const onAddTicketPriority = (priority) => {
       if (data.success) {
         console.log(" sending data", data.data)
         dispatch({type: ADD_TICKET_PRIORITY, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onEditTicketPriority = (priority) => {
+  console.log("onEditTicketPriority", priority)
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.put(`/setup/priorities/${priority.id}`, priority).then(({data}) => {
+      console.info("data:", data);
+      if (data.success) {
+        console.log(" sending data", data.data)
+        dispatch({type: EDIT_TICKET_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});

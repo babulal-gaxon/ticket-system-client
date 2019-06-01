@@ -5,18 +5,53 @@ import PropTypes from "prop-types";
 class AddNewPriority extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: "",
-      color_code: "",
-      desc: "",
-      status: "",
-      value: 1
-    };
+    if(this.props.priorityId === 0) {
+      this.state = {
+        name: "",
+        color_code: "",
+        desc: "",
+        status: "",
+        value: 1
+      };
+    }
+    else {
+      const selectedPriority = this.props.priorities.find(priority => priority.id === this.props.priorityId);
+      console.log("selectedPriority", selectedPriority);
+      const {name, desc, status, value, color_code} = selectedPriority;
+      this.state = {
+        name: name,
+        color_code: color_code,
+        desc: desc,
+        status: status,
+        value: value
+      };
+    }
   };
-
+  onPriorityAdd = () => {
+    if (this.props.priorityId === 0) {
+      const newPriority = {
+        name: this.state.name,
+        desc: this.state.desc,
+        status: this.state.status,
+        value: this.state.value,
+        color_code: this.state.color_code,
+      };
+      this.props.onAddTicketPriority(newPriority);
+    } else {
+      const newPriority = {
+        name: this.state.name,
+        desc: this.state.desc,
+        status: this.state.status,
+        value: this.state.value,
+        color_code: this.state.color_code,
+        id: this.props.priorityId
+      };
+      this.props.onEditTicketPriority(newPriority);
+    }
+  };
   render() {
     const {name, value, desc, status} = this.state;
-    const {showAddPriority, onToggleAddPriority, onAddTicketPriority} = this.props;
+    const {showAddPriority, onToggleAddPriority} = this.props;
     return (
       <div>
 
@@ -25,10 +60,8 @@ class AddNewPriority extends Component {
           title="Add New Priority"
           onCancel={onToggleAddPriority}
           footer={[
-            <Button key="submit" type="primary" onClick={() => {
-              onAddTicketPriority(this.state)
-            }}>
-              Add
+            <Button key="submit" type="primary" onClick ={this.onPriorityAdd}>
+              {this.props.priorityId===0 ? "Add" : "Edit"}
             </Button>,
             <Button key="cancel" onClick={onToggleAddPriority}>
               Cancel
@@ -69,9 +102,16 @@ export default AddNewPriority;
 
 
 AddNewPriority.defaultProps = {
-  statuses: []
+  priorities: [],
+  priorityId: 0,
+  showAddPriority: true
 };
 
 AddNewPriority.propTypes = {
-  statuses: PropTypes.array
+  priorities: PropTypes.array,
+  priorityId: PropTypes.number,
+  showAddPriority: PropTypes.bool,
+  onToggleAddPriority: PropTypes.func,
+  onAddTicketPriority: PropTypes.func,
+  onEditTicketPriority: PropTypes.func
 };

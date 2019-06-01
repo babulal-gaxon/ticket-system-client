@@ -1,7 +1,7 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
 import {
-  ADD_CANNED_RESPONSE, DELETE_CANNED_RESPONSE, GET_CANNED_RESPONSES,
+  ADD_CANNED_RESPONSE, DELETE_CANNED_RESPONSE, EDIT_CANNED_RESPONSE, GET_CANNED_RESPONSES,
   TOGGLE_ADD_CANNED_BOX
 } from "../../constants/CannedResponses";
 
@@ -23,13 +23,13 @@ export const onGetCannedResponses = () => {
       console.info("Error****:", error.message);
     });
   }
-}
+};
 
 export const onToggleAddCanned = () => {
   return {
     type: TOGGLE_ADD_CANNED_BOX
   }
-}
+};
 
 export const onAddCannedResponse = (cannedResponse) => {
   console.log("onAddCannedResponse", cannedResponse)
@@ -49,7 +49,7 @@ export const onAddCannedResponse = (cannedResponse) => {
       console.info("Error****:", error.message);
     });
   }
-}
+};
 
 export const onDeleteCannedResponse = (cannedResponseId) => {
   return (dispatch) => {
@@ -67,4 +67,24 @@ export const onDeleteCannedResponse = (cannedResponseId) => {
       console.info("Error****:", error.message);
     });
   }
-}
+};
+
+export const onEditCannedResponse = (cannedResponse) => {
+  console.log("onEditCannedResponse", cannedResponse)
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.put(`/setup/canned/responses/${cannedResponse.id}`, cannedResponse).then(({data}) => {
+      console.info("data:", data);
+      if (data.success) {
+        console.log(" sending data", data.data)
+        dispatch({type: EDIT_CANNED_RESPONSE, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};

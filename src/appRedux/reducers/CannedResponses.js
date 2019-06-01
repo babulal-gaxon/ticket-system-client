@@ -1,7 +1,7 @@
 
 
 import {
-  ADD_CANNED_RESPONSE, DELETE_CANNED_RESPONSE, GET_CANNED_RESPONSES,
+  ADD_CANNED_RESPONSE, DELETE_CANNED_RESPONSE, EDIT_CANNED_RESPONSE, GET_CANNED_RESPONSES,
   TOGGLE_ADD_CANNED_BOX
 } from "../../constants/CannedResponses";
 
@@ -30,14 +30,22 @@ export default (state = initialState, action) => {
         ...state,
         responses: state.responses.concat(action.payload),
         showAddCanned: false
-      }
+      };
+
+    case EDIT_CANNED_RESPONSE:
+        const updateResponses = state.responses.map((response) => response.id === action.payload.id ? action.payload : response)
+        return {
+          ...state,
+          responses: updateResponses,
+          showAddCanned: false
+        };
 
     case DELETE_CANNED_RESPONSE:
       const updatedResponses = state.responses.filter((cannedResponse) => cannedResponse.id !== action.payload)
       return {
         ...state,
        responses:updatedResponses
-      }
+      };
     default:
       return state;
   }
