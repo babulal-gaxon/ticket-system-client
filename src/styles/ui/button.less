@@ -393,6 +393,19 @@ fieldset[disabled] a.@{class-prefix}-btn {
   line-height: @btn-height-lg;
   height: @btn-height-lg;
   .border-radius(@border-radius-xxl);
+  position: relative;
+
+  & .icon-filter {
+    position: relative;
+
+    &:before {
+
+      .@{class-prefix}-main-layout-has-sider & {
+        content: '\e942';
+      }
+    }
+
+  }
 
   &-rtl-round {
     .border-radius(0 @border-radius-xxl @border-radius-xxl 0);

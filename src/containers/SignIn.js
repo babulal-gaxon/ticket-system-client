@@ -51,7 +51,7 @@ class SignIn extends React.Component {
 
                 <FormItem>
                   {getFieldDecorator('email', {
-                    initialValue: "demo@example.com",
+                    initialValue: "admin@g-axon.com",
                     rules: [{
                       required: true, type: 'email', message: 'The input is not valid E-mail!',
                     }],
@@ -61,7 +61,7 @@ class SignIn extends React.Component {
                 </FormItem>
                 <FormItem>
                   {getFieldDecorator('password', {
-                    initialValue: "demo#123",
+                    initialValue: "123456",
                     rules: [{required: true, message: 'Please input your Password!'}],
                   })(
                     <Input type="password" placeholder="Password"/>

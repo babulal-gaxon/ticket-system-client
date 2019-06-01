@@ -208,7 +208,7 @@ class AllTickets extends Component {
                 <Table key={Math.random()} rowSelection={rowSelection} columns={ticketColumn}
                        dataSource={this.props.tickets}
                        pagination={{pageSize: this.state.itemNumbers}}
-                       className="gx-mb-4"
+                       className="gx-table-responsive"
                        onRow={(record) => ({
                          onClick: (e) => {
                            if (Permissions.canViewTicketDetail()) {

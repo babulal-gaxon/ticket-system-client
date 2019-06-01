@@ -146,19 +146,25 @@
 .@{class-prefix}-main-layout {
   &-has-sider {
     .flex-display();
+
+    & .@{class-prefix}-main-layout-sidenav {
+      width: @main-layout-sidenav-width;
+
+      & + .@{class-prefix}-main-layout-content {
+        width: calc(100% ~"-" @main-layout-sidenav-width);
+        padding-left: 30px;
+      }
+    }
   }
 
   &-content {
     position: relative;
+    .transition(all 0.1s ease);
   }
 
   &-sidenav {
-    width: @main-layout-sidenav-width;
-
-    & + .@{class-prefix}-main-layout-content {
-      width: calc(100% ~"-" @main-layout-sidenav-width);
-      padding-left: 30px;
-    }
+    width: 0px;
+    .transition(all 0.2s ease);
   }
 
   &-side {
