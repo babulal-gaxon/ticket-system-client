@@ -546,6 +546,19 @@
   }
 }
 
+.@{class-prefix}-app-sidebar,
+.ant-drawer {
+  & .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow {
+    .rotate(-90deg);
+  }
+
+  & .ant-menu-submenu-open.ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow {
+    .rotate(180deg);
+    margin-top: 4px;
+    left: 20px;
+  }
+}
+
 .ant-menu-submenu-horizontal {
   & > .ant-menu-submenu-title {
     color: @header-text-color;

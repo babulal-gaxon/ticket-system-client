@@ -2,24 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="72ebf97e-8970-4775-8ec5-0b0606640859" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/Read Me.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/demo-files/demo.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/demo-files/demo.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/demo.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/selection.json" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/assets/vendors/gaxon/fonts/gaxon.eot" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/fonts/gaxon.eot" />
-      <change beforePath="$PROJECT_DIR$/src/assets/vendors/gaxon/fonts/gaxon.svg" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/fonts/gaxon.svg" />
-      <change beforePath="$PROJECT_DIR$/src/assets/vendors/gaxon/fonts/gaxon.ttf" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/fonts/gaxon.ttf" />
-      <change beforePath="$PROJECT_DIR$/src/assets/vendors/gaxon/fonts/gaxon.woff" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/fonts/gaxon.woff" />
-      <change beforePath="$PROJECT_DIR$/src/assets/vendors/gaxon/icons-reference.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/assets/vendors/gaxon/styles.css" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/style.css" />
-      <change beforePath="$PROJECT_DIR$/src/assets/vendors/style.js" afterPath="$PROJECT_DIR$/src/assets/vendors/style.js" />
-      <change beforePath="$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js" afterPath="$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js" />
-      <change beforePath="$PROJECT_DIR$/src/styles/global/variables.less" afterPath="$PROJECT_DIR$/src/styles/global/variables.less" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Dashboard/index.js" afterPath="$PROJECT_DIR$/src/routes/Dashboard/index.js" />
+      <change beforePath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js" afterPath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js" />
+      <change beforePath="$PROJECT_DIR$/src/routes/ManageTickets/index.js" afterPath="$PROJECT_DIR$/src/routes/ManageTickets/index.js" />
+      <change beforePath="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js" afterPath="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js" />
       <change beforePath="$PROJECT_DIR$/src/styles/layout/navbar.less" afterPath="$PROJECT_DIR$/src/styles/layout/navbar.less" />
       <change beforePath="$PROJECT_DIR$/src/styles/layout/sidebar.less" afterPath="$PROJECT_DIR$/src/styles/layout/sidebar.less" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" afterPath="$PROJECT_DIR$/yarn.lock" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -33,23 +22,69 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="variables.less" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/styles/variables.less">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="sidebar.less" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/styles/layout/sidebar.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="18" lean-forward="false" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+            <state relative-caret-position="391">
+              <caret line="222" column="19" lean-forward="true" selection-start-line="222" selection-start-column="19" selection-end-line="222" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sidebar.less" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/styles/layout/sidebar.less">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="200" column="40" lean-forward="true" selection-start-line="200" selection-start-column="40" selection-end-line="200" selection-end-column="40" />
+            <state relative-caret-position="166">
+              <caret line="163" column="23" lean-forward="true" selection-start-line="163" selection-start-column="23" selection-end-line="163" selection-end-column="38" />
+              <folding>
+                <element signature="e#1974#4641#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="8" column="90" lean-forward="false" selection-start-line="8" selection-start-column="90" selection-end-line="8" selection-end-column="90" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/Dashboard/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="17" column="4" lean-forward="true" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="10" lean-forward="true" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="109" lean-forward="false" selection-start-line="8" selection-start-column="109" selection-end-line="8" selection-end-column="109" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -57,38 +92,28 @@
       <file leaf-file-name="SidebarContent.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="55" column="38" lean-forward="true" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
+            <state relative-caret-position="17">
+              <caret line="55" column="38" lean-forward="false" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="navbar.less" pinned="false" current-in-tab="true">
+      <file leaf-file-name="navbar.less" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/styles/layout/navbar.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="186" column="17" lean-forward="true" selection-start-line="186" selection-start-column="17" selection-end-line="186" selection-end-column="17" />
+            <state relative-caret-position="314">
+              <caret line="555" column="12" lean-forward="false" selection-start-line="555" selection-start-column="12" selection-end-line="555" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="variables.less" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/styles/global/variables.less">
+      <file leaf-file-name="mixin.less" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/styles/global/mixin.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="84" column="1" lean-forward="false" selection-start-line="84" selection-start-column="1" selection-end-line="84" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="header.less" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/styles/layout/header.less">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="21" lean-forward="false" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+            <state relative-caret-position="222">
+              <caret line="38" column="1" lean-forward="false" selection-start-line="38" selection-start-column="1" selection-end-line="38" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -124,6 +149,10 @@
       <find>icon-dashboard</find>
       <find>transform</find>
       <find>submenu-arrow</find>
+      <find>-drawer</find>
+      <find>gx-module-sidenav</find>
+      <find>gx-card-widget</find>
+      <find>gx-main-content-wrapper</find>
     </findStrings>
     <replaceStrings>
       <replace>price</replace>
@@ -165,11 +194,8 @@
         <option value="$PROJECT_DIR$/src/routes/Dashboard/DashboardInfo/TicketList.js" />
         <option value="$PROJECT_DIR$/src/routes/Dashboard/DashboardInfo/RecentCustomers.js" />
         <option value="$PROJECT_DIR$/src/routes/Dashboard/DashboardInfo/Statistics.js" />
-        <option value="$PROJECT_DIR$/src/routes/Dashboard/index.js" />
         <option value="$PROJECT_DIR$/src/routes/Dashboard/DashboardInfo/SupportStaff.js" />
-        <option value="$PROJECT_DIR$/src/routes/ManageTickets/index.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/data.js" />
-        <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/DropdownButton.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js" />
@@ -178,7 +204,6 @@
         <option value="$PROJECT_DIR$/src/routes/TicketSystem/Departments/AddNewDepartment.js" />
         <option value="$PROJECT_DIR$/src/routes/TicketSystem/Departments/data.js" />
         <option value="$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js" />
         <option value="$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/index.js" />
         <option value="$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/AddNewStatus.js" />
         <option value="$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/index.js" />
@@ -188,10 +213,14 @@
         <option value="$PROJECT_DIR$/src/assets/vendors/gaxon/styles.css" />
         <option value="D:/gaxon-product-psd/ticket-system-client/gaxon(8)/style.css" />
         <option value="$PROJECT_DIR$/src/styles/global/variables.less" />
-        <option value="$PROJECT_DIR$/src/styles/layout/sidebar.less" />
         <option value="$PROJECT_DIR$/src/assets/vendors/style.js" />
-        <option value="$PROJECT_DIR$/src/styles/layout/navbar.less" />
         <option value="$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js" />
+        <option value="$PROJECT_DIR$/src/styles/layout/navbar.less" />
+        <option value="$PROJECT_DIR$/src/styles/layout/sidebar.less" />
+        <option value="$PROJECT_DIR$/src/routes/ManageTickets/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/Dashboard/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js" />
       </list>
     </option>
   </component>
@@ -227,7 +256,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -256,22 +284,57 @@
               <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="vendors" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="vendors" type="462c0819:PsiDirectoryNode" />
-              <item name="gaxon" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="Dashboard" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="ManageTickets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="ManageTickets" type="462c0819:PsiDirectoryNode" />
+              <item name="AllTickets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="TicketSystem" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="TicketSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="CannedResponses" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="styles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="styles" type="462c0819:PsiDirectoryNode" />
+              <item name="global" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
@@ -285,6 +348,7 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -303,6 +367,131 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\gaxon-product\ticket-system-client\src\assets\vendors\gaxon" />
     </key>
+  </component>
+  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
+    <UpdatedFiles>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Updated from server" />
+        <option name="myStatusName" value="Changed on server" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="CHANGED_ON_SERVER" />
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated" />
+          <option name="myStatusName" value="Changed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/appRedux/actions/CannedResponses.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/appRedux/actions/TicketPriorities.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/appRedux/actions/TicketStatuses.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/appRedux/reducers/CannedResponses.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/appRedux/reducers/TicketPriorities.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/appRedux/reducers/TicketStatuses.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/constants/CannedResponses.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/constants/TicketPriorities.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/AddNewResponses.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/routes/TicketSystem/Departments/AddNewDepartment.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/AddNewPriority.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/index.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/AddNewStatus.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/index.js</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Created" />
+          <option name="myStatusName" value="Created" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CREATED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Deleted" />
+          <option name="myStatusName" value="Deleted" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="true" />
+          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Restored" />
+          <option name="myStatusName" value="Will be restored" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="RESTORED" />
+        </FILE-GROUP>
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Modified" />
+        <option name="myStatusName" value="Modified" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MODIFIED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Skipped" />
+        <option name="myStatusName" value="Skipped" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SKIPPED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with conflicts" />
+        <option name="myStatusName" value="Will be merged with conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_CONFLICTS" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with tree conflicts" />
+        <option name="myStatusName" value="Merged with tree conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with property conflicts" />
+        <option name="myStatusName" value="Will be merged with property conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged" />
+        <option name="myStatusName" value="Will be merged" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Not in repository" />
+        <option name="myStatusName" value="Not in repository" />
+        <option name="mySupportsDeletion" value="true" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="UNKNOWN" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally added" />
+        <option name="myStatusName" value="Locally added" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_ADDED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally removed" />
+        <option name="myStatusName" value="Locally removed" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_REMOVED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Switched" />
+        <option name="myStatusName" value="Switched" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SWITCHED" />
+      </FILE-GROUP>
+    </UpdatedFiles>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -340,6 +529,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+      <changelist id="72ebf97e-8970-4775-8ec5-0b0606640859" name="Default" comment="" />
       <created>1558163629825</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -359,6 +549,7 @@
       <workItem from="1559191078874" duration="16942000" />
       <workItem from="1559211285480" duration="11784000" />
       <workItem from="1559277438647" duration="9142000" />
+      <workItem from="1559364030366" duration="5192000" />
     </task>
     <task id="LOCAL-00001" summary="add api">
       <created>1558429986835</created>
@@ -451,11 +642,18 @@
       <option name="project" value="LOCAL" />
       <updated>1559283142166</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="working on icon and sidebar">
+      <created>1559309744797</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1559309744797</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="287763000" />
+    <option name="totallyTimeSpent" value="293039000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -472,21 +670,21 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24968314" sideWeight="0.49298596" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.50537634" sideWeight="0.50253487" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.50537634" sideWeight="0.50253487" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.50537634" sideWeight="0.49746513" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24968314" sideWeight="0.50701404" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24968314" sideWeight="0.50701404" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293011" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293011" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -522,25 +720,15 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="working on icon and sidebar" />
+    <option name="LAST_COMMIT_MESSAGE" value="working on icon and sidebar" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/constants/Departments.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/Departments.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-151">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/Dashboard/Tickets/data.js" />
     <entry file="file://$PROJECT_DIR$/src/constants/TicketList.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -574,9 +762,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="14" lean-forward="true" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#173#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -643,13 +828,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
@@ -671,27 +849,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Dashboard/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1011">
-          <caret line="200" column="23" lean-forward="true" selection-start-line="200" selection-start-column="23" selection-end-line="200" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/data.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="16" lean-forward="true" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="161" column="51" lean-forward="false" selection-start-line="161" selection-start-column="41" selection-end-line="161" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#39#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -710,24 +871,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="7" lean-forward="true" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/AddNewResponses.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
           <caret line="66" column="31" lean-forward="false" selection-start-line="66" selection-start-column="31" selection-end-line="66" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="461">
-          <caret line="161" column="2" lean-forward="true" selection-start-line="161" selection-start-column="2" selection-end-line="161" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -778,7 +925,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -786,7 +932,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -802,7 +947,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="446" column="18" lean-forward="false" selection-start-line="446" selection-start-column="13" selection-end-line="446" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -814,51 +958,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/styles/layout/header.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="21" lean-forward="false" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/styles/global/variables.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
+        <state relative-caret-position="1428">
           <caret line="84" column="1" lean-forward="false" selection-start-line="84" selection-start-column="1" selection-end-line="84" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/vendors/gaxon/icons-reference.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="516" column="37" lean-forward="false" selection-start-line="516" selection-start-column="23" selection-end-line="516" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/vendors/gaxon/styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="755" column="18" lean-forward="true" selection-start-line="755" selection-start-column="18" selection-end-line="755" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="55" column="38" lean-forward="true" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/vendors/gaxon/icons-reference.html" />
+    <entry file="file://$PROJECT_DIR$/src/assets/vendors/gaxon/styles.css" />
     <entry file="file://$PROJECT_DIR$/src/assets/vendors/gaxon/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="281" column="1" lean-forward="true" selection-start-line="281" selection-start-column="1" selection-end-line="281" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -866,7 +979,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="34" lean-forward="true" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -878,19 +990,97 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/styles/layout/sidebar.less">
+    <entry file="file://$PROJECT_DIR$/src/styles/layout/header.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="200" column="40" lean-forward="true" selection-start-line="200" selection-start-column="40" selection-end-line="200" selection-end-column="40" />
+        <state relative-caret-position="408">
+          <caret line="34" column="9" lean-forward="true" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/styles/global/mixin.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="38" column="1" lean-forward="false" selection-start-line="38" selection-start-column="1" selection-end-line="38" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/styles/layout/navbar.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="186" column="17" lean-forward="true" selection-start-line="186" selection-start-column="17" selection-end-line="186" selection-end-column="17" />
+        <state relative-caret-position="314">
+          <caret line="555" column="12" lean-forward="false" selection-start-line="555" selection-start-column="12" selection-end-line="555" selection-end-column="12" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/styles/layout/sidebar.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="222" column="19" lean-forward="true" selection-start-line="222" selection-start-column="19" selection-end-line="222" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="109" lean-forward="false" selection-start-line="8" selection-start-column="109" selection-end-line="8" selection-end-column="109" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="163" column="23" lean-forward="true" selection-start-line="163" selection-start-column="23" selection-end-line="163" selection-end-column="38" />
+          <folding>
+            <element signature="e#1974#4641#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="55" column="38" lean-forward="false" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="8" column="90" lean-forward="false" selection-start-line="8" selection-start-column="90" selection-end-line="8" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Dashboard/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="17" column="4" lean-forward="true" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="125" column="39" lean-forward="true" selection-start-line="125" selection-start-column="39" selection-end-line="125" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="10" lean-forward="true" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

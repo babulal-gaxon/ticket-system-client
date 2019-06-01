@@ -123,7 +123,7 @@ class CannedResponses extends Component {
     };
     console.log("in Show Responses", this.props.responses);
     return (
-      <Auxiliary>
+      <div className="gx-main-content">
         {console.log("in return",this.state.filterText)}
         <Widget
           title={
@@ -164,7 +164,7 @@ class CannedResponses extends Component {
                            onEditCannedResponse={this.props.onEditCannedResponse}
                            responses={this.props.responses}
           /> : null}
-      </Auxiliary>
+      </div>
     );
   }
 }

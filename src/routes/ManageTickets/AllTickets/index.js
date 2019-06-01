@@ -69,7 +69,7 @@ class AllTickets extends Component {
     this.setState({endDate: value});
   };
   getSidebar = () => {
-    return <Sider className="gx-module-sidenav gx-d-none gx-d-lg-flex">
+    return <div className="gx-module-sidenav gx-d-none gx-d-lg-flex">
       <div className="gx-module-side">
         <div className="gx-module-side-content">
           <h2>Filter Tickets</h2>
@@ -144,7 +144,7 @@ class AllTickets extends Component {
           </Button>
         </div>
       </div>
-    </Sider>
+    </div>
   };
   getTicketShowOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>
@@ -161,7 +161,7 @@ class AllTickets extends Component {
       onChange: this.onSelectChange,
     };
     return (
-      <Auxiliary>
+      <div className={`gx-main-content ${this.state.sideBarActive ? "demo" : ""}`}>
         {this.state.sideBarActive ? this.getSidebar() : null}
         <Auxiliary>
           <Widget
@@ -219,7 +219,7 @@ class AllTickets extends Component {
           </Widget>
         </Auxiliary>
         <InfoView/>
-      </Auxiliary>
+      </div>
     );
   }
 }
