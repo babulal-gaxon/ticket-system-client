@@ -43,7 +43,9 @@ class CannedResponses extends Component {
     this.setState({responseId: id});
     this.props.onToggleAddCanned();
   };
-
+onFilterData = () => {
+  return this.props.responses.filter(response => response.short_title.indexOf(this.state.filterText) !== -1);
+};
   onGetTableColumns = () => {
     return [
       {
@@ -115,7 +117,7 @@ class CannedResponses extends Component {
     ];
   };
   render() {
-
+    const responses = this.onFilterData();
     const {selectedRowKeys} = this.state;
     const rowSelection = {
       selectedRowKeys,
@@ -133,11 +135,10 @@ class CannedResponses extends Component {
           extra={
             <div className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
               <Input
-                placeholder="Enter keywords to search tickets"
-                prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}
+                placeholder="Enter keywords to search Responses"
+                prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 value = {this.state.filterText}
-                onChange={this.onFilterTextChange}/>}
-              />
+                  onChange={this.onFilterTextChange}/>
               <ButtonGroup>
                 <Button type="default">
                   <i className="icon icon-long-arrow-left"/>
@@ -149,7 +150,7 @@ class CannedResponses extends Component {
             </div>
           }>
           {Permissions.canResponseView() ?
-            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={this.props.responses}
+            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={responses}
                    className="gx-mb-4"/> : null}
           <div className="gx-d-flex gx-flex-row">
           </div>
@@ -162,7 +163,7 @@ class CannedResponses extends Component {
                            onAddCannedResponse={this.props.onAddCannedResponse}
                            responseId={this.state.responseId}
                            onEditCannedResponse={this.props.onEditCannedResponse}
-                           responses={this.props.responses}
+                           responses={responses}
           /> : null}
       </div>
     );

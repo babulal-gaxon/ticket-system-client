@@ -22,11 +22,18 @@ class Departments extends Component {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      departmentId: 0
+      departmentId: 0,
+      filterText: ""
     }
   };
   componentWillMount() {
     this.props.onGetDepartments();
+  };
+  onFilterTextChange = (e) => {
+    this.setState({filterText: e.target.value})
+  };
+  onFilterData = () => {
+    return this.props.dept.filter(department => department.name.indexOf(this.state.filterText) !== -1);
   };
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
@@ -98,6 +105,7 @@ class Departments extends Component {
     ];
   };
   render() {
+    const dept = this.onFilterData();
     const {selectedRowKeys} = this.state;
     const rowSelection = {
       selectedRowKeys,
@@ -114,7 +122,9 @@ class Departments extends Component {
             <div className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
               <Input
                 placeholder="Enter keywords to search tickets"
-                prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}/>
+                prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              value={this.state.filterText}
+              onChange={this.onFilterTextChange}/>
               <ButtonGroup>
                 <Button type="default">
                   <i className="icon icon-long-arrow-left"/>
@@ -126,7 +136,7 @@ class Departments extends Component {
             </div>
           }>
           {Permissions.canDepartmentView() ?
-            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={this.props.dept}
+            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={dept}
                    className="gx-mb-4"/> : null}
           <div className="gx-d-flex gx-flex-row">
           </div>
@@ -139,7 +149,7 @@ class Departments extends Component {
                             onAddDepartment={this.props.onAddDepartment}
                             departmentId={this.state.departmentId}
                             onEditDepartment={this.props.onEditDepartment}
-                            dept={this.props.dept}/> : null}
+                            dept={dept}/> : null}
       </Auxiliary>
 
     );

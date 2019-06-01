@@ -22,11 +22,18 @@ class TicketStatuses extends Component {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      statusId: 0
+      statusId: 0,
+      filterText: ""
     };
   };
   componentWillMount() {
     this.props.onGetTicketStatus();
+  };
+  onFilterTextChange = (e) => {
+    this.setState({filterText: e.target.value});
+  };
+  onFilterData = () => {
+    return this.props.statuses.filter(status => status.name.indexOf(this.state.filterText) !== -1);
   };
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
@@ -114,6 +121,7 @@ class TicketStatuses extends Component {
     ];
   };
   render() {
+    const statuses = this.onFilterData();
     const {selectedRowKeys} = this.state;
     const rowSelection = {
       selectedRowKeys,
@@ -132,6 +140,8 @@ class TicketStatuses extends Component {
               <Input
                 placeholder="Enter keywords to search tickets"
                 prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                value={this.state.filterText}
+                onChange={this.onFilterTextChange}
               />
               <ButtonGroup>
                 <Button type="default">
@@ -144,7 +154,7 @@ class TicketStatuses extends Component {
             </div>
           }>
           {Permissions.canStatusView() ?
-            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={this.props.statuses}
+            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={statuses}
                    className="gx-mb-4"/> : null}
           <div className="gx-d-flex gx-flex-row">
           </div>
@@ -157,7 +167,7 @@ class TicketStatuses extends Component {
                         onAddTicketStatus={this.props.onAddTicketStatus}
                         statusId={this.state.statusId}
                         onEditTicketStatus={this.props.onEditTicketStatus}
-                        statuses={this.props.statuses}/> : null}
+                        statuses={statuses}/> : null}
       </Auxiliary>
     );
   }
