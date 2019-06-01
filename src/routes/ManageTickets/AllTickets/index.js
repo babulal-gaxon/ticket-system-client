@@ -69,13 +69,13 @@ class AllTickets extends Component {
     this.setState({endDate: value});
   };
   getSidebar = () => {
-    return <div className="gx-module-sidenav gx-d-none gx-d-lg-flex">
-      <div className="gx-module-side">
-        <div className="gx-module-side-content">
-          <h2>Filter Tickets</h2>
+    return <div className="gx-main-layout-sidenav gx-d-none gx-d-lg-flex">
+      <div className="gx-main-layout-side">
+        <div className="gx-main-layout-side-header">
+          <h4 className="gx-font-weight-medium">Filter Tickets</h4>
         </div>
-        <div className="gx-module-nav">
-          <h5>Date</h5>
+        <div className="gx-main-layout-nav">
+          <label>Date</label>
           <div>
             <DatePicker
               showTime
@@ -90,17 +90,17 @@ class AllTickets extends Component {
               placeholder="End Date"
               onChange={this.onEndDateChange}/>
           </div>
-          <ul className="gx-module-nav">
+          <ul className="gx-main-layout-nav">
             <h5>Category</h5>
-            <li className="gx-module-nav-label">
+            <li className="gx-main-layout-nav-label">
               <i className="icon icon-tickets"/>
               <IntlMessages id="sidebar.dashboard.all.tickets"/>
             </li>
-            <li className="gx-module-nav-label">
+            <li className="gx-main-layout-nav-label">
               <i className="icon icon-ticket-new"/>
               <IntlMessages id="sidebar.dashboard.add.new.ticket"/>
             </li>
-            <li className="gx-module-nav-label">
+            <li className="gx-main-layout-nav-label">
               <i className="icon icon-schedule"/>
               <IntlMessages id="sidebar.dashboard.snoozes"/>
             </li>
@@ -161,40 +161,46 @@ class AllTickets extends Component {
       onChange: this.onSelectChange,
     };
     return (
-      <div className={`gx-main-content ${this.state.sideBarActive ? "demo" : ""}`}>
+      <div className={`gx-main-content ${this.state.sideBarActive ? "gx-main-layout-has-sider" : ""}`}>
         {this.state.sideBarActive ? this.getSidebar() : null}
-        <Auxiliary>
-          <Widget
-            title={<div>
-              <Button type="default" shape="round" onClick={this.onSideBarActive}>
-                <i className="icon icon-long-arrow-left"/>
-              </Button>
-              {Permissions.canTicketAdd() ? <Button type="primary" className="h4 gx-text-capitalize gx-mb-0"
-                                                    onClick={this.props.onToggleAddTicket}>
-                Add New
-              </Button> : null}
-              {this.props.showAddTicket ?
-                <AddNewTicket showAddTicket={this.props.showAddTicket}
-                              onToggleAddTicket={this.props.onToggleAddTicket}
-                              onAddTickets={this.props.onAddTickets}
-                              priorities={this.props.priorities}
-                              staff={this.props.staff}/> : null}
-            </div>}
-            extra={
-              <div className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
-                <Input
-                  placeholder="Enter keywords to search tickets"
-                  prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}/>
-                {this.getTicketShowOptions()}
-                <ButtonGroup>
-                  <Button type="default" onClick={this.onCurrentDecrement}>
-                    <i className="icon icon-long-arrow-left"/>
-                  </Button>
-                  <Button type="default" onClick={this.onCurrentIncrement}>
-                    <i className="icon icon-long-arrow-right"/>
-                  </Button>
-                </ButtonGroup>
-              </div>}>
+        <div className="gx-main-layout-content">
+          <Widget styleName="gx-card-filter"
+                  title={<div className="gx-filter-btn-view gx-filter-btn-view-mins">
+                    <Button type="default" className="gx-filter-btn gx-filter-btn-rtl-round"
+                            onClick={this.onSideBarActive}>
+                      <i className="icon icon-filter"/>
+                    </Button>
+                    {Permissions.canTicketAdd() ? <Button type="primary" className="gx-btn-lg"
+                                                          onClick={this.props.onToggleAddTicket}>
+                      Add New
+                    </Button> : null}
+                    {this.props.showAddTicket ?
+                      <AddNewTicket showAddTicket={this.props.showAddTicket}
+                                    onToggleAddTicket={this.props.onToggleAddTicket}
+                                    onAddTickets={this.props.onAddTickets}
+                                    priorities={this.props.priorities}
+                                    staff={this.props.staff}/> : null}
+                  </div>}
+                  extra={
+                    <div className="gx-d-flex gx-align-items-center">
+
+                      <Input
+                        placeholder="Enter keywords to search tickets"
+                        prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}/>
+                      <div className="gx-ml-3">
+                        {this.getTicketShowOptions()}
+                      </div>
+                      <div className="gx-ml-3">
+                        <ButtonGroup className="gx-btn-group-flex">
+                          <Button className="gx-mb-0" type="default" onClick={this.onCurrentDecrement}>
+                            <i className="icon icon-long-arrow-left"/>
+                          </Button>
+                          <Button className="gx-mb-0" type="default" onClick={this.onCurrentIncrement}>
+                            <i className="icon icon-long-arrow-right"/>
+                          </Button>
+                        </ButtonGroup>
+                      </div>
+                    </div>}>
             {this.props.currentTicket ?
               <TicketDetail ticket={this.props.currentTicket} onUpdateTickets={this.props.onUpdateTickets}
                             onBackToList={this.props.onBackToList}/> :
@@ -217,7 +223,7 @@ class AllTickets extends Component {
             <div>
             </div>
           </Widget>
-        </Auxiliary>
+        </div>
         <InfoView/>
       </div>
     );

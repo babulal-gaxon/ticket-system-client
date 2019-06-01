@@ -143,4 +143,36 @@
   }
 }
 
+.@{class-prefix}-main-layout {
+  &-has-sider {
+    .flex-display();
+  }
+
+  &-content {
+    position: relative;
+  }
+
+  &-sidenav {
+    width: @main-layout-sidenav-width;
+
+    & + .@{class-prefix}-main-layout-content {
+      width: calc(100% ~"-" @main-layout-sidenav-width);
+      padding-left: 30px;
+    }
+  }
+
+  &-side {
+    margin-bottom: @gx-card-margin-base;
+    background-color: @white-color;
+    .box-shadow(@gx-card-shadow);
+    padding: @card-padding-base;
+    position: relative;
+    .border-radius(@border-radius-lg);
+  }
+
+  &-side-header {
+    margin-bottom: 20px;
+  }
+}
+
 

@@ -1,7 +1,7 @@
 /*Button Styles*/
 .ant-btn {
 
-  line-height: @btn-height-base - 2px;
+  line-height: @btn-height-base;
 
   &-sm {
     line-height: @btn-height-sm;
@@ -226,11 +226,6 @@ button {
   }
 }
 
-.@{class-prefix}-btn-block {
-  display: block;
-  width: 100%;
-}
-
 a.@{class-prefix}-btn.disabled,
 fieldset[disabled] a.@{class-prefix}-btn {
   pointer-events: none;
@@ -392,5 +387,27 @@ fieldset[disabled] a.@{class-prefix}-btn {
       display: none;
     }
   }
+}
+
+.@{class-prefix}-filter-btn {
+  line-height: @btn-height-lg;
+  height: @btn-height-lg;
+  .border-radius(@border-radius-xxl);
+
+  &-rtl-round {
+    .border-radius(0 @border-radius-xxl @border-radius-xxl 0);
+  }
+
+  .@{class-prefix}-filter-btn-view-mins & {
+    border-left: 0 none;
+  }
+}
+
+.@{class-prefix}-filter-btn-view-mins {
+  margin-left: -24px;
+}
+
+.@{class-prefix}-btn-group-flex {
+  display: flex !important;
 }
 
