@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Badge, Button, Icon, Input, Table} from "antd";
+import {Badge, Button, Icon, Input, Select, Table} from "antd";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -16,6 +16,8 @@ import Auxiliary from "../../../util/Auxiliary";
 import Permissions from "../../../util/Permissions";
 
 const ButtonGroup = Button.Group;
+const { Option } = Select;
+
 
 class Departments extends Component {
   constructor(props) {
@@ -23,11 +25,25 @@ class Departments extends Component {
     this.state = {
       selectedRowKeys: [],
       departmentId: 0,
-      filterText: ""
+      filterText: "",
+      itemNumbers: null,
+      current: 1
     }
   };
   componentWillMount() {
     this.props.onGetDepartments();
+  };
+  onCurrentIncrement = () => {
+    this.setState({current: this.state.current + 1});
+    console.log("current value", this.state.current)
+  };
+  onCurrentDecrement = () => {
+    if(this.state.current !== 1) {
+      this.setState({current: this.state.current - 1});
+    }
+    else{
+      return null;
+    }
   };
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value})
@@ -46,16 +62,16 @@ class Departments extends Component {
     this.setState({departmentId: id})
     this.props.onToggleAddDepartment()
   };
+  onSelectOption = () => {
+    return <Select defaultValue="Archive" style={{ width: 120 }}>
+      <Option value="Archive">Archive</Option>
+      <Option value="Delete">Delete</Option>
+      <Option value="Disable">Disable</Option>
+      <Option value="Export">Export</Option>
+    </Select>
+  };
   onGetTableColumns = () => {
     return [
-      {
-        title: 'ID',
-        dataIndex: 'id',
-        key: 'id',
-        render: (text, record) => {
-          return <span className="gx-text-grey">{record.id}</span>
-        },
-      },
       {
         title: 'Name',
         dataIndex: 'name',
@@ -77,7 +93,7 @@ class Departments extends Component {
         dataIndex: 'createdBy',
         key: 'createdBy',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.user_id}</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.created_by}</span>
         },
       },
       {
@@ -86,7 +102,7 @@ class Departments extends Component {
         key: 'Status',
         render: (text, record) => {
           return <Badge>
-            {record.status}
+            {record.status === 1 ? "Active" : "Disabled"}
           </Badge>
         },
       },
@@ -104,6 +120,21 @@ class Departments extends Component {
       },
     ];
   };
+  onShowItemOptions = () => {
+    return <Select defaultValue={10} onChange={this.onDropdownChange}>
+      <Option value={10}>10</Option>
+      <Option value={25}>25</Option>
+      <Option value={50}>50</Option>
+    </Select>
+  };
+  onDropdownChange = (value) => {
+    this.setState({itemNumbers: value})
+  };
+  onPageChange = page => {
+    this.setState({
+      current: page,
+    });
+  };
   render() {
     const dept = this.onFilterData();
     const {selectedRowKeys} = this.state;
@@ -113,34 +144,43 @@ class Departments extends Component {
     };
     return (<Auxiliary>
         <Widget
-          title={
-            (Permissions.canDepartmentAdd()) ?
+          title={<span>
+            {(Permissions.canDepartmentAdd()) ?
               <Button type="primary" className="h4 gx-text-capitalize gx-mb-0"
                       onClick={this.onAddButtonClick}>
                 Add New Department</Button> : null}
+            <span>{this.onSelectOption()}</span>
+          </span>}
           extra={
-            <div className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
+            <div className="gx-d-flex gx-align-items-center">
               <Input
                 placeholder="Enter keywords to search tickets"
                 prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
               value={this.state.filterText}
               onChange={this.onFilterTextChange}/>
-              <ButtonGroup>
-                <Button type="default">
-                  <i className="icon icon-long-arrow-left"/>
-                </Button>
-                <Button type="default">
-                  <i className="icon icon-long-arrow-right"/>
-                </Button>
-              </ButtonGroup>
-            </div>
-          }>
+              <div className="gx-ml-3">
+                {this.onShowItemOptions()}
+              </div>
+              <div className="gx-ml-3">
+                <ButtonGroup className="gx-btn-group-flex">
+                  <Button className="gx-mb-0" type="default" onClick ={this.onCurrentDecrement} >
+                    <i className="icon icon-long-arrow-left"/>
+                  </Button>
+                  <Button className="gx-mb-0" type="default" onClick ={this.onCurrentIncrement}>
+                    <i className="icon icon-long-arrow-right"/>
+                  </Button>
+                </ButtonGroup>
+              </div>
+            </div>}>
           {Permissions.canDepartmentView() ?
-            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={dept}
-                   className="gx-mb-4"/> : null}
+            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={dept} className="gx-mb-4"
+                   pagination = {{pageSize: this.state.itemNumbers,
+              current: this.state.current,
+                     total:dept.length,
+                     showTotal:((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   onChange: this.onPageChange}}/> : null}
           <div className="gx-d-flex gx-flex-row">
-          </div>
-          <div>
+            {/*<span>Showing {dept.length} of {dept.length}</span>*/}
           </div>
         </Widget>
         {this.props.showAddDepartment ?
@@ -151,7 +191,6 @@ class Departments extends Component {
                             onEditDepartment={this.props.onEditDepartment}
                             dept={dept}/> : null}
       </Auxiliary>
-
     );
   }
 }

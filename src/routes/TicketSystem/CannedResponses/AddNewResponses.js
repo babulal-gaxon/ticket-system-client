@@ -11,7 +11,7 @@ class AddNewResponses extends Component {
         short_title: "",
         short_code: "",
         message: "",
-        status: ""
+        status: 1
       };
     }
     else {

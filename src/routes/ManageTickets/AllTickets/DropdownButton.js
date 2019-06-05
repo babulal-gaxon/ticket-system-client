@@ -9,19 +9,19 @@ class DropdownButton extends Component {
   selectHeaderOptionMenu = (menu) => {
     switch (menu) {
       case '1': {
-        this.setState({items: menu})
+        this.setState({items: menu});
         break;
       }
       case '2': {
-        this.setState({items: menu})
+        this.setState({items: menu});
         break;
       }
       case '3': {
-        this.setState({items: menu})
+        this.setState({items: menu});
         break;
       }
       case '4': {
-        this.setState({items: menu})
+        this.setState({items: menu});
         break;
       }
       default:
@@ -30,10 +30,11 @@ class DropdownButton extends Component {
   };
   render() {
     const menu = (
-      <Menu >
+      <Menu onClick = {(event) => event.stopPropagation()}>
         {this.props.options.map(option => {
           return (
-            <Menu.Item key={option.id} onClick={() => this.selectHeaderOptionMenu(option.value)}>
+            <Menu.Item key={option.id} onClick={() =>
+              this.selectHeaderOptionMenu(option.value)}>
               {option.value}
             </Menu.Item>
           )
@@ -41,7 +42,7 @@ class DropdownButton extends Component {
       </Menu>
     );
     return (
-      <Dropdown overlay={menu} trigger={['click']} >
+      <Dropdown overlay={menu} trigger={['click']} onClick = {(e) => e.stopPropagation()}>
         {this.props.children}
       </Dropdown>
     )

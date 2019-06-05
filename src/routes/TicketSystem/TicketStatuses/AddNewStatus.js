@@ -1,7 +1,8 @@
 import React, {Component} from "react"
 import {Button, Checkbox, Form, Input, Modal, Radio} from "antd";
-import {ChromePicker} from "react-color";
+import {SketchPicker} from "react-color";
 import PropTypes from "prop-types";
+import reactCSS from 'reactcss'
 
 class AddNewStatus extends Component {
   constructor(props) {
@@ -9,21 +10,18 @@ class AddNewStatus extends Component {
     if (this.props.statusId === 0) {
       this.state = {
         name: "",
-        desc: "",
-        status: "",
-        is_default: 0,
-        checked: false,
+        status: 1,
+        is_default: 1,
+        checked: true,
         displayColorPicker: false,
-        color_code: "",
+        color_code: "#8D3C3C"
       };
-    }
-    else {
+    } else {
       const selectedStatus = this.props.statuses.find(status => status.id === this.props.statusId);
       console.log("selectedstatus", selectedStatus);
-      const {name, desc, status, is_default, color_code} = selectedStatus;
+      const {name, status, is_default, color_code} = selectedStatus;
       this.state = {
         name: name,
-        desc: desc,
         status: status,
         is_default: is_default,
         displayColorPicker: false,
@@ -32,6 +30,7 @@ class AddNewStatus extends Component {
       };
     }
   };
+
   handleColorClick = () => {
     this.setState({displayColorPicker: !this.state.displayColorPicker});
   };
@@ -39,13 +38,12 @@ class AddNewStatus extends Component {
     this.setState({displayColorPicker: false});
   };
   handleColorChange = (color) => {
-    this.setState({color_code: color.hex.toUpperCase()})
+    this.setState({color_code: color.hex})
   };
   onStatusAdd = () => {
     if (this.props.statusId === 0) {
       const newStatus = {
         name: this.state.name,
-        desc: this.state.desc,
         status: this.state.status,
         is_default: this.state.is_default,
         color_code: this.state.color_code,
@@ -54,7 +52,6 @@ class AddNewStatus extends Component {
     } else {
       const newStatus = {
         name: this.state.name,
-        desc: this.state.desc,
         status: this.state.status,
         is_default: this.state.is_default,
         color_code: this.state.color_code,
@@ -71,20 +68,39 @@ class AddNewStatus extends Component {
       this.setState({is_default: 0})
     }
   };
+
   render() {
-    const {name, color_code, desc, status} = this.state;
+    const {name, color_code, status} = this.state;
     const {showAddStatus, onToggleAddStatus} = this.props;
-    const popover = {
-      position: 'absolute',
-      zIndex: '2',
-    };
-    const cover = {
-      position: 'fixed',
-      top: '0px',
-      right: '0px',
-      bottom: '0px',
-      left: '0px',
-    };
+    const styles = reactCSS({
+      'default': {
+        color: {
+          width: '36px',
+          height: '14px',
+          borderRadius: '2px',
+          background: color_code
+        },
+        swatch: {
+          padding: '5px',
+          background: '#fff',
+          borderRadius: '1px',
+          boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+          display: 'inline-block',
+          cursor: 'pointer',
+        },
+        popover: {
+          position: 'absolute',
+          zIndex: '2',
+        },
+        cover: {
+          position: 'fixed',
+          top: '0px',
+          right: '0px',
+          bottom: '0px',
+          left: '0px',
+        },
+      },
+    });
     return (
       <div>
         <Modal
@@ -107,17 +123,15 @@ class AddNewStatus extends Component {
             </Form.Item>
             <Form.Item label="Color Code">
               <div>
-                <button onClick={this.handleColorClick}>Pick Color</button>
-                {this.state.displayColorPicker ? <div style={popover}>
-                  <div style={cover} onClick={this.handleColorClose}/>
-                  <ChromePicker color={color_code} onChange={this.handleColorChange}/>
+                <div style={styles.swatch} onClick={this.handleColorClick}>
+                  <div style={styles.color}/>
+                  <span>{color_code}</span>
+                </div>
+                {this.state.displayColorPicker ? <div style={styles.popover}>
+                  <div style={styles.cover} onClick={this.handleColorClose}/>
+                  <SketchPicker color={color_code} onChange={this.handleColorChange}/>
                 </div> : null}
               </div>
-            </Form.Item>
-            <Form.Item label="Description">
-              <Input className="gx-form-control-lg" type="textarea" value={desc} onChange={(e) => {
-                this.setState({desc: e.target.value})
-              }}/>
             </Form.Item>
             <Form.Item>
               <Checkbox className="gx-form-control-lg" checked={this.state.checked} onChange={this.onCheckBoxChange}>
@@ -138,6 +152,7 @@ class AddNewStatus extends Component {
     )
   }
 }
+
 
 export default AddNewStatus;
 

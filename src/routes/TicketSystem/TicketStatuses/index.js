@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Badge, Button, Icon, Input, Table} from "antd";
+import {Badge, Button, Icon, Input, Select, Table} from "antd";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -16,6 +16,8 @@ import Permissions from "../../../util/Permissions";
 import Auxiliary from "../../../util/Auxiliary";
 
 const ButtonGroup = Button.Group;
+const { Option } = Select;
+
 
 class TicketStatuses extends Component {
   constructor(props) {
@@ -23,11 +25,25 @@ class TicketStatuses extends Component {
     this.state = {
       selectedRowKeys: [],
       statusId: 0,
-      filterText: ""
+      filterText: "",
+      itemNumbers: null,
+      current: 1
     };
   };
   componentWillMount() {
     this.props.onGetTicketStatus();
+  };
+  onCurrentIncrement = () => {
+    this.setState({current: this.state.current + 1});
+    console.log("current value", this.state.current)
+  };
+  onCurrentDecrement = () => {
+    if(this.state.current !== 1) {
+      this.setState({current: this.state.current - 1});
+    }
+    else{
+      return null;
+    }
   };
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value});
@@ -46,16 +62,16 @@ class TicketStatuses extends Component {
     this.setState({statusId: id});
     this.props.onToggleAddStatus();
   };
+  onSelectOption = () => {
+    return <Select defaultValue="Archive" style={{ width: 120 }}>
+      <Option value="Archive">Archive</Option>
+      <Option value="Delete">Delete</Option>
+      <Option value="Disable">Disable</Option>
+      <Option value="Export">Export</Option>
+    </Select>
+  };
   onGetTableColumns = () => {
     return [
-      {
-        title: 'ID',
-        dataIndex: 'id',
-        key: 'id',
-        render: (text, record) => {
-          return <span className="gx-text-grey">{record.id}</span>
-        },
-      },
       {
         title: 'Name',
         dataIndex: 'name',
@@ -85,7 +101,7 @@ class TicketStatuses extends Component {
         dataIndex: 'default',
         key: 'default',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.is_default}</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.is_default === 1 ? "Default" : "Set Default"}</span>
         },
       },
       {
@@ -93,16 +109,16 @@ class TicketStatuses extends Component {
         dataIndex: 'createdBy',
         key: 'createdBy',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.user_id}</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.created_by}</span>
         },
       },
       {
         title: 'Status',
-        dataIndex: 'status_id',
-        key: 'Status',
+        dataIndex: 'status',
+        key: 'status',
         render: (text, record) => {
           return <Badge>
-            {record.status}
+            {record.status == 1 ? "Active" : "Disabled"}
           </Badge>
         },
       },
@@ -120,6 +136,21 @@ class TicketStatuses extends Component {
       },
     ];
   };
+  onPageChange = page => {
+    this.setState({
+      current: page,
+    });
+  };
+  onShowItemOptions = () => {
+    return <Select defaultValue={10} onChange={this.onDropdownChange}>
+      <Option value={10}>10</Option>
+      <Option value={25}>25</Option>
+      <Option value={50}>50</Option>
+    </Select>
+  };
+  onDropdownChange = (value) => {
+    this.setState({itemNumbers: value})
+  };
   render() {
     const statuses = this.onFilterData();
     const {selectedRowKeys} = this.state;
@@ -131,34 +162,44 @@ class TicketStatuses extends Component {
     return (
       <Auxiliary>
         <Widget
-          title={
-            Permissions.canStatusAdd() ?
+          title={<span>
+            {Permissions.canStatusAdd() ?
               <Button type="primary" className="h4 gx-text-capitalize gx-mb-0" onClick={this.onAddButtonClick}>
                 Add New Status</Button> : null}
+        <span>{this.onSelectOption()}</span>
+      </span>}
           extra={
-            <div className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
+            <div className="gx-d-flex gx-align-items-center">
               <Input
-                placeholder="Enter keywords to search tickets"
+                placeholder="Enter keywords to search Status"
                 prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}
               />
-              <ButtonGroup>
-                <Button type="default">
-                  <i className="icon icon-long-arrow-left"/>
-                </Button>
-                <Button type="default">
-                  <i className="icon icon-long-arrow-right"/>
-                </Button>
-              </ButtonGroup>
-            </div>
-          }>
+              <div className="gx-ml-3">
+                {this.onShowItemOptions()}
+              </div>
+              <div className="gx-ml-3">
+                <ButtonGroup className="gx-btn-group-flex">
+                  <Button className="gx-mb-0" type="default" onClick ={this.onCurrentDecrement} >
+                    <i className="icon icon-long-arrow-left"/>
+                  </Button>
+                  <Button className="gx-mb-0" type="default" onClick ={this.onCurrentIncrement}>
+                    <i className="icon icon-long-arrow-right"/>
+                  </Button>
+                </ButtonGroup>
+              </div>
+            </div>}>
           {Permissions.canStatusView() ?
-            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={statuses}
-                   className="gx-mb-4"/> : null}
+            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
+                   dataSource={statuses} className="gx-mb-4"
+                   pagination = {{pageSize: this.state.itemNumbers,
+                     current: this.state.current,
+                     total:statuses.length,
+                     showTotal:((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                     onChange: this.onPageChange}}/> : null}
           <div className="gx-d-flex gx-flex-row">
-          </div>
-          <div>
+            <span>Showing {statuses.length} of {statuses.length}</span>
           </div>
         </Widget>
         {this.props.showAddStatus ?

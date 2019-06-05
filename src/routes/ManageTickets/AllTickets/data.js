@@ -3,7 +3,6 @@ import React from "react";
 
 import DropdownButton from "./DropdownButton";
 
-const buttonWidth = 100;
 function lighten(color, luminosity) {
 
   // validate hex string
@@ -14,7 +13,7 @@ function lighten(color, luminosity) {
   luminosity = luminosity || 0;
 
   // convert to decimal and change luminosity
-  var newColor = "#", c, i, black = 0, white = 255;
+  let newColor = "#", c, i, black = 0, white = 255;
   for (i = 0; i < 3; i++) {
     c = parseInt(color.substr(i*2,2), 16);
     c = Math.round(Math.min(Math.max(black, c + (luminosity * white)), white)).toString(16);
@@ -102,7 +101,8 @@ export const ticketColumn = [
         options={[{id: 3, value: 'Archived'}, {id: 2, value: 'Re-Open'}, {id: 1, value: 'Change Priority'}, {
           id: 4,
           value: 'Delete'
-        }]}><i className="icon icon-ellipse-h"/>
+        }]} >
+        <i className="icon icon-ellipse-h"/>
       </DropdownButton>
     },
   },

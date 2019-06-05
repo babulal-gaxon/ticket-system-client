@@ -9,7 +9,7 @@ class AddNewDepartment extends Component {
       this.state = {
         name: "",
         desc: "",
-        status: ""
+        status: 1
       };
     } else {
       const selectedDept = this.props.dept.find(department => department.id === this.props.departmentId)
@@ -82,6 +82,7 @@ class AddNewDepartment extends Component {
     )
   }
 }
+
 
 export default AddNewDepartment;
 

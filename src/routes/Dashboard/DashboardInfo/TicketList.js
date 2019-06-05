@@ -26,7 +26,7 @@ class TicketList extends Component {
         </p>
       }>
         <div>
-          <Table columns={ticketListcolumns} dataSource={this.props.tickets} pagination={false}/>
+          <Table columns={ticketListcolumns} dataSource={this.props.tickets} pagination={{pageSize: 5}}/>
         </div>
         <div>
           <Button type="default">View All</Button>

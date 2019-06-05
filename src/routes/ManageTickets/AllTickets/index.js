@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, DatePicker, Icon, Input, Layout, Select, Table} from "antd";
+import {Button, DatePicker, Icon, Input, Select, Table} from "antd";
 import {connect} from "react-redux";
 
 import {
@@ -17,14 +17,12 @@ import {onSupportStaff} from "../../../appRedux/actions/SupportStaff";
 import IntlMessages from "../../../util/IntlMessages";
 import TicketDetail from "./TicketDetail";
 import InfoView from '../../../components/InfoView'
-import Auxiliary from "../../../util/Auxiliary";
 import Permissions from "../../../util/Permissions";
 import {ticketColumn} from "./data";
 import PropTypes from "prop-types";
 
 const ButtonGroup = Button.Group;
 const Option = Select.Option;
-const {Sider} = Layout;
 
 class AllTickets extends Component {
   constructor(props) {
@@ -174,16 +172,10 @@ class AllTickets extends Component {
                                                           onClick={this.props.onToggleAddTicket}>
                       Add New
                     </Button> : null}
-                    {this.props.showAddTicket ?
-                      <AddNewTicket showAddTicket={this.props.showAddTicket}
-                                    onToggleAddTicket={this.props.onToggleAddTicket}
-                                    onAddTickets={this.props.onAddTickets}
-                                    priorities={this.props.priorities}
-                                    staff={this.props.staff}/> : null}
+
                   </div>}
                   extra={
                     <div className="gx-d-flex gx-align-items-center">
-
                       <Input
                         placeholder="Enter keywords to search tickets"
                         prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}/>
@@ -210,7 +202,7 @@ class AllTickets extends Component {
                        pagination={{pageSize: this.state.itemNumbers}}
                        className="gx-table-responsive"
                        onRow={(record) => ({
-                         onClick: (e) => {
+                         onClick: () => {
                            if (Permissions.canViewTicketDetail()) {
                              this.props.onSelectTicket(record)
                            }
@@ -223,6 +215,12 @@ class AllTickets extends Component {
             <div>
             </div>
           </Widget>
+          {this.props.showAddTicket ?
+            <AddNewTicket showAddTicket={this.props.showAddTicket}
+                          onToggleAddTicket={this.props.onToggleAddTicket}
+                          onAddTickets={this.props.onAddTickets}
+                          priorities={this.props.priorities}
+                          staff={this.props.staff}/> : null}
         </div>
         <InfoView/>
       </div>

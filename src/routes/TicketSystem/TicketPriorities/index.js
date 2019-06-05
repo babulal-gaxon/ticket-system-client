@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Badge, Button, Icon, Input, Table} from "antd";
+import {Badge, Button, Icon, Input, Select, Table} from "antd";
 import {connect} from "react-redux";
 import {
   onAddTicketPriority,
@@ -16,6 +16,8 @@ import Permissions from "../../../util/Permissions";
 import Auxiliary from "../../../util/Auxiliary";
 
 const ButtonGroup = Button.Group;
+const {Option} = Select;
+
 
 class TicketPriorities extends Component {
   constructor(props) {
@@ -23,14 +25,27 @@ class TicketPriorities extends Component {
     this.state = {
       selectedRowKeys: [],
       priorityId: 0,
-      filterText: ""
+      filterText: "",
+      itemNumbers: null,
+      current: 1
     };
   };
   componentWillMount() {
     this.props.onGetTicketPriorities();
   };
+  onCurrentIncrement = () => {
+    this.setState({current: this.state.current + 1});
+    console.log("current value", this.state.current)
+  };
+  onCurrentDecrement = () => {
+    if (this.state.current !== 1) {
+      this.setState({current: this.state.current - 1});
+    } else {
+      return null;
+    }
+  };
   onFilterTextChange = (e) => {
-    this.setState({filterText:e.target.value});
+    this.setState({filterText: e.target.value});
   };
   onFilterData = () => {
     return this.props.priorities.filter(priority => priority.name.indexOf(this.state.filterText) !== -1);
@@ -46,17 +61,16 @@ class TicketPriorities extends Component {
     this.setState({priorityId: id});
     this.props.onToggleAddPriority();
   };
+  onSelectOption = () => {
+    return <Select defaultValue="Archive" style={{width: 120}}>
+      <Option value="Archive">Archive</Option>
+      <Option value="Delete">Delete</Option>
+      <Option value="Disable">Disable</Option>
+      <Option value="Export">Export</Option>
+    </Select>
+  };
   onGetTableColumns = () => {
     return [
-      {
-        title: 'ID',
-        dataIndex: 'id',
-        key: 'id',
-        render: (text, record) => {
-          return <span className="gx-text-grey">{record.id}</span>
-
-        },
-      },
       {
         title: 'Name',
         dataIndex: 'name',
@@ -82,11 +96,19 @@ class TicketPriorities extends Component {
         },
       },
       {
+        title: 'Priority Value',
+        dataIndex: 'priorityValue',
+        key: 'priorityValue',
+        render: (text, record) => {
+          return <span className="gx-email gx-d-inline-block gx-mr-2">{`0${record.value} - some message`}</span>
+        },
+      },
+      {
         title: 'Created By',
         dataIndex: 'createdBy',
         key: 'createdBy',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.user_id}</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.created_by}</span>
         },
       },
       {
@@ -95,7 +117,7 @@ class TicketPriorities extends Component {
         key: 'Status',
         render: (text, record) => {
           return <Badge>
-            {record.status}
+            {record.status ? "Active" : "Disabled"}
           </Badge>
         },
       },
@@ -113,6 +135,21 @@ class TicketPriorities extends Component {
       },
     ];
   };
+  onPageChange = page => {
+    this.setState({
+      current: page,
+    });
+  };
+  onShowItemOptions = () => {
+    return <Select defaultValue={10} onChange={this.onDropdownChange}>
+      <Option value={10}>10</Option>
+      <Option value={25}>25</Option>
+      <Option value={50}>50</Option>
+    </Select>
+  };
+  onDropdownChange = (value) => {
+    this.setState({itemNumbers: value})
+  };
   render() {
     const priorities = this.onFilterData();
     const {selectedRowKeys} = this.state;
@@ -124,33 +161,44 @@ class TicketPriorities extends Component {
     return (
       <Auxiliary>
         <Widget
-          title={
-            Permissions.canPriorityAdd() ?
+          title={<span>
+            {Permissions.canPriorityAdd() ?
               <Button type="primary" className="h4 gx-text-capitalize gx-mb-0" onClick={this.onAddButtonClick}>
                 Add New Priority
               </Button> : null}
+            <span>{this.onSelectOption()}</span>
+      </span>}
           extra={
-            <div className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
+            <div className="gx-d-flex gx-align-items-center">
               <Input
-                placeholder="Enter keywords to search tickets"
+                placeholder="Enter keywords to search Priorities"
                 prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                value ={this.state.filterText}
+                value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
-              <ButtonGroup>
-                <Button type="default">
-                  <i className="icon icon-long-arrow-left"/>
-                </Button>
-                <Button type="default">
-                  <i className="icon icon-long-arrow-right"/>
-                </Button>
-              </ButtonGroup>
-            </div>
-          }>
+              <div className="gx-ml-3">
+                {this.onShowItemOptions()}
+              </div>
+              <div className="gx-ml-3">
+                <ButtonGroup className="gx-btn-group-flex">
+                  <Button className="gx-mb-0" type="default" onClick={this.onCurrentDecrement}>
+                    <i className="icon icon-long-arrow-left"/>
+                  </Button>
+                  <Button className="gx-mb-0" type="default" onClick={this.onCurrentIncrement}>
+                    <i className="icon icon-long-arrow-right"/>
+                  </Button>
+                </ButtonGroup>
+              </div>
+            </div>}>
           {Permissions.canPriorityView() ?
-            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={priorities}
-                   className="gx-mb-4"/> : null}
-          <div>
-          </div>
+            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
+                   dataSource={priorities} className="gx-mb-4"
+                   pagination={{
+                     pageSize: this.state.itemNumbers,
+                     current: this.state.current,
+                     total: priorities.length,
+                     showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                     onChange: this.onPageChange
+                   }}/> : null}
         </Widget>
         {this.props.showAddPriority ?
           <AddNewPriority showAddPriority={this.props.showAddPriority}
@@ -163,6 +211,7 @@ class TicketPriorities extends Component {
     );
   }
 }
+
 
 const mapStateToProps = ({ticketPriorities}) => {
   const {priorities, showAddPriority} = ticketPriorities;

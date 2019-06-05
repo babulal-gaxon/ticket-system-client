@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Badge, Button, Icon, Input, Table} from "antd";
+import {Badge, Button, Icon, Input, Select, Table} from "antd";
 import {connect} from "react-redux";
 
 import {
@@ -13,9 +13,9 @@ import AddNewResponses from "./AddNewResponses";
 import Widget from "../../../components/Widget/index";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
-import Auxiliary from "../../../util/Auxiliary";
 
 const ButtonGroup = Button.Group;
+const {Option} = Select;
 
 class CannedResponses extends Component {
   constructor(props) {
@@ -23,11 +23,26 @@ class CannedResponses extends Component {
     this.state = {
       selectedRowKeys: [],
       responseId: 0,
-      filterText: ""
+      filterText: "",
+      itemNumbers: null,
+      current: 1
     };
   };
+
   componentWillMount() {
     this.props.onGetCannedResponses();
+  };
+
+  onCurrentIncrement = () => {
+    this.setState({current: this.state.current + 1});
+    console.log("current value", this.state.current)
+  };
+  onCurrentDecrement = () => {
+    if (this.state.current !== 1) {
+      this.setState({current: this.state.current - 1});
+    } else {
+      return null;
+    }
   };
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
@@ -43,20 +58,19 @@ class CannedResponses extends Component {
     this.setState({responseId: id});
     this.props.onToggleAddCanned();
   };
-onFilterData = () => {
-  return this.props.responses.filter(response => response.short_title.indexOf(this.state.filterText) !== -1);
-};
+  onFilterData = () => {
+    return this.props.responses.filter(response => response.short_title.indexOf(this.state.filterText) !== -1);
+  };
+  onSelectOption = () => {
+    return <Select defaultValue="Archive" style={{width: 120}}>
+      <Option value="Archive">Archive</Option>
+      <Option value="Delete">Delete</Option>
+      <Option value="Disable">Disable</Option>
+      <Option value="Export">Export</Option>
+    </Select>
+  };
   onGetTableColumns = () => {
     return [
-      {
-        title: 'ID',
-        dataIndex: 'id',
-        key: 'id',
-        render: (text, record) => {
-          return <span className="gx-text-grey">{record.id}</span>
-
-        },
-      },
       {
         title: 'Short Title',
         dataIndex: 'shortTitle',
@@ -89,7 +103,7 @@ onFilterData = () => {
         dataIndex: 'createdBy',
         key: 'createdBy',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.user_id}</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.created_by}</span>
         },
       },
       {
@@ -98,7 +112,7 @@ onFilterData = () => {
         key: 'Status',
         render: (text, record) => {
           return <Badge>
-            {record.status}
+            {record.status === 1 ? "Active" : "Disabled"}
           </Badge>
         },
       },
@@ -116,6 +130,21 @@ onFilterData = () => {
       },
     ];
   };
+  onPageChange = page => {
+    this.setState({
+      current: page,
+    });
+  };
+  onShowItemOptions = () => {
+    return <Select defaultValue={10} onChange={this.onDropdownChange}>
+      <Option value={10}>10</Option>
+      <Option value={25}>25</Option>
+      <Option value={50}>50</Option>
+    </Select>
+  };
+  onDropdownChange = (value) => {
+    this.setState({itemNumbers: value})
+  };
   render() {
     const responses = this.onFilterData();
     const {selectedRowKeys} = this.state;
@@ -126,35 +155,46 @@ onFilterData = () => {
     console.log("in Show Responses", this.props.responses);
     return (
       <div className="gx-main-content">
-        {console.log("in return",this.state.filterText)}
+        {console.log("in return", this.state.filterText)}
         <Widget
-          title={
-            Permissions.canResponseAdd() ? <Button type="primary" className="h4 gx-text-capitalize gx-mb-0"
-                                                   onClick={this.onAddButtonClick}>
+          title={<span>
+            {Permissions.canResponseAdd() ? <Button type="primary" className="h4 gx-text-capitalize gx-mb-0"
+                                                    onClick={this.onAddButtonClick}>
               Add New Response</Button> : null}
+            <span>{this.onSelectOption()}</span>
+          </span>}
           extra={
-            <div className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
+            <div className="gx-d-flex gx-align-items-center">
               <Input
                 placeholder="Enter keywords to search Responses"
                 prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                value = {this.state.filterText}
-                  onChange={this.onFilterTextChange}/>
-              <ButtonGroup>
-                <Button type="default">
-                  <i className="icon icon-long-arrow-left"/>
-                </Button>
-                <Button type="default">
-                  <i className="icon icon-long-arrow-right"/>
-                </Button>
-              </ButtonGroup>
-            </div>
-          }>
+                value={this.state.filterText}
+                onChange={this.onFilterTextChange}/>
+              <div className="gx-ml-3">
+                {this.onShowItemOptions()}
+              </div>
+              <div className="gx-ml-3">
+                <ButtonGroup className="gx-btn-group-flex">
+                  <Button className="gx-mb-0" type="default" onClick={this.onCurrentDecrement}>
+                    <i className="icon icon-long-arrow-left"/>
+                  </Button>
+                  <Button className="gx-mb-0" type="default" onClick={this.onCurrentIncrement}>
+                    <i className="icon icon-long-arrow-right"/>
+                  </Button>
+                </ButtonGroup>
+              </div>
+            </div>}>
           {Permissions.canResponseView() ?
-            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={responses}
-                   className="gx-mb-4"/> : null}
+            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
+                   dataSource={responses} className="gx-mb-4"
+                   pagination={{
+                     pageSize: this.state.itemNumbers,
+                     current: this.state.current,
+                     total: responses.length,
+                     showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                     onChange: this.onPageChange
+                   }}/> : null}
           <div className="gx-d-flex gx-flex-row">
-          </div>
-          <div>
           </div>
         </Widget>
         {this.props.showAddCanned ?
@@ -169,6 +209,7 @@ onFilterData = () => {
     );
   }
 }
+
 
 const mapStateToProps = ({cannedResponses}) => {
   const {responses, showAddCanned} = cannedResponses;
