@@ -18,36 +18,18 @@ class AddNewPriority extends Component {
     } else {
       const selectedPriority = this.props.priorities.find(priority => priority.id === this.props.priorityId);
       console.log("selectedPriority", selectedPriority);
-      const {name, desc, status, value, color_code} = selectedPriority;
       this.state = {
-        name: name,
-        color_code: color_code,
-        desc: desc,
-        status: status,
-        value: value
+        ...selectedPriority
       };
     }
   };
   onPriorityAdd = () => {
     if (this.props.priorityId === 0) {
-      const newPriority = {
-        name: this.state.name,
-        desc: this.state.desc,
-        status: this.state.status,
-        value: this.state.value,
-        color_code: this.state.color_code,
-      };
-      this.props.onAddTicketPriority(newPriority);
+      this.props.onAddTicketPriority({...this.state});
+      this.props.onToggleAddPriority();
     } else {
-      const newPriority = {
-        name: this.state.name,
-        desc: this.state.desc,
-        status: this.state.status,
-        value: this.state.value,
-        color_code: this.state.color_code,
-        id: this.props.priorityId
-      };
-      this.props.onEditTicketPriority(newPriority);
+      this.props.onEditTicketPriority({...this.state});
+      this.props.onToggleAddPriority();
     }
   };
   handleColorClick = () => {
@@ -102,7 +84,7 @@ class AddNewPriority extends Component {
             <Button key="submit" type="primary" onClick={this.onPriorityAdd}>
               {this.props.priorityId === 0 ? "Add" : "Edit"}
             </Button>,
-            <Button key="cancel" onClick={onToggleAddPriority}>
+            <Button key="cancel" onClick={() => onToggleAddPriority()}>
               Cancel
             </Button>,
           ]}>

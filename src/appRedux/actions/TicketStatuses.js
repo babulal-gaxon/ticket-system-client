@@ -1,10 +1,11 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
 import {
-  ADD_TICKET_STATUS, DELETE_TICKET_STATUS, EDIT_TICKET_STATUS, GET_TICKET_STATUSES,
-  TOGGLE_ADD_STATUS_BOX
+  ADD_TICKET_STATUS,
+  DELETE_TICKET_STATUS,
+  EDIT_TICKET_STATUS,
+  GET_TICKET_STATUSES
 } from "../../constants/TicketStatuses";
-
 
 
 export const onGetTicketStatus = () => {
@@ -23,12 +24,6 @@ export const onGetTicketStatus = () => {
       dispatch({type: FETCH_ERROR, payload: error.message});
       console.info("Error****:", error.message);
     });
-  }
-};
-
-export const onToggleAddStatus = () => {
-  return {
-    type: TOGGLE_ADD_STATUS_BOX
   }
 };
 

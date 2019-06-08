@@ -1,11 +1,6 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
-import {
-  ADD_DEPARTMENT,
-  DELETE_DEPARTMENT, EDIT_DEPARTMENT,
-  GET_DEPARTMENTS,
-  TOGGLE_ADD_DEPARTMENT_BOX
-} from "../../constants/Departments";
+import {ADD_DEPARTMENT, DELETE_DEPARTMENT, EDIT_DEPARTMENT, GET_DEPARTMENTS} from "../../constants/Departments";
 
 export const onGetDepartments = () => {
   return (dispatch) => {
@@ -24,16 +19,10 @@ export const onGetDepartments = () => {
       console.info("Error****:", error.message);
     });
   }
-}
+};
 
-export const onToggleAddDepartment = () => {
-  return {
-    type: TOGGLE_ADD_DEPARTMENT_BOX
-  }
-}
 
 export const onAddDepartment = (department) => {
-
   console.log("onAddDepartment", department)
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -51,7 +40,7 @@ export const onAddDepartment = (department) => {
       console.info("Error****:", error.message);
     });
   }
-}
+};
 
 export const onDeleteDepartment = (departmentId) => {
   return (dispatch) => {
@@ -69,7 +58,7 @@ export const onDeleteDepartment = (departmentId) => {
       console.info("Error****:", error.message);
     });
   }
-}
+};
 
 export const onEditDepartment = (department) => {
   console.log("onEditDepartment", department)
@@ -89,4 +78,4 @@ export const onEditDepartment = (department) => {
       console.info("Error****:", error.message);
     });
   }
-}
+};

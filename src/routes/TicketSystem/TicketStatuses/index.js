@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Badge, Button, Icon, Input, Select, Table} from "antd";
+import {Button, Icon, Input, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -7,8 +7,7 @@ import {
   onAddTicketStatus,
   onDeleteTicketStatus,
   onEditTicketStatus,
-  onGetTicketStatus,
-  onToggleAddStatus
+  onGetTicketStatus
 } from "../../../appRedux/actions/TicketStatuses";
 import AddNewStatus from "./AddNewStatus";
 import Widget from "../../../components/Widget/index";
@@ -26,16 +25,28 @@ class TicketStatuses extends Component {
       selectedRowKeys: [],
       statusId: 0,
       filterText: "",
-      itemNumbers: null,
-      current: 1
+      itemNumbers: 10,
+      current: 1,
+      showAddStatus: false
     };
   };
   componentWillMount() {
-    this.props.onGetTicketStatus();
+    if(Permissions.canStatusView())
+    {
+      this.props.onGetTicketStatus();
+    }
+  };
+  onToggleAddStatus = () => {
+    this.setState({showAddStatus: !this.state.showAddStatus})
   };
   onCurrentIncrement = () => {
-    this.setState({current: this.state.current + 1});
-    console.log("current value", this.state.current)
+    const pages = Math.ceil(this.props.statuses.length/this.state.itemNumbers);
+    if(this.state.current < pages ) {
+      this.setState({current: this.state.current + 1});
+    }
+    else {
+      return null;
+    }
   };
   onCurrentDecrement = () => {
     if(this.state.current !== 1) {
@@ -55,12 +66,10 @@ class TicketStatuses extends Component {
     this.setState({selectedRowKeys});
   };
   onAddButtonClick = () => {
-    this.setState({statusId: 0});
-    this.props.onToggleAddStatus();
+    this.setState({statusId: 0, showAddStatus: true});
   };
   onEditStatus = (id) => {
-    this.setState({statusId: id});
-    this.props.onToggleAddStatus();
+    this.setState({statusId: id, showAddStatus: true});
   };
   onSelectOption = () => {
     return <Select defaultValue="Archive" style={{ width: 120 }}>
@@ -93,7 +102,7 @@ class TicketStatuses extends Component {
         dataIndex: 'colorCode',
         key: 'colorCode',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.color_code}</span>
+          return <Tag color={record.color_code}>{record.color_code}</Tag>
         },
       },
       {
@@ -117,9 +126,9 @@ class TicketStatuses extends Component {
         dataIndex: 'status',
         key: 'status',
         render: (text, record) => {
-          return <Badge>
-            {record.status == 1 ? "Active" : "Disabled"}
-          </Badge>
+          return <Tag color={record.color_code}>
+            {record.status === 1 ? "Active" : "Disabled"}
+          </Tag>
         },
       },
       {
@@ -190,21 +199,21 @@ class TicketStatuses extends Component {
                 </ButtonGroup>
               </div>
             </div>}>
-          {Permissions.canStatusView() ?
+
             <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
                    dataSource={statuses} className="gx-mb-4"
                    pagination = {{pageSize: this.state.itemNumbers,
                      current: this.state.current,
                      total:statuses.length,
                      showTotal:((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
-                     onChange: this.onPageChange}}/> : null}
+                     onChange: this.onPageChange}}/>
           <div className="gx-d-flex gx-flex-row">
             <span>Showing {statuses.length} of {statuses.length}</span>
           </div>
         </Widget>
-        {this.props.showAddStatus ?
-          <AddNewStatus showAddStatus={this.props.showAddStatus}
-                        onToggleAddStatus={this.props.onToggleAddStatus}
+        {this.state.showAddStatus ?
+          <AddNewStatus showAddStatus={this.state.showAddStatus}
+                        onToggleAddStatus={this.onToggleAddStatus}
                         onAddTicketStatus={this.props.onAddTicketStatus}
                         statusId={this.state.statusId}
                         onEditTicketStatus={this.props.onEditTicketStatus}
@@ -221,7 +230,6 @@ const mapStateToProps = ({ticketStatuses}) => {
 
 export default connect(mapStateToProps, {
   onGetTicketStatus,
-  onToggleAddStatus,
   onAddTicketStatus,
   onDeleteTicketStatus,
   onEditTicketStatus
@@ -229,11 +237,9 @@ export default connect(mapStateToProps, {
 
 
 TicketStatuses.defaultProps = {
-  statuses: [],
-  showAddStatus: false
+  statuses: []
 };
 
 TicketStatuses.propTypes = {
-  statuses: PropTypes.array,
-  showAddStatus: PropTypes.bool
+  statuses: PropTypes.array
 };

@@ -1,126 +1,120 @@
 import React, {Component} from "react"
-import {Avatar, Badge, Col, Input, Row} from "antd";
+import {Col, Row} from "antd";
 import PropTypes from "prop-types";
-
-import CustomScrollbars from "../../../util/CustomScrollbars";
+import Widget from "../../../components/Widget";
+import ConversationCell from "../../../components/todo/ToDoDetail/ConversationCell";
 
 class TicketDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       ticket: this.props.ticket,
-      editTitle: false,
       title: "",
+      message: '',
+      conversation:[]
     }
   };
-  onEditTitle = () => {
-    if (this.state.editTitle) {
-      const ticket = this.state.ticket;
-      ticket.title = this.state.title;
-      this.props.onUpdateTickets(ticket)
+  // onEditTitle = () => {
+  //   if (this.state.editTitle) {
+  //     const ticket = this.state.ticket;
+  //     ticket.title = this.state.title;
+  //     this.props.onUpdateTickets(ticket)
+  //   }
+  //   this.setState({
+  //     editTitle: !this.state.editTitle
+  //   });
+  // };
+
+  _handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.submitComment();
     }
+  };
+
+  submitComment() {
+    if (this.state.message !== '') {
+      const updatedConversation = this.state.conversation.concat({
+        'name': this.props.user.name,
+        'thumb': this.props.user.avatar,
+        'message': this.state.message,
+        // 'sentAt': Moment().format('ddd DD, YYYY, hh:mm:ss A'),
+      });
+      this.setState({
+        conversation: updatedConversation,
+        message: '',
+      });
+    }
+  }
+
+  updateMessageValue(evt) {
     this.setState({
-      editTitle: !this.state.editTitle
+      message: evt.target.value
     });
-  };
+  }
+
   render() {
-    const {ticket, editTitle} = this.state;
+    const {ticket, conversation} = this.state;
+    console.log("in ticket detail", ticket)
     return (
-      <div className="gx-module-detail gx-module-list">
-        <CustomScrollbars className="gx-todo-detail-content-scroll">
-          <div className="gx-module-detail-item gx-module-detail-header">
-            <i className="gx-icon-btn icon icon-arrow-left" onClick={this.props.onBackToList}/>
-            <Row>
-              <Col xs={24} sm={12} md={17} lg={12} xl={17}>
-                <div className="gx-flex-row">
-                  <div className="gx-user-name gx-mr-md-4 gx-mr-2 gx-my-1">
-                    <div className="gx-flex-row gx-align-items-center gx-pointer">
-                      <Avatar className="gx-mr-3 gx-size-36" src="https://via.placeholder.com/150x150"/>
-                      <h4 className="gx-mb-0">Assigned to</h4>
+      <div className="gx-main-layout-content">
+      <Widget
+        title={<i className="gx-icon-btn icon icon-arrow-left" onClick={this.props.onBackToList}/>}>
+                <div className="gx-module-detail-item gx-module-detail-header">
+                  <Row>
+                    <Col xs={18} sm={12} md={17} lg={12} xl={17}>
+                      <div>
+                      <div className="gx-flex-row">
+                        <div className="gx-user-name gx-mr-md-4 gx-mr-2 gx-my-1">
+                          two dropdowns
+                        </div>
+                      </div>
+                <div className="gx-module-detail-item">
+                  <div>
+                    <div>#{ticket.id}</div>
+                    <h3 className="gx-module-detail-item">{ticket.title}</h3>
+                    <div>
+                      <span>Created at: {ticket.created_at}</span>
+                      <span> Last Updated at: 2 hours ago</span>
                     </div>
-                  </div>
+                    <div>{ticket.message}</div>
                 </div>
-              </Col>
-              <Col xs={24} sm={12} md={7} lg={12} xl={7}>
-                <div className="gx-flex-row gx-justify-content-between">
-                  <i className="gx-icon-btn icon icon-trash"/>
-                  <span className="gx-d-block">
-                    <i className="gx-icon-btn icon icon-star"/>
-                  </span>
-                  <span className="gx-d-block">
-                    <i className="gx-icon-btn icon icon-important"/>
-                  </span>
-                  <span className="gx-d-block">
-                    <i className="gx-icon-btn icon icon-tag"/>
-                  </span>
                 </div>
-              </Col>
-            </Row>
-          </div>
-          <div className="gx-module-detail-item">
-            <div className="gx-mb-md-4 gx-mb-2">
-              <Badge style={ticket.priority_color_code}>
-                {ticket.priority_name}
-              </Badge>
-            </div>
-            <div className="gx-form-group gx-flex-row gx-align-items-center gx-mb-0 gx-flex-nowrap">
-              <div>
-                <span
-                  className="gx-border-2 gx-size-30 gx-rounded-circle gx-text-muted gx-border-grey gx-d-block gx-text-center gx-pointer">
-                    <i className="icon icon-check"/>
-                </span>
-              </div>
-              {editTitle ?
-                <div className="gx-flex-row gx-align-items-center gx-justify-content-between gx-flex-1 gx-flex-nowrap">
-                  <div className="gx-col">
-                    <Input
-                      fullWidth
-                      className="gx-task-title"
-                      id="required"
-                      placeholder="Title"
-                      onChange={(event) => this.setState({title: event.target.value})}
-                      defaultValue={ticket.title}/>
-                  </div>
-                  <span className="gx-d-block gx-size-40 gx-text-center gx-pointer" onClick={this.onEditTitle}>
-                    <i className="gx-icon-btn icon icon-edit"/>
-                  </span>
-                </div> :
-                <div className="gx-flex-row gx-align-items-center gx-justify-content-between gx-flex-1 gx-flex-nowrap">
-                  <div className="gx-task-title gx-col">
-                    {ticket.title}
-                  </div>
-                  <span className="gx-d-block gx-size-40 gx-text-center gx-pointer" onClick={this.onEditTitle}>
-                    <i className="gx-icon-btn icon icon-edit"/>
-                  </span>
-                </div>}
-            </div>
-            <div className="gx-module-detail-item gx-mb-md-4 gx-mb-2">
-              <div className="gx-flex-row gx-align-items-center gx-justify-content-between gx-flex-1 gx-flex-nowrap">
-                <div className="gx-task-input gx-col">
-                  <Input
-                    fullWidth
-                    id="required"
-                    placeholder="Note"
-                    defaultValue={ticket.message}/>
+                        <div className="gx-module-detail-item">
+                          <h3 className="gx-mb-0 gx-mb-sm-1">Messages</h3>
+                        </div>
+                        {conversation.map((conversation, index) =>
+                          <ConversationCell key={index} conversation={conversation}/>
+                        )}
+                        {/*<div className="gx-chat-main-footer gx-todo-main-footer">*/}
+                        {/*  <div className="gx-flex-row gx-align-items-center">*/}
+                        {/*    <div className="gx-col">*/}
+                        {/*      <div className="gx-form-group">*/}
+                        {/*        <TextArea className="gx-border-0 ant-input gx-chat-textarea"*/}
+                        {/*                  id="required"*/}
+                        {/*                  onKeyUp={this._handleKeyPress}*/}
+                        {/*                  onChange={this.updateMessageValue}*/}
+                        {/*                  value={message}*/}
+                        {/*                  rows={2}*/}
+                        {/*                  placeholder="Type and hit enter to send message"/>*/}
+                        {/*      </div>*/}
+                        {/*    </div>*/}
+
+                        {/*    <div className="gx-chat-sent"*/}
+                        {/*         onClick={this.submitComment}*/}
+                        {/*         aria-label="Send message">*/}
+                        {/*      <i className="gx-icon-btn icon icon-sent"/>*/}
+                        {/*    </div>*/}
+                        {/*  </div>*/}
+                        {/*</div>*/}
+                      </div>
+
+          </Col>
+          <Col xl={6} lg={12} md={12} sm={12} xs={24}>
+          data will come soon
+          </Col>
+        </Row>
                 </div>
-                <span className="gx-d-block gx-size-40 gx-text-center gx-pointer">
-                    <i className="gx-icon-btn icon icon-edit"/>
-                </span>
-              </div>
-              <div className="gx-flex-row gx-align-items-center gx-justify-content-between gx-flex-1 gx-flex-nowrap">
-                <div className="gx-task-des gx-col">
-                  {ticket.message === '' ? 'Add note here' : ticket.message}
-                </div>
-                <span className="gx-d-block gx-size-40 gx-text-center gx-pointer">
-                  <i className="gx-icon-btn icon icon-edit"/>
-                </span>
-              </div>
-            </div>
-            <div className="gx-module-detail-item">
-              <h3 className="gx-mb-0 gx-mb-sm-1">Comments</h3>
-            </div>
-          </div>
-        </CustomScrollbars>
+      </Widget>
       </div>
     )
   }

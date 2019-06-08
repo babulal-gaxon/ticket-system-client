@@ -14,30 +14,16 @@ class AddNewDepartment extends Component {
     } else {
       const selectedDept = this.props.dept.find(department => department.id === this.props.departmentId)
       console.log("selectedDepartment", selectedDept)
-      const {name, desc, status} = selectedDept;
-      this.state = {
-        name: name,
-        desc: desc,
-        status: status
-      };
+      this.state = {...selectedDept};
     }
   };
   onDepartmentAdd = () => {
     if (this.props.departmentId === 0) {
-      const newDepartment = {
-        name: this.state.name,
-        desc: this.state.desc,
-        status: this.state.status,
-      };
-      this.props.onAddDepartment(newDepartment)
+      this.props.onAddDepartment({...this.state})
+      this.props.onToggleAddDepartment();
     } else {
-      const newDepartment = {
-        name: this.state.name,
-        desc: this.state.desc,
-        status: this.state.status,
-        id: this.props.departmentId
-      };
-      this.props.onEditDepartment(newDepartment)
+      this.props.onEditDepartment({...this.state})
+      this.props.onToggleAddDepartment();
     }
   };
   render() {
@@ -48,12 +34,12 @@ class AddNewDepartment extends Component {
         <Modal
           visible={showAddDepartment}
           title="Add New Department"
-          onCancel={onToggleAddDepartment}
+          onCancel={() => onToggleAddDepartment()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onDepartmentAdd}>
               {this.props.departmentId === 0 ? "Add" : "Edit"}
             </Button>,
-            <Button key="cancel" onClick={onToggleAddDepartment}>
+            <Button key="cancel" onClick={() => onToggleAddDepartment()}>
               Cancel
             </Button>,
           ]}>
@@ -90,7 +76,7 @@ export default AddNewDepartment;
 AddNewDepartment.defaultProps = {
   dept: [],
   departmentId: '',
-  showAddDepartment: true,
+  showAddDepartment: true
 };
 
 AddNewDepartment.propTypes = {

@@ -1,10 +1,10 @@
 import axios from 'util/Api'
 import {
-  ADD_TICKETS, BACK_TO_LIST,
-  GET_PRIORITIES,
+  ADD_TICKETS,
+  BACK_TO_LIST,
+  DELETE_TICKET,
   GET_TICKETS,
   SELECT_CURRENT_TICKET,
-  TOGGLE_ADD_TICKET_BOX,
   UPDATE_TICKET
 } from "../../constants/TicketList";
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
@@ -32,15 +32,9 @@ export const onGetTickets = () => {
 };
 
 
-export const onToggleAddTicket = () => {
-  return {
-    type: TOGGLE_ADD_TICKET_BOX
-  }
-};
-
 
 export const onAddTickets = (ticket) => {
-  console.log("onAddTickets", ticket);
+  console.log("onAddTickets ticket data is ", ticket);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/tickets', ticket).then(({data}) => {
@@ -51,26 +45,6 @@ export const onAddTickets = (ticket) => {
         dispatch({type: FETCH_SUCCESS});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
-      }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.info("Error****:", error.message);
-    });
-  }
-};
-
-export const onGetPriorities = () => {
-
-  return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.get('/setup/priorities'
-    ).then(({data}) => {
-      console.info("onGetPriorities: ", data);
-      if (data.success) {
-        dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_PRIORITIES, payload: data.data});
-      } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -107,6 +81,26 @@ export const onUpdateTickets = (ticket) => {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }
     }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onDeleteTicket = (ticketId) => {
+console.log("In delete option", ticketId)
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.delete(`/tickets/${ticketId}`)
+      .then(({data}) => {
+        console.log("on Delete ticket: ", data);
+        if (data.success) {
+          dispatch({type: FETCH_SUCCESS});
+          dispatch({type: DELETE_TICKET, payload: ticketId});
+        } else {
+          dispatch({type: FETCH_ERROR, payload: data.error});
+        }
+      }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
       console.info("Error****:", error.message);
     });

@@ -1,14 +1,8 @@
-
-
-import {
-  ADD_DEPARTMENT, DELETE_DEPARTMENT, EDIT_DEPARTMENT, GET_DEPARTMENTS,
-  TOGGLE_ADD_DEPARTMENT_BOX
-} from "../../constants/Departments";
+import {ADD_DEPARTMENT, DELETE_DEPARTMENT, EDIT_DEPARTMENT, GET_DEPARTMENTS} from "../../constants/Departments";
 
 const initialState = {
   dept: [],
-  showAddDepartment: false
-}
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -16,35 +10,27 @@ export default (state = initialState, action) => {
       return {
         ...state,
         dept: action.payload
-      }
-
-    case TOGGLE_ADD_DEPARTMENT_BOX:
-      return {
-        ...state,
-        showAddDepartment: !state.showAddDepartment
-      }
+      };
 
     case ADD_DEPARTMENT:
       return {
         ...state,
         dept: state.dept.concat(action.payload),
-        showAddDepartment: false
-      }
+      };
 
     case EDIT_DEPARTMENT:
       const updateDepartments = state.dept.map((department) => department.id === action.payload.id ? action.payload : department)
       return {
         ...state,
         dept:updateDepartments,
-        showAddDepartment: false
-      }
+      };
 
       case DELETE_DEPARTMENT:
         const updatedDepartments = state.dept.filter((department) => department.id !== action.payload)
         return {
           ...state,
           dept:updatedDepartments
-        }
+        };
     default:
       return state;
   }

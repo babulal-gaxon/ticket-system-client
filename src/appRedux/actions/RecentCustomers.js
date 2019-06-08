@@ -3,11 +3,11 @@ import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTyp
 import {RECENT_CUSTOMERS} from "../../constants/RecentCustomers";
 
 
-export const onRecentCustomers = () => {
+export const onGetCustomers = () => {
 
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get('/customers'
+    axios.get('/companies'
     ).then(({data}) => {
       console.info("onRecentCustomers: ", data);
       if (data.success) {

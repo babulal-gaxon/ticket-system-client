@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Badge, Button, Icon, Input, Select, Table} from "antd";
+import {Badge, Button, Icon, Input, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -9,10 +9,8 @@ import {
   onDeleteDepartment,
   onEditDepartment,
   onGetDepartments,
-  onToggleAddDepartment
 } from "../../../appRedux/actions/Departments";
 import AddNewDepartment from "./AddNewDepartment";
-import Auxiliary from "../../../util/Auxiliary";
 import Permissions from "../../../util/Permissions";
 
 const ButtonGroup = Button.Group;
@@ -26,20 +24,31 @@ class Departments extends Component {
       selectedRowKeys: [],
       departmentId: 0,
       filterText: "",
-      itemNumbers: null,
-      current: 1
+      itemNumbers: 10,
+      currentPage: 1,
+      showAddDepartment: false
     }
   };
   componentWillMount() {
-    this.props.onGetDepartments();
+    if(Permissions.canDepartmentView()) {
+      this.props.onGetDepartments()
+    }
+  };
+  onToggleAddDepartment = () => {
+    this.setState({showAddDepartment: !this.state.showAddDepartment})
   };
   onCurrentIncrement = () => {
-    this.setState({current: this.state.current + 1});
-    console.log("current value", this.state.current)
+    const pages = Math.ceil(this.props.dept.length/this.state.itemNumbers);
+    if(this.state.currentPage < pages ) {
+      this.setState({currentPage: this.state.currentPage + 1});
+    }
+    else {
+      return null;
+    }
   };
   onCurrentDecrement = () => {
-    if(this.state.current !== 1) {
-      this.setState({current: this.state.current - 1});
+    if(this.state.currentPage !== 1) {
+      this.setState({currentPage: this.state.currentPage - 1});
     }
     else{
       return null;
@@ -55,12 +64,10 @@ class Departments extends Component {
     this.setState({selectedRowKeys});
   };
   onAddButtonClick = () => {
-    this.setState({departmentId: 0});
-    this.props.onToggleAddDepartment()
+    this.setState({departmentId: 0, showAddDepartment: true});
   };
   onEditDepartment = (id) => {
-    this.setState({departmentId: id})
-    this.props.onToggleAddDepartment()
+    this.setState({departmentId: id, showAddDepartment: true});
   };
   onSelectOption = () => {
     return <Select defaultValue="Archive" style={{ width: 120 }}>
@@ -101,9 +108,9 @@ class Departments extends Component {
         dataIndex: 'status_id',
         key: 'Status',
         render: (text, record) => {
-          return <Badge>
+          return <Tag>
             {record.status === 1 ? "Active" : "Disabled"}
-          </Badge>
+          </Tag>
         },
       },
       {
@@ -132,7 +139,7 @@ class Departments extends Component {
   };
   onPageChange = page => {
     this.setState({
-      current: page,
+      currentPage: page,
     });
   };
   render() {
@@ -142,7 +149,8 @@ class Departments extends Component {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
-    return (<Auxiliary>
+    return (
+      <div className="gx-main-content">
         <Widget
           title={<span>
             {(Permissions.canDepartmentAdd()) ?
@@ -172,37 +180,35 @@ class Departments extends Component {
                 </ButtonGroup>
               </div>
             </div>}>
-          {Permissions.canDepartmentView() ?
+
             <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={dept} className="gx-mb-4"
                    pagination = {{pageSize: this.state.itemNumbers,
-              current: this.state.current,
+              current: this.state.currentPage,
                      total:dept.length,
                      showTotal:((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
-                   onChange: this.onPageChange}}/> : null}
+                   onChange: this.onPageChange}}/>
           <div className="gx-d-flex gx-flex-row">
-            {/*<span>Showing {dept.length} of {dept.length}</span>*/}
           </div>
         </Widget>
-        {this.props.showAddDepartment ?
-          <AddNewDepartment showAddDepartment={this.props.showAddDepartment}
-                            onToggleAddDepartment={this.props.onToggleAddDepartment}
+        {this.state.showAddDepartment ?
+          <AddNewDepartment showAddDepartment={this.state.showAddDepartment}
+                            onToggleAddDepartment={this.onToggleAddDepartment}
                             onAddDepartment={this.props.onAddDepartment}
                             departmentId={this.state.departmentId}
                             onEditDepartment={this.props.onEditDepartment}
                             dept={dept}/> : null}
-      </Auxiliary>
+      </div>
     );
   }
 }
 
 const mapStateToProps = ({departments}) => {
-  const {dept, showAddDepartment} = departments;
-  return {dept, showAddDepartment};
+  const {dept} = departments;
+  return {dept};
 };
 
 export default connect(mapStateToProps, {
   onGetDepartments,
-  onToggleAddDepartment,
   onAddDepartment,
   onDeleteDepartment,
   onEditDepartment
@@ -210,12 +216,10 @@ export default connect(mapStateToProps, {
 
 
 Departments.defaultProps = {
-  dept: [],
-  showAddDepartment: false
+  dept: []
 };
 
 Departments.propTypes = {
-  dept: PropTypes.array,
-  showAddDepartment: PropTypes.bool
+  dept: PropTypes.array
 };
 

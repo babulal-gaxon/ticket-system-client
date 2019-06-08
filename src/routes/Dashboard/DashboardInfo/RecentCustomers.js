@@ -2,13 +2,13 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Avatar, Button} from "antd";
 
-import {onRecentCustomers} from "../../../appRedux/actions/RecentCustomers";
+import {onGetCustomers} from "../../../appRedux/actions/RecentCustomers";
 import Widget from "../../../components/Widget/index";
 import PropTypes from "prop-types";
 
 class RecentCustomers extends Component {
   componentDidMount() {
-    this.props.onRecentCustomers();
+    this.props.onGetCustomers();
   }
   render() {
     console.log("inRecentCustomers", this.props.customers);
@@ -52,7 +52,7 @@ const mapStateToProps = ({recentCustomers}) => {
   return {customers}
 };
 
-export default connect(mapStateToProps,{onRecentCustomers})(RecentCustomers)
+export default connect(mapStateToProps,{onGetCustomers})(RecentCustomers)
 
 
 RecentCustomers.defaultProps = {

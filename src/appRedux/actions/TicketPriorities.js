@@ -1,10 +1,11 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
 import {
-  ADD_TICKET_PRIORITY, DELETE_TICKET_PRIORITY, EDIT_TICKET_PRIORITY, GET_TICKET_PRIORITIES,
-  TOGGLE_ADD_PRIORITY_BOX
+  ADD_TICKET_PRIORITY,
+  DELETE_TICKET_PRIORITY,
+  EDIT_TICKET_PRIORITY,
+  GET_TICKET_PRIORITIES
 } from "../../constants/TicketPriorities";
-
 
 
 export const onGetTicketPriorities = () => {
@@ -23,12 +24,6 @@ export const onGetTicketPriorities = () => {
       dispatch({type: FETCH_ERROR, payload: error.message});
       console.info("Error****:", error.message);
     });
-  }
-}
-
-export const onToggleAddPriority = () => {
-  return {
-    type: TOGGLE_ADD_PRIORITY_BOX
   }
 }
 

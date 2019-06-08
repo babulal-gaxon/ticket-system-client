@@ -1,13 +1,12 @@
 import React, {Component} from "react"
-import {Badge, Button, Icon, Input, Select, Table} from "antd";
+import {Badge, Button, Icon, Input, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 
 import {
   onAddCannedResponse,
   onDeleteCannedResponse,
   onEditCannedResponse,
-  onGetCannedResponses,
-  onToggleAddCanned
+  onGetCannedResponses
 } from "../../../appRedux/actions/CannedResponses";
 import AddNewResponses from "./AddNewResponses";
 import Widget from "../../../components/Widget/index";
@@ -24,18 +23,28 @@ class CannedResponses extends Component {
       selectedRowKeys: [],
       responseId: 0,
       filterText: "",
-      itemNumbers: null,
-      current: 1
+      itemNumbers: 10,
+      current: 1,
+      showAddCanned: false
     };
   };
-
   componentWillMount() {
-    this.props.onGetCannedResponses();
+    if(Permissions.canResponseView()) {
+      this.props.onGetCannedResponses();
+    }
   };
-
+  onToggleAddCanned = () => {
+    this.setState({showAddCanned: !this.state.showAddCanned})
+  };
   onCurrentIncrement = () => {
-    this.setState({current: this.state.current + 1});
-    console.log("current value", this.state.current)
+    const pages = Math.ceil(this.props.responses.length/this.state.itemNumbers);
+    console.log("pages", pages)
+    if(this.state.current < pages ) {
+      this.setState({current: this.state.current + 1});
+    }
+    else {
+      return null;
+    }
   };
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
@@ -51,12 +60,10 @@ class CannedResponses extends Component {
     this.setState({filterText: e.target.value})
   };
   onAddButtonClick = () => {
-    this.setState({responseId: 0});
-    this.props.onToggleAddCanned();
+    this.setState({responseId: 0, showAddCanned: true});
   };
   onEditResponse = (id) => {
-    this.setState({responseId: id});
-    this.props.onToggleAddCanned();
+    this.setState({responseId: id, showAddCanned: true});
   };
   onFilterData = () => {
     return this.props.responses.filter(response => response.short_title.indexOf(this.state.filterText) !== -1);
@@ -77,10 +84,8 @@ class CannedResponses extends Component {
         key: 'shortTitle',
         render: (text, record) => {
           return <span className="gx-email gx-d-inline-block gx-mr-2">{record.short_title}</span>
-        },
-
+        }
       },
-
       {
         title: 'Short Code',
         dataIndex: 'shortCode',
@@ -88,7 +93,6 @@ class CannedResponses extends Component {
         render: (text, record) => {
           return <span className="gx-email gx-d-inline-block gx-mr-2">{record.short_code}</span>
         },
-
       },
       {
         title: 'Message',
@@ -111,9 +115,9 @@ class CannedResponses extends Component {
         dataIndex: 'status_id',
         key: 'Status',
         render: (text, record) => {
-          return <Badge>
+          return <Tag>
             {record.status === 1 ? "Active" : "Disabled"}
-          </Badge>
+          </Tag>
         },
       },
       {
@@ -184,7 +188,7 @@ class CannedResponses extends Component {
                 </ButtonGroup>
               </div>
             </div>}>
-          {Permissions.canResponseView() ?
+
             <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
                    dataSource={responses} className="gx-mb-4"
                    pagination={{
@@ -193,13 +197,13 @@ class CannedResponses extends Component {
                      total: responses.length,
                      showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
                      onChange: this.onPageChange
-                   }}/> : null}
+                   }}/>
           <div className="gx-d-flex gx-flex-row">
           </div>
         </Widget>
-        {this.props.showAddCanned ?
-          <AddNewResponses showAddCanned={this.props.showAddCanned}
-                           onToggleAddCanned={this.props.onToggleAddCanned}
+        {this.state.showAddCanned ?
+          <AddNewResponses showAddCanned={this.state.showAddCanned}
+                           onToggleAddCanned={this.onToggleAddCanned}
                            onAddCannedResponse={this.props.onAddCannedResponse}
                            responseId={this.state.responseId}
                            onEditCannedResponse={this.props.onEditCannedResponse}
@@ -212,25 +216,22 @@ class CannedResponses extends Component {
 
 
 const mapStateToProps = ({cannedResponses}) => {
-  const {responses, showAddCanned} = cannedResponses;
-  return {responses, showAddCanned};
+  const {responses} = cannedResponses;
+  return {responses};
 };
 
 
 export default connect(mapStateToProps, {
   onGetCannedResponses,
-  onToggleAddCanned,
   onAddCannedResponse,
   onDeleteCannedResponse,
   onEditCannedResponse
 })(CannedResponses);
 
 CannedResponses.defaultProps = {
-  responses: [],
-  showAddCanned: false
+  responses: []
 };
 
 CannedResponses.propTypes = {
-  responses: PropTypes.array,
-  showAddCanned: PropTypes.bool
+  responses: PropTypes.array
 };

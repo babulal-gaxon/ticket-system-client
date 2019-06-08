@@ -19,14 +19,8 @@ class AddNewStatus extends Component {
     } else {
       const selectedStatus = this.props.statuses.find(status => status.id === this.props.statusId);
       console.log("selectedstatus", selectedStatus);
-      const {name, status, is_default, color_code} = selectedStatus;
       this.state = {
-        name: name,
-        status: status,
-        is_default: is_default,
-        displayColorPicker: false,
-        color_code: color_code,
-        checked: is_default
+       ...selectedStatus
       };
     }
   };
@@ -42,22 +36,11 @@ class AddNewStatus extends Component {
   };
   onStatusAdd = () => {
     if (this.props.statusId === 0) {
-      const newStatus = {
-        name: this.state.name,
-        status: this.state.status,
-        is_default: this.state.is_default,
-        color_code: this.state.color_code,
-      };
-      this.props.onAddTicketStatus(newStatus);
+      this.props.onAddTicketStatus({...this.state});
+      this.props.onToggleAddStatus();
     } else {
-      const newStatus = {
-        name: this.state.name,
-        status: this.state.status,
-        is_default: this.state.is_default,
-        color_code: this.state.color_code,
-        id: this.props.statusId
-      };
-      this.props.onEditTicketStatus(newStatus);
+      this.props.onEditTicketStatus({...this.state});
+      this.props.onToggleAddStatus();
     }
   };
   onCheckBoxChange = (e) => {
@@ -111,7 +94,7 @@ class AddNewStatus extends Component {
             <Button key="submit" type="primary" onClick={this.onStatusAdd}>
               {this.props.statusId === 0 ? "Add" : "Edit"}
             </Button>,
-            <Button key="cancel" onClick={onToggleAddStatus}>
+            <Button key="cancel" onClick={() => onToggleAddStatus()}>
               Cancel
             </Button>,
           ]}>

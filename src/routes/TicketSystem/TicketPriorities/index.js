@@ -1,12 +1,11 @@
 import React, {Component} from "react"
-import {Badge, Button, Icon, Input, Select, Table} from "antd";
+import {Badge, Button, Icon, Input, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 import {
   onAddTicketPriority,
   onDeleteTicketPriority,
   onEditTicketPriority,
-  onGetTicketPriorities,
-  onToggleAddPriority
+  onGetTicketPriorities
 } from "../../../appRedux/actions/TicketPriorities";
 
 import Widget from "../../../components/Widget/index";
@@ -26,16 +25,28 @@ class TicketPriorities extends Component {
       selectedRowKeys: [],
       priorityId: 0,
       filterText: "",
-      itemNumbers: null,
-      current: 1
+      itemNumbers: 10,
+      current: 1,
+      showAddPriority: false
     };
   };
   componentWillMount() {
-    this.props.onGetTicketPriorities();
+    if(Permissions.canPriorityView())
+    {
+      this.props.onGetTicketPriorities();
+    }
+  };
+  onToggleAddPriority = () => {
+    this.setState({showAddPriority: !this.state.showAddPriority})
   };
   onCurrentIncrement = () => {
-    this.setState({current: this.state.current + 1});
-    console.log("current value", this.state.current)
+    const pages = Math.ceil(this.props.priorities.length/this.state.itemNumbers);
+    if(this.state.current < pages ) {
+      this.setState({current: this.state.current + 1});
+    }
+    else {
+    return null;
+    }
   };
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
@@ -54,12 +65,10 @@ class TicketPriorities extends Component {
     this.setState({selectedRowKeys});
   };
   onAddButtonClick = () => {
-    this.setState({priorityId: 0});
-    this.props.onToggleAddPriority();
+    this.setState({priorityId: 0, showAddPriority: true});
   };
   onEditPriority = (id) => {
-    this.setState({priorityId: id});
-    this.props.onToggleAddPriority();
+    this.setState({priorityId: id, showAddPriority: true});
   };
   onSelectOption = () => {
     return <Select defaultValue="Archive" style={{width: 120}}>
@@ -92,7 +101,7 @@ class TicketPriorities extends Component {
         dataIndex: 'colorCode',
         key: 'colorCode',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.color_code}</span>
+          return <Tag color ={record.color_code}>{record.color_code}</Tag>
         },
       },
       {
@@ -116,9 +125,9 @@ class TicketPriorities extends Component {
         dataIndex: 'status_id',
         key: 'Status',
         render: (text, record) => {
-          return <Badge>
+          return <Tag color={record.color_code}>
             {record.status ? "Active" : "Disabled"}
-          </Badge>
+          </Tag>
         },
       },
       {
@@ -189,7 +198,6 @@ class TicketPriorities extends Component {
                 </ButtonGroup>
               </div>
             </div>}>
-          {Permissions.canPriorityView() ?
             <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
                    dataSource={priorities} className="gx-mb-4"
                    pagination={{
@@ -198,11 +206,11 @@ class TicketPriorities extends Component {
                      total: priorities.length,
                      showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
                      onChange: this.onPageChange
-                   }}/> : null}
+                   }}/>
         </Widget>
-        {this.props.showAddPriority ?
-          <AddNewPriority showAddPriority={this.props.showAddPriority}
-                          onToggleAddPriority={this.props.onToggleAddPriority}
+        {this.state.showAddPriority ?
+          <AddNewPriority showAddPriority={this.state.showAddPriority}
+                          onToggleAddPriority={this.onToggleAddPriority}
                           onAddTicketPriority={this.props.onAddTicketPriority}
                           priorityId={this.state.priorityId}
                           onEditTicketPriority={this.props.onEditTicketPriority}
@@ -214,24 +222,21 @@ class TicketPriorities extends Component {
 
 
 const mapStateToProps = ({ticketPriorities}) => {
-  const {priorities, showAddPriority} = ticketPriorities;
-  return {priorities, showAddPriority};
+  const {priorities} = ticketPriorities;
+  return {priorities};
 };
 
 export default connect(mapStateToProps, {
   onGetTicketPriorities,
-  onToggleAddPriority,
   onAddTicketPriority,
   onDeleteTicketPriority,
   onEditTicketPriority
 })(TicketPriorities);
 
 TicketPriorities.defaultProps = {
-  priorities: [],
-  showAddPriority: false
+  priorities: []
 };
 
 TicketPriorities.propTypes = {
-  priorities: PropTypes.array,
-  showAddPriority: PropTypes.bool
+  priorities: PropTypes.array
 };

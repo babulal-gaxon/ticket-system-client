@@ -1,13 +1,12 @@
-
-
 import {
-  ADD_CANNED_RESPONSE, DELETE_CANNED_RESPONSE, EDIT_CANNED_RESPONSE, GET_CANNED_RESPONSES,
-  TOGGLE_ADD_CANNED_BOX
+  ADD_CANNED_RESPONSE,
+  DELETE_CANNED_RESPONSE,
+  EDIT_CANNED_RESPONSE,
+  GET_CANNED_RESPONSES
 } from "../../constants/CannedResponses";
 
 const initialState = {
-  responses: [],
-  showAddCanned: false
+  responses: []
 }
 
 export default (state = initialState, action) => {
@@ -18,26 +17,18 @@ export default (state = initialState, action) => {
         responses: action.payload
       }
 
-    case TOGGLE_ADD_CANNED_BOX:
-      return {
-        ...state,
-        showAddCanned: !state.showAddCanned
-      }
-
     case ADD_CANNED_RESPONSE:
       console.log("hello i reached here")
       return {
         ...state,
-        responses: state.responses.concat(action.payload),
-        showAddCanned: false
+        responses: state.responses.concat(action.payload)
       };
 
     case EDIT_CANNED_RESPONSE:
         const updateResponses = state.responses.map((response) => response.id === action.payload.id ? action.payload : response)
         return {
           ...state,
-          responses: updateResponses,
-          showAddCanned: false
+          responses: updateResponses
         };
 
     case DELETE_CANNED_RESPONSE:

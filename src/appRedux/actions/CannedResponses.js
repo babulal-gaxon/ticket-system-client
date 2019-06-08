@@ -1,8 +1,10 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
 import {
-  ADD_CANNED_RESPONSE, DELETE_CANNED_RESPONSE, EDIT_CANNED_RESPONSE, GET_CANNED_RESPONSES,
-  TOGGLE_ADD_CANNED_BOX
+  ADD_CANNED_RESPONSE,
+  DELETE_CANNED_RESPONSE,
+  EDIT_CANNED_RESPONSE,
+  GET_CANNED_RESPONSES
 } from "../../constants/CannedResponses";
 
 
@@ -25,11 +27,6 @@ export const onGetCannedResponses = () => {
   }
 };
 
-export const onToggleAddCanned = () => {
-  return {
-    type: TOGGLE_ADD_CANNED_BOX
-  }
-};
 
 export const onAddCannedResponse = (cannedResponse) => {
   console.log("onAddCannedResponse", cannedResponse)

@@ -38,8 +38,8 @@ class SidebarContent extends Component {
     const {themeType, navStyle, pathname} = this.props;
     const selectedKeys = pathname.substr(1);
     const defaultOpenKeys = selectedKeys.split('/')[1];
-    return (<Auxiliary>
-
+    return (
+      <Auxiliary>
         <SidebarLogo/>
         <div className="gx-sidebar-content">
           <div className={`gx-sidebar-notifications ${this.getNoHeaderClass(navStyle)}`}>

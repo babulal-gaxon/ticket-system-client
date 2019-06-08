@@ -1,10 +1,12 @@
 import {
-  ADD_TICKET_PRIORITY, DELETE_TICKET_PRIORITY, EDIT_TICKET_PRIORITY, GET_TICKET_PRIORITIES,
-  TOGGLE_ADD_PRIORITY_BOX
+  ADD_TICKET_PRIORITY,
+  DELETE_TICKET_PRIORITY,
+  EDIT_TICKET_PRIORITY,
+  GET_TICKET_PRIORITIES
 } from "../../constants/TicketPriorities";
+
 const initialState = {
-  priorities: [],
-  showAddPriority: false
+  priorities: []
 };
 
 export default (state = initialState, action) => {
@@ -15,18 +17,11 @@ export default (state = initialState, action) => {
         priorities: action.payload
       };
 
-    case TOGGLE_ADD_PRIORITY_BOX:
-      return {
-        ...state,
-        showAddPriority: !state.showAddPriority
-      };
-
     case ADD_TICKET_PRIORITY:
       console.log("hello i reached here")
       return {
         ...state,
         priorities: state.priorities.concat(action.payload),
-        showAddPriority: false
       };
 
     case EDIT_TICKET_PRIORITY:
@@ -34,7 +29,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         priorities:updatePriorities,
-        showAddPriority: false
       };
 
     case DELETE_TICKET_PRIORITY:
