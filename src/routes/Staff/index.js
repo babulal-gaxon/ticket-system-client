@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
+import React from "react";
+import {Redirect, Route, Switch} from "react-router-dom";
 
-class Staff extends Component {
-  render() {
-    return (
-      <div>
-        Hello, Data will come here
-      </div>
-    );
-  }
-}
+import asyncComponent from "../../util/asyncComponent";
+
+const Staff = ({match}) => (
+  <Switch>
+    <Redirect exact from={`${match.url}/`} to={`${match.url}/staff/all-members`}/>
+    <Route path={`${match.url}/all-members`} component={asyncComponent(() => import('./StaffList/index'))}/>
+    <Route path={`${match.url}/add-new-member`} component={asyncComponent(() => import('./AddNewStaff/index'))}/>
+  </Switch>
+);
 
 export default Staff;

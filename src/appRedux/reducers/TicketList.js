@@ -2,7 +2,6 @@ import {
   ADD_TICKETS,
   BACK_TO_LIST,
   DELETE_TICKET,
-  GET_PRIORITIES,
   GET_TICKETS,
   SELECT_CURRENT_TICKET,
   UPDATE_TICKET
@@ -10,10 +9,7 @@ import {
 
 const initialState = {
   tickets: [],
-  priorities: [],
-  staff: [],
-  currentTicket: null,
-  departments: []
+  currentTicket: null
 };
 
 export default (state = initialState, action) => {
@@ -32,11 +28,6 @@ export default (state = initialState, action) => {
         showAddTicket: false
       };
 
-    case GET_PRIORITIES:
-      return {
-        ...state,
-        priorities: action.payload
-      };
 
     case SELECT_CURRENT_TICKET:
       return {

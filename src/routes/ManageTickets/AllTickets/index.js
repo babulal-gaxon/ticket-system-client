@@ -11,7 +11,7 @@ import {
   onUpdateTickets
 } from "../../../appRedux/actions/TicketList";
 import Widget from "../../../components/Widget/index";
-import {onSupportStaff} from "../../../appRedux/actions/SupportStaff";
+import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
 import TicketDetail from "./TicketDetail";
 import InfoView from '../../../components/InfoView'
 import Permissions from "../../../util/Permissions";
@@ -59,7 +59,7 @@ class AllTickets extends Component {
       this.props.onGetTickets();
     }
     this.props.onGetTicketPriorities();
-    this.props.onSupportStaff();
+    this.props.onGetStaff();
     this.props.onGetCustomers();
     this.props.onGetTicketStatus();
   };
@@ -134,7 +134,7 @@ class AllTickets extends Component {
               <span> Reset</span>
             </span>
             <Input type="text"/>
-            {this.props.staff.map(employee=> {
+            {this.props.staffList.map(employee=> {
               employee.checked= false;
               {console.log("in filter of staff", employee)}
              return <div>
@@ -420,18 +420,18 @@ class AllTickets extends Component {
 
 const mapStateToProps = ({ticketList, supportStaff, recentCustomers,ticketPriorities, ticketStatuses}) => {
   const {tickets, currentTicket} = ticketList;
-  const {staff} = supportStaff;
+  const {staffList} = supportStaff;
   const {customers} =  recentCustomers;
   const {priorities} = ticketPriorities;
   const {statuses} = ticketStatuses;
-  return {tickets, priorities, staff, currentTicket,customers, statuses};
+  return {tickets, priorities, staffList, currentTicket,customers, statuses};
 };
 
 export default connect(mapStateToProps, {
   onGetTickets,
   onAddTickets,
   onGetTicketPriorities,
-  onSupportStaff,
+  onGetStaff,
   onSelectTicket,
   onUpdateTickets,
   onBackToList,

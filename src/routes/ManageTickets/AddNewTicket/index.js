@@ -3,7 +3,7 @@ import {Button, Col, Form, Input, Row, Select} from "antd";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
-import {onSupportStaff} from "../../../appRedux/actions/SupportStaff";
+import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
 import {onGetDepartments} from "../../../appRedux/actions/Departments";
 import {onAddTickets, onBackToList} from "../../../appRedux/actions/TicketList";
 import {onGetTicketPriorities} from "../../../appRedux/actions/TicketPriorities";
@@ -23,7 +23,7 @@ class AddNewTicket extends Component {
 
   componentWillMount() {
     this.props.onGetTicketPriorities();
-    this.props.onSupportStaff();
+    this.props.onGetStaff();
     this.props.onGetDepartments();
   }
 
@@ -38,9 +38,9 @@ class AddNewTicket extends Component {
   };
 
   render() {
-    const {title, message, product, priority_id, user_id} = this.state;
+    const {title, message, product, priority_id} = this.state;
     console.log("departments",this.props.dept);
-    const {priorities, staff} = this.props;
+    const {priorities} = this.props;
     const {Option} = Select;
     return (
       <div className="gx-main-layout-content">
@@ -53,7 +53,7 @@ class AddNewTicket extends Component {
           <Row>
             <Col xl={18} lg={12} md={12} sm={12} xs={24}>
               <Form layout="vertical" style={{ width: "60%"}}>
-                <Form.Item label="Customer" >
+                <Form.Item label="Customer" required={true}>
                   <Input type="text" value={title} onChange={(e) => {
                     this.setState({title: e.target.value})
                   }}/>
@@ -95,7 +95,7 @@ class AddNewTicket extends Component {
                 {/*  <Select value={user_id} onChange={(value) => {*/}
                 {/*    this.setState({user_id: value})*/}
                 {/*  }}>*/}
-                {/*    {staff.map(member => {*/}
+                {/*    {staffList.map(member => {*/}
                 {/*  return <Option value={member.id} key ={member.id}>{member.staff_name}</Option>*/}
                 {/*    })}*/}
                 {/*  </Select>*/}
@@ -120,30 +120,29 @@ class AddNewTicket extends Component {
 
 const mapStateToProps = ({ticketPriorities, departments, supportStaff}) => {
   const {priorities} = ticketPriorities;
-  const {staff} = supportStaff;
+  const {staffList} = supportStaff;
   const {dept} = departments;
-  return {priorities, staff, dept};
+  return {priorities, staffList, dept};
 };
 
 export default connect(mapStateToProps, {
   onAddTickets,
   onGetTicketPriorities,
-  onSupportStaff,
+  onGetStaff,
   onBackToList,
   onGetDepartments
 })(AddNewTicket);
 
 
 AddNewTicket.defaultProps = {
-  staff: [],
+  staffList: [],
   priorities: [],
   showAddTicket: true
 };
 
 AddNewTicket.propTypes = {
-  staff: PropTypes.array,
+  staffList: PropTypes.array,
   priorities: PropTypes.array,
-  onToggleAddTicket: PropTypes.func,
   onAddTickets: PropTypes.func,
   showAddTicket: PropTypes.bool
 };

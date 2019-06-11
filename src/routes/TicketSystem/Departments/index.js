@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Badge, Button, Icon, Input, Select, Table, Tag} from "antd";
+import {Button, Icon, Input, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 

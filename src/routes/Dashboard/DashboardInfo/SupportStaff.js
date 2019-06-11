@@ -2,16 +2,16 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Avatar, Button} from "antd";
 
-import {onSupportStaff} from "../../../appRedux/actions/SupportStaff";
+import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
 import Widget from "../../../components/Widget/index";
 import PropTypes from "prop-types";
 
 class SupportStaff extends Component {
   componentDidMount() {
-    this.props.onSupportStaff()
+    this.props.onGetStaff()
   }
   render() {
-    console.log("onSupportStaff", this.props.staff);
+    console.log("onGetStaff", this.props.staffList);
     return (
       <Widget title={
         <div>
@@ -22,7 +22,7 @@ class SupportStaff extends Component {
               styleName="gx-card-ticketlist"
               extra={<span><i className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
             </span>}>
-        {this.props.staff.map(employee => {
+        {this.props.staffList.map(employee => {
           return (
             <div key={employee.id} className="gx-media gx-task-list-item gx-flex-nowrap">
               <Avatar className="gx-mr-3 gx-size-36" src="https://via.placeholder.com/150x150"/>
@@ -53,16 +53,16 @@ class SupportStaff extends Component {
 }
 
 const mapStateToProps = ({supportStaff}) => {
-  const {staff} = supportStaff;
-  return {staff}
+  const {staffList} = supportStaff;
+  return {staffList}
 };
 
-export default connect(mapStateToProps, {onSupportStaff})(SupportStaff)
+export default connect(mapStateToProps, {onGetStaff})(SupportStaff)
 
 SupportStaff.defaultProps = {
-  staff: []
+  staffList: []
 };
 
 SupportStaff.propTypes = {
-  staff: PropTypes.array
+  staffList: PropTypes.array
 };

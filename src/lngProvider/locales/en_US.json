@@ -322,6 +322,8 @@
   "sidebar.dashboard.ticket.priorities": "Ticket Priorities",
   "sidebar.dashboard.ticket.statuses": "Ticket Statuses",
   "sidebar.dashboard.email.templates": "Email Templates",
-  "sidebar.dashboard.ticket.settings": "Ticket Settings"
-
+  "sidebar.dashboard.ticket.settings": "Ticket Settings",
+  "sidebar.dashboard.staff": "Staff",
+  "sidebar.dashboard.staff.members": "Staff Members",
+  "sidebar.dashboard.add.new.member": "Add New Member"
 }
