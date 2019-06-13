@@ -1,11 +1,12 @@
 import React, {Component} from "react"
-import {Button, Col, Form, Input, Radio, Row} from "antd/lib/index";
+import {Avatar, Button, Col, Form, Input, Radio, Row} from "antd/lib/index";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
 import {onAddSupportStaff, onEditSupportStaff} from "../../../appRedux/actions/SupportStaff";
 import {onGetDepartments} from "../../../appRedux/actions/Departments";
-import {Select} from "antd";
+import {Breadcrumb, Select} from "antd";
+import {Link} from "react-router-dom";
 
 const { Option } = Select;
 
@@ -71,7 +72,7 @@ class AddNewStaff extends Component {
     this.setState({departments_ids: this.state.departments_ids.concat(id)})
   };
   onDepartmentRemove = (value ) => {
-    const updatedDepartments =  this.state.departments_ids.filter(department => department.id !== value )
+    const updatedDepartments =  this.state.departments_ids.filter(department => department !== value )
     this.setState({departments_ids: updatedDepartments})
   };
 
@@ -86,18 +87,25 @@ class AddNewStaff extends Component {
       account_status: 1})
   };
   render() {
+    console.log("in adding state", this.state)
     const {first_name, last_name, email, password, mobile, hourly_rate, account_status,departments_ids} = this.state;
     const deptOptions = this.onDepartmentSelectOption();
-    console.log("this.state",this.state)
 
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter"
                 title={
-                  <i className="icon icon-arrow-left" onClick={this.onReturnStaffScreen}/>
-                }>
+                  <div><h3>Add Staff Member</h3>
+                    <Breadcrumb>
+                      <Breadcrumb.Item>
+                        <Link to="/staff/all-members">Staffs</Link>
+                      </Breadcrumb.Item>
+                      <Breadcrumb.Item>
+                        <Link to="/">Add Staff</Link>
+                      </Breadcrumb.Item>
+                    </Breadcrumb>
+                  </div>}>
           <hr/>
-          <div className="gx-mb-4"><h3>Add Staff Member</h3></div>
           <Row>
             <Col xl={18} lg={12} md={12} sm={12} xs={24}>
           <Form layout="vertical" style={{ width: "60%"}}>
@@ -166,7 +174,10 @@ class AddNewStaff extends Component {
           </Form>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
-              <div>data will come soon</div>
+              <div>
+                <Avatar className="gx-mr-3 gx-size-150" src="https://via.placeholder.com/150x150"/>
+                <Button default className="gx-mt-lg-3">Set Profile Picture</Button>
+              </div>
             </Col>
           </Row>
         </Widget>

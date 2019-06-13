@@ -16,7 +16,7 @@ export const onGetTicketPriorities = () => {
       console.info("onGetTicketPriorities: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_TICKET_PRIORITIES, payload: data.data});
+        dispatch({type: GET_TICKET_PRIORITIES, payload: data.data.items});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }

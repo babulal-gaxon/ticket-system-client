@@ -16,7 +16,7 @@ export const onGetCannedResponses = () => {
       console.info("onCannedResponses: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_CANNED_RESPONSES, payload: data.data});
+        dispatch({type: GET_CANNED_RESPONSES, payload: data.data.items});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }

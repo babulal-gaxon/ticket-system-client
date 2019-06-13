@@ -16,7 +16,7 @@ export const onGetTicketStatus = () => {
       console.info("onGetTicketStatuses: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_TICKET_STATUSES, payload: data.data});
+        dispatch({type: GET_TICKET_STATUSES, payload: data.data.items});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }

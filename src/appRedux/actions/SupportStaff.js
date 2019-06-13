@@ -77,8 +77,9 @@ export const onEditSupportStaff = (staffMember) => {
   return(dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/staffs/${staffMember.id}`, staffMember).then(({data}) => {
+      console.log("in edit staff", data)
       if(data.success) {
-        dispatch({type: EDIT_SUPPORT_STAFF, payload: staffMember});
+        dispatch({type: EDIT_SUPPORT_STAFF, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});

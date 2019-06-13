@@ -12,6 +12,7 @@ import {
   onGetStaffId
 } from "../../../appRedux/actions/SupportStaff";
 import StaffDetail from "./StaffDetail";
+import {Breadcrumb} from "antd";
 
 
 const ButtonGroup = Button.Group;
@@ -29,16 +30,17 @@ class StaffList extends Component {
       currentMember: null
     };
   };
+
   componentWillMount() {
-      this.props.onGetStaff();
+    this.props.onGetStaff();
   };
+
   onCurrentIncrement = () => {
-    const pages = Math.ceil(this.props.staffList.length/this.state.itemNumbers);
+    const pages = Math.ceil(this.props.staffList.length / this.state.itemNumbers);
     console.log("pages", pages)
-    if(this.state.currentPage < pages ) {
+    if (this.state.currentPage < pages) {
       this.setState({currentPage: this.state.currentPage + 1});
-    }
-    else {
+    } else {
       return null;
     }
   };
@@ -95,10 +97,12 @@ class StaffList extends Component {
         dataIndex: 'department',
         key: 'department',
         render: (text, record) => {
+          console.log("one record", record)
           return <span className="gx-email gx-d-inline-block gx-mr-2">
             {record.departments.map(department => {
-             return department.name
-            })}</span>
+              return department.name
+            }).join()}
+            </span>
         },
       },
       {
@@ -106,7 +110,7 @@ class StaffList extends Component {
         dataIndex: 'role',
         key: 'role',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.role}</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.designation}</span>
         },
       },
       {
@@ -114,7 +118,7 @@ class StaffList extends Component {
         dataIndex: 'status',
         key: 'status',
         render: (text, record) => {
-          return <Tag color = {record.account_status === 1 ? "green" : "red"}>
+          return <Tag color={record.account_status === 1 ? "green" : "red"}>
             {record.account_status === 1 ? "Active" : "Disabled"}
           </Tag>
         },
@@ -124,7 +128,7 @@ class StaffList extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <span onClick = {(e) => {
+          return <span onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();
           }}>
@@ -137,7 +141,7 @@ class StaffList extends Component {
   onShowRowDropdown = (staffId) => {
     const menu = (
       <Menu>
-        <Menu.Item key="2" onClick = {() => {
+        <Menu.Item key="2" onClick={() => {
           this.props.onGetStaffId(staffId);
           this.props.history.push('/staff/add-new-member')
         }}>
@@ -150,7 +154,7 @@ class StaffList extends Component {
           Notes
         </Menu.Item>
         <Menu.Divider/>
-        <Menu.Item key="4" >
+        <Menu.Item key="4">
           <Popconfirm
             title="Are you sure delete this Ticket?"
             onConfirm={() => this.props.onDeleteSupportStaff(staffId)}
@@ -163,7 +167,7 @@ class StaffList extends Component {
     );
     return (
       <Dropdown overlay={menu} trigger={['click']}>
-        <i className="icon icon-ellipse-h" />
+        <i className="icon icon-ellipse-h"/>
       </Dropdown>
     )
   };
@@ -188,6 +192,7 @@ class StaffList extends Component {
   onBackToList = () => {
     this.setState({currentMember: null})
   };
+
   render() {
     const staffList = this.onFilterData();
     const {selectedRowKeys} = this.state;
@@ -199,51 +204,57 @@ class StaffList extends Component {
     return (
       <div className="gx-main-content">
         {this.state.currentMember === null ?
-        <Widget
-          title={<span>
-            <Button type="primary" className="h4 gx-text-capitalize gx-mb-0"
-                                                    onClick={this.onAddButtonClick}>
+          <Widget
+            title={<span>
+            <h4>Staffs</h4>
+            <Breadcrumb>
+    <Breadcrumb.Item>Staffs</Breadcrumb.Item>
+  </Breadcrumb>
+            <Button type="primary" className="h4 gx-text-capitalize gx-mb-0 gx-mt-4"
+                    onClick={this.onAddButtonClick}>
               Add New Staff</Button>
-            <span>{this.onSelectOption()}</span>
+            <span className="gx-mt-4">{this.onSelectOption()}</span>
           </span>}
-          extra={
-            <div className="gx-d-flex gx-align-items-center">
-              <Input
-                placeholder="Enter keywords to search Staff"
-                prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                value={this.state.filterText}
-                onChange={this.onFilterTextChange}
+            extra={
+              <div className="gx-d-flex gx-align-items-center">
+                <Input
+                  placeholder="Enter keywords to search Staff"
+                  prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                  value={this.state.filterText}
+                  onChange={this.onFilterTextChange}
                 />
-              <div className="gx-ml-3">
-                {this.onShowItemOptions()}
-              </div>
-              <div className="gx-ml-3">
-                <ButtonGroup className="gx-btn-group-flex">
-                  <Button className="gx-mb-0" type="default" onClick={this.onCurrentDecrement}>
-                    <i className="icon icon-long-arrow-left"/>
-                  </Button>
-                  <Button className="gx-mb-0" type="default" onClick={this.onCurrentIncrement}>
-                    <i className="icon icon-long-arrow-right"/>
-                  </Button>
-                </ButtonGroup>
-              </div>
-            </div>}>
+                <div className="gx-ml-3">
+                  {this.onShowItemOptions()}
+                </div>
+                <div className="gx-ml-3">
+                  <ButtonGroup className="gx-btn-group-flex">
+                    <Button className="gx-mb-0" type="default" onClick={this.onCurrentDecrement}>
+                      <i className="icon icon-long-arrow-left"/>
+                    </Button>
+                    <Button className="gx-mb-0" type="default" onClick={this.onCurrentIncrement}>
+                      <i className="icon icon-long-arrow-right"/>
+                    </Button>
+                  </ButtonGroup>
+                </div>
+              </div>}>
 
-          <Table rowSelection={rowSelection} columns={this.staffRowData()}
-                 dataSource={staffList}
-                 pagination={{
-                   pageSize: this.state.itemNumbers,
-                   current: this.state.currentPage,
-                   total: staffList.length,
-                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
-                   onChange: this.onPageChange}}
-                 className="gx-table-responsive gx-mb-4"
-                 onRow={(record) => ({
-                   onClick: () => this.onSelectStaff(record)
-                 })}/>
-          <div className="gx-d-flex gx-flex-row">
-          </div>
-        </Widget> : <StaffDetail staff={this.state.currentMember} onBackToList={this.onBackToList}/>}
+            <Table rowSelection={rowSelection} columns={this.staffRowData()}
+                   dataSource={staffList}
+                   pagination={{
+                     pageSize: this.state.itemNumbers,
+                     current: this.state.currentPage,
+                     total: staffList.length,
+                     showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                     onChange: this.onPageChange
+                   }}
+                   className="gx-table-responsive gx-mb-4"
+                   onRow={(record) => ({
+                     onClick: () => this.onSelectStaff(record)
+                   })}/>
+            <div className="gx-d-flex gx-flex-row">
+            </div>
+          </Widget> : <StaffDetail staff={this.state.currentMember} onBackToList={this.onBackToList}
+                                   onGetStaffId={this.props.onGetStaffId} history={this.props.history}/>}
       </div>
     );
   }
