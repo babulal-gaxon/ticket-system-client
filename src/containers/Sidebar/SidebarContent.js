@@ -58,7 +58,7 @@ class SidebarContent extends Component {
                          <IntlMessages id="sidebar.dashboard"/></span>}>
 
               <Menu.Item key="dashboard">
-                <Link to="/dashboard"><i className="icon icon-widgets"/>
+                <Link to="/dashboard"><i className="icon icon-tickets"/>
                   <IntlMessages id="sidebar.dashboard.tickets"/></Link>
               </Menu.Item>
 
@@ -80,7 +80,7 @@ class SidebarContent extends Component {
               </SubMenu>
 
               <SubMenu key ="Staff"
-                       title={<span><i className="icon icon-widgets"/>
+                       title={<span><i className="icon icon-customers"/>
                        <IntlMessages id="sidebar.dashboard.staff"/></span>}>
 
                 <Menu.Item key="allStaffMembers">
@@ -93,6 +93,7 @@ class SidebarContent extends Component {
                     <IntlMessages id="sidebar.dashboard.add.new.member"/></Link>
                 </Menu.Item>
               </SubMenu>
+
 
               <SubMenu key ="TicketSystem"
                        title={<span><i className="icon icon-ticket-new"/>
@@ -127,9 +128,12 @@ class SidebarContent extends Component {
                   <Link to ="/ticket-system/ticket-settings"><i className="icon icon-customizer"/>
                     <IntlMessages id="sidebar.dashboard.ticket.settings"/></Link>
                 </Menu.Item>
-
               </SubMenu>
 
+                <Menu.Item key="rolesAndPermissions">
+                  <Link to ="/roles-permissions/all"><i className="icon icon-widgets"/>
+                    <IntlMessages id="sidebar.dashboard.roles.and.permissions"/></Link>
+                </Menu.Item>
 
             </Menu>
           </CustomScrollbars>

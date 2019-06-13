@@ -185,6 +185,9 @@ class StaffList extends Component {
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value})
   };
+  onBackToList = () => {
+    this.setState({currentMember: null})
+  };
   render() {
     const staffList = this.onFilterData();
     const {selectedRowKeys} = this.state;
@@ -227,20 +230,20 @@ class StaffList extends Component {
             </div>}>
 
           <Table rowSelection={rowSelection} columns={this.staffRowData()}
-                 dataSource={staffList} className="gx-mb-4"
+                 dataSource={staffList}
                  pagination={{
                    pageSize: this.state.itemNumbers,
                    current: this.state.currentPage,
                    total: staffList.length,
                    showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
                    onChange: this.onPageChange}}
-                 className="gx-table-responsive"
+                 className="gx-table-responsive gx-mb-4"
                  onRow={(record) => ({
                    onClick: () => this.onSelectStaff(record)
                  })}/>
           <div className="gx-d-flex gx-flex-row">
           </div>
-        </Widget> : <StaffDetail />}
+        </Widget> : <StaffDetail staff={this.state.currentMember} onBackToList={this.onBackToList}/>}
       </div>
     );
   }

@@ -1,22 +1,18 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
-import {
-  ADD_SUPPORT_STAFF,
-  DELETE_SUPPORT_STAFF,
-  EDIT_SUPPORT_STAFF, GET_STAFF_ID,
-  GET_SUPPORT_STAFF
-} from "../../constants/SupportStaff";
+import {ADD_NEW_ROLE, DELETE_ROLE, EDIT_ROLE, GET_ROLE_ID, GET_ROLES} from "../../constants/RolesAndPermissions";
 
 
-export const onGetStaff = () => {
+export const onGetRoles = () => {
+  console.log("hello onGet ROles")
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get('/setup/staffs'
+    axios.get('/roles'
     ).then(({data}) => {
-      console.info("onGetStaff: ", data);
+      console.info("onGetRoles: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_SUPPORT_STAFF, payload: data.data.items});
+        dispatch({type: GET_ROLES, payload: data.data.items});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }
@@ -27,23 +23,24 @@ export const onGetStaff = () => {
   }
 };
 
-export const onGetStaffId = (id) => {
+export const onGetRoleID = (id) => {
   return {
-    type: GET_STAFF_ID,
+    type: GET_ROLE_ID,
     payload: id
   }
-};
+}
 
 
-export const onAddSupportStaff = (staffMember) => {
-  console.log("onAddSupportStaff", staffMember)
+export const onAddRole = (newRole) => {
+  console.log("hello onAddRole ROles")
+  console.log("onAddRole", newRole);
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post('/setup/staffs', staffMember).then(({data}) => {
+    axios.post('/roles', newRole).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
         console.log(" sending data", data.data)
-        dispatch({type: ADD_SUPPORT_STAFF, payload: data.data});
+        dispatch({type: ADD_NEW_ROLE, payload: data.data.items});
         dispatch({type: FETCH_SUCCESS});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
@@ -55,13 +52,13 @@ export const onAddSupportStaff = (staffMember) => {
   }
 };
 
-export const onDeleteSupportStaff = (staffId) => {
+export const onDeleteRole = (roleId) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.delete(`/setup/staffs/${staffId}`).then(({data}) => {
+    axios.delete(`/roles/${roleId}`).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        dispatch({type: DELETE_SUPPORT_STAFF, payload: staffId});
+        dispatch({type: DELETE_ROLE, payload: roleId});
         dispatch({type: FETCH_SUCCESS});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
@@ -73,12 +70,16 @@ export const onDeleteSupportStaff = (staffId) => {
   }
 };
 
-export const onEditSupportStaff = (staffMember) => {
-  return(dispatch) => {
+export const onEditRole = (role) => {
+  console.log("hello onEditRole ROles")
+  console.log("onEditRole", role)
+  return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.put(`/setup/staffs/${staffMember.id}`, staffMember).then(({data}) => {
-      if(data.success) {
-        dispatch({type: EDIT_SUPPORT_STAFF, payload: staffMember});
+    axios.put(`/roles/${role.id}`, role).then(({data}) => {
+      console.info("data:", data);
+      if (data.success) {
+        console.log(" sending data", data.data)
+        dispatch({type: EDIT_ROLE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
@@ -89,4 +90,3 @@ export const onEditSupportStaff = (staffMember) => {
     });
   }
 };
-
