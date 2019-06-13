@@ -325,5 +325,8 @@
   "sidebar.dashboard.ticket.settings": "Ticket Settings",
   "sidebar.dashboard.staff": "Staff",
   "sidebar.dashboard.staff.members": "Staff Members",
-  "sidebar.dashboard.add.new.member": "Add New Member"
+  "sidebar.dashboard.add.new.member": "Add New Member",
+  "sidebar.dashboard.roles.and.permissions": "Roles & Permissions",
+  "sidebar.dashboard.all.roles.and.permissions": "All Roles and Permissions",
+  "sidebar.dashboard.add.new": "Add New"
 }

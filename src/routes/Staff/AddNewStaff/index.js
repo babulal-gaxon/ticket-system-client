@@ -150,8 +150,7 @@ class AddNewStaff extends Component {
                 <Radio value={0}>Disabled</Radio>
               </Radio.Group>
             </Form.Item>
-          </Form>
-              <Form.Item>
+            <Form.Item>
                 <span>
                 <Button type="primary" onClick={this.onStaffAdd}>
                   Save
@@ -163,7 +162,8 @@ class AddNewStaff extends Component {
                   Cancel
                 </Button>
                 </span>
-              </Form.Item>
+            </Form.Item>
+          </Form>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
               <div>data will come soon</div>

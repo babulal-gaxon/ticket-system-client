@@ -10,6 +10,7 @@ import Departments from "./Departments";
 import CannedResponses from "./CannedResponses";
 import TicketPriorities from "./TicketPriorities";
 import TicketStatuses from "./TicketStatuses";
+import RolesAndPermissions from "./RolesAndPermissions";
 
 
 const reducers = combineReducers({
@@ -23,7 +24,8 @@ const reducers = combineReducers({
   departments: Departments,
   cannedResponses: CannedResponses,
   ticketPriorities: TicketPriorities,
-  ticketStatuses: TicketStatuses
+  ticketStatuses: TicketStatuses,
+  rolesAndPermissions: RolesAndPermissions
 
 });
 
