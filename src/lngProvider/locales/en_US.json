@@ -328,5 +328,8 @@
   "sidebar.dashboard.add.new.member": "Add New Member",
   "sidebar.dashboard.roles.and.permissions": "Roles & Permissions",
   "sidebar.dashboard.all.roles.and.permissions": "All Roles and Permissions",
-  "sidebar.dashboard.add.new": "Add New"
+  "sidebar.dashboard.add.new": "Add New",
+  "sidebar.dashboard.setup": "Setup",
+  "sidebar.dashboard.customers.label": "Customers Label",
+  "sidebar.dashboard.about.company": "About Company"
 }

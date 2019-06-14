@@ -11,6 +11,7 @@ import CannedResponses from "./CannedResponses";
 import TicketPriorities from "./TicketPriorities";
 import TicketStatuses from "./TicketStatuses";
 import RolesAndPermissions from "./RolesAndPermissions";
+import Labels from "./Labels";
 
 
 const reducers = combineReducers({
@@ -25,8 +26,8 @@ const reducers = combineReducers({
   cannedResponses: CannedResponses,
   ticketPriorities: TicketPriorities,
   ticketStatuses: TicketStatuses,
-  rolesAndPermissions: RolesAndPermissions
-
+  rolesAndPermissions: RolesAndPermissions,
+  labelsList: Labels
 });
 
 export default reducers;
