@@ -41,6 +41,7 @@ class AddNewTicket extends Component {
     const {title, message, product, priority_id} = this.state;
     console.log("departments",this.props.dept);
     const {priorities} = this.props;
+    console.log("in add ticket", priorities)
     const {Option} = Select;
     return (
       <div className="gx-main-layout-content">

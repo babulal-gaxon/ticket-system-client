@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
       const updatedStaffList = state.staffList.map((member) => member.id === action.payload.id ? action.payload : member);
       return {
         ...state,
-        responses: updatedStaffList
+        staffList: updatedStaffList
       };
 
     case DELETE_SUPPORT_STAFF:

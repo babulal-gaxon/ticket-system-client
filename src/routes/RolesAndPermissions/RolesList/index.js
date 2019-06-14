@@ -5,13 +5,7 @@ import {connect} from "react-redux";
 
 import Widget from "../../../components/Widget/index";
 import InfoView from '../../../components/InfoView'
-import {
-  onAddRole,
-  onDeleteRole,
-  onEditRole,
-  onGetRoleID,
-  onGetRoles
-} from "../../../appRedux/actions/RolesAndPermissions";
+import {onAddRole, onDeleteRole, onGetRoleID, onGetRoles} from "../../../appRedux/actions/RolesAndPermissions";
 
 const ButtonGroup = Button.Group;
 const Option = Select.Option;
@@ -28,11 +22,12 @@ class RolesList extends Component {
   };
 
   componentWillMount() {
-this.props.onGetRoles();
+    this.props.onGetRoles();
   };
-onFilterData = () => {
-  return this.props.roles.filter(role => role.name.indexOf(this.state.filterText) !== -1);
-};
+
+  onFilterData = () => {
+    return this.props.roles.filter(role => role.name.indexOf(this.state.filterText) !== -1);
+  };
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value})
   };
@@ -117,7 +112,7 @@ onFilterData = () => {
   onShowRowDropdown = (roleId) => {
     const menu = (
       <Menu>
-        <Menu.Item key="2" onClick = {() => {
+        <Menu.Item key="2" onClick={() => {
           this.props.onGetRoleID(roleId);
           this.props.history.push("/roles-permissions/add-new")
         }}>
@@ -130,7 +125,7 @@ onFilterData = () => {
           Notes
         </Menu.Item>
         <Menu.Divider/>
-        <Menu.Item key="4" >
+        <Menu.Item key="4">
           <Popconfirm
             title="Are you sure delete this Ticket?"
             onConfirm={() => this.props.onDeleteRole(roleId)}
@@ -143,7 +138,7 @@ onFilterData = () => {
     );
     return (
       <Dropdown overlay={menu} trigger={['click']}>
-        <i className="icon icon-ellipse-h" />
+        <i className="icon icon-ellipse-h"/>
       </Dropdown>
     )
   };
