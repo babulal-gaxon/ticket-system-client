@@ -10,7 +10,7 @@ export const onGetDepartments = () => {
       console.info("onGetDepartments: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_DEPARTMENTS, payload: data.data});
+        dispatch({type: GET_DEPARTMENTS, payload: data.data.items});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }

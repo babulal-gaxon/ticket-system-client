@@ -1,0 +1,2 @@
+export const GET_LABELS_DATA = "GET_LABELS_DATA";
+export const ADD_LABELS_DATA = "ADD_LABELS_DATA"
