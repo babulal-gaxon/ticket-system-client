@@ -15,7 +15,7 @@ import {
   Switch
 } from "antd";
 import Widget from "../../../components/Widget";
-import {onAddRole, onEditRole} from "../../../appRedux/actions/RolesAndPermissions";
+import {onAddRole, onEditRole, onGetRoleID} from "../../../appRedux/actions/RolesAndPermissions";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 
@@ -136,6 +136,7 @@ class AddNewRole extends Component {
       };
       this.props.onAddRole(addData);
       this.props.history.push("/roles-permissions/all");
+      this.props.onGetRoleID(0);
     } else {
       const EditedData = {
         name: this.state.name,
@@ -151,7 +152,7 @@ class AddNewRole extends Component {
     if (this.props.roleId !== 0) {
       staffWithRole = this.props.staffList.filter(staff => staff.designation === this.state.name);
     }
-    const filteredStaff=this.onFilterStaffList(staffWithRole);
+    const filteredStaff = this.onFilterStaffList(staffWithRole);
     return filteredStaff.map(staff => {
       return <Widget styleName="gx-card-filter">
  <span className="gx-email gx-d-inline-block gx-mr-2">
@@ -164,7 +165,7 @@ class AddNewRole extends Component {
     })
   };
   onFilterStaffList = (staffWithRole) => {
-    return staffWithRole.filter(staff=> staff.first_name.indexOf(this.state.filterText) !==1)
+    return staffWithRole.filter(staff => staff.first_name.indexOf(this.state.filterText) !== 1)
   };
 
   render() {
@@ -203,8 +204,8 @@ class AddNewRole extends Component {
               </div>
               <hr/>
               <Form.Item label="General">
-                <Collapse bordered={false} >
-                  <Panel header="Customers"  key="1" showArrow={false} extra={<i className="icon icon-add-circle"/>}
+                <Collapse bordered={false}>
+                  <Panel header="Customers" key="1" showArrow={false} extra={<i className="icon icon-add-circle"/>}
                          style={customPanelStyle}>
                     <Checkbox.Group style={{width: '100%'}} onChange={this.onSelectCustomerPermissions}>
                       <Row>
@@ -216,7 +217,7 @@ class AddNewRole extends Component {
                         }
                       </Row>
                     </Checkbox.Group>
-                  </Panel >
+                  </Panel>
                   <Panel header="Company Contracts" key="2" showArrow={false} style={customPanelStyle}
                          extra={<i className="icon icon-add-circle"/>}>
                     <Checkbox.Group style={{width: '100%'}} onChange={this.onSelectContactPermissions}>
@@ -230,7 +231,8 @@ class AddNewRole extends Component {
                       </Row>
                     </Checkbox.Group>
                   </Panel>
-                  <Panel header="Departments" key="3" style={customPanelStyle} showArrow={false} extra={<i className="icon icon-add-circle"/>}>
+                  <Panel header="Departments" key="3" style={customPanelStyle} showArrow={false}
+                         extra={<i className="icon icon-add-circle"/>}>
                     <Checkbox.Group style={{width: '100%'}} onChange={this.onSelectDepartmentPermissions}>
                       <Row>
                         {this.props.userPermissions.departments.map(department => {
@@ -242,7 +244,8 @@ class AddNewRole extends Component {
                       </Row>
                     </Checkbox.Group>
                   </Panel>
-                  <Panel header="Labels" key="4" style={customPanelStyle} showArrow={false} extra={<i className="icon icon-add-circle"/>}>
+                  <Panel header="Labels" key="4" style={customPanelStyle} showArrow={false}
+                         extra={<i className="icon icon-add-circle"/>}>
                     <Checkbox.Group style={{width: '100%'}} onChange={this.onSelectLabelPermissions}>
                       <Row>
                         {this.props.userPermissions.labels.map(label => {
@@ -254,7 +257,8 @@ class AddNewRole extends Component {
                       </Row>
                     </Checkbox.Group>
                   </Panel>
-                  <Panel header="Priorities" key="5" style={customPanelStyle} extra={<i className="icon icon-add-circle"/>} showArrow={false}>
+                  <Panel header="Priorities" key="5" style={customPanelStyle}
+                         extra={<i className="icon icon-add-circle"/>} showArrow={false}>
                     <Checkbox.Group style={{width: '100%'}} onChange={this.onSelectPriorityPermissions}>
                       <Row>
                         {this.props.userPermissions.priorities.map(priority => {
@@ -266,7 +270,8 @@ class AddNewRole extends Component {
                       </Row>
                     </Checkbox.Group>
                   </Panel>
-                  <Panel header="Responses" key="6" style={customPanelStyle} showArrow={false} extra={<i className="icon icon-add-circle"/>}>
+                  <Panel header="Responses" key="6" style={customPanelStyle} showArrow={false}
+                         extra={<i className="icon icon-add-circle"/>}>
                     <Checkbox.Group style={{width: '100%'}} onChange={this.onSelectResponsesPermissions}>
                       <Row>
                         {this.props.userPermissions.responses.map(response => {
@@ -278,7 +283,8 @@ class AddNewRole extends Component {
                       </Row>
                     </Checkbox.Group>
                   </Panel>
-                  <Panel header="Roles" key="7" showArrow={false} style={customPanelStyle} extra={<i className="icon icon-add-circle"/>}>
+                  <Panel header="Roles" key="7" showArrow={false} style={customPanelStyle}
+                         extra={<i className="icon icon-add-circle"/>}>
                     <Checkbox.Group style={{width: '100%'}} onChange={this.onSelectRolesPermissions}>
                       <Row>
                         {this.props.userPermissions.roles.map(role => {
@@ -290,7 +296,8 @@ class AddNewRole extends Component {
                       </Row>
                     </Checkbox.Group>
                   </Panel>
-                  <Panel header="Settings" key="8" showArrow={false} style={customPanelStyle} extra={<i className="icon icon-add-circle"/>}>
+                  <Panel header="Settings" key="8" showArrow={false} style={customPanelStyle}
+                         extra={<i className="icon icon-add-circle"/>}>
                     <Checkbox.Group style={{width: '100%'}} onChange={this.onSelectSettingsPermissions}>
                       <Row>
                         {this.props.userPermissions.settings.map(setting => {
@@ -302,7 +309,8 @@ class AddNewRole extends Component {
                       </Row>
                     </Checkbox.Group>
                   </Panel>
-                  <Panel header="Staffs" key="9" showArrow={false} style={customPanelStyle} extra={<i className="icon icon-add-circle"/>}>
+                  <Panel header="Staffs" key="9" showArrow={false} style={customPanelStyle}
+                         extra={<i className="icon icon-add-circle"/>}>
                     <Checkbox.Group style={{width: '100%'}} onChange={this.onSelectStaffsPermissions}>
                       <Row>
                         {this.props.userPermissions.staffs.map(staff => {
@@ -314,7 +322,8 @@ class AddNewRole extends Component {
                       </Row>
                     </Checkbox.Group>
                   </Panel>
-                  <Panel header="Status" key="10" showArrow={false} style={customPanelStyle} extra={<i className="icon icon-add-circle"/>}>
+                  <Panel header="Status" key="10" showArrow={false} style={customPanelStyle}
+                         extra={<i className="icon icon-add-circle"/>}>
                     <Checkbox.Group style={{width: '100%'}} onChange={this.onSelectStatusPermissions}>
                       <Row>
                         {this.props.userPermissions.status.map(stat => {
@@ -326,7 +335,8 @@ class AddNewRole extends Component {
                       </Row>
                     </Checkbox.Group>
                   </Panel>
-                  <Panel header="Tickets" key="11" showArrow={false} style={customPanelStyle} extra={<i className="icon icon-add-circle"/>}>
+                  <Panel header="Tickets" key="11" showArrow={false} style={customPanelStyle}
+                         extra={<i className="icon icon-add-circle"/>}>
                     <Checkbox.Group style={{width: '100%'}} onChange={this.onSelectTicketsPermissions}>
                       <Row>
                         {this.props.userPermissions.tickets.map(ticket => {
@@ -338,7 +348,8 @@ class AddNewRole extends Component {
                       </Row>
                     </Checkbox.Group>
                   </Panel>
-                  <Panel header="Users" key="12" showArrow={false} style={customPanelStyle} extra={<i className="icon icon-add-circle"/>}>
+                  <Panel header="Users" key="12" showArrow={false} style={customPanelStyle}
+                         extra={<i className="icon icon-add-circle"/>}>
                     <Checkbox.Group style={{width: '100%'}} onChange={this.onSelectUsersPermissions}>
                       <Row>
                         {this.props.userPermissions.users.map(user => {
@@ -372,8 +383,8 @@ class AddNewRole extends Component {
                 <Input
                   placeholder="Enter keywords to search roles"
                   prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}
-                  value={this.state.filterText}
-                  onChange={(e) => this.setState({filterText: e.target.value})}/>}/>
+                                value={this.state.filterText}
+                                onChange={(e) => this.setState({filterText: e.target.value})}/>}/>
               </div>
               <div className="gx-mt-4">Member Name</div>
               {this.onStaffListOnEdit()}
@@ -391,7 +402,7 @@ const mapStateToProps = ({auth, rolesAndPermissions, supportStaff}) => {
   return {userPermissions, roles, roleId, staffList}
 };
 
-export default connect(mapStateToProps, {onAddRole, onEditRole})(AddNewRole);
+export default connect(mapStateToProps, {onAddRole, onEditRole, onGetRoleID})(AddNewRole);
 
 AddNewRole.defaultProps = {};
 

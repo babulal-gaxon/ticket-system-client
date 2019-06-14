@@ -63,7 +63,7 @@ class AddNewStaff extends Component {
   onDepartmentSelectOption = () => {
     const deptOptions = [];
     this.props.dept.map(department => {
-      deptOptions.push(<Option value={department.id}>{department.name}</Option>);
+    return deptOptions.push(<Option value={department.id}>{department.name}</Option>);
       });
     return deptOptions;
     };

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Avatar, Col, Divider, Row, Table, Tabs, Tag, Tooltip} from "antd";
+import {Avatar, Col, Divider, Row, Table, Tabs, Tag} from "antd";
 import Widget from "../../../components/Widget";
-import Permissions from "../../../util/Permissions";
 
 const { TabPane } = Tabs;
 
@@ -159,16 +158,16 @@ class StaffDetail extends Component {
           <Col xl={12} lg={12} md={12} sm={12} xs={24}>
             <Row>
               <Col xl={12} lg={12} md={12} sm={12} xs={24}>
-                <Widget></Widget>
+                <Widget> total login time will come here</Widget>
               </Col>
               <Col xl={12} lg={12} md={12} sm={12} xs={24}>
-                <Widget></Widget>
+                <Widget>today's login time will come here</Widget>
               </Col>
             </Row>
             <Row>
               <Col xl={24} lg={24} md={24} sm={24} xs={24}>
 <Widget>
-  hello
+  Notes prepared by staff will come here
 </Widget>
               </Col>
             </Row>

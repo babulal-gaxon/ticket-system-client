@@ -136,7 +136,6 @@ class AllTickets extends Component {
             <Input type="text"/>
             {this.props.staffList.map(employee=> {
               employee.checked= false;
-              {console.log("in filter of staff", employee)}
              return <div>
                <input type="checkbox" checked={employee.checked} onChange = {(e) => this.onFilteredCustomerData(e,employee)}/>
             <span>{employee.staff_name}</span>
