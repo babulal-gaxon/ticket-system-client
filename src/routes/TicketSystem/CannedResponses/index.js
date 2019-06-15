@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Button, Icon, Input, Select, Table, Tag} from "antd";
+import {Button, Icon, Input, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 
 import {
@@ -127,12 +127,20 @@ class CannedResponses extends Component {
         render: (text, record) => {
           return <span> {Permissions.canResponseEdit() ? <i className="icon icon-edit gx-mr-3"
                                                             onClick={() => this.onEditResponse(record.id)}/> : null}
-            {Permissions.canResponseDelete() ? <i className="icon icon-trash"
-                                                  onClick={() => this.props.onDeleteCannedResponse(record.id)}/> : null}
+            {Permissions.canResponseDelete() ? this.onDeletePopUp(record.id) : null}
           </span>
         },
       },
     ];
+  };
+  onDeletePopUp = (recordId) => {
+    return <Popconfirm
+      title="Are you sure delete this Response?"
+      onConfirm={() => this.props.onDeleteCannedResponse(recordId)}
+      okText="Yes"
+      cancelText="No">
+      <i className="icon icon-trash"/>
+    </Popconfirm>
   };
   onPageChange = page => {
     this.setState({

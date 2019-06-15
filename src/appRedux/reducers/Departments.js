@@ -15,7 +15,7 @@ export default (state = initialState, action) => {
     case ADD_DEPARTMENT:
       return {
         ...state,
-        dept: state.dept.concat(action.payload),
+        dept: [action.payload, ...state.dept]
       };
 
     case EDIT_DEPARTMENT:

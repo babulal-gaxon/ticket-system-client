@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Button, Icon, Input, Select, Table, Tag} from "antd";
+import {Button, Icon, Input, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 import {
   onAddTicketPriority,
@@ -137,12 +137,20 @@ class TicketPriorities extends Component {
         render: (text, record) => {
           return <span>{Permissions.canPriorityEdit() ? <i className="icon icon-edit gx-mr-3"
                                                            onClick={() => this.onEditPriority(record.id)}/> : null}
-            {Permissions.canPriorityDelete() ? <i className="icon icon-trash"
-                                                  onClick={() => this.props.onDeleteTicketPriority(record.id)}/> : null}
+            {Permissions.canPriorityDelete() ? this.onDeletePopUp(record.id) : null}
           </span>
         },
       },
     ];
+  };
+  onDeletePopUp = (recordId) => {
+    return <Popconfirm
+      title="Are you sure delete this Department?"
+      onConfirm={() => this.props.onDeleteTicketPriority(recordId)}
+      okText="Yes"
+      cancelText="No">
+      <i className="icon icon-trash"/>
+    </Popconfirm>
   };
   onPageChange = page => {
     this.setState({

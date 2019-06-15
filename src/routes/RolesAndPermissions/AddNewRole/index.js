@@ -18,6 +18,7 @@ import Widget from "../../../components/Widget";
 import {onAddRole, onEditRole, onGetRoleID} from "../../../appRedux/actions/RolesAndPermissions";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
+import InfoView from "../../../components/InfoView";
 
 const Panel = Collapse.Panel;
 const customPanelStyle = {
@@ -48,7 +49,7 @@ class AddNewRole extends Component {
         statusPermissions: [],
         ticketsPermissions: [],
         usersPermissions: [],
-        permissions: [],
+        role_permissions: [],
       }
     } else {
       const selectedRole = this.props.roles.find(role => role.id === this.props.roleId);
@@ -68,7 +69,7 @@ class AddNewRole extends Component {
         statusPermissions: [],
         ticketsPermissions: [],
         usersPermissions: [],
-        permissions: permissions,
+        permissions: selectedRole.role_permissions,
         filterText: ""
       }
     }
@@ -112,7 +113,7 @@ class AddNewRole extends Component {
   };
   onCollectAllPermissions = () => {
     this.setState({
-      permissions: this.state.permissions.concat(...this.state.customerPermissions,
+      role_permissions: this.state.role_permissions.concat(...this.state.customerPermissions,
         this.state.contactPermissions,
         this.state.departmentsPermissions,
         this.state.labelPermissions,
@@ -132,19 +133,17 @@ class AddNewRole extends Component {
       const addData = {
         name: this.state.name,
         status: this.state.status,
-        permissions: this.state.permissions
+        role_permissions: this.state.role_permissions
       };
-      this.props.onAddRole(addData);
-      this.props.history.push("/roles-permissions/all");
+      this.props.onAddRole(addData, this.props.history);
       this.props.onGetRoleID(0);
     } else {
       const EditedData = {
         name: this.state.name,
         status: this.state.status,
-        permissions: this.state.permissions
+        role_permissions: this.state.role_permissions
       };
-      this.props.onEditRole(EditedData)
-      this.props.history.push('/staff/all-members');
+      this.props.onEditRole(EditedData, this.props.history)
     }
   };
   onStaffListOnEdit = () => {
@@ -169,12 +168,13 @@ class AddNewRole extends Component {
   };
 
   render() {
-    console.log("staffList in add role", this.props.staffList)
+    console.log("in AA roles", this.state)
     const {name, status} = this.state;
     return (
-      <Widget styleName="gx-card-filter"
-              title={<div><h3>Add Staff Member</h3>
-                <Breadcrumb>
+      <div className="gx-main-layout-content">
+      <Widget styleName="gx-card-filter">
+        <h3>Add New Role</h3>
+                <Breadcrumb className="gx-mb-4">
                   <Breadcrumb.Item>
                     <Link to="/roles-permissions/all">Roles & Permission</Link>
                   </Breadcrumb.Item>
@@ -182,14 +182,13 @@ class AddNewRole extends Component {
                     <Link to="/roles-permissions/add-new">Add New Role</Link>
                   </Breadcrumb.Item>
                 </Breadcrumb>
-              </div>}>
         <Row>
           <Col xl={15} lg={12} md={12} sm={12} xs={24}>
             <Form layout="vertical" style={{width: "80%"}}>
               <Form.Item label="Role Name">
                 <Input type="text" value={name} onChange={(e) => this.setState({name: e.target.value})}/>
               </Form.Item>
-              <Form.Item label="Status">
+              <Form.Item label="Status" >
                 <Radio.Group value={status} onChange={(e) => {
                   this.setState({status: e.target.value})
                 }}>
@@ -199,12 +198,12 @@ class AddNewRole extends Component {
               </Form.Item>
               <h3 className="gx-mt-4">Features and Permissions</h3>
               <div className="gx-mr-2">
-                <span>All permissions for all features</span>
-                <span className="gx-ml-5"><Switch defaultChecked/></span>
+                <span className="gx-mr-lg-5">All permissions for all features</span>
+                <span className="gx-ml-5"><Switch /></span>
               </div>
               <hr/>
-              <Form.Item label="General">
-                <Collapse bordered={false}>
+              <Form.Item>
+                <Collapse bordered={false} accordion>
                   <Panel header="Customers" key="1" showArrow={false} extra={<i className="icon icon-add-circle"/>}
                          style={customPanelStyle}>
                     <Checkbox.Group style={{width: '100%'}} onChange={this.onSelectCustomerPermissions}>
@@ -363,18 +362,16 @@ class AddNewRole extends Component {
                   </Panel>
                 </Collapse>
               </Form.Item>
-              <Form.Item>
-                <span>
+              <Divider/>
+            </Form>
+            <span>
                 <Button type="primary" onClick={this.onAddButtonClick}>
                   Save
                 </Button>
-                     <Button>
+                     <Button onClick = {() => this.props.history.goBack()}>
                   Cancel
                 </Button>
                 </span>
-              </Form.Item>
-              <Divider/>
-            </Form>
           </Col>
           {this.props.roleId !== 0 ?
             <Col xl={9} lg={12} md={12} sm={12} xs={24}>
@@ -391,6 +388,8 @@ class AddNewRole extends Component {
             </Col> : null}
         </Row>
       </Widget>
+        <InfoView/>
+      </div>
     )
   }
 }

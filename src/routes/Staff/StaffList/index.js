@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {
-  onAddSupportStaff,
+  onAddSupportStaff, onBulkDeleteStaff,
   onDeleteSupportStaff,
   onEditSupportStaff,
   onGetStaff,
@@ -13,6 +13,7 @@ import {
 } from "../../../appRedux/actions/SupportStaff";
 import StaffDetail from "./StaffDetail";
 import {Breadcrumb} from "antd";
+import InfoView from "../../../components/InfoView";
 
 
 const ButtonGroup = Button.Group;
@@ -27,7 +28,8 @@ class StaffList extends Component {
       itemNumbers: 10,
       currentPage: 1,
       showAddStaff: false,
-      currentMember: null
+      currentMember: null,
+      selectedStaff: []
     };
   };
 
@@ -67,7 +69,19 @@ class StaffList extends Component {
   onSelectOption = () => {
     return <Select defaultValue="Archive" style={{width: 120}}>
       <Option value="Archive">Archive</Option>
-      <Option value="Delete">Delete</Option>
+      <Option value="Delete">
+        <Popconfirm
+        title="Are you sure delete this Tickets?"
+        onConfirm={() => {
+          const obj = {
+            staff_ids: this.state.selectedStaff
+          };
+          this.props.onBulkDeleteStaff(obj)
+        }}
+        okText="Yes"
+        cancelText="No">
+        Delete All
+      </Popconfirm></Option>
       <Option value="Disable">Disable</Option>
       <Option value="Export">Export</Option>
     </Select>
@@ -89,7 +103,9 @@ class StaffList extends Component {
         dataIndex: 'hourlyRate',
         key: 'hourlyRate',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.hourly_rate}</span>
+          return <span
+            className="gx-email gx-d-inline-block gx-mr-2"
+            style={{color:record.hourly_rate === null ? "red" : "" }}>{record.hourly_rate === null ? "NA" : record.hourly_rate}</span>
         },
       },
       {
@@ -97,20 +113,20 @@ class StaffList extends Component {
         dataIndex: 'department',
         key: 'department',
         render: (text, record) => {
-          console.log("one record", record)
           return <span className="gx-email gx-d-inline-block gx-mr-2">
-            {record.departments.map(department => {
+            {record.departments.length !==0 ? record.departments.map(department => {
               return department.name
-            }).join()}
+            }).join() : "NA"}
             </span>
         },
       },
       {
-        title: 'Role',
-        dataIndex: 'role',
-        key: 'role',
+        title: 'Designation',
+        dataIndex: 'designation',
+        key: 'designation',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.designation}</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2" style={{color:record.designation === null ? "red" : "" }}>
+            {record.designation === null ? "NA" : record.designation}</span>
         },
       },
       {
@@ -192,51 +208,50 @@ class StaffList extends Component {
   onBackToList = () => {
     this.setState({currentMember: null})
   };
-
   render() {
     const staffList = this.onFilterData();
-    const {selectedRowKeys} = this.state;
     const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange
-    };
-    console.log("in Show staffList", this.props.staffList);
+      onChange: (selectedRowKeys, selectedRows) => {
+        const ids = selectedRows.map(selectedRow => {
+          return selectedRow.id
+        });
+        this.setState({selectedStaff:ids})
+      }};
+    console.log("selected Data", this.state.selectedStaff)
     return (
       <div className="gx-main-content">
         {this.state.currentMember === null ?
-          <Widget
-            title={<span>
+          <Widget styleName="gx-card-filter">
             <h4>Staffs</h4>
-            <Breadcrumb>
-    <Breadcrumb.Item>Staffs</Breadcrumb.Item>
-  </Breadcrumb>
-            <Button type="primary" className="h4 gx-text-capitalize gx-mb-0 gx-mt-4"
+            <Breadcrumb className="gx-mb-3">
+              <Breadcrumb.Item>Staffs</Breadcrumb.Item>
+            </Breadcrumb>
+            <div className="gx-d-flex gx-justify-content-between">
+              <div className="gx-d-flex">
+            <Button type="primary" className="gx-btn-lg"
                     onClick={this.onAddButtonClick}>
               Add New Staff</Button>
-            <span className="gx-mt-4">{this.onSelectOption()}</span>
-          </span>}
-            extra={
-              <div className="gx-d-flex gx-align-items-center">
+            <span>{this.onSelectOption()}</span>
+              </div>
+              <div className="gx-d-flex">
                 <Input
                   placeholder="Enter keywords to search Staff"
                   prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
                   value={this.state.filterText}
                   onChange={this.onFilterTextChange}
+                  style={{width: 200}}
                 />
-                <div className="gx-ml-3">
                   {this.onShowItemOptions()}
-                </div>
-                <div className="gx-ml-3">
-                  <ButtonGroup className="gx-btn-group-flex">
-                    <Button className="gx-mb-0" type="default" onClick={this.onCurrentDecrement}>
+                  <ButtonGroup>
+                    <Button type="default" onClick={this.onCurrentDecrement}>
                       <i className="icon icon-long-arrow-left"/>
                     </Button>
-                    <Button className="gx-mb-0" type="default" onClick={this.onCurrentIncrement}>
+                    <Button  type="default" onClick={this.onCurrentIncrement}>
                       <i className="icon icon-long-arrow-right"/>
                     </Button>
                   </ButtonGroup>
                 </div>
-              </div>}>
+              </div>
 
             <Table rowSelection={rowSelection} columns={this.staffRowData()}
                    dataSource={staffList}
@@ -255,6 +270,7 @@ class StaffList extends Component {
             </div>
           </Widget> : <StaffDetail staff={this.state.currentMember} onBackToList={this.onBackToList}
                                    onGetStaffId={this.props.onGetStaffId} history={this.props.history}/>}
+                                   <InfoView />
       </div>
     );
   }
@@ -272,7 +288,8 @@ export default connect(mapStateToProps, {
   onGetStaffId,
   onAddSupportStaff,
   onEditSupportStaff,
-  onDeleteSupportStaff
+  onDeleteSupportStaff,
+  onBulkDeleteStaff
 })(StaffList);
 
 StaffList.defaultProps = {

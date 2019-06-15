@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Button, Icon, Input, Select, Table, Tag} from "antd";
+import {Button, Icon, Input, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -108,7 +108,7 @@ class Departments extends Component {
         dataIndex: 'status_id',
         key: 'Status',
         render: (text, record) => {
-          return <Tag>
+          return <Tag color = {record.status === 1 ? "green" : "red"}>
             {record.status === 1 ? "Active" : "Disabled"}
           </Tag>
         },
@@ -120,13 +120,23 @@ class Departments extends Component {
         render: (text, record) => {
           return <span> {Permissions.canDepartmentEdit() ? <i className="icon icon-edit gx-mr-3"
                                                               onClick={() => this.onEditDepartment(record.id)}/> : null}
-            {Permissions.canDepartmentDelete() ? <i className="icon icon-trash"
-                                                    onClick={() => this.props.onDeleteDepartment(record.id)}/> : null}
+            {Permissions.canDepartmentDelete() ? this.onDeletePopUp(record.id)
+                : null}
           </span>
         },
       },
     ];
   };
+  onDeletePopUp = (recordId) => {
+    return <Popconfirm
+      title="Are you sure delete this Department?"
+      onConfirm={() => this.props.onDeleteDepartment(recordId)}
+      okText="Yes"
+      cancelText="No">
+      <i className="icon icon-trash"/>
+    </Popconfirm>
+  };
+
   onShowItemOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>
       <Option value={10}>10</Option>

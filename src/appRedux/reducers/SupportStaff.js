@@ -1,5 +1,5 @@
 import {
-  ADD_SUPPORT_STAFF,
+  ADD_SUPPORT_STAFF, BULK_DELETE_SUPPORT_STAFF,
   DELETE_SUPPORT_STAFF,
   EDIT_SUPPORT_STAFF, GET_STAFF_ID,
   GET_SUPPORT_STAFF
@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         staffId: action.payload
-      }
+      };
 
     case ADD_SUPPORT_STAFF:
       return {
@@ -38,10 +38,21 @@ export default (state = initialState, action) => {
       };
 
     case DELETE_SUPPORT_STAFF:
-      const updatedStaff = state.staffList.filter((member) => member.id !== action.payload)
+      const updatedStaff = state.staffList.filter((member) => member.id !== action.payload);
       return {
         ...state,
         staffList:updatedStaff
+      };
+
+    case BULK_DELETE_SUPPORT_STAFF:
+      const updateStaff = state.staffList.filter(member => {
+        if(action.payload.staff_ids.indexOf(member.id) === -1) {
+          return member
+        }
+      });
+      return {
+        ...state,
+        staffList:updateStaff
       };
 
     default:

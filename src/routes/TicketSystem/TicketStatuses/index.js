@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Button, Icon, Input, Select, Table, Tag} from "antd";
+import {Button, Icon, Input, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -138,12 +138,20 @@ class TicketStatuses extends Component {
         render: (text, record) => {
           return <span> {Permissions.canStatusEdit() ? <i className="icon icon-edit gx-mr-3"
                                                           onClick={() => this.onEditStatus(record.id)}/> : null}
-            {Permissions.canStatusDelete() ? <i className="icon icon-trash"
-                                                onClick={() => this.props.onDeleteTicketStatus(record.id)}/> : null}
+            {Permissions.canStatusDelete() ? this.onDeletePopUp(record.id) : null}
           </span>
         },
       },
     ];
+  };
+  onDeletePopUp = (recordId) => {
+    return <Popconfirm
+      title="Are you sure delete this Department?"
+      onConfirm={() => this.props.onDeleteTicketStatus(recordId)}
+      okText="Yes"
+      cancelText="No">
+      <i className="icon icon-trash"/>
+    </Popconfirm>
   };
   onPageChange = page => {
     this.setState({

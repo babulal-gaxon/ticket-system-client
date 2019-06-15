@@ -29,15 +29,16 @@ class AddNewDepartment extends Component {
   render() {
     const {name, desc, status} = this.state;
     const {showAddDepartment, onToggleAddDepartment} = this.props;
+    const { getFieldDecorator } = this.props.form;
     return (
       <div>
         <Modal
           visible={showAddDepartment}
-          title="Add New Department"
+          title={this.props.departmentId === 0 ? "Add New Department" : "Edit Department Detail"}
           onCancel={() => onToggleAddDepartment()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onDepartmentAdd}>
-              {this.props.departmentId === 0 ? "Add" : "Edit"}
+              Save
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddDepartment()}>
               Cancel
@@ -45,9 +46,13 @@ class AddNewDepartment extends Component {
           ]}>
           <Form layout="vertical">
             <Form.Item label="Name">
-              <Input type="text" value={name} onChange={(e) => {
+              {getFieldDecorator('name', {
+                rules: [{ required: true, message: 'Please enter department name!', whitespace: true }],
+              })(<Input type="text" value={name} onChange={(e) => {
                 this.setState({name: e.target.value})
-              }}/>
+              }}/>)}
+
+
             </Form.Item>
             <Form.Item label="Description">
               <Input className="gx-form-control-lg" type="textarea" value={desc} onChange={(e) => {

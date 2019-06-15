@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="72ebf97e-8970-4775-8ec5-0b0606640859" name="Default" comment="added functionality to roles and permissions and staff section">
+    <list default="true" id="72ebf97e-8970-4775-8ec5-0b0606640859" name="Default" comment="Taking pull">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/RolesAndPermissions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/RolesAndPermissions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/SupportStaff.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/SupportStaff.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/TicketList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/TicketList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appRedux/reducers/Departments.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/reducers/Departments.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appRedux/reducers/RolesAndPermissions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/reducers/RolesAndPermissions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appRedux/reducers/SupportStaff.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/reducers/SupportStaff.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/RolesAndPermissions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/RolesAndPermissions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/SupportStaff.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/SupportStaff.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Staff/StaffList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Staff/StaffList/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/TicketSystem/Departments/AddNewDepartment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/TicketSystem/Departments/AddNewDepartment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -20,13 +34,63 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail.js">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/Departments.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="169" column="40" selection-start-line="169" selection-start-column="40" selection-end-line="169" selection-end-column="40" />
+            <state relative-caret-position="255">
+              <caret line="15" column="14" lean-forward="true" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/SetUp/AboutCompany/index.js">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/SetUp/CustomersLabel/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="95" column="30" lean-forward="true" selection-start-line="95" selection-start-column="30" selection-end-line="95" selection-end-column="30" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-799">
+              <caret line="112" column="16" lean-forward="true" selection-start-line="112" selection-start-column="16" selection-end-line="112" selection-end-column="16" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/Departments/AddNewDepartment.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -44,10 +108,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>prize</find>
-      <find>ButtonGroup</find>
-      <find>icon-menu-fold</find>
-      <find>layout-sider-header</find>
       <find>[class*=&quot; icon-&quot;]</find>
       <find>\2f</find>
       <find>sidebar-notifications</find>
@@ -74,6 +134,10 @@
       <find>status</find>
       <find>staffId</find>
       <find>tickets</find>
+      <find>Search</find>
+      <find>one record</find>
+      <find>selectedStaff</find>
+      <find>selectedRoles</find>
     </findStrings>
     <replaceStrings>
       <replace>price</replace>
@@ -96,12 +160,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketRowData.js" />
-        <option value="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/ConversationCell.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js" />
         <option value="$PROJECT_DIR$/src/constants/Departments.js" />
-        <option value="$PROJECT_DIR$/src/appRedux/reducers/Departments.js" />
-        <option value="$PROJECT_DIR$/src/routes/TicketSystem/Departments/AddNewDepartment.js" />
         <option value="$PROJECT_DIR$/src/constants/CannedResponses.js" />
         <option value="$PROJECT_DIR$/src/appRedux/reducers/TicketPriorities.js" />
         <option value="$PROJECT_DIR$/src/constants/TicketPriorities.js" />
@@ -110,10 +170,6 @@
         <option value="$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/AddNewPriority.js" />
         <option value="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/AddNewResponses.js" />
         <option value="$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/AddNewStatus.js" />
-        <option value="$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js" />
         <option value="$PROJECT_DIR$/src/appRedux/reducers/CannedResponses.js" />
         <option value="$PROJECT_DIR$/src/routes/Dashboard/DashboardInfo/SupportStaff.js" />
         <option value="$PROJECT_DIR$/src/routes/Staff/AddSupportStaff.js" />
@@ -121,32 +177,40 @@
         <option value="$PROJECT_DIR$/src/appRedux/reducers/TicketList.js" />
         <option value="$PROJECT_DIR$/src/util/Permissions.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/DropdownButton.js" />
-        <option value="$PROJECT_DIR$/src/constants/SupportStaff.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/routes/Staff/index.js" />
         <option value="$PROJECT_DIR$/src/routes/index.js" />
         <option value="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" />
         <option value="$PROJECT_DIR$/src/routes/RolesAndPermissions/index.js" />
-        <option value="$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js" />
         <option value="$PROJECT_DIR$/src/appRedux/reducers/index.js" />
-        <option value="$PROJECT_DIR$/src/constants/RolesAndPermissions.js" />
         <option value="$PROJECT_DIR$/src/routes/Staff/testing.js" />
-        <option value="$PROJECT_DIR$/src/appRedux/reducers/RolesAndPermissions.js" />
-        <option value="$PROJECT_DIR$/src/appRedux/actions/RolesAndPermissions.js" />
-        <option value="$PROJECT_DIR$/src/appRedux/actions/TicketList.js" />
-        <option value="$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js" />
-        <option value="$PROJECT_DIR$/src/appRedux/actions/Departments.js" />
-        <option value="$PROJECT_DIR$/src/appRedux/reducers/SupportStaff.js" />
-        <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/index.js" />
-        <option value="$PROJECT_DIR$/src/appRedux/actions/SupportStaff.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/TicketPriorities.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/CannedResponses.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/TicketStatuses.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/index.js" />
         <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail.js" />
+        <option value="$PROJECT_DIR$/src/routes/SetUp/CustomersLabel/index.js" />
+        <option value="$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js" />
+        <option value="$PROJECT_DIR$/src/routes/Staff/AddNewStaff/ImageUpload.js" />
+        <option value="$PROJECT_DIR$/src/appRedux/actions/TicketList.js" />
+        <option value="$PROJECT_DIR$/src/constants/SupportStaff.js" />
+        <option value="$PROJECT_DIR$/src/appRedux/actions/SupportStaff.js" />
+        <option value="$PROJECT_DIR$/src/appRedux/reducers/SupportStaff.js" />
+        <option value="$PROJECT_DIR$/src/constants/RolesAndPermissions.js" />
+        <option value="$PROJECT_DIR$/src/appRedux/reducers/RolesAndPermissions.js" />
+        <option value="$PROJECT_DIR$/src/appRedux/actions/RolesAndPermissions.js" />
+        <option value="$PROJECT_DIR$/src/appRedux/actions/Departments.js" />
+        <option value="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js" />
+        <option value="$PROJECT_DIR$/src/appRedux/reducers/Departments.js" />
+        <option value="$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/TicketSystem/Departments/AddNewDepartment.js" />
+        <option value="$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js" />
       </list>
     </option>
   </component>
@@ -160,7 +224,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -177,6 +240,12 @@
               <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="appRedux" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -184,20 +253,36 @@
               <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="Staff" type="462c0819:PsiDirectoryNode" />
+              <item name="RolesAndPermissions" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="Staff" type="462c0819:PsiDirectoryNode" />
-              <item name="StaffList" type="462c0819:PsiDirectoryNode" />
+              <item name="RolesAndPermissions" type="462c0819:PsiDirectoryNode" />
+              <item name="RolesList" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="SetUp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="SetUp" type="462c0819:PsiDirectoryNode" />
+              <item name="CustomersLabel" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -286,7 +371,8 @@
       <workItem from="1560227270919" duration="25924000" />
       <workItem from="1560319805739" duration="20109000" />
       <workItem from="1560399239586" duration="22642000" />
-      <workItem from="1560487106813" duration="1502000" />
+      <workItem from="1560487106813" duration="26725000" />
+      <workItem from="1560573681397" duration="11246000" />
     </task>
     <task id="LOCAL-00001" summary="add api">
       <created>1558429986835</created>
@@ -421,11 +507,18 @@
       <option name="project" value="LOCAL" />
       <updated>1560432788400</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Taking pull">
+      <created>1560488627549</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1560488627549</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="503873000" />
+    <option name="totallyTimeSpent" value="540342000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -440,9 +533,9 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.45874587" visible="true" weight="0.20907739" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.45544556" visible="true" weight="0.20907739" />
       <window_info id="Structure" order="1" weight="0.25" />
-      <window_info id="npm" order="2" sideWeight="0.5412541" side_tool="true" weight="0.20907739" />
+      <window_info id="npm" order="2" sideWeight="0.5445545" side_tool="true" weight="0.20907739" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -454,7 +547,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.65302783" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.44189852" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50253487" side_tool="true" weight="0.50537634" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50253487" side_tool="true" weight="0.5040917" />
       <window_info anchor="bottom" id="TypeScript" order="11" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -511,7 +604,8 @@
     <MESSAGE value="Added Staff panel" />
     <MESSAGE value="Added Roles and Permission Panel" />
     <MESSAGE value="added functionality to roles and permissions and staff section" />
-    <option name="LAST_COMMIT_MESSAGE" value="added functionality to roles and permissions and staff section" />
+    <MESSAGE value="Taking pull" />
+    <option name="LAST_COMMIT_MESSAGE" value="Taking pull" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -535,87 +629,12 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/Widget/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="2" lean-forward="true" selection-start-line="24" selection-start-column="2" selection-end-line="24" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/CannedResponses.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="32" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#146#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/AddNewResponses.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="95" column="2" selection-start-line="95" selection-start-column="2" selection-end-line="95" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/TicketList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
-          <folding>
-            <element signature="e#0#149#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/Permissions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2025">
-          <caret line="121" column="5" lean-forward="true" selection-start-line="121" selection-start-column="5" selection-end-line="121" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/Api.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="20" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="2" lean-forward="true" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/Departments/AddNewDepartment.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="19" column="27" lean-forward="true" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="139" column="2" selection-start-line="139" selection-start-column="2" selection-end-line="139" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <element signature="e#2279#3830#0" />
           </folding>
         </state>
       </provider>
@@ -627,13 +646,6 @@
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/constants/SupportStaff.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -668,50 +680,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="529">
           <caret line="330" column="29" selection-start-line="330" selection-start-column="2" selection-end-line="330" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="133" column="51" selection-start-line="133" selection-start-column="51" selection-end-line="133" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Staff/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="78" selection-start-line="7" selection-start-column="60" selection-end-line="7" selection-end-column="78" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/Departments.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="34" column="19" lean-forward="true" selection-end-line="36" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/AddNewPriority.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="125" column="24" lean-forward="true" selection-start-line="118" selection-start-column="12" selection-end-line="125" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -767,16 +735,6 @@
     <entry file="file://$PROJECT_DIR$/src/appRedux/actions/index.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="34" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/react-hot-loader/dist/react-hot-loader.development.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -784,103 +742,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/RolesAndPermissions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="16" column="16" lean-forward="true" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/constants/RolesAndPermissions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="41" selection-start-line="4" selection-start-column="41" selection-end-line="4" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/Staff/testing.js" />
-    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/Departments.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="24" lean-forward="true" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="127" column="94" lean-forward="true" selection-start-line="127" selection-start-column="57" selection-end-line="127" selection-end-column="94" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/SupportStaff.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="32" column="28" selection-start-line="32" selection-start-column="28" selection-end-line="32" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="98" column="30" lean-forward="true" selection-start-line="98" selection-start-column="30" selection-end-line="98" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <element signature="n#!!block;n#componentWillMount#0;n#StaffList#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/SupportStaff.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="986">
-          <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="208" column="23" lean-forward="true" selection-start-line="200" selection-start-column="12" selection-end-line="208" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <element signature="e#2312#4377#0" />
-            <element signature="e#4404#4458#0" />
-            <element signature="e#4488#4689#0" />
-            <element signature="e#4723#4768#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/RolesAndPermissions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
-          <caret line="57" column="34" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/TicketList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="13" column="35" lean-forward="true" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
@@ -911,16 +773,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/TicketStatuses.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="13" column="29" lean-forward="true" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/appRedux/actions/RecentCustomers.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -939,10 +791,61 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="169" column="40" selection-start-line="169" selection-start-column="40" selection-end-line="169" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="84" column="28" selection-start-line="84" selection-start-column="28" selection-end-line="84" selection-end-column="28" />
+          <folding>
+            <element signature="e#3614#4351#0" />
+            <element signature="e#4367#6139#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="34" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Staff/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="78" selection-start-line="7" selection-start-column="60" selection-end-line="7" selection-end-column="78" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-17">
-          <caret line="329" column="7" selection-start-line="329" selection-start-column="7" selection-end-line="329" selection-end-column="7" />
+        <state relative-caret-position="2516">
+          <caret line="198" column="59" lean-forward="true" selection-start-line="198" selection-start-column="59" selection-end-line="198" selection-end-column="59" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
             <element signature="e#1380#1794#0" />
@@ -960,10 +863,163 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Staff/AddNewStaff/ImageUpload.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="45" column="65" selection-start-line="45" selection-start-column="65" selection-end-line="45" selection-end-column="65" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/TicketList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="41" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/constants/TicketList.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/constants/RolesAndPermissions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="45" lean-forward="true" selection-start-line="5" selection-start-column="45" selection-end-line="5" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/SupportStaff.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="478">
+          <caret line="94" column="1" lean-forward="true" selection-start-line="78" selection-end-line="94" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/SupportStaff.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="55" column="8" lean-forward="true" selection-start-line="46" selection-start-column="4" selection-end-line="55" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/constants/SupportStaff.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="68" lean-forward="true" selection-start-line="5" selection-start-column="68" selection-end-line="5" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/RolesAndPermissions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="11" lean-forward="true" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#146#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/RolesAndPermissions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="637">
+          <caret line="98" column="31" selection-start-line="98" selection-start-column="27" selection-end-line="98" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/Departments.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="65" selection-start-line="12" selection-start-column="60" selection-end-line="12" selection-end-column="65" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="134" column="4" lean-forward="true" selection-start-line="134" selection-start-column="4" selection-end-line="134" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/AddNewPriority.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2142">
+          <caret line="129" column="5" lean-forward="true" selection-start-line="129" selection-start-column="5" selection-end-line="129" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="134" column="22" lean-forward="true" selection-start-line="134" selection-start-column="22" selection-end-line="134" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#4404#4458#0" />
+            <element signature="e#4488#4689#0" />
+            <element signature="e#4723#4768#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="144" column="6" lean-forward="true" selection-start-line="144" selection-start-column="6" selection-end-line="144" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/TicketStatuses.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="13" column="29" lean-forward="true" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="253" column="20" lean-forward="true" selection-start-line="253" selection-start-column="20" selection-end-line="253" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+            <element signature="n#!!block;n#componentWillMount#0;n#StaffList#0" />
+            <element signature="e#1002#1266#0" />
+            <element signature="e#1297#1444#0" />
+            <element signature="e#1559#1612#0" />
+            <element signature="e#1641#1731#0" />
+            <element signature="e#1756#1866#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="65" column="10" lean-forward="true" selection-start-line="65" selection-start-column="10" selection-end-line="65" selection-end-column="10" />
+        <state relative-caret-position="53">
+          <caret line="96" column="42" selection-start-line="96" selection-start-column="42" selection-end-line="96" selection-end-column="42" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
@@ -972,29 +1028,67 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="137" column="56" selection-start-line="137" selection-start-column="55" selection-end-line="137" selection-end-column="56" />
+        <state relative-caret-position="-85">
+          <caret line="176" column="48" lean-forward="true" selection-start-line="176" selection-start-column="48" selection-end-line="176" selection-end-column="48" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#AddNewRole#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js">
+    <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/Departments.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1872">
-          <caret line="209" column="89" selection-start-line="209" selection-start-column="78" selection-end-line="209" selection-end-column="89" />
+        <state relative-caret-position="255">
+          <caret line="15" column="14" lean-forward="true" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/Departments/AddNewDepartment.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-799">
+          <caret line="112" column="16" lean-forward="true" selection-start-line="112" selection-start-column="16" selection-end-line="112" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/CustomersLabel/AddNewLabel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/AboutCompany/index.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/CustomersLabel/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="169" column="40" selection-start-line="169" selection-start-column="40" selection-end-line="169" selection-end-column="40" />
+        <state relative-caret-position="221">
+          <caret line="95" column="30" lean-forward="true" selection-start-line="95" selection-start-column="30" selection-end-line="95" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
