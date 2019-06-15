@@ -1,6 +1,7 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
-import {ADD_LABELS_DATA, GET_LABELS_DATA} from "../../constants/Labels";
+import {ADD_LABELS_DATA, DELETE_LABEL, EDIT_LABEL_DATA, GET_LABELS_DATA} from "../../constants/Labels";
+import {EDIT_DEPARTMENT} from "../../constants/Departments";
 
 
 export const onGetLabelData = () => {
@@ -25,16 +26,13 @@ export const onGetLabelData = () => {
 export const onAddLabelsData = (label) => {
     console.log("onAddLabelsData", label);
     return (dispatch) => {
-        console.log("label hai" , label);
         dispatch({type: FETCH_START});
         axios.post('/setup/labels', label).then(({data}) => {
             console.info("data:", data);
-            console.log("horaha success");
             if (data.success) {
                 console.log(" sending data", data.data);
                 dispatch({type: ADD_LABELS_DATA, payload: data.data});
                 dispatch({type: FETCH_SUCCESS});
-                console.log("hogya success",);
             } else {
                 dispatch({type: FETCH_ERROR, payload: "Network Error"});
             }
@@ -44,6 +42,47 @@ export const onAddLabelsData = (label) => {
         });
     }
 };
+
+export const onDeleteLabel =(labelId) =>{
+    console.log("onDeleteLabel", labelId);
+    return (dispatch) =>{
+        dispatch({type: FETCH_START});
+        axios.delete(`/setup/labels/${labelId}`).then(({data})=>{
+            console.info("data", data);
+            if(data.success){
+                dispatch({type: DELETE_LABEL, payload: labelId});
+                dispatch({type: FETCH_SUCCESS});
+            } else {
+                dispatch({type: FETCH_ERROR, payload: "Network Error"});
+            }
+        }).catch(function (error) {
+            dispatch({type: FETCH_ERROR, payload: error.message});
+            console.info("Error****:", error.message);
+        });
+    }
+
+};
+
+export const onEditLabelsData =(label)=>{
+    console.log("Edit label", label);
+    return (dispatch) => {
+        dispatch({type: FETCH_START});
+        axios.put(`/setup/labels/${label.id}`, label).then(({data}) => {
+            console.info("data:", data);
+            if (data.success) {
+                console.log(" sending data", data.data);
+                dispatch({type: EDIT_LABEL_DATA, payload: data.data});
+                dispatch({type: FETCH_SUCCESS});
+            } else {
+                dispatch({type: FETCH_ERROR, payload: "Network Error"});
+            }
+        }).catch(function (error) {
+            dispatch({type: FETCH_ERROR, payload: error.message});
+            console.info("Error****:", error.message);
+        });
+    }
+};
+
 
 
 

@@ -1,2 +1,4 @@
 export const GET_LABELS_DATA = "GET_LABELS_DATA";
-export const ADD_LABELS_DATA = "ADD_LABELS_DATA"
+export const ADD_LABELS_DATA = "ADD_LABELS_DATA";
+export const DELETE_LABEL = "DELETE_LABEL";
+export const EDIT_LABEL_DATA = "EDIT_LABEL_DATA";
