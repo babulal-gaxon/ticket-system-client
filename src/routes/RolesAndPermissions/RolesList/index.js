@@ -1,14 +1,22 @@
 import React, {Component} from "react";
-import {Button, Dropdown, Icon, Input, Menu, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Input, Menu, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 
 
 import Widget from "../../../components/Widget/index";
 import InfoView from '../../../components/InfoView'
-import {onAddRole, onDeleteRole, onGetRoleID, onGetRoles} from "../../../appRedux/actions/RolesAndPermissions";
+import {
+  onAddRole,
+  onBulkDeleteRoles,
+  onDeleteRole,
+  onEditRole,
+  onGetRoleID,
+  onGetRoles
+} from "../../../appRedux/actions/RolesAndPermissions";
 
 const ButtonGroup = Button.Group;
 const Option = Select.Option;
+const Search = Input.Search;
 
 class RolesList extends Component {
   constructor(props) {
@@ -17,7 +25,8 @@ class RolesList extends Component {
       selectedRowKeys: [],
       itemNumbers: 10,
       current: 1,
-      filterText: ""
+      filterText: "",
+      selectedRoles: []
     };
   };
 
@@ -53,7 +62,7 @@ class RolesList extends Component {
     }
   };
   onGetRolesShowOptions = () => {
-    return <Select defaultValue={10} onChange={this.onDropdownChange}>
+    return <Select defaultValue={10} onChange={this.onDropdownChange} className="gx-mx-2">
       <Option value={10}>10</Option>
       <Option value={25}>25</Option>
       <Option value={50}>50</Option>
@@ -82,7 +91,7 @@ class RolesList extends Component {
         title: 'Users',
         dataIndex: 'users',
         render: (text, record) => {
-          return <span className="gx-text-grey">{record.users}</span>
+          return <span className="gx-text-grey">{record.users_count}</span>
         },
       },
       {
@@ -102,24 +111,29 @@ class RolesList extends Component {
             e.stopPropagation();
             e.preventDefault();
           }}>
-        {this.onShowRowDropdown(record.id)}
+        {this.onShowRowDropdown(record)}
       </span>
         },
       },
     ];
   };
-
-  onShowRowDropdown = (roleId) => {
+  onShowRowDropdown = (record) => {
     const menu = (
       <Menu>
         <Menu.Item key="2" onClick={() => {
-          this.props.onGetRoleID(roleId);
+          this.props.onGetRoleID(record.id);
           this.props.history.push("/roles-permissions/add-new")
         }}>
           Edit
         </Menu.Item>
         <Menu.Item key="3">
-          Disable
+          <Popconfirm
+            title="Are you sure Disable this Role?"
+            onConfirm={() => this.onDisableRole(record)}
+            okText="Yes"
+            cancelText="No">
+            Disable
+          </Popconfirm>
         </Menu.Item>
         <Menu.Item key="3">
           Notes
@@ -128,7 +142,7 @@ class RolesList extends Component {
         <Menu.Item key="4">
           <Popconfirm
             title="Are you sure delete this Ticket?"
-            onConfirm={() => this.props.onDeleteRole(roleId)}
+            onConfirm={() => this.props.onDeleteRole(record.id)}
             okText="Yes"
             cancelText="No">
             Delete
@@ -142,44 +156,70 @@ class RolesList extends Component {
       </Dropdown>
     )
   };
-
+  onDisableRole = (record) => {
+    const updatedRecord = record;
+    updatedRecord.status = 0;
+    this.props.onGetRoleID(record.id);
+    this.props.onEditRole(updatedRecord)
+  };
+  onSelectOption = () => {
+    return <Select defaultValue="Archive" style={{width: 120}}>
+      <Option value="Archive">Archive</Option>
+      <Option value="Delete" onClick={() => {
+        const obj = {
+          role_ids: this.state.selectedRoles
+        };
+        this.props.onBulkDeleteRoles(obj)
+      }}>Delete</Option>
+    </Select>
+  };
+  onRowSelection = (ids) => {
+    this.setState({selectedRoles: ids})
+  };
   render() {
     const roles = this.onFilterData();
-    const {selectedRowKeys} = this.state;
+    let ids;
     const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange,
-    };
+      onChange: (selectedRowKeys, selectedRows) => {
+        console.log("selectedRows",selectedRows)
+        ids = selectedRows.map(selectedRow => {
+          return selectedRow.id
+        });
+        this.onRowSelection(ids)
+      }};
     return (
       <div className="gx-main-layout-content">
-        <Widget styleName="gx-card-filter"
-                title={<span>
-                  <Button type="primary" className="gx-btn-lg"
-                          onClick={this.onAddButtonClick}>
-                    New Role
-                  </Button>
-                </span>}
-                extra={
-                  <div className="gx-d-flex gx-align-items-center">
-                    <Input
-                      placeholder="Enter keywords to search roles"
-                      prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                      value={this.state.filterText}
-                      onChange={this.onFilterTextChange}/>
-                    <div className="gx-ml-3">
-                      {this.onGetRolesShowOptions()}
-                    </div>
-                    <div className="gx-ml-3">
-                      <ButtonGroup className="gx-btn-group-flex">
-                        <Button className="gx-mb-0" type="default" onClick={this.onCurrentDecrement}>
-                          <i className="icon icon-long-arrow-left"/>
-                        </Button>
-                        <Button className="gx-mb-0" type="default" onClick={this.onCurrentIncrement}>
-                          <i className="icon icon-long-arrow-right"/>
-                        </Button>
-                      </ButtonGroup>
-                    </div>
-                  </div>}>
+        <Widget styleName="gx-card-filter">
+          <h4>Roles & Permission</h4>
+          <Breadcrumb className="gx-mb-3">
+            <Breadcrumb.Item className="gx-text-primary">Roles & Permission</Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="gx-d-flex gx-justify-content-between">
+            <div className="gx-d-flex">
+              <Button type="primary" className="gx-btn-lg"
+                      onClick={this.onAddButtonClick}>
+                Add New Role
+              </Button>
+              <span>{this.onSelectOption()}</span>
+            </div>
+            <div className="gx-d-flex">
+              <Search
+                placeholder="Search Roles here"
+                value={this.state.filterText}
+                onChange={this.onFilterTextChange}
+                style={{width: 200}}
+              />
+              {this.onGetRolesShowOptions()}
+              <ButtonGroup>
+                <Button type="default" onClick={this.onCurrentDecrement}>
+                  <i className="icon icon-long-arrow-left"/>
+                </Button>
+                <Button type="default" onClick={this.onCurrentIncrement}>
+                  <i className="icon icon-long-arrow-right"/>
+                </Button>
+              </ButtonGroup>
+            </div>
+          </div>
           <Table key={Math.random()} rowSelection={rowSelection} columns={this.rolesRowData()}
                  dataSource={roles}
                  pagination={{
@@ -207,7 +247,14 @@ const mapStateToProps = ({rolesAndPermissions}) => {
   return {roles}
 };
 
-export default connect(mapStateToProps, {onGetRoles, onAddRole, onDeleteRole, onGetRoleID})(RolesList);
+export default connect(mapStateToProps, {
+  onGetRoles,
+  onAddRole,
+  onDeleteRole,
+  onGetRoleID,
+  onEditRole,
+  onBulkDeleteRoles
+})(RolesList);
 
 RolesList.defaultProps = {};
 

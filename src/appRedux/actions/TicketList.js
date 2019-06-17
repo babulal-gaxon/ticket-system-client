@@ -12,7 +12,6 @@ import {showErrorMessage} from "./Auth";
 
 
 export const onGetTickets = () => {
-
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get('/tickets'

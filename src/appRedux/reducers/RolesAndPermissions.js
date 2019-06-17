@@ -1,4 +1,11 @@
-import {ADD_NEW_ROLE, DELETE_ROLE, EDIT_ROLE, GET_ROLE_ID, GET_ROLES} from "../../constants/RolesAndPermissions";
+import {
+  ADD_NEW_ROLE,
+  BULK_DELETE_ROLES,
+  DELETE_ROLE,
+  EDIT_ROLE,
+  GET_ROLE_ID,
+  GET_ROLES
+} from "../../constants/RolesAndPermissions";
 
 
 const initialState = {
@@ -39,6 +46,18 @@ export default (state = initialState, action) => {
         ...state,
         roles:updatedRoles
       };
+
+    case BULK_DELETE_ROLES:
+      const upRoles = state.roles.filter(role => {
+        if(action.payload.role_ids.indexOf(role.id) === -1) {
+          return role
+        }
+      });
+      return {
+        ...state,
+        staffList:upRoles
+      };
+
     default:
       return state;
   }

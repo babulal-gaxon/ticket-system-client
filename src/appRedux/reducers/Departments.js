@@ -1,4 +1,10 @@
-import {ADD_DEPARTMENT, DELETE_DEPARTMENT, EDIT_DEPARTMENT, GET_DEPARTMENTS} from "../../constants/Departments";
+import {
+  ADD_DEPARTMENT, BULK_ACTIVE_DEPARTMENTS,
+  BULK_DELETE_DEPARTMENTS, BULK_INACTIVE_DEPARTMENTS,
+  DELETE_DEPARTMENT,
+  EDIT_DEPARTMENT,
+  GET_DEPARTMENTS
+} from "../../constants/Departments";
 
 const initialState = {
   dept: [],
@@ -15,7 +21,7 @@ export default (state = initialState, action) => {
     case ADD_DEPARTMENT:
       return {
         ...state,
-        dept: state.dept.concat(action.payload),
+        dept: [action.payload, ...state.dept]
       };
 
     case EDIT_DEPARTMENT:
@@ -31,6 +37,50 @@ export default (state = initialState, action) => {
           ...state,
           dept:updatedDepartments
         };
+
+    case BULK_DELETE_DEPARTMENTS:
+      const upDepartments = state.dept.filter(department => {
+        if(action.payload.indexOf(department.id) === -1) {
+          return department
+        }
+      });
+      return {
+        ...state,
+        dept:upDepartments
+      };
+
+    case BULK_ACTIVE_DEPARTMENTS:
+      const activateDepartments = state.dept.map(department => {
+        if(action.payload.indexOf(department.id) !== -1) {
+          department.status = 1;
+          return department;
+        }
+        return department;
+      });
+      return {
+        ...state,
+        dept:activateDepartments
+      };
+
+    case BULK_INACTIVE_DEPARTMENTS:
+      const deActivateDepartments = state.dept.map(department => {
+        if(action.payload.indexOf(department.id) !== -1) {
+          department.status = 0;
+          return department;
+        }
+        return department;
+      });
+
+      return {
+        ...state,
+        dept: deActivateDepartments
+      };
+
+      return {
+        ...state,
+        staffList:upDepartments
+      };
+
     default:
       return state;
   }

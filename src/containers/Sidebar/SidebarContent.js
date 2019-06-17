@@ -79,20 +79,10 @@ class SidebarContent extends Component {
                 </Menu.Item>
               </SubMenu>
 
-              <SubMenu key ="Staff"
-                       title={<span><i className="icon icon-customers"/>
-                       <IntlMessages id="sidebar.dashboard.staff"/></span>}>
-
                 <Menu.Item key="allStaffMembers">
                   <Link to ="/staff/all-members"><i className="icon icon-tickets"/>
-                    <IntlMessages id= "sidebar.dashboard.staff.members"/></Link>
+                    <IntlMessages id= "sidebar.dashboard.staff"/></Link>
                 </Menu.Item>
-
-                <Menu.Item key="addNewStaff">
-                  <Link to ="/staff/add-new-member"><i className="icon icon-ticket-new"/>
-                    <IntlMessages id="sidebar.dashboard.add.new.member"/></Link>
-                </Menu.Item>
-              </SubMenu>
 
               <SubMenu key ="Customers"
                        title={<span><i className="icon icon-customer"/>
