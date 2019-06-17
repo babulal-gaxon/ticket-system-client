@@ -1,6 +1,7 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
 import {ADD_LABELS_DATA, DELETE_LABEL, EDIT_LABEL_DATA, GET_LABELS_DATA} from "../../constants/Labels";
+import {message} from "antd";
 
 
 export const onGetLabelData = () => {
@@ -9,6 +10,7 @@ export const onGetLabelData = () => {
         axios.get('/setup/labels').then(({data}) => {
             console.info("onGetLabels: ", data);
             if (data.success) {
+                message.success('This is a success message');
                 dispatch({type: FETCH_SUCCESS});
                 dispatch({type: GET_LABELS_DATA, payload: data.data.items});
             } else {

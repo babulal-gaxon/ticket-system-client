@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {onAddLabelsData, onDeleteLabel, onEditLabelsData, onGetLabelData} from "../../../appRedux/actions/Labels";
 import {connect} from "react-redux";
 import Widget from "../../../components/Widget";
-import {Breadcrumb, Button, Dropdown, Input, Menu, Popover, Select, Table, Tag} from "antd";
+import {message,Breadcrumb, Button, Dropdown, Input, Menu, Popover, Select, Table, Tag} from "antd";
 import {Link} from "react-router-dom";
 import AddNewLabel from "./AddNewLabel";
 
@@ -20,6 +20,7 @@ class CustomersLabel extends Component {
             current:1
         }
     }
+
 
     componentWillMount() {
         this.props.onGetLabelData();
