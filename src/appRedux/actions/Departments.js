@@ -1,22 +1,24 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
 import {
-  ADD_DEPARTMENT, BULK_ACTIVE_DEPARTMENTS,
-  BULK_DELETE_DEPARTMENTS, BULK_INACTIVE_DEPARTMENTS,
+  ADD_DEPARTMENT,
+  BULK_ACTIVE_DEPARTMENTS,
+  BULK_DELETE_DEPARTMENTS,
+  BULK_INACTIVE_DEPARTMENTS,
   DELETE_DEPARTMENT,
   EDIT_DEPARTMENT,
   GET_DEPARTMENTS
 } from "../../constants/Departments";
 
-export const onGetDepartments = () => {
+export const onGetDepartments = (currentPage, itemsPerPage) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get('/setup/departments'
+    axios.get(`/setup/departments?page=${currentPage}&per_page=${itemsPerPage}`
     ).then(({data}) => {
       console.info("onGetDepartments: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_DEPARTMENTS, payload: data.data.items});
+        dispatch({type: GET_DEPARTMENTS, payload: data.data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }
@@ -27,15 +29,14 @@ export const onGetDepartments = () => {
   }
 };
 
-
 export const onAddDepartment = (department, addMessage) => {
-  console.log("onAddDepartment", department)
+  console.log("onAddDepartment", department);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/departments', department).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data)
+        console.log(" sending data", data.data);
         dispatch({type: ADD_DEPARTMENT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         addMessage();
@@ -85,10 +86,10 @@ export const onBulkDeleteDepartments = (departmentIds, deleteMessage) => {
       console.info("Error****:", error.message);
     });
   }
-}
+};
 
 export const onBulkActiveDepartments = (departmentIds, successMessage) => {
-  console.log("in action", departmentIds)
+  console.log("in action", departmentIds);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/departments/status/1', departmentIds).then(({data}) => {
@@ -104,14 +105,14 @@ export const onBulkActiveDepartments = (departmentIds, successMessage) => {
       console.info("Error****:", error.message);
     });
   }
-}
+};
 
 export const onBulkInActiveDepartments = (departmentIds, successMessage) => {
-  console.log("in action", departmentIds)
+  console.log("in action", departmentIds);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/departments/status/0', departmentIds).then(({data}) => {
-      console.log("data.data", data)
+      console.log("data.data", data);
       if (data.success) {
         dispatch({type: BULK_INACTIVE_DEPARTMENTS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
@@ -127,13 +128,13 @@ export const onBulkInActiveDepartments = (departmentIds, successMessage) => {
 };
 
 export const onEditDepartment = (department, editMessage) => {
-  console.log("onEditDepartment", department)
+  console.log("onEditDepartment", department);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/departments/${department.id}`, department).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data)
+        console.log(" sending data", data.data);
         dispatch({type: EDIT_DEPARTMENT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         editMessage();

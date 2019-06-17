@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import {Breadcrumb, Button, Icon, Input, message, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 import {
-  onAddTicketPriority,
+  onAddTicketPriority, onBulkActivePriorities, onBulkDeletePriorities, onBulkInActivePriorities,
   onDeleteTicketPriority,
   onEditTicketPriority,
   onGetTicketPriorities
@@ -28,26 +28,31 @@ class TicketPriorities extends Component {
       filterText: "",
       itemNumbers: 10,
       current: 1,
-      showAddPriority: false
+      showAddPriority: false,
+      selectedPriorities: []
     };
   };
   componentWillMount() {
+    this.onGetPriorityData(this.state.current, this.state.itemNumbers);
+  };
+  onGetPriorityData = (currentPage, itemsPerPage) => {
     if(Permissions.canPriorityView())
     {
-      this.props.onGetTicketPriorities();
+      this.props.onGetTicketPriorities(currentPage, itemsPerPage);
     }
   };
   onToggleAddPriority = () => {
     this.setState({showAddPriority: !this.state.showAddPriority})
   };
   onCurrentIncrement = () => {
-    const pages = Math.ceil(this.props.priorities.length/this.state.itemNumbers);
+    const pages = Math.ceil(this.props.totalItems/this.state.itemNumbers);
     if(this.state.current < pages ) {
       this.setState({current: this.state.current + 1});
     }
     else {
     return null;
     }
+    this.onGetPriorityData(this.state.current + 1, this.state.itemNumbers);
   };
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
@@ -55,6 +60,7 @@ class TicketPriorities extends Component {
     } else {
       return null;
     }
+    this.onGetPriorityData(this.state.current - 1, this.state.itemNumbers);
   };
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value});
@@ -72,12 +78,72 @@ class TicketPriorities extends Component {
     this.setState({priorityId: id, showAddPriority: true});
   };
   onSelectOption = () => {
-    return <Select defaultValue="Archive" style={{width: 120}}>
-      <Option value="Archive">Archive</Option>
-      <Option value="Delete">Delete</Option>
-      <Option value="Disable">Disable</Option>
-      <Option value="Export">Export</Option>
+    return <Select defaultValue="Active" style={{width: 120}}>
+      <Option value="Active">
+        {this.state.selectedPriorities.length !== 0 ?
+          <Popconfirm
+            title="Are you sure to change the status of selected Priority(s) to ACTIVE?"
+            onConfirm={() => {
+              const obj = {
+                priority_ids: this.state.selectedPriorities
+              };
+              this.props.onBulkActivePriorities(obj, this.onStatusChangeMessage);
+              this.setState({selectedRowKeys: []})
+            }}
+            okText="Yes"
+            cancelText="No">
+            Active
+          </Popconfirm> :
+          <Popconfirm
+            title="Please select Priority(s) first"
+            okText="Ok">
+            Active
+          </Popconfirm>}</Option>
+      <Option value="Disable">
+        {this.state.selectedPriorities.length !== 0 ?
+          <Popconfirm
+            title="Are you sure to change the status of selected Priority(s) to DISABLED?"
+            onConfirm={() => {
+              const obj = {
+                priority_ids: this.state.selectedPriorities
+              };
+              this.props.onBulkInActivePriorities(obj, this.onStatusChangeMessage);
+              this.setState({selectedRowKeys: []})
+            }}
+            okText="Yes"
+            cancelText="No">
+            Disable
+          </Popconfirm> :
+          <Popconfirm
+            title="Please select Priority(s) first"
+            okText="Ok">
+            Disable
+          </Popconfirm>}</Option>
+      <Option value="Delete">
+        {this.state.selectedPriorities.length !== 0 ?
+          <Popconfirm
+            title="Are you sure to delete the selected Priority(s)?"
+            onConfirm={() => {
+              const obj = {
+                priority_ids: this.state.selectedPriorities
+              };
+              this.props.onBulkDeletePriorities(obj, this.onDeleteSuccessMessage);
+              this.setState({selectedRowKeys: []})
+            }}
+            okText="Yes"
+            cancelText="No">
+            Delete
+          </Popconfirm> :
+          <Popconfirm
+            title="Please select Priority(s) first"
+            okText="Ok">
+            Delete
+          </Popconfirm>}
+      </Option>
     </Select>
+  };
+  onStatusChangeMessage = () => {
+    message.success('The status of selected Priorities has been changed successfully.');
   };
   onGetTableColumns = () => {
     return [
@@ -160,6 +226,7 @@ class TicketPriorities extends Component {
     this.setState({
       current: page,
     });
+    this.onGetPriorityData(page, this.state.itemNumbers);
   };
   onShowItemOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>
@@ -169,15 +236,20 @@ class TicketPriorities extends Component {
     </Select>
   };
   onDropdownChange = (value) => {
-    this.setState({itemNumbers: value})
+    this.setState({itemNumbers: value, current: 1})
+    this.onGetPriorityData(1,value);
   };
   render() {
+    const selectedRowKeys = this.state.selectedRowKeys;
     const priorities = this.onFilterData();
-    const {selectedRowKeys} = this.state;
     const rowSelection = {
       selectedRowKeys,
-      onChange: this.onSelectChange
-    };
+      onChange: (selectedRowKeys, selectedRows) => {
+        const ids = selectedRows.map(selectedRow => {
+          return selectedRow.id
+        });
+        this.setState({selectedPriorities:ids, selectedRowKeys: selectedRowKeys})
+      }};
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -219,7 +291,7 @@ class TicketPriorities extends Component {
                    pagination={{
                      pageSize: this.state.itemNumbers,
                      current: this.state.current,
-                     total: priorities.length,
+                     total: this.props.totalItems,
                      showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
                      onChange: this.onPageChange
                    }}/>
@@ -238,21 +310,26 @@ class TicketPriorities extends Component {
 
 
 const mapStateToProps = ({ticketPriorities}) => {
-  const {priorities} = ticketPriorities;
-  return {priorities};
+  const {priorities, totalItems} = ticketPriorities;
+  return {priorities, totalItems};
 };
 
 export default connect(mapStateToProps, {
   onGetTicketPriorities,
   onAddTicketPriority,
   onDeleteTicketPriority,
-  onEditTicketPriority
+  onEditTicketPriority,
+  onBulkActivePriorities,
+  onBulkInActivePriorities,
+  onBulkDeletePriorities
 })(TicketPriorities);
 
 TicketPriorities.defaultProps = {
-  priorities: []
+  priorities: [],
+  totalItems: null
 };
 
 TicketPriorities.propTypes = {
-  priorities: PropTypes.array
+  priorities: PropTypes.array,
+  totalItems: PropTypes.number
 };

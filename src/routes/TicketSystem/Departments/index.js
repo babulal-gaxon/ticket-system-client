@@ -5,7 +5,10 @@ import PropTypes from "prop-types";
 
 import Widget from "../../../components/Widget/index";
 import {
-  onAddDepartment, onBulkActiveDepartments, onBulkDeleteDepartments, onBulkInActiveDepartments,
+  onAddDepartment,
+  onBulkActiveDepartments,
+  onBulkDeleteDepartments,
+  onBulkInActiveDepartments,
   onDeleteDepartment,
   onEditDepartment,
   onGetDepartments,
@@ -15,7 +18,7 @@ import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
 
 const ButtonGroup = Button.Group;
-const { Option } = Select;
+const {Option} = Select;
 const Search = Input.Search;
 
 
@@ -33,29 +36,32 @@ class Departments extends Component {
     }
   };
   componentWillMount() {
-    if(Permissions.canDepartmentView()) {
-      this.props.onGetDepartments()
+    this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
+  };
+  onGetDepartmentData = (currentPage, itemsPerPage) => {
+    if (Permissions.canDepartmentView()) {
+      this.props.onGetDepartments(currentPage, itemsPerPage)
     }
   };
   onToggleAddDepartment = () => {
     this.setState({showAddDepartment: !this.state.showAddDepartment})
   };
   onCurrentIncrement = () => {
-    const pages = Math.ceil(this.props.dept.length/this.state.itemNumbers);
-    if(this.state.currentPage < pages ) {
+    const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
+    if (this.state.currentPage < pages) {
       this.setState({currentPage: this.state.currentPage + 1});
-    }
-    else {
+    } else {
       return null;
     }
+    this.onGetDepartmentData(this.state.currentPage + 1, this.state.itemNumbers)
   };
   onCurrentDecrement = () => {
-    if(this.state.currentPage !== 1) {
+    if (this.state.currentPage !== 1) {
       this.setState({currentPage: this.state.currentPage - 1});
-    }
-    else{
+    } else {
       return null;
     }
+    this.onGetDepartmentData(this.state.currentPage - 1, this.state.itemNumbers)
   };
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value})
@@ -73,7 +79,7 @@ class Departments extends Component {
     this.setState({departmentId: id, showAddDepartment: true});
   };
   onSelectOption = () => {
-    return <Select defaultValue="Active" style={{ width: 120 }}>
+    return <Select defaultValue="Active" style={{width: 120}}>
       <Option value="Active">
         {this.state.selectedDepartments.length !== 0 ?
           <Popconfirm
@@ -83,6 +89,7 @@ class Departments extends Component {
                 department_ids: this.state.selectedDepartments
               };
               this.props.onBulkActiveDepartments(obj, this.onStatusChangeMessage);
+              this.setState({selectedRowKeys: []})
             }}
             okText="Yes"
             cancelText="No">
@@ -102,6 +109,7 @@ class Departments extends Component {
                 department_ids: this.state.selectedDepartments
               };
               this.props.onBulkInActiveDepartments(obj, this.onStatusChangeMessage);
+              this.setState({selectedRowKeys: []})
             }}
             okText="Yes"
             cancelText="No">
@@ -114,18 +122,19 @@ class Departments extends Component {
           </Popconfirm>}</Option>
       <Option value="Delete">
         {this.state.selectedDepartments.length !== 0 ?
-        <Popconfirm
-          title="Are you sure to delete the selected departments?"
-          onConfirm={() => {
-            const obj = {
-              department_ids: this.state.selectedDepartments
-            };
-            this.props.onBulkDeleteDepartments(obj, this.onDeleteSuccessMessage)
-          }}
-          okText="Yes"
-          cancelText="No">
-          Delete
-        </Popconfirm> :
+          <Popconfirm
+            title="Are you sure to delete the selected departments?"
+            onConfirm={() => {
+              const obj = {
+                department_ids: this.state.selectedDepartments
+              };
+              this.props.onBulkDeleteDepartments(obj, this.onDeleteSuccessMessage);
+              this.setState({selectedRowKeys: []})
+            }}
+            okText="Yes"
+            cancelText="No">
+            Delete
+          </Popconfirm> :
           <Popconfirm
             title="Please select departments to delete"
             okText="Ok">
@@ -165,7 +174,7 @@ class Departments extends Component {
         dataIndex: 'status_id',
         key: 'Status',
         render: (text, record) => {
-          return <Tag color = {record.status === 1 ? "green" : "red"}>
+          return <Tag color={record.status === 1 ? "green" : "red"}>
             {record.status === 1 ? "Active" : "Disabled"}
           </Tag>
         },
@@ -178,7 +187,7 @@ class Departments extends Component {
           return <span> {Permissions.canDepartmentEdit() ? <i className="icon icon-edit gx-mr-3"
                                                               onClick={() => this.onEditDepartment(record.id)}/> : null}
             {Permissions.canDepartmentDelete() ? this.onDeletePopUp(record.id)
-                : null}
+              : null}
           </span>
         },
       },
@@ -194,14 +203,14 @@ class Departments extends Component {
   onDeletePopUp = (recordId) => {
     return (
       <Popconfirm
-      title="Are you sure to delete this Department?"
-      onConfirm={() =>
-      this.props.onDeleteDepartment(recordId,this.onDeleteSuccessMessage)
-      }
-      okText="Yes"
-      cancelText="No">
-      <i className="icon icon-trash"/>
-    </Popconfirm>
+        title="Are you sure to delete this Department?"
+        onConfirm={() =>
+          this.props.onDeleteDepartment(recordId, this.onDeleteSuccessMessage)
+        }
+        okText="Yes"
+        cancelText="No">
+        <i className="icon icon-trash"/>
+      </Popconfirm>
     )
   };
 
@@ -213,64 +222,71 @@ class Departments extends Component {
     </Select>
   };
   onDropdownChange = (value) => {
-    this.setState({itemNumbers: value})
+    this.setState({itemNumbers: value, currentPage:1})
+    this.onGetDepartmentData(1, value);
   };
   onPageChange = page => {
     this.setState({
       currentPage: page,
     });
+    this.onGetDepartmentData(page, this.state.itemNumbers);
   };
   render() {
+    const selectedRowKeys = this.state.selectedRowKeys;
     const dept = this.onFilterData();
     const rowSelection = {
+      selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
         const ids = selectedRows.map(selectedRow => {
           return selectedRow.id
         });
-        this.setState({selectedDepartments:ids})
-      }};
+        this.setState({selectedDepartments: ids, selectedRowKeys: selectedRowKeys})
+      }
+    };
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
           <h4>Departments</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>
-              <Link to = "/ticket-system/departments">Ticket System</Link></Breadcrumb.Item>
+              <Link to="/ticket-system/departments">Ticket System</Link></Breadcrumb.Item>
             <Breadcrumb.Item className="gx-text-primary">Departments</Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
-            {(Permissions.canDepartmentAdd()) ?
-              <Button type="primary" className="gx-btn-lg"
-                      onClick={this.onAddButtonClick}>
-                Add New Department</Button> : null}
-            <span>{this.onSelectOption()}</span>
+              {(Permissions.canDepartmentAdd()) ?
+                <Button type="primary" className="gx-btn-lg"
+                        onClick={this.onAddButtonClick}>
+                  Add New Department</Button> : null}
+              <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
                 style={{width: 200}}
                 placeholder="Enter keywords to search tickets"
-              value={this.state.filterText}
-              onChange={this.onFilterTextChange}/>
+                value={this.state.filterText}
+                onChange={this.onFilterTextChange}/>
               <div className="gx-ml-3">
                 {this.onShowItemOptions()}
               </div>
-                <ButtonGroup className="gx-ml-3">
-                  <Button type="default" onClick ={this.onCurrentDecrement} >
-                    <i className="icon icon-long-arrow-left"/>
-                  </Button>
-                  <Button type="default" onClick ={this.onCurrentIncrement}>
-                    <i className="icon icon-long-arrow-right"/>
-                  </Button>
-                </ButtonGroup>
-              </div>
+              <ButtonGroup className="gx-ml-3">
+                <Button type="default" onClick={this.onCurrentDecrement}>
+                  <i className="icon icon-long-arrow-left"/>
+                </Button>
+                <Button type="default" onClick={this.onCurrentIncrement}>
+                  <i className="icon icon-long-arrow-right"/>
+                </Button>
+              </ButtonGroup>
             </div>
-            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={dept} className="gx-mb-4"
-                   pagination = {{pageSize: this.state.itemNumbers,
-              current: this.state.currentPage,
-                     total:dept.length,
-                     showTotal:((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
-                   onChange: this.onPageChange}}/>
+          </div>
+          <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={dept} className="gx-mb-4"
+                 pagination={{
+                   pageSize: this.state.itemNumbers,
+                   current: this.state.currentPage,
+                   total: this.props.totalItems,
+                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   onChange: this.onPageChange
+                 }}/>
           <div className="gx-d-flex gx-flex-row">
           </div>
         </Widget>
@@ -287,8 +303,8 @@ class Departments extends Component {
 }
 
 const mapStateToProps = ({departments}) => {
-  const {dept} = departments;
-  return {dept};
+  const {dept, totalItems} = departments;
+  return {dept, totalItems};
 };
 
 export default connect(mapStateToProps, {
@@ -303,10 +319,12 @@ export default connect(mapStateToProps, {
 
 
 Departments.defaultProps = {
-  dept: []
+  dept: [],
+  totalItems: null
 };
 
 Departments.propTypes = {
-  dept: PropTypes.array
+  dept: PropTypes.array,
+  totalItems: PropTypes.number
 };
 

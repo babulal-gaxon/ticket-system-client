@@ -3,7 +3,6 @@ import {Button, Checkbox, Form, Input, message, Modal, Radio} from "antd";
 import {SketchPicker} from "react-color";
 import PropTypes from "prop-types";
 import reactCSS from 'reactcss'
-import AddNewPriority from "../TicketPriorities/AddNewPriority";
 
 class AddNewStatus extends Component {
   constructor(props) {
@@ -21,7 +20,7 @@ class AddNewStatus extends Component {
       setTimeout(this.onSetFieldsValue, 10);
       const selectedStatus = this.props.statuses.find(status => status.id === this.props.statusId);
       this.state = {
-       ...selectedStatus
+        ...selectedStatus
       };
     }
   };
@@ -70,7 +69,6 @@ class AddNewStatus extends Component {
       this.setState({is_default: 0})
     }
   };
-
   render() {
     const {getFieldDecorator} = this.props.form;
     const {name, color_code, status} = this.state;

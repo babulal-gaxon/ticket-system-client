@@ -20,27 +20,21 @@ class CustomersLabel extends Component {
             current:1
         }
     }
-
     componentWillMount() {
         this.props.onGetLabelData();
     };
-
     onSetID = () => {
         this.setState({labelEditId: 0})
     };
-
     onToggleModalState = () => {
         this.setState({isVisible: !this.state.isVisible});
     };
-
     onFilterData = () => {
         return this.props.labelList.filter(label => label.name.indexOf(this.state.filterText) !== -1)
     };
-
     onSelectRowOperation = (e) => {
         return e.key === "item_0" ? this.onToggleModalState() : null;
     };
-
     onHandleMenuClick = (labelEditId) => {
         return <Menu onClick={(e) => {
             this.onSelectRowOperation(e);
@@ -64,7 +58,6 @@ class CustomersLabel extends Component {
     onSelectPageSize = (value) => {
         this.setState({pageSize: eval(value)});
     };
-
     onCurrentIncrement = () =>{
         const totalPage = Math.ceil(this.props.labelList.length/this.state.pageSize);
         if (this.state.current < totalPage) {
@@ -75,13 +68,10 @@ class CustomersLabel extends Component {
         if(this.state.current > 1){
             this.setState({current:this.state.current-1})
         }
-
     };
     onPageChange = (page) =>{
         this.setState({current:page});
     };
-
-
     render() {
         const data = this.onFilterData();
         const rowSelection = {
@@ -89,7 +79,6 @@ class CustomersLabel extends Component {
                 console.log('selectedRows:', selectedRows);
             }
         };
-
         const columnData = [
                 {
                     title: 'id',
@@ -106,7 +95,6 @@ class CustomersLabel extends Component {
                     dataIndex: 'desc',
                     key: 'desc',
                 },
-
                 {
                     title: 'Status',
                     dataIndex: 'Status',
@@ -115,8 +103,6 @@ class CustomersLabel extends Component {
                         let color = record.status ? "green" : "red";
                         return <Tag color={color}>{record.status ? "Active" : "Disabled"}</Tag>
                     }
-
-
                 },
                 {
                     render: (record) => {
@@ -125,24 +111,18 @@ class CustomersLabel extends Component {
                         </Dropdown>
                     }
                 }
-
-
             ]
         ;
         return (
             <div className="gx-main-layout-content">
-
                 <Widget styleName="gx-card-filter">
-
                     <h4>Customers Label</h4>
-
                     <Breadcrumb className="gx-mb-3">
                         <Breadcrumb.Item>Setup</Breadcrumb.Item>
                         <Breadcrumb.Item>
                             <Link to={""} className="gx-text-primary">Customers Label</Link>
                         </Breadcrumb.Item>
                     </Breadcrumb>
-
                     <div className="gx-d-flex gx-justify-content-between">
                         <div className="gx-d-flex">
                             <Button type="primary" onClick={this.onToggleModalState} style={{width: 200}}>Add New
@@ -150,13 +130,11 @@ class CustomersLabel extends Component {
                             </Button>
                             <Select
                                 labelInValue
-                                defaultValue={{key: 'Bulk Action'}}
-                            >
+                                defaultValue={{key: 'Bulk Action'}}>
                                 <Option value="Export">Export All</Option>
                                 <Option value="Archive">Archive All</Option>
                             </Select>
                         </div>
-
                         <div className="gx-d-flex">
                             <Search
                                 placeholder="input search text"
@@ -179,7 +157,6 @@ class CustomersLabel extends Component {
                                 </Button>
                             </Button.Group>
                         </div>
-
                     </div>
                     <Table rowSelection={rowSelection} dataSource={data} columns={columnData} pagination={{
                         pageSize: this.state.pageSize,
@@ -187,9 +164,7 @@ class CustomersLabel extends Component {
                         showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
                         onChange:((page)=> this.onPageChange(page))
                     }}>
-
                     </Table>
-
                 </Widget>
                 {this.state.isVisible ?
                     <AddNewLabel visible={this.state.isVisible} labelEditId={this.state.labelEditId}

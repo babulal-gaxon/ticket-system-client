@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   dept: [],
+  totalItems: null
 };
 
 export default (state = initialState, action) => {
@@ -15,13 +16,15 @@ export default (state = initialState, action) => {
     case GET_DEPARTMENTS:
       return {
         ...state,
-        dept: action.payload
+        dept: action.payload.items,
+        totalItems: action.payload.paginate.total
       };
 
     case ADD_DEPARTMENT:
       return {
         ...state,
-        dept: [action.payload, ...state.dept]
+        dept: [action.payload, ...state.dept],
+        totalItems: state.totalItems + 1
       };
 
     case EDIT_DEPARTMENT:
@@ -32,10 +35,11 @@ export default (state = initialState, action) => {
       };
 
       case DELETE_DEPARTMENT:
-        const updatedDepartments = state.dept.filter((department) => department.id !== action.payload)
+        const updatedDepartments = state.dept.filter((department) => department.id !== action.payload);
         return {
           ...state,
-          dept:updatedDepartments
+          dept:updatedDepartments,
+          totalItems: state.totalItems - 1
         };
 
     case BULK_DELETE_DEPARTMENTS:
@@ -46,7 +50,8 @@ export default (state = initialState, action) => {
       });
       return {
         ...state,
-        dept:upDepartments
+        dept:upDepartments,
+        totalItems: state.totalItems - action.payload.length
       };
 
     case BULK_ACTIVE_DEPARTMENTS:
@@ -70,15 +75,9 @@ export default (state = initialState, action) => {
         }
         return department;
       });
-
       return {
         ...state,
         dept: deActivateDepartments
-      };
-
-      return {
-        ...state,
-        staffList:upDepartments
       };
 
     default:

@@ -19,7 +19,6 @@ class AddNewDepartment extends Component {
       console.log("selectedDepartment", selectedDept)
       this.state = {...selectedDept};
     }
-
   };
   onSetFieldsValue=()=>{
     this.props.form.setFieldsValue({
@@ -94,6 +93,7 @@ class AddNewDepartment extends Component {
     )
   }
 }
+
 
 AddNewDepartment = Form.create({})(AddNewDepartment);
 

@@ -1,25 +1,23 @@
 import React, {Component} from "react"
 import {Button, Form, Input, message, Modal, Radio} from "antd";
 import PropTypes from "prop-types";
-import AddNewPriority from "../TicketPriorities/AddNewPriority";
 
 
 class AddNewResponses extends Component {
   constructor(props) {
     super(props);
-    if(this.props.responseId === 0 ) {
+    if (this.props.responseId === 0) {
       this.state = {
         short_title: "",
         short_code: "",
         message: "",
         status: 1
       };
-    }
-    else {
+    } else {
       setTimeout(this.onSetFieldsValue, 10);
-        const selectedResponse = this.props.responses.find(response => response.id === this.props.responseId);
+      const selectedResponse = this.props.responses.find(response => response.id === this.props.responseId);
       this.state = {
-       ...selectedResponse
+        ...selectedResponse
       };
     }
   };
@@ -33,10 +31,10 @@ class AddNewResponses extends Component {
   };
   onResponseAdd = () => {
     if (this.props.responseId === 0) {
-      this.props.onAddCannedResponse({...this.state},this.onAddSuccess);
+      this.props.onAddCannedResponse({...this.state}, this.onAddSuccess);
       this.props.onToggleAddCanned();
     } else {
-      this.props.onEditCannedResponse({...this.state},this.onEditSuccess);
+      this.props.onEditCannedResponse({...this.state}, this.onEditSuccess);
       this.props.onToggleAddCanned();
     }
   };
@@ -53,6 +51,7 @@ class AddNewResponses extends Component {
       }
     });
   };
+
   render() {
     const {getFieldDecorator} = this.props.form;
     const {short_title, short_code, message, status} = this.state;
@@ -107,6 +106,7 @@ class AddNewResponses extends Component {
     )
   }
 }
+
 
 AddNewResponses = Form.create({})(AddNewResponses);
 

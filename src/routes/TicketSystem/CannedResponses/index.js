@@ -1,9 +1,12 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Icon, Input, message, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Input, message, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 
 import {
   onAddCannedResponse,
+  onBulkActiveResponses,
+  onBulkDeleteResponses,
+  onBulkInActiveResponses,
   onDeleteCannedResponse,
   onEditCannedResponse,
   onGetCannedResponses
@@ -27,26 +30,29 @@ class CannedResponses extends Component {
       filterText: "",
       itemNumbers: 10,
       current: 1,
-      showAddCanned: false
+      showAddCanned: false,
+      selectedResponses: []
     };
   };
   componentWillMount() {
-    if(Permissions.canResponseView()) {
-      this.props.onGetCannedResponses();
+    this.onGetResponseData(this.state.current, this.state.itemNumbers)
+  }
+  onGetResponseData = (currentPage, itemsPerPage) => {
+    if (Permissions.canResponseView()) {
+      this.props.onGetCannedResponses(currentPage, itemsPerPage);
     }
   };
   onToggleAddCanned = () => {
     this.setState({showAddCanned: !this.state.showAddCanned})
   };
   onCurrentIncrement = () => {
-    const pages = Math.ceil(this.props.responses.length/this.state.itemNumbers);
-    console.log("pages", pages)
-    if(this.state.current < pages ) {
+    const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
+    if (this.state.current < pages) {
       this.setState({current: this.state.current + 1});
-    }
-    else {
+    } else {
       return null;
     }
+    this.onGetResponseData(this.state.current + 1, this.state.itemNumbers);
   };
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
@@ -54,6 +60,7 @@ class CannedResponses extends Component {
     } else {
       return null;
     }
+    this.onGetResponseData(this.state.current - 1, this.state.itemNumbers);
   };
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
@@ -71,12 +78,72 @@ class CannedResponses extends Component {
     return this.props.responses.filter(response => response.short_title.indexOf(this.state.filterText) !== -1);
   };
   onSelectOption = () => {
-    return <Select defaultValue="Archive" style={{width: 120}}>
-      <Option value="Archive">Archive</Option>
-      <Option value="Delete">Delete</Option>
-      <Option value="Disable">Disable</Option>
-      <Option value="Export">Export</Option>
+    return <Select defaultValue="Active" style={{width: 120}}>
+      <Option value="Active">
+        {this.state.selectedResponses.length !== 0 ?
+          <Popconfirm
+            title="Are you sure to change the status of selected Response(s) to ACTIVE?"
+            onConfirm={() => {
+              const obj = {
+                canned_ids: this.state.selectedResponses
+              };
+              this.props.onBulkActiveResponses(obj, this.onStatusChangeMessage);
+              this.setState({selectedRowKeys: []})
+            }}
+            okText="Yes"
+            cancelText="No">
+            Active
+          </Popconfirm> :
+          <Popconfirm
+            title="Please select Response(s) first"
+            okText="Ok">
+            Active
+          </Popconfirm>}</Option>
+      <Option value="Disable">
+        {this.state.selectedResponses.length !== 0 ?
+          <Popconfirm
+            title="Are you sure to change the status of selected Response(s) to DISABLED?"
+            onConfirm={() => {
+              const obj = {
+                canned_ids: this.state.selectedResponses
+              };
+              this.props.onBulkInActiveResponses(obj, this.onStatusChangeMessage);
+              this.setState({selectedRowKeys: []})
+            }}
+            okText="Yes"
+            cancelText="No">
+            Disable
+          </Popconfirm> :
+          <Popconfirm
+            title="Please select Response(s) first"
+            okText="Ok">
+            Disable
+          </Popconfirm>}</Option>
+      <Option value="Delete">
+        {this.state.selectedResponses.length !== 0 ?
+          <Popconfirm
+            title="Are you sure to delete the selected Response(s)?"
+            onConfirm={() => {
+              const obj = {
+                canned_ids: this.state.selectedResponses
+              };
+              this.props.onBulkDeleteResponses(obj, this.onDeleteSuccessMessage)
+              this.setState({selectedRowKeys: []})
+            }}
+            okText="Yes"
+            cancelText="No">
+            Delete
+          </Popconfirm> :
+          <Popconfirm
+            title="Please select Response(s) first"
+            okText="Ok">
+            Delete
+          </Popconfirm>}
+      </Option>
     </Select>
+  };
+  onStatusChangeMessage = () => {
+    message.success('The status of selected Responses has been changed successfully.');
   };
   onGetTableColumns = () => {
     return [
@@ -118,7 +185,7 @@ class CannedResponses extends Component {
         key: 'Status',
         render: (text, record) => {
 
-          return <Tag color = {record.status === 1 ? "green" : "red"}>
+          return <Tag color={record.status === 1 ? "green" : "red"}>
             {record.status === 1 ? "Active" : "Disabled"}
           </Tag>
         },
@@ -139,21 +206,23 @@ class CannedResponses extends Component {
   onDeletePopUp = (recordId) => {
     return <Popconfirm
       title="Are you sure to delete this Response?"
-      onConfirm={() => {this.props.onDeleteCannedResponse(recordId, this.onDeleteSuccessMessage)
+      onConfirm={() => {
+        this.props.onDeleteCannedResponse(recordId, this.onDeleteSuccessMessage)
       }}
       okText="Yes"
       cancelText="No">
       <i className="icon icon-trash"/>
     </Popconfirm>
   };
-
   onDeleteSuccessMessage = () => {
     message.success('The selected Response has been deleted successfully.');
   };
   onPageChange = page => {
+    console.log("current page", page)
     this.setState({
       current: page,
     });
+    this.onGetResponseData(page, this.state.itemNumbers);
   };
   onShowItemOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>
@@ -163,14 +232,20 @@ class CannedResponses extends Component {
     </Select>
   };
   onDropdownChange = (value) => {
-    this.setState({itemNumbers: value})
+    this.setState({itemNumbers: value, current: 1})
+    this.onGetResponseData(1, value);
   };
   render() {
+    const selectedRowKeys = this.state.selectedRowKeys;
     const responses = this.onFilterData();
-    const {selectedRowKeys} = this.state;
     const rowSelection = {
       selectedRowKeys,
-      onChange: this.onSelectChange
+      onChange: (selectedRowKeys, selectedRows) => {
+        const ids = selectedRows.map(selectedRow => {
+          return selectedRow.id
+        });
+        this.setState({selectedResponses: ids, selectedRowKeys: selectedRowKeys})
+      }
     };
     return (
       <div className="gx-main-layout-content">
@@ -178,16 +253,16 @@ class CannedResponses extends Component {
           <h4>Canned Responses</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>
-              <Link to = "/ticket-system/canned-responses">Ticket System</Link></Breadcrumb.Item>
+              <Link to="/ticket-system/canned-responses">Ticket System</Link></Breadcrumb.Item>
             <Breadcrumb.Item className="gx-text-primary">Canned Responses</Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
-            {Permissions.canResponseAdd() ?
-              <Button type="primary" className="gx-btn-lg" onClick={this.onAddButtonClick}>
-              Add New Response</Button> : null}
-            <span>{this.onSelectOption()}</span>
-          </div>
+              {Permissions.canResponseAdd() ?
+                <Button type="primary" className="gx-btn-lg" onClick={this.onAddButtonClick}>
+                  Add New Response</Button> : null}
+              <span>{this.onSelectOption()}</span>
+            </div>
             <div className="gx-d-flex">
               <Search
                 placeholder="Enter keywords to search Responses"
@@ -197,25 +272,25 @@ class CannedResponses extends Component {
               <div className="gx-ml-3">
                 {this.onShowItemOptions()}
               </div>
-                <ButtonGroup  className="gx-ml-3">
-                  <Button type="default" onClick={this.onCurrentDecrement}>
-                    <i className="icon icon-long-arrow-left"/>
-                  </Button>
-                  <Button type="default" onClick={this.onCurrentIncrement}>
-                    <i className="icon icon-long-arrow-right"/>
-                  </Button>
-                </ButtonGroup>
+              <ButtonGroup className="gx-ml-3">
+                <Button type="default" onClick={this.onCurrentDecrement}>
+                  <i className="icon icon-long-arrow-left"/>
+                </Button>
+                <Button type="default" onClick={this.onCurrentIncrement}>
+                  <i className="icon icon-long-arrow-right"/>
+                </Button>
+              </ButtonGroup>
             </div>
           </div>
-            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
-                   dataSource={responses} className="gx-mb-4"
-                   pagination={{
-                     pageSize: this.state.itemNumbers,
-                     current: this.state.current,
-                     total: responses.length,
-                     showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
-                     onChange: this.onPageChange
-                   }}/>
+          <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
+                 dataSource={responses} className="gx-mb-4"
+                 pagination={{
+                   pageSize: this.state.itemNumbers,
+                   current: this.state.current,
+                   total: this.props.totalItems,
+                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   onChange: this.onPageChange
+                 }}/>
           <div className="gx-d-flex gx-flex-row">
           </div>
         </Widget>
@@ -234,8 +309,8 @@ class CannedResponses extends Component {
 
 
 const mapStateToProps = ({cannedResponses}) => {
-  const {responses} = cannedResponses;
-  return {responses};
+  const {responses, totalItems} = cannedResponses;
+  return {responses, totalItems};
 };
 
 
@@ -243,13 +318,18 @@ export default connect(mapStateToProps, {
   onGetCannedResponses,
   onAddCannedResponse,
   onDeleteCannedResponse,
-  onEditCannedResponse
+  onEditCannedResponse,
+  onBulkActiveResponses,
+  onBulkInActiveResponses,
+  onBulkDeleteResponses
 })(CannedResponses);
 
 CannedResponses.defaultProps = {
-  responses: []
+  responses: [],
+  totalItems: null
 };
 
 CannedResponses.propTypes = {
-  responses: PropTypes.array
+  responses: PropTypes.array,
+  totalItems: PropTypes.number
 };

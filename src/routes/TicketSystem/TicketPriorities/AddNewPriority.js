@@ -23,7 +23,6 @@ class AddNewPriority extends Component {
       };
     }
   };
-
   onSetFieldsValue = () => {
     this.props.form.setFieldsValue({
       name: this.state.name
@@ -60,7 +59,6 @@ class AddNewPriority extends Component {
   onEditSuccess = () => {
     message.success('The Priority has been updated successfully.');
   };
-
   render() {
     const {getFieldDecorator} = this.props.form;
     const {name, value, desc, status, color_code} = this.state;
