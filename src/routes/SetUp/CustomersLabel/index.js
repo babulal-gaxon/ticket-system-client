@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {onAddLabelsData, onDeleteLabel, onEditLabelsData, onGetLabelData} from "../../../appRedux/actions/Labels";
 import {connect} from "react-redux";
 import Widget from "../../../components/Widget";
-import {message,Breadcrumb, Button, Dropdown, Input, Menu, Popover, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Input, Menu, Popover, Select, Table, Tag} from "antd";
 import {Link} from "react-router-dom";
 import AddNewLabel from "./AddNewLabel";
 
@@ -20,7 +20,6 @@ class CustomersLabel extends Component {
             current:1
         }
     }
-
 
     componentWillMount() {
         this.props.onGetLabelData();
@@ -53,7 +52,7 @@ class CustomersLabel extends Component {
             <Menu.Item>
                 <Popover
                     placement="topLeft"
-                    content={<div><Button onClick={this.hide}>Close</Button> <Button onClick={(e)=>{e.stopPropagation();this.props.onDeleteLabel(this.state.labelEditId);this.handleVisibleChange()}}>Yes</Button></div>}
+                    content={<div><Button onClick={this.hide}>Close</Button> <Button onClick={(e)=>{e.stopPropagation();this.props.onDeleteLabel(this.state.labelEditId);this.onSetID()}}>Yes</Button></div>}
                     title="Are You Sure You Want To Delete"
                     trigger="click"
                 >

@@ -62,7 +62,7 @@ class AddNewLabel extends Component {
                     }}
                     footer={[
                         <Button key="Save" type="primary" onClick={this.check}>
-                            {this.props.labelEditId === 0 ? "Add Label" : "Edit"}
+                           Save
                         </Button>,
                         <Button key="Cancel" onClick={() => {
                             this.props.onModalState();
