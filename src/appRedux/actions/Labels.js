@@ -1,7 +1,6 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
 import {ADD_LABELS_DATA, DELETE_LABEL, EDIT_LABEL_DATA, GET_LABELS_DATA} from "../../constants/Labels";
-import {EDIT_DEPARTMENT} from "../../constants/Departments";
 
 
 export const onGetLabelData = () => {

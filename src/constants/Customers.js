@@ -1,0 +1,4 @@
+export const GET_CUSTOMERS_DATA = "GET_CUSTOMERS_DATA";
+export const ADD_LABELS_DATA = "ADD_LABELS_DATA";
+export const DELETE_LABEL = "DELETE_LABEL";
+export const EDIT_LABEL_DATA = "EDIT_LABEL_DATA";

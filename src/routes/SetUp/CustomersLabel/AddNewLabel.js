@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input, Modal, Radio} from "antd";
 
-
 class AddNewLabel extends Component {
     constructor(props) {
         super(props);
-        console.log("labelEditId", this.props.labelEditId);
         if (this.props.labelEditId === 0) {
             this.state = {
                 name: "",
@@ -15,9 +13,19 @@ class AddNewLabel extends Component {
         } else {
             const selectedLabel = this.props.labelList.find((label) => label.id === this.props.labelEditId);
             this.state = {...selectedLabel};
+            setTimeout(this.onSetFieldsValue,10);
         }
 
     }
+    onSetFieldsValue=()=>{
+        console.log("aaraha hai" );
+        this.props.form.setFieldsValue({
+            name : this.state.name,
+            description: this.state.desc
+
+        });
+    };
+
 
     onSaveData = () => {
 
@@ -30,10 +38,20 @@ class AddNewLabel extends Component {
         this.props.onSetID();
         this.props.onModalState();
     };
+    check = () => {
+        this.props.form.validateFields(err => {
+            if (!err) {
+                this.onSaveData();
+            }
+        });
+    };
 
     render() {
+        const {getFieldDecorator} = this.props.form;
         const {visible} = this.props;
+
         return (
+
             <div>
                 <Modal
                     title="Add New Label"
@@ -43,7 +61,7 @@ class AddNewLabel extends Component {
                         this.props.onSetID()
                     }}
                     footer={[
-                        <Button key="Save" type="primary" onClick={() => this.onSaveData()}>
+                        <Button key="Save" type="primary" onClick={this.check}>
                             {this.props.labelEditId === 0 ? "Add Label" : "Edit"}
                         </Button>,
                         <Button key="Cancel" onClick={() => {
@@ -56,16 +74,20 @@ class AddNewLabel extends Component {
                 >
 
                     <Form layout="vertical" style={{width: "60%"}}>
-                        <Form.Item label="First Name">
-                            <Input type="text" value={this.state.name} placeholder="Name" onChange={(e) => {
-                                this.setState({name: e.target.value})
-                            }}/>
+                        {console.log("Form", this.props.form)}
+                        <Form.Item label="Name">{getFieldDecorator('name', {
+                            rules: [{required: true, message: 'Please input Name!'}],
+                        })(<Input type="text" placeholder="Name" onChange={(e) => {
+                            this.setState({name: e.target.value})
+                        }}/>)}
                         </Form.Item>
 
-                        <Form.Item label="Description">
-                            <Input type="text" value={this.state.desc} placeholder="Description" onChange={(e) => {
-                                this.setState({desc: e.target.value})
-                            }}/>
+
+                        <Form.Item label="Description">{getFieldDecorator('description', {
+                            rules: [{required: true, message: 'Please input Description!'}],
+                        })(<Input type="text" placeholder="Description" onChange={(e) => {
+                            this.setState({desc: e.target.value})
+                        }}/>)}
                         </Form.Item>
                         <Form.Item label={"Set Priority"}>
                             <Radio.Group onChange={(e) => {
@@ -83,6 +105,8 @@ class AddNewLabel extends Component {
 
 
 }
+
+AddNewLabel = Form.create({})(AddNewLabel);
 
 export default AddNewLabel;
 
