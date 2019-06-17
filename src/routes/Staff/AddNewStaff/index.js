@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Avatar, Button, Col, Form, Input, Radio, Row} from "antd/lib/index";
+import {Button, Col, Form, Input, Radio, Row} from "antd/lib/index";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
@@ -8,7 +8,6 @@ import {onGetDepartments} from "../../../appRedux/actions/Departments";
 import {Breadcrumb, Select} from "antd";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
-import ImageUpload from "./ImageUpload";
 
 const {Option} = Select;
 
@@ -174,7 +173,7 @@ class AddNewStaff extends Component {
               <div>
                 {/*<Avatar className="gx-mr-3 gx-size-150" src="https://via.placeholder.com/150x150"/>*/}
                 {/*<Button default className="gx-mt-lg-3">Set Profile Picture</Button>*/}
-                <ImageUpload />
+                {/*<ImageUpload />*/}
               </div>
             </Col>
           </Row>

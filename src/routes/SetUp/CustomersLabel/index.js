@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {onAddLabelsData, onDeleteLabel, onEditLabelsData, onGetLabelData} from "../../../appRedux/actions/Labels";
 import {connect} from "react-redux";
 import Widget from "../../../components/Widget";
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Pagination, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Input, Menu, Popover, Select, Table, Tag} from "antd";
 import {Link} from "react-router-dom";
 import AddNewLabel from "./AddNewLabel";
 
@@ -17,8 +17,7 @@ class CustomersLabel extends Component {
             filterText: "",
             labelEditId: 0,
             pageSize: 10,
-            current:1,
-            totalPage:null
+            current:1
         }
     }
 
@@ -39,7 +38,7 @@ class CustomersLabel extends Component {
     };
 
     onSelectRowOperation = (e) => {
-        return e.key === "item_0" ? this.onToggleModalState() : this.props.onDeleteLabel(this.state.labelEditId);
+        return e.key === "item_0" ? this.onToggleModalState() : null;
     };
 
     onHandleMenuClick = (labelEditId) => {
@@ -51,7 +50,14 @@ class CustomersLabel extends Component {
                 Edit
             </Menu.Item>
             <Menu.Item>
-                Delete
+                <Popover
+                    placement="topLeft"
+                    content={<div><Button onClick={this.hide}>Close</Button> <Button onClick={(e)=>{e.stopPropagation();this.props.onDeleteLabel(this.state.labelEditId);this.onSetID()}}>Yes</Button></div>}
+                    title="Are You Sure You Want To Delete"
+                    trigger="click"
+                >
+                    Delete
+                </Popover>
             </Menu.Item>
         </Menu>
     };
@@ -104,10 +110,12 @@ class CustomersLabel extends Component {
                 {
                     title: 'Status',
                     dataIndex: 'Status',
+                    key: 'status',
                     render: (text, record) => {
                         let color = record.status ? "green" : "red";
                         return <Tag color={color}>{record.status ? "Active" : "Disabled"}</Tag>
                     }
+
 
                 },
                 {
@@ -131,7 +139,7 @@ class CustomersLabel extends Component {
                     <Breadcrumb className="gx-mb-3">
                         <Breadcrumb.Item>Setup</Breadcrumb.Item>
                         <Breadcrumb.Item>
-                            <Link to={''} className="gx-text-primary">Customers Label</Link>
+                            <Link to={""} className="gx-text-primary">Customers Label</Link>
                         </Breadcrumb.Item>
                     </Breadcrumb>
 
@@ -194,8 +202,8 @@ class CustomersLabel extends Component {
     }
 }
 
-const mapToState = ({labelsList}) => {
+const mapPropsToState = ({labelsList}) => {
     const {labelList} = labelsList;
     return {labelList};
 };
-export default connect(mapToState, {onGetLabelData, onAddLabelsData, onDeleteLabel, onEditLabelsData})(CustomersLabel)
+export default connect(mapPropsToState, {onGetLabelData, onAddLabelsData, onDeleteLabel, onEditLabelsData})(CustomersLabel)

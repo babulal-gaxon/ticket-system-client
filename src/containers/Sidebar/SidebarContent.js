@@ -84,6 +84,21 @@ class SidebarContent extends Component {
                     <IntlMessages id= "sidebar.dashboard.staff"/></Link>
                 </Menu.Item>
 
+              <SubMenu key ="Customers"
+                       title={<span><i className="icon icon-customer"/>
+                       <IntlMessages id="sidebar.dashboard.customers"/></span>}>
+
+                <Menu.Item key="allCustomers">
+                  <Link to ="/customers/all-customers"><i className="icon icon-tag"/>
+                    <IntlMessages id= "sidebar.dashboard.all.customers"/></Link>
+                </Menu.Item>
+
+                <Menu.Item key="manageCustomers">
+                  <Link to ="/customers/manage-contacts"><i className="icon icon-company"/>
+                    <IntlMessages id="sidebar.dashboard.manage.contacts"/></Link>
+                </Menu.Item>
+              </SubMenu>
+
                 <SubMenu key ="Setup"
                          title={<span><i className="icon icon-setup-outline"/>
                        <IntlMessages id="sidebar.dashboard.setup"/></span>}>

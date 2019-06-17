@@ -12,6 +12,7 @@ import TicketPriorities from "./TicketPriorities";
 import TicketStatuses from "./TicketStatuses";
 import RolesAndPermissions from "./RolesAndPermissions";
 import Labels from "./Labels";
+import Customers from "./Customers";
 
 
 const reducers = combineReducers({
@@ -27,7 +28,8 @@ const reducers = combineReducers({
   ticketPriorities: TicketPriorities,
   ticketStatuses: TicketStatuses,
   rolesAndPermissions: RolesAndPermissions,
-  labelsList: Labels
+  labelsList: Labels,
+  customers: Customers
 });
 
 export default reducers;
