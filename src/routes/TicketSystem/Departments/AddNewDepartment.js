@@ -1,6 +1,8 @@
 import React, {Component} from "react"
-import {Button, Form, Input, Modal, Radio} from "antd";
+import {Button, Form, Input, Modal, Radio, message} from "antd";
 import PropTypes from "prop-types";
+
+
 
 class AddNewDepartment extends Component {
   constructor(props) {
@@ -12,24 +14,40 @@ class AddNewDepartment extends Component {
         status: 1
       };
     } else {
+      setTimeout(this.onSetFieldsValue,10);
       const selectedDept = this.props.dept.find(department => department.id === this.props.departmentId)
       console.log("selectedDepartment", selectedDept)
       this.state = {...selectedDept};
     }
+
+  };
+  onSetFieldsValue=()=>{
+    this.props.form.setFieldsValue({
+      name : this.state.name,
+      description: this.state.desc
+
+    });
   };
   onDepartmentAdd = () => {
     if (this.props.departmentId === 0) {
-      this.props.onAddDepartment({...this.state})
+      this.props.onAddDepartment({...this.state}, this.onAddSuccess)
       this.props.onToggleAddDepartment();
+
     } else {
-      this.props.onEditDepartment({...this.state})
+      this.props.onEditDepartment({...this.state},  this.onEditSuccess)
       this.props.onToggleAddDepartment();
     }
   };
+  onAddSuccess = () => {
+    message.success('New department has been added successfully.');
+  };
+  onEditSuccess = () => {
+    message.success('The department has been updated successfully.');
+  };
   render() {
+    const {getFieldDecorator} = this.props.form;
     const {name, desc, status} = this.state;
     const {showAddDepartment, onToggleAddDepartment} = this.props;
-    const { getFieldDecorator } = this.props.form;
     return (
       <div>
         <Modal
@@ -37,7 +55,7 @@ class AddNewDepartment extends Component {
           title={this.props.departmentId === 0 ? "Add New Department" : "Edit Department Detail"}
           onCancel={() => onToggleAddDepartment()}
           footer={[
-            <Button key="submit" type="primary" onClick={this.onDepartmentAdd}>
+            <Button key="submit" type="primary" onClick={this.onDepartmentAdd} disabled ={this.state.name === ""}>
               Save
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddDepartment()}>
@@ -47,12 +65,9 @@ class AddNewDepartment extends Component {
           <Form layout="vertical">
             <Form.Item label="Name">
               {getFieldDecorator('name', {
-                rules: [{ required: true, message: 'Please enter department name!', whitespace: true }],
+                rules: [{required: true, message: 'Please Enter Department Name!'}],
               })(<Input type="text" value={name} onChange={(e) => {
-                this.setState({name: e.target.value})
-              }}/>)}
-
-
+                this.setState({name: e.target.value}) }}/>)}
             </Form.Item>
             <Form.Item label="Description">
               <Input className="gx-form-control-lg" type="textarea" value={desc} onChange={(e) => {
@@ -74,8 +89,10 @@ class AddNewDepartment extends Component {
   }
 }
 
+AddNewDepartment = Form.create({})(AddNewDepartment);
 
 export default AddNewDepartment;
+
 
 
 AddNewDepartment.defaultProps = {

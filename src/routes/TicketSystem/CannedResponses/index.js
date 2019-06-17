@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Button, Icon, Input, Popconfirm, Select, Table, Tag} from "antd";
+import {Button, Icon, Input, message, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 
 import {
@@ -115,7 +115,8 @@ class CannedResponses extends Component {
         dataIndex: 'status_id',
         key: 'Status',
         render: (text, record) => {
-          return <Tag>
+
+          return <Tag color = {record.status === 1 ? "green" : "red"}>
             {record.status === 1 ? "Active" : "Disabled"}
           </Tag>
         },
@@ -136,11 +137,17 @@ class CannedResponses extends Component {
   onDeletePopUp = (recordId) => {
     return <Popconfirm
       title="Are you sure delete this Response?"
-      onConfirm={() => this.props.onDeleteCannedResponse(recordId)}
+      onConfirm={() => {this.props.onDeleteCannedResponse(recordId)
+        this.onDeleteSuccessMessage()
+      }}
       okText="Yes"
       cancelText="No">
       <i className="icon icon-trash"/>
     </Popconfirm>
+  };
+
+  onDeleteSuccessMessage = () => {
+    message.success('The selected Response has been deleted successfully.');
   };
   onPageChange = page => {
     this.setState({

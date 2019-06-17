@@ -1,20 +1,22 @@
 import React, {Component} from "react"
-import {Button, Icon, Input, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Input, message, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
 import Widget from "../../../components/Widget/index";
 import {
-  onAddDepartment,
+  onAddDepartment, onBulkActiveDepartments, onBulkDeleteDepartments, onBulkInActiveDepartments,
   onDeleteDepartment,
   onEditDepartment,
   onGetDepartments,
 } from "../../../appRedux/actions/Departments";
 import AddNewDepartment from "./AddNewDepartment";
 import Permissions from "../../../util/Permissions";
+import {Link} from "react-router-dom";
 
 const ButtonGroup = Button.Group;
 const { Option } = Select;
+const Search = Input.Search;
 
 
 class Departments extends Component {
@@ -26,7 +28,8 @@ class Departments extends Component {
       filterText: "",
       itemNumbers: 10,
       currentPage: 1,
-      showAddDepartment: false
+      showAddDepartment: false,
+      selectedDepartments: []
     }
   };
   componentWillMount() {
@@ -70,11 +73,65 @@ class Departments extends Component {
     this.setState({departmentId: id, showAddDepartment: true});
   };
   onSelectOption = () => {
-    return <Select defaultValue="Archive" style={{ width: 120 }}>
-      <Option value="Archive">Archive</Option>
-      <Option value="Delete">Delete</Option>
-      <Option value="Disable">Disable</Option>
-      <Option value="Export">Export</Option>
+    return <Select defaultValue="Active" style={{ width: 120 }}>
+      <Option value="Active">
+        {this.state.selectedDepartments.length !== 0 ?
+          <Popconfirm
+            title="Are you sure to change the status of selected departments to ACTIVE?"
+            onConfirm={() => {
+              const obj = {
+                department_ids: this.state.selectedDepartments
+              };
+              this.props.onBulkActiveDepartments(obj, this.onStatusChangeMessage);
+            }}
+            okText="Yes"
+            cancelText="No">
+            Active
+          </Popconfirm> :
+          <Popconfirm
+            title="Please select departments to delete"
+            okText="Ok">
+            Active
+          </Popconfirm>}</Option>
+      <Option value="Disable">
+        {this.state.selectedDepartments.length !== 0 ?
+          <Popconfirm
+            title="Are you sure to change the status of selected departments to DISABLED?"
+            onConfirm={() => {
+              const obj = {
+                department_ids: this.state.selectedDepartments
+              };
+              this.props.onBulkInActiveDepartments(obj, this.onStatusChangeMessage);
+            }}
+            okText="Yes"
+            cancelText="No">
+            Disable
+          </Popconfirm> :
+          <Popconfirm
+            title="Please select departments to delete"
+            okText="Ok">
+            Disable
+          </Popconfirm>}</Option>
+      <Option value="Delete">
+        {this.state.selectedDepartments.length !== 0 ?
+        <Popconfirm
+          title="Are you sure to delete the selected departments?"
+          onConfirm={() => {
+            const obj = {
+              department_ids: this.state.selectedDepartments
+            };
+            this.props.onBulkDeleteDepartments(obj, this.onDeleteSuccessMessage)
+          }}
+          okText="Yes"
+          cancelText="No">
+          Delete
+        </Popconfirm> :
+          <Popconfirm
+            title="Please select departments to delete"
+            okText="Ok">
+            Delete
+          </Popconfirm>}
+      </Option>
     </Select>
   };
   onGetTableColumns = () => {
@@ -92,7 +149,7 @@ class Departments extends Component {
         dataIndex: 'description',
         key: 'description',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc}</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc === null ? "NA" : record.desc}</span>
         },
       },
       {
@@ -127,14 +184,25 @@ class Departments extends Component {
       },
     ];
   };
+  onDeleteSuccessMessage = () => {
+    message.success('The selected department(s) has been deleted successfully.');
+  };
+
+  onStatusChangeMessage = () => {
+    message.success('The status of selected departments has been changed successfully.');
+  };
   onDeletePopUp = (recordId) => {
-    return <Popconfirm
+    return (
+      <Popconfirm
       title="Are you sure delete this Department?"
-      onConfirm={() => this.props.onDeleteDepartment(recordId)}
+      onConfirm={() =>
+      this.props.onDeleteDepartment(recordId,this.onDeleteSuccessMessage)
+      }
       okText="Yes"
       cancelText="No">
       <i className="icon icon-trash"/>
     </Popconfirm>
+    )
   };
 
   onShowItemOptions = () => {
@@ -154,43 +222,48 @@ class Departments extends Component {
   };
   render() {
     const dept = this.onFilterData();
-    const {selectedRowKeys} = this.state;
     const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange
-    };
+      onChange: (selectedRowKeys, selectedRows) => {
+        const ids = selectedRows.map(selectedRow => {
+          return selectedRow.id
+        });
+        this.setState({selectedDepartments:ids})
+      }};
+    console.log(this.state.selectedRowKeys)
     return (
-      <div className="gx-main-content">
-        <Widget
-          title={<span>
+      <div className="gx-main-layout-content">
+        <Widget styleName="gx-card-filter">
+          <h4>Departments</h4>
+          <Breadcrumb className="gx-mb-3">
+            <Breadcrumb.Item>
+              <Link to = "/ticket-system/departments">Ticket System</Link></Breadcrumb.Item>
+            <Breadcrumb.Item className="gx-text-primary">Departments</Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="gx-d-flex gx-justify-content-between">
+            <div className="gx-d-flex">
             {(Permissions.canDepartmentAdd()) ?
-              <Button type="primary" className="h4 gx-text-capitalize gx-mb-0"
+              <Button type="primary" className="gx-btn-lg"
                       onClick={this.onAddButtonClick}>
                 Add New Department</Button> : null}
             <span>{this.onSelectOption()}</span>
-          </span>}
-          extra={
-            <div className="gx-d-flex gx-align-items-center">
-              <Input
+            </div>
+            <div className="gx-d-flex">
+              <Search
+                style={{width: 200}}
                 placeholder="Enter keywords to search tickets"
-                prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
               value={this.state.filterText}
               onChange={this.onFilterTextChange}/>
-              <div className="gx-ml-3">
                 {this.onShowItemOptions()}
-              </div>
-              <div className="gx-ml-3">
-                <ButtonGroup className="gx-btn-group-flex">
-                  <Button className="gx-mb-0" type="default" onClick ={this.onCurrentDecrement} >
+                <ButtonGroup>
+                  <Button type="default" onClick ={this.onCurrentDecrement} >
                     <i className="icon icon-long-arrow-left"/>
                   </Button>
-                  <Button className="gx-mb-0" type="default" onClick ={this.onCurrentIncrement}>
+                  <Button type="default" onClick ={this.onCurrentIncrement}>
                     <i className="icon icon-long-arrow-right"/>
                   </Button>
                 </ButtonGroup>
               </div>
-            </div>}>
-
+            </div>
             <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={dept} className="gx-mb-4"
                    pagination = {{pageSize: this.state.itemNumbers,
               current: this.state.currentPage,
@@ -221,7 +294,10 @@ export default connect(mapStateToProps, {
   onGetDepartments,
   onAddDepartment,
   onDeleteDepartment,
-  onEditDepartment
+  onEditDepartment,
+  onBulkDeleteDepartments,
+  onBulkActiveDepartments,
+  onBulkInActiveDepartments
 })(Departments);
 
 

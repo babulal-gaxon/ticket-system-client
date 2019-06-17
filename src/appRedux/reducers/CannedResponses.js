@@ -21,7 +21,7 @@ export default (state = initialState, action) => {
       console.log("hello i reached here")
       return {
         ...state,
-        responses: state.responses.concat(action.payload)
+        responses: [action.payload, ...state.responses]
       };
 
     case EDIT_CANNED_RESPONSE:

@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Button, Form, Input, Modal, Radio} from "antd";
+import {Button, Form, Input, message, Modal, Radio} from "antd";
 import PropTypes from "prop-types";
 
 
@@ -26,10 +26,18 @@ class AddNewResponses extends Component {
     if (this.props.responseId === 0) {
       this.props.onAddCannedResponse({...this.state});
       this.props.onToggleAddCanned();
+      this.onAddSuccess()
     } else {
       this.props.onEditCannedResponse({...this.state});
       this.props.onToggleAddCanned();
+      this.onEditSuccess()
     }
+  };
+  onAddSuccess = () => {
+    message.success('New Response has been added successfully.');
+  };
+  onEditSuccess = () => {
+    message.success('The Response has been updated successfully.');
   };
   render() {
     const {short_title, short_code, message, status} = this.state;
@@ -38,11 +46,11 @@ class AddNewResponses extends Component {
       <div>
         <Modal
           visible={showAddCanned}
-          title="Add New Response"
+          title={this.props.responseId === 0 ? "Add New Response" : "Edit Response Details"}
           onCancel={() => onToggleAddCanned()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onResponseAdd}>
-              {this.props.responseId === 0 ? "Add" : "Edit"}
+              Save
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddCanned()}>
               Cancel

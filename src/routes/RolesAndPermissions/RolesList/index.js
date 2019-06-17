@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Input, Menu, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 
 
@@ -175,7 +175,7 @@ class RolesList extends Component {
   };
   onRowSelection = (ids) => {
     this.setState({selectedRoles: ids})
-  }
+  };
   render() {
     const roles = this.onFilterData();
     let ids;
@@ -192,7 +192,7 @@ class RolesList extends Component {
         <Widget styleName="gx-card-filter">
           <h4>Roles & Permission</h4>
           <Breadcrumb className="gx-mb-3">
-            <Breadcrumb.Item>Roles & Permission</Breadcrumb.Item>
+            <Breadcrumb.Item className="gx-text-primary">Roles & Permission</Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">

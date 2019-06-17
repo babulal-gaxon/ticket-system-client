@@ -178,7 +178,7 @@ class AddNewRole extends Component {
                   <Breadcrumb.Item>
                     <Link to="/roles-permissions/all">Roles & Permission</Link>
                   </Breadcrumb.Item>
-                  <Breadcrumb.Item>
+                  <Breadcrumb.Item className="gx-text-primary">
                     <Link to="/roles-permissions/add-new">Add New Role</Link>
                   </Breadcrumb.Item>
                 </Breadcrumb>

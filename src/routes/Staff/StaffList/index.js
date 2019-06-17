@@ -1,5 +1,4 @@
 import React, {Component} from "react"
-import {Avatar, Button, Dropdown, Icon, Input, Menu, Popconfirm, Select, Table, Tag} from "antd/lib/index";
 import {connect} from "react-redux";
 
 import PropTypes from "prop-types";
@@ -12,12 +11,13 @@ import {
   onGetStaffId
 } from "../../../appRedux/actions/SupportStaff";
 import StaffDetail from "./StaffDetail";
-import {Breadcrumb} from "antd";
+import {Breadcrumb, Avatar, Button, Dropdown, Input, Menu, Popconfirm, Table, Tag, Select} from "antd";
 import InfoView from "../../../components/InfoView";
 
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
+const Search = Input.Search;
 
 class StaffList extends Component {
   constructor(props) {
@@ -234,9 +234,8 @@ class StaffList extends Component {
             <span>{this.onSelectOption()}</span>
               </div>
               <div className="gx-d-flex">
-                <Input
-                  placeholder="Enter keywords to search Staff"
-                  prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                <Search
+                  placeholder=" Search Staff Here"
                   value={this.state.filterText}
                   onChange={this.onFilterTextChange}
                   style={{width: 200}}
