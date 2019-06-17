@@ -28,7 +28,7 @@ export const onGetCannedResponses = () => {
 };
 
 
-export const onAddCannedResponse = (cannedResponse) => {
+export const onAddCannedResponse = (cannedResponse, successMessage) => {
   console.log("onAddCannedResponse", cannedResponse)
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -38,6 +38,7 @@ export const onAddCannedResponse = (cannedResponse) => {
         console.log(" sending data", data.data)
         dispatch({type: ADD_CANNED_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
+        successMessage();
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -48,7 +49,7 @@ export const onAddCannedResponse = (cannedResponse) => {
   }
 };
 
-export const onDeleteCannedResponse = (cannedResponseId) => {
+export const onDeleteCannedResponse = (cannedResponseId, successMessage) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.delete(`/setup/canned/responses/${cannedResponseId}`).then(({data}) => {
@@ -56,6 +57,7 @@ export const onDeleteCannedResponse = (cannedResponseId) => {
       if (data.success) {
         dispatch({type: DELETE_CANNED_RESPONSE, payload: cannedResponseId});
         dispatch({type: FETCH_SUCCESS});
+        successMessage();
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -66,16 +68,15 @@ export const onDeleteCannedResponse = (cannedResponseId) => {
   }
 };
 
-export const onEditCannedResponse = (cannedResponse) => {
-  console.log("onEditCannedResponse", cannedResponse)
+export const onEditCannedResponse = (cannedResponse, successMessage) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/canned/responses/${cannedResponse.id}`, cannedResponse).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data)
         dispatch({type: EDIT_CANNED_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
+        successMessage();
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

@@ -27,7 +27,7 @@ export const onGetTicketStatus = () => {
   }
 };
 
-export const onAddTicketStatus = (status) => {
+export const onAddTicketStatus = (status, successMessage) => {
   console.log("onAddTicketStatus", status)
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -37,6 +37,7 @@ export const onAddTicketStatus = (status) => {
         console.log(" sending data", data.data)
         dispatch({type: ADD_TICKET_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
+        successMessage();
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -47,7 +48,7 @@ export const onAddTicketStatus = (status) => {
   }
 };
 
-export const onDeleteTicketStatus = (statusId) => {
+export const onDeleteTicketStatus = (statusId, successMessage) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.delete(`/setup/status/${statusId}`).then(({data}) => {
@@ -55,6 +56,7 @@ export const onDeleteTicketStatus = (statusId) => {
       if (data.success) {
         dispatch({type: DELETE_TICKET_STATUS, payload: statusId});
         dispatch({type: FETCH_SUCCESS});
+        successMessage();
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -66,7 +68,7 @@ export const onDeleteTicketStatus = (statusId) => {
 };
 
 
-export const onEditTicketStatus = (status) => {
+export const onEditTicketStatus = (status, successMessage) => {
   console.log("onEditTicketStatus", status);
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -76,6 +78,7 @@ export const onEditTicketStatus = (status) => {
         console.log(" sending data", data.data);
         dispatch({type: EDIT_TICKET_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
+        successMessage();
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

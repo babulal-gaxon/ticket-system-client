@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Button, Icon, Input, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Icon, Input, message, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -13,9 +13,11 @@ import AddNewStatus from "./AddNewStatus";
 import Widget from "../../../components/Widget/index";
 import Permissions from "../../../util/Permissions";
 import Auxiliary from "../../../util/Auxiliary";
+import {Link} from "react-router-dom";
 
 const ButtonGroup = Button.Group;
 const { Option } = Select;
+const Search = Input.Search;
 
 
 class TicketStatuses extends Component {
@@ -102,7 +104,8 @@ class TicketStatuses extends Component {
         dataIndex: 'colorCode',
         key: 'colorCode',
         render: (text, record) => {
-          return <Tag color={record.color_code}>{record.color_code}</Tag>
+          return <Tag color={record.color_code}>
+            <span style={{color:record.color_code}}>{record.color_code}</span></Tag>
         },
       },
       {
@@ -110,7 +113,8 @@ class TicketStatuses extends Component {
         dataIndex: 'default',
         key: 'default',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.is_default === 1 ? "Default" : "Set Default"}</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2" style={{color: record.is_default === 1 ? "blue" : ""}}>{
+            record.is_default === 1 ? "Default" : "Set Default"}</span>
         },
       },
       {
@@ -126,7 +130,7 @@ class TicketStatuses extends Component {
         dataIndex: 'status',
         key: 'status',
         render: (text, record) => {
-          return <Tag color={record.color_code}>
+          return <Tag color={record.status === 1 ? "green" : "red"}>
             {record.status === 1 ? "Active" : "Disabled"}
           </Tag>
         },
@@ -144,10 +148,13 @@ class TicketStatuses extends Component {
       },
     ];
   };
+  onDeleteSuccessMessage = () => {
+    message.success('The selected Status(s) has been deleted successfully.');
+  };
   onDeletePopUp = (recordId) => {
     return <Popconfirm
-      title="Are you sure delete this Department?"
-      onConfirm={() => this.props.onDeleteTicketStatus(recordId)}
+      title="Are you sure to delete this Status?"
+      onConfirm={() => this.props.onDeleteTicketStatus(recordId, this.onDeleteSuccessMessage)}
       okText="Yes"
       cancelText="No">
       <i className="icon icon-trash"/>
@@ -177,37 +184,41 @@ class TicketStatuses extends Component {
     };
     console.log("in Show TicketStatuses", this.props.statuses);
     return (
-      <Auxiliary>
-        <Widget
-          title={<span>
+      <div className="gx-main-layout-content">
+        <Widget styleName="gx-card-filter">
+          <h4>Ticket Status</h4>
+          <Breadcrumb className="gx-mb-3">
+            <Breadcrumb.Item>
+              <Link to = "/ticket-system/ticket-Status">Ticket System</Link></Breadcrumb.Item>
+            <Breadcrumb.Item className="gx-text-primary">Ticket Status</Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="gx-d-flex gx-justify-content-between">
+            <div className="gx-d-flex">
             {Permissions.canStatusAdd() ?
-              <Button type="primary" className="h4 gx-text-capitalize gx-mb-0" onClick={this.onAddButtonClick}>
+              <Button type="primary" className="gx-btn-lg" onClick={this.onAddButtonClick}>
                 Add New Status</Button> : null}
         <span>{this.onSelectOption()}</span>
-      </span>}
-          extra={
-            <div className="gx-d-flex gx-align-items-center">
-              <Input
+      </div>
+            <div className="gx-d-flex">
+              <Search
                 placeholder="Enter keywords to search Status"
-                prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                style={{width: 200}}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}
               />
               <div className="gx-ml-3">
                 {this.onShowItemOptions()}
               </div>
-              <div className="gx-ml-3">
-                <ButtonGroup className="gx-btn-group-flex">
-                  <Button className="gx-mb-0" type="default" onClick ={this.onCurrentDecrement} >
+                <ButtonGroup  className="gx-ml-3">
+                  <Button type="default" onClick ={this.onCurrentDecrement} >
                     <i className="icon icon-long-arrow-left"/>
                   </Button>
-                  <Button className="gx-mb-0" type="default" onClick ={this.onCurrentIncrement}>
+                  <Button type="default" onClick ={this.onCurrentIncrement}>
                     <i className="icon icon-long-arrow-right"/>
                   </Button>
                 </ButtonGroup>
               </div>
-            </div>}>
-
+            </div>
             <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
                    dataSource={statuses} className="gx-mb-4"
                    pagination = {{pageSize: this.state.itemNumbers,
@@ -215,9 +226,6 @@ class TicketStatuses extends Component {
                      total:statuses.length,
                      showTotal:((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
                      onChange: this.onPageChange}}/>
-          <div className="gx-d-flex gx-flex-row">
-            <span>Showing {statuses.length} of {statuses.length}</span>
-          </div>
         </Widget>
         {this.state.showAddStatus ?
           <AddNewStatus showAddStatus={this.state.showAddStatus}
@@ -226,7 +234,7 @@ class TicketStatuses extends Component {
                         statusId={this.state.statusId}
                         onEditTicketStatus={this.props.onEditTicketStatus}
                         statuses={statuses}/> : null}
-      </Auxiliary>
+      </div>
     );
   }
 }

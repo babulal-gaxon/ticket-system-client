@@ -194,7 +194,7 @@ class Departments extends Component {
   onDeletePopUp = (recordId) => {
     return (
       <Popconfirm
-      title="Are you sure delete this Department?"
+      title="Are you sure to delete this Department?"
       onConfirm={() =>
       this.props.onDeleteDepartment(recordId,this.onDeleteSuccessMessage)
       }
@@ -229,7 +229,6 @@ class Departments extends Component {
         });
         this.setState({selectedDepartments:ids})
       }};
-    console.log(this.state.selectedRowKeys)
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -253,8 +252,10 @@ class Departments extends Component {
                 placeholder="Enter keywords to search tickets"
               value={this.state.filterText}
               onChange={this.onFilterTextChange}/>
+              <div className="gx-ml-3">
                 {this.onShowItemOptions()}
-                <ButtonGroup>
+              </div>
+                <ButtonGroup className="gx-ml-3">
                   <Button type="default" onClick ={this.onCurrentDecrement} >
                     <i className="icon icon-long-arrow-left"/>
                   </Button>

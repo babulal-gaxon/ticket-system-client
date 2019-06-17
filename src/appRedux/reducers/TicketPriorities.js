@@ -18,10 +18,9 @@ export default (state = initialState, action) => {
       };
 
     case ADD_TICKET_PRIORITY:
-      console.log("hello i reached here")
       return {
         ...state,
-        priorities: state.priorities.concat(action.payload),
+        priorities: [action.payload, ...state.priorities]
       };
 
     case EDIT_TICKET_PRIORITY:

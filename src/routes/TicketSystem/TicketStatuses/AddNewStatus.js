@@ -1,8 +1,9 @@
 import React, {Component} from "react"
-import {Button, Checkbox, Form, Input, Modal, Radio} from "antd";
+import {Button, Checkbox, Form, Input, message, Modal, Radio} from "antd";
 import {SketchPicker} from "react-color";
 import PropTypes from "prop-types";
 import reactCSS from 'reactcss'
+import AddNewPriority from "../TicketPriorities/AddNewPriority";
 
 class AddNewStatus extends Component {
   constructor(props) {
@@ -17,14 +18,18 @@ class AddNewStatus extends Component {
         color_code: "#8D3C3C"
       };
     } else {
+      setTimeout(this.onSetFieldsValue, 10);
       const selectedStatus = this.props.statuses.find(status => status.id === this.props.statusId);
-      console.log("selectedstatus", selectedStatus);
       this.state = {
        ...selectedStatus
       };
     }
   };
-
+  onSetFieldsValue = () => {
+    this.props.form.setFieldsValue({
+      name: this.state.name
+    });
+  };
   handleColorClick = () => {
     this.setState({displayColorPicker: !this.state.displayColorPicker});
   };
@@ -36,12 +41,26 @@ class AddNewStatus extends Component {
   };
   onStatusAdd = () => {
     if (this.props.statusId === 0) {
-      this.props.onAddTicketStatus({...this.state});
+      this.props.onAddTicketStatus({...this.state}, this.onAddSuccess);
       this.props.onToggleAddStatus();
     } else {
-      this.props.onEditTicketStatus({...this.state});
+      this.props.onEditTicketStatus({...this.state}, this.onEditSuccess);
       this.props.onToggleAddStatus();
     }
+  };
+  onAddSuccess = () => {
+    message.success('New Status has been added successfully.');
+  };
+  onEditSuccess = () => {
+    message.success('The Status has been updated successfully.');
+  };
+
+  onValidationCheck = () => {
+    this.props.form.validateFields(err => {
+      if (!err) {
+        this.onStatusAdd();
+      }
+    });
   };
   onCheckBoxChange = (e) => {
     this.setState({checked: e.target.checked});
@@ -53,6 +72,7 @@ class AddNewStatus extends Component {
   };
 
   render() {
+    const {getFieldDecorator} = this.props.form;
     const {name, color_code, status} = this.state;
     const {showAddStatus, onToggleAddStatus} = this.props;
     const styles = reactCSS({
@@ -88,11 +108,11 @@ class AddNewStatus extends Component {
       <div>
         <Modal
           visible={showAddStatus}
-          title="Add New Ticket Status"
+          title={this.props.statusId === 0 ? "Add New Ticket Status" : "Edit Ticket Status Details"}
           onCancel={onToggleAddStatus}
           footer={[
-            <Button key="submit" type="primary" onClick={this.onStatusAdd}>
-              {this.props.statusId === 0 ? "Add" : "Edit"}
+            <Button key="submit" type="primary" onClick={this.onValidationCheck}>
+              Save
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddStatus()}>
               Cancel
@@ -100,9 +120,12 @@ class AddNewStatus extends Component {
           ]}>
           <Form layout="vertical">
             <Form.Item label="Name">
-              <Input type="text" value={name} onChange={(e) => {
+              {getFieldDecorator('name', {
+                rules: [{required: true, message: 'Please Enter Status Name!'}],
+              })(<Input type="text" value={name} onChange={(e) => {
                 this.setState({name: e.target.value})
-              }}/>
+              }}/>)}
+
             </Form.Item>
             <Form.Item label="Color Code">
               <div>
@@ -136,6 +159,7 @@ class AddNewStatus extends Component {
   }
 }
 
+AddNewStatus = Form.create({})(AddNewStatus);
 
 export default AddNewStatus;
 

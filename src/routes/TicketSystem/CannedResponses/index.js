@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Button, Icon, Input, message, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Icon, Input, message, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 
 import {
@@ -12,9 +12,11 @@ import AddNewResponses from "./AddNewResponses";
 import Widget from "../../../components/Widget/index";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
+import {Link} from "react-router-dom";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
+const Search = Input.Search;
 
 class CannedResponses extends Component {
   constructor(props) {
@@ -136,9 +138,8 @@ class CannedResponses extends Component {
   };
   onDeletePopUp = (recordId) => {
     return <Popconfirm
-      title="Are you sure delete this Response?"
-      onConfirm={() => {this.props.onDeleteCannedResponse(recordId)
-        this.onDeleteSuccessMessage()
+      title="Are you sure to delete this Response?"
+      onConfirm={() => {this.props.onDeleteCannedResponse(recordId, this.onDeleteSuccessMessage)
       }}
       okText="Yes"
       cancelText="No">
@@ -171,39 +172,41 @@ class CannedResponses extends Component {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
-    console.log("in Show Responses", this.props.responses);
     return (
-      <div className="gx-main-content">
-        {console.log("in return", this.state.filterText)}
-        <Widget
-          title={<span>
-            {Permissions.canResponseAdd() ? <Button type="primary" className="h4 gx-text-capitalize gx-mb-0"
-                                                    onClick={this.onAddButtonClick}>
+      <div className="gx-main-layout-content">
+        <Widget styleName="gx-card-filter">
+          <h4>Canned Responses</h4>
+          <Breadcrumb className="gx-mb-3">
+            <Breadcrumb.Item>
+              <Link to = "/ticket-system/canned-responses">Ticket System</Link></Breadcrumb.Item>
+            <Breadcrumb.Item className="gx-text-primary">Canned Responses</Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="gx-d-flex gx-justify-content-between">
+            <div className="gx-d-flex">
+            {Permissions.canResponseAdd() ?
+              <Button type="primary" className="gx-btn-lg" onClick={this.onAddButtonClick}>
               Add New Response</Button> : null}
             <span>{this.onSelectOption()}</span>
-          </span>}
-          extra={
-            <div className="gx-d-flex gx-align-items-center">
-              <Input
+          </div>
+            <div className="gx-d-flex">
+              <Search
                 placeholder="Enter keywords to search Responses"
-                prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                style={{width: 200}}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
               <div className="gx-ml-3">
                 {this.onShowItemOptions()}
               </div>
-              <div className="gx-ml-3">
-                <ButtonGroup className="gx-btn-group-flex">
-                  <Button className="gx-mb-0" type="default" onClick={this.onCurrentDecrement}>
+                <ButtonGroup  className="gx-ml-3">
+                  <Button type="default" onClick={this.onCurrentDecrement}>
                     <i className="icon icon-long-arrow-left"/>
                   </Button>
-                  <Button className="gx-mb-0" type="default" onClick={this.onCurrentIncrement}>
+                  <Button type="default" onClick={this.onCurrentIncrement}>
                     <i className="icon icon-long-arrow-right"/>
                   </Button>
                 </ButtonGroup>
-              </div>
-            </div>}>
-
+            </div>
+          </div>
             <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
                    dataSource={responses} className="gx-mb-4"
                    pagination={{

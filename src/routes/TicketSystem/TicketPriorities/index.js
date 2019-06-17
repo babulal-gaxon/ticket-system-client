@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Button, Icon, Input, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Icon, Input, message, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 import {
   onAddTicketPriority,
@@ -12,10 +12,11 @@ import Widget from "../../../components/Widget/index";
 import AddNewPriority from "./AddNewPriority";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
-import Auxiliary from "../../../util/Auxiliary";
+import {Link} from "react-router-dom";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
+const Search = Input.Search;
 
 
 class TicketPriorities extends Component {
@@ -93,7 +94,7 @@ class TicketPriorities extends Component {
         dataIndex: 'description',
         key: 'description',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc}</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc ? record.desc : "NA"}</span>
         },
       },
       {
@@ -101,7 +102,7 @@ class TicketPriorities extends Component {
         dataIndex: 'colorCode',
         key: 'colorCode',
         render: (text, record) => {
-          return <Tag color ={record.color_code}>{record.color_code}</Tag>
+          return <Tag color ={record.color_code}><span style={{color:record.color_code}}>{record.color_code}</span></Tag>
         },
       },
       {
@@ -125,7 +126,7 @@ class TicketPriorities extends Component {
         dataIndex: 'status_id',
         key: 'Status',
         render: (text, record) => {
-          return <Tag color={record.color_code}>
+          return <Tag color={record.status ? "green" : "red"}>
             {record.status ? "Active" : "Disabled"}
           </Tag>
         },
@@ -143,10 +144,13 @@ class TicketPriorities extends Component {
       },
     ];
   };
+  onDeleteSuccessMessage = () => {
+    message.success('The selected Priority(s) has been deleted successfully.');
+  };
   onDeletePopUp = (recordId) => {
     return <Popconfirm
-      title="Are you sure delete this Department?"
-      onConfirm={() => this.props.onDeleteTicketPriority(recordId)}
+      title="Are you sure to delete this Priority?"
+      onConfirm={() => this.props.onDeleteTicketPriority(recordId, this.onDeleteSuccessMessage)}
       okText="Yes"
       cancelText="No">
       <i className="icon icon-trash"/>
@@ -174,38 +178,42 @@ class TicketPriorities extends Component {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
-    console.log("in Show TicketPriorities", this.props.priorities);
     return (
-      <Auxiliary>
-        <Widget
-          title={<span>
+      <div className="gx-main-layout-content">
+        <Widget styleName="gx-card-filter">
+          <h4>Ticket Priorities</h4>
+          <Breadcrumb className="gx-mb-3">
+            <Breadcrumb.Item>
+              <Link to = "/ticket-system/ticket-priorities">Ticket System</Link></Breadcrumb.Item>
+            <Breadcrumb.Item className="gx-text-primary">Ticket Priorities</Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="gx-d-flex gx-justify-content-between">
+            <div className="gx-d-flex">
             {Permissions.canPriorityAdd() ?
-              <Button type="primary" className="h4 gx-text-capitalize gx-mb-0" onClick={this.onAddButtonClick}>
+              <Button type="primary" className="gx-btn-lg" onClick={this.onAddButtonClick}>
                 Add New Priority
               </Button> : null}
             <span>{this.onSelectOption()}</span>
-      </span>}
-          extra={
-            <div className="gx-d-flex gx-align-items-center">
-              <Input
+            </div>
+            <div className="gx-d-flex">
+              <Search
                 placeholder="Enter keywords to search Priorities"
-                prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                style={{width: 200}}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
               <div className="gx-ml-3">
                 {this.onShowItemOptions()}
               </div>
-              <div className="gx-ml-3">
-                <ButtonGroup className="gx-btn-group-flex">
-                  <Button className="gx-mb-0" type="default" onClick={this.onCurrentDecrement}>
+                <ButtonGroup className="gx-ml-3">
+                  <Button type="default" onClick={this.onCurrentDecrement}>
                     <i className="icon icon-long-arrow-left"/>
                   </Button>
-                  <Button className="gx-mb-0" type="default" onClick={this.onCurrentIncrement}>
+                  <Button type="default" onClick={this.onCurrentIncrement}>
                     <i className="icon icon-long-arrow-right"/>
                   </Button>
                 </ButtonGroup>
-              </div>
-            </div>}>
+            </div>
+            </div>
             <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
                    dataSource={priorities} className="gx-mb-4"
                    pagination={{
@@ -223,7 +231,7 @@ class TicketPriorities extends Component {
                           priorityId={this.state.priorityId}
                           onEditTicketPriority={this.props.onEditTicketPriority}
                           priorities={priorities}/> : null}
-      </Auxiliary>
+      </div>
     );
   }
 }

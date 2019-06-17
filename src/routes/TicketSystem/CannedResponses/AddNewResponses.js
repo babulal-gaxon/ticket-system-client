@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 import {Button, Form, Input, message, Modal, Radio} from "antd";
 import PropTypes from "prop-types";
+import AddNewPriority from "../TicketPriorities/AddNewPriority";
 
 
 class AddNewResponses extends Component {
@@ -15,22 +16,28 @@ class AddNewResponses extends Component {
       };
     }
     else {
+      setTimeout(this.onSetFieldsValue, 10);
         const selectedResponse = this.props.responses.find(response => response.id === this.props.responseId);
-        console.log("SelectedResponse", selectedResponse);
       this.state = {
        ...selectedResponse
       };
     }
   };
+  onSetFieldsValue = () => {
+    this.props.form.setFieldsValue({
+      short_title: this.state.short_title,
+      short_code: this.state.short_code,
+      message: this.state.message
+
+    });
+  };
   onResponseAdd = () => {
     if (this.props.responseId === 0) {
-      this.props.onAddCannedResponse({...this.state});
+      this.props.onAddCannedResponse({...this.state},this.onAddSuccess);
       this.props.onToggleAddCanned();
-      this.onAddSuccess()
     } else {
-      this.props.onEditCannedResponse({...this.state});
+      this.props.onEditCannedResponse({...this.state},this.onEditSuccess);
       this.props.onToggleAddCanned();
-      this.onEditSuccess()
     }
   };
   onAddSuccess = () => {
@@ -39,7 +46,15 @@ class AddNewResponses extends Component {
   onEditSuccess = () => {
     message.success('The Response has been updated successfully.');
   };
+  onValidationCheck = () => {
+    this.props.form.validateFields(err => {
+      if (!err) {
+        this.onResponseAdd();
+      }
+    });
+  };
   render() {
+    const {getFieldDecorator} = this.props.form;
     const {short_title, short_code, message, status} = this.state;
     const {showAddCanned, onToggleAddCanned} = this.props;
     return (
@@ -49,7 +64,7 @@ class AddNewResponses extends Component {
           title={this.props.responseId === 0 ? "Add New Response" : "Edit Response Details"}
           onCancel={() => onToggleAddCanned()}
           footer={[
-            <Button key="submit" type="primary" onClick={this.onResponseAdd}>
+            <Button key="submit" type="primary" onClick={this.onValidationCheck}>
               Save
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddCanned()}>
@@ -58,19 +73,25 @@ class AddNewResponses extends Component {
           ]}>
           <Form layout="vertical">
             <Form.Item label="Short Title">
-              <Input type="text" value={short_title} onChange={(e) => {
+              {getFieldDecorator('short_title', {
+                rules: [{required: true, message: 'Please Enter Short Title!'}],
+              })(<Input type="text" value={short_title} onChange={(e) => {
                 this.setState({short_title: e.target.value})
-              }}/>
+              }}/>)}
             </Form.Item>
             <Form.Item label="Short Code">
-              <Input type="text" value={short_code} onChange={(e) => {
+              {getFieldDecorator('short_code', {
+                rules: [{required: true, message: 'Please Enter Short Code!'}],
+              })(<Input type="text" value={short_code} onChange={(e) => {
                 this.setState({short_code: e.target.value})
-              }}/>
+              }}/>)}
             </Form.Item>
             <Form.Item label="Message">
-              <Input className="gx-form-control-lg" type="textarea" value={message} onChange={(e) => {
+              {getFieldDecorator('message', {
+                rules: [{required: true, message: 'Please Enter Message!'}],
+              })(<Input className="gx-form-control-lg" type="textarea" value={message} onChange={(e) => {
                 this.setState({message: e.target.value})
-              }}/>
+              }}/>)}
             </Form.Item>
             <Form.Item label="Status">
               <Radio.Group value={status} onChange={(e) => {
@@ -86,6 +107,8 @@ class AddNewResponses extends Component {
     )
   }
 }
+
+AddNewResponses = Form.create({})(AddNewResponses);
 
 export default AddNewResponses;
 

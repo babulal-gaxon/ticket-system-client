@@ -25,7 +25,6 @@ class AddNewDepartment extends Component {
     this.props.form.setFieldsValue({
       name : this.state.name,
       description: this.state.desc
-
     });
   };
   onDepartmentAdd = () => {
@@ -37,6 +36,13 @@ class AddNewDepartment extends Component {
       this.props.onEditDepartment({...this.state},  this.onEditSuccess)
       this.props.onToggleAddDepartment();
     }
+  };
+  onValidationCheck = () => {
+    this.props.form.validateFields(err => {
+      if (!err) {
+        this.onDepartmentAdd();
+      }
+    });
   };
   onAddSuccess = () => {
     message.success('New department has been added successfully.');
@@ -55,7 +61,7 @@ class AddNewDepartment extends Component {
           title={this.props.departmentId === 0 ? "Add New Department" : "Edit Department Detail"}
           onCancel={() => onToggleAddDepartment()}
           footer={[
-            <Button key="submit" type="primary" onClick={this.onDepartmentAdd} disabled ={this.state.name === ""}>
+            <Button key="submit" type="primary" onClick={this.onValidationCheck} >
               Save
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddDepartment()}>

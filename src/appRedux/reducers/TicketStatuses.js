@@ -21,7 +21,7 @@ export default (state = initialState, action) => {
     case ADD_TICKET_STATUS:
       return {
         ...state,
-        statuses: state.statuses.concat(action.payload)
+        statuses: [action.payload, ...state.statuses]
       };
 
     case EDIT_TICKET_STATUS:

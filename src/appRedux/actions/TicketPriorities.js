@@ -27,7 +27,7 @@ export const onGetTicketPriorities = () => {
   }
 }
 
-export const onAddTicketPriority = (priority) => {
+export const onAddTicketPriority = (priority, successMessage) => {
   console.log("onAddTicketPriority", priority)
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -37,6 +37,7 @@ export const onAddTicketPriority = (priority) => {
         console.log(" sending data", data.data)
         dispatch({type: ADD_TICKET_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
+        successMessage();
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -47,7 +48,7 @@ export const onAddTicketPriority = (priority) => {
   }
 };
 
-export const onEditTicketPriority = (priority) => {
+export const onEditTicketPriority = (priority, successMessage) => {
   console.log("onEditTicketPriority", priority)
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -57,6 +58,7 @@ export const onEditTicketPriority = (priority) => {
         console.log(" sending data", data.data)
         dispatch({type: EDIT_TICKET_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
+        successMessage();
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -67,7 +69,7 @@ export const onEditTicketPriority = (priority) => {
   }
 }
 
-export const onDeleteTicketPriority = (priorityId) => {
+export const onDeleteTicketPriority = (priorityId,successMessage) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.delete(`/setup/priorities/${priorityId}`).then(({data}) => {
@@ -75,6 +77,7 @@ export const onDeleteTicketPriority = (priorityId) => {
       if (data.success) {
         dispatch({type: DELETE_TICKET_PRIORITY, payload: priorityId});
         dispatch({type: FETCH_SUCCESS});
+        successMessage();
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
