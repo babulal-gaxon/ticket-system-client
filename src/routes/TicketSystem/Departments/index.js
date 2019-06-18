@@ -129,7 +129,8 @@ class Departments extends Component {
                 department_ids: this.state.selectedDepartments
               };
               this.props.onBulkDeleteDepartments(obj, this.onDeleteSuccessMessage);
-              this.setState({selectedRowKeys: []})
+              this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
+              this.setState({selectedRowKeys: []});
             }}
             okText="Yes"
             cancelText="No">
@@ -204,9 +205,10 @@ class Departments extends Component {
     return (
       <Popconfirm
         title="Are you sure to delete this Department?"
-        onConfirm={() =>
-          this.props.onDeleteDepartment(recordId, this.onDeleteSuccessMessage)
-        }
+        onConfirm={() => {
+          this.props.onDeleteDepartment(recordId, this.onDeleteSuccessMessage);
+          this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
+        }}
         okText="Yes"
         cancelText="No">
         <i className="icon icon-trash"/>

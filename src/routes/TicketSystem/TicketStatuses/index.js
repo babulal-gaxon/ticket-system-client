@@ -128,8 +128,9 @@ class TicketStatuses extends Component {
               const obj = {
                 status_ids: this.state.selectedStatus
               };
-              this.props.onBulkDeleteStatuses(obj, this.onDeleteSuccessMessage)
-              this.setState({selectedRowKeys: []})
+              this.props.onBulkDeleteStatuses(obj, this.onDeleteSuccessMessage);
+              this.onGetStatusData(this.state.current, this.state.itemNumbers);
+              this.setState({selectedRowKeys: []});
             }}
             okText="Yes"
             cancelText="No">
@@ -217,7 +218,10 @@ class TicketStatuses extends Component {
   onDeletePopUp = (recordId) => {
     return <Popconfirm
       title="Are you sure to delete this Status?"
-      onConfirm={() => this.props.onDeleteTicketStatus(recordId, this.onDeleteSuccessMessage)}
+      onConfirm={() => {
+        this.props.onDeleteTicketStatus(recordId, this.onDeleteSuccessMessage);
+        this.onGetStatusData(this.state.current, this.state.itemNumbers);
+      }}
       okText="Yes"
       cancelText="No">
       <i className="icon icon-trash"/>

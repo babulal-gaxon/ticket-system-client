@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Icon, Input, message, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Input, message, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 import {
   onAddTicketPriority, onBulkActivePriorities, onBulkDeletePriorities, onBulkInActivePriorities,
@@ -128,7 +128,8 @@ class TicketPriorities extends Component {
                 priority_ids: this.state.selectedPriorities
               };
               this.props.onBulkDeletePriorities(obj, this.onDeleteSuccessMessage);
-              this.setState({selectedRowKeys: []})
+              this.onGetPriorityData(this.state.current, this.state.itemNumbers);
+              this.setState({selectedRowKeys: []});
             }}
             okText="Yes"
             cancelText="No">
@@ -216,7 +217,10 @@ class TicketPriorities extends Component {
   onDeletePopUp = (recordId) => {
     return <Popconfirm
       title="Are you sure to delete this Priority?"
-      onConfirm={() => this.props.onDeleteTicketPriority(recordId, this.onDeleteSuccessMessage)}
+      onConfirm={() => {
+        this.props.onDeleteTicketPriority(recordId, this.onDeleteSuccessMessage);
+        this.onGetPriorityData(this.state.current, this.state.itemNumbers);
+      }}
       okText="Yes"
       cancelText="No">
       <i className="icon icon-trash"/>

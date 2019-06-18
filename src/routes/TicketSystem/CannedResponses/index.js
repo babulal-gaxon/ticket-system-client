@@ -128,7 +128,8 @@ class CannedResponses extends Component {
                 canned_ids: this.state.selectedResponses
               };
               this.props.onBulkDeleteResponses(obj, this.onDeleteSuccessMessage)
-              this.setState({selectedRowKeys: []})
+              this.onGetResponseData(this.state.current, this.state.itemNumbers);
+              this.setState({selectedRowKeys: []});
             }}
             okText="Yes"
             cancelText="No">
@@ -208,6 +209,7 @@ class CannedResponses extends Component {
       title="Are you sure to delete this Response?"
       onConfirm={() => {
         this.props.onDeleteCannedResponse(recordId, this.onDeleteSuccessMessage)
+        this.onGetResponseData(this.state.current, this.state.itemNumbers)
       }}
       okText="Yes"
       cancelText="No">

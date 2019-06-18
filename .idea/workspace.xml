@@ -1,27 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="72ebf97e-8970-4775-8ec5-0b0606640859" name="Default" comment="Taking pull">
+    <list default="true" id="72ebf97e-8970-4775-8ec5-0b0606640859" name="Default" comment="COmpleted ticket system">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/CannedResponses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/CannedResponses.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/Departments.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/Departments.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/TicketPriorities.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/TicketPriorities.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/TicketStatuses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/TicketStatuses.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appRedux/reducers/CannedResponses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/reducers/CannedResponses.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appRedux/reducers/Departments.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/reducers/Departments.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appRedux/reducers/TicketPriorities.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/reducers/TicketPriorities.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appRedux/reducers/TicketStatuses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/reducers/TicketStatuses.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/CannedResponses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/CannedResponses.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/TicketPriorities.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/TicketPriorities.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/TicketStatuses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/TicketStatuses.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/SetUp/CustomersLabel/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/SetUp/CustomersLabel/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/AddNewResponses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/AddNewResponses.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/TicketSystem/Departments/AddNewDepartment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/TicketSystem/Departments/AddNewDepartment.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/AddNewPriority.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/AddNewPriority.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/AddNewStatus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/AddNewStatus.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
@@ -39,8 +23,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="221" column="13" lean-forward="true" selection-start-line="221" selection-start-column="13" selection-end-line="221" selection-end-column="13" />
+            <state relative-caret-position="240">
+              <caret line="132" column="51" selection-start-line="132" selection-start-column="51" selection-end-line="132" selection-end-column="51" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -48,13 +32,25 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2380">
-              <caret line="73" column="28" lean-forward="true" selection-start-line="73" selection-start-column="28" selection-end-line="73" selection-end-column="28" />
+            <state relative-caret-position="221">
+              <caret line="130" column="81" selection-start-line="130" selection-start-column="81" selection-end-line="130" selection-end-column="81" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -63,24 +59,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="240" column="33" selection-start-line="240" selection-start-column="33" selection-end-line="240" selection-end-column="33" />
+            <state relative-caret-position="257">
+              <caret line="131" column="79" selection-start-line="131" selection-start-column="79" selection-end-line="131" selection-end-column="79" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
-                <element signature="e#4542#6680#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="239" column="34" selection-start-line="239" selection-start-column="34" selection-end-line="239" selection-end-column="34" />
+            <state relative-caret-position="1139">
+              <caret line="130" column="81" selection-start-line="130" selection-start-column="81" selection-end-line="130" selection-end-column="81" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
-                <element signature="e#4798#6831#0" />
               </folding>
             </state>
           </provider>
@@ -194,11 +188,11 @@
         <option value="$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/AddNewStatus.js" />
         <option value="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/AddNewResponses.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/CannedResponses.js" />
-        <option value="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/Departments.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/TicketPriorities.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/TicketStatuses.js" />
         <option value="$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js" />
         <option value="$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/index.js" />
         <option value="$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/index.js" />
       </list>
@@ -214,6 +208,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -245,50 +240,10 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="TicketSystem" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="TicketSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="CannedResponses" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="TicketSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="Departments" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="TicketSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="TicketPriorities" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="TicketSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="TicketStatuses" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -325,7 +280,17 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.start">
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -339,6 +304,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="npm.start" />
+        <item itemvalue="npm.build" />
       </list>
     </recent_temporary>
   </component>
@@ -381,7 +347,9 @@
       <workItem from="1560573681397" duration="13698000" />
       <workItem from="1560590785614" duration="254000" />
       <workItem from="1560591126862" duration="14408000" />
-      <workItem from="1560746266428" duration="28213000" />
+      <workItem from="1560746266428" duration="28938000" />
+      <workItem from="1560778695921" duration="68000" />
+      <workItem from="1560831898170" duration="1005000" />
     </task>
     <task id="LOCAL-00001" summary="add api">
       <created>1558429986835</created>
@@ -544,11 +512,18 @@
       <option name="project" value="LOCAL" />
       <updated>1560754248503</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="COmpleted ticket system">
+      <created>1560777945516</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1560777945516</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="585669000" />
+    <option name="totallyTimeSpent" value="587467000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -563,9 +538,9 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.44844517" visible="true" weight="0.20907739" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.44554454" visible="true" weight="0.20907739" />
       <window_info id="Structure" order="1" weight="0.25" />
-      <window_info id="npm" order="2" sideWeight="0.5515548" side_tool="true" weight="0.20907739" />
+      <window_info id="npm" order="2" sideWeight="0.55445546" side_tool="true" weight="0.20907739" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -573,12 +548,12 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3289689" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.65302783" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.44189852" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50253487" side_tool="true" weight="0.5040917" />
-      <window_info anchor="bottom" id="TypeScript" order="11" />
+      <window_info anchor="bottom" id="TypeScript" order="11" weight="0.3289689" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -635,7 +610,8 @@
     <MESSAGE value="Added Roles and Permission Panel" />
     <MESSAGE value="added functionality to roles and permissions and staff section" />
     <MESSAGE value="Taking pull" />
-    <option name="LAST_COMMIT_MESSAGE" value="Taking pull" />
+    <MESSAGE value="COmpleted ticket system" />
+    <option name="LAST_COMMIT_MESSAGE" value="COmpleted ticket system" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -657,35 +633,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js</url>
-          <line>145</line>
-          <properties lambdaOrdinal="-1" />
+          <line>146</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js</url>
           <line>79</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js</url>
-          <line>227</line>
-          <properties lambdaOrdinal="-1" />
+          <line>229</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/Setting.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#90#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/appRedux/actions/index.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1088,28 +1052,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="240" column="33" selection-start-line="240" selection-start-column="33" selection-end-line="240" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <element signature="e#4542#6680#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="239" column="34" selection-start-line="239" selection-start-column="34" selection-end-line="239" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <element signature="e#4798#6831#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/AddNewResponses.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -1120,10 +1062,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js">
+    <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="221" column="13" lean-forward="true" selection-start-line="221" selection-start-column="13" selection-end-line="221" selection-end-column="13" />
+        <state relative-caret-position="187">
+          <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/TicketStatuses/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="131" column="79" selection-start-line="131" selection-start-column="79" selection-end-line="131" selection-end-column="79" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
@@ -1132,8 +1084,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/CannedResponses/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2380">
-          <caret line="73" column="28" lean-forward="true" selection-start-line="73" selection-start-column="28" selection-end-line="73" selection-end-column="28" />
+        <state relative-caret-position="221">
+          <caret line="130" column="81" selection-start-line="130" selection-start-column="81" selection-end-line="130" selection-end-column="81" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/Departments/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="132" column="51" selection-start-line="132" selection-start-column="51" selection-end-line="132" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/TicketSystem/TicketPriorities/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1139">
+          <caret line="130" column="81" selection-start-line="130" selection-start-column="81" selection-end-line="130" selection-end-column="81" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
