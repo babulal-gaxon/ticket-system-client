@@ -10,7 +10,8 @@ import {
 
 const initialState = {
   roles: [],
-  roleId: 0
+  roleId: 0,
+  totalItems: null
 };
 
 export default (state = initialState, action) => {
@@ -18,19 +19,22 @@ export default (state = initialState, action) => {
     case GET_ROLES:
       return {
         ...state,
-        roles: action.payload
+        roles: action.payload.items,
+        totalItems: action.payload.paginate.total
       };
 
     case GET_ROLE_ID:
       return {
         ...state,
         roleId: action.payload
-      }
+      };
 
     case ADD_NEW_ROLE:
+      console.log("in add new role reducer", action.payload)
       return {
         ...state,
-        roles: state.roles.concat(action.payload),
+        roles: [action.payload, ...state.roles],
+        totalItems: state.totalItems + 1
       };
 
     case EDIT_ROLE:
@@ -44,7 +48,8 @@ export default (state = initialState, action) => {
       const updatedRoles = state.roles.filter((role) => role.id !== action.payload)
       return {
         ...state,
-        roles:updatedRoles
+        roles:updatedRoles,
+        totalItems: state.totalItems - 1
       };
 
     case BULK_DELETE_ROLES:
@@ -55,7 +60,8 @@ export default (state = initialState, action) => {
       });
       return {
         ...state,
-        staffList:upRoles
+        staffList:upRoles,
+        totalItems: state.totalItems - action.payload.role_ids.length
       };
 
     default:

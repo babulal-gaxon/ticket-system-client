@@ -10,16 +10,16 @@ import {
 } from "../../constants/RolesAndPermissions";
 
 
-export const onGetRoles = () => {
-  console.log("hello onGet ROles")
+export const onGetRoles = (currentPage, itemsPerPage) => {
+  console.log("in get roles action", currentPage, itemsPerPage)
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get('/roles'
+    axios.get(`/roles?page=${currentPage}&per_page=${itemsPerPage}`
     ).then(({data}) => {
       console.info("onGetRoles: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_ROLES, payload: data.data.items});
+        dispatch({type: GET_ROLES, payload: data.data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }

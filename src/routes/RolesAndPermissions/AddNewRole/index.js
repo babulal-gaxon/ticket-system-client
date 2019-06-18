@@ -49,7 +49,7 @@ class AddNewRole extends Component {
         statusPermissions: [],
         ticketsPermissions: [],
         usersPermissions: [],
-        role_permissions: [],
+        permissions: [],
       }
     } else {
       const selectedRole = this.props.roles.find(role => role.id === this.props.roleId);
@@ -113,35 +113,37 @@ class AddNewRole extends Component {
   };
   onCollectAllPermissions = () => {
     this.setState({
-      role_permissions: this.state.role_permissions.concat(...this.state.customerPermissions,
-        this.state.contactPermissions,
-        this.state.departmentsPermissions,
-        this.state.labelPermissions,
-        this.state.prioritiesPermissions,
-        this.state.responsesPermissions,
-        this.state.rolesPermissions,
-        this.state.settingsPermissions,
-        this.state.staffsPermissions,
-        this.state.statusPermissions,
-        this.state.ticketsPermissions,
-        this.state.usersPermissions)
+      permissions: this.state.permissions.concat(...this.state.customerPermissions,
+        ...this.state.contactPermissions,
+        ...this.state.departmentsPermissions,
+        ...this.state.labelPermissions,
+        ...this.state.prioritiesPermissions,
+        ...this.state.responsesPermissions,
+        ...this.state.rolesPermissions,
+        ...this.state.settingsPermissions,
+        ...this.state.staffsPermissions,
+        ...this.state.statusPermissions,
+        ...this.state.ticketsPermissions,
+        ...this.state.usersPermissions)
     })
   };
   onAddButtonClick = () => {
     this.onCollectAllPermissions();
+    console.log("total permissions", this.state.permissions)
     if (this.props.roleId === 0) {
       const addData = {
         name: this.state.name,
         status: this.state.status,
-        role_permissions: this.state.role_permissions
+        permissions: this.state.permissions
       };
+      console.log("data to add",addData);
       this.props.onAddRole(addData, this.props.history);
       this.props.onGetRoleID(0);
     } else {
       const EditedData = {
         name: this.state.name,
         status: this.state.status,
-        role_permissions: this.state.role_permissions
+        permissions: this.state.permissions
       };
       this.props.onEditRole(EditedData, this.props.history)
     }
@@ -173,13 +175,13 @@ class AddNewRole extends Component {
     return (
       <div className="gx-main-layout-content">
       <Widget styleName="gx-card-filter">
-        <h3>Add New Role</h3>
+        <h3>{this.props.roleId === 0 ? "Add New Role" : "Edit Role Details"}</h3>
                 <Breadcrumb className="gx-mb-4">
                   <Breadcrumb.Item>
                     <Link to="/roles-permissions/all">Roles & Permission</Link>
                   </Breadcrumb.Item>
                   <Breadcrumb.Item className="gx-text-primary">
-                    <Link to="/roles-permissions/add-new">Add New Role</Link>
+                    <Link to="/roles-permissions/add-new">{this.props.roleId === 0 ? "Add New Role" : "Edit Role Details"}</Link>
                   </Breadcrumb.Item>
                 </Breadcrumb>
         <Row>

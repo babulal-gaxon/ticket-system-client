@@ -31,9 +31,11 @@ class RolesList extends Component {
   };
 
   componentWillMount() {
-    this.props.onGetRoles();
+    this.onGetRolesData(this.state.current, this.state.itemNumbers)
   };
-
+  onGetRolesData = (currentPage, itemsPerPage) => {
+    this.props.onGetRoles(currentPage, itemsPerPage);
+  };
   onFilterData = () => {
     return this.props.roles.filter(role => role.name.indexOf(this.state.filterText) !== -1);
   };
@@ -45,14 +47,16 @@ class RolesList extends Component {
   };
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value});
+    this.onGetRolesData(1, value)
   };
   onCurrentIncrement = () => {
-    const pages = Math.ceil(this.props.roles.length / this.state.itemNumbers);
+    const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1});
     } else {
       return null;
     }
+    this.onGetRolesData(this.state.current + 1, this.state.itemNumbers)
   };
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
@@ -60,6 +64,7 @@ class RolesList extends Component {
     } else {
       return null;
     }
+    this.onGetRolesData(this.state.current - 1, this.state.itemNumbers)
   };
   onGetRolesShowOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange} className="gx-mx-2">
@@ -142,7 +147,8 @@ class RolesList extends Component {
         <Menu.Item key="4">
           <Popconfirm
             title="Are you sure delete this Ticket?"
-            onConfirm={() => this.props.onDeleteRole(record.id)}
+            onConfirm={() => {this.props.onDeleteRole(record.id)
+              this.onGetRolesData(this.state.current, this.state.itemNumbers)}}
             okText="Yes"
             cancelText="No">
             Delete
@@ -169,23 +175,27 @@ class RolesList extends Component {
         const obj = {
           role_ids: this.state.selectedRoles
         };
-        this.props.onBulkDeleteRoles(obj)
+        this.props.onBulkDeleteRoles(obj);
+        this.onGetRolesData(this.state.current, this.state.itemNumbers)
+        this.setState({selectedRowKeys:[]})
       }}>Delete</Option>
     </Select>
   };
-  onRowSelection = (ids) => {
-    this.setState({selectedRoles: ids})
+  onPageChange = page => {
+    this.setState({current: page});
+    this.onGetRolesData(page, this.state.itemNumbers)
   };
   render() {
     const roles = this.onFilterData();
+    const selectedRowKeys = this.state.selectedRowKeys;
     let ids;
     const rowSelection = {
+      selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
-        console.log("selectedRows",selectedRows)
         ids = selectedRows.map(selectedRow => {
           return selectedRow.id
         });
-        this.onRowSelection(ids)
+        this.setState({selectedResponses: ids, selectedRowKeys: selectedRowKeys})
       }};
     return (
       <div className="gx-main-layout-content">
@@ -225,7 +235,7 @@ class RolesList extends Component {
                  pagination={{
                    pageSize: this.state.itemNumbers,
                    current: this.state.current,
-                   total: this.props.roles.length,
+                   total: this.props.totalItems,
                    showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
                    onChange: this.onPageChange
                  }}
@@ -243,8 +253,8 @@ class RolesList extends Component {
 }
 
 const mapStateToProps = ({rolesAndPermissions}) => {
-  const {roles} = rolesAndPermissions;
-  return {roles}
+  const {roles, totalItems} = rolesAndPermissions;
+  return {roles, totalItems}
 };
 
 export default connect(mapStateToProps, {
