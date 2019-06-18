@@ -240,8 +240,10 @@ class StaffList extends Component {
                   onChange={this.onFilterTextChange}
                   style={{width: 200}}
                 />
+                <div className="gx-ml-3">
                   {this.onShowItemOptions()}
-                  <ButtonGroup>
+                </div>
+                  <ButtonGroup className="gx-ml-3">
                     <Button type="default" onClick={this.onCurrentDecrement}>
                       <i className="icon icon-long-arrow-left"/>
                     </Button>

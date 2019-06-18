@@ -2,7 +2,7 @@ import {
   ADD_NEW_ROLE,
   BULK_DELETE_ROLES,
   DELETE_ROLE,
-  EDIT_ROLE,
+  EDIT_ROLE, GET_ROLE_DETAIL,
   GET_ROLE_ID,
   GET_ROLES
 } from "../../constants/RolesAndPermissions";
@@ -11,7 +11,8 @@ import {
 const initialState = {
   roles: [],
   roleId: 0,
-  totalItems: null
+  totalItems: null,
+  selectedRole: null
 };
 
 export default (state = initialState, action) => {
@@ -29,6 +30,12 @@ export default (state = initialState, action) => {
         roleId: action.payload
       };
 
+    case GET_ROLE_DETAIL:
+      return {
+        ...state,
+        selectedRole: action.payload
+      };
+
     case ADD_NEW_ROLE:
       console.log("in add new role reducer", action.payload)
       return {
@@ -38,10 +45,11 @@ export default (state = initialState, action) => {
       };
 
     case EDIT_ROLE:
-      const updateRoles = state.dept.map((role) => role.id === action.payload.id ? action.payload : role)
+      const updateRoles = state.roles.map((role) => role.id === action.payload.id ? action.payload : role)
       return {
         ...state,
         roles:updateRoles,
+        selectedRole: null
       };
 
     case DELETE_ROLE:
@@ -60,7 +68,7 @@ export default (state = initialState, action) => {
       });
       return {
         ...state,
-        staffList:upRoles,
+        roles:upRoles,
         totalItems: state.totalItems - action.payload.role_ids.length
       };
 

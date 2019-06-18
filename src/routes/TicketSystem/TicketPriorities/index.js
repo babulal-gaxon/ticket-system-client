@@ -47,20 +47,18 @@ class TicketPriorities extends Component {
   onCurrentIncrement = () => {
     const pages = Math.ceil(this.props.totalItems/this.state.itemNumbers);
     if(this.state.current < pages ) {
-      this.setState({current: this.state.current + 1});
+      this.setState({current: this.state.current + 1},() => {this.onGetPriorityData(this.state.current, this.state.itemNumbers)});
     }
     else {
     return null;
     }
-    this.onGetPriorityData(this.state.current + 1, this.state.itemNumbers);
   };
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
-      this.setState({current: this.state.current - 1});
+      this.setState({current: this.state.current - 1}, () => {this.onGetPriorityData(this.state.current, this.state.itemNumbers)});
     } else {
       return null;
     }
-    this.onGetPriorityData(this.state.current - 1, this.state.itemNumbers);
   };
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value});
@@ -88,7 +86,7 @@ class TicketPriorities extends Component {
                 priority_ids: this.state.selectedPriorities
               };
               this.props.onBulkActivePriorities(obj, this.onStatusChangeMessage);
-              this.setState({selectedRowKeys: []})
+              this.setState({selectedRowKeys: [], selectedPriorities:[]})
             }}
             okText="Yes"
             cancelText="No">
@@ -108,7 +106,7 @@ class TicketPriorities extends Component {
                 priority_ids: this.state.selectedPriorities
               };
               this.props.onBulkInActivePriorities(obj, this.onStatusChangeMessage);
-              this.setState({selectedRowKeys: []})
+              this.setState({selectedRowKeys: [], selectedPriorities:[]})
             }}
             okText="Yes"
             cancelText="No">
@@ -129,7 +127,7 @@ class TicketPriorities extends Component {
               };
               this.props.onBulkDeletePriorities(obj, this.onDeleteSuccessMessage);
               this.onGetPriorityData(this.state.current, this.state.itemNumbers);
-              this.setState({selectedRowKeys: []});
+              this.setState({selectedRowKeys: [], selectedPriorities:[]});
             }}
             okText="Yes"
             cancelText="No">
@@ -229,8 +227,7 @@ class TicketPriorities extends Component {
   onPageChange = page => {
     this.setState({
       current: page,
-    });
-    this.onGetPriorityData(page, this.state.itemNumbers);
+    },() => {this.onGetPriorityData(this.state.current, this.state.itemNumbers)});
   };
   onShowItemOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>

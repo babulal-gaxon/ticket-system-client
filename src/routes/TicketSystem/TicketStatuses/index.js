@@ -49,19 +49,17 @@ class TicketStatuses extends Component {
   onCurrentIncrement = () => {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
-      this.setState({current: this.state.current + 1});
+      this.setState({current: this.state.current + 1}, () => {this.onGetStatusData(this.state.current, this.state.itemNumbers)});
     } else {
       return null;
     }
-    this.onGetStatusData(this.state.current + 1, this.state.itemNumbers)
   };
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
-      this.setState({current: this.state.current - 1});
+      this.setState({current: this.state.current - 1}, () => {this.onGetStatusData(this.state.current, this.state.itemNumbers)});
     } else {
       return null;
     }
-    this.onGetStatusData(this.state.current - 1, this.state.itemNumbers)
   };
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value});
@@ -89,7 +87,7 @@ class TicketStatuses extends Component {
                 status_ids: this.state.selectedStatus
               };
               this.props.onBulkActiveStatuses(obj, this.onStatusChangeMessage);
-              this.setState({selectedRowKeys: []})
+              this.setState({selectedRowKeys: [], selectedStatus:[]})
             }}
             okText="Yes"
             cancelText="No">
@@ -109,7 +107,7 @@ class TicketStatuses extends Component {
                 status_ids: this.state.selectedStatus
               };
               this.props.onBulkInActiveStatuses(obj, this.onStatusChangeMessage);
-              this.setState({selectedRowKeys: []})
+              this.setState({selectedRowKeys: [], selectedStatus:[]})
             }}
             okText="Yes"
             cancelText="No">
@@ -130,7 +128,7 @@ class TicketStatuses extends Component {
               };
               this.props.onBulkDeleteStatuses(obj, this.onDeleteSuccessMessage);
               this.onGetStatusData(this.state.current, this.state.itemNumbers);
-              this.setState({selectedRowKeys: []});
+              this.setState({selectedRowKeys: [], selectedStatus:[]});
             }}
             okText="Yes"
             cancelText="No">
@@ -229,9 +227,8 @@ class TicketStatuses extends Component {
   };
   onPageChange = page => {
     this.setState({
-      current: page,
-    });
-    this.onGetStatusData(page, this.state.itemNumbers);
+      current: page
+    }, () => {this.onGetStatusData(this.state.current, this.state.itemNumbers)});
   };
   onShowItemOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>

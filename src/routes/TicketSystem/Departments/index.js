@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Input, message, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, message, Popconfirm, Select, Table, Tag, Modal} from "antd";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -20,7 +20,7 @@ import {Link} from "react-router-dom";
 const ButtonGroup = Button.Group;
 const {Option} = Select;
 const Search = Input.Search;
-
+const confirm = Modal.confirm;
 
 class Departments extends Component {
   constructor(props) {
@@ -49,19 +49,19 @@ class Departments extends Component {
   onCurrentIncrement = () => {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.currentPage < pages) {
-      this.setState({currentPage: this.state.currentPage + 1});
+      this.setState({currentPage: this.state.currentPage + 1}, () => {this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers)});
     } else {
       return null;
     }
-    this.onGetDepartmentData(this.state.currentPage + 1, this.state.itemNumbers)
+
   };
   onCurrentDecrement = () => {
     if (this.state.currentPage !== 1) {
-      this.setState({currentPage: this.state.currentPage - 1});
+      this.setState({currentPage: this.state.currentPage - 1}, () => {this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers)});
     } else {
       return null;
     }
-    this.onGetDepartmentData(this.state.currentPage - 1, this.state.itemNumbers)
+
   };
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value})
@@ -78,71 +78,79 @@ class Departments extends Component {
   onEditDepartment = (id) => {
     this.setState({departmentId: id, showAddDepartment: true});
   };
+  showBulkAciveConfirm = () => {
+    {this.state.selectedDepartments.length !== 0 ?
+        confirm({
+          title: "Are you sure to change the status of selected departments to ACTIVE?",
+          onOk: () => {
+            const obj = {
+              department_ids: this.state.selectedDepartments
+            };
+            this.props.onBulkActiveDepartments(obj, this.onStatusChangeMessage);
+            this.setState({selectedRowKeys: [], selectedDepartments: []})
+          },
+          onCancel() {
+            console.log('Cancel');
+          }
+        }) :
+        confirm({
+          title: "Please Select Roles first",
+        })
+    }
+  };
+  showBulkDisableConfirm = () => {
+    {this.state.selectedDepartments.length !== 0 ?
+        confirm({
+          title: "Are you sure to change the status of selected departments to DISABLED?",
+          onOk :() => {
+            this.props.onBulkInActiveDepartments({department_ids: this.state.selectedDepartments}, this.onStatusChangeMessage);
+            this.setState({selectedRowKeys: [], selectedDepartments:[]})
+          }}) :
+        confirm({
+          title: "Please Select Roles first",
+        })
+    }
+  };
+  showBulkDeleteConfirm = () => {
+    {
+      this.state.selectedDepartments.length !== 0 ?
+        confirm({
+          title: "Are you sure to delete the selected departments?",
+          onOk : () => {
+            const obj = {
+              department_ids: this.state.selectedDepartments
+            };
+            this.props.onBulkDeleteDepartments(obj, this.onDeleteSuccessMessage);
+            this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
+            this.setState({selectedRowKeys: [], selectedDepartments: []});
+          }
+        }) :
+        confirm({
+          title: "Please Select Roles first",
+        })
+    }
+  };
   onSelectOption = () => {
-    return <Select defaultValue="Active" style={{width: 120}}>
-      <Option value="Active">
-        {this.state.selectedDepartments.length !== 0 ?
-          <Popconfirm
-            title="Are you sure to change the status of selected departments to ACTIVE?"
-            onConfirm={() => {
-              const obj = {
-                department_ids: this.state.selectedDepartments
-              };
-              this.props.onBulkActiveDepartments(obj, this.onStatusChangeMessage);
-              this.setState({selectedRowKeys: []})
-            }}
-            okText="Yes"
-            cancelText="No">
-            Active
-          </Popconfirm> :
-          <Popconfirm
-            title="Please select departments to delete"
-            okText="Ok">
-            Active
-          </Popconfirm>}</Option>
-      <Option value="Disable">
-        {this.state.selectedDepartments.length !== 0 ?
-          <Popconfirm
-            title="Are you sure to change the status of selected departments to DISABLED?"
-            onConfirm={() => {
-              const obj = {
-                department_ids: this.state.selectedDepartments
-              };
-              this.props.onBulkInActiveDepartments(obj, this.onStatusChangeMessage);
-              this.setState({selectedRowKeys: []})
-            }}
-            okText="Yes"
-            cancelText="No">
-            Disable
-          </Popconfirm> :
-          <Popconfirm
-            title="Please select departments to delete"
-            okText="Ok">
-            Disable
-          </Popconfirm>}</Option>
-      <Option value="Delete">
-        {this.state.selectedDepartments.length !== 0 ?
-          <Popconfirm
-            title="Are you sure to delete the selected departments?"
-            onConfirm={() => {
-              const obj = {
-                department_ids: this.state.selectedDepartments
-              };
-              this.props.onBulkDeleteDepartments(obj, this.onDeleteSuccessMessage);
-              this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
-              this.setState({selectedRowKeys: []});
-            }}
-            okText="Yes"
-            cancelText="No">
-            Delete
-          </Popconfirm> :
-          <Popconfirm
-            title="Please select departments to delete"
-            okText="Ok">
-            Delete
-          </Popconfirm>}
-      </Option>
-    </Select>
+    const menu = (
+      <Menu>
+        <Menu.Item key="1" onClick={this.showBulkAciveConfirm}>
+          Active
+        </Menu.Item>
+        <Menu.Item key="2" onClick={this.showBulkDisableConfirm}>
+          Disable
+        </Menu.Item>
+        <Menu.Item key="3" onClick={this.showBulkDeleteConfirm}>
+          Delete
+        </Menu.Item>
+      </Menu>
+    );
+
+    return <Dropdown overlay={menu} trigger={['click']}>
+      <Button>
+        Bulk Actions <Icon type="down" />
+      </Button>
+    </Dropdown>
+
   };
   onGetTableColumns = () => {
     return [
@@ -197,7 +205,6 @@ class Departments extends Component {
   onDeleteSuccessMessage = () => {
     message.success('The selected department(s) has been deleted successfully.');
   };
-
   onStatusChangeMessage = () => {
     message.success('The status of selected departments has been changed successfully.');
   };
@@ -215,7 +222,6 @@ class Departments extends Component {
       </Popconfirm>
     )
   };
-
   onShowItemOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>
       <Option value={10}>10</Option>
@@ -229,9 +235,8 @@ class Departments extends Component {
   };
   onPageChange = page => {
     this.setState({
-      currentPage: page,
-    });
-    this.onGetDepartmentData(page, this.state.itemNumbers);
+      currentPage: page
+    }, () => {this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers)});
   };
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;

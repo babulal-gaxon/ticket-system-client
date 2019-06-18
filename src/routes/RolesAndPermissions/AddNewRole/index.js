@@ -10,9 +10,9 @@ import {
   Form,
   Icon,
   Input,
+  message,
   Radio,
-  Row,
-  Switch
+  Row
 } from "antd";
 import Widget from "../../../components/Widget";
 import {onAddRole, onEditRole, onGetRoleID} from "../../../appRedux/actions/RolesAndPermissions";
@@ -33,7 +33,7 @@ const customPanelStyle = {
 class AddNewRole extends Component {
   constructor(props) {
     super(props);
-    if (this.props.roleId === 0) {
+    if (!this.props.selectedRole) {
       this.state = {
         name: "",
         status: 1,
@@ -52,11 +52,11 @@ class AddNewRole extends Component {
         permissions: [],
       }
     } else {
-      const selectedRole = this.props.roles.find(role => role.id === this.props.roleId);
-      const {name, status, permissions} = selectedRole;
+      setTimeout(this.onSetFieldsValue, 1000);
       this.state = {
-        name: name,
-        status: status,
+        id: this.props.selectedRole.id,
+        name: this.props.selectedRole.name,
+        status: this.props.selectedRole.status,
         customerPermissions: [],
         contactPermissions: [],
         departmentsPermissions: [],
@@ -69,12 +69,16 @@ class AddNewRole extends Component {
         statusPermissions: [],
         ticketsPermissions: [],
         usersPermissions: [],
-        permissions: selectedRole.role_permissions,
+        permissions:[],
         filterText: ""
       }
     }
   }
-
+  onSetFieldsValue = () => {
+    this.props.form.setFieldsValue({
+      name: this.state.name
+    });
+  };
   onSelectCustomerPermissions = checkedList => {
     this.setState({customerPermissions: checkedList})
   };
@@ -112,70 +116,85 @@ class AddNewRole extends Component {
     this.setState({usersPermissions: checkedList})
   };
   onCollectAllPermissions = () => {
-    this.setState({
-      permissions: this.state.permissions.concat(...this.state.customerPermissions,
-        ...this.state.contactPermissions,
-        ...this.state.departmentsPermissions,
-        ...this.state.labelPermissions,
-        ...this.state.prioritiesPermissions,
-        ...this.state.responsesPermissions,
-        ...this.state.rolesPermissions,
-        ...this.state.settingsPermissions,
-        ...this.state.staffsPermissions,
-        ...this.state.statusPermissions,
-        ...this.state.ticketsPermissions,
-        ...this.state.usersPermissions)
-    })
+    return [...this.state.customerPermissions,
+  ...this.state.contactPermissions,
+  ...this.state.departmentsPermissions,
+  ...this.state.labelPermissions,
+  ...this.state.prioritiesPermissions,
+  ...this.state.responsesPermissions,
+  ...this.state.rolesPermissions,
+  ...this.state.settingsPermissions,
+  ...this.state.staffsPermissions,
+  ...this.state.statusPermissions,
+  ...this.state.ticketsPermissions,
+  ...this.state.usersPermissions];
+  };
+  onValidationCheck = () => {
+    this.props.form.validateFields(err => {
+      if (!err) {
+        this.onAddButtonClick();
+      }
+    });
   };
   onAddButtonClick = () => {
-    this.onCollectAllPermissions();
-    console.log("total permissions", this.state.permissions)
-    if (this.props.roleId === 0) {
+    if (!this.props.selectedRole) {
       const addData = {
         name: this.state.name,
         status: this.state.status,
-        permissions: this.state.permissions
+        permissions: this.onCollectAllPermissions()
       };
-      console.log("data to add",addData);
-      this.props.onAddRole(addData, this.props.history);
+      this.props.onAddRole(addData, this.props.history,this.onAddSuccess);
       this.props.onGetRoleID(0);
     } else {
-      const EditedData = {
+      const editedData = {
         name: this.state.name,
         status: this.state.status,
-        permissions: this.state.permissions
+        permissions: this.onCollectAllPermissions(),
+        id: this.state.id
       };
-      this.props.onEditRole(EditedData, this.props.history)
+      console.log("edited data", editedData)
+      this.props.onEditRole(editedData, this.props.history, this.onEditSuccess)
     }
+  };
+  onAddSuccess = () => {
+    message.success('New Role has been added successfully.');
+  };
+  onEditSuccess = () => {
+    message.success('The Role has been updated successfully.');
   };
   onStaffListOnEdit = () => {
     let staffWithRole = [];
-    if (this.props.roleId !== 0) {
-      staffWithRole = this.props.staffList.filter(staff => staff.designation === this.state.name);
+    if (this.props.selectedRole !== null) {
+      staffWithRole = this.props.staffList.filter(staff => staff.designation === this.props.selectedRole.name);
     }
-    const filteredStaff = this.onFilterStaffList(staffWithRole);
-    return filteredStaff.map(staff => {
-      return <Widget styleName="gx-card-filter">
+    if(staffWithRole.length !== 0) {
+      const filteredStaff = this.onFilterStaffList(staffWithRole);
+      return filteredStaff.map(staff => {
+        return <Widget styleName="gx-card-filter">
  <span className="gx-email gx-d-inline-block gx-mr-2">
              <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>
    {staff.first_name + " " + staff.last_name} </span>
-        <span> <i className="icon icon-edit gx-mr-3"/>
+          <span> <i className="icon icon-edit gx-mr-3"/>
           <i className="icon icon-trash"/>
           </span>
-      </Widget>
-    })
+        </Widget>
+      })
+    }
+    else {
+      return <div className="gx-mt-5">"No member associated yet to this role."</div>
+    }
   };
   onFilterStaffList = (staffWithRole) => {
     return staffWithRole.filter(staff => staff.first_name.indexOf(this.state.filterText) !== 1)
   };
-
   render() {
-    console.log("in AA roles", this.state)
+    console.log("selected Role", this.props.selectedRole, this.state.customerPermissions)
+    const {getFieldDecorator} =  this.props.form;
     const {name, status} = this.state;
     return (
       <div className="gx-main-layout-content">
       <Widget styleName="gx-card-filter">
-        <h3>{this.props.roleId === 0 ? "Add New Role" : "Edit Role Details"}</h3>
+        <h3>{this.props.selectedRole === null ? "Add New Role" : "Edit Role Details"}</h3>
                 <Breadcrumb className="gx-mb-4">
                   <Breadcrumb.Item>
                     <Link to="/roles-permissions/all">Roles & Permission</Link>
@@ -188,7 +207,9 @@ class AddNewRole extends Component {
           <Col xl={15} lg={12} md={12} sm={12} xs={24}>
             <Form layout="vertical" style={{width: "80%"}}>
               <Form.Item label="Role Name">
-                <Input type="text" value={name} onChange={(e) => this.setState({name: e.target.value})}/>
+                {getFieldDecorator('name', {
+                  rules: [{required: true, message: 'Please Enter Role Name!'}],
+                })(<Input type="text" value={name} onChange={(e) => this.setState({name: e.target.value})}/>)}
               </Form.Item>
               <Form.Item label="Status" >
                 <Radio.Group value={status} onChange={(e) => {
@@ -199,10 +220,6 @@ class AddNewRole extends Component {
                 </Radio.Group>
               </Form.Item>
               <h3 className="gx-mt-4">Features and Permissions</h3>
-              <div className="gx-mr-2">
-                <span className="gx-mr-lg-5">All permissions for all features</span>
-                <span className="gx-ml-5"><Switch /></span>
-              </div>
               <hr/>
               <Form.Item>
                 <Collapse bordered={false} accordion>
@@ -367,7 +384,7 @@ class AddNewRole extends Component {
               <Divider/>
             </Form>
             <span>
-                <Button type="primary" onClick={this.onAddButtonClick}>
+                <Button type="primary" onClick={this.onValidationCheck}>
                   Save
                 </Button>
                      <Button onClick = {() => this.props.history.goBack()}>
@@ -375,7 +392,7 @@ class AddNewRole extends Component {
                 </Button>
                 </span>
           </Col>
-          {this.props.roleId !== 0 ?
+          {this.props.selectedRole !== null ?
             <Col xl={9} lg={12} md={12} sm={12} xs={24}>
               <h5 className="gx-mb-4">Associated Staff Members</h5>
               <div className="gx-d-flex gx-align-items-center">
@@ -396,11 +413,13 @@ class AddNewRole extends Component {
   }
 }
 
+AddNewRole = Form.create({})(AddNewRole);
+
 const mapStateToProps = ({auth, rolesAndPermissions, supportStaff}) => {
   const {userPermissions} = auth;
   const {staffList} = supportStaff;
-  const {roles, roleId} = rolesAndPermissions;
-  return {userPermissions, roles, roleId, staffList}
+  const {roles, roleId, selectedRole} = rolesAndPermissions;
+  return {userPermissions, roles, roleId, staffList, selectedRole}
 };
 
 export default connect(mapStateToProps, {onAddRole, onEditRole, onGetRoleID})(AddNewRole);

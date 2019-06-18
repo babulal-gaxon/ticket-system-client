@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import {SketchPicker} from "react-color";
 import reactCSS from 'reactcss';
 
+const {TextArea} = Input;
+
 class AddNewPriority extends Component {
   constructor(props) {
     super(props);
@@ -127,7 +129,7 @@ class AddNewPriority extends Component {
               </div>
             </Form.Item>
             <Form.Item label="Description">
-              <Input className="gx-form-control-lg" type="textarea" value={desc} onChange={(e) => {
+              <TextArea rows={4} className="gx-form-control-lg" type="textarea" value={desc} onChange={(e) => {
                 this.setState({desc: e.target.value})
               }}/>
             </Form.Item>

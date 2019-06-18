@@ -2,6 +2,7 @@ import React, {Component} from "react"
 import {Button, Form, Input, message, Modal, Radio} from "antd";
 import PropTypes from "prop-types";
 
+const {TextArea} = Input;
 
 class AddNewResponses extends Component {
   constructor(props) {
@@ -88,7 +89,7 @@ class AddNewResponses extends Component {
             <Form.Item label="Message">
               {getFieldDecorator('message', {
                 rules: [{required: true, message: 'Please Enter Message!'}],
-              })(<Input className="gx-form-control-lg" type="textarea" value={message} onChange={(e) => {
+              })(<TextArea rows={4} className="gx-form-control-lg" type="textarea" value={message} onChange={(e) => {
                 this.setState({message: e.target.value})
               }}/>)}
             </Form.Item>

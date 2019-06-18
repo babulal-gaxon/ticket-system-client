@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import {Button, Form, Input, Modal, Radio, message} from "antd";
 import PropTypes from "prop-types";
 
-
+const {TextArea} = Input;
 
 class AddNewDepartment extends Component {
   constructor(props) {
@@ -75,7 +75,7 @@ class AddNewDepartment extends Component {
                 this.setState({name: e.target.value}) }}/>)}
             </Form.Item>
             <Form.Item label="Description">
-              <Input className="gx-form-control-lg" type="textarea" value={desc} onChange={(e) => {
+              <TextArea rows={4} className="gx-form-control-lg" value={desc} onChange={(e) => {
                 this.setState({desc: e.target.value})
               }}/>
             </Form.Item>

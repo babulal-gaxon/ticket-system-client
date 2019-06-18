@@ -4,7 +4,7 @@ import {
   ADD_NEW_ROLE,
   BULK_DELETE_ROLES,
   DELETE_ROLE,
-  EDIT_ROLE,
+  EDIT_ROLE, GET_ROLE_DETAIL,
   GET_ROLE_ID,
   GET_ROLES
 } from "../../constants/RolesAndPermissions";
@@ -38,18 +38,17 @@ export const onGetRoleID = (id) => {
 }
 
 
-export const onAddRole = (newRole, history) => {
-  console.log("hello onAddRole ROles")
-  console.log("onAddRole", newRole);
+export const onAddRole = (newRole, history, successMessage) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/roles', newRole).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data i am here", data.data)
+        console.log(" in add new role, server response", data.data)
         dispatch({type: ADD_NEW_ROLE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
+        successMessage();
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -60,14 +59,16 @@ export const onAddRole = (newRole, history) => {
   }
 };
 
-export const onDeleteRole = (roleId) => {
+export const onDeleteRole = (roleId, successMessage) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.delete(`/roles/${roleId}`).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
+        console.log("i have reached the role delete success")
         dispatch({type: DELETE_ROLE, payload: roleId});
         dispatch({type: FETCH_SUCCESS});
+        successMessage();
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -78,14 +79,15 @@ export const onDeleteRole = (roleId) => {
   }
 };
 
-export const onBulkDeleteRoles = (roleIds) => {
-  console.log("in action", roleIds)
+export const onBulkDeleteRoles = (roleIds, successMessage) => {
+  console.log("in action", roleIds);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('roles/delete', roleIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DELETE_ROLES, payload: roleIds});
         dispatch({type: FETCH_SUCCESS});
+        successMessage();
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -96,20 +98,41 @@ export const onBulkDeleteRoles = (roleIds) => {
   }
 };
 
-export const onEditRole = (role, history) => {
-  console.log("hello onEditRole ROles")
-  console.log("onEditRole", role)
+export const onEditRole = (role, history = {}, successMessage) => {
+  console.log("in action of onEditRole", role)
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/roles/${role.id}`, role).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
+        console.log("data is successful")
         console.log(" sending data", data.data)
         dispatch({type: EDIT_ROLE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
+        successMessage();
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onGetRoleDetail = (roleId, history) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.get(`/roles/${roleId}`
+    ).then(({data}) => {
+      console.info("onGetRoles: ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_ROLE_DETAIL, payload: data.data});
+        history.push("/roles-permissions/add-new")
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});

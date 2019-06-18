@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
     case ADD_SUPPORT_STAFF:
       return {
         ...state,
-        staffList: state.staffList.concat(action.payload)
+        staffList: [action.payload, ...state.staffList]
       };
 
     case EDIT_SUPPORT_STAFF:

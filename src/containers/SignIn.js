@@ -1,7 +1,6 @@
 import React from "react";
 import {Button, Checkbox, Form, Input} from "antd";
 import {connect} from "react-redux";
-import {Link} from "react-router-dom";
 
 import {onUserSignIn} from "../appRedux/actions/Auth";
 import IntlMessages from "util/IntlMessages";
@@ -35,7 +34,7 @@ class SignIn extends React.Component {
           <div className="gx-app-login-main-content">
             <div className="gx-app-logo-content">
               <div className="gx-app-logo-content-bg">
-                <img src="https://via.placeholder.com/272x395" alt='Neature'/>
+                {/*<img src="https://via.placeholder.com/272x395" alt='Neature'/>*/}//back ground image here
               </div>
               <div className="gx-app-logo-wid">
                 <h1><IntlMessages id="app.userAuth.signIn"/></h1>
@@ -43,7 +42,7 @@ class SignIn extends React.Component {
                 <p><IntlMessages id="app.userAuth.getAccount"/></p>
               </div>
               <div className="gx-app-logo">
-                <img alt="example" src={require("assets/images/logo.png")}/>
+                {/*<img alt="example" src={require("assets/images/logo.png")}/>*/}
               </div>
             </div>
             <div className="gx-app-login-content">
@@ -72,20 +71,15 @@ class SignIn extends React.Component {
                     valuePropName: 'checked',
                     initialValue: true,
                   })(
-                    <Checkbox><IntlMessages id="appModule.iAccept"/></Checkbox>
+                    <Checkbox><IntlMessages id="appModule.rememberMeOnThisComputer"/></Checkbox>
                   )}
-                  <span className="gx-signup-form-forgot gx-link"><IntlMessages
-                    id="appModule.termAndCondition"/></span>
+
                 </FormItem>
                 <FormItem>
                   <Button type="primary" className="gx-mb-0" htmlType="submit">
                     <IntlMessages id="app.userAuth.signIn"/>
                   </Button>
-                  <span><IntlMessages id="app.userAuth.or"/></span> <Link to="/signup"><IntlMessages
-                  id="app.userAuth.signUp"/></Link>
                 </FormItem>
-                <span
-                  className="gx-text-light gx-fs-sm"> demo user email: 'demo@example.com' and password: 'demo#123'</span>
               </Form>
             </div>
             <InfoView/>

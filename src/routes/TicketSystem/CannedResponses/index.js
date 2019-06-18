@@ -48,19 +48,17 @@ class CannedResponses extends Component {
   onCurrentIncrement = () => {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
-      this.setState({current: this.state.current + 1});
+      this.setState({current: this.state.current + 1}, () => {this.onGetResponseData(this.state.current, this.state.itemNumbers)});
     } else {
       return null;
     }
-    this.onGetResponseData(this.state.current + 1, this.state.itemNumbers);
   };
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
-      this.setState({current: this.state.current - 1});
+      this.setState({current: this.state.current - 1}, () => {this.onGetResponseData(this.state.current, this.state.itemNumbers)});
     } else {
       return null;
     }
-    this.onGetResponseData(this.state.current - 1, this.state.itemNumbers);
   };
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
@@ -88,7 +86,7 @@ class CannedResponses extends Component {
                 canned_ids: this.state.selectedResponses
               };
               this.props.onBulkActiveResponses(obj, this.onStatusChangeMessage);
-              this.setState({selectedRowKeys: []})
+              this.setState({selectedRowKeys: [], selectedResponses:[]})
             }}
             okText="Yes"
             cancelText="No">
@@ -108,7 +106,7 @@ class CannedResponses extends Component {
                 canned_ids: this.state.selectedResponses
               };
               this.props.onBulkInActiveResponses(obj, this.onStatusChangeMessage);
-              this.setState({selectedRowKeys: []})
+              this.setState({selectedRowKeys: [], selectedResponses:[]})
             }}
             okText="Yes"
             cancelText="No">
@@ -129,7 +127,7 @@ class CannedResponses extends Component {
               };
               this.props.onBulkDeleteResponses(obj, this.onDeleteSuccessMessage)
               this.onGetResponseData(this.state.current, this.state.itemNumbers);
-              this.setState({selectedRowKeys: []});
+              this.setState({selectedRowKeys: [], selectedResponses:[]});
             }}
             okText="Yes"
             cancelText="No">
@@ -220,11 +218,9 @@ class CannedResponses extends Component {
     message.success('The selected Response has been deleted successfully.');
   };
   onPageChange = page => {
-    console.log("current page", page)
     this.setState({
       current: page,
-    });
-    this.onGetResponseData(page, this.state.itemNumbers);
+    },() => {this.onGetResponseData(this.state.current, this.state.itemNumbers)});
   };
   onShowItemOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>
