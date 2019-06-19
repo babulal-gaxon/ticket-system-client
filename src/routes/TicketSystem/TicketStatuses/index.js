@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Input, message, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, message, Modal, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -20,6 +20,7 @@ import {Link} from "react-router-dom";
 const ButtonGroup = Button.Group;
 const {Option} = Select;
 const Search = Input.Search;
+const confirm = Modal.confirm;
 
 
 class TicketStatuses extends Component {
@@ -76,71 +77,83 @@ class TicketStatuses extends Component {
   onEditStatus = (id) => {
     this.setState({statusId: id, showAddStatus: true});
   };
+  onShowBulkActiveConfirm = () => {
+    if(this.state.selectedStatus.length !== 0) {
+      confirm({
+        title: "Are you sure to change the status of selected Statuses to ACTIVE?",
+        onOk: () => {
+          const obj = {
+            status_ids: this.state.selectedStatus
+          };
+          this.props.onBulkActiveStatuses(obj, this.onStatusChangeMessage);
+          this.setState({selectedRowKeys: [], selectedStatus:[]})
+        }
+      })
+    }
+    else {
+      confirm({
+        title: "Please Select Statuses first",
+      })
+    }
+  };
+  onShowBulkDisableConfirm = () => {
+    if(this.state.selectedStatus.length !== 0) {
+      confirm({
+        title: "Are you sure to change the status of selected Statuses to DISABLED?",
+        onOk: () => {
+          const obj = {
+            status_ids: this.state.selectedStatus
+          };
+          this.props.onBulkInActiveStatuses(obj, this.onStatusChangeMessage);
+          this.setState({selectedRowKeys: [], selectedStatus:[]})
+        }
+      })
+    }
+    else {
+      confirm({
+        title: "Please Select Statuses first",
+      })
+    }
+  };
+  onShowBulkDeleteConfirm = () => {
+    if(this.state.selectedStatus.length !== 0) {
+      confirm({
+        title: "Are you sure to delete the selected Statuses?",
+        onOk: () => {
+          const obj = {
+            status_ids: this.state.selectedStatus
+          };
+          this.props.onBulkDeleteStatuses(obj, this.onDeleteSuccessMessage);
+          this.onGetStatusData(this.state.current, this.state.itemNumbers);
+          this.setState({selectedRowKeys: [], selectedStatus:[]});
+        }
+      })
+    }
+    else {
+      confirm({
+        title: "Please Select Statuses first",
+      })
+    }
+  };
   onSelectOption = () => {
-    return <Select defaultValue="Active" style={{width: 120}}>
-      <Option value="Active">
-        {this.state.selectedStatus.length !== 0 ?
-          <Popconfirm
-            title="Are you sure to change the status of selected Statuses to ACTIVE?"
-            onConfirm={() => {
-              const obj = {
-                status_ids: this.state.selectedStatus
-              };
-              this.props.onBulkActiveStatuses(obj, this.onStatusChangeMessage);
-              this.setState({selectedRowKeys: [], selectedStatus:[]})
-            }}
-            okText="Yes"
-            cancelText="No">
-            Active
-          </Popconfirm> :
-          <Popconfirm
-            title="Please select Statuses first"
-            okText="Ok">
-            Active
-          </Popconfirm>}</Option>
-      <Option value="Disable">
-        {this.state.selectedStatus.length !== 0 ?
-          <Popconfirm
-            title="Are you sure to change the status of selected Statuses to DISABLED?"
-            onConfirm={() => {
-              const obj = {
-                status_ids: this.state.selectedStatus
-              };
-              this.props.onBulkInActiveStatuses(obj, this.onStatusChangeMessage);
-              this.setState({selectedRowKeys: [], selectedStatus:[]})
-            }}
-            okText="Yes"
-            cancelText="No">
-            Disable
-          </Popconfirm> :
-          <Popconfirm
-            title="Please select Statuses first"
-            okText="Ok">
-            Disable
-          </Popconfirm>}</Option>
-      <Option value="Delete">
-        {this.state.selectedStatus.length !== 0 ?
-          <Popconfirm
-            title="Are you sure to delete the selected Statuses?"
-            onConfirm={() => {
-              const obj = {
-                status_ids: this.state.selectedStatus
-              };
-              this.props.onBulkDeleteStatuses(obj, this.onDeleteSuccessMessage);
-              this.onGetStatusData(this.state.current, this.state.itemNumbers);
-              this.setState({selectedRowKeys: [], selectedStatus:[]});
-            }}
-            okText="Yes"
-            cancelText="No">
-            Delete
-          </Popconfirm> :
-          <Popconfirm
-            title="Please select Statuses first"
-            okText="Ok">
-            Delete
-          </Popconfirm>}
-      </Option>
-    </Select>
+    const menu = (
+      <Menu>
+        <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
+          Active
+        </Menu.Item>
+        <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
+          Disable
+        </Menu.Item>
+        <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
+          Delete
+        </Menu.Item>
+      </Menu>
+    );
+    return <Dropdown overlay={menu} trigger={['click']}>
+      <Button>
+        Bulk Actions <Icon type="down" />
+      </Button>
+    </Dropdown>
   };
   onGetTableColumns = () => {
     return [

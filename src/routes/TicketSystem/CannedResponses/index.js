@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Input, message, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, message, Modal, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 
 import {
@@ -20,6 +20,7 @@ import {Link} from "react-router-dom";
 const ButtonGroup = Button.Group;
 const {Option} = Select;
 const Search = Input.Search;
+const confirm = Modal.confirm;
 
 class CannedResponses extends Component {
   constructor(props) {
@@ -75,72 +76,88 @@ class CannedResponses extends Component {
   onFilterData = () => {
     return this.props.responses.filter(response => response.short_title.indexOf(this.state.filterText) !== -1);
   };
-  onSelectOption = () => {
-    return <Select defaultValue="Active" style={{width: 120}}>
-      <Option value="Active">
-        {this.state.selectedResponses.length !== 0 ?
-          <Popconfirm
-            title="Are you sure to change the status of selected Response(s) to ACTIVE?"
-            onConfirm={() => {
-              const obj = {
-                canned_ids: this.state.selectedResponses
-              };
-              this.props.onBulkActiveResponses(obj, this.onStatusChangeMessage);
-              this.setState({selectedRowKeys: [], selectedResponses:[]})
-            }}
-            okText="Yes"
-            cancelText="No">
-            Active
-          </Popconfirm> :
-          <Popconfirm
-            title="Please select Response(s) first"
-            okText="Ok">
-            Active
-          </Popconfirm>}</Option>
-      <Option value="Disable">
-        {this.state.selectedResponses.length !== 0 ?
-          <Popconfirm
-            title="Are you sure to change the status of selected Response(s) to DISABLED?"
-            onConfirm={() => {
-              const obj = {
-                canned_ids: this.state.selectedResponses
-              };
-              this.props.onBulkInActiveResponses(obj, this.onStatusChangeMessage);
-              this.setState({selectedRowKeys: [], selectedResponses:[]})
-            }}
-            okText="Yes"
-            cancelText="No">
-            Disable
-          </Popconfirm> :
-          <Popconfirm
-            title="Please select Response(s) first"
-            okText="Ok">
-            Disable
-          </Popconfirm>}</Option>
-      <Option value="Delete">
-        {this.state.selectedResponses.length !== 0 ?
-          <Popconfirm
-            title="Are you sure to delete the selected Response(s)?"
-            onConfirm={() => {
-              const obj = {
-                canned_ids: this.state.selectedResponses
-              };
-              this.props.onBulkDeleteResponses(obj, this.onDeleteSuccessMessage)
-              this.onGetResponseData(this.state.current, this.state.itemNumbers);
-              this.setState({selectedRowKeys: [], selectedResponses:[]});
-            }}
-            okText="Yes"
-            cancelText="No">
-            Delete
-          </Popconfirm> :
-          <Popconfirm
-            title="Please select Response(s) first"
-            okText="Ok">
-            Delete
-          </Popconfirm>}
-      </Option>
-    </Select>
+  onShowBulkActiveConfirm = () => {
+    if(this.state.selectedResponses.length !== 0) {
+      confirm({
+        title: "Are you sure to change the status of selected Response(s) to ACTIVE?",
+        onOk: () => {
+          const obj = {
+            canned_ids: this.state.selectedResponses
+          };
+          this.props.onBulkActiveResponses(obj, this.onStatusChangeMessage);
+          this.setState({selectedRowKeys: [], selectedResponses:[]})
+        },
+        onCancel() {
+          console.log('Cancel');
+        }
+      })
+    }
+    else {
+      confirm({
+        title: "Please Select Response(s) first",
+      })
+    }
   };
+  onShowBulkDisableConfirm = () => {
+    if(this.state.selectedResponses.length !== 0) {
+      confirm({
+        title: "Are you sure to change the status of selected Response(s) to DISABLED?",
+        onOk: () => {
+          const obj = {
+            canned_ids: this.state.selectedResponses
+          };
+          this.props.onBulkInActiveResponses(obj, this.onStatusChangeMessage);
+          this.setState({selectedRowKeys: [], selectedResponses:[]})
+        }
+      })
+    }
+    else {
+      confirm({
+        title: "Please Select Response(s) first",
+      })
+    }
+  };
+  onShowBulkDeleteConfirm = () => {
+    if(this.state.selectedResponses.length !== 0) {
+      confirm({
+        title: "Are you sure to delete the selected Response(s)?",
+        onOk: () => {
+          const obj = {
+            canned_ids: this.state.selectedResponses
+          };
+          this.props.onBulkDeleteResponses(obj, this.onDeleteSuccessMessage)
+          this.onGetResponseData(this.state.current, this.state.itemNumbers);
+          this.setState({selectedRowKeys: [], selectedResponses:[]});
+        }
+      })
+    }
+    else {
+      confirm({
+        title: "Please Select Response(s) first",
+      })
+    }
+  };
+  onSelectOption = () => {
+    const menu = (
+      <Menu>
+        <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
+          Active
+        </Menu.Item>
+        <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
+          Disable
+        </Menu.Item>
+        <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
+          Delete
+        </Menu.Item>
+      </Menu>
+    );
+    return <Dropdown overlay={menu} trigger={['click']}>
+      <Button>
+        Bulk Actions <Icon type="down" />
+      </Button>
+    </Dropdown>
+  };
+
   onStatusChangeMessage = () => {
     message.success('The status of selected Responses has been changed successfully.');
   };

@@ -78,54 +78,60 @@ class Departments extends Component {
   onEditDepartment = (id) => {
     this.setState({departmentId: id, showAddDepartment: true});
   };
-  showBulkAciveConfirm = () => {
-    {this.state.selectedDepartments.length !== 0 ?
-        confirm({
-          title: "Are you sure to change the status of selected departments to ACTIVE?",
-          onOk: () => {
-            const obj = {
-              department_ids: this.state.selectedDepartments
-            };
-            this.props.onBulkActiveDepartments(obj, this.onStatusChangeMessage);
-            this.setState({selectedRowKeys: [], selectedDepartments: []})
-          },
-          onCancel() {
-            console.log('Cancel');
-          }
-        }) :
+  onShowBulkActiveConfirm = () => {
+    if(this.state.selectedDepartments.length !== 0) {
+      confirm({
+        title: "Are you sure to change the status of selected departments to ACTIVE?",
+        onOk: () => {
+          const obj = {
+            department_ids: this.state.selectedDepartments
+          };
+          this.props.onBulkActiveDepartments(obj, this.onStatusChangeMessage);
+          this.setState({selectedRowKeys: [], selectedDepartments: []})
+        },
+        onCancel() {
+          console.log('Cancel');
+        }
+      })
+    }
+    else {
+      confirm({
+          title: "Please Select Roles first",
+        })
+    }
+  };
+  onShowBulkDisableConfirm = () => {
+    if(this.state.selectedDepartments.length !== 0) {
+      confirm({
+        title: "Are you sure to change the status of selected departments to DISABLED?",
+        onOk: () => {
+          this.props.onBulkInActiveDepartments({department_ids: this.state.selectedDepartments}, this.onStatusChangeMessage);
+          this.setState({selectedRowKeys: [], selectedDepartments: []})
+        }
+      })
+    }
+      else {
         confirm({
           title: "Please Select Roles first",
         })
     }
   };
-  showBulkDisableConfirm = () => {
-    {this.state.selectedDepartments.length !== 0 ?
-        confirm({
-          title: "Are you sure to change the status of selected departments to DISABLED?",
-          onOk :() => {
-            this.props.onBulkInActiveDepartments({department_ids: this.state.selectedDepartments}, this.onStatusChangeMessage);
-            this.setState({selectedRowKeys: [], selectedDepartments:[]})
-          }}) :
-        confirm({
-          title: "Please Select Roles first",
-        })
+  onShowBulkDeleteConfirm = () => {
+    if(this.state.selectedDepartments.length !== 0) {
+      confirm({
+        title: "Are you sure to delete the selected departments?",
+        onOk: () => {
+          const obj = {
+            department_ids: this.state.selectedDepartments
+          };
+          this.props.onBulkDeleteDepartments(obj, this.onDeleteSuccessMessage);
+          this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
+          this.setState({selectedRowKeys: [], selectedDepartments: []});
+        }
+      })
     }
-  };
-  showBulkDeleteConfirm = () => {
-    {
-      this.state.selectedDepartments.length !== 0 ?
-        confirm({
-          title: "Are you sure to delete the selected departments?",
-          onOk : () => {
-            const obj = {
-              department_ids: this.state.selectedDepartments
-            };
-            this.props.onBulkDeleteDepartments(obj, this.onDeleteSuccessMessage);
-            this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
-            this.setState({selectedRowKeys: [], selectedDepartments: []});
-          }
-        }) :
-        confirm({
+    else {
+         confirm({
           title: "Please Select Roles first",
         })
     }
@@ -133,13 +139,13 @@ class Departments extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
-        <Menu.Item key="1" onClick={this.showBulkAciveConfirm}>
+        <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
           Active
         </Menu.Item>
-        <Menu.Item key="2" onClick={this.showBulkDisableConfirm}>
+        <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
           Disable
         </Menu.Item>
-        <Menu.Item key="3" onClick={this.showBulkDeleteConfirm}>
+        <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
           Delete
         </Menu.Item>
       </Menu>

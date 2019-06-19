@@ -2,6 +2,6 @@ export const GET_ROLES = "GET_ROLES";
 export const ADD_NEW_ROLE = "ADD_NEW_ROLE";
 export const DELETE_ROLE = "DELETE_ROLE";
 export const EDIT_ROLE = "EDIT_ROLE";
-export const GET_ROLE_ID = "GET_ROLE_ID";
+export const NULLIFY_SELECTED_ROLE = "NULLIFY_SELECTED_ROLE";
 export const BULK_DELETE_ROLES = "BULK_DELETE_ROLES";
 export const GET_ROLE_DETAIL = "GET_ROLE_DETAIL";

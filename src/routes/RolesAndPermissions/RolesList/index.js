@@ -9,8 +9,8 @@ import {
   onAddRole,
   onBulkDeleteRoles,
   onDeleteRole,
-  onEditRole, onGetRoleDetail,
-  onGetRoleID,
+  onEditRole,
+  onGetRoleDetail,
   onGetRoles
 } from "../../../appRedux/actions/RolesAndPermissions";
 import moment from "moment";
@@ -35,6 +35,7 @@ class RolesList extends Component {
   componentWillMount() {
     this.onGetRolesData(this.state.current, this.state.itemNumbers)
   };
+
   onGetRolesData = (currentPage, itemsPerPage) => {
     this.props.onGetRoles(currentPage, itemsPerPage);
   };
@@ -113,80 +114,44 @@ class RolesList extends Component {
       {
         title: '',
         dataIndex: '',
+        key: 'empty',
         render: (text, record) => {
-          return <span onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-          }}>
-        {this.onShowRowDropdown(record)}
-      </span>
+          return <span> <i className="icon icon-edit gx-mr-3" onClick={() => {
+            this.props.onGetRoleDetail(record.id, this.props.history);
+          }}/>
+            {this.onDeletePopUp(record.id)}
+          </span>
         },
       },
     ];
   };
-  onShowRowDropdown = (record) => {
-    const menu = (
-      <Menu>
-        <Menu.Item key="2" onClick={() => {
-          this.props.onGetRoleDetail(record.id,  this.props.history);
-        }}>
-          Edit
-        </Menu.Item>
-        <Menu.Item key="3">
-          <Popconfirm
-            title="Are you sure Disable this Role?"
-            onConfirm={() => this.onDisableRole(record,{} , this.onDisableSuccessMessage)}
-            okText="Yes"
-            cancelText="No">
-            Disable
-          </Popconfirm>
-        </Menu.Item>
-        <Menu.Item key="3">
-          Notes
-        </Menu.Item>
-        <Menu.Divider/>
-        <Menu.Item key="4">
-          <Popconfirm
-            title="Are you sure to delete this Role?"
-            onConfirm={() => {this.props.onDeleteRole(record.id, this.onDeleteSuccessMessage)
-              this.onGetRolesData(this.state.current, this.state.itemNumbers)}}
-            okText="Yes"
-            cancelText="No">
-            Delete
-          </Popconfirm>
-        </Menu.Item>
-      </Menu>
-    );
-    return (
-      <Dropdown overlay={menu} trigger={['click']}>
-        <i className="icon icon-ellipse-h"/>
-      </Dropdown>
-    )
-  };
-  onDisableSuccessMessage = () => {
-    message.success('TheStatus of selected Role has been changed to Disabled successfully.');
+  onDeletePopUp = (recordId) =>{
+   return <Popconfirm
+      title="Are you sure to delete this Role?"
+      onConfirm={() => {
+        this.props.onDeleteRole(recordId, this.onDeleteSuccessMessage)
+        this.onGetRolesData(this.state.current, this.state.itemNumbers)
+      }}
+      okText="Yes"
+      cancelText="No">
+     <i className="icon icon-trash"/>
+    </Popconfirm>
   };
   onDeleteSuccessMessage = () => {
     message.success('The selected Role has been deleted successfully.');
-  };
-  onDisableRole = (record) => {
-    const updatedRecord = record;
-    updatedRecord.status = 0;
-    this.props.onGetRoleID(record.id);
-    this.props.onEditRole(updatedRecord)
   };
   showBulkDeleteConfirm = () => {
     {
       this.state.selectedRoles.length !== 0 ?
         confirm({
           title: "Are you sure to delete the selected Role(s)?",
-          onOk : () => {
+          onOk: () => {
             const obj = {
               role_ids: this.state.selectedRoles
             };
             this.props.onBulkDeleteRoles(obj, this.onDeleteSuccessMessage);
             this.onGetRolesData(this.state.current, this.state.itemNumbers)
-            this.setState({selectedRowKeys:[], selectedRoles:[]})
+            this.setState({selectedRowKeys: [], selectedRoles: []})
           }
         }) :
         confirm({
@@ -207,7 +172,7 @@ class RolesList extends Component {
     );
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        Bulk Actions <Icon type="down" />
+        Bulk Actions <Icon type="down"/>
       </Button>
     </Dropdown>
 
@@ -216,6 +181,7 @@ class RolesList extends Component {
     this.setState({current: page});
     this.onGetRolesData(page, this.state.itemNumbers)
   };
+
   render() {
     const roles = this.onFilterData();
     const selectedRowKeys = this.state.selectedRowKeys;
@@ -227,7 +193,8 @@ class RolesList extends Component {
           return selectedRow.id
         });
         this.setState({selectedRoles: ids, selectedRowKeys: selectedRowKeys})
-      }};
+      }
+    };
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -292,10 +259,9 @@ export default connect(mapStateToProps, {
   onGetRoles,
   onAddRole,
   onDeleteRole,
-  onGetRoleID,
   onEditRole,
   onBulkDeleteRoles,
-  onGetRoleDetail
+  onGetRoleDetail,
 })(RolesList);
 
 RolesList.defaultProps = {};

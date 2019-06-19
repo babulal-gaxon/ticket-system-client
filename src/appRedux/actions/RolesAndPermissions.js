@@ -4,9 +4,11 @@ import {
   ADD_NEW_ROLE,
   BULK_DELETE_ROLES,
   DELETE_ROLE,
-  EDIT_ROLE, GET_ROLE_DETAIL,
-  GET_ROLE_ID,
-  GET_ROLES
+  DISABLE_ROLE_STATUS,
+  EDIT_ROLE,
+  GET_ROLE_DETAIL,
+  GET_ROLES,
+  NULLIFY_SELECTED_ROLE
 } from "../../constants/RolesAndPermissions";
 
 
@@ -30,12 +32,11 @@ export const onGetRoles = (currentPage, itemsPerPage) => {
   }
 };
 
-export const onGetRoleID = (id) => {
+export const onDisableSelectedRole = (id) => {
   return {
-    type: GET_ROLE_ID,
-    payload: id
+    type: NULLIFY_SELECTED_ROLE
   }
-}
+};
 
 
 export const onAddRole = (newRole, history, successMessage) => {
@@ -98,14 +99,13 @@ export const onBulkDeleteRoles = (roleIds, successMessage) => {
   }
 };
 
-export const onEditRole = (role, history = {}, successMessage) => {
+export const onEditRole = (role, history, successMessage) => {
   console.log("in action of onEditRole", role)
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/roles/${role.id}`, role).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log("data is successful")
         console.log(" sending data", data.data)
         dispatch({type: EDIT_ROLE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
@@ -120,6 +120,7 @@ export const onEditRole = (role, history = {}, successMessage) => {
     });
   }
 };
+
 
 export const onGetRoleDetail = (roleId, history) => {
   return (dispatch) => {

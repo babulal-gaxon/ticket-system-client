@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Input, message, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, message, Modal, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 import {
   onAddTicketPriority, onBulkActivePriorities, onBulkDeletePriorities, onBulkInActivePriorities,
@@ -17,6 +17,7 @@ import {Link} from "react-router-dom";
 const ButtonGroup = Button.Group;
 const {Option} = Select;
 const Search = Input.Search;
+const confirm = Modal.confirm;
 
 
 class TicketPriorities extends Component {
@@ -75,72 +76,88 @@ class TicketPriorities extends Component {
   onEditPriority = (id) => {
     this.setState({priorityId: id, showAddPriority: true});
   };
-  onSelectOption = () => {
-    return <Select defaultValue="Active" style={{width: 120}}>
-      <Option value="Active">
-        {this.state.selectedPriorities.length !== 0 ?
-          <Popconfirm
-            title="Are you sure to change the status of selected Priority(s) to ACTIVE?"
-            onConfirm={() => {
-              const obj = {
-                priority_ids: this.state.selectedPriorities
-              };
-              this.props.onBulkActivePriorities(obj, this.onStatusChangeMessage);
-              this.setState({selectedRowKeys: [], selectedPriorities:[]})
-            }}
-            okText="Yes"
-            cancelText="No">
-            Active
-          </Popconfirm> :
-          <Popconfirm
-            title="Please select Priority(s) first"
-            okText="Ok">
-            Active
-          </Popconfirm>}</Option>
-      <Option value="Disable">
-        {this.state.selectedPriorities.length !== 0 ?
-          <Popconfirm
-            title="Are you sure to change the status of selected Priority(s) to DISABLED?"
-            onConfirm={() => {
-              const obj = {
-                priority_ids: this.state.selectedPriorities
-              };
-              this.props.onBulkInActivePriorities(obj, this.onStatusChangeMessage);
-              this.setState({selectedRowKeys: [], selectedPriorities:[]})
-            }}
-            okText="Yes"
-            cancelText="No">
-            Disable
-          </Popconfirm> :
-          <Popconfirm
-            title="Please select Priority(s) first"
-            okText="Ok">
-            Disable
-          </Popconfirm>}</Option>
-      <Option value="Delete">
-        {this.state.selectedPriorities.length !== 0 ?
-          <Popconfirm
-            title="Are you sure to delete the selected Priority(s)?"
-            onConfirm={() => {
-              const obj = {
-                priority_ids: this.state.selectedPriorities
-              };
-              this.props.onBulkDeletePriorities(obj, this.onDeleteSuccessMessage);
-              this.onGetPriorityData(this.state.current, this.state.itemNumbers);
-              this.setState({selectedRowKeys: [], selectedPriorities:[]});
-            }}
-            okText="Yes"
-            cancelText="No">
-            Delete
-          </Popconfirm> :
-          <Popconfirm
-            title="Please select Priority(s) first"
-            okText="Ok">
-            Delete
-          </Popconfirm>}
-      </Option>
-    </Select>
+  onShowBulkActiveConfirm = () => {
+    if(this.state.selectedPriorities.length !== 0) {
+      confirm({
+        title: "Are you sure to change the status of selected Priority(s) to ACTIVE?",
+        onOk: () => {
+          const obj = {
+            priority_ids: this.state.selectedPriorities
+          };
+          this.props.onBulkActivePriorities(obj, this.onStatusChangeMessage);
+          this.setState({selectedRowKeys: [], selectedPriorities:[]})
+        },
+        onCancel() {
+          console.log('Cancel');
+        }
+      })
+    }
+    else {
+      confirm({
+        title: "Please Select Priority(s) first",
+      })
+    }
   };
+  onShowBulkDisableConfirm = () => {
+    if(this.state.selectedPriorities.length !== 0) {
+      confirm({
+        title: "Are you sure to change the status of selected Priority(s) to DISABLED?",
+        onOk: () => {
+          const obj = {
+            priority_ids: this.state.selectedPriorities
+          };
+          this.props.onBulkInActivePriorities(obj, this.onStatusChangeMessage);
+          this.setState({selectedRowKeys: [], selectedPriorities:[]})
+        }
+      })
+    }
+    else {
+      confirm({
+        title: "Please Select Priority(s) first",
+      })
+    }
+  };
+  onShowBulkDeleteConfirm = () => {
+    if(this.state.selectedPriorities.length !== 0) {
+      confirm({
+        title: "Are you sure to delete the selected Priority(s)?",
+        onOk: () => {
+          const obj = {
+            priority_ids: this.state.selectedPriorities
+          };
+          this.props.onBulkDeletePriorities(obj, this.onDeleteSuccessMessage);
+          this.onGetPriorityData(this.state.current, this.state.itemNumbers);
+          this.setState({selectedRowKeys: [], selectedPriorities:[]});
+        }
+      })
+    }
+    else {
+      confirm({
+        title: "Please Select Priority(s) first",
+      })
+    }
+  };
+  onSelectOption = () => {
+    const menu = (
+      <Menu>
+        <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
+          Active
+        </Menu.Item>
+        <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
+          Disable
+        </Menu.Item>
+        <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
+          Delete
+        </Menu.Item>
+      </Menu>
+    );
+    return <Dropdown overlay={menu} trigger={['click']}>
+      <Button>
+        Bulk Actions <Icon type="down" />
+      </Button>
+    </Dropdown>
+  };
+
   onStatusChangeMessage = () => {
     message.success('The status of selected Priorities has been changed successfully.');
   };
