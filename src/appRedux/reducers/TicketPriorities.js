@@ -3,7 +3,6 @@ import {
   BULK_ACTIVE_PRIORITY,
   BULK_DELETE_PRIORITY,
   BULK_DISABLE_PRIORITY,
-  DELETE_TICKET_PRIORITY,
   EDIT_TICKET_PRIORITY,
   GET_TICKET_PRIORITIES
 } from "../../constants/TicketPriorities";
@@ -35,14 +34,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         priorities: updatePriorities,
-      };
-
-    case DELETE_TICKET_PRIORITY:
-      const updatedTickets = state.priorities.filter((priority) => priority.id !== action.payload)
-      return {
-        ...state,
-        priorities: updatedTickets,
-        totalItems: state.totalItems - 1
       };
 
     case BULK_DELETE_PRIORITY:

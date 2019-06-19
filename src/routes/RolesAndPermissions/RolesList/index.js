@@ -8,7 +8,6 @@ import InfoView from '../../../components/InfoView'
 import {
   onAddRole,
   onBulkDeleteRoles,
-  onDeleteRole,
   onEditRole,
   onGetRoleDetail,
   onGetRoles
@@ -129,7 +128,7 @@ class RolesList extends Component {
    return <Popconfirm
       title="Are you sure to delete this Role?"
       onConfirm={() => {
-        this.props.onDeleteRole(recordId, this.onDeleteSuccessMessage)
+        this.props.onBulkDeleteRoles({ids:[recordId]}, this.onDeleteSuccessMessage)
         this.onGetRolesData(this.state.current, this.state.itemNumbers)
       }}
       okText="Yes"
@@ -147,7 +146,7 @@ class RolesList extends Component {
           title: "Are you sure to delete the selected Role(s)?",
           onOk: () => {
             const obj = {
-              role_ids: this.state.selectedRoles
+              ids: this.state.selectedRoles
             };
             this.props.onBulkDeleteRoles(obj, this.onDeleteSuccessMessage);
             this.onGetRolesData(this.state.current, this.state.itemNumbers)
@@ -258,7 +257,6 @@ const mapStateToProps = ({rolesAndPermissions}) => {
 export default connect(mapStateToProps, {
   onGetRoles,
   onAddRole,
-  onDeleteRole,
   onEditRole,
   onBulkDeleteRoles,
   onGetRoleDetail,

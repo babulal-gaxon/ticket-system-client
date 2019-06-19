@@ -72,25 +72,6 @@ export const onEditTicketPriority = (priority, successMessage) => {
   }
 };
 
-export const onDeleteTicketPriority = (priorityId, successMessage) => {
-  return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.delete(`/setup/priorities/${priorityId}`).then(({data}) => {
-      console.info("data:", data);
-      if (data.success) {
-        dispatch({type: DELETE_TICKET_PRIORITY, payload: priorityId});
-        dispatch({type: FETCH_SUCCESS});
-        successMessage();
-      } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
-      }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.info("Error****:", error.message);
-    });
-  }
-};
-
 export const onBulkActivePriorities = (priorityIds, successMessage) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});

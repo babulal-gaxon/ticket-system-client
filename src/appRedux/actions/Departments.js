@@ -50,25 +50,6 @@ export const onAddDepartment = (department, addMessage) => {
   }
 };
 
-export const onDeleteDepartment = (departmentId, deleteMessage) => {
-  return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.delete(`/setup/departments/${departmentId}`).then(({data}) => {
-      console.info("data:", data);
-      if (data.success) {
-        dispatch({type: DELETE_DEPARTMENT, payload: departmentId});
-        dispatch({type: FETCH_SUCCESS});
-        deleteMessage();
-      } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
-      }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.info("Error****:", error.message);
-    });
-  }
-};
-
 export const onBulkDeleteDepartments = (departmentIds, deleteMessage) => {
   console.log("in action", departmentIds)
   return (dispatch) => {

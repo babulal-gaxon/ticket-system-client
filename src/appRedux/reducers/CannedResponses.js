@@ -3,7 +3,6 @@ import {
   BULK_ACTIVE_RESPONSE,
   BULK_DELETE_RESPONSE,
   BULK_DISABLE_RESPONSE,
-  DELETE_CANNED_RESPONSE,
   EDIT_CANNED_RESPONSE,
   GET_CANNED_RESPONSES
 } from "../../constants/CannedResponses";
@@ -34,14 +33,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         responses: updateResponses
-      };
-
-    case DELETE_CANNED_RESPONSE:
-      const updatedResponses = state.responses.filter((cannedResponse) => cannedResponse.id !== action.payload)
-      return {
-        ...state,
-        responses: updatedResponses,
-        totalItems: state.totalItems - 1
       };
 
     case BULK_DELETE_RESPONSE:

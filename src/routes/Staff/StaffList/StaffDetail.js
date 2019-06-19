@@ -75,11 +75,11 @@ class StaffDetail extends Component {
   };
   onTabChange = (key) => {
     this.setState({currentTab: key})
-  }
+  };
   onEditProfile = () => {
     this.props.onGetStaffId(this.props.staff.id);
     this.props.history.push('/staff/add-new-member')
-  }
+  };
   render() {
     const {selectedRowKeys} = this.state;
     const rowSelection = {
@@ -107,45 +107,52 @@ class StaffDetail extends Component {
                       </div>
                     </div>
                   </div>
-                  <div>
-                    <span className="gx-mr-lg-5">
+                  <Row>
+                    <Col span={6}>
                   Email
-                    </span>
-                    <span className="gx-ml-4">{staff.email}</span>
-                  </div>
-                  <Divider/>
-                  <div>
-                    <span className="gx-mr-lg-5">
+                    </Col>
+                    <Col>{staff.email}</Col>
+                  </Row>
+                  <Divider />
+                  <Row>
+                    <Col span={6}>
                   Phone
-                    </span>
-                    <span className="gx-ml-4">{staff.mobile}</span>
-                  </div>
-                  <Divider/>
-                  <div>
-                    <span className="gx-mr-lg-5">
+                    </Col>
+                    <Col>{staff.mobile}</Col>
+                  </Row>
+                  <Divider />
+                  <Row>
+                    <Col span={6}>
                   Hourly Rate
-                    </span>
-                    <span className="gx-ml-4">{staff.hourly_rate}</span>
-                  </div>
-                  <Divider/>
-                  <div>
-                    <span className="gx-mr-lg-5">
+                    </Col>
+                    <Col>{staff.hourly_rate}</Col>
+                  </Row>
+                  <Divider />
+                  <Row>
+                    <Col span={6}>
                   Departments
-                    </span>
-                    <span className="gx-ml-4">{staff.departments.map(department => {
+                    </Col>
+                    <Col>{staff.departments.map(department => {
                       return department.name
                       }).join()
                     }
-                    </span>
-                  </div>
-                  <Divider/>
-                  <div>
-                    <span className="gx-mr-lg-5">
+                    </Col>
+                  </Row>
+                  <Divider />
+                  <Row>
+                    <Col span={6}>
                   Status
-                    </span>
-                    <span className="gx-ml-4">{staff.status === 1 ? "Active" : "Disabled"}</span>
-                  </div>
-                  <Divider/>
+                    </Col>
+                    <Col>{staff.status === 1 ? "Active" : "Disabled"}</Col>
+                  </Row>
+                  <Divider />
+                  <Row>
+                    <Col span={6}>
+                  Designation
+                    </Col>
+                    <Col>{staff.designation}</Col>
+                  </Row>
+                  <Divider />
                   <Tag color="blue" onClick ={this.onEditProfile}>
                     <i className="icon icon-edit gx-mr-3"/>Edit Profile</Tag>
                 </TabPane>

@@ -3,7 +3,6 @@ import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, message, Modal, Popconf
 import {connect} from "react-redux";
 import {
   onAddTicketPriority, onBulkActivePriorities, onBulkDeletePriorities, onBulkInActivePriorities,
-  onDeleteTicketPriority,
   onEditTicketPriority,
   onGetTicketPriorities
 } from "../../../appRedux/actions/TicketPriorities";
@@ -82,7 +81,7 @@ class TicketPriorities extends Component {
         title: "Are you sure to change the status of selected Priority(s) to ACTIVE?",
         onOk: () => {
           const obj = {
-            priority_ids: this.state.selectedPriorities
+            ids: this.state.selectedPriorities
           };
           this.props.onBulkActivePriorities(obj, this.onStatusChangeMessage);
           this.setState({selectedRowKeys: [], selectedPriorities:[]})
@@ -104,7 +103,7 @@ class TicketPriorities extends Component {
         title: "Are you sure to change the status of selected Priority(s) to DISABLED?",
         onOk: () => {
           const obj = {
-            priority_ids: this.state.selectedPriorities
+            ids: this.state.selectedPriorities
           };
           this.props.onBulkInActivePriorities(obj, this.onStatusChangeMessage);
           this.setState({selectedRowKeys: [], selectedPriorities:[]})
@@ -123,7 +122,7 @@ class TicketPriorities extends Component {
         title: "Are you sure to delete the selected Priority(s)?",
         onOk: () => {
           const obj = {
-            priority_ids: this.state.selectedPriorities
+            ids: this.state.selectedPriorities
           };
           this.props.onBulkDeletePriorities(obj, this.onDeleteSuccessMessage);
           this.onGetPriorityData(this.state.current, this.state.itemNumbers);
@@ -233,7 +232,7 @@ class TicketPriorities extends Component {
     return <Popconfirm
       title="Are you sure to delete this Priority?"
       onConfirm={() => {
-        this.props.onDeleteTicketPriority(recordId, this.onDeleteSuccessMessage);
+        this.props.onBulkDeletePriorities({ids: [recordId]}, this.onDeleteSuccessMessage);
         this.onGetPriorityData(this.state.current, this.state.itemNumbers);
       }}
       okText="Yes"
@@ -335,7 +334,6 @@ const mapStateToProps = ({ticketPriorities}) => {
 export default connect(mapStateToProps, {
   onGetTicketPriorities,
   onAddTicketPriority,
-  onDeleteTicketPriority,
   onEditTicketPriority,
   onBulkActivePriorities,
   onBulkInActivePriorities,

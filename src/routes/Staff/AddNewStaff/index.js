@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Button, Col, Form, Input, Radio, Row} from "antd/lib/index";
+import {Button, Col, Form, Input, message, Radio, Row} from "antd/lib/index";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
@@ -26,6 +26,7 @@ class AddNewStaff extends Component {
         account_status: 1
       };
     } else {
+      setTimeout(this.onSetFieldsValue,10);
       const selectedStaff = this.props.staffList.find(staff => staff.id === this.props.staffId);
       const {id, first_name, last_name, email, password, mobile, hourly_rate, account_status} = selectedStaff;
       const department_ids = selectedStaff.departments.map(department => {
@@ -47,15 +48,29 @@ class AddNewStaff extends Component {
   componentWillMount() {
     this.props.onGetDepartments();
   }
+  onSetFieldsValue=()=>{
+    this.props.form.setFieldsValue({
+      first_name : this.state.first_name,
+      last_name: this.state.last_name,
+      email: this.state.email,
+      password: this.state.password
+    });
+  };
   onReturnStaffScreen = () => {
     this.props.history.goBack();
   };
   onStaffAdd = () => {
     if (this.props.staffId === 0) {
-      this.props.onAddSupportStaff({...this.state}, this.props.history);
+      this.props.onAddSupportStaff({...this.state}, this.props.history, this.onAddSuccess);
     } else {
-      this.props.onEditSupportStaff({...this.state}, this.props.history);
+      this.props.onEditSupportStaff({...this.state}, this.props.history, this.onEditSuccess);
     }
+  };
+  onAddSuccess = () => {
+    message.success('New Staff has been added successfully.');
+  };
+  onEditSuccess = () => {
+    message.success('The Staff details has been updated successfully.');
   };
   onDepartmentSelectOption = () => {
     const deptOptions = [];
@@ -85,20 +100,28 @@ class AddNewStaff extends Component {
       account_status: 1
     })
   };
+  onValidationCheck = () => {
+    this.props.form.validateFields(err => {
+      if (!err) {
+        this.onStaffAdd();
+      }
+    });
+  };
 
   render() {
+    const {getFieldDecorator} = this.props.form;
     const {first_name, last_name, email, password, mobile, hourly_rate, account_status, departments_ids} = this.state;
     const deptOptions = this.onDepartmentSelectOption();
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-                  <h3>Add Staff Member</h3>
+                  <h3>{this.props.staffId === 0 ? "Add Staff Member" : "Edit Staff Details"}</h3>
           <Breadcrumb className="gx-mb-4">
                       <Breadcrumb.Item>
                         <Link to="/staff/all-members">Staffs</Link>
                       </Breadcrumb.Item>
                       <Breadcrumb.Item>
-                        <Link to="/">Add Staff</Link>
+                        <Link to="/staff/add-new-member">{this.props.staffId === 0 ? "Add Staff" : "Edit Staff"}</Link>
                       </Breadcrumb.Item>
                     </Breadcrumb>
           <hr/>
@@ -106,19 +129,30 @@ class AddNewStaff extends Component {
             <Col xl={18} lg={12} md={12} sm={12} xs={24}>
               <Form layout="vertical" style={{width: "60%"}}>
                 <Form.Item label="First Name">
-                  <Input type="text" value={first_name} onChange={(e) => {
+                  {getFieldDecorator('first_name', {
+                    rules: [{required: true, message: 'Please Enter First Name!'}],
+                  })(<Input type="text" value={first_name} onChange={(e) => {
                     this.setState({first_name: e.target.value})
-                  }}/>
+                  }}/>)}
                 </Form.Item>
                 <Form.Item label="Last Name">
-                  <Input type="text" value={last_name} onChange={(e) => {
+                  {getFieldDecorator('last_name', {
+                    rules: [{required: true, message: 'Please Enter Last Name!'}],
+                  })(<Input type="text" value={last_name} onChange={(e) => {
                     this.setState({last_name: e.target.value})
-                  }}/>
+                  }}/>)}
                 </Form.Item>
                 <Form.Item label="Email Address">
-                  <Input type="text" value={email} onChange={(e) => {
+                  {getFieldDecorator('email', {
+                    rules: [{
+                      type: 'email',
+                      message: 'The input is not valid E-mail!',
+                    },
+                      {required: true,
+                        message: 'Please Enter Email!'}],
+                  })(<Input type="text" value={email} onChange={(e) => {
                     this.setState({email: e.target.value})
-                  }}/>
+                  }}/>)}
                 </Form.Item>
                 <Form.Item label="Phone Number">
                   <Input type="text" value={mobile} onChange={(e) => {
@@ -131,9 +165,11 @@ class AddNewStaff extends Component {
                   }}/>
                 </Form.Item>
                 <Form.Item label="Password">
-                  <Input.Password type="text" value={password} onChange={(e) => {
+                  {getFieldDecorator('password', {
+                    rules: [{required: true, message: 'Please Enter Password!'}],
+                  })(<Input.Password type="text" value={password} onChange={(e) => {
                     this.setState({password: e.target.value})
-                  }}/>
+                  }}/>)}
                 </Form.Item>
                 <Form.Item label="Department">
                   <Select
@@ -156,7 +192,7 @@ class AddNewStaff extends Component {
                 </Form.Item>
                 <Form.Item>
                 <span>
-                <Button type="primary" onClick={this.onStaffAdd}>
+                <Button type="primary" onClick={this.onValidationCheck}>
                   Save
                 </Button>
                      <Button type="primary" onClick={this.onReset}>
@@ -184,6 +220,7 @@ class AddNewStaff extends Component {
   }
 }
 
+AddNewStaff = Form.create({})(AddNewStaff);
 
 const mapStateToProps = ({departments, supportStaff}) => {
   const {staffId, staffList} = supportStaff;

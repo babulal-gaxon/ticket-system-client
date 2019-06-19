@@ -4,20 +4,35 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {
-  onAddSupportStaff, onBulkDeleteStaff,
-  onDeleteSupportStaff,
+  onAddSupportStaff,
+  onBulkDeleteStaff, onDisableSupportStaff,
   onEditSupportStaff,
   onGetStaff,
   onGetStaffId
 } from "../../../appRedux/actions/SupportStaff";
 import StaffDetail from "./StaffDetail";
-import {Breadcrumb, Avatar, Button, Dropdown, Input, Menu, Popconfirm, Table, Tag, Select} from "antd";
+import {
+  Breadcrumb,
+  Avatar,
+  Button,
+  Dropdown,
+  Input,
+  Menu,
+  Popconfirm,
+  Table,
+  Tag,
+  Select,
+  Modal,
+  Icon,
+  message
+} from "antd";
 import InfoView from "../../../components/InfoView";
 
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
 const Search = Input.Search;
+const confirm = Modal.confirm;
 
 class StaffList extends Component {
   constructor(props) {
@@ -34,21 +49,25 @@ class StaffList extends Component {
   };
 
   componentWillMount() {
-    this.props.onGetStaff();
+    this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers);
+  };
+
+  onGetStaffDataPaginated = (currentPage, itemsPerPage) => {
+    this.props.onGetStaff(currentPage, itemsPerPage);
   };
 
   onCurrentIncrement = () => {
-    const pages = Math.ceil(this.props.staffList.length / this.state.itemNumbers);
+    const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     console.log("pages", pages)
     if (this.state.currentPage < pages) {
-      this.setState({currentPage: this.state.currentPage + 1});
+      this.setState({currentPage: this.state.currentPage + 1},() => {this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)});
     } else {
       return null;
     }
   };
   onCurrentDecrement = () => {
     if (this.state.currentPage !== 1) {
-      this.setState({currentPage: this.state.currentPage - 1});
+      this.setState({currentPage: this.state.currentPage - 1}, () => {this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)});
     } else {
       return null;
     }
@@ -64,28 +83,54 @@ class StaffList extends Component {
     this.props.history.push('/staff/add-new-member')
   };
   onFilterData = () => {
-    return this.props.staffList.filter(staff => staff.first_name.indexOf(this.state.filterText) !== -1);
+    return this.props.staffList.filter(staff => {
+      const name = staff.first_name + " " + staff.last_name;
+      if(name.indexOf(this.state.filterText) !== -1) {
+        return staff
+      }
+    });
   };
-  onSelectOption = () => {
-    return <Select defaultValue="Archive" style={{width: 120}}>
-      <Option value="Archive">Archive</Option>
-      <Option value="Delete">
-        <Popconfirm
-        title="Are you sure delete this Tickets?"
-        onConfirm={() => {
+  onDeleteSuccessMessage = () => {
+    message.success('The selected Staff has been deleted successfully.');
+  };
+  onShowBulkDeleteConfirm = () => {
+    if(this.state.selectedStaff.length !== 0) {
+      confirm({
+        title: "Are you sure to delete the selected Staffs?",
+        onOk: () => {
           const obj = {
-            staff_ids: this.state.selectedStaff
+            ids: this.state.selectedStaff
           };
-          this.props.onBulkDeleteStaff(obj)
-        }}
-        okText="Yes"
-        cancelText="No">
-        Delete All
-      </Popconfirm></Option>
-      <Option value="Disable">Disable</Option>
-      <Option value="Export">Export</Option>
-    </Select>
+          this.props.onBulkDeleteStaff(obj, this.onDeleteSuccessMessage);
+          this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers);
+          this.setState({selectedRowKeys: [], selectedStaff: []});
+        }
+      })
+    }
+    else {
+      confirm({
+        title: "Please Select Staffs first",
+      })
+    }
   };
+    onSelectOption = () => {
+      const menu = (
+        <Menu>
+          <Menu.Item key="1">
+            Archive
+          </Menu.Item>
+          <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
+            Delete
+          </Menu.Item>
+        </Menu>
+      );
+      return <Dropdown overlay={menu} trigger={['click']}>
+        <Button>
+          Bulk Actions <Icon type="down" />
+        </Button>
+      </Dropdown>
+    };
+
   staffRowData = () => {
     return [
       {
@@ -105,7 +150,7 @@ class StaffList extends Component {
         render: (text, record) => {
           return <span
             className="gx-email gx-d-inline-block gx-mr-2"
-            style={{color:record.hourly_rate === null ? "red" : "" }}>{record.hourly_rate === null ? "NA" : record.hourly_rate}</span>
+            style={{color:record.hourly_rate === null ? "red" : "" }}>{record.hourly_rate === null ? "NA" : `$${record.hourly_rate}`}</span>
         },
       },
       {
@@ -154,6 +199,14 @@ class StaffList extends Component {
       },
     ];
   };
+  onStaffDisableSuccess = () => {
+    message.success('The status of Staff has been changed to Disable successfully.');
+  };
+  onDisableStaff = (staffId) => {
+    const selectedStaff = this.props.staffList.find(staff => staff.id === staffId);
+    selectedStaff.account_status = 0;
+    this.props.onDisableSupportStaff(selectedStaff, this.onStaffDisableSuccess)
+  };
   onShowRowDropdown = (staffId) => {
     const menu = (
       <Menu>
@@ -163,7 +216,7 @@ class StaffList extends Component {
         }}>
           Edit
         </Menu.Item>
-        <Menu.Item key="3">
+        <Menu.Item key="3" onClick = {() => {this.onDisableStaff(staffId)}}>
           Disable
         </Menu.Item>
         <Menu.Item key="3">
@@ -172,8 +225,10 @@ class StaffList extends Component {
         <Menu.Divider/>
         <Menu.Item key="4">
           <Popconfirm
-            title="Are you sure delete this Ticket?"
-            onConfirm={() => this.props.onDeleteSupportStaff(staffId)}
+            title="Are you sure to delete this Staff?"
+            onConfirm={() => {
+              this.props.onBulkDeleteStaff({ids:[staffId]}, this.onDeleteSuccessMessage)
+              this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)}}
             okText="Yes"
             cancelText="No">
             Delete
@@ -193,7 +248,7 @@ class StaffList extends Component {
   onPageChange = page => {
     this.setState({
       currentPage: page,
-    });
+    },() => {this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)});
   };
   onShowItemOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>
@@ -203,21 +258,22 @@ class StaffList extends Component {
     </Select>
   };
   onDropdownChange = (value) => {
-    this.setState({itemNumbers: value})
+    this.setState({itemNumbers: value}, () => {this.onGetStaffDataPaginated(1, this.state.itemNumbers)})
   };
   onBackToList = () => {
     this.setState({currentMember: null})
   };
   render() {
+    const selectedRowKeys =  this.state.selectedRowKeys;
     const staffList = this.onFilterData();
     const rowSelection = {
+      selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
         const ids = selectedRows.map(selectedRow => {
           return selectedRow.id
         });
-        this.setState({selectedStaff:ids})
+        this.setState({selectedStaff:ids, selectedRowKeys: selectedRowKeys})
       }};
-    console.log("selected Data", this.state.selectedStaff)
     return (
       <div className="gx-main-content">
         {this.state.currentMember === null ?
@@ -259,7 +315,7 @@ class StaffList extends Component {
                    pagination={{
                      pageSize: this.state.itemNumbers,
                      current: this.state.currentPage,
-                     total: staffList.length,
+                     total: this.props.totalItems,
                      showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
                      onChange: this.onPageChange
                    }}
@@ -279,8 +335,8 @@ class StaffList extends Component {
 
 
 const mapStateToProps = ({supportStaff}) => {
-  const {staffList} = supportStaff;
-  return {staffList};
+  const {staffList, totalItems} = supportStaff;
+  return {staffList, totalItems};
 };
 
 
@@ -289,8 +345,8 @@ export default connect(mapStateToProps, {
   onGetStaffId,
   onAddSupportStaff,
   onEditSupportStaff,
-  onDeleteSupportStaff,
-  onBulkDeleteStaff
+  onBulkDeleteStaff,
+  onDisableSupportStaff
 })(StaffList);
 
 StaffList.defaultProps = {

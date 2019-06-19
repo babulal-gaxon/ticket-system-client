@@ -7,7 +7,6 @@ import {
   onBulkActiveResponses,
   onBulkDeleteResponses,
   onBulkInActiveResponses,
-  onDeleteCannedResponse,
   onEditCannedResponse,
   onGetCannedResponses
 } from "../../../appRedux/actions/CannedResponses";
@@ -82,7 +81,7 @@ class CannedResponses extends Component {
         title: "Are you sure to change the status of selected Response(s) to ACTIVE?",
         onOk: () => {
           const obj = {
-            canned_ids: this.state.selectedResponses
+            ids: this.state.selectedResponses
           };
           this.props.onBulkActiveResponses(obj, this.onStatusChangeMessage);
           this.setState({selectedRowKeys: [], selectedResponses:[]})
@@ -104,7 +103,7 @@ class CannedResponses extends Component {
         title: "Are you sure to change the status of selected Response(s) to DISABLED?",
         onOk: () => {
           const obj = {
-            canned_ids: this.state.selectedResponses
+            ids: this.state.selectedResponses
           };
           this.props.onBulkInActiveResponses(obj, this.onStatusChangeMessage);
           this.setState({selectedRowKeys: [], selectedResponses:[]})
@@ -123,7 +122,7 @@ class CannedResponses extends Component {
         title: "Are you sure to delete the selected Response(s)?",
         onOk: () => {
           const obj = {
-            canned_ids: this.state.selectedResponses
+            ids: this.state.selectedResponses
           };
           this.props.onBulkDeleteResponses(obj, this.onDeleteSuccessMessage)
           this.onGetResponseData(this.state.current, this.state.itemNumbers);
@@ -223,7 +222,7 @@ class CannedResponses extends Component {
     return <Popconfirm
       title="Are you sure to delete this Response?"
       onConfirm={() => {
-        this.props.onDeleteCannedResponse(recordId, this.onDeleteSuccessMessage)
+        this.props.onBulkDeleteResponses({ids: [recordId]}, this.onDeleteSuccessMessage)
         this.onGetResponseData(this.state.current, this.state.itemNumbers)
       }}
       okText="Yes"
@@ -332,7 +331,6 @@ const mapStateToProps = ({cannedResponses}) => {
 export default connect(mapStateToProps, {
   onGetCannedResponses,
   onAddCannedResponse,
-  onDeleteCannedResponse,
   onEditCannedResponse,
   onBulkActiveResponses,
   onBulkInActiveResponses,

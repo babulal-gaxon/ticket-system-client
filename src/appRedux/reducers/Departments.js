@@ -1,7 +1,8 @@
 import {
-  ADD_DEPARTMENT, BULK_ACTIVE_DEPARTMENTS,
-  BULK_DELETE_DEPARTMENTS, BULK_INACTIVE_DEPARTMENTS,
-  DELETE_DEPARTMENT,
+  ADD_DEPARTMENT,
+  BULK_ACTIVE_DEPARTMENTS,
+  BULK_DELETE_DEPARTMENTS,
+  BULK_INACTIVE_DEPARTMENTS,
   EDIT_DEPARTMENT,
   GET_DEPARTMENTS
 } from "../../constants/Departments";
@@ -31,32 +32,24 @@ export default (state = initialState, action) => {
       const updateDepartments = state.dept.map((department) => department.id === action.payload.id ? action.payload : department)
       return {
         ...state,
-        dept:updateDepartments,
+        dept: updateDepartments,
       };
-
-      case DELETE_DEPARTMENT:
-        const updatedDepartments = state.dept.filter((department) => department.id !== action.payload);
-        return {
-          ...state,
-          dept:updatedDepartments,
-          totalItems: state.totalItems - 1
-        };
 
     case BULK_DELETE_DEPARTMENTS:
       const upDepartments = state.dept.filter(department => {
-        if(action.payload.indexOf(department.id) === -1) {
+        if (action.payload.indexOf(department.id) === -1) {
           return department
         }
       });
       return {
         ...state,
-        dept:upDepartments,
+        dept: upDepartments,
         totalItems: state.totalItems - action.payload.length
       };
 
     case BULK_ACTIVE_DEPARTMENTS:
       const activateDepartments = state.dept.map(department => {
-        if(action.payload.indexOf(department.id) !== -1) {
+        if (action.payload.indexOf(department.id) !== -1) {
           department.status = 1;
           return department;
         }
@@ -64,12 +57,12 @@ export default (state = initialState, action) => {
       });
       return {
         ...state,
-        dept:activateDepartments
+        dept: activateDepartments
       };
 
     case BULK_INACTIVE_DEPARTMENTS:
       const deActivateDepartments = state.dept.map(department => {
-        if(action.payload.indexOf(department.id) !== -1) {
+        if (action.payload.indexOf(department.id) !== -1) {
           department.status = 0;
           return department;
         }

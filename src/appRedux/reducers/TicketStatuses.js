@@ -1,8 +1,8 @@
 import {
   ADD_TICKET_STATUS,
   BULK_ACTIVE_STATUS,
-  BULK_DELETE_STATUS, BULK_DISABLE_STATUS,
-  DELETE_TICKET_STATUS,
+  BULK_DELETE_STATUS,
+  BULK_DISABLE_STATUS,
   EDIT_TICKET_STATUS,
   GET_TICKET_STATUSES
 } from "../../constants/TicketStatuses";
@@ -33,14 +33,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         statuses: updateStatuses
-      };
-
-    case DELETE_TICKET_STATUS:
-      const updatedStatuses = state.statuses.filter((status) => status.id !== action.payload)
-      return {
-        ...state,
-        statuses: updatedStatuses,
-        totalItems: state.totalItems - 1
       };
 
     case BULK_DELETE_STATUS:

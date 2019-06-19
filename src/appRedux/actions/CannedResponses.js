@@ -53,25 +53,6 @@ export const onAddCannedResponse = (cannedResponse, successMessage) => {
   }
 };
 
-export const onDeleteCannedResponse = (cannedResponseId, successMessage) => {
-  return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.delete(`/setup/canned/responses/${cannedResponseId}`).then(({data}) => {
-      console.info("data:", data);
-      if (data.success) {
-        dispatch({type: DELETE_CANNED_RESPONSE, payload: cannedResponseId});
-        dispatch({type: FETCH_SUCCESS});
-        successMessage();
-      } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
-      }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.info("Error****:", error.message);
-    });
-  }
-};
-
 export const onEditCannedResponse = (cannedResponse, successMessage) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});

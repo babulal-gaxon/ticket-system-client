@@ -51,26 +51,6 @@ export const onAddTicketStatus = (status, successMessage) => {
   }
 };
 
-export const onDeleteTicketStatus = (statusId, successMessage) => {
-  return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.delete(`/setup/status/${statusId}`).then(({data}) => {
-      console.info("data:", data);
-      if (data.success) {
-        dispatch({type: DELETE_TICKET_STATUS, payload: statusId});
-        dispatch({type: FETCH_SUCCESS});
-        successMessage();
-      } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
-      }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.info("Error****:", error.message);
-    });
-  }
-};
-
-
 export const onEditTicketStatus = (status, successMessage) => {
   console.log("onEditTicketStatus", status);
   return (dispatch) => {

@@ -8,7 +8,6 @@ import {
   onBulkActiveStatuses,
   onBulkDeleteStatuses,
   onBulkInActiveStatuses,
-  onDeleteTicketStatus,
   onEditTicketStatus,
   onGetTicketStatus
 } from "../../../appRedux/actions/TicketStatuses";
@@ -83,7 +82,7 @@ class TicketStatuses extends Component {
         title: "Are you sure to change the status of selected Statuses to ACTIVE?",
         onOk: () => {
           const obj = {
-            status_ids: this.state.selectedStatus
+            ids: this.state.selectedStatus
           };
           this.props.onBulkActiveStatuses(obj, this.onStatusChangeMessage);
           this.setState({selectedRowKeys: [], selectedStatus:[]})
@@ -102,7 +101,7 @@ class TicketStatuses extends Component {
         title: "Are you sure to change the status of selected Statuses to DISABLED?",
         onOk: () => {
           const obj = {
-            status_ids: this.state.selectedStatus
+            ids: this.state.selectedStatus
           };
           this.props.onBulkInActiveStatuses(obj, this.onStatusChangeMessage);
           this.setState({selectedRowKeys: [], selectedStatus:[]})
@@ -121,7 +120,7 @@ class TicketStatuses extends Component {
         title: "Are you sure to delete the selected Statuses?",
         onOk: () => {
           const obj = {
-            status_ids: this.state.selectedStatus
+            ids: this.state.selectedStatus
           };
           this.props.onBulkDeleteStatuses(obj, this.onDeleteSuccessMessage);
           this.onGetStatusData(this.state.current, this.state.itemNumbers);
@@ -226,22 +225,25 @@ class TicketStatuses extends Component {
   onDeleteSuccessMessage = () => {
     message.success('The selected Status(s) has been deleted successfully.');
   };
+  onStatusChangeMessage = () => {
+    message.success('The status of selected Status(s) has been changed successfully.');
+  };
   onDeletePopUp = (recordId) => {
     return <Popconfirm
       title="Are you sure to delete this Status?"
       onConfirm={() => {
-        this.props.onDeleteTicketStatus(recordId, this.onDeleteSuccessMessage);
+        this.props.onBulkDeleteStatuses({ids:[recordId]}, this.onDeleteSuccessMessage);
         this.onGetStatusData(this.state.current, this.state.itemNumbers);
       }}
       okText="Yes"
       cancelText="No">
       <i className="icon icon-trash"/>
     </Popconfirm>
-  };
+  }
   onPageChange = page => {
     this.setState({
       current: page
-    }, () => {this.onGetStatusData(this.state.current, this.state.itemNumbers)});
+    }, () => {this.onGetStatusData(this.state.current, this.state.itemNumbers)})
   };
   onShowItemOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>
@@ -332,7 +334,6 @@ const mapStateToProps = ({ticketStatuses}) => {
 export default connect(mapStateToProps, {
   onGetTicketStatus,
   onAddTicketStatus,
-  onDeleteTicketStatus,
   onEditTicketStatus,
   onBulkActiveStatuses,
   onBulkInActiveStatuses,

@@ -9,7 +9,6 @@ import {
   onBulkActiveDepartments,
   onBulkDeleteDepartments,
   onBulkInActiveDepartments,
-  onDeleteDepartment,
   onEditDepartment,
   onGetDepartments,
 } from "../../../appRedux/actions/Departments";
@@ -84,7 +83,7 @@ class Departments extends Component {
         title: "Are you sure to change the status of selected departments to ACTIVE?",
         onOk: () => {
           const obj = {
-            department_ids: this.state.selectedDepartments
+            ids: this.state.selectedDepartments
           };
           this.props.onBulkActiveDepartments(obj, this.onStatusChangeMessage);
           this.setState({selectedRowKeys: [], selectedDepartments: []})
@@ -105,7 +104,7 @@ class Departments extends Component {
       confirm({
         title: "Are you sure to change the status of selected departments to DISABLED?",
         onOk: () => {
-          this.props.onBulkInActiveDepartments({department_ids: this.state.selectedDepartments}, this.onStatusChangeMessage);
+          this.props.onBulkInActiveDepartments({ids: this.state.selectedDepartments}, this.onStatusChangeMessage);
           this.setState({selectedRowKeys: [], selectedDepartments: []})
         }
       })
@@ -122,7 +121,7 @@ class Departments extends Component {
         title: "Are you sure to delete the selected departments?",
         onOk: () => {
           const obj = {
-            department_ids: this.state.selectedDepartments
+            ids: this.state.selectedDepartments
           };
           this.props.onBulkDeleteDepartments(obj, this.onDeleteSuccessMessage);
           this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
@@ -150,13 +149,11 @@ class Departments extends Component {
         </Menu.Item>
       </Menu>
     );
-
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
         Bulk Actions <Icon type="down" />
       </Button>
     </Dropdown>
-
   };
   onGetTableColumns = () => {
     return [
@@ -219,7 +216,7 @@ class Departments extends Component {
       <Popconfirm
         title="Are you sure to delete this Department?"
         onConfirm={() => {
-          this.props.onDeleteDepartment(recordId, this.onDeleteSuccessMessage);
+          this.props.onBulkDeleteDepartments({ids:[recordId]}, this.onDeleteSuccessMessage);
           this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
         }}
         okText="Yes"
@@ -323,7 +320,6 @@ const mapStateToProps = ({departments}) => {
 export default connect(mapStateToProps, {
   onGetDepartments,
   onAddDepartment,
-  onDeleteDepartment,
   onEditDepartment,
   onBulkDeleteDepartments,
   onBulkActiveDepartments,

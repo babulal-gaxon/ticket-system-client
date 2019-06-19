@@ -1,21 +1,24 @@
 import {
-  ADD_SUPPORT_STAFF, BULK_DELETE_SUPPORT_STAFF,
-  DELETE_SUPPORT_STAFF,
-  EDIT_SUPPORT_STAFF, GET_STAFF_ID,
+  ADD_SUPPORT_STAFF,
+  BULK_DELETE_SUPPORT_STAFF, DISABLE_STAFF_STATUS,
+  EDIT_SUPPORT_STAFF,
+  GET_STAFF_ID,
   GET_SUPPORT_STAFF
 } from "../../constants/SupportStaff";
 
 const initialState = {
   staffList: [],
-  staffId: 0
+  staffId: 0,
+  totalItems: null
 };
 
 export default (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case GET_SUPPORT_STAFF:
       return {
         ...state,
-        staffList: action.payload
+        staffList: action.payload.items,
+        totalItems: action.payload.paginate.total
       };
 
     case GET_STAFF_ID:
@@ -27,7 +30,8 @@ export default (state = initialState, action) => {
     case ADD_SUPPORT_STAFF:
       return {
         ...state,
-        staffList: [action.payload, ...state.staffList]
+        staffList: [action.payload, ...state.staffList],
+        totalItems: state.totalItems + 1
       };
 
     case EDIT_SUPPORT_STAFF:
@@ -37,22 +41,23 @@ export default (state = initialState, action) => {
         staffList: updatedStaffList
       };
 
-    case DELETE_SUPPORT_STAFF:
-      const updatedStaff = state.staffList.filter((member) => member.id !== action.payload);
+    case DISABLE_STAFF_STATUS:
+      const updateStaffList = state.staffList.map((member) => member.id === action.payload.id ? action.payload : member);
       return {
         ...state,
-        staffList:updatedStaff
+        staffList: updateStaffList
       };
 
     case BULK_DELETE_SUPPORT_STAFF:
       const updateStaff = state.staffList.filter(member => {
-        if(action.payload.staff_ids.indexOf(member.id) === -1) {
+        if (action.payload.indexOf(member.id) === -1) {
           return member
         }
       });
       return {
         ...state,
-        staffList:updateStaff
+        staffList: updateStaff,
+        totalItems: state.totalItems - action.payload.length
       };
 
     default:

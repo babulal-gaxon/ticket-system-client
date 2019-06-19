@@ -1,8 +1,6 @@
 import {
   ADD_NEW_ROLE,
   BULK_DELETE_ROLES,
-  DELETE_ROLE,
-  DISABLE_ROLE_STATUS,
   EDIT_ROLE,
   GET_ROLE_DETAIL,
   GET_ROLES,
@@ -54,24 +52,17 @@ export default (state = initialState, action) => {
         selectedRole: null
       };
 
-    case DELETE_ROLE:
-      const updatedRoles = state.roles.filter((role) => role.id !== action.payload);
-      return {
-        ...state,
-        roles: updatedRoles,
-        totalItems: state.totalItems - 1
-      };
-
     case BULK_DELETE_ROLES:
       const upRoles = state.roles.filter(role => {
-        if (action.payload.role_ids.indexOf(role.id) === -1) {
+        console.log("action.payload", action.payload)
+        if (action.payload.indexOf(role.id) === -1) {
           return role
         }
       });
       return {
         ...state,
         roles: upRoles,
-        totalItems: state.totalItems - action.payload.role_ids.length
+        totalItems: state.totalItems - action.payload.length
       };
 
     default:

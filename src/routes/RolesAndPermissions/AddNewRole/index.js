@@ -54,7 +54,7 @@ class AddNewRole extends Component {
         checkAll: false,
       }
     } else {
-      setTimeout(this.onSetFieldsValue, 1000);
+      setTimeout(this.onSetFieldsValue, 10);
       this.state = {
         id: this.props.selectedRole.id,
         name: this.props.selectedRole.name,
