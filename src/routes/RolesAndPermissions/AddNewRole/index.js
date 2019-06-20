@@ -49,9 +49,7 @@ class AddNewRole extends Component {
         statusPermissions: [],
         ticketsPermissions: [],
         usersPermissions: [],
-        permissions: [],
-        indeterminate: true,
-        checkAll: false,
+        permissions: []
       }
     } else {
       setTimeout(this.onSetFieldsValue, 10);
@@ -61,7 +59,7 @@ class AddNewRole extends Component {
         status: this.props.selectedRole.status,
         customerPermissions: this.props.selectedRole.role_permissions.companies ?
           this.props.selectedRole.role_permissions.companies.map(company => company.id) : [],
-        contactPermissions:this.props.selectedRole.role_permissions.contacts ?
+        contactPermissions: this.props.selectedRole.role_permissions.contacts ?
           this.props.selectedRole.role_permissions.contacts.map(contact => contact.id) : [],
         departmentsPermissions: this.props.selectedRole.role_permissions.departments ?
           this.props.selectedRole.role_permissions.departments.map(department => department.id) : [],
@@ -77,7 +75,7 @@ class AddNewRole extends Component {
           this.props.selectedRole.role_permissions.settings.map(setting => setting.id) : [],
         staffsPermissions: this.props.selectedRole.role_permissions.staffs ?
           this.props.selectedRole.role_permissions.staffs.map(staff => staff.id) : [],
-        statusPermissions:  this.props.selectedRole.role_permissions.status ?
+        statusPermissions: this.props.selectedRole.role_permissions.status ?
           this.props.selectedRole.role_permissions.status.map(stat => stat.id) : [],
         ticketsPermissions: this.props.selectedRole.role_permissions.tickets ?
           this.props.selectedRole.role_permissions.tickets.map(ticket => ticket.id) : [],
@@ -85,9 +83,7 @@ class AddNewRole extends Component {
           this.props.selectedRole.role_permissions.users.map(user => user.id) : [],
         permissions: [],
         filterText: "",
-        checkedList: [],
-        indeterminate: true,
-        checkAll: false,
+        checkedList: []
       }
     }
   }
@@ -98,33 +94,17 @@ class AddNewRole extends Component {
     });
   };
   onSelectCustomerPermissions = checkedList => {
-    const allSelected = this.props.userPermissions.companies.map(company => {
-      return company.id
-    });
     this.setState({
-      customerPermissions: checkedList,
-      indeterminate: !!checkedList.length && checkedList.length < allSelected.length,
-      checkAll: checkedList.length === allSelected.length
-    })
+      customerPermissions: checkedList})
   };
   onSelectContactPermissions = checkedList => {
-    const allSelected = this.props.userPermissions.contacts.map(contact => {
-      return contact.id
-    });
     this.setState({
-      contactPermissions: checkedList,
-      indeterminate: !!checkedList.length && checkedList.length < allSelected.length,
-      checkAll: checkedList.length === allSelected.length
+      contactPermissions: checkedList
     })
   };
   onSelectDepartmentPermissions = checkedList => {
-    const allSelected = this.props.userPermissions.departments.map(department => {
-      return department.id
-    });
     this.setState({
-      departmentsPermissions: checkedList,
-      indeterminate: !!checkedList.length && checkedList.length < allSelected.length,
-      checkAll: checkedList.length === allSelected.length
+      departmentsPermissions: checkedList
     })
   };
   onSelectLabelPermissions = checkedList => {
@@ -246,7 +226,6 @@ class AddNewRole extends Component {
         permissions: this.onCollectAllPermissions()
       };
       this.props.onAddRole(addData, this.props.history, this.onAddSuccess);
-      this.props.onGetRoleID(0);
     } else {
       const editedData = {
         name: this.state.name,
@@ -254,7 +233,7 @@ class AddNewRole extends Component {
         permissions: this.onCollectAllPermissions(),
         id: this.state.id
       };
-      console.log("edited data", editedData)
+      console.log("edited data", editedData);
       this.props.onEditRole(editedData, this.props.history, this.onEditSuccess)
     }
   };
@@ -298,9 +277,7 @@ class AddNewRole extends Component {
       return company.id
     });
     this.setState({
-      customerPermissions: e.target.checked ? allSelected : [],
-      indeterminate: false,
-      checkAll: e.target.checked,
+      customerPermissions: e.target.checked ? allSelected : []
     });
   };
   onCheckAllContacts = e => {
@@ -308,9 +285,7 @@ class AddNewRole extends Component {
       return company.id
     });
     this.setState({
-      contactPermissions: e.target.checked ? allSelected : [],
-      indeterminate: false,
-      checkAll: e.target.checked,
+      contactPermissions: e.target.checked ? allSelected : []
     });
   };
   onCheckAllDepartments = e => {
@@ -318,9 +293,7 @@ class AddNewRole extends Component {
       return department.id
     });
     this.setState({
-      departmentsPermissions: e.target.checked ? allSelected : [],
-      indeterminate: false,
-      checkAll: e.target.checked,
+      departmentsPermissions: e.target.checked ? allSelected : []
     });
   };
   onCheckAllLabels = e => {
@@ -427,7 +400,8 @@ class AddNewRole extends Component {
               <Link to="/roles-permissions/all">Roles & Permission</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item className="gx-text-primary">
-              <Link to="/roles-permissions/add-new">{this.props.selectedRole === null ? "Add New Role" : "Edit Role Details"}</Link>
+              <Link
+                to="/roles-permissions/add-new">{this.props.selectedRole === null ? "Add New Role" : "Edit Role Details"}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <Row>
@@ -453,9 +427,10 @@ class AddNewRole extends Component {
                     <Panel header="Customers" key="1" showArrow={false} extra={<i className="icon icon-add-circle"/>}
                            style={customPanelStyle}>
                       <Checkbox className="gx-ml-auto"
-                        indeterminate={this.state.indeterminate}
-                        onChange={this.onCheckAllCustomers}
-                        checked={this.state.checkAll}>
+                                indeterminate={this.state.customerPermissions.length > 0
+                                && this.props.userPermissions.companies.length > this.state.customerPermissions.length}
+                                onChange={this.onCheckAllCustomers}
+                                checked={this.props.userPermissions.companies.length === this.state.customerPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
@@ -545,7 +520,7 @@ class AddNewRole extends Component {
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectPriorityPermissions}
-                      value={this.state.prioritiesPermissions}>
+                                      value={this.state.prioritiesPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.priorities.map(priority => {
                             return <Col span={12} className="gx-mb-2">
@@ -566,7 +541,7 @@ class AddNewRole extends Component {
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectResponsesPermissions}
-                      value={this.state.responsesPermissions}>
+                                      value={this.state.responsesPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.responses.map(response => {
                             return <Col span={12} className="gx-mb-2">
@@ -587,7 +562,7 @@ class AddNewRole extends Component {
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectRolesPermissions}
-                      value={this.state.rolesPermissions}>
+                                      value={this.state.rolesPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.roles.map(role => {
                             return <Col span={12} className="gx-mb-2">
@@ -608,7 +583,7 @@ class AddNewRole extends Component {
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectSettingsPermissions}
-                      value={this.state.settingsPermissions}>
+                                      value={this.state.settingsPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.settings.map(setting => {
                             return <Col span={12} className="gx-mb-2">
@@ -629,7 +604,7 @@ class AddNewRole extends Component {
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectStaffsPermissions}
-                      value={this.state.staffsPermissions}>
+                                      value={this.state.staffsPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.staffs.map(staff => {
                             return <Col span={12} className="gx-mb-2">
@@ -650,7 +625,7 @@ class AddNewRole extends Component {
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectStatusPermissions}
-                      value={this.state.statusPermissions}>
+                                      value={this.state.statusPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.status.map(stat => {
                             return <Col span={12} className="gx-mb-2">
@@ -671,7 +646,7 @@ class AddNewRole extends Component {
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectTicketsPermissions}
-                      value={this.state.ticketsPermissions}>
+                                      value={this.state.ticketsPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.tickets.map(ticket => {
                             return <Col span={12} className="gx-mb-2">
@@ -692,7 +667,7 @@ class AddNewRole extends Component {
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectUsersPermissions}
-                      value={this.state.usersPermissions}>
+                                      value={this.state.usersPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.users.map(user => {
                             return <Col span={12} className="gx-mb-2">

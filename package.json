@@ -16,6 +16,7 @@
     "react-color": "^2.17.3",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.8.6",
+    "react-dropzone": "^10.1.5",
     "react-hot-loader": "^4.8.6",
     "react-intl": "^2.9.0",
     "react-placeholder": "^3.0.2",

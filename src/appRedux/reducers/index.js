@@ -4,7 +4,6 @@ import Settings from "./Settings";
 import Auth from "./Auth";
 import Common from "./Common";
 import TicketList from "./TicketList";
-import RecentCustomers from "./RecentCustomers";
 import SupportStaff from "./SupportStaff";
 import Departments from "./Departments";
 import CannedResponses from "./CannedResponses";
@@ -21,8 +20,7 @@ const reducers = combineReducers({
   auth: Auth,
   commonData: Common,
   ticketList: TicketList,
-  recentCustomers: RecentCustomers,
-  supportStaff:SupportStaff,
+  supportStaff: SupportStaff,
   departments: Departments,
   cannedResponses: CannedResponses,
   ticketPriorities: TicketPriorities,

@@ -7,7 +7,7 @@ import Widget from "../../../components/Widget/index";
 import InfoView from '../../../components/InfoView'
 import {
   onAddRole,
-  onBulkDeleteRoles,
+  onBulkDeleteRoles, onDisableSelectedRole,
   onEditRole,
   onGetRoleDetail,
   onGetRoles
@@ -76,6 +76,7 @@ class RolesList extends Component {
     </Select>
   };
   onAddButtonClick = () => {
+    this.props.onDisableSelectedRole();
     this.props.history.push("/roles-permissions/add-new")
   };
   rolesRowData = () => {
@@ -140,8 +141,7 @@ class RolesList extends Component {
     message.success('The selected Role has been deleted successfully.');
   };
   showBulkDeleteConfirm = () => {
-    {
-      this.state.selectedRoles.length !== 0 ?
+      if(this.state.selectedRoles.length !== 0) {
         confirm({
           title: "Are you sure to delete the selected Role(s)?",
           onOk: () => {
@@ -152,7 +152,9 @@ class RolesList extends Component {
             this.onGetRolesData(this.state.current, this.state.itemNumbers)
             this.setState({selectedRowKeys: [], selectedRoles: []})
           }
-        }) :
+        })
+      }
+      else {
         confirm({
           title: "Please Select Roles first",
         })
@@ -260,6 +262,7 @@ export default connect(mapStateToProps, {
   onEditRole,
   onBulkDeleteRoles,
   onGetRoleDetail,
+  onDisableSelectedRole
 })(RolesList);
 
 RolesList.defaultProps = {};

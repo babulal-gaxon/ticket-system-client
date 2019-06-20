@@ -6,6 +6,8 @@ import {onGetCustomersData} from "../../../appRedux/actions/Customers";
 
 const {Option} = Select;
 const Search = Input.Search;
+
+
 class AllCustomers extends Component{
     constructor(props){
         super(props);
@@ -15,11 +17,10 @@ class AllCustomers extends Component{
     }
     componentWillMount() {
         this.props.onGetCustomersData();
-        console.log("idhar",this.props.customersList)
     }
-    onClickNavigateToAddCustomer=()=>{
+    onClickAddCustomerButton=()=>{
         this.props.history.push('/customers/add-customers')
-    }
+    };
 
     render(){
         return(
@@ -29,18 +30,16 @@ class AllCustomers extends Component{
                     <p className="gx-text-grey">Customers</p>
                     <div className="gx-d-flex gx-justify-content-between">
                         <div className="gx-d-flex">
-                            <Button type="primary" onClick={this.onClickNavigateToAddCustomer} style={{width: 200}}>Add New
+                            <Button type="primary" onClick={this.onClickAddCustomerButton} style={{width: 200}}>Add New
                                 Customers
                             </Button>
                             <Select
                                 labelInValue
-                                defaultValue={{key: 'Bulk Action'}}
-                            >
+                                defaultValue={{key: 'Bulk Action'}}>
                                 <Option value="Export">Export All</Option>
                                 <Option value="Archive">Archive All</Option>
                             </Select>
                         </div>
-
                         <div className="gx-d-flex">
                             <Search
                                 placeholder="input search text"
@@ -48,8 +47,7 @@ class AllCustomers extends Component{
                                 onChange={(e) => {
                                     this.setState({filterText: e.target.value})
                                 }}
-                                style={{width: 200}}
-                            />
+                                style={{width: 200}}/>
                             <Select defaultValue="10" className="gx-mx-1" onChange={this.onSelectPageSize}>
                                 <Option value="10">10</Option>
                                 <Option value="25">25</Option>
@@ -63,9 +61,7 @@ class AllCustomers extends Component{
                                 </Button>
                             </Button.Group>
                         </div>
-
                     </div>
-
                 </Widget>
             </div>
         )

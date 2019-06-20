@@ -1,1 +1,0 @@
-export const RECENT_CUSTOMERS = "RECENT_CUSTOMERS"

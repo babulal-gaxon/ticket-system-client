@@ -17,10 +17,10 @@ import InfoView from '../../../components/InfoView'
 import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
 import {onGetTicketPriorities} from "../../../appRedux/actions/TicketPriorities";
-import {onGetCustomers} from "../../../appRedux/actions/RecentCustomers";
 import {onGetTicketStatus} from "../../../appRedux/actions/TicketStatuses";
 import moment from "moment";
 import DropdownButton from "./DropdownButton";
+import {onGetCustomersData} from "../../../appRedux/actions/Customers";
 
 const ButtonGroup = Button.Group;
 const Option = Select.Option;
@@ -60,7 +60,7 @@ class AllTickets extends Component {
     }
     this.props.onGetTicketPriorities();
     this.props.onGetStaff();
-    this.props.onGetCustomers();
+    this.props.onGetCustomersData();
     this.props.onGetTicketStatus();
   };
   componentWillReceiveProps(nextProps, nextContext) {
@@ -151,7 +151,7 @@ class AllTickets extends Component {
               <span> Reset</span>
             </span>
             <Input type="text"/>
-            {this.props.customers.map(customer=> {
+            {this.props.customersList.map(customer=> {
               customer.checked = false;
               return <div>
                 <input type="checkbox" checked={customer.checked} onChange = {(e) => this.onFilteredCustomerData(e,customer)}/>
@@ -417,13 +417,13 @@ class AllTickets extends Component {
   }
 }
 
-const mapStateToProps = ({ticketList, supportStaff, recentCustomers,ticketPriorities, ticketStatuses}) => {
+const mapStateToProps = ({ticketList, supportStaff, customers,ticketPriorities, ticketStatuses}) => {
   const {tickets, currentTicket} = ticketList;
   const {staffList} = supportStaff;
-  const {customers} =  recentCustomers;
+  const {customersList} =  customers;
   const {priorities} = ticketPriorities;
   const {statuses} = ticketStatuses;
-  return {tickets, priorities, staffList, currentTicket,customers, statuses};
+  return {tickets, priorities, staffList, currentTicket,customersList, statuses};
 };
 
 export default connect(mapStateToProps, {
@@ -434,7 +434,7 @@ export default connect(mapStateToProps, {
   onSelectTicket,
   onUpdateTickets,
   onBackToList,
-  onGetCustomers,
+  onGetCustomersData,
   onGetTicketStatus,
   onDeleteTicket
 })(AllTickets);

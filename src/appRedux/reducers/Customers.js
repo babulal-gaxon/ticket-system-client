@@ -1,7 +1,8 @@
-import {GET_CUSTOMERS_DATA} from "../../constants/Customers";
+import {ADD_NEW_CUSTOMER, GET_CUSTOMERS_DATA} from "../../constants/Customers";
 
 const initialState = {
-    customersList: []
+    customersList: [],
+    totalItems: null
 };
 
 export default (state = initialState, action) => {
@@ -12,25 +13,14 @@ export default (state = initialState, action) => {
                 customersList: action.payload,
             };
 
-        // case ADD_LABELS_DATA :
-        //     return {
-        //         ...state,
-        //         labelList: state.labelList.concat(action.payload)
-        //     };
-        //
-        // case DELETE_LABEL :
-        //     const updatedLabelList = state.labelList.filter((labelList) => (labelList.id !== action.payload));
-        //     return {
-        //         ...state,
-        //         labelList:updatedLabelList
-        //     };
-        //
-        // case EDIT_LABEL_DATA :
-        //     const updateLabelList = state.labelList.map((labelList) => labelList.id === action.payload.id ? action.payload : labelList);
-        //     return {
-        //         ...state,
-        //         labelList:updateLabelList
-        //     }
+        case ADD_NEW_CUSTOMER:
+            return {
+                ...state,
+                customersList:[action.payload, ...state.customersList],
+                totalItems: state.totalItems + 1
+            }
+
+
         default:
             return state;
     }

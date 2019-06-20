@@ -83,6 +83,7 @@ class StaffList extends Component {
     this.props.history.push('/staff/add-new-member')
   };
   onFilterData = () => {
+    console.log("in filter Data", this.props.staffList);
     return this.props.staffList.filter(staff => {
       const name = staff.first_name + " " + staff.last_name;
       if(name.indexOf(this.state.filterText) !== -1) {
@@ -150,7 +151,7 @@ class StaffList extends Component {
         render: (text, record) => {
           return <span
             className="gx-email gx-d-inline-block gx-mr-2"
-            style={{color:record.hourly_rate === null ? "red" : "" }}>{record.hourly_rate === null ? "NA" : `$${record.hourly_rate}`}</span>
+            style={{color:record.hourly_rate === null ? "red" : "" }}>{record.hourly_rate === null ? "NA" : `$${record.hourly_rate}/Hour`}</span>
         },
       },
       {
@@ -158,6 +159,7 @@ class StaffList extends Component {
         dataIndex: 'department',
         key: 'department',
         render: (text, record) => {
+          console.log("record departments", record.departments, record.id);
           return <span className="gx-email gx-d-inline-block gx-mr-2">
             {record.departments.length !==0 ? record.departments.map(department => {
               return department.name

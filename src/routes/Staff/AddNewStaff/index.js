@@ -3,11 +3,12 @@ import {Button, Col, Form, Input, message, Radio, Row} from "antd/lib/index";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
-import {onAddSupportStaff, onEditSupportStaff} from "../../../appRedux/actions/SupportStaff";
+import {onAddProfileImage, onAddSupportStaff, onEditSupportStaff} from "../../../appRedux/actions/SupportStaff";
 import {onGetDepartments} from "../../../appRedux/actions/Departments";
 import {Breadcrumb, Select} from "antd";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
+import ImageUpload from "./ImageUpload";
 
 const {Option} = Select;
 
@@ -23,10 +24,11 @@ class AddNewStaff extends Component {
         mobile: "",
         hourly_rate: "",
         departments_ids: [],
-        account_status: 1
+        account_status: 1,
+        profile_pic:""
       };
     } else {
-      setTimeout(this.onSetFieldsValue,10);
+      setTimeout(this.onSetFieldsValue, 10);
       const selectedStaff = this.props.staffList.find(staff => staff.id === this.props.staffId);
       const {id, first_name, last_name, email, password, mobile, hourly_rate, account_status} = selectedStaff;
       const department_ids = selectedStaff.departments.map(department => {
@@ -45,12 +47,14 @@ class AddNewStaff extends Component {
       }
     }
   }
+
   componentWillMount() {
     this.props.onGetDepartments();
   }
-  onSetFieldsValue=()=>{
+
+  onSetFieldsValue = () => {
     this.props.form.setFieldsValue({
-      first_name : this.state.first_name,
+      first_name: this.state.first_name,
       last_name: this.state.last_name,
       email: this.state.email,
       password: this.state.password
@@ -61,7 +65,9 @@ class AddNewStaff extends Component {
   };
   onStaffAdd = () => {
     if (this.props.staffId === 0) {
-      this.props.onAddSupportStaff({...this.state}, this.props.history, this.onAddSuccess);
+      this.setState({profile_pic:this.props.profilePicId},() => {this.props.onAddSupportStaff({...this.state}, this.props.history, this.onAddSuccess)})
+      console.log("data to be added of staff", this.state);
+
     } else {
       this.props.onEditSupportStaff({...this.state}, this.props.history, this.onEditSuccess);
     }
@@ -115,15 +121,15 @@ class AddNewStaff extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-                  <h3>{this.props.staffId === 0 ? "Add Staff Member" : "Edit Staff Details"}</h3>
+          <h3>{this.props.staffId === 0 ? "Add Staff Member" : "Edit Staff Details"}</h3>
           <Breadcrumb className="gx-mb-4">
-                      <Breadcrumb.Item>
-                        <Link to="/staff/all-members">Staffs</Link>
-                      </Breadcrumb.Item>
-                      <Breadcrumb.Item>
-                        <Link to="/staff/add-new-member">{this.props.staffId === 0 ? "Add Staff" : "Edit Staff"}</Link>
-                      </Breadcrumb.Item>
-                    </Breadcrumb>
+            <Breadcrumb.Item>
+              <Link to="/staff/all-members">Staffs</Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/staff/add-new-member">{this.props.staffId === 0 ? "Add Staff" : "Edit Staff"}</Link>
+            </Breadcrumb.Item>
+          </Breadcrumb>
           <hr/>
           <Row>
             <Col xl={18} lg={12} md={12} sm={12} xs={24}>
@@ -148,8 +154,10 @@ class AddNewStaff extends Component {
                       type: 'email',
                       message: 'The input is not valid E-mail!',
                     },
-                      {required: true,
-                        message: 'Please Enter Email!'}],
+                      {
+                        required: true,
+                        message: 'Please Enter Email!'
+                      }],
                   })(<Input type="text" value={email} onChange={(e) => {
                     this.setState({email: e.target.value})
                   }}/>)}
@@ -206,15 +214,11 @@ class AddNewStaff extends Component {
               </Form>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
-              <div>
-                {/*<Avatar className="gx-mr-3 gx-size-150" src="https://via.placeholder.com/150x150"/>*/}
-                {/*<Button default className="gx-mt-lg-3">Set Profile Picture</Button>*/}
-                {/*<ImageUpload />*/}
-              </div>
+              <ImageUpload onAddProfileImage={this.props.onAddProfileImage}/>
             </Col>
           </Row>
         </Widget>
-        <InfoView />
+        <InfoView/>
       </div>
     )
   }
@@ -223,15 +227,16 @@ class AddNewStaff extends Component {
 AddNewStaff = Form.create({})(AddNewStaff);
 
 const mapStateToProps = ({departments, supportStaff}) => {
-  const {staffId, staffList} = supportStaff;
+  const {staffId, staffList, profilePicId} = supportStaff;
   const {dept} = departments;
-  return {dept, staffId, staffList};
+  return {dept, staffId, staffList, profilePicId};
 };
 
 export default connect(mapStateToProps, {
   onEditSupportStaff,
   onAddSupportStaff,
-  onGetDepartments
+  onGetDepartments,
+  onAddProfileImage
 })(AddNewStaff);
 
 AddNewStaff.defaultProps = {

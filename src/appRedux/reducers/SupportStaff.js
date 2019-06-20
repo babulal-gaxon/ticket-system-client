@@ -3,13 +3,14 @@ import {
   BULK_DELETE_SUPPORT_STAFF, DISABLE_STAFF_STATUS,
   EDIT_SUPPORT_STAFF,
   GET_STAFF_ID,
-  GET_SUPPORT_STAFF
+  GET_SUPPORT_STAFF, UPLOAD_PROFILE_IMAGE
 } from "../../constants/SupportStaff";
 
 const initialState = {
   staffList: [],
   staffId: 0,
-  totalItems: null
+  totalItems: null,
+  profilePicId: ""
 };
 
 export default (state = initialState, action) => {
@@ -28,10 +29,12 @@ export default (state = initialState, action) => {
       };
 
     case ADD_SUPPORT_STAFF:
+      console.log("in reducer of add staff", action.payload)
       return {
         ...state,
         staffList: [action.payload, ...state.staffList],
-        totalItems: state.totalItems + 1
+        totalItems: state.totalItems + 1,
+        profilePicId: ""
       };
 
     case EDIT_SUPPORT_STAFF:
@@ -58,6 +61,12 @@ export default (state = initialState, action) => {
         ...state,
         staffList: updateStaff,
         totalItems: state.totalItems - action.payload.length
+      };
+
+    case UPLOAD_PROFILE_IMAGE:
+      return {
+        ...state,
+        profilePicId: action.payload
       };
 
     default:
