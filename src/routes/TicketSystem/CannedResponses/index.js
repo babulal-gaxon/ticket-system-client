@@ -246,8 +246,7 @@ class CannedResponses extends Component {
     </Select>
   };
   onDropdownChange = (value) => {
-    this.setState({itemNumbers: value, current: 1})
-    this.onGetResponseData(1, value);
+    this.setState({itemNumbers: value, current: 1}, () => {this.onGetResponseData(this.state.current, this.state.itemNumbers)})
   };
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;

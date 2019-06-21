@@ -233,8 +233,7 @@ class Departments extends Component {
     </Select>
   };
   onDropdownChange = (value) => {
-    this.setState({itemNumbers: value, currentPage:1})
-    this.onGetDepartmentData(1, value);
+    this.setState({itemNumbers: value, currentPage:1}, () => {this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers)})
   };
   onPageChange = page => {
     this.setState({

@@ -260,7 +260,7 @@ class StaffList extends Component {
     </Select>
   };
   onDropdownChange = (value) => {
-    this.setState({itemNumbers: value}, () => {this.onGetStaffDataPaginated(1, this.state.itemNumbers)})
+    this.setState({itemNumbers: value, current: 1}, () => {this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)})
   };
   onBackToList = () => {
     this.setState({currentMember: null})

@@ -253,8 +253,7 @@ class TicketPriorities extends Component {
     </Select>
   };
   onDropdownChange = (value) => {
-    this.setState({itemNumbers: value, current: 1})
-    this.onGetPriorityData(1,value);
+    this.setState({itemNumbers: value, current: 1},() => {this.onGetPriorityData(this.state.current, this.state.itemNumbers)});
   };
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;

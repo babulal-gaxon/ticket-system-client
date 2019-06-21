@@ -126,8 +126,6 @@ class AllTickets extends Component {
           </div>
           </div>
 
-
-
           <div>
             <span>
             <label>Filter By Product</label>

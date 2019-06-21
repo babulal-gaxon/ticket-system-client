@@ -18,7 +18,6 @@ export const onGetCannedResponses = (currentPage, itemsPerPage) => {
     ).then(({data}) => {
       console.info("onCannedResponses: ", data);
       if (data.success) {
-        console.log("i m here")
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_CANNED_RESPONSES, payload: data.data});
       } else {

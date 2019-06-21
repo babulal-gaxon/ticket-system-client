@@ -253,8 +253,7 @@ class TicketStatuses extends Component {
     </Select>
   };
   onDropdownChange = (value) => {
-    this.setState({itemNumbers: value, current: 1});
-    this.onGetStatusData(1, value);
+    this.setState({itemNumbers: value, current: 1}, () => {this.onGetStatusData(this.state.current, this.state.itemNumbers)});
   };
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;

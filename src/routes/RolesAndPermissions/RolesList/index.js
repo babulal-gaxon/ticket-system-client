@@ -6,9 +6,7 @@ import {connect} from "react-redux";
 import Widget from "../../../components/Widget/index";
 import InfoView from '../../../components/InfoView'
 import {
-  onAddRole,
   onBulkDeleteRoles, onDisableSelectedRole,
-  onEditRole,
   onGetRoleDetail,
   onGetRoles
 } from "../../../appRedux/actions/RolesAndPermissions";
@@ -48,25 +46,22 @@ class RolesList extends Component {
     this.setState({selectedRowKeys});
   };
   onDropdownChange = (value) => {
-    this.setState({itemNumbers: value});
-    this.onGetRolesData(1, value)
+    this.setState({itemNumbers: value, current: 1}, () => {this.onGetRolesData(this.state.current, this.state.itemNumbers)});
   };
   onCurrentIncrement = () => {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
-      this.setState({current: this.state.current + 1});
+      this.setState({current: this.state.current + 1}, () => { this.onGetRolesData(this.state.current, this.state.itemNumbers)});
     } else {
       return null;
     }
-    this.onGetRolesData(this.state.current + 1, this.state.itemNumbers)
   };
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
-      this.setState({current: this.state.current - 1});
+      this.setState({current: this.state.current - 1},() => { this.onGetRolesData(this.state.current, this.state.itemNumbers)});
     } else {
       return null;
     }
-    this.onGetRolesData(this.state.current - 1, this.state.itemNumbers)
   };
   onGetRolesShowOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange} className="gx-mx-2">
@@ -179,8 +174,7 @@ class RolesList extends Component {
 
   };
   onPageChange = page => {
-    this.setState({current: page});
-    this.onGetRolesData(page, this.state.itemNumbers)
+    this.setState({current: page}, () => { this.onGetRolesData(this.state.current, this.state.itemNumbers)});
   };
 
   render() {
@@ -239,10 +233,6 @@ class RolesList extends Component {
                    onChange: this.onPageChange
                  }}
                  className="gx-table-responsive"/>
-          <div className="gx-d-flex gx-flex-row">
-          </div>
-          <div>
-          </div>
         </Widget>
         <InfoView/>
       </div>
@@ -258,8 +248,6 @@ const mapStateToProps = ({rolesAndPermissions}) => {
 
 export default connect(mapStateToProps, {
   onGetRoles,
-  onAddRole,
-  onEditRole,
   onBulkDeleteRoles,
   onGetRoleDetail,
   onDisableSelectedRole

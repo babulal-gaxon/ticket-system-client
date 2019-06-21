@@ -40,8 +40,7 @@ export const onAddSupportStaff = (staffMember, history, successMessage) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/staffs', staffMember).then((data) => {
-      console.log("i m just befor success", data.data);
-
+      console.log("i m just before success", data.data);
       if (data.data.success) {
         console.log(" sending data of staff", data.data);
         dispatch({type: ADD_SUPPORT_STAFF, payload: data.data.data});

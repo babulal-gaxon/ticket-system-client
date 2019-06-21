@@ -108,93 +108,48 @@ class AddNewRole extends Component {
     })
   };
   onSelectLabelPermissions = checkedList => {
-    const allSelected = this.props.userPermissions.labels.map(label => {
-      return label.id
-    });
     this.setState({
-      labelPermissions: checkedList,
-      indeterminate: !!checkedList.length && checkedList.length < allSelected.length,
-      checkAll: checkedList.length === allSelected.length
+      labelPermissions: checkedList
     })
   };
   onSelectPriorityPermissions = checkedList => {
-    const allSelected = this.props.userPermissions.priorities.map(priority => {
-      return priority.id
-    });
     this.setState({
-      prioritiesPermissions: checkedList,
-      indeterminate: !!checkedList.length && checkedList.length < allSelected.length,
-      checkAll: checkedList.length === allSelected.length
+      prioritiesPermissions: checkedList
     })
   };
   onSelectResponsesPermissions = checkedList => {
-    const allSelected = this.props.userPermissions.responses.map(response => {
-      return response.id
-    });
     this.setState({
-      responsesPermissions: checkedList,
-      indeterminate: !!checkedList.length && checkedList.length < allSelected.length,
-      checkAll: checkedList.length === allSelected.length
+      responsesPermissions: checkedList
     })
   };
   onSelectRolesPermissions = checkedList => {
-    const allSelected = this.props.userPermissions.roles.map(role => {
-      return role.id
-    });
     this.setState({
-      rolesPermissions: checkedList,
-      indeterminate: !!checkedList.length && checkedList.length < allSelected.length,
-      checkAll: checkedList.length === allSelected.length
+      rolesPermissions: checkedList
     })
   };
   onSelectSettingsPermissions = checkedList => {
-    const allSelected = this.props.userPermissions.settings.map(setting => {
-      return setting.id
-    });
     this.setState({
-      settingsPermissions: checkedList,
-      indeterminate: !!checkedList.length && checkedList.length < allSelected.length,
-      checkAll: checkedList.length === allSelected.length
+      settingsPermissions: checkedList
     })
   };
   onSelectStaffsPermissions = checkedList => {
-    const allSelected = this.props.userPermissions.staffs.map(staff => {
-      return staff.id
-    });
     this.setState({
-      staffsPermissions: checkedList,
-      indeterminate: !!checkedList.length && checkedList.length < allSelected.length,
-      checkAll: checkedList.length === allSelected.length
+      staffsPermissions: checkedList
     })
   };
   onSelectStatusPermissions = checkedList => {
-    const allSelected = this.props.userPermissions.status.map(stat => {
-      return stat.id
-    });
     this.setState({
-      statusPermissions: checkedList,
-      indeterminate: !!checkedList.length && checkedList.length < allSelected.length,
-      checkAll: checkedList.length === allSelected.length
+      statusPermissions: checkedList
     })
   };
   onSelectTicketsPermissions = checkedList => {
-    const allSelected = this.props.userPermissions.tickets.map(ticket => {
-      return ticket.id
-    });
     this.setState({
-      ticketsPermissions: checkedList,
-      indeterminate: !!checkedList.length && checkedList.length < allSelected.length,
-      checkAll: checkedList.length === allSelected.length
+      ticketsPermissions: checkedList
     })
   };
   onSelectUsersPermissions = checkedList => {
-    const allSelected = this.props.userPermissions.users.map(user => {
-      return user.id
-    });
     this.setState({
-      usersPermissions: checkedList,
-      indeterminate: !!checkedList.length && checkedList.length < allSelected.length,
-      checkAll: checkedList.length === allSelected.length
+      usersPermissions: checkedList
     })
   };
   onCollectAllPermissions = () => {
@@ -301,9 +256,7 @@ class AddNewRole extends Component {
       return label.id
     });
     this.setState({
-      labelPermissions: e.target.checked ? allSelected : [],
-      indeterminate: false,
-      checkAll: e.target.checked
+      labelPermissions: e.target.checked ? allSelected : []
     })
   };
   onCheckAllPriorities = e => {
@@ -311,9 +264,7 @@ class AddNewRole extends Component {
       return priority.id
     });
     this.setState({
-      prioritiesPermissions: e.target.checked ? allSelected : [],
-      indeterminate: false,
-      checkAll: e.target.checked
+      prioritiesPermissions: e.target.checked ? allSelected : []
     })
   };
   onCheckAllResponses = e => {
@@ -321,9 +272,7 @@ class AddNewRole extends Component {
       return response.id
     });
     this.setState({
-      responsesPermissions: e.target.checked ? allSelected : [],
-      indeterminate: false,
-      checkAll: e.target.checked
+      responsesPermissions: e.target.checked ? allSelected : []
     })
   };
   onCheckAllRoles = e => {
@@ -331,9 +280,7 @@ class AddNewRole extends Component {
       return role.id
     });
     this.setState({
-      rolesPermissions: e.target.checked ? allSelected : [],
-      indeterminate: false,
-      checkAll: e.target.checked
+      rolesPermissions: e.target.checked ? allSelected : []
     })
   };
   onCheckAllSettings = e => {
@@ -341,9 +288,7 @@ class AddNewRole extends Component {
       return setting.id
     });
     this.setState({
-      settingsPermissions: e.target.checked ? allSelected : [],
-      indeterminate: false,
-      checkAll: e.target.checked
+      settingsPermissions: e.target.checked ? allSelected : []
     })
   };
   onCheckAllStaffs = e => {
@@ -351,9 +296,7 @@ class AddNewRole extends Component {
       return staff.id
     });
     this.setState({
-      staffsPermissions: e.target.checked ? allSelected : [],
-      indeterminate: false,
-      checkAll: e.target.checked
+      staffsPermissions: e.target.checked ? allSelected : []
     })
   };
   onCheckAllStatus = e => {
@@ -361,9 +304,7 @@ class AddNewRole extends Component {
       return stat.id
     });
     this.setState({
-      statusPermissions: e.target.checked ? allSelected : [],
-      indeterminate: false,
-      checkAll: e.target.checked
+      statusPermissions: e.target.checked ? allSelected : []
     })
   };
   onCheckAllTickets = e => {
@@ -371,9 +312,7 @@ class AddNewRole extends Component {
       return ticket.id
     });
     this.setState({
-      ticketsPermissions: e.target.checked ? allSelected : [],
-      indeterminate: false,
-      checkAll: e.target.checked
+      ticketsPermissions: e.target.checked ? allSelected : []
     })
   };
   onCheckAllUsers = e => {
@@ -381,9 +320,7 @@ class AddNewRole extends Component {
       return user.id
     });
     this.setState({
-      usersPermissions: e.target.checked ? allSelected : [],
-      indeterminate: false,
-      checkAll: e.target.checked
+      usersPermissions: e.target.checked ? allSelected : []
     })
   };
 
@@ -450,9 +387,10 @@ class AddNewRole extends Component {
                     <Panel header="Company Contracts" key="2" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.indeterminate}
+                        indeterminate={this.state.contactPermissions.length > 0
+                        && this.props.userPermissions.contacts.length > this.state.contactPermissions.length}
                         onChange={this.onCheckAllContacts}
-                        checked={this.state.checkAll}>
+                        checked={this.props.userPermissions.contacts.length === this.state.contactPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
@@ -471,9 +409,10 @@ class AddNewRole extends Component {
                     <Panel header="Departments" key="3" style={customPanelStyle} showArrow={false}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.indeterminate}
+                        indeterminate={this.state.departmentsPermissions.length > 0
+                        && this.props.userPermissions.departments.length > this.state.departmentsPermissions.length}
                         onChange={this.onCheckAllDepartments}
-                        checked={this.state.checkAll}>
+                        checked={this.props.userPermissions.departments.length === this.state.departmentsPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
@@ -492,9 +431,10 @@ class AddNewRole extends Component {
                     <Panel header="Labels" key="4" style={customPanelStyle} showArrow={false}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.indeterminate}
+                        indeterminate={this.state.labelPermissions.length > 0
+                        && this.props.userPermissions.labels.length > this.state.labelPermissions.length}
                         onChange={this.onCheckAllLabels}
-                        checked={this.state.checkAll}>
+                        checked={this.props.userPermissions.labels.length === this.state.labelPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
@@ -513,9 +453,10 @@ class AddNewRole extends Component {
                     <Panel header="Priorities" key="5" style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>} showArrow={false}>
                       <Checkbox
-                        indeterminate={this.state.indeterminate}
+                        indeterminate={this.state.prioritiesPermissions.length > 0
+                        && this.props.userPermissions.priorities.length > this.state.prioritiesPermissions.length}
                         onChange={this.onCheckAllPriorities}
-                        checked={this.state.checkAll}>
+                        checked={this.props.userPermissions.priorities.length === this.state.prioritiesPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
@@ -534,9 +475,10 @@ class AddNewRole extends Component {
                     <Panel header="Responses" key="6" style={customPanelStyle} showArrow={false}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.indeterminate}
+                        indeterminate={this.state.responsesPermissions.length > 0
+                        && this.props.userPermissions.responses.length > this.state.responsesPermissions.length}
                         onChange={this.onCheckAllResponses}
-                        checked={this.state.checkAll}>
+                        checked={this.props.userPermissions.responses.length === this.state.responsesPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
@@ -555,9 +497,10 @@ class AddNewRole extends Component {
                     <Panel header="Roles" key="7" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.indeterminate}
+                        indeterminate={this.state.rolesPermissions.length > 0
+                        && this.props.userPermissions.roles.length > this.state.rolesPermissions.length}
                         onChange={this.onCheckAllRoles}
-                        checked={this.state.checkAll}>
+                        checked={this.props.userPermissions.roles.length === this.state.rolesPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
@@ -576,9 +519,10 @@ class AddNewRole extends Component {
                     <Panel header="Settings" key="8" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.indeterminate}
+                        indeterminate={this.state.settingsPermissions.length > 0
+                        && this.props.userPermissions.settings.length > this.state.settingsPermissions.length}
                         onChange={this.onCheckAllSettings}
-                        checked={this.state.checkAll}>
+                        checked={this.props.userPermissions.settings.length === this.state.settingsPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
@@ -597,9 +541,10 @@ class AddNewRole extends Component {
                     <Panel header="Staffs" key="9" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.indeterminate}
+                        indeterminate={this.state.staffsPermissions.length > 0
+                        && this.props.userPermissions.staffs.length > this.state.staffsPermissions.length}
                         onChange={this.onCheckAllStaffs}
-                        checked={this.state.checkAll}>
+                        checked={this.props.userPermissions.staffs.length === this.state.staffsPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
@@ -618,9 +563,10 @@ class AddNewRole extends Component {
                     <Panel header="Status" key="10" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.indeterminate}
+                        indeterminate={this.state.statusPermissions.length > 0
+                        && this.props.userPermissions.status.length > this.state.statusPermissions.length}
                         onChange={this.onCheckAllStatus}
-                        checked={this.state.checkAll}>
+                        checked={this.props.userPermissions.status.length === this.state.statusPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
@@ -639,9 +585,10 @@ class AddNewRole extends Component {
                     <Panel header="Tickets" key="11" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.indeterminate}
+                        indeterminate={this.state.ticketsPermissions.length > 0
+                        && this.props.userPermissions.tickets.length > this.state.ticketsPermissions.length}
                         onChange={this.onCheckAllTickets}
-                        checked={this.state.checkAll}>
+                        checked={this.props.userPermissions.tickets.length === this.state.ticketsPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
@@ -660,9 +607,10 @@ class AddNewRole extends Component {
                     <Panel header="Users" key="12" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.indeterminate}
+                        indeterminate={this.state.usersPermissions.length > 0
+                        && this.props.userPermissions.users.length > this.state.usersPermissions.length}
                         onChange={this.onCheckAllUsers}
-                        checked={this.state.checkAll}>
+                        checked={this.props.userPermissions.users.length === this.state.usersPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
