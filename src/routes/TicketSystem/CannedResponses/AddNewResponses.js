@@ -75,21 +75,21 @@ class AddNewResponses extends Component {
             <Form.Item label="Short Title">
               {getFieldDecorator('short_title', {
                 rules: [{required: true, message: 'Please Enter Short Title!'}],
-              })(<Input type="text" value={short_title} onChange={(e) => {
+              })(<Input type="text" onChange={(e) => {
                 this.setState({short_title: e.target.value})
               }}/>)}
             </Form.Item>
             <Form.Item label="Short Code">
               {getFieldDecorator('short_code', {
                 rules: [{required: true, message: 'Please Enter Short Code!'}],
-              })(<Input type="text" value={short_code} onChange={(e) => {
+              })(<Input type="text" onChange={(e) => {
                 this.setState({short_code: e.target.value})
               }}/>)}
             </Form.Item>
             <Form.Item label="Message">
               {getFieldDecorator('message', {
                 rules: [{required: true, message: 'Please Enter Message!'}],
-              })(<TextArea rows={4} className="gx-form-control-lg" type="textarea" value={message} onChange={(e) => {
+              })(<TextArea rows={4} className="gx-form-control-lg" type="textarea" onChange={(e) => {
                 this.setState({message: e.target.value})
               }}/>)}
             </Form.Item>

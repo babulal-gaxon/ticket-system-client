@@ -19,23 +19,15 @@ class AddNewCustomers extends Component {
         last_name: "",
         email: "",
         password: "",
-        mobile: "",
-        address_line_1: "",
-        city: "",
-        state: "",
-        country_id: "",
-        zip_code: "",
-        website: "",
-        label_ids: [],
-        billing_address: "",
-        shipping_address: "",
-        isModalVisible: false,
-        account_status: 1
+        phone: "",
+        company_id: null,
+        position: "",
+        isModalVisible: false
       };
     } else {
       setTimeout(this.onSetFieldsValue, 10);
       const selectedCustomer = this.props.customersList.find(customer => customer.id === this.props.customerId);
-      this.state = {...selectedCustomer}
+      this.state = {...selectedCustomer, isModalVisible: false}
     }
   }
   componentWillMount() {
@@ -45,9 +37,7 @@ class AddNewCustomers extends Component {
     this.props.form.setFieldsValue({
       first_name: this.state.first_name,
       last_name: this.state.last_name,
-      email: this.state.email,
-      password: this.state.password,
-      mobile: this.state.mobile
+      email: this.state.email
     });
   };
   onToggleAddressModal = () => {

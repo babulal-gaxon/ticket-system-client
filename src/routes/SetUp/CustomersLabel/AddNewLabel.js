@@ -18,23 +18,18 @@ class AddNewLabel extends Component {
 
     }
     onSetFieldsValue=()=>{
-        console.log("aaraha hai" );
         this.props.form.setFieldsValue({
             name : this.state.name,
             description: this.state.desc
 
         });
     };
-
-
     onSaveData = () => {
-
         if (this.props.labelEditId === 0) {
             this.props.onAddLabelsData({...this.state});
         } else {
             this.props.onEditLabelsData({...this.state});
         }
-
         this.props.onSetID();
         this.props.onModalState();
     };
@@ -45,7 +40,6 @@ class AddNewLabel extends Component {
             }
         });
     };
-
     render() {
         const {getFieldDecorator} = this.props.form;
         const {visible} = this.props;

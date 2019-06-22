@@ -93,9 +93,9 @@ class SidebarContent extends Component {
                     <IntlMessages id= "sidebar.dashboard.all.customers"/></Link>
                 </Menu.Item>
 
-                <Menu.Item key="manageCustomers">
-                  <Link to ="/customers/manage-contacts"><i className="icon icon-company"/>
-                    <IntlMessages id="sidebar.dashboard.manage.contacts"/></Link>
+                <Menu.Item key="companies">
+                  <Link to ="/customers/companies"><i className="icon icon-company"/>
+                    <IntlMessages id="sidebar.dashboard.companies"/></Link>
                 </Menu.Item>
               </SubMenu>
 

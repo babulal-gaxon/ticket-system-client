@@ -71,11 +71,11 @@ class AddNewDepartment extends Component {
             <Form.Item label="Name">
               {getFieldDecorator('name', {
                 rules: [{required: true, message: 'Please Enter Department Name!'}],
-              })(<Input type="text" value={name} onChange={(e) => {
+              })(<Input type="text" onChange={(e) => {
                 this.setState({name: e.target.value}) }}/>)}
             </Form.Item>
             <Form.Item label="Description">
-              <TextArea rows={4} className="gx-form-control-lg" value={desc} onChange={(e) => {
+              <TextArea rows={4} className="gx-form-control-lg"  onChange={(e) => {
                 this.setState({desc: e.target.value})
               }}/>
             </Form.Item>
