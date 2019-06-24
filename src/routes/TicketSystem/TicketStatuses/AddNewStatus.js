@@ -120,7 +120,7 @@ class AddNewStatus extends Component {
             <Form.Item label="Name">
               {getFieldDecorator('name', {
                 rules: [{required: true, message: 'Please Enter Status Name!'}],
-              })(<Input type="text" value={name} onChange={(e) => {
+              })(<Input type="text" onChange={(e) => {
                 this.setState({name: e.target.value})
               }}/>)}
 

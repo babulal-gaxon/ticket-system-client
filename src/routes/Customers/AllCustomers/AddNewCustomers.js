@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {onAddNewCustomer, onEditCustomer} from "../../../appRedux/actions/Customers";
 import {onGetLabelData} from "../../../appRedux/actions/Labels";
 import AddCustomerAddress from "./AddCustomerAddress";
+import {onGetCompaniesData} from "../../../appRedux/actions/Companies";
 
 const {Option} = Select;
 
@@ -32,12 +33,14 @@ class AddNewCustomers extends Component {
   }
   componentWillMount() {
     this.props.onGetLabelData();
+    this.props.onGetCompaniesData();
   }
   onSetFieldsValue = () => {
     this.props.form.setFieldsValue({
       first_name: this.state.first_name,
       last_name: this.state.last_name,
-      email: this.state.email
+      email: this.state.email,
+      password: this.state.password
     });
   };
   onToggleAddressModal = () => {
@@ -65,17 +68,10 @@ class AddNewCustomers extends Component {
       first_name: "",
       last_name: "",
       email: "",
-      mobile: "",
-      address_line_1: "",
-      city: "",
-      state: "",
-      country_id: "",
-      zip_code: "",
-      website: "",
-      label_ids: [],
-      billing_address: "",
-      shipping_address: "",
-      status: 1,
+      password: "",
+      phone: "",
+      company_id: null,
+      position: "",
       isModalVisible: false
     })
   };
@@ -100,11 +96,13 @@ class AddNewCustomers extends Component {
       }
     });
   };
-
+  onCompanySelect = value => {
+    this.setState({company_id: value})
+  }
   render() {
-    console.log("in state", this.props.customerId);
+    console.log("in state", this.props.companiesList);
     const {getFieldDecorator} = this.props.form;
-    const {first_name, last_name, email, password, mobile, company_name, account_status, label_ids} = this.state;
+    const { mobile, account_status, label_ids, company_id} = this.state;
     const labelOptions = this.onLabeltSelectOption();
     return (
       <div className="gx-main-layout-content">
@@ -127,7 +125,7 @@ class AddNewCustomers extends Component {
                     <Form.Item label="First Name">
                       {getFieldDecorator('first_name', {
                         rules: [{required: true, message: 'Please Enter First Name!'}],
-                      })(<Input type="text" value={first_name} onChange={(e) => {
+                      })(<Input type="text" onChange={(e) => {
                         this.setState({first_name: e.target.value})
                       }}/>)}
                     </Form.Item>
@@ -136,7 +134,7 @@ class AddNewCustomers extends Component {
                     <Form.Item label="Last Name">
                       {getFieldDecorator('last_name', {
                         rules: [{required: true, message: 'Please Enter Last Name!'}],
-                      })(<Input type="text" value={last_name} onChange={(e) => {
+                      })(<Input type="text"  onChange={(e) => {
                         this.setState({last_name: e.target.value})
                       }}/>)}
                     </Form.Item>
@@ -152,14 +150,14 @@ class AddNewCustomers extends Component {
                         required: true,
                         message: 'Please Enter Email!'
                       }],
-                  })(<Input type="text" value={email} onChange={(e) => {
+                  })(<Input type="text" onChange={(e) => {
                     this.setState({email: e.target.value})
                   }}/>)}
                 </Form.Item>
                 <Form.Item label="Password">
                   {getFieldDecorator('password', {
                     rules: [{required: true, message: 'Please Enter Password!'}],
-                  })(<Input.Password type="text" value={password} onChange={(e) => {
+                  })(<Input.Password type="text" onChange={(e) => {
                     this.setState({password: e.target.value})
                   }}/>)}
                 </Form.Item>
@@ -169,9 +167,10 @@ class AddNewCustomers extends Component {
                   }}/>
                 </Form.Item>
                 <Form.Item label="Select Company">
-                  <Input type="text" value={company_name} onChange={(e) => {
-                    this.setState({company_name: e.target.value})
-                  }}/>
+                  <Select value={company_id} onChange={this.onCompanySelect}/>
+                  {this.props.companiesList.map(company => {
+                  return <Option value={company.id}>{company.company_name}</Option>
+                  })}
                 </Form.Item>
                 <Form.Item label=" Add Labels">
                   <Select
@@ -224,14 +223,16 @@ class AddNewCustomers extends Component {
 
 AddNewCustomers = Form.create({})(AddNewCustomers);
 
-const mapStateToProps = ({customers, labelsList}) => {
+const mapStateToProps = ({customers, labelsList, companies}) => {
   const {customersList, customerId} = customers;
   const {labelList} = labelsList;
-  return {labelList, customersList, customerId};
+  const {companiesList} = companies;
+  return {labelList, customersList, customerId, companiesList};
 };
 
 export default connect(mapStateToProps, {
   onEditCustomer,
   onAddNewCustomer,
-  onGetLabelData
+  onGetLabelData,
+  onGetCompaniesData
 })(AddNewCustomers);

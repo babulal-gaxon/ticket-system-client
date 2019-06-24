@@ -55,7 +55,7 @@ class AddNewResponses extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {short_title, short_code, message, status} = this.state;
+    const {status} = this.state;
     const {showAddCanned, onToggleAddCanned} = this.props;
     return (
       <div>

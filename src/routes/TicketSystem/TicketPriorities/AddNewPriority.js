@@ -112,7 +112,7 @@ class AddNewPriority extends Component {
             <Form.Item label="Name">
               {getFieldDecorator('name', {
                 rules: [{required: true, message: 'Please Enter Priority Name!'}],
-              })(<Input type="text" value={name} onChange={(e) => {
+              })(<Input type="text" onChange={(e) => {
                 this.setState({name: e.target.value})
               }}/>)}
             </Form.Item>
