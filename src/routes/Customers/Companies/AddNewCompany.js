@@ -8,7 +8,8 @@ class AddNewCompany extends Component {
       this.state = {
         company_name: "",
         website: "",
-        company_logo: null
+        company_logo: null,
+        title: ""
       };
     } else {
       setTimeout(this.onSetFieldsValue, 10);
@@ -26,20 +27,25 @@ class AddNewCompany extends Component {
     });
   };
   onCompanyAdd = () => {
-    let data = new FormData();
-    console.log("formdata", data);
-    data.append('company_logo', this.state.company_logo);
-    data.append('company_name', this.state.company_name);
-    data.append('website', this.state.website);
+    // let data = new FormData();
+    // console.log("formdata", data);
+    // data.append('company_logo', this.state.company_logo);
+    // data.append('company_name', this.state.company_name);
+    // data.append('website', this.state.website);
     if (this.props.companyId === 0) {
-      this.props.onAddNewCompany(data, this.onAddSuccess);
+      const dataToUpload = {
+        company_name: this.state.company_name,
+        website: this.state.website,
+        company_logo: this.props.companyLogoId
+      }
+      this.props.onAddNewCompany(dataToUpload, this.onAddSuccess);
       this.props.onToggleAddCompany();
     }
-    else {
-      console.log(" i am in edit function")
-      this.props.onEditCompany(data, this.onEditSuccess);
-      this.props.onToggleAddCompany();
-    }
+    // else {
+    //   console.log(" i am in edit function")
+    //   this.props.onEditCompany(dataToUpload, this.onEditSuccess);
+    //   this.props.onToggleAddCompany();
+    // }
   };
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
@@ -55,12 +61,18 @@ class AddNewCompany extends Component {
     message.success('The Company details has been updated successfully.');
   };
   onLogoSelect = (e) => {
-    console.log("fdfsdf",e.target.files[0])
-    this.setState({company_logo : e.target.files[0]})
+    this.setState({company_logo : e.target.files[0], title: e.target.files[0].name}, () => {this.onLogoUpload()});
   };
+  onLogoUpload = () => {
+    console.log("thislogod", this.state.company_logo);
+    const data = new FormData();
+    data.append('file', this.state.company_logo);
+    data.append('title', this.state.title);
+    this.props.onAddProfileImage(data);
+  }
 
   render() {
-    console.log("file of lofo",this.state.logoFile);
+    console.log("file of lofo",this.props.companyLogoId);
     console.log("state", this.state);
     const {getFieldDecorator} = this.props.form;
     const {company_name, website, company_logo} = this.state;
@@ -83,14 +95,14 @@ class AddNewCompany extends Component {
             <Form.Item label="Company Name">
               {getFieldDecorator('company_name', {
                 rules: [{required: true, message: 'Please Enter Company Name!'}],
-              })(<Input type="text" value={company_name} onChange={(e) => {
+              })(<Input type="text" onChange={(e) => {
                 this.setState({company_name: e.target.value})
               }}/>)}
             </Form.Item>
             <Form.Item label="Website">
               {getFieldDecorator('website', {
                 rules: [{required: true, message: 'Please Enter Website URL!'}],
-              })(<Input type="text" value={website} onChange={(e) => {
+              })(<Input type="text" onChange={(e) => {
                 this.setState({website: e.target.value})
               }}/>)}
             </Form.Item>

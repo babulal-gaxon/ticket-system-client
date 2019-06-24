@@ -102,6 +102,7 @@ export const onAddProfileImage = (imageFile) => {
         'Content-Type': "multipart/form-data"
       }
     }).then(({data}) => {
+      console.log("profile pic add", data);
       if (data.success) {
         dispatch({type: EDIT_COMPANY_LOGO, payload: data.data});
         dispatch({type: FETCH_SUCCESS});

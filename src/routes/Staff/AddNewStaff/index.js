@@ -8,7 +8,6 @@ import {onGetDepartments} from "../../../appRedux/actions/Departments";
 import {Breadcrumb, Select} from "antd";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
-import ImageUpload from "./ImageUpload";
 
 const {Option} = Select;
 
@@ -137,14 +136,14 @@ class AddNewStaff extends Component {
                 <Form.Item label="First Name">
                   {getFieldDecorator('first_name', {
                     rules: [{required: true, message: 'Please Enter First Name!'}],
-                  })(<Input type="text" value={first_name} onChange={(e) => {
+                  })(<Input type="text" onChange={(e) => {
                     this.setState({first_name: e.target.value})
                   }}/>)}
                 </Form.Item>
                 <Form.Item label="Last Name">
                   {getFieldDecorator('last_name', {
                     rules: [{required: true, message: 'Please Enter Last Name!'}],
-                  })(<Input type="text" value={last_name} onChange={(e) => {
+                  })(<Input type="text" onChange={(e) => {
                     this.setState({last_name: e.target.value})
                   }}/>)}
                 </Form.Item>
@@ -158,7 +157,7 @@ class AddNewStaff extends Component {
                         required: true,
                         message: 'Please Enter Email!'
                       }],
-                  })(<Input type="text" value={email} onChange={(e) => {
+                  })(<Input type="text" onChange={(e) => {
                     this.setState({email: e.target.value})
                   }}/>)}
                 </Form.Item>
@@ -175,7 +174,7 @@ class AddNewStaff extends Component {
                 <Form.Item label="Password">
                   {getFieldDecorator('password', {
                     rules: [{required: true, message: 'Please Enter Password!'}],
-                  })(<Input.Password type="text" value={password} onChange={(e) => {
+                  })(<Input.Password type="text" onChange={(e) => {
                     this.setState({password: e.target.value})
                   }}/>)}
                 </Form.Item>
@@ -214,7 +213,7 @@ class AddNewStaff extends Component {
               </Form>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
-              <ImageUpload onAddProfileImage={this.props.onAddProfileImage}/>
+              {/*<ImageUpload onAddProfileImage={this.props.onAddProfileImage}/>*/}
             </Col>
           </Row>
         </Widget>
