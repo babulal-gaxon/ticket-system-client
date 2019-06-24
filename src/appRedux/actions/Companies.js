@@ -1,4 +1,4 @@
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import axios from 'util/Api'
 import {
   ADD_NEW_COMPANY,
@@ -28,21 +28,17 @@ export const onGetCompaniesData = (currentPage, itemsPerPage) => {
   }
 };
 
-export const onAddNewCompany = (company, successMessage) => {
+export const onAddNewCompany = (company) => {
   console.log("onAddNewCompany", company);
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post('/setup/customer/companies', company, {
-      headers: {
-        'Content-Type': "multipart/form-data"
-      }
-    }).then(({data}) => {
+    axios.post('/setup/customer/companies', company
+     ).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: ADD_NEW_COMPANY, payload: data.data});
-        dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Company has been added successfully" });
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -53,7 +49,7 @@ export const onAddNewCompany = (company, successMessage) => {
   }
 };
 
-export const onEditCompany = (company, successMessage) => {
+export const onEditCompany = (company) => {
   console.log("onEditCompany", company);
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -62,8 +58,7 @@ export const onEditCompany = (company, successMessage) => {
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: EDIT_COMPANY_DETAILS, payload: data.data});
-        dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Company details has been added successfully" });
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -74,16 +69,14 @@ export const onEditCompany = (company, successMessage) => {
   }
 };
 
-export const onDeleteCompanies = (companyIds, successMessage, reload, currentPage, itemsPerPage) => {
+export const onDeleteCompanies = (companyIds) => {
   console.log("in action", companyIds);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/customer/companies/delete', companyIds).then(({data}) => {
       if (data.success) {
         dispatch({type: DELETE_COMPANIES, payload: data.data});
-        dispatch({type: FETCH_SUCCESS});
-        reload(currentPage, itemsPerPage);
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Company has been deleted successfully" });
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

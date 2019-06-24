@@ -11,6 +11,7 @@ import {
   Icon,
   Input,
   message,
+  Modal,
   Radio,
   Row
 } from "antd";
@@ -19,6 +20,9 @@ import {onAddRole, onDisableSelectedRole, onEditRole} from "../../../appRedux/ac
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
+import {onBulkDeleteStaff, onGetStaff, onGetStaffId} from "../../../appRedux/actions/SupportStaff";
+import StaffDetail from "../../Staff/StaffList/StaffDetail";
+import StaffWithSelectedRole from "./StaffWithSelectedRole";
 
 const Panel = Collapse.Panel;
 const customPanelStyle = {
@@ -28,7 +32,7 @@ const customPanelStyle = {
   border: 0,
   overflow: 'hidden',
 };
-
+const confirm = Modal.confirm;
 
 class AddNewRole extends Component {
   constructor(props) {
@@ -88,6 +92,10 @@ class AddNewRole extends Component {
     }
   }
 
+  componentWillMount() {
+    this.props.onGetStaff();
+  }
+
   onSetFieldsValue = () => {
     this.props.form.setFieldsValue({
       name: this.state.name
@@ -95,7 +103,8 @@ class AddNewRole extends Component {
   };
   onSelectCustomerPermissions = checkedList => {
     this.setState({
-      customerPermissions: checkedList})
+      customerPermissions: checkedList
+    })
   };
   onSelectContactPermissions = checkedList => {
     this.setState({
@@ -201,29 +210,53 @@ class AddNewRole extends Component {
   onStaffListOnEdit = () => {
     let staffWithRole = [];
     if (this.props.selectedRole !== null) {
-      staffWithRole = this.props.staffList.filter(staff => staff.designation === this.props.selectedRole.name);
+      staffWithRole = this.props.staffList.filter(staff => staff.role_id === this.props.selectedRole.id);
     }
     if (staffWithRole.length !== 0) {
       const filteredStaff = this.onFilterStaffList(staffWithRole);
       return (
         <div>
-          <div className="gx-mt-4">Member Name</div>
+          <div className="gx-mt-4 gx-mb-4">Member Name</div>
           {filteredStaff.map(staff => {
             return <Widget styleName="gx-card-filter">
+              <div className="gx-d-flex gx-justify-content-between">
         <span className="gx-email gx-d-inline-block gx-mr-2">
              <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>
           {staff.first_name + " " + staff.last_name} </span>
-              <span> <i className="icon icon-edit gx-mr-3"/>
-          <i className="icon icon-trash"/>
+                <span> <i className="icon icon-edit gx-mr-3" onClick={() => {
+                  this.props.onGetStaffId(staff.id);
+                  this.props.history.push('/staff/add-new-member')
+                }}/>
+          <i className="icon icon-trash" onClick={() => this.onGetStaffDetail(staff)}/>
           </span>
+              </div>
             </Widget>
-          })};
+          })}
         </div>
       )
     } else {
       return <div className="gx-mt-5">"No member associated yet to this role."</div>
     }
   };
+  onGetStaffDetail = (staff) => {
+    return <StaffDetail staff={staff} onGetStaffId={this.props.onGetStaffId}
+                        history={this.props.history}/>
+  }
+  // onDeleteStaff = (id) => {
+  //   if (id !== null) {
+  //     confirm({
+  //       title: "Are you sure to delete the selected Staff?",
+  //       onOk: () => {
+  //         this.props.onBulkDeleteStaff({ids: id}, this.onDeleteSuccessMessage);
+  //         // this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers);
+  //       }
+  //     })
+  //   } else {
+  //     confirm({
+  //       title: "Please Select Staffs first",
+  //     })
+  //   }
+  // };
   onFilterStaffList = (staffWithRole) => {
     return staffWithRole.filter(staff => staff.first_name.indexOf(this.state.filterText) !== 1)
   };
@@ -325,9 +358,8 @@ class AddNewRole extends Component {
   };
 
   render() {
-    console.log("selected Role", this.props.selectedRole)
     const {getFieldDecorator} = this.props.form;
-    const {name, status} = this.state;
+    const {status} = this.state;
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -649,6 +681,10 @@ class AddNewRole extends Component {
                                   value={this.state.filterText}
                                   onChange={(e) => this.setState({filterText: e.target.value})}/>}/>
                 </div>
+                {/*<StaffWithSelectedRole staffList={this.props.staffList}*/}
+                {/*                       selectedRole={this.props.selectedRole}*/}
+                {/*                       onGetStaffId={this.props.onGetStaffId}*/}
+                {/*history={this.props.history}/>*/}
                 {this.onStaffListOnEdit()}
               </Col> : null}
           </Row>
@@ -668,7 +704,14 @@ const mapStateToProps = ({auth, rolesAndPermissions, supportStaff}) => {
   return {userPermissions, roles, roleId, staffList, selectedRole}
 };
 
-export default connect(mapStateToProps, {onAddRole, onEditRole, onDisableSelectedRole})(AddNewRole);
+export default connect(mapStateToProps, {
+  onAddRole,
+  onEditRole,
+  onDisableSelectedRole,
+  onGetStaff,
+  onGetStaffId,
+  onBulkDeleteStaff
+})(AddNewRole);
 
 AddNewRole.defaultProps = {};
 

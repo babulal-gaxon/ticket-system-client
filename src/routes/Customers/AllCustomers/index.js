@@ -1,15 +1,32 @@
 import React, {Component} from 'react';
 import Widget from "../../../components/Widget";
-import {Avatar, Button, Dropdown, Icon, Input, Menu, message, Modal, Popconfirm, Select, Table, Tag} from "antd";
-import {connect} from "react-redux";
+import {
+  Avatar,
+  Button,
+  Checkbox,
+  Dropdown,
+  Icon,
+  Input,
+  Menu,
+  message,
+  Modal,
+  Popconfirm,
+  Select,
+  Table,
+  Tag
+} from "antd";
 import {
   getCustomerId,
   onDeleteCustomers,
   onDisableCustomer,
   onGetCustomersData
 } from "../../../appRedux/actions/Customers";
-import InfoView from "../../../components/InfoView";
 import moment from "moment";
+import CustomerDetails from "./CustomerDetails";
+import {onGetLabelData} from "../../../appRedux/actions/Labels";
+import {onGetCompaniesData} from "../../../appRedux/actions/Companies";
+import {connect} from "react-redux";
+import InfoView from "../../../components/InfoView";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -24,21 +41,49 @@ class AllCustomers extends Component {
       selectedRowKeys: [],
       itemNumbers: 10,
       current: 1,
-      selectedCustomers: []
+      selectedCustomers: [],
+      sideBarActive: false,
+      selectedCompanies: [],
+      currentCustomer: null,
+      currentCustomerCompany: null,
+      selectedLabels: [],
+      filterStatusActive: false,
+      filterStatusDisabled: false
     }
   }
 
   componentWillMount() {
     this.onGetPaginatedData(this.state.current, this.state.itemNumbers);
+    this.props.onGetCompaniesData();
+    this.props.onGetLabelData();
   }
 
   onGetPaginatedData = (currentPage, itemsPerPage) => {
     this.props.onGetCustomersData(currentPage, itemsPerPage);
   };
+  onSideBarShow = () => {
+    this.setState({sideBarActive: !this.state.sideBarActive})
+  }
   onFilterData = () => {
     return this.props.customersList.filter(customer => {
+      let flag = true;
       const name = customer.first_name + " " + customer.last_name;
-      if (name.indexOf(this.state.filterText) !== -1) {
+      if (name.indexOf(this.state.filterText) === -1) {
+        flag = false;
+      }
+      if (!flag && this.state.selectedCompanies.indexOf(customer.company_id) === -1) {
+        flag = false;
+      }
+      if (!flag && this.state.selectedLabels.indexOf(customer.label_id) === -1) {
+        flag = false;
+      }
+      if (!flag && (this.state.filterStatusDisabled && customer.account_status === 1)) {
+        flag = false;
+      }
+      if (!flag && (this.state.filterStatusActive && customer.account_status === 0)) {
+        flag = false;
+      }
+      if (flag) {
         return customer;
       }
     });
@@ -148,7 +193,6 @@ class AllCustomers extends Component {
     ];
   };
   onShowRowDropdown = (customerId) => {
-    console.log("customerId", customerId);
     const menu = (
       <Menu>
         <Menu.Item key="2" onClick={() => {
@@ -200,6 +244,13 @@ class AllCustomers extends Component {
   onCustomerDisableSuccess = () => {
     message.success('The status of Customer has been changed to Disable successfully.');
   };
+  onSelectCustomer = record => {
+    // const selectedCompany = this.props.companiesList.find(company => company.id === record.company_id);
+    this.setState({
+      currentCustomer: record,
+      // currentCustomerCompany: selectedCompany
+    })
+  };
   onShowBulkDeleteConfirm = () => {
     if (this.state.selectedCustomers.length !== 0) {
       confirm({
@@ -241,8 +292,83 @@ class AllCustomers extends Component {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers)
     });
   };
+  onBackToList = () => {
+    this.setState({currentCustomer: null})
+  }
+  onGetSidebar = () => {
+    return <div className="gx-main-layout-sidenav gx-d-none gx-d-lg-flex">
+      <div className="gx-main-layout-side">
+        <div className="gx-main-layout-side-header">
+          <h4 className="gx-font-weight-medium">Filter Tickets</h4>
+        </div>
+        <div className="gx-main-layout-nav">
+          <div className="gx-mr-5 gx-mb-4"><label>Filter By Company</label>
+            <span className="gx-ml-5">Reset</span>
+          </div>
+          <div>
+            <Checkbox.Group onChange={this.onSelectCompanies} value={this.state.selectedCompanies}>
+              {this.props.companiesList.map(company => {
+                return <div><Checkbox value={company.id}>{company.company_name}</Checkbox></div>
+              })}
+            </Checkbox.Group>
+          </div>
+          <div className="gx-mt-5">
+            <div className="gx-mb-3">Filter by labels</div>
+            <Select
+              mode="multiple"
+              style={{width: '100%'}}
+              placeholder="Please select Labels"
+              value={this.state.selectedLabels}
+              onSelect={this.onLabelSelect}
+              onDeselect={this.onLabelRemove}>
+              {this.onLabelSelectOption}
+            </Select>
+          </div>
+          <div className="gx-mt-5">
+            <div className="gx-mb-3">Status</div>
+            <Checkbox onChange={this.onFilterDisabledCustomers}>Disabled</Checkbox>
+            <Checkbox onChange={this.onFilterActiveCustomers}>Active</Checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+  };
+  onLabelSelectOption = () => {
+    const labelOptions = [];
+    this.props.labelList.map(label => {
+      return labelOptions.push(<Option value={label.id}>{label.name}</Option>)
+    });
+    return labelOptions;
+  };
+  onLabelSelect = (id) => {
+    this.setState({selectedLabels: this.state.selectedLabels.concat(id)})
+  };
+  onLabelRemove = (value) => {
+    const updatedLabels = this.state.selectedLabels.filter(label => label !== value)
+    this.setState({selectedLabels: updatedLabels})
+  };
+  onSelectCompanies = checkedList => {
+    this.setState({selectedCompanies: checkedList})
+  };
+  onFilterActiveCustomers = event => {
+    if (event.target.checked) {
+      this.setState({filterStatusActive: true})
+    } else {
+      this.setState({filterStatusActive: false})
+    }
+  };
+  onFilterDisabledCustomers = event => {
+    if (event.target.checked) {
+      this.setState({filterStatusDisabled: true})
+    } else {
+      this.setState({filterStatusDisabled: false})
+    }
+  };
 
   render() {
+    console.log("companies data", this.state.selectedCompanies)
+    console.log("active", this.state.filterStatusActive);
+    console.log("disable", this.state.filterStatusDisabled);
     const customers = this.onFilterData();
     const selectedRowKeys = this.state.selectedRowKeys;
     let ids;
@@ -256,8 +382,8 @@ class AllCustomers extends Component {
       }
     };
     return (
-      <div className="gx-main-layout-content">
-        <Widget styleName="gx-card-filter">
+      <div className={`gx-main-content ${this.state.sideBarActive ? "gx-main-layout-has-sider" : ""}`}>
+        {this.state.currentCustomer === null ? <Widget styleName="gx-card-filter">
           <h4>Customers</h4>
           <p className="gx-text-grey">Customers</p>
           <div className="gx-d-flex gx-justify-content-between">
@@ -269,7 +395,7 @@ class AllCustomers extends Component {
             </div>
             <div className="gx-d-flex">
               <Search
-                placeholder="Search Customers Hers"
+                placeholder="Search Customers Here"
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}
                 style={{width: 200}}/>
@@ -282,6 +408,9 @@ class AllCustomers extends Component {
                   <i className="icon icon-long-arrow-right"/>
                 </Button>
               </Button.Group>
+              <Button type="default" className="gx-filter-btn gx-filter-btn-rtl-round" onClick={this.onSideBarShow}>
+                <i className="icon icon-filter"/>
+              </Button>
             </div>
           </div>
           <Table key={Math.random()} rowSelection={rowSelection} columns={this.onCustomersRowData()}
@@ -293,21 +422,34 @@ class AllCustomers extends Component {
                    showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
                    onChange: this.onPageChange
                  }}
-                 className="gx-table-responsive"/>
-        </Widget>
+                 className="gx-table-responsive"
+                 onRow={(record) => ({
+                   onClick: () => this.onSelectCustomer(record)
+                 })}/>
+        </Widget> : <CustomerDetails getCustomerId={this.props.getCustomerId}
+                                     currentCustomer={this.state.currentCustomer}
+                                     history={this.props.history}
+                                     onBackToList={this.onBackToList}
+          // currentCustomerCompany={this.state.currentCustomerCompany}
+        />}
+        {this.state.sideBarActive ? this.onGetSidebar() : null}
         <InfoView/>
       </div>
     )
   }
 }
 
-const mapPropsToState = ({customers}) => {
+const mapPropsToState = ({customers, companies, labelsList}) => {
   const {customersList, totalItems} = customers;
-  return {customersList, totalItems};
+  const {companiesList} = companies;
+  const {labelList} = labelsList;
+  return {customersList, totalItems, companiesList, labelList};
 };
 export default connect(mapPropsToState, {
   onGetCustomersData,
   onDeleteCustomers,
   getCustomerId,
-  onDisableCustomer
+  onDisableCustomer,
+  onGetCompaniesData,
+  onGetLabelData
 })(AllCustomers);
