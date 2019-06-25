@@ -61,17 +61,17 @@ class AllCustomers extends Component {
   };
   onSideBarShow = () => {
     this.setState({sideBarActive: !this.state.sideBarActive})
-  }
+  };
   onFilterData = () => {
     console.log(" in filter data", this.props.customersList);
     return this.props.customersList.filter(customer => {
       let flag = true;
       const name = customer.first_name + " " + customer.last_name;
-      if (!flag && this.state.selectedCompanies.indexOf(customer.company.id) === -1) {
-        flag = false;
+      if (this.state.selectedCompanies.indexOf(customer.company.id) !== -1) {
+        return customer;
       }
-      if (name.indexOf(this.state.filterText) === -1) {
-        flag = false;
+      if (name.indexOf(this.state.filterText) !== -1) {
+        return customer;
       }
       // if (flag && this.state.selectedLabels.indexOf(customer.label_id) === -1) {
       //   flag = false;
@@ -82,9 +82,9 @@ class AllCustomers extends Component {
       // if (flag && (this.state.filterStatusActive && customer.account_status === 0)) {
       //   flag = false;
       // }
-      if (flag) {
-        return customer;
-      }
+      // if (flag) {
+      //   return customer;
+      // }
     });
   };
   onFilterTextChange = (e) => {
@@ -140,7 +140,7 @@ class AllCustomers extends Component {
               <div className="gx-media-body">
                 <span className="gx-mb-0 gx-text-capitalize">{record.first_name + " " + record.last_name}</span>
                 <div className="gx-mt-1">
-                  <Tag color="#fc895f">{record.country_name}</Tag>
+                  <Tag color="#fc895f">{record.company.company_name}</Tag>
                 </div>
               </div>
             </div>
@@ -165,11 +165,10 @@ class AllCustomers extends Component {
         title: 'Labels',
         dataIndex: 'labels',
         render: (text, record) => {
-          console.log("recors", record.labels)
           return (record.labels && record.labels.length > 0) ?
             record.labels.map(label=> {
-              return label.name
-            }).join() : "NA"
+              return <Tag>{label.name}</Tag>
+            }) : "NA"
         },
       },
       {
@@ -247,10 +246,10 @@ class AllCustomers extends Component {
     message.success('The status of Customer has been changed to Disable successfully.');
   };
   onSelectCustomer = record => {
-    // const selectedCompany = this.props.companiesList.find(company => company.id === record.company_id);
+    const selectedCompany = this.props.companiesList.find(company => company.id === record.company.id);
     this.setState({
       currentCustomer: record,
-      // currentCustomerCompany: selectedCompany
+      currentCustomerCompany: selectedCompany
     })
   };
   onShowBulkDeleteConfirm = () => {
@@ -323,7 +322,7 @@ class AllCustomers extends Component {
               value={this.state.selectedLabels}
               onSelect={this.onLabelSelect}
               onDeselect={this.onLabelRemove}>
-              {this.onLabelSelectOption}
+              {this.onLabelSelectOption()}
             </Select>
           </div>
           <div className="gx-mt-5">
@@ -336,6 +335,7 @@ class AllCustomers extends Component {
     </div>
   };
   onLabelSelectOption = () => {
+    console.log("label list", this.props.labelList)
     const labelOptions = [];
     this.props.labelList.map(label => {
       return labelOptions.push(<Option value={label.id}>{label.name}</Option>)
@@ -432,7 +432,7 @@ class AllCustomers extends Component {
                                      currentCustomer={this.state.currentCustomer}
                                      history={this.props.history}
                                      onBackToList={this.onBackToList}
-          // currentCustomerCompany={this.state.currentCustomerCompany}
+          currentCustomerCompany={this.state.currentCustomerCompany}
         />}
         {this.state.sideBarActive ? this.onGetSidebar() : null}
         <InfoView/>

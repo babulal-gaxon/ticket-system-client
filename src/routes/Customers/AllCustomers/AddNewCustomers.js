@@ -15,7 +15,6 @@ class AddNewCustomers extends Component {
   constructor(props) {
     super(props);
     if (this.props.customerId === null) {
-      console.log("here i am in if")
       this.state = {
         first_name: "",
         last_name: "",
@@ -25,13 +24,28 @@ class AddNewCustomers extends Component {
         company_id: null,
         position: "",
         label_ids: [],
-        isModalVisible: false
+        isModalVisible: false,
+        account_status: 1
       };
     } else {
-      console.log("i m in else")
       setTimeout(this.onSetFieldsValue, 10);
       const selectedCustomer = this.props.customersList.find(customer => customer.id === this.props.customerId);
-      this.state = {...selectedCustomer, isModalVisible: false, label_ids: []}
+      console.log("selected Customer", selectedCustomer);
+      const {first_name, last_name, email, phone,account_status} = selectedCustomer;
+      const companyId = selectedCustomer.company.id;
+      const labelIds = selectedCustomer.labels.map(label => {
+        return label.id
+      });
+      this.state = {
+        first_name: first_name,
+        last_name: last_name,
+        email: email,
+        phone: phone,
+        account_status: account_status,
+        company_id: companyId,
+        label_ids: labelIds,
+        isModalVisible: false
+      }
     }
   }
 
@@ -68,15 +82,19 @@ class AddNewCustomers extends Component {
     message.success(' Customer details has been updated successfully.');
   };
   onReset = () => {
-    this.setState({
+    this.props.form.setFieldsValue({
       first_name: "",
       last_name: "",
       email: "",
-      password: "",
+      password: ""
+    });
+    this.setState({
       phone: "",
       company_id: null,
       position: "",
-      isModalVisible: false
+      label_ids: [],
+      isModalVisible: false,
+      account_status: 1
     })
   };
   onLabelSelect = (id) => {
@@ -106,7 +124,6 @@ class AddNewCustomers extends Component {
     this.setState({company_id: value})
   };
   render() {
-    console.log("in state", this.state);
     const {getFieldDecorator} = this.props.form;
     const {phone, account_status, label_ids, company_id} = this.state;
     const labelOptions = this.onLabeltSelectOption();
