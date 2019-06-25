@@ -18,8 +18,8 @@ export default (state = initialState, action) => {
     case GET_CUSTOMERS_DATA:
       return {
         ...state,
-        customersList: action.payload.items,
-        totalItems: action.payload.paginate.total
+        customersList: action.payload.data,
+        totalItems: action.payload.meta.total
       };
 
     case ADD_NEW_CUSTOMER:

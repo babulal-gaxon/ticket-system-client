@@ -92,7 +92,6 @@ class AddNewCompany extends Component {
               {getFieldDecorator('company_logo', {
                 rules: [{required: true, message: 'Please Select Logo!'}],
               })(<Input type="file" placeholder="Choose file..." onChange = {this.onLogoSelect}/>)}
-
             </Form.Item>
           </Form>
         </Modal>

@@ -1,20 +1,5 @@
 import React, {Component} from "react"
-import {
-  Avatar,
-  Breadcrumb,
-  Button,
-  Checkbox,
-  Col,
-  Collapse,
-  Divider,
-  Form,
-  Icon,
-  Input,
-  message,
-  Modal,
-  Radio,
-  Row
-} from "antd";
+import {Breadcrumb, Button, Checkbox, Col, Collapse, Divider, Form, Input, message, Modal, Radio, Row} from "antd";
 import Widget from "../../../components/Widget";
 import {onAddRole, onDisableSelectedRole, onEditRole} from "../../../appRedux/actions/RolesAndPermissions";
 import {connect} from "react-redux";
@@ -53,10 +38,10 @@ class AddNewRole extends Component {
         statusPermissions: [],
         ticketsPermissions: [],
         usersPermissions: [],
-        permissions: []
+        permissions: [],
+        currentMember: null
       }
     } else {
-      setTimeout(this.onSetFieldsValue, 10);
       this.state = {
         id: this.props.selectedRole.id,
         name: this.props.selectedRole.name,
@@ -87,13 +72,17 @@ class AddNewRole extends Component {
           this.props.selectedRole.role_permissions.users.map(user => user.id) : [],
         permissions: [],
         filterText: "",
-        checkedList: []
+        checkedList: [],
+        currentMember: null
       }
     }
   }
 
   componentWillMount() {
     this.props.onGetStaff();
+  }
+  componentDidMount() {
+    this.onSetFieldsValue()
   }
 
   onSetFieldsValue = () => {
@@ -207,59 +196,7 @@ class AddNewRole extends Component {
   onEditSuccess = () => {
     message.success('The Role has been updated successfully.');
   };
-  onStaffListOnEdit = () => {
-    let staffWithRole = [];
-    if (this.props.selectedRole !== null) {
-      staffWithRole = this.props.staffList.filter(staff => staff.role_id === this.props.selectedRole.id);
-    }
-    if (staffWithRole.length !== 0) {
-      const filteredStaff = this.onFilterStaffList(staffWithRole);
-      return (
-        <div>
-          <div className="gx-mt-4 gx-mb-4">Member Name</div>
-          {filteredStaff.map(staff => {
-            return <Widget styleName="gx-card-filter">
-              <div className="gx-d-flex gx-justify-content-between">
-        <span className="gx-email gx-d-inline-block gx-mr-2">
-             <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>
-          {staff.first_name + " " + staff.last_name} </span>
-                <span> <i className="icon icon-edit gx-mr-3" onClick={() => {
-                  this.props.onGetStaffId(staff.id);
-                  this.props.history.push('/staff/add-new-member')
-                }}/>
-          <i className="icon icon-trash" onClick={() => this.onGetStaffDetail(staff)}/>
-          </span>
-              </div>
-            </Widget>
-          })}
-        </div>
-      )
-    } else {
-      return <div className="gx-mt-5">"No member associated yet to this role."</div>
-    }
-  };
-  onGetStaffDetail = (staff) => {
-    return <StaffDetail staff={staff} onGetStaffId={this.props.onGetStaffId}
-                        history={this.props.history}/>
-  }
-  // onDeleteStaff = (id) => {
-  //   if (id !== null) {
-  //     confirm({
-  //       title: "Are you sure to delete the selected Staff?",
-  //       onOk: () => {
-  //         this.props.onBulkDeleteStaff({ids: id}, this.onDeleteSuccessMessage);
-  //         // this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers);
-  //       }
-  //     })
-  //   } else {
-  //     confirm({
-  //       title: "Please Select Staffs first",
-  //     })
-  //   }
-  // };
-  onFilterStaffList = (staffWithRole) => {
-    return staffWithRole.filter(staff => staff.first_name.indexOf(this.state.filterText) !== 1)
-  };
+
   onCheckAllCustomers = e => {
     const allSelected = this.props.userPermissions.companies.map(company => {
       return company.id
@@ -356,10 +293,15 @@ class AddNewRole extends Component {
       usersPermissions: e.target.checked ? allSelected : []
     })
   };
-
+  onSelectStaff = (staff) => {
+    this.setState({currentMember: staff})
+  };
+  onBackToList = () => {
+    this.setState({currentMember: null})
+  };
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {status} = this.state;
+    const {status, currentMember} = this.state;
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -373,7 +315,7 @@ class AddNewRole extends Component {
                 to="/roles-permissions/add-new">{this.props.selectedRole === null ? "Add New Role" : "Edit Role Details"}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
-          <Row>
+          {currentMember === null ? <Row>
             <Col xl={15} lg={12} md={12} sm={12} xs={24}>
               <Form layout="vertical" style={{width: "80%"}}>
                 <Form.Item label="Role Name">
@@ -673,21 +615,15 @@ class AddNewRole extends Component {
             </Col>
             {this.props.selectedRole !== null ?
               <Col xl={9} lg={12} md={12} sm={12} xs={24}>
-                <h5 className="gx-mb-4">Associated Staff Members</h5>
-                <div className="gx-d-flex gx-align-items-center">
-                  <Input
-                    placeholder="Enter keywords to search roles"
-                    prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}
-                                  value={this.state.filterText}
-                                  onChange={(e) => this.setState({filterText: e.target.value})}/>}/>
-                </div>
-                {/*<StaffWithSelectedRole staffList={this.props.staffList}*/}
-                {/*                       selectedRole={this.props.selectedRole}*/}
-                {/*                       onGetStaffId={this.props.onGetStaffId}*/}
-                {/*history={this.props.history}/>*/}
-                {this.onStaffListOnEdit()}
+                <StaffWithSelectedRole staffList={this.props.staffList}
+                                       selectedRole={this.props.selectedRole}
+                                       onGetStaffId={this.props.onGetStaffId}
+                                       onSelectStaff={this.onSelectStaff}
+                history={this.props.history}/>
               </Col> : null}
-          </Row>
+          </Row> : <StaffDetail staff={currentMember} onGetStaffId={this.props.onGetStaffId}
+                                history={this.props.history} onSelectStaff = {this.onSelectStaff}
+                                onBackToList = {this.onBackToList}/>}
         </Widget>
         <InfoView/>
       </div>

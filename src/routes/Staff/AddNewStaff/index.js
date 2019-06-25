@@ -96,15 +96,15 @@ class AddNewStaff extends Component {
     });
     return deptOptions;
   };
-
   onDepartmentSelect = (id) => {
-    this.setState({departments_ids: this.state.departments_ids.concat(id)})
+    console.log(this.state.departments_ids)
+    this.setState({departments_ids: this.state.departments_ids.concat(id)});
+    console.log("after id", this.state.departments_ids)
   };
   onDepartmentRemove = (value) => {
     const updatedDepartments = this.state.departments_ids.filter(department => department !== value)
     this.setState({departments_ids: updatedDepartments})
   };
-
   onReset = () => {
     this.setState({
       mobile: "",

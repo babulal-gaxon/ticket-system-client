@@ -13,6 +13,7 @@ const App = ({match}) => (
             <Route path={`${match.url}roles-permissions`}component={asyncComponent(() => import('./RolesAndPermissions'))}/>
             <Route path={`${match.url}customers`} component={asyncComponent(() => import('./Customers'))}/>
             <Route path={`${match.url}setup`} component={asyncComponent(() => import('./SetUp'))}/>
+            <Route path={`${match.url}settings`} component={asyncComponent(() => import('./Settings'))}/>
         </Switch>
     </div>
 );

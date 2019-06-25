@@ -51,13 +51,11 @@ class AllCustomers extends Component {
       filterStatusDisabled: false
     }
   }
-
   componentWillMount() {
     this.onGetPaginatedData(this.state.current, this.state.itemNumbers);
     this.props.onGetCompaniesData();
     this.props.onGetLabelData();
   }
-
   onGetPaginatedData = (currentPage, itemsPerPage) => {
     this.props.onGetCustomersData(currentPage, itemsPerPage);
   };
@@ -65,24 +63,25 @@ class AllCustomers extends Component {
     this.setState({sideBarActive: !this.state.sideBarActive})
   }
   onFilterData = () => {
+    console.log(" in filter data", this.props.customersList);
     return this.props.customersList.filter(customer => {
       let flag = true;
       const name = customer.first_name + " " + customer.last_name;
+      if (!flag && this.state.selectedCompanies.indexOf(customer.company.id) === -1) {
+        flag = false;
+      }
       if (name.indexOf(this.state.filterText) === -1) {
         flag = false;
       }
-      if (!flag && this.state.selectedCompanies.indexOf(customer.company_id) === -1) {
-        flag = false;
-      }
-      if (!flag && this.state.selectedLabels.indexOf(customer.label_id) === -1) {
-        flag = false;
-      }
-      if (!flag && (this.state.filterStatusDisabled && customer.account_status === 1)) {
-        flag = false;
-      }
-      if (!flag && (this.state.filterStatusActive && customer.account_status === 0)) {
-        flag = false;
-      }
+      // if (flag && this.state.selectedLabels.indexOf(customer.label_id) === -1) {
+      //   flag = false;
+      // }
+      // if (flag && (this.state.filterStatusDisabled && customer.account_status === 1)) {
+      //   flag = false;
+      // }
+      // if (flag && (this.state.filterStatusActive && customer.account_status === 0)) {
+      //   flag = false;
+      // }
       if (flag) {
         return customer;
       }
@@ -159,15 +158,18 @@ class AllCustomers extends Component {
         title: 'Phone no.',
         dataIndex: 'phone',
         render: (text, record) => {
-          return <span className="gx-text-grey">{record.mobile ? record.mobile : "NA"}</span>
+          return <span className="gx-text-grey">{record.phone ? record.phone : "NA"}</span>
         },
       },
       {
         title: 'Labels',
         dataIndex: 'labels',
         render: (text, record) => {
-          return <span
-            className="gx-text-grey">{(record.labels && record.labels.length) > 0 ? record.labels : "NA"}</span>
+          console.log("recors", record.labels)
+          return (record.labels && record.labels.length > 0) ?
+            record.labels.map(label=> {
+              return label.name
+            }).join() : "NA"
         },
       },
       {
@@ -366,10 +368,10 @@ class AllCustomers extends Component {
   };
 
   render() {
-    console.log("companies data", this.state.selectedCompanies)
-    console.log("active", this.state.filterStatusActive);
-    console.log("disable", this.state.filterStatusDisabled);
+    console.log("companies data", this.state.selectedCompanies);
+    console.log("total customers", this.props.customersList)
     const customers = this.onFilterData();
+    // const customers= this.props.customersList;
     const selectedRowKeys = this.state.selectedRowKeys;
     let ids;
     const rowSelection = {
