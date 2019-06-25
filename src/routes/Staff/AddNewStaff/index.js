@@ -8,6 +8,7 @@ import {onGetDepartments} from "../../../appRedux/actions/Departments";
 import {Breadcrumb, Select} from "antd";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
+import {onGetRoles} from "../../../appRedux/actions/RolesAndPermissions";
 
 const {Option} = Select;
 
@@ -24,12 +25,13 @@ class AddNewStaff extends Component {
         hourly_rate: "",
         departments_ids: [],
         account_status: 1,
-        profile_pic:""
+        profile_pic:"",
+        role_id: null
       };
     } else {
       setTimeout(this.onSetFieldsValue, 10);
       const selectedStaff = this.props.staffList.find(staff => staff.id === this.props.staffId);
-      const {id, first_name, last_name, email, password, mobile, hourly_rate, account_status} = selectedStaff;
+      const {id, first_name, last_name, email, password, mobile, hourly_rate, account_status,role_id} = selectedStaff;
       const department_ids = selectedStaff.departments.map(department => {
         return department.pivot.department_id
       });
@@ -42,13 +44,15 @@ class AddNewStaff extends Component {
         mobile: mobile,
         hourly_rate: hourly_rate,
         account_status: account_status,
-        departments_ids: department_ids
+        departments_ids: department_ids,
+        role_id: role_id
       }
     }
   }
 
   componentWillMount() {
     this.props.onGetDepartments();
+    this.props.onGetRoles();
   }
 
   onSetFieldsValue = () => {
@@ -57,6 +61,14 @@ class AddNewStaff extends Component {
       last_name: this.state.last_name,
       email: this.state.email,
       password: this.state.password
+    });
+  };
+  onSetFieldsToReset = () => {
+    this.props.form.setFieldsValue({
+      first_name: "",
+      last_name: "",
+      email: "",
+      password: ""
     });
   };
   onReturnStaffScreen = () => {
@@ -84,25 +96,22 @@ class AddNewStaff extends Component {
     });
     return deptOptions;
   };
-
   onDepartmentSelect = (id) => {
-    this.setState({departments_ids: this.state.departments_ids.concat(id)})
+    console.log(this.state.departments_ids)
+    this.setState({departments_ids: this.state.departments_ids.concat(id)});
+    console.log("after id", this.state.departments_ids)
   };
   onDepartmentRemove = (value) => {
     const updatedDepartments = this.state.departments_ids.filter(department => department !== value)
     this.setState({departments_ids: updatedDepartments})
   };
-
   onReset = () => {
     this.setState({
-      first_name: "",
-      last_name: "",
-      email: "",
-      password: "",
       mobile: "",
       hourly_rate: "",
       department_ids: [],
-      account_status: 1
+      account_status: 1,
+      role_id: null
     })
   };
   onValidationCheck = () => {
@@ -112,10 +121,13 @@ class AddNewStaff extends Component {
       }
     });
   };
+  onSelectRole = value => {
+    this.setState({role_id: value})
+  };
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {first_name, last_name, email, password, mobile, hourly_rate, account_status, departments_ids} = this.state;
+    const {mobile, hourly_rate, account_status, departments_ids, role_id} = this.state;
     const deptOptions = this.onDepartmentSelectOption();
     return (
       <div className="gx-main-layout-content">
@@ -189,6 +201,13 @@ class AddNewStaff extends Component {
                     {deptOptions}
                   </Select>
                 </Form.Item>
+                <Form.Item label="Role">
+                  <Select value={role_id} onChange={this.onSelectRole}>
+                    {this.props.roles.map(role => {
+                     return <Option value={role.id}>{role.name}</Option>
+                    })}
+                  </Select>
+                </Form.Item>
                 <Form.Item label="Status">
                   <Radio.Group value={account_status} onChange={(e) => {
                     this.setState({account_status: e.target.value})
@@ -202,7 +221,10 @@ class AddNewStaff extends Component {
                 <Button type="primary" onClick={this.onValidationCheck}>
                   Save
                 </Button>
-                     <Button type="primary" onClick={this.onReset}>
+                     <Button type="primary" onClick={() => {
+                       this.onSetFieldsToReset();
+                       this.onReset();
+                     }}>
                   Reset
                 </Button>
                      <Button onClick={this.onReturnStaffScreen}>
@@ -225,17 +247,19 @@ class AddNewStaff extends Component {
 
 AddNewStaff = Form.create({})(AddNewStaff);
 
-const mapStateToProps = ({departments, supportStaff}) => {
+const mapStateToProps = ({departments, supportStaff,rolesAndPermissions}) => {
   const {staffId, staffList, profilePicId} = supportStaff;
   const {dept} = departments;
-  return {dept, staffId, staffList, profilePicId};
+  const {roles} = rolesAndPermissions;
+  return {dept, staffId, staffList, profilePicId, roles};
 };
 
 export default connect(mapStateToProps, {
   onEditSupportStaff,
   onAddSupportStaff,
   onGetDepartments,
-  onAddProfileImage
+  onAddProfileImage,
+  onGetRoles
 })(AddNewStaff);
 
 AddNewStaff.defaultProps = {

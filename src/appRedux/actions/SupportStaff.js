@@ -57,7 +57,7 @@ export const onAddSupportStaff = (staffMember, history, successMessage) => {
   }
 };
 
-export const onBulkDeleteStaff = (staffIds, successMessage) => {
+export const onBulkDeleteStaff = (staffIds) => {
   console.log("in action", staffIds)
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -65,7 +65,6 @@ export const onBulkDeleteStaff = (staffIds, successMessage) => {
       if (data.success) {
         dispatch({type: BULK_DELETE_SUPPORT_STAFF, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

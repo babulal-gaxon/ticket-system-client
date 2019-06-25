@@ -8,8 +8,7 @@ class AddNewCompany extends Component {
       this.state = {
         company_name: "",
         website: "",
-        company_logo: null,
-        title: ""
+        company_logo: this.props.companyLogoId
       };
     } else {
       setTimeout(this.onSetFieldsValue, 10);
@@ -27,25 +26,16 @@ class AddNewCompany extends Component {
     });
   };
   onCompanyAdd = () => {
-    // let data = new FormData();
-    // console.log("formdata", data);
-    // data.append('company_logo', this.state.company_logo);
-    // data.append('company_name', this.state.company_name);
-    // data.append('website', this.state.website);
-    if (this.props.companyId === 0) {
-      const dataToUpload = {
-        company_name: this.state.company_name,
-        website: this.state.website,
-        company_logo: this.props.companyLogoId
+    this.setState({company_logo: this.props.companyLogoId}, () => {
+      if (this.props.companyId === 0) {
+        this.props.onAddNewCompany({...this.state});
+        this.props.onToggleAddCompany();
       }
-      this.props.onAddNewCompany(dataToUpload, this.onAddSuccess);
-      this.props.onToggleAddCompany();
-    }
-    // else {
-    //   console.log(" i am in edit function")
-    //   this.props.onEditCompany(dataToUpload, this.onEditSuccess);
-    //   this.props.onToggleAddCompany();
-    // }
+      else {
+        this.props.onEditCompany({...this.state});
+        this.props.onToggleAddCompany();
+      }
+    })
   };
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
@@ -54,22 +44,14 @@ class AddNewCompany extends Component {
       }
     });
   };
-  onAddSuccess = () => {
-    message.success('New Company has been added successfully.');
-  };
-  onEditSuccess = () => {
-    message.success('The Company details has been updated successfully.');
-  };
   onLogoSelect = (e) => {
-    this.setState({company_logo : e.target.files[0], title: e.target.files[0].name}, () => {this.onLogoUpload()});
-  };
-  onLogoUpload = () => {
-    console.log("thislogod", this.state.company_logo);
+    let file = e.target.files[0];
     const data = new FormData();
-    data.append('file', this.state.company_logo);
-    data.append('title', this.state.title);
+    data.append('file', file);
+    data.append('title', file.name);
     this.props.onAddProfileImage(data);
-  }
+  };
+
 
   render() {
     console.log("file of lofo",this.props.companyLogoId);
@@ -110,7 +92,6 @@ class AddNewCompany extends Component {
               {getFieldDecorator('company_logo', {
                 rules: [{required: true, message: 'Please Select Logo!'}],
               })(<Input type="file" placeholder="Choose file..." onChange = {this.onLogoSelect}/>)}
-
             </Form.Item>
           </Form>
         </Modal>

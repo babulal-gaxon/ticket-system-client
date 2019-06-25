@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {Avatar, Col, Divider, Row, Table, Tabs, Tag} from "antd";
 import Widget from "../../../components/Widget";
 
-const { TabPane } = Tabs;
-
 class StaffDetail extends Component {
   constructor(props) {
     super(props);
@@ -73,9 +71,6 @@ class StaffDetail extends Component {
       },
     ];
   };
-  onTabChange = (key) => {
-    this.setState({currentTab: key})
-  };
   onEditProfile = () => {
     this.props.onGetStaffId(this.props.staff.id);
     this.props.history.push('/staff/add-new-member')
@@ -86,16 +81,13 @@ class StaffDetail extends Component {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
-    const operations = <span><i className="icon icon-arrow-left" onClick ={()=> this.props.onBackToList()}/></span>;
     const staff = this.props.staff;
-    console.log("staff detaul", staff)
     return (
-      <div>
+      <div className="gx-main-content">
         <Row>
           <Col xl={12} lg={12} md={12} sm={12} xs={24}>
             <Widget>
-              <Tabs defaultActiveKey={this.state.currentTab} onChange={this.onTabChange} tabBarExtraContent={operations}>
-                <TabPane tab="Profile" key="1">
+              <i className="icon icon-arrow-left" onClick ={()=> this.props.onBackToList()}/>
                   <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
                       <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>
                     <div className="gx-media-body">
@@ -155,11 +147,6 @@ class StaffDetail extends Component {
                   <Divider />
                   <Tag color="blue" onClick ={this.onEditProfile}>
                     <i className="icon icon-edit gx-mr-3"/>Edit Profile</Tag>
-                </TabPane>
-                <TabPane tab="Permissions" key="2">
-                  Content of Tab Pane 2
-                </TabPane>
-              </Tabs>
             </Widget>
           </Col>
           <Col xl={12} lg={12} md={12} sm={12} xs={24}>

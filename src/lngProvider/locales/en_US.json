@@ -335,5 +335,11 @@
   "sidebar.dashboard.companies": "Companies",
   "sidebar.dashboard.setup": "Setup",
   "sidebar.dashboard.customers.label": "Customers Label",
-  "sidebar.dashboard.about.company": "About Company"
+  "sidebar.dashboard.about.company": "About Company",
+  "sidebar.dashboard.settings": "Settings",
+  "sidebar.dashboard.general.setting": "General Settings",
+  "sidebar.dashboard.localization": "Localization",
+  "sidebar.dashboard.email": "Email",
+  "sidebar.dashboard.customer.panel": "Customer Panel",
+  "sidebar.dashboard.about.system": "About System"
 }

@@ -6,15 +6,16 @@ import InfoView from "../../../components/InfoView";
 import {connect} from "react-redux";
 import {onAddNewCustomer, onEditCustomer} from "../../../appRedux/actions/Customers";
 import {onGetLabelData} from "../../../appRedux/actions/Labels";
-import AddCustomerAddress from "./AddCustomerAddress";
 import {onGetCompaniesData} from "../../../appRedux/actions/Companies";
+import AddCustomerAddress from "./AddCustomerAddress";
 
 const {Option} = Select;
 
 class AddNewCustomers extends Component {
   constructor(props) {
     super(props);
-    if (this.props.customerId === 0) {
+    if (this.props.customerId === null) {
+      console.log("here i am in if")
       this.state = {
         first_name: "",
         last_name: "",
@@ -23,18 +24,22 @@ class AddNewCustomers extends Component {
         phone: "",
         company_id: null,
         position: "",
+        label_ids: [],
         isModalVisible: false
       };
     } else {
+      console.log("i m in else")
       setTimeout(this.onSetFieldsValue, 10);
       const selectedCustomer = this.props.customersList.find(customer => customer.id === this.props.customerId);
-      this.state = {...selectedCustomer, isModalVisible: false}
+      this.state = {...selectedCustomer, isModalVisible: false, label_ids: []}
     }
   }
+
   componentWillMount() {
     this.props.onGetLabelData();
     this.props.onGetCompaniesData();
   }
+
   onSetFieldsValue = () => {
     this.props.form.setFieldsValue({
       first_name: this.state.first_name,
@@ -50,10 +55,9 @@ class AddNewCustomers extends Component {
     this.props.history.goBack();
   };
   onCustomerAdd = () => {
-    if(this.props.customerId === null) {
+    if (this.props.customerId === null) {
       this.props.onAddNewCustomer({...this.state}, this.props.history, this.onAddSuccess)
-    }
-    else {
+    } else {
       this.props.onEditCustomer({...this.state}, this.props.history, this.onEditSuccess)
     }
   };
@@ -76,7 +80,9 @@ class AddNewCustomers extends Component {
     })
   };
   onLabelSelect = (id) => {
+    console.log(this.state.label_ids)
     this.setState({label_ids: this.state.label_ids.concat(id)})
+    console.log("after id", this.state.label_ids)
   };
   onLabelRemove = (value) => {
     const updatedLabels = this.state.label_ids.filter(label => label !== value)
@@ -98,22 +104,23 @@ class AddNewCustomers extends Component {
   };
   onCompanySelect = value => {
     this.setState({company_id: value})
-  }
+  };
   render() {
-    console.log("in state", this.props.companiesList);
+    console.log("in state", this.state);
     const {getFieldDecorator} = this.props.form;
-    const { mobile, account_status, label_ids, company_id} = this.state;
+    const {phone, account_status, label_ids, company_id} = this.state;
     const labelOptions = this.onLabeltSelectOption();
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h3>Add New Customer</h3>
+          <h3>{this.props.customerId === null ? "Add New Customer" : "Edit Customer Details"}</h3>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/customers">Customers</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/customers/add-customers">Add New Customer</Link>
+              <Link
+                to="/customers/add-customers">{this.props.customerId === null ? "Add New Customer" : "Edit Customer Details"}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <hr/>
@@ -134,7 +141,7 @@ class AddNewCustomers extends Component {
                     <Form.Item label="Last Name">
                       {getFieldDecorator('last_name', {
                         rules: [{required: true, message: 'Please Enter Last Name!'}],
-                      })(<Input type="text"  onChange={(e) => {
+                      })(<Input type="text" onChange={(e) => {
                         this.setState({last_name: e.target.value})
                       }}/>)}
                     </Form.Item>
@@ -162,15 +169,16 @@ class AddNewCustomers extends Component {
                   }}/>)}
                 </Form.Item>
                 <Form.Item label="Phone Number">
-                  <Input type="text" value={mobile} onChange={(e) => {
-                    this.setState({mobile: e.target.value})
+                  <Input type="text" value={phone} onChange={(e) => {
+                    this.setState({phone: e.target.value})
                   }}/>
                 </Form.Item>
                 <Form.Item label="Select Company">
-                  <Select value={company_id} onChange={this.onCompanySelect}/>
-                  {this.props.companiesList.map(company => {
-                  return <Option value={company.id}>{company.company_name}</Option>
-                  })}
+                  <Select value={company_id} onChange={this.onCompanySelect}>
+                    {this.props.companiesList.map(company => {
+                      return <Option value={company.id}>{company.company_name}</Option>
+                    })}
+                  </Select>
                 </Form.Item>
                 <Form.Item label=" Add Labels">
                   <Select
@@ -200,7 +208,7 @@ class AddNewCustomers extends Component {
                 <Button type="primary" onClick={this.onValidationCheck}>
                   Save
                 </Button>
-                     <Button type="primary" onClick={this.onReset}>
+                     <Button onClick={this.onReset}>
                   Reset
                 </Button>
                      <Button onClick={this.onReturnCustomersScreen}>

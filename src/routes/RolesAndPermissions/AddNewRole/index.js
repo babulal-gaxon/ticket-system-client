@@ -1,24 +1,13 @@
 import React, {Component} from "react"
-import {
-  Avatar,
-  Breadcrumb,
-  Button,
-  Checkbox,
-  Col,
-  Collapse,
-  Divider,
-  Form,
-  Icon,
-  Input,
-  message,
-  Radio,
-  Row
-} from "antd";
+import {Breadcrumb, Button, Checkbox, Col, Collapse, Divider, Form, Input, message, Modal, Radio, Row} from "antd";
 import Widget from "../../../components/Widget";
 import {onAddRole, onDisableSelectedRole, onEditRole} from "../../../appRedux/actions/RolesAndPermissions";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
+import {onBulkDeleteStaff, onGetStaff, onGetStaffId} from "../../../appRedux/actions/SupportStaff";
+import StaffDetail from "../../Staff/StaffList/StaffDetail";
+import StaffWithSelectedRole from "./StaffWithSelectedRole";
 
 const Panel = Collapse.Panel;
 const customPanelStyle = {
@@ -28,7 +17,7 @@ const customPanelStyle = {
   border: 0,
   overflow: 'hidden',
 };
-
+const confirm = Modal.confirm;
 
 class AddNewRole extends Component {
   constructor(props) {
@@ -49,10 +38,10 @@ class AddNewRole extends Component {
         statusPermissions: [],
         ticketsPermissions: [],
         usersPermissions: [],
-        permissions: []
+        permissions: [],
+        currentMember: null
       }
     } else {
-      setTimeout(this.onSetFieldsValue, 10);
       this.state = {
         id: this.props.selectedRole.id,
         name: this.props.selectedRole.name,
@@ -83,9 +72,17 @@ class AddNewRole extends Component {
           this.props.selectedRole.role_permissions.users.map(user => user.id) : [],
         permissions: [],
         filterText: "",
-        checkedList: []
+        checkedList: [],
+        currentMember: null
       }
     }
+  }
+
+  componentWillMount() {
+    this.props.onGetStaff();
+  }
+  componentDidMount() {
+    this.onSetFieldsValue()
   }
 
   onSetFieldsValue = () => {
@@ -95,7 +92,8 @@ class AddNewRole extends Component {
   };
   onSelectCustomerPermissions = checkedList => {
     this.setState({
-      customerPermissions: checkedList})
+      customerPermissions: checkedList
+    })
   };
   onSelectContactPermissions = checkedList => {
     this.setState({
@@ -198,35 +196,7 @@ class AddNewRole extends Component {
   onEditSuccess = () => {
     message.success('The Role has been updated successfully.');
   };
-  onStaffListOnEdit = () => {
-    let staffWithRole = [];
-    if (this.props.selectedRole !== null) {
-      staffWithRole = this.props.staffList.filter(staff => staff.designation === this.props.selectedRole.name);
-    }
-    if (staffWithRole.length !== 0) {
-      const filteredStaff = this.onFilterStaffList(staffWithRole);
-      return (
-        <div>
-          <div className="gx-mt-4">Member Name</div>
-          {filteredStaff.map(staff => {
-            return <Widget styleName="gx-card-filter">
-        <span className="gx-email gx-d-inline-block gx-mr-2">
-             <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>
-          {staff.first_name + " " + staff.last_name} </span>
-              <span> <i className="icon icon-edit gx-mr-3"/>
-          <i className="icon icon-trash"/>
-          </span>
-            </Widget>
-          })};
-        </div>
-      )
-    } else {
-      return <div className="gx-mt-5">"No member associated yet to this role."</div>
-    }
-  };
-  onFilterStaffList = (staffWithRole) => {
-    return staffWithRole.filter(staff => staff.first_name.indexOf(this.state.filterText) !== 1)
-  };
+
   onCheckAllCustomers = e => {
     const allSelected = this.props.userPermissions.companies.map(company => {
       return company.id
@@ -323,11 +293,15 @@ class AddNewRole extends Component {
       usersPermissions: e.target.checked ? allSelected : []
     })
   };
-
+  onSelectStaff = (staff) => {
+    this.setState({currentMember: staff})
+  };
+  onBackToList = () => {
+    this.setState({currentMember: null})
+  };
   render() {
-    console.log("selected Role", this.props.selectedRole)
     const {getFieldDecorator} = this.props.form;
-    const {name, status} = this.state;
+    const {status, currentMember} = this.state;
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -341,7 +315,7 @@ class AddNewRole extends Component {
                 to="/roles-permissions/add-new">{this.props.selectedRole === null ? "Add New Role" : "Edit Role Details"}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
-          <Row>
+          {currentMember === null ? <Row>
             <Col xl={15} lg={12} md={12} sm={12} xs={24}>
               <Form layout="vertical" style={{width: "80%"}}>
                 <Form.Item label="Role Name">
@@ -641,17 +615,15 @@ class AddNewRole extends Component {
             </Col>
             {this.props.selectedRole !== null ?
               <Col xl={9} lg={12} md={12} sm={12} xs={24}>
-                <h5 className="gx-mb-4">Associated Staff Members</h5>
-                <div className="gx-d-flex gx-align-items-center">
-                  <Input
-                    placeholder="Enter keywords to search roles"
-                    prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}
-                                  value={this.state.filterText}
-                                  onChange={(e) => this.setState({filterText: e.target.value})}/>}/>
-                </div>
-                {this.onStaffListOnEdit()}
+                <StaffWithSelectedRole staffList={this.props.staffList}
+                                       selectedRole={this.props.selectedRole}
+                                       onGetStaffId={this.props.onGetStaffId}
+                                       onSelectStaff={this.onSelectStaff}
+                history={this.props.history}/>
               </Col> : null}
-          </Row>
+          </Row> : <StaffDetail staff={currentMember} onGetStaffId={this.props.onGetStaffId}
+                                history={this.props.history} onSelectStaff = {this.onSelectStaff}
+                                onBackToList = {this.onBackToList}/>}
         </Widget>
         <InfoView/>
       </div>
@@ -668,7 +640,14 @@ const mapStateToProps = ({auth, rolesAndPermissions, supportStaff}) => {
   return {userPermissions, roles, roleId, staffList, selectedRole}
 };
 
-export default connect(mapStateToProps, {onAddRole, onEditRole, onDisableSelectedRole})(AddNewRole);
+export default connect(mapStateToProps, {
+  onAddRole,
+  onEditRole,
+  onDisableSelectedRole,
+  onGetStaff,
+  onGetStaffId,
+  onBulkDeleteStaff
+})(AddNewRole);
 
 AddNewRole.defaultProps = {};
 

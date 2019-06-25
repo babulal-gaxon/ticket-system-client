@@ -149,11 +149,35 @@ class SidebarContent extends Component {
                 </Menu.Item>
               </SubMenu>
 
-                <Menu.Item key="rolesAndPermissions">
-                  <Link to ="/roles-permissions/all"><i className="icon icon-widgets"/>
-                    <IntlMessages id="sidebar.dashboard.roles.and.permissions"/></Link>
+              <SubMenu key ="settings"
+                       title={<span><i className="icon icon-setting"/>
+                       <IntlMessages id="sidebar.dashboard.settings"/></span>}>
+
+                <Menu.Item key="generalSettings">
+                  <Link to ="/settings/general-settings"><i className="icon icon-extra-components"/>
+                    <IntlMessages id="sidebar.dashboard.general.setting"/></Link>
                 </Menu.Item>
 
+                <Menu.Item key="localization">
+                  <Link to ="/settings/localization"><i className="icon icon-map-directions"/>
+                    <IntlMessages id="sidebar.dashboard.localization"/></Link>
+                </Menu.Item>
+
+                <Menu.Item key="email">
+                  <Link to ="/settings/email"><i className="icon icon-mail-open"/>
+                    <IntlMessages id="sidebar.dashboard.email"/></Link>
+                </Menu.Item>
+
+                <Menu.Item key="customerPanel">
+                  <Link to ="/settings/customer-panel"><i className="icon icon-customer-panel"/>
+                    <IntlMessages id="sidebar.dashboard.customer.panel"/></Link>
+                </Menu.Item>
+
+                <Menu.Item key="aboutSystem">
+                  <Link to ="/settings/about-system"><i className="icon icon-sweet-alert"/>
+                    <IntlMessages id="sidebar.dashboard.about.system"/></Link>
+                </Menu.Item>
+              </SubMenu>
             </Menu>
           </CustomScrollbars>
         </div>
