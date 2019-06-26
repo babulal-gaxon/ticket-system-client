@@ -17,8 +17,8 @@ export default (state = initialState, action) => {
     case GET_COMPANY_DATA:
       return {
         ...state,
-        companiesList: action.payload.items,
-        totalItems: action.payload.paginate.total
+        companiesList: action.payload.data,
+        totalItems: action.payload.meta.total
       };
 
     case ADD_NEW_COMPANY:

@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import Widget from "../../../components/Widget";
-import {Breadcrumb, Form, Tabs} from "antd";
+import {Breadcrumb, Tabs} from "antd";
 import {Link} from "react-router-dom";
 import Addresses from "./Addresses";
 import GeneralDetails from "./GeneralDetails";
+import {connect} from "react-redux";
+import {onGetGeneralDetails, onSaveGeneralDetails} from "../../../appRedux/actions/GeneralSettings";
 
 const {TabPane} = Tabs;
 
@@ -11,15 +13,13 @@ class GeneralSettings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      key: "1",
-      address_line_1: "",
-      city: "",
-      state: "",
-      country_id: "",
-      zip_code: "",
-      department_id: []
+      key: "1"
     }
   };
+
+  componentWillMount() {
+    this.props.onGetGeneralDetails();
+  }
 
   onTabChange = key => {
     this.setState({key: key})
@@ -44,7 +44,8 @@ class GeneralSettings extends Component {
           </Breadcrumb>
           <Tabs defaultActiveKey="1" size="large" onChange={this.onTabChange}>
             <TabPane tab="General Setup" key="1">
-              <GeneralDetails/>
+              <GeneralDetails onSaveGeneralDetails={this.props.onSaveGeneralDetails}
+                              generalSettingsData={this.props.generalSettingsData}/>
             </TabPane>
             <TabPane tab="Addresses" key="2">
               <Addresses/>
@@ -56,4 +57,12 @@ class GeneralSettings extends Component {
   }
 }
 
-export default GeneralSettings;
+const mapStateToProps = ({generalSettings}) => {
+  const {generalSettingsData} = generalSettings;
+  return {generalSettingsData};
+};
+
+export default connect(mapStateToProps, {
+  onGetGeneralDetails,
+  onSaveGeneralDetails
+})(GeneralSettings);

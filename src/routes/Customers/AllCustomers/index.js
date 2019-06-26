@@ -60,31 +60,32 @@ class AllCustomers extends Component {
     this.props.onGetCustomersData(currentPage, itemsPerPage);
   };
   onSideBarShow = () => {
-    this.setState({sideBarActive: !this.state.sideBarActive})
+    this.setState({sideBarActive: !this.state.sideBarActive, selectedLabels: [],
+      selectedCompanies:[], filterStatusActive:false, filterStatusDisabled: false})
   };
   onFilterData = () => {
     console.log(" in filter data", this.props.customersList);
     return this.props.customersList.filter(customer => {
       let flag = true;
       const name = customer.first_name + " " + customer.last_name;
-      if (this.state.selectedCompanies.indexOf(customer.company.id) !== -1) {
+      if (this.state.selectedCompanies.length >0 && this.state.selectedCompanies.indexOf(customer.company.id) === -1) {
+        flag=false;
+      }
+      if (this.state.filterText !== "" && name.indexOf(this.state.filterText) === -1) {
+        flag=false;
+      }
+      if (this.state.selectedLabels.length >0 && customer.labels && customer.labels.filter(label => this.state.selectedLabels.indexOf(label.id) !== -1).length ===0){
+        flag = false;
+      }
+      if (this.state.filterStatusDisabled && customer.status === 1) {
+        flag = false;
+      }
+      if (this.state.filterStatusActive && customer.status === 0) {
+        flag = false;
+      }
+      if (flag) {
         return customer;
       }
-      if (name.indexOf(this.state.filterText) !== -1) {
-        return customer;
-      }
-      // if (flag && this.state.selectedLabels.indexOf(customer.label_id) === -1) {
-      //   flag = false;
-      // }
-      // if (flag && (this.state.filterStatusDisabled && customer.account_status === 1)) {
-      //   flag = false;
-      // }
-      // if (flag && (this.state.filterStatusActive && customer.account_status === 0)) {
-      //   flag = false;
-      // }
-      // if (flag) {
-      //   return customer;
-      // }
     });
   };
   onFilterTextChange = (e) => {
@@ -126,8 +127,8 @@ class AllCustomers extends Component {
     </Select>
   };
   onAddButtonClick = () => {
+    this.props.getCustomerId(null);
     this.props.history.push('/customers/add-customers');
-    this.props.getCustomerId(0);
   };
   onCustomersRowData = () => {
     return [
@@ -136,7 +137,10 @@ class AllCustomers extends Component {
         dataIndex: 'title',
         render: (text, record) => {
           return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
-              <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>
+              {record.avatar ?
+              <Avatar className="gx-mr-3 gx-size-50" src={record.avatar.src}/> :
+                <Avatar className="gx-mr-3 gx-size-50"
+                        style={{backgroundColor: '#f56a00'}}>{record.first_name[0].toUpperCase()}</Avatar>}
               <div className="gx-media-body">
                 <span className="gx-mb-0 gx-text-capitalize">{record.first_name + " " + record.last_name}</span>
                 <div className="gx-mt-1">
@@ -236,7 +240,7 @@ class AllCustomers extends Component {
   };
   onDisableCustomerCall = (customerId) => {
     const selectedCustomer = this.props.customersList.find(customer => customer.id === customerId);
-    selectedCustomer.account_status = 0;
+    selectedCustomer.status = 0;
     this.props.onDisableCustomer(selectedCustomer, this.onCustomerDisableSuccess);
   };
   onDeleteSuccessMessage = () => {
@@ -366,10 +370,9 @@ class AllCustomers extends Component {
       this.setState({filterStatusDisabled: false})
     }
   };
-
   render() {
     console.log("companies data", this.state.selectedCompanies);
-    console.log("total customers", this.props.customersList)
+    console.log("total customers", this.props.customersList);
     const customers = this.onFilterData();
     // const customers= this.props.customersList;
     const selectedRowKeys = this.state.selectedRowKeys;

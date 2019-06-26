@@ -13,6 +13,7 @@ import RolesAndPermissions from "./RolesAndPermissions";
 import Labels from "./Labels";
 import Customers from "./Customers";
 import Companies from "./Companies";
+import GeneralSettings from "./GeneralSettings";
 
 
 const reducers = combineReducers({
@@ -29,7 +30,8 @@ const reducers = combineReducers({
   rolesAndPermissions: RolesAndPermissions,
   labelsList: Labels,
   customers: Customers,
-  companies: Companies
+  companies: Companies,
+  generalSettings: GeneralSettings
 });
 
 export default reducers;

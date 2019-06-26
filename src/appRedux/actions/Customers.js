@@ -1,7 +1,7 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
 import {
-  ADD_NEW_CUSTOMER,
+  ADD_NEW_CUSTOMER, ADD_PROFILE_PICTURE,
   DELETE_CUSTOMERS, DISABLE_CUSTOMER,
   EDIT_CUSTOMER_DETAILS,
   GET_CUSTOMER_ID,
@@ -108,6 +108,26 @@ export const onDeleteCustomers = (customerIds, successMessage) => {
         dispatch({type: DELETE_CUSTOMERS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         successMessage();
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onAddImage = (imageFile) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post("/uploads/temporary/media", imageFile, {
+      headers: {
+        'Content-Type': "multipart/form-data"
+      }}).then(({data}) => {
+      if (data.success) {
+        dispatch({type: ADD_PROFILE_PICTURE, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
