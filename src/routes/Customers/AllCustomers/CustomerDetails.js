@@ -140,20 +140,26 @@ class CustomerDetails extends Component {
             </Widget>
           </Col>
           <Col xl={12} lg={12} md={12} sm={12} xs={24}>
-            {/*<div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">*/}
-            {/*  <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>*/}
-            {/*  <div className="gx-media-body">*/}
-            {/*    <span>*/}
-            {/*      <span className="gx-mb-0 gx-text-capitalize">*/}
-            {/*        {currentCustomerCompany.company_name}*/}
-            {/*      </span>*/}
-            {/*      <div>{currentCustomerCompany.website}</div>*/}
-            {/*    </span>*/}
-            {/*    <div>*/}
-            {/*      Other Members*/}
-            {/*    </div>*/}
-            {/*  </div>*/}
-            {/*</div>*/}
+            <Widget>
+              <div className="gx-d-flex gx-justify-content-between gx-mb-5">
+              <span className="gx-font-weight-bold">Company Details</span>
+              </div>
+              <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
+              <Avatar className="gx-mr-3 gx-size-100" src="https://via.placeholder.com/150x150"/>
+              <div className="gx-media-body">
+                <span>
+                  <span className="gx-mb-0 gx-text-capitalize">
+                    {currentCustomerCompany.company_name}
+                  </span>
+                  <div>{currentCustomerCompany.website}</div>
+                </span>
+              </div>
+              </div>
+                <div className="gx-ml-0 gx-text-capitalize">
+                  Other Members
+            </div>
+              <div className="gx-mb-5">Currently No Members of this company is associated.</div>
+            </Widget>
           </Col>
         </Row>
         <Widget title={<span>Assigned Tickets</span>}>
