@@ -1,42 +1,70 @@
 import React, {Component} from 'react';
 import {Button, Divider, Form, Input} from "antd/lib/index";
-import GeneralSettings from "./index";
 
 class GeneralDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: "",
-      url: "",
-      logo: null,
-      favicon: null,
-      allowed_ext: "",
-      file_upload_max_size: null,
-      email: "",
-      mobile: ""
-    }}
-  onSetFieldsValue = () => {
-    this.props.form.setFieldsValue({
-      name: this.state.name,
-      allowed_ext: this.state.allowed_ext,
-      file_upload_max_size: this.state.file_upload_max_size
-    });
-  };
+    if(this.props.generalSettingsData ===  null) {
+      this.state = {
+        name: "",
+        url: "",
+        logo: null,
+        favicon: null,
+        allowed_ext: "",
+        file_upload_max_size: null,
+        email: "",
+        mobile: ""
+      }
+    }
+    // else {
+    //   const {name, website, file_upload_max_size, email, mobile, logo, favicon, allowed_ext} = this.props.generalSettingsData;
+    //   this.state = {
+    //     name: name,
+    //     url: website,
+    //     logo: logo,
+    //     favicon: favicon,
+    //     allowed_ext: allowed_ext,
+    //     file_upload_max_size: file_upload_max_size,
+    //     email: email,
+    //     mobile: mobile
+    //   }
+    // }
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    const {name, allowed_ext, file_upload_max_size, email, mobile, logo, favicon, website} =nextProps.generalSettingsData;
+    if(JSON.stringify(nextProps.generalSettingsData) !== JSON.stringify(this.props.generalSettingsData)) {
+      this.setState({
+        name: name,
+        url: website,
+        logo: logo,
+        favicon: favicon,
+        allowed_ext: allowed_ext,
+        file_upload_max_size: file_upload_max_size,
+        email: email,
+        mobile: mobile
+      })
+    }
+  }
+
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        // this.onAddGeneralSettings();
+        this.props.onSaveGeneralDetails({...this.state});
       }
     });
   };
+
   render() {
-    const {mobile} = this.state;
+    console.log("general Settings Data", this.state);
+    const {mobile,name,url,email,allowed_ext,file_upload_max_size} = this.state;
     const {getFieldDecorator} = this.props.form;
     return (
       <div>
-        <Form layout="vertical" style={{width:"50%"}}>
+        <Form layout="vertical" style={{width: "50%"}}>
           <Form.Item label="Company Name">
             {getFieldDecorator('name', {
+              initialValue: name,
               rules: [{required: true, message: 'Please Enter Company Name!'}],
             })(<Input type="text" onChange={(e) => {
               this.setState({name: e.target.value})
@@ -44,6 +72,7 @@ class GeneralDetails extends Component {
           </Form.Item>
           <Form.Item label="Company Website">
             {getFieldDecorator('url', {
+              initialValue: url,
               rules: [{required: true, message: 'Please Enter Company Website!'}],
             })(<Input type="text" onChange={(e) => {
               this.setState({url: e.target.value})
@@ -61,6 +90,7 @@ class GeneralDetails extends Component {
           </Form.Item>
           <Form.Item label="Email">
             {getFieldDecorator('email', {
+              initialValue:email,
               rules: [{
                 type: 'email',
                 message: 'The input is not valid E-mail!',
@@ -80,6 +110,7 @@ class GeneralDetails extends Component {
           </Form.Item>
           <Form.Item label="Allowed Extensions">
             {getFieldDecorator('allowed_ext', {
+              initialValue:allowed_ext,
               rules: [{required: true, message: 'Please Select Allowed Extensions!'}],
             })(<Input type="text" onChange={(e) => {
               this.setState({allowed_ext: e.target.value})
@@ -87,6 +118,7 @@ class GeneralDetails extends Component {
           </Form.Item>
           <Form.Item label="File upload max size">
             {getFieldDecorator('file_upload_max_size', {
+              initialValue:file_upload_max_size,
               rules: [{required: true, message: 'Please Select File upload size!'}],
             })(<Input type="text" addonAfter="MB" onChange={(e) => {
               this.setState({file_upload_max_size: e.target.value})
@@ -94,9 +126,9 @@ class GeneralDetails extends Component {
           </Form.Item>
         </Form>
         <Divider/>
-        <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+        <Form.Item wrapperCol={{span: 12, offset: 6}}>
           <div className="gx-d-flex">
-            <Button type="primary" style={{width: 100}}>
+            <Button type="primary" style={{width: 100}} onClick={this.onValidationCheck}>
               Save
             </Button>
             <Button type="default" style={{width: 100}}>
@@ -112,3 +144,4 @@ class GeneralDetails extends Component {
 GeneralDetails = Form.create({})(GeneralDetails);
 
 export default GeneralDetails;
+

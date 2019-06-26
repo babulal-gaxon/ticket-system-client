@@ -93,7 +93,10 @@ class CustomerDetails extends Component {
               <i className="icon icon-arrow-left" onClick={() => this.props.onBackToList()}/>
               </div>
               <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
-                <Avatar className="gx-mr-3 gx-size-100" src="https://via.placeholder.com/150x150"/>
+                {currentCustomer.avatar ?
+                  <Avatar className="gx-mr-3 gx-size-100" src={currentCustomer.avatar.src}/> :
+                  <Avatar className="gx-mr-3 gx-size-100"
+                          style={{backgroundColor: '#f56a00'}}>{currentCustomer.first_name[0].toUpperCase()}</Avatar>}
                 <div className="gx-media-body">
                   <div className="gx-d-flex gx-justify-content-between">
                     <span
@@ -103,8 +106,8 @@ class CustomerDetails extends Component {
                   </div>
 
                   <div className="gx-mt-2">
-                    <Tag color={currentCustomer.account_status === 1 ? "green" : "red"}>
-                      {currentCustomer.account_status === 1 ? "Active" : "Disabled"}
+                    <Tag color={currentCustomer.status === 1 ? "green" : "red"}>
+                      {currentCustomer.status === 1 ? "Active" : "Disabled"}
                     </Tag>
                   </div>
                 </div>
@@ -120,7 +123,7 @@ class CustomerDetails extends Component {
                 <Col span={6}>
                   Phone
                 </Col>
-                <Col>{currentCustomer.mobile}</Col>
+                <Col>{currentCustomer.phone}</Col>
               </Row>
               <Divider/>
               <Row>

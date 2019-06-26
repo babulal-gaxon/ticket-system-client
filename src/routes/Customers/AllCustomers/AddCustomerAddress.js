@@ -81,14 +81,14 @@ class AddCustomerAddress extends Component {
             </div>
                 <Form.Item label="Select Department">
                   <Checkbox.Group onChange={this.onSelectDepartments} value={department_id}>
-                    <Row className="gx-d-flex gx-flex-row">
-                      <Col span={8} >
+                    <Row className="gx-d-flex gx-flex-row ">
+                      <Col span={8}>
                         <Checkbox value="Billing">Billing</Checkbox>
                       </Col>
-                      <Col span={8} >
+                      <Col span={8}>
                         <Checkbox value="Shipping">Shipping</Checkbox>
                       </Col>
-                      <Col span={8} >
+                      <Col span={8}>
                         <Checkbox value="Other">Other</Checkbox>
                       </Col>
                     </Row>

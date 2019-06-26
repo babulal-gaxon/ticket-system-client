@@ -89,8 +89,8 @@ class Companies extends Component {
         dataIndex: 'companyName',
         render: (text, record) => {
           return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
-              {record.attachment ?
-                <Avatar className="gx-mr-3 gx-size-80" src={record.attachment.src}/> :
+              {record.avatar ?
+                <Avatar className="gx-mr-3 gx-size-80" src={record.avatar.src}/> :
                 <Avatar className="gx-mr-3 gx-size-80"
                         style={{backgroundColor: '#f56a00'}}>{record.company_name[0].toUpperCase()}</Avatar>}
               <div className="gx-media-body">

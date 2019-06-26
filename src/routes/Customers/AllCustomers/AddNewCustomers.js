@@ -4,10 +4,11 @@ import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
 import {connect} from "react-redux";
-import {onAddNewCustomer, onEditCustomer} from "../../../appRedux/actions/Customers";
+import {onAddImage, onAddNewCustomer, onEditCustomer} from "../../../appRedux/actions/Customers";
 import {onGetLabelData} from "../../../appRedux/actions/Labels";
 import {onGetCompaniesData} from "../../../appRedux/actions/Companies";
 import AddCustomerAddress from "./AddCustomerAddress";
+import CustomerImageUpload from "./CustomerImageUpload";
 
 const {Option} = Select;
 
@@ -22,29 +23,32 @@ class AddNewCustomers extends Component {
         password: "",
         phone: "",
         company_id: null,
-        position: "",
         label_ids: [],
         isModalVisible: false,
-        account_status: 1
+        status: 1,
+        profile_pic: null
       };
     } else {
       setTimeout(this.onSetFieldsValue, 10);
       const selectedCustomer = this.props.customersList.find(customer => customer.id === this.props.customerId);
       console.log("selected Customer", selectedCustomer);
-      const {first_name, last_name, email, phone,account_status} = selectedCustomer;
+      const {first_name, last_name, email, phone,status, id} = selectedCustomer;
       const companyId = selectedCustomer.company.id;
       const labelIds = selectedCustomer.labels.map(label => {
         return label.id
       });
+      const imageId = selectedCustomer.avatar ? selectedCustomer.avatar.id : null;
       this.state = {
+        id: id,
         first_name: first_name,
         last_name: last_name,
         email: email,
         phone: phone,
-        account_status: account_status,
+        status: status,
         company_id: companyId,
         label_ids: labelIds,
-        isModalVisible: false
+        isModalVisible: false,
+        profile_pic: imageId
       }
     }
   }
@@ -58,8 +62,7 @@ class AddNewCustomers extends Component {
     this.props.form.setFieldsValue({
       first_name: this.state.first_name,
       last_name: this.state.last_name,
-      email: this.state.email,
-      password: this.state.password
+      email: this.state.email
     });
   };
   onToggleAddressModal = () => {
@@ -70,11 +73,13 @@ class AddNewCustomers extends Component {
   };
   onCustomerAdd = () => {
     if (this.props.customerId === null) {
-      this.props.onAddNewCustomer({...this.state}, this.props.history, this.onAddSuccess)
+      this.setState({profile_pic: this.props.profilePicId},
+        () => {this.props.onAddNewCustomer({...this.state}, this.props.history, this.onAddSuccess)})
     } else {
-      this.props.onEditCustomer({...this.state}, this.props.history, this.onEditSuccess)
-    }
-  };
+      this.setState({profile_pic: this.props.profilePicId},
+        () => {this.props.onEditCustomer({...this.state}, this.props.history, this.onEditSuccess)})
+}
+};
   onAddSuccess = () => {
     message.success('New Customer has been added successfully.');
   };
@@ -85,8 +90,7 @@ class AddNewCustomers extends Component {
     this.props.form.setFieldsValue({
       first_name: "",
       last_name: "",
-      email: "",
-      password: ""
+      email: ""
     });
     this.setState({
       phone: "",
@@ -94,13 +98,11 @@ class AddNewCustomers extends Component {
       position: "",
       label_ids: [],
       isModalVisible: false,
-      account_status: 1
+      status: 1
     })
   };
   onLabelSelect = (id) => {
-    console.log(this.state.label_ids)
     this.setState({label_ids: this.state.label_ids.concat(id)})
-    console.log("after id", this.state.label_ids)
   };
   onLabelRemove = (value) => {
     const updatedLabels = this.state.label_ids.filter(label => label !== value)
@@ -125,7 +127,7 @@ class AddNewCustomers extends Component {
   };
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {phone, account_status, label_ids, company_id} = this.state;
+    const {phone, status, label_ids, company_id, password} = this.state;
     const labelOptions = this.onLabeltSelectOption();
     return (
       <div className="gx-main-layout-content">
@@ -179,11 +181,8 @@ class AddNewCustomers extends Component {
                   }}/>)}
                 </Form.Item>
                 <Form.Item label="Password">
-                  {getFieldDecorator('password', {
-                    rules: [{required: true, message: 'Please Enter Password!'}],
-                  })(<Input.Password type="text" onChange={(e) => {
-                    this.setState({password: e.target.value})
-                  }}/>)}
+                  <Input.Password type="text" onChange={(e) => {
+                    this.setState({password: e.target.value})}}/>
                 </Form.Item>
                 <Form.Item label="Phone Number">
                   <Input type="text" value={phone} onChange={(e) => {
@@ -209,8 +208,8 @@ class AddNewCustomers extends Component {
                   </Select>
                 </Form.Item>
                 <Form.Item label="Status">
-                  <Radio.Group value={account_status} onChange={(e) => {
-                    this.setState({account_status: e.target.value})
+                  <Radio.Group value={status} onChange={(e) => {
+                    this.setState({status: e.target.value})
                   }}>
                     <Radio value={1}>Active</Radio>
                     <Radio value={0}>Disabled</Radio>
@@ -234,7 +233,7 @@ class AddNewCustomers extends Component {
                 </span>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
-              image uploading option will come here, please wait
+              <CustomerImageUpload onAddImage = {this.props.onAddImage}/>
             </Col>
           </Row>
         </Widget>
@@ -249,15 +248,16 @@ class AddNewCustomers extends Component {
 AddNewCustomers = Form.create({})(AddNewCustomers);
 
 const mapStateToProps = ({customers, labelsList, companies}) => {
-  const {customersList, customerId} = customers;
+  const {customersList, customerId, profilePicId} = customers;
   const {labelList} = labelsList;
   const {companiesList} = companies;
-  return {labelList, customersList, customerId, companiesList};
+  return {labelList, customersList, customerId, companiesList, profilePicId};
 };
 
 export default connect(mapStateToProps, {
   onEditCustomer,
   onAddNewCustomer,
   onGetLabelData,
-  onGetCompaniesData
+  onGetCompaniesData,
+  onAddImage
 })(AddNewCustomers);

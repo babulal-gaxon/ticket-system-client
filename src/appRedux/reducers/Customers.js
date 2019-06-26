@@ -1,16 +1,18 @@
 import {
   ADD_NEW_CUSTOMER,
-  DELETE_CUSTOMERS, DISABLE_CUSTOMER,
+  ADD_PROFILE_PICTURE,
+  DELETE_CUSTOMERS,
+  DISABLE_CUSTOMER,
   EDIT_CUSTOMER_DETAILS,
   GET_CUSTOMER_ID,
   GET_CUSTOMERS_DATA
 } from "../../constants/Customers";
-import {BULK_DELETE_SUPPORT_STAFF} from "../../constants/SupportStaff";
 
 const initialState = {
   customersList: [],
   totalItems: null,
-  customerId: null
+  customerId: null,
+  profilePicId: null
 };
 
 export default (state = initialState, action) => {
@@ -60,7 +62,11 @@ export default (state = initialState, action) => {
         customersList: upCustomers,
         totalItems: state.totalItems - action.payload.length
       };
-
+    case ADD_PROFILE_PICTURE:
+      return {
+        ...state,
+        profilePicId: action.payload
+      };
 
     default:
       return state;

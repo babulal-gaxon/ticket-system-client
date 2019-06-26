@@ -7,6 +7,8 @@ import {
   EDIT_COMPANY_LOGO,
   GET_COMPANY_DATA
 } from "../../constants/Companies";
+import {UPLOAD_PROFILE_IMAGE} from "../../constants/SupportStaff";
+import {ADD_PROFILE_PICTURE} from "../../constants/Customers";
 
 export const onGetCompaniesData = (currentPage, itemsPerPage) => {
   return (dispatch) => {
@@ -17,7 +19,7 @@ export const onGetCompaniesData = (currentPage, itemsPerPage) => {
       if (data.success) {
         console.log("data of companies", data.data.items);
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_COMPANY_DATA, payload: data.data});
+        dispatch({type: GET_COMPANY_DATA, payload: data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }
@@ -108,3 +110,4 @@ export const onAddProfileImage = (imageFile) => {
     });
   }
 };
+

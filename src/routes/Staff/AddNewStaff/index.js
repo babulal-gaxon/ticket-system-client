@@ -76,8 +76,9 @@ class AddNewStaff extends Component {
   };
   onStaffAdd = () => {
     if (this.props.staffId === 0) {
-      this.setState({profile_pic:this.props.profilePicId},() => {this.props.onAddSupportStaff({...this.state}, this.props.history, this.onAddSuccess)})
-      console.log("data to be added of staff", this.state);
+      this.setState({profile_pic:this.props.profilePicId},
+        () => {this.props.onAddSupportStaff({...this.state}, this.props.history, this.onAddSuccess)})
+
 
     } else {
       this.props.onEditSupportStaff({...this.state}, this.props.history, this.onEditSuccess);
