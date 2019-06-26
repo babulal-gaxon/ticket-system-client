@@ -1,27 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="72ebf97e-8970-4775-8ec5-0b0606640859" name="Default" comment="Worked on Customers Section">
-      <change afterPath="$PROJECT_DIR$/src/routes/Settings/AboutSystem/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/Settings/CustomerPanel/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/Settings/Email/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/Settings/GeneralSettings/Addresses.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/Settings/GeneralSettings/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/Settings/Localization/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/Settings/index.js" afterDir="false" />
+    <list default="true" id="c249039c-5683-456a-9b9b-29c60c26deea" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/Customers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/Customers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appRedux/reducers/Customers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/reducers/Customers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddNewCustomers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddNewCustomers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Customers/Companies/AddNewCompany.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Customers/Companies/AddNewCompany.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/StaffWithSelectedRole.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/StaffWithSelectedRole.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -35,52 +16,40 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddNewCustomers.js">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-571">
-              <caret line="172" column="40" selection-start-line="172" selection-start-column="40" selection-end-line="172" selection-end-column="40" />
+            <state relative-caret-position="529">
+              <caret line="65" column="59" selection-start-line="65" selection-start-column="59" selection-end-line="65" selection-end-column="59" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
-                <marker date="1561467252972" expanded="true" signature="3211:3283" ph="..." />
+                <element signature="n#!!block;n#componentWillMount#0;n#AllCustomers#0" />
+                <element signature="e#1438#1505#0" />
+                <element signature="e#1531#1598#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddNewCustomers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="72" column="10" selection-start-line="72" selection-start-column="10" selection-end-line="72" selection-end-column="10" />
+            <state relative-caret-position="1513">
+              <caret line="98" column="4" selection-start-line="98" selection-start-column="4" selection-end-line="98" selection-end-column="4" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
-                <element signature="n#!!block;n#componentWillMount#0;n#AllCustomers#0" />
-                <element signature="e#1440#1507#0" />
-                <element signature="e#2418#2471#0" />
-                <element signature="e#2511#2554#0" />
-                <element signature="e#2588#2736#0" />
-                <element signature="e#2767#3074#0" />
-                <element signature="e#3105#3333#0" />
-                <element signature="e#3371#3592#0" />
-                <element signature="e#3621#3716#0" />
-                <element signature="e#3882#5842#0" />
-                <element signature="e#5663#6857#0" />
-                <element signature="e#6901#7130#0" />
-                <element signature="e#7165#7250#0" />
-                <element signature="e#7287#7381#0" />
-                <element signature="e#7414#7633#0" />
-                <element signature="e#7669#8256#0" />
-                <element signature="e#8283#8658#0" />
-                <element signature="e#8685#8815#0" />
-                <element signature="e#8840#8888#0" />
-                <element signature="e#8912#10454#0" />
-                <element signature="e#10486#10672#0" />
-                <element signature="e#10700#10779#0" />
-                <element signature="e#10810#10951#0" />
-                <element signature="e#10990#11047#0" />
-                <element signature="e#11086#11239#0" />
-                <element signature="e#11280#11437#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerDetails.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2686">
+              <caret line="160" column="37" selection-start-line="160" selection-start-column="37" selection-end-line="160" selection-end-column="37" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -176,7 +145,6 @@
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js" />
         <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/Companies.js" />
-        <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerDetails.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/SupportStaff.js" />
         <option value="$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/index.js" />
         <option value="$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/StaffWithSelectedRole.js" />
@@ -200,6 +168,7 @@
         <option value="$PROJECT_DIR$/src/appRedux/reducers/Customers.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/Customers.js" />
         <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddNewCustomers.js" />
+        <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerDetails.js" />
         <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" />
       </list>
     </option>
@@ -215,67 +184,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
       <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="Customers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="Customers" type="462c0819:PsiDirectoryNode" />
-              <item name="AllCustomers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="Staff" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="Staff" type="462c0819:PsiDirectoryNode" />
-              <item name="AddNewStaff" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="Staff" type="462c0819:PsiDirectoryNode" />
-              <item name="StaffList" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -347,6 +257,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+      <changelist id="c249039c-5683-456a-9b9b-29c60c26deea" name="Default Changelist" comment="" />
       <created>1558163629825</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -391,6 +302,7 @@
       <workItem from="1561210224858" duration="41000" />
       <workItem from="1561350828115" duration="29554000" />
       <workItem from="1561437996857" duration="24772000" />
+      <workItem from="1561564715435" duration="285000" />
     </task>
     <task id="LOCAL-00001" summary="add api">
       <created>1558429986835</created>
@@ -630,11 +542,18 @@
       <option name="project" value="LOCAL" />
       <updated>1561383188639</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Worked on Customers Section">
+      <created>1561483208620</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1561483208620</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="786656000" />
+    <option name="totallyTimeSpent" value="791770000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -649,9 +568,9 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.43207857" visible="true" weight="0.20907739" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4304419" visible="true" weight="0.20907739" />
       <window_info id="Structure" order="1" weight="0.25" />
-      <window_info id="npm" order="2" sideWeight="0.56792146" side_tool="true" weight="0.20907739" />
+      <window_info id="npm" order="2" sideWeight="0.5695581" side_tool="true" weight="0.20907739" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
@@ -774,8 +693,12 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js</url>
           <line>88</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js</url>
+          <line>127</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -891,16 +814,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Staff/AddNewStaff/ImageUpload.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="70" column="1" lean-forward="true" selection-start-line="70" selection-start-column="1" selection-end-line="70" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Staff/AddNewStaff/ImageUpload.js" />
     <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/RolesAndPermissions.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -1138,16 +1052,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerDetails.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-284">
-          <caret line="95" column="54" selection-start-line="95" selection-start-column="54" selection-end-line="95" selection-end-column="54" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2533">
@@ -1242,49 +1146,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddNewCustomers.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-571">
-          <caret line="172" column="40" selection-start-line="172" selection-start-column="40" selection-end-line="172" selection-end-column="40" />
+        <state relative-caret-position="529">
+          <caret line="65" column="59" selection-start-line="65" selection-start-column="59" selection-end-line="65" selection-end-column="59" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
-            <marker date="1561467252972" expanded="true" signature="3211:3283" ph="..." />
+            <element signature="n#!!block;n#componentWillMount#0;n#AllCustomers#0" />
+            <element signature="e#1438#1505#0" />
+            <element signature="e#1531#1598#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddNewCustomers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="72" column="10" selection-start-line="72" selection-start-column="10" selection-end-line="72" selection-end-column="10" />
+        <state relative-caret-position="1513">
+          <caret line="98" column="4" selection-start-line="98" selection-start-column="4" selection-end-line="98" selection-end-column="4" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
-            <element signature="n#!!block;n#componentWillMount#0;n#AllCustomers#0" />
-            <element signature="e#1440#1507#0" />
-            <element signature="e#2418#2471#0" />
-            <element signature="e#2511#2554#0" />
-            <element signature="e#2588#2736#0" />
-            <element signature="e#2767#3074#0" />
-            <element signature="e#3105#3333#0" />
-            <element signature="e#3371#3592#0" />
-            <element signature="e#3621#3716#0" />
-            <element signature="e#3882#5842#0" />
-            <element signature="e#5663#6857#0" />
-            <element signature="e#6901#7130#0" />
-            <element signature="e#7165#7250#0" />
-            <element signature="e#7287#7381#0" />
-            <element signature="e#7414#7633#0" />
-            <element signature="e#7669#8256#0" />
-            <element signature="e#8283#8658#0" />
-            <element signature="e#8685#8815#0" />
-            <element signature="e#8840#8888#0" />
-            <element signature="e#8912#10454#0" />
-            <element signature="e#10486#10672#0" />
-            <element signature="e#10700#10779#0" />
-            <element signature="e#10810#10951#0" />
-            <element signature="e#10990#11047#0" />
-            <element signature="e#11086#11239#0" />
-            <element signature="e#11280#11437#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerDetails.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2686">
+          <caret line="160" column="37" selection-start-line="160" selection-start-column="37" selection-end-line="160" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
