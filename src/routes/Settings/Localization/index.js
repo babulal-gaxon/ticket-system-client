@@ -34,15 +34,15 @@ class Localization extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.localizationDetails) {
       const {date_format, time_format, default_language, disable_language_selection} = nextProps.localizationDetails;
+      if(JSON.stringify(nextProps.localizationDetails) !== JSON.stringify(this.props.localizationDetails)) {
       this.setState({
         date_format: date_format,
         time_format: time_format,
         default_language: default_language,
         disable_language_selection: disable_language_selection
       })
-    } else return null;
+    }
   }
 
   onDateSelect = value => {
@@ -128,8 +128,8 @@ class Localization extends Component {
                 initialValue: disable_language_selection,
                 rules: [{required: true, message: 'Please Enter State Name!'}],
               })(<Radio.Group onChange={(event) => this.onChangePermission(event)}>
-                <Radio value={1}>Allowed</Radio>
-                <Radio value={0}>Not-Allowed</Radio>
+                <Radio value="1">Allowed</Radio>
+                <Radio value="0">Not-Allowed</Radio>
               </Radio.Group>)}
             </Form.Item>
             <hr/>

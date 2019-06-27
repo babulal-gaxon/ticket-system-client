@@ -1,7 +1,7 @@
 import {
   ADD_CUSTOMER_PANEL_DETAILS,
   ADD_GENERAL_DETAILS,
-  ADD_LOCALIZATION_DETAILS, GET_CUSTOMER_PANEL_DETAILS,
+  ADD_LOCALIZATION_DETAILS, GET_COUNTRIES_LIST, GET_CUSTOMER_PANEL_DETAILS,
   GET_GENERAL_DETAILS,
   GET_LOCALIZATION_DETAILS
 } from "../../constants/GeneralSettings";
@@ -9,7 +9,9 @@ import {
 const initialState = {
   generalSettingsData: null,
   localizationDetails: null,
-  customerPanelDetails: null
+  customerPanelDetails: null,
+  generalAddress: [],
+  countriesList: []
 };
 
 export default (state = initialState, action) => {
@@ -50,6 +52,13 @@ export default (state = initialState, action) => {
         ...state,
         customerPanelDetails: action.payload
       };
+
+    case GET_COUNTRIES_LIST:
+      console.log(" i am in countries list")
+      return {
+        ...state,
+        countriesList: action.payload
+      }
 
     default: return state;
   }
