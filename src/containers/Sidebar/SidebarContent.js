@@ -172,12 +172,13 @@ class SidebarContent extends Component {
                   <Link to ="/settings/customer-panel"><i className="icon icon-customer-panel"/>
                     <IntlMessages id="sidebar.dashboard.customer.panel"/></Link>
                 </Menu.Item>
-
-                <Menu.Item key="aboutSystem">
-                  <Link to ="/settings/about-system"><i className="icon icon-sweet-alert"/>
-                    <IntlMessages id="sidebar.dashboard.about.system"/></Link>
-                </Menu.Item>
               </SubMenu>
+
+              <Menu.Item key="rolesAndPermissions">
+                <Link to ="/roles-permissions/all"><i className="icon icon-widgets"/>
+                  <IntlMessages id="sidebar.dashboard.roles.and.permissions"/></Link>
+              </Menu.Item>
+
             </Menu>
           </CustomScrollbars>
         </div>

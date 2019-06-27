@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Button, Form, Input, message, Modal, Radio} from "antd";
+import {Button, Form, Input, Modal, Radio} from "antd";
 import PropTypes from "prop-types";
 import {SketchPicker} from "react-color";
 import reactCSS from 'reactcss';
@@ -18,24 +18,19 @@ class AddNewPriority extends Component {
         value: 1
       };
     } else {
-      setTimeout(this.onSetFieldsValue, 10);
       const selectedPriority = this.props.priorities.find(priority => priority.id === this.props.priorityId);
       this.state = {
         ...selectedPriority
       };
     }
   };
-  onSetFieldsValue = () => {
-    this.props.form.setFieldsValue({
-      name: this.state.name
-    });
-  };
+
   onPriorityAdd = () => {
     if (this.props.priorityId === 0) {
-      this.props.onAddTicketPriority({...this.state},this.onAddSuccess);
+      this.props.onAddTicketPriority({...this.state});
       this.props.onToggleAddPriority();
     } else {
-      this.props.onEditTicketPriority({...this.state},this.onEditSuccess);
+      this.props.onEditTicketPriority({...this.state});
       this.props.onToggleAddPriority();
     }
   };
@@ -46,21 +41,19 @@ class AddNewPriority extends Component {
       }
     });
   };
+
   handleColorClick = () => {
     this.setState({displayColorPicker: !this.state.displayColorPicker});
   };
+
   handleColorClose = () => {
     this.setState({displayColorPicker: false});
   };
+
   handleColorChange = (color) => {
     this.setState({color_code: color.hex})
   };
-  onAddSuccess = () => {
-    message.success('New Priority has been added successfully.');
-  };
-  onEditSuccess = () => {
-    message.success('The Priority has been updated successfully.');
-  };
+
   render() {
     const {getFieldDecorator} = this.props.form;
     const {name, value, desc, status, color_code} = this.state;
@@ -94,6 +87,7 @@ class AddNewPriority extends Component {
         },
       },
     });
+
     return (
       <div>
         <Modal
@@ -111,6 +105,7 @@ class AddNewPriority extends Component {
           <Form layout="vertical">
             <Form.Item label="Name">
               {getFieldDecorator('name', {
+                initialValue: name,
                 rules: [{required: true, message: 'Please Enter Priority Name!'}],
               })(<Input type="text" onChange={(e) => {
                 this.setState({name: e.target.value})

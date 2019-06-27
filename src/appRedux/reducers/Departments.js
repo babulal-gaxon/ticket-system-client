@@ -17,8 +17,8 @@ export default (state = initialState, action) => {
     case GET_DEPARTMENTS:
       return {
         ...state,
-        dept: action.payload.items,
-        totalItems: action.payload.paginate.total
+        dept: action.payload.data,
+        totalItems: action.payload.meta.total
       };
 
     case ADD_DEPARTMENT:

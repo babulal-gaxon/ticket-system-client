@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Checkbox, Col, Collapse, Divider, Form, Input, message, Modal, Radio, Row} from "antd";
+import {Breadcrumb, Button, Checkbox, Col, Collapse, Divider, Form, Input, Radio, Row} from "antd";
 import Widget from "../../../components/Widget";
 import {onAddRole, onDisableSelectedRole, onEditRole} from "../../../appRedux/actions/RolesAndPermissions";
 import {connect} from "react-redux";
@@ -8,6 +8,7 @@ import InfoView from "../../../components/InfoView";
 import {onBulkDeleteStaff, onGetStaff, onGetStaffId} from "../../../appRedux/actions/SupportStaff";
 import StaffDetail from "../../Staff/StaffList/StaffDetail";
 import StaffWithSelectedRole from "./StaffWithSelectedRole";
+import PropTypes from "prop-types";
 
 const Panel = Collapse.Panel;
 const customPanelStyle = {
@@ -17,7 +18,6 @@ const customPanelStyle = {
   border: 0,
   overflow: 'hidden',
 };
-const confirm = Modal.confirm;
 
 class AddNewRole extends Component {
   constructor(props) {
@@ -42,34 +42,35 @@ class AddNewRole extends Component {
         currentMember: null
       }
     } else {
+      const selectedRole = this.props.selectedRole;
       this.state = {
-        id: this.props.selectedRole.id,
-        name: this.props.selectedRole.name,
-        status: this.props.selectedRole.status,
-        customerPermissions: this.props.selectedRole.role_permissions.companies ?
-          this.props.selectedRole.role_permissions.companies.map(company => company.id) : [],
-        contactPermissions: this.props.selectedRole.role_permissions.contacts ?
-          this.props.selectedRole.role_permissions.contacts.map(contact => contact.id) : [],
-        departmentsPermissions: this.props.selectedRole.role_permissions.departments ?
-          this.props.selectedRole.role_permissions.departments.map(department => department.id) : [],
-        labelPermissions: this.props.selectedRole.role_permissions.labels ?
-          this.props.selectedRole.role_permissions.labels.map(label => label.id) : [],
-        prioritiesPermissions: this.props.selectedRole.role_permissions.priorities ?
-          this.props.selectedRole.role_permissions.priorities.map(priority => priority.id) : [],
-        responsesPermissions: this.props.selectedRole.role_permissions.responses ?
-          this.props.selectedRole.role_permissions.responses.map(response => response.id) : [],
-        rolesPermissions: this.props.selectedRole.role_permissions.roles ?
-          this.props.selectedRole.role_permissions.roles.map(role => role.id) : [],
-        settingsPermissions: this.props.selectedRole.role_permissions.settings ?
-          this.props.selectedRole.role_permissions.settings.map(setting => setting.id) : [],
-        staffsPermissions: this.props.selectedRole.role_permissions.staffs ?
-          this.props.selectedRole.role_permissions.staffs.map(staff => staff.id) : [],
-        statusPermissions: this.props.selectedRole.role_permissions.status ?
-          this.props.selectedRole.role_permissions.status.map(stat => stat.id) : [],
-        ticketsPermissions: this.props.selectedRole.role_permissions.tickets ?
-          this.props.selectedRole.role_permissions.tickets.map(ticket => ticket.id) : [],
-        usersPermissions: this.props.selectedRole.role_permissions.users ?
-          this.props.selectedRole.role_permissions.users.map(user => user.id) : [],
+        id: selectedRole.id,
+        name: selectedRole.name,
+        status: selectedRole.status,
+        customerPermissions: selectedRole.role_permissions.companies ?
+          selectedRole.role_permissions.companies.map(company => company.id) : [],
+        contactPermissions: selectedRole.role_permissions.contacts ?
+          selectedRole.role_permissions.contacts.map(contact => contact.id) : [],
+        departmentsPermissions: selectedRole.role_permissions.departments ?
+          selectedRole.role_permissions.departments.map(department => department.id) : [],
+        labelPermissions: selectedRole.role_permissions.labels ?
+          selectedRole.role_permissions.labels.map(label => label.id) : [],
+        prioritiesPermissions: selectedRole.role_permissions.priorities ?
+          selectedRole.role_permissions.priorities.map(priority => priority.id) : [],
+        responsesPermissions: selectedRole.role_permissions.responses ?
+          selectedRole.role_permissions.responses.map(response => response.id) : [],
+        rolesPermissions: selectedRole.role_permissions.roles ?
+          selectedRole.role_permissions.roles.map(role => role.id) : [],
+        settingsPermissions: selectedRole.role_permissions.settings ?
+          selectedRole.role_permissions.settings.map(setting => setting.id) : [],
+        staffsPermissions: selectedRole.role_permissions.staffs ?
+          selectedRole.role_permissions.staffs.map(staff => staff.id) : [],
+        statusPermissions: selectedRole.role_permissions.status ?
+          selectedRole.role_permissions.status.map(stat => stat.id) : [],
+        ticketsPermissions: selectedRole.role_permissions.tickets ?
+          selectedRole.role_permissions.tickets.map(ticket => ticket.id) : [],
+        usersPermissions: selectedRole.role_permissions.users ?
+          selectedRole.role_permissions.users.map(user => user.id) : [],
         permissions: [],
         filterText: "",
         checkedList: [],
@@ -81,75 +82,79 @@ class AddNewRole extends Component {
   componentWillMount() {
     this.props.onGetStaff();
   }
-  componentDidMount() {
-    this.onSetFieldsValue()
-  }
 
-  onSetFieldsValue = () => {
-    this.props.form.setFieldsValue({
-      name: this.state.name
-    });
-  };
   onSelectCustomerPermissions = checkedList => {
     this.setState({
       customerPermissions: checkedList
     })
   };
+
   onSelectContactPermissions = checkedList => {
     this.setState({
       contactPermissions: checkedList
     })
   };
+
   onSelectDepartmentPermissions = checkedList => {
     this.setState({
       departmentsPermissions: checkedList
     })
   };
+
   onSelectLabelPermissions = checkedList => {
     this.setState({
       labelPermissions: checkedList
     })
   };
+
   onSelectPriorityPermissions = checkedList => {
     this.setState({
       prioritiesPermissions: checkedList
     })
   };
+
   onSelectResponsesPermissions = checkedList => {
     this.setState({
       responsesPermissions: checkedList
     })
   };
+
   onSelectRolesPermissions = checkedList => {
     this.setState({
       rolesPermissions: checkedList
     })
   };
+
   onSelectSettingsPermissions = checkedList => {
     this.setState({
       settingsPermissions: checkedList
     })
   };
+
   onSelectStaffsPermissions = checkedList => {
     this.setState({
       staffsPermissions: checkedList
     })
   };
+
   onSelectStatusPermissions = checkedList => {
     this.setState({
       statusPermissions: checkedList
     })
   };
+
   onSelectTicketsPermissions = checkedList => {
     this.setState({
       ticketsPermissions: checkedList
     })
   };
+
   onSelectUsersPermissions = checkedList => {
     this.setState({
       usersPermissions: checkedList
     })
   };
+
   onCollectAllPermissions = () => {
     return [...this.state.customerPermissions,
       ...this.state.contactPermissions,
@@ -164,13 +169,7 @@ class AddNewRole extends Component {
       ...this.state.ticketsPermissions,
       ...this.state.usersPermissions];
   };
-  onValidationCheck = () => {
-    this.props.form.validateFields(err => {
-      if (!err) {
-        this.onAddButtonClick();
-      }
-    });
-  };
+
   onAddButtonClick = () => {
     if (!this.props.selectedRole) {
       const addData = {
@@ -178,7 +177,7 @@ class AddNewRole extends Component {
         status: this.state.status,
         permissions: this.onCollectAllPermissions()
       };
-      this.props.onAddRole(addData, this.props.history, this.onAddSuccess);
+      this.props.onAddRole(addData, this.props.history);
     } else {
       const editedData = {
         name: this.state.name,
@@ -186,15 +185,8 @@ class AddNewRole extends Component {
         permissions: this.onCollectAllPermissions(),
         id: this.state.id
       };
-      console.log("edited data", editedData);
-      this.props.onEditRole(editedData, this.props.history, this.onEditSuccess)
+      this.props.onEditRole(editedData, this.props.history)
     }
-  };
-  onAddSuccess = () => {
-    message.success('New Role has been added successfully.');
-  };
-  onEditSuccess = () => {
-    message.success('The Role has been updated successfully.');
   };
 
   onCheckAllCustomers = e => {
@@ -205,6 +197,7 @@ class AddNewRole extends Component {
       customerPermissions: e.target.checked ? allSelected : []
     });
   };
+
   onCheckAllContacts = e => {
     const allSelected = this.props.userPermissions.contacts.map(company => {
       return company.id
@@ -213,6 +206,7 @@ class AddNewRole extends Component {
       contactPermissions: e.target.checked ? allSelected : []
     });
   };
+
   onCheckAllDepartments = e => {
     const allSelected = this.props.userPermissions.departments.map(department => {
       return department.id
@@ -221,6 +215,7 @@ class AddNewRole extends Component {
       departmentsPermissions: e.target.checked ? allSelected : []
     });
   };
+
   onCheckAllLabels = e => {
     const allSelected = this.props.userPermissions.labels.map(label => {
       return label.id
@@ -229,6 +224,7 @@ class AddNewRole extends Component {
       labelPermissions: e.target.checked ? allSelected : []
     })
   };
+
   onCheckAllPriorities = e => {
     const allSelected = this.props.userPermissions.priorities.map(priority => {
       return priority.id
@@ -237,6 +233,7 @@ class AddNewRole extends Component {
       prioritiesPermissions: e.target.checked ? allSelected : []
     })
   };
+
   onCheckAllResponses = e => {
     const allSelected = this.props.userPermissions.responses.map(response => {
       return response.id
@@ -245,6 +242,7 @@ class AddNewRole extends Component {
       responsesPermissions: e.target.checked ? allSelected : []
     })
   };
+
   onCheckAllRoles = e => {
     const allSelected = this.props.userPermissions.roles.map(role => {
       return role.id
@@ -253,6 +251,7 @@ class AddNewRole extends Component {
       rolesPermissions: e.target.checked ? allSelected : []
     })
   };
+
   onCheckAllSettings = e => {
     const allSelected = this.props.userPermissions.settings.map(setting => {
       return setting.id
@@ -261,6 +260,7 @@ class AddNewRole extends Component {
       settingsPermissions: e.target.checked ? allSelected : []
     })
   };
+
   onCheckAllStaffs = e => {
     const allSelected = this.props.userPermissions.staffs.map(staff => {
       return staff.id
@@ -269,6 +269,7 @@ class AddNewRole extends Component {
       staffsPermissions: e.target.checked ? allSelected : []
     })
   };
+
   onCheckAllStatus = e => {
     const allSelected = this.props.userPermissions.status.map(stat => {
       return stat.id
@@ -277,6 +278,7 @@ class AddNewRole extends Component {
       statusPermissions: e.target.checked ? allSelected : []
     })
   };
+
   onCheckAllTickets = e => {
     const allSelected = this.props.userPermissions.tickets.map(ticket => {
       return ticket.id
@@ -285,6 +287,7 @@ class AddNewRole extends Component {
       ticketsPermissions: e.target.checked ? allSelected : []
     })
   };
+
   onCheckAllUsers = e => {
     const allSelected = this.props.userPermissions.users.map(user => {
       return user.id
@@ -293,15 +296,28 @@ class AddNewRole extends Component {
       usersPermissions: e.target.checked ? allSelected : []
     })
   };
+
   onSelectStaff = (staff) => {
     this.setState({currentMember: staff})
   };
+
   onBackToList = () => {
     this.setState({currentMember: null})
   };
+
+  onValidationCheck = () => {
+    this.props.form.validateFields(err => {
+      if (!err) {
+        this.onAddButtonClick();
+      }
+    });
+  };
+
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {status, currentMember} = this.state;
+    const {status, currentMember, name} = this.state;
+    console.log("user permissions", this.props.userPermissions)
+
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -320,6 +336,7 @@ class AddNewRole extends Component {
               <Form layout="vertical" style={{width: "80%"}}>
                 <Form.Item label="Role Name">
                   {getFieldDecorator('name', {
+                    initialValue: name,
                     rules: [{required: true, message: 'Please Enter Role Name!'}],
                   })(<Input type="text" onChange={(e) => this.setState({name: e.target.value})}/>)}
                 </Form.Item>
@@ -357,7 +374,6 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-
                     <Panel header="Company Contracts" key="2" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
@@ -619,11 +635,11 @@ class AddNewRole extends Component {
                                        selectedRole={this.props.selectedRole}
                                        onGetStaffId={this.props.onGetStaffId}
                                        onSelectStaff={this.onSelectStaff}
-                history={this.props.history}/>
+                                       history={this.props.history}/>
               </Col> : null}
           </Row> : <StaffDetail staff={currentMember} onGetStaffId={this.props.onGetStaffId}
-                                history={this.props.history} onSelectStaff = {this.onSelectStaff}
-                                onBackToList = {this.onBackToList}/>}
+                                history={this.props.history} onSelectStaff={this.onSelectStaff}
+                                onBackToList={this.onBackToList}/>}
         </Widget>
         <InfoView/>
       </div>
@@ -636,8 +652,8 @@ AddNewRole = Form.create({})(AddNewRole);
 const mapStateToProps = ({auth, rolesAndPermissions, supportStaff}) => {
   const {userPermissions} = auth;
   const {staffList} = supportStaff;
-  const {roles, roleId, selectedRole} = rolesAndPermissions;
-  return {userPermissions, roles, roleId, staffList, selectedRole}
+  const {selectedRole} = rolesAndPermissions;
+  return {userPermissions, staffList, selectedRole}
 };
 
 export default connect(mapStateToProps, {
@@ -649,6 +665,14 @@ export default connect(mapStateToProps, {
   onBulkDeleteStaff
 })(AddNewRole);
 
-AddNewRole.defaultProps = {};
+AddNewRole.defaultProps = {
+  selectedRole: {},
+  userPermissions: {},
+  staffList: []
+};
 
-AddNewRole.propTypes = {};
+AddNewRole.propTypes = {
+  selectedRole: PropTypes.object,
+  userPermissions: PropTypes.object,
+  staffList: PropTypes.array
+};

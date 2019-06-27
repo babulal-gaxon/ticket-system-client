@@ -15,36 +15,23 @@ class AddNewResponses extends Component {
         status: 1
       };
     } else {
-      setTimeout(this.onSetFieldsValue, 10);
       const selectedResponse = this.props.responses.find(response => response.id === this.props.responseId);
       this.state = {
         ...selectedResponse
       };
     }
   };
-  onSetFieldsValue = () => {
-    this.props.form.setFieldsValue({
-      short_title: this.state.short_title,
-      short_code: this.state.short_code,
-      message: this.state.message
 
-    });
-  };
   onResponseAdd = () => {
     if (this.props.responseId === 0) {
-      this.props.onAddCannedResponse({...this.state}, this.onAddSuccess);
+      this.props.onAddCannedResponse({...this.state});
       this.props.onToggleAddCanned();
     } else {
-      this.props.onEditCannedResponse({...this.state}, this.onEditSuccess);
+      this.props.onEditCannedResponse({...this.state});
       this.props.onToggleAddCanned();
     }
   };
-  onAddSuccess = () => {
-    message.success('New Response has been added successfully.');
-  };
-  onEditSuccess = () => {
-    message.success('The Response has been updated successfully.');
-  };
+
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
@@ -55,7 +42,7 @@ class AddNewResponses extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {status} = this.state;
+    const {status, short_title, short_code, message} = this.state;
     const {showAddCanned, onToggleAddCanned} = this.props;
     return (
       <div>
@@ -74,6 +61,7 @@ class AddNewResponses extends Component {
           <Form layout="vertical">
             <Form.Item label="Short Title">
               {getFieldDecorator('short_title', {
+                initialValue: short_title,
                 rules: [{required: true, message: 'Please Enter Short Title!'}],
               })(<Input type="text" onChange={(e) => {
                 this.setState({short_title: e.target.value})
@@ -81,6 +69,7 @@ class AddNewResponses extends Component {
             </Form.Item>
             <Form.Item label="Short Code">
               {getFieldDecorator('short_code', {
+                initialValue: short_code,
                 rules: [{required: true, message: 'Please Enter Short Code!'}],
               })(<Input type="text" onChange={(e) => {
                 this.setState({short_code: e.target.value})
@@ -88,6 +77,7 @@ class AddNewResponses extends Component {
             </Form.Item>
             <Form.Item label="Message">
               {getFieldDecorator('message', {
+                initialValue: message,
                 rules: [{required: true, message: 'Please Enter Message!'}],
               })(<TextArea rows={4} className="gx-form-control-lg" type="textarea" onChange={(e) => {
                 this.setState({message: e.target.value})

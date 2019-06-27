@@ -7,8 +7,6 @@ import {
   EDIT_COMPANY_LOGO,
   GET_COMPANY_DATA
 } from "../../constants/Companies";
-import {UPLOAD_PROFILE_IMAGE} from "../../constants/SupportStaff";
-import {ADD_PROFILE_PICTURE} from "../../constants/Customers";
 
 export const onGetCompaniesData = (currentPage, itemsPerPage) => {
   return (dispatch) => {
@@ -35,12 +33,13 @@ export const onAddNewCompany = (company) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/customer/companies', company
-     ).then(({data}) => {
+    ).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: ADD_NEW_COMPANY, payload: data.data});
-        dispatch({type: SHOW_MESSAGE, payload: "The Company has been added successfully" });
+        dispatch({type:FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "The Company has been added successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -60,7 +59,8 @@ export const onEditCompany = (company) => {
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: EDIT_COMPANY_DETAILS, payload: data.data});
-        dispatch({type: SHOW_MESSAGE, payload: "The Company details has been added successfully" });
+        dispatch({type:FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "The Company details has been added successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -78,7 +78,8 @@ export const onDeleteCompanies = (companyIds) => {
     axios.post('/setup/customer/companies/delete', companyIds).then(({data}) => {
       if (data.success) {
         dispatch({type: DELETE_COMPANIES, payload: data.data});
-        dispatch({type: SHOW_MESSAGE, payload: "The Company has been deleted successfully" });
+        dispatch({type:FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "The Company has been deleted successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

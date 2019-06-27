@@ -9,7 +9,6 @@ const Settings =({match}) => (
     <Route path={`${match.url}/localization`} component={asyncComponent(() => import('./Localization/index'))}/>
     <Route path={`${match.url}/email`} component={asyncComponent(() => import('./Email/index'))}/>
     <Route path={`${match.url}/customer-panel`} component={asyncComponent(() => import('./CustomerPanel/index'))}/>
-    <Route path={`${match.url}/about-system`} component={asyncComponent(() => import('./AboutSystem/index'))}/>
   </Switch>
 );
 

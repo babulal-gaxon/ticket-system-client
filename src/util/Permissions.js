@@ -158,6 +158,35 @@ class Permissions {
     }
     return false;
   };
+
+  // RolesAndPermissions
+  static canRoleAdd= () => {
+    if (this.permissions.roles) {
+      return this.permissions.roles.filter((key) => key.name === "roles.store").length > 0
+    }
+    return false;
+  };
+
+  static canRoleEdit = () => {
+    if (this.permissions.roles) {
+      return this.permissions.roles.filter((key) => key.name === "roles.update").length > 0
+    }
+    return false;
+  };
+
+  static canRoleView = () => {
+    if (this.permissions.roles) {
+      return this.permissions.roles.filter((key) => key.name === "roles.index").length > 0
+    }
+    return false;
+  };
+
+  static canRoleDelete = () => {
+    if (this.permissions.roles) {
+      return this.permissions.roles.filter((key) => key.name === "roles.destroy").length > 0
+    }
+    return false;
+  };
 }
 
 

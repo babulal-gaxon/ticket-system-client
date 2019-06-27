@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Divider, Form, Input} from "antd/lib/index";
+import InfoView from "../../../components/InfoView";
 
 class GeneralDetails extends Component {
   constructor(props) {
@@ -16,25 +17,9 @@ class GeneralDetails extends Component {
         mobile: ""
       }
     }
-    // else {
-    //   const {name, website, file_upload_max_size, email, mobile, logo, favicon, allowed_ext} = this.props.generalSettingsData;
-    //   this.state = {
-    //     name: name,
-    //     url: website,
-    //     logo: logo,
-    //     favicon: favicon,
-    //     allowed_ext: allowed_ext,
-    //     file_upload_max_size: file_upload_max_size,
-    //     email: email,
-    //     mobile: mobile
-    //   }
-    // }
-  }
-
-  componentWillReceiveProps(nextProps, nextContext) {
-    const {name, allowed_ext, file_upload_max_size, email, mobile, logo, favicon, website} =nextProps.generalSettingsData;
-    if(JSON.stringify(nextProps.generalSettingsData) !== JSON.stringify(this.props.generalSettingsData)) {
-      this.setState({
+    else {
+      const {name, website, file_upload_max_size, email, logo, favicon, allowed_ext} = this.props.generalSettingsData;
+      this.state = {
         name: name,
         url: website,
         logo: logo,
@@ -42,8 +27,26 @@ class GeneralDetails extends Component {
         allowed_ext: allowed_ext,
         file_upload_max_size: file_upload_max_size,
         email: email,
-        mobile: mobile
-      })
+        // mobile: mobile
+      }
+    }
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if(nextProps.generalSettingsData) {
+      const {name, allowed_ext, file_upload_max_size, email, mobile, logo, favicon, website} = nextProps.generalSettingsData;
+      if (JSON.stringify(nextProps.generalSettingsData) !== JSON.stringify(this.props.generalSettingsData)) {
+        this.setState({
+          name: name,
+          url: website,
+          logo: logo,
+          favicon: favicon,
+          allowed_ext: allowed_ext,
+          file_upload_max_size: file_upload_max_size,
+          email: email,
+          // mobile: mobile
+        })
+      }
     }
   }
 
@@ -57,7 +60,7 @@ class GeneralDetails extends Component {
 
   render() {
     console.log("general Settings Data", this.state);
-    const {mobile,name,url,email,allowed_ext,file_upload_max_size} = this.state;
+    const {name,url,email,allowed_ext,file_upload_max_size} = this.state;
     const {getFieldDecorator} = this.props.form;
     return (
       <div>
@@ -103,11 +106,11 @@ class GeneralDetails extends Component {
               this.setState({email: e.target.value})
             }}/>)}
           </Form.Item>
-          <Form.Item label="Phone no.">
-            <Input type="text" value={mobile} onChange={(e) => {
-              this.setState({mobile: e.target.value})
-            }}/>
-          </Form.Item>
+          {/*<Form.Item label="Phone no.">*/}
+          {/*  <Input type="text" value={mobile} onChange={(e) => {*/}
+          {/*    this.setState({mobile: e.target.value})*/}
+          {/*  }}/>*/}
+          {/*</Form.Item>*/}
           <Form.Item label="Allowed Extensions">
             {getFieldDecorator('allowed_ext', {
               initialValue:allowed_ext,
@@ -136,6 +139,7 @@ class GeneralDetails extends Component {
             </Button>
           </div>
         </Form.Item>
+        <InfoView/>
       </div>
     );
   }

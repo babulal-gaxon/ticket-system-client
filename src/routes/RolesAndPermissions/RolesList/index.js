@@ -1,16 +1,19 @@
 import React, {Component} from "react";
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, message, Modal, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 
 
 import Widget from "../../../components/Widget/index";
 import InfoView from '../../../components/InfoView'
 import {
-  onBulkDeleteRoles, onDisableSelectedRole,
+  onBulkDeleteRoles,
+  onDisableSelectedRole,
   onGetRoleDetail,
   onGetRoles
 } from "../../../appRedux/actions/RolesAndPermissions";
 import moment from "moment";
+import Permissions from "../../../util/Permissions";
+import PropTypes from "prop-types";
 
 const ButtonGroup = Button.Group;
 const Option = Select.Option;
@@ -30,39 +33,57 @@ class RolesList extends Component {
   };
 
   componentWillMount() {
-    this.onGetRolesData(this.state.current, this.state.itemNumbers)
+    this.onGetRolesData(this.state.current, this.state.itemNumbers);
   };
 
   onGetRolesData = (currentPage, itemsPerPage) => {
-    this.props.onGetRoles(currentPage, itemsPerPage);
+    if (Permissions.canRoleView()) {
+      this.props.onGetRoles(currentPage, itemsPerPage);
+    }
   };
+
   onFilterData = () => {
     return this.props.roles.filter(role => role.name.indexOf(this.state.filterText) !== -1);
   };
+
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value})
   };
+
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
   };
+
   onDropdownChange = (value) => {
-    this.setState({itemNumbers: value, current: 1}, () => {this.onGetRolesData(this.state.current, this.state.itemNumbers)});
+    this.setState({itemNumbers: value, current: 1},
+      () => {
+        this.onGetRolesData(this.state.current, this.state.itemNumbers)
+      });
   };
+
   onCurrentIncrement = () => {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
-      this.setState({current: this.state.current + 1}, () => { this.onGetRolesData(this.state.current, this.state.itemNumbers)});
+      this.setState({current: this.state.current + 1},
+        () => {
+          this.onGetRolesData(this.state.current, this.state.itemNumbers)
+        });
     } else {
       return null;
     }
   };
+
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
-      this.setState({current: this.state.current - 1},() => { this.onGetRolesData(this.state.current, this.state.itemNumbers)});
+      this.setState({current: this.state.current - 1},
+        () => {
+          this.onGetRolesData(this.state.current, this.state.itemNumbers)
+        });
     } else {
       return null;
     }
   };
+
   onGetRolesShowOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange} className="gx-mx-2">
       <Option value={10}>10</Option>
@@ -70,10 +91,12 @@ class RolesList extends Component {
       <Option value={50}>50</Option>
     </Select>
   };
+
   onAddButtonClick = () => {
     this.props.onDisableSelectedRole();
     this.props.history.push("/roles-permissions/add-new")
   };
+
   rolesRowData = () => {
     return [
       {
@@ -111,59 +134,60 @@ class RolesList extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <span> <i className="icon icon-edit gx-mr-3" onClick={() => {
+          return <span> {Permissions.canRoleEdit() ? <i className="icon icon-edit gx-mr-3" onClick={() => {
             this.props.onGetRoleDetail(record.id, this.props.history);
-          }}/>
-            {this.onDeletePopUp(record.id)}
+          }}/> : null}
+            {Permissions.canRoleDelete() ? this.onDeletePopUp(record.id) : null}
           </span>
         },
       },
     ];
   };
-  onDeletePopUp = (recordId) =>{
-   return <Popconfirm
+
+  onDeletePopUp = (recordId) => {
+    return <Popconfirm
       title="Are you sure to delete this Role?"
       onConfirm={() => {
-        this.props.onBulkDeleteRoles({ids:[recordId]}, this.onDeleteSuccessMessage)
+        this.props.onBulkDeleteRoles({ids: [recordId]});
         this.onGetRolesData(this.state.current, this.state.itemNumbers)
       }}
       okText="Yes"
       cancelText="No">
-     <i className="icon icon-trash"/>
+      <i className="icon icon-trash"/>
     </Popconfirm>
   };
-  onDeleteSuccessMessage = () => {
-    message.success('The selected Role has been deleted successfully.');
-  };
+
   showBulkDeleteConfirm = () => {
-      if(this.state.selectedRoles.length !== 0) {
-        confirm({
-          title: "Are you sure to delete the selected Role(s)?",
-          onOk: () => {
-            const obj = {
-              ids: this.state.selectedRoles
-            };
-            this.props.onBulkDeleteRoles(obj, this.onDeleteSuccessMessage);
-            this.onGetRolesData(this.state.current, this.state.itemNumbers)
-            this.setState({selectedRowKeys: [], selectedRoles: []})
-          }
-        })
-      }
-      else {
-        confirm({
-          title: "Please Select Roles first",
-        })
+    if (this.state.selectedRoles.length !== 0) {
+      confirm({
+        title: "Are you sure to delete the selected Role(s)?",
+        onOk: () => {
+          const obj = {
+            ids: this.state.selectedRoles
+          };
+          this.props.onBulkDeleteRoles(obj);
+          this.onGetRolesData(this.state.current, this.state.itemNumbers)
+          this.setState({selectedRowKeys: [], selectedRoles: []})
+        }
+      })
+    } else {
+      confirm({
+        title: "Please Select Roles first",
+      })
     }
   };
+
   onSelectOption = () => {
     const menu = (
       <Menu>
         <Menu.Item key="1">
           Archive
         </Menu.Item>
-        <Menu.Item key="2" onClick={this.showBulkDeleteConfirm}>
+        {Permissions.canRoleDelete() ?
+          <Menu.Item key="2" onClick={this.showBulkDeleteConfirm}>
           Delete
         </Menu.Item>
+          : null}
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
@@ -171,10 +195,13 @@ class RolesList extends Component {
         Bulk Actions <Icon type="down"/>
       </Button>
     </Dropdown>
-
   };
+
   onPageChange = page => {
-    this.setState({current: page}, () => { this.onGetRolesData(this.state.current, this.state.itemNumbers)});
+    this.setState({current: page},
+      () => {
+        this.onGetRolesData(this.state.current, this.state.itemNumbers)
+      });
   };
 
   render() {
@@ -190,6 +217,7 @@ class RolesList extends Component {
         this.setState({selectedRoles: ids, selectedRowKeys: selectedRowKeys})
       }
     };
+
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -199,10 +227,11 @@ class RolesList extends Component {
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
+              {(Permissions.canRoleAdd()) ?
               <Button type="primary" className="gx-btn-lg"
                       onClick={this.onAddButtonClick}>
                 Add New Role
-              </Button>
+              </Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
@@ -253,6 +282,12 @@ export default connect(mapStateToProps, {
   onDisableSelectedRole
 })(RolesList);
 
-RolesList.defaultProps = {};
+RolesList.defaultProps = {
+  roles:[],
+  totalItems: null
+};
 
-RolesList.propTypes = {};
+RolesList.propTypes = {
+  roles:PropTypes.array,
+  totalItems: PropTypes.number
+};

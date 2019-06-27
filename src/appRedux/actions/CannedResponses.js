@@ -1,5 +1,5 @@
 import axios from 'util/Api'
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import {
   ADD_CANNED_RESPONSE,
   BULK_ACTIVE_RESPONSE,
@@ -10,16 +10,16 @@ import {
 } from "../../constants/CannedResponses";
 
 
-export const onGetCannedResponses = (currentPage, itemsPerPage) => {
-  console.log("items per page", itemsPerPage)
+export const onGetCannedResponses = (currentPage, itemsPerPage, filterData) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get(`/setup/canned/responses?page=${currentPage}&per_page=${itemsPerPage}`
-    ).then(({data}) => {
+    const url = filterData ? `/setup/canned/responses?search=${filterData}&page=${currentPage}&per_page=${itemsPerPage}` :
+      `/setup/canned/responses?page=${currentPage}&per_page=${itemsPerPage}`;
+    axios.get(url).then(({data}) => {
       console.info("onCannedResponses: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_CANNED_RESPONSES, payload: data.data});
+        dispatch({type: GET_CANNED_RESPONSES, payload: data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }
@@ -30,7 +30,7 @@ export const onGetCannedResponses = (currentPage, itemsPerPage) => {
   }
 };
 
-export const onAddCannedResponse = (cannedResponse, successMessage) => {
+export const onAddCannedResponse = (cannedResponse) => {
   console.log("onAddCannedResponse", cannedResponse);
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -40,7 +40,7 @@ export const onAddCannedResponse = (cannedResponse, successMessage) => {
         console.log(" sending data", data.data);
         dispatch({type: ADD_CANNED_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Response has been added successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -51,7 +51,7 @@ export const onAddCannedResponse = (cannedResponse, successMessage) => {
   }
 };
 
-export const onEditCannedResponse = (cannedResponse, successMessage) => {
+export const onEditCannedResponse = (cannedResponse) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/canned/responses/${cannedResponse.id}`, cannedResponse).then(({data}) => {
@@ -59,7 +59,7 @@ export const onEditCannedResponse = (cannedResponse, successMessage) => {
       if (data.success) {
         dispatch({type: EDIT_CANNED_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Response details has been updated successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -70,14 +70,14 @@ export const onEditCannedResponse = (cannedResponse, successMessage) => {
   }
 };
 
-export const onBulkActiveResponses = (responseIds, successMessage) => {
+export const onBulkActiveResponses = (responseIds) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/canned/responses/status/1', responseIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_ACTIVE_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Status of Response(s) has been changed to Active successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -88,14 +88,14 @@ export const onBulkActiveResponses = (responseIds, successMessage) => {
   }
 };
 
-export const onBulkInActiveResponses = (responseIds, successMessage) => {
+export const onBulkInActiveResponses = (responseIds) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/canned/responses/status/0', responseIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DISABLE_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Status of Response(s) has been changed to Disabled successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -106,14 +106,14 @@ export const onBulkInActiveResponses = (responseIds, successMessage) => {
   }
 };
 
-export const onBulkDeleteResponses = (responseIds, successMessage) => {
+export const onBulkDeleteResponses = (responseIds) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/canned/responses/delete', responseIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DELETE_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Response(s) has been deleted successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

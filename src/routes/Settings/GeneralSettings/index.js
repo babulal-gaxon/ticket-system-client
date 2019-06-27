@@ -5,7 +5,12 @@ import {Link} from "react-router-dom";
 import Addresses from "./Addresses";
 import GeneralDetails from "./GeneralDetails";
 import {connect} from "react-redux";
-import {onGetGeneralDetails, onSaveGeneralDetails} from "../../../appRedux/actions/GeneralSettings";
+import {
+  onGetCountriesList, onGetGeneralAddress,
+  onGetGeneralDetails,
+  onSaveGeneralAddress,
+  onSaveGeneralDetails
+} from "../../../appRedux/actions/GeneralSettings";
 
 const {TabPane} = Tabs;
 
@@ -19,6 +24,8 @@ class GeneralSettings extends Component {
 
   componentWillMount() {
     this.props.onGetGeneralDetails();
+    this.props.onGetCountriesList();
+    this.props.onGetGeneralAddress();
   }
 
   onTabChange = key => {
@@ -26,6 +33,7 @@ class GeneralSettings extends Component {
   };
 
   render() {
+    console.log("countriesList",this.props.countriesList)
     const {key} = this.state;
     return (
       <div className="gx-main-layout-content">
@@ -45,10 +53,13 @@ class GeneralSettings extends Component {
           <Tabs defaultActiveKey="1" size="large" onChange={this.onTabChange}>
             <TabPane tab="General Setup" key="1">
               <GeneralDetails onSaveGeneralDetails={this.props.onSaveGeneralDetails}
-                              generalSettingsData={this.props.generalSettingsData}/>
+                              generalSettingsData={this.props.generalSettingsData}
+                              />
             </TabPane>
             <TabPane tab="Addresses" key="2">
-              <Addresses/>
+              <Addresses countriesList = {this.props.countriesList}
+                         onSaveGeneralAddress = {this.props.onSaveGeneralAddress}
+                         generalAddress = {this.props.generalAddress}/>
             </TabPane>
           </Tabs>
         </Widget>
@@ -58,11 +69,14 @@ class GeneralSettings extends Component {
 }
 
 const mapStateToProps = ({generalSettings}) => {
-  const {generalSettingsData} = generalSettings;
-  return {generalSettingsData};
+  const {generalSettingsData,countriesList, generalAddress} = generalSettings;
+  return {generalSettingsData, countriesList, generalAddress};
 };
 
 export default connect(mapStateToProps, {
   onGetGeneralDetails,
-  onSaveGeneralDetails
+  onSaveGeneralDetails,
+  onGetCountriesList,
+  onSaveGeneralAddress,
+  onGetGeneralAddress
 })(GeneralSettings);

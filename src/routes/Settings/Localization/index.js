@@ -4,6 +4,7 @@ import {Breadcrumb, Button, Col, Form, Radio, Select} from "antd";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {onGetLocalizationDetails, onSaveLocalizationDetails} from "../../../appRedux/actions/GeneralSettings";
+import InfoView from "../../../components/InfoView";
 
 const {Option} = Select;
 
@@ -105,8 +106,8 @@ class Localization extends Component {
                     initialValue:time_format,
                     rules: [{required: true, message: 'Please Enter State Name!'}],
                   })(<Select style={{width: "100%"}} onChange={this.onTimeSelect}>
-                    <Option value="24 Hours">24 Hours</Option>
-                    <Option value="12 Hours">12 Hours</Option>
+                    <Option value="24 Hours">24 Hours (20:30)</Option>
+                    <Option value="12 Hours">12 Hours (08:30)</Option>
                   </Select>)}
                 </Form.Item>
               </Col>
@@ -139,6 +140,7 @@ class Localization extends Component {
             </div>
           </Form>
         </Widget>
+        <InfoView/>
       </div>
     );
   }

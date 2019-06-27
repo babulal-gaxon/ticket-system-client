@@ -17,8 +17,8 @@ export default (state = initialState, action) => {
     case GET_CANNED_RESPONSES:
       return {
         ...state,
-        responses: action.payload.items,
-        totalItems: action.payload.paginate.total
+        responses: action.payload.data,
+        totalItems: action.payload.meta.total
       };
 
     case ADD_CANNED_RESPONSE:

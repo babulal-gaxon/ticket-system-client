@@ -1,9 +1,13 @@
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import axios from 'util/Api'
 import {
-  ADD_CUSTOMER_PANEL_DETAILS, ADD_GENERAL_ADDRESS,
+  ADD_CUSTOMER_PANEL_DETAILS,
+  ADD_GENERAL_ADDRESS,
   ADD_GENERAL_DETAILS,
-  ADD_LOCALIZATION_DETAILS, GET_COUNTRIES_LIST, GET_CUSTOMER_PANEL_DETAILS, GET_GENERAL_ADDRESS,
+  ADD_LOCALIZATION_DETAILS,
+  GET_COUNTRIES_LIST,
+  GET_CUSTOMER_PANEL_DETAILS,
+  GET_GENERAL_ADDRESS,
   GET_GENERAL_DETAILS,
   GET_LOCALIZATION_DETAILS
 } from "../../constants/GeneralSettings";
@@ -29,23 +33,23 @@ export const onGetGeneralDetails = () => {
 };
 
 export const onSaveGeneralDetails = (details) => {
-    console.log("onSaveGeneralDetails", details);
-    return (dispatch) => {
-      dispatch({type: FETCH_START});
-      axios.post('/setup/settings/general', details).then(({data}) => {
-        console.info("data:", data);
-        if (data.success) {
-          console.log(" sending data", data.data);
-          dispatch({type: ADD_GENERAL_DETAILS, payload: data.data});
-          dispatch({type: FETCH_SUCCESS});
-        } else {
-          dispatch({type: FETCH_ERROR, payload: "Network Error"});
-        }
-      }).catch(function (error) {
-        dispatch({type: FETCH_ERROR, payload: error.message});
-        console.info("Error****:", error.message);
-      });
-    }
+  console.log("onSaveGeneralDetails", details);
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post('/setup/settings/general', details).then(({data}) => {
+      console.info("data:", data);
+      if (data.success) {
+        console.log(" sending data", data.data);
+        dispatch({type: ADD_GENERAL_DETAILS, payload: data.data});
+        dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
 };
 
 export const onGetLocalizationDetails = () => {
@@ -76,7 +80,7 @@ export const onSaveLocalizationDetails = (details) => {
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: ADD_LOCALIZATION_DETAILS, payload: data.data});
-        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -115,7 +119,7 @@ export const onSaveCustomerPanelDetails = (details) => {
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: ADD_CUSTOMER_PANEL_DETAILS, payload: data.data});
-        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -154,7 +158,7 @@ export const onSaveGeneralAddress = (details) => {
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: ADD_GENERAL_ADDRESS, payload: data.data});
-        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

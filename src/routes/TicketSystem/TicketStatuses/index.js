@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, message, Modal, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -15,6 +15,7 @@ import AddNewStatus from "./AddNewStatus";
 import Widget from "../../../components/Widget/index";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
+import InfoView from "../../../components/InfoView";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -35,105 +36,120 @@ class TicketStatuses extends Component {
       selectedStatus: []
     };
   };
+
   componentWillMount() {
     this.onGetStatusData(this.state.current, this.state.itemNumbers)
   };
+
   onGetStatusData = (currentPage, itemsPerPage) => {
     if (Permissions.canStatusView()) {
       this.props.onGetTicketStatus(currentPage, itemsPerPage);
     }
   };
+
   onToggleAddStatus = () => {
     this.setState({showAddStatus: !this.state.showAddStatus})
   };
+
   onCurrentIncrement = () => {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
-      this.setState({current: this.state.current + 1}, () => {this.onGetStatusData(this.state.current, this.state.itemNumbers)});
+      this.setState({current: this.state.current + 1}, () => {
+        this.onGetStatusData(this.state.current, this.state.itemNumbers)
+      });
     } else {
       return null;
     }
   };
+
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
-      this.setState({current: this.state.current - 1}, () => {this.onGetStatusData(this.state.current, this.state.itemNumbers)});
+      this.setState({current: this.state.current - 1}, () => {
+        this.onGetStatusData(this.state.current, this.state.itemNumbers)
+      });
     } else {
       return null;
     }
   };
+
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value});
   };
+
   onFilterData = () => {
     return this.props.statuses.filter(status => status.name.indexOf(this.state.filterText) !== -1);
   };
+
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
   };
+
   onAddButtonClick = () => {
     this.setState({statusId: 0, showAddStatus: true});
   };
+
   onEditStatus = (id) => {
     this.setState({statusId: id, showAddStatus: true});
   };
+
   onShowBulkActiveConfirm = () => {
-    if(this.state.selectedStatus.length !== 0) {
+    if (this.state.selectedStatus.length !== 0) {
       confirm({
         title: "Are you sure to change the status of selected Statuses to ACTIVE?",
         onOk: () => {
           const obj = {
             ids: this.state.selectedStatus
           };
-          this.props.onBulkActiveStatuses(obj, this.onStatusChangeMessage);
-          this.setState({selectedRowKeys: [], selectedStatus:[]})
+          this.props.onBulkActiveStatuses(obj);
+          this.setState({selectedRowKeys: [], selectedStatus: []})
         }
       })
-    }
-    else {
+    } else {
       confirm({
         title: "Please Select Statuses first",
       })
     }
   };
+
   onShowBulkDisableConfirm = () => {
-    if(this.state.selectedStatus.length !== 0) {
+    if (this.state.selectedStatus.length !== 0) {
       confirm({
         title: "Are you sure to change the status of selected Statuses to DISABLED?",
         onOk: () => {
           const obj = {
             ids: this.state.selectedStatus
           };
-          this.props.onBulkInActiveStatuses(obj, this.onStatusChangeMessage);
-          this.setState({selectedRowKeys: [], selectedStatus:[]})
+          this.props.onBulkInActiveStatuses(obj);
+          this.setState({selectedRowKeys: [], selectedStatus: []})
         }
       })
-    }
-    else {
+    } else {
       confirm({
         title: "Please Select Statuses first",
       })
     }
   };
+
   onShowBulkDeleteConfirm = () => {
-    if(this.state.selectedStatus.length !== 0) {
+    if (this.state.selectedStatus.length !== 0) {
       confirm({
         title: "Are you sure to delete the selected Statuses?",
         onOk: () => {
           const obj = {
             ids: this.state.selectedStatus
           };
-          this.props.onBulkDeleteStatuses(obj, this.onDeleteSuccessMessage);
+          this.props.onBulkDeleteStatuses(obj);
           this.onGetStatusData(this.state.current, this.state.itemNumbers);
-          this.setState({selectedRowKeys: [], selectedStatus:[]});
+          this.setState({selectedRowKeys: [], selectedStatus: []});
         }
       })
-    }
-    else {
+    } else {
       confirm({
         title: "Please Select Statuses first",
       })
     }
   };
+
   onSelectOption = () => {
     const menu = (
       <Menu>
@@ -150,10 +166,11 @@ class TicketStatuses extends Component {
     );
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        Bulk Actions <Icon type="down" />
+        Bulk Actions <Icon type="down"/>
       </Button>
     </Dropdown>
   };
+
   onGetTableColumns = () => {
     return [
       {
@@ -222,29 +239,28 @@ class TicketStatuses extends Component {
       },
     ];
   };
-  onDeleteSuccessMessage = () => {
-    message.success('The selected Status(s) has been deleted successfully.');
-  };
-  onStatusChangeMessage = () => {
-    message.success('The status of selected Status(s) has been changed successfully.');
-  };
+
   onDeletePopUp = (recordId) => {
     return <Popconfirm
       title="Are you sure to delete this Status?"
       onConfirm={() => {
-        this.props.onBulkDeleteStatuses({ids:[recordId]}, this.onDeleteSuccessMessage);
+        this.props.onBulkDeleteStatuses({ids: [recordId]});
         this.onGetStatusData(this.state.current, this.state.itemNumbers);
       }}
       okText="Yes"
       cancelText="No">
       <i className="icon icon-trash"/>
     </Popconfirm>
-  }
+  };
+
   onPageChange = page => {
     this.setState({
       current: page
-    }, () => {this.onGetStatusData(this.state.current, this.state.itemNumbers)})
+    }, () => {
+      this.onGetStatusData(this.state.current, this.state.itemNumbers)
+    })
   };
+
   onShowItemOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>
       <Option value={10}>10</Option>
@@ -252,9 +268,13 @@ class TicketStatuses extends Component {
       <Option value={50}>50</Option>
     </Select>
   };
+
   onDropdownChange = (value) => {
-    this.setState({itemNumbers: value, current: 1}, () => {this.onGetStatusData(this.state.current, this.state.itemNumbers)});
+    this.setState({itemNumbers: value, current: 1}, () => {
+      this.onGetStatusData(this.state.current, this.state.itemNumbers)
+    });
   };
+
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;
     const statuses = this.onFilterData();
@@ -267,6 +287,7 @@ class TicketStatuses extends Component {
         this.setState({selectedStatus: ids, selectedRowKeys: selectedRowKeys})
       }
     };
+
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -320,6 +341,7 @@ class TicketStatuses extends Component {
                         statusId={this.state.statusId}
                         onEditTicketStatus={this.props.onEditTicketStatus}
                         statuses={statuses}/> : null}
+        <InfoView/>
       </div>
     );
   }
