@@ -60,14 +60,16 @@ class StaffList extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     console.log("pages", pages)
     if (this.state.currentPage < pages) {
-      this.setState({currentPage: this.state.currentPage + 1},() => {this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)});
+      this.setState({currentPage: this.state.currentPage + 1},
+        () => {this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)});
     } else {
       return null;
     }
   };
   onCurrentDecrement = () => {
     if (this.state.currentPage !== 1) {
-      this.setState({currentPage: this.state.currentPage - 1}, () => {this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)});
+      this.setState({currentPage: this.state.currentPage - 1},
+        () => {this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)});
     } else {
       return null;
     }
@@ -140,7 +142,10 @@ class StaffList extends Component {
         key: 'name',
         render: (text, record) => {
           return <span className="gx-email gx-d-inline-block gx-mr-2">
-             <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>
+             {record.avatar ?
+               <Avatar className="gx-mr-3 gx-size-50" src={record.avatar.src}/> :
+               <Avatar className="gx-mr-3 gx-size-50"
+                       style={{backgroundColor: '#f56a00'}}>{record.first_name[0].toUpperCase()}</Avatar>}
             {record.first_name + " " + record.last_name} </span>
         }
       },

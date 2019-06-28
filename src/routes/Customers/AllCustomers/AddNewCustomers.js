@@ -29,11 +29,9 @@ class AddNewCustomers extends Component {
         profile_pic: null
       };
     } else {
-      setTimeout(this.onSetFieldsValue, 10);
       const selectedCustomer = this.props.customersList.find(customer => customer.id === this.props.customerId);
-      console.log("selected Customer", selectedCustomer);
       const {first_name, last_name, email, phone,status, id} = selectedCustomer;
-      const companyId = selectedCustomer.company.id;
+      const companyId = selectedCustomer.company ? selectedCustomer.company.id : null;
       const labelIds = selectedCustomer.labels.map(label => {
         return label.id
       });
@@ -58,13 +56,6 @@ class AddNewCustomers extends Component {
     this.props.onGetCompaniesData();
   }
 
-  onSetFieldsValue = () => {
-    this.props.form.setFieldsValue({
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      email: this.state.email
-    });
-  };
   onToggleAddressModal = () => {
     this.setState({isModalVisible: !this.state.isModalVisible})
   };
@@ -87,12 +78,10 @@ class AddNewCustomers extends Component {
     message.success(' Customer details has been updated successfully.');
   };
   onReset = () => {
-    this.props.form.setFieldsValue({
+    this.setState({
       first_name: "",
       last_name: "",
-      email: ""
-    });
-    this.setState({
+      email: "",
       phone: "",
       company_id: null,
       position: "",
@@ -127,7 +116,7 @@ class AddNewCustomers extends Component {
   };
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {phone, status, label_ids, company_id, password} = this.state;
+    const {phone, status, label_ids, company_id,first_name,last_name,email} = this.state;
     const labelOptions = this.onLabeltSelectOption();
     return (
       <div className="gx-main-layout-content">
@@ -138,8 +127,8 @@ class AddNewCustomers extends Component {
               <Link to="/customers">Customers</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link
-                to="/customers/add-customers">{this.props.customerId === null ? "Add New Customer" : "Edit Customer Details"}</Link>
+              <Link to="/customers/add-customers">{this.props.customerId === null ?
+                "Add New Customer" : "Edit Customer Details"}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <hr/>
@@ -150,6 +139,7 @@ class AddNewCustomers extends Component {
                   <Col sm={12} xs={24} className="gx-pl-0">
                     <Form.Item label="First Name">
                       {getFieldDecorator('first_name', {
+                        initialValue:first_name,
                         rules: [{required: true, message: 'Please Enter First Name!'}],
                       })(<Input type="text" onChange={(e) => {
                         this.setState({first_name: e.target.value})
@@ -159,6 +149,7 @@ class AddNewCustomers extends Component {
                   <Col sm={12} xs={24} className="gx-pr-0">
                     <Form.Item label="Last Name">
                       {getFieldDecorator('last_name', {
+                        initialValue:last_name,
                         rules: [{required: true, message: 'Please Enter Last Name!'}],
                       })(<Input type="text" onChange={(e) => {
                         this.setState({last_name: e.target.value})
@@ -168,6 +159,7 @@ class AddNewCustomers extends Component {
                 </div>
                 <Form.Item label="Email Address">
                   {getFieldDecorator('email', {
+                    initialValue:email,
                     rules: [{
                       type: 'email',
                       message: 'The input is not valid E-mail!',

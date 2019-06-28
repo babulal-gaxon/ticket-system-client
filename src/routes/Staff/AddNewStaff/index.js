@@ -9,6 +9,7 @@ import {Breadcrumb, Select} from "antd";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
 import {onGetRoles} from "../../../appRedux/actions/RolesAndPermissions";
+import ImageUpload from "./ImageUpload";
 
 const {Option} = Select;
 
@@ -25,13 +26,13 @@ class AddNewStaff extends Component {
         hourly_rate: "",
         departments_ids: [],
         account_status: 1,
-        profile_pic:"",
+        profile_pic: "",
         role_id: null
       };
     } else {
       setTimeout(this.onSetFieldsValue, 10);
       const selectedStaff = this.props.staffList.find(staff => staff.id === this.props.staffId);
-      const {id, first_name, last_name, email, password, mobile, hourly_rate, account_status,role_id} = selectedStaff;
+      const {id, first_name, last_name, email, password, mobile, hourly_rate, account_status, role_id} = selectedStaff;
       const department_ids = selectedStaff.departments.map(department => {
         return department.pivot.department_id
       });
@@ -76,8 +77,10 @@ class AddNewStaff extends Component {
   };
   onStaffAdd = () => {
     if (this.props.staffId === 0) {
-      this.setState({profile_pic:this.props.profilePicId},
-        () => {this.props.onAddSupportStaff({...this.state}, this.props.history, this.onAddSuccess)})
+      this.setState({profile_pic: this.props.profilePicId},
+        () => {
+          this.props.onAddSupportStaff({...this.state}, this.props.history, this.onAddSuccess)
+        })
 
 
     } else {
@@ -205,7 +208,7 @@ class AddNewStaff extends Component {
                 <Form.Item label="Role">
                   <Select value={role_id} onChange={this.onSelectRole}>
                     {this.props.roles.map(role => {
-                     return <Option value={role.id}>{role.name}</Option>
+                      return <Option value={role.id}>{role.name}</Option>
                     })}
                   </Select>
                 </Form.Item>
@@ -236,7 +239,7 @@ class AddNewStaff extends Component {
               </Form>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
-              {/*<ImageUpload onAddProfileImage={this.props.onAddProfileImage}/>*/}
+              <ImageUpload onAddProfileImage={this.props.onAddProfileImage}/>
             </Col>
           </Row>
         </Widget>
@@ -248,7 +251,7 @@ class AddNewStaff extends Component {
 
 AddNewStaff = Form.create({})(AddNewStaff);
 
-const mapStateToProps = ({departments, supportStaff,rolesAndPermissions}) => {
+const mapStateToProps = ({departments, supportStaff, rolesAndPermissions}) => {
   const {staffId, staffList, profilePicId} = supportStaff;
   const {dept} = departments;
   const {roles} = rolesAndPermissions;

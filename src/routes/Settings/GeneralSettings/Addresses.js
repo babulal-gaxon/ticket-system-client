@@ -9,25 +9,49 @@ const {Option} = Select;
 class Addresses extends Component {
   constructor(props) {
     super(props);
+    if(this.props.generalAddress === null) {
     this.state = {
       address_line_1: "",
       city: "",
       state: "",
       country_id: "",
       zip_code: "",
-      departments: "",
-      addressToSend: [],
-      isBillingAddress: false,
-      isShippingAddress: false,
-      isOtherAddress: false
+      address_type: []
+    }
+  }
+    else {
+      const {address_line_1,city,state,country_id,zip_code,address_type} = this.props.generalAddress;
+      this.state = {
+        address_line_1: address_line_1,
+        city: city,
+        state: state,
+        country_id: country_id,
+        zip_code: zip_code,
+        address_type: address_type
+      }
     }
   }
 
+  componentWillReceiveProps(nextProps, nextContext) {
+    if(nextProps.generalAddress) {
+      const {address_line_1, city, state, country_id, zip_code, address_type} = nextProps.generalAddress;
+      if (JSON.stringify(nextProps.generalAddress) !== JSON.stringify(this.props.generalAddress)) {
+        this.setState({
+          address_line_1: address_line_1,
+          city: city,
+          state: state,
+          country_id: country_id,
+          zip_code: zip_code,
+          address_type: address_type
+        })
+      }
+    }
+  }
 
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.props.onSaveGeneralAddress({addresses: this.state.addressToSend});
+        this.props.onSaveGeneralAddress({...this.state});
       }
     });
   };
@@ -36,74 +60,14 @@ class Addresses extends Component {
     this.setState({country_id: value})
   };
 
-  onSelectDepartments = checkedList => {
-    this.setState({departments: checkedList}, () => {
-      this.onDataAdd(this.state.departments)
-    })
-  };
-
-  // onDataAdd = departments => {
-  //   const {address_line_1,city,state,country_id,zip_code, addressToSend} = this.state;
-  //
-  //     if(addressToSend.length > 0)
-  //     {
-  //      addressToSend.map(address => {
-  //        if(departments.indexOf(address.address_type) === -1)
-  //      })
-  //     }
-  //     this.setState({addressToSend: this.state.addressToSend.concat({address_line_1,city,state,country_id, zip_code,address_type:department})})
-  //   })
-  // };
-
-  onBillingAddress = event => {
-    const {address_line_1, city, state, country_id, zip_code, addressToSend} = this.state;
-    if (event.target.checked) {
-      this.setState({isBillingAddress: true});
-      if (addressToSend.length > 0) {
-        addressToSend.map(address => {
-          if (address.address_type !== event.target.value) {
-            this.setState({
-              addressToSend: addressToSend.concat({
-                address_line_1,
-                city,
-                state,
-                country_id,
-                zip_code,
-                address_type: event.target.value
-              })
-            })
-          }
-          else return null;
-        })
-      } else {
-        this.setState({
-          addressToSend: addressToSend.concat({
-            address_line_1,
-            city,
-            state,
-            country_id,
-            zip_code,
-            address_type: event.target.value
-          })
-        })
-      }
-    } else {
-      this.setState({isBillingAddress: false});
-      if (addressToSend.length > 0) {
-        addressToSend.map(address => {
-          if (address.address_type === event.target.value) {
-            this.setState({addressToSend: addressToSend.filter(address => address.address_type !== event.target.value)});
-          }
-        })
-      }
-    }
+  onSelectAddressType = checkedList => {
+    this.setState({address_type: checkedList})
   };
 
   render() {
-    const {address_line_1, city, state, country_id, zip_code, departments, isBillingAddress, isShippingAddress, isOtherAddress} = this.state;
+    console.log("address response",this.props.generalSettingsData);
+    const {address_line_1, city, state, country_id, zip_code, address_type} = this.state;
     const {getFieldDecorator} = this.props.form;
-    console.log("state", this.state.addressToSend);
-    console.log("add to sen", this.state.isBillingAddress);
     return (
       <div>
         <Form layout="vertical" style={{width: "50%"}}>
@@ -162,9 +126,10 @@ class Addresses extends Component {
             </Col>
           </div>
           <Form.Item label="Select Department">
+            <Checkbox.Group value = {address_type} onChange={this.onSelectAddressType}>
             <Row className="gx-d-flex gx-flex-row" style={{whiteSpace: "nowrap"}}>
               <Col span={8}>
-                <Checkbox value="billing" checked={isBillingAddress} onChange={this.onBillingAddress}>Billing</Checkbox>
+                <Checkbox value="billing">Billing</Checkbox>
               </Col>
               <Col span={8}>
                 <Checkbox value="shipping">Shipping</Checkbox>
@@ -173,23 +138,24 @@ class Addresses extends Component {
                 <Checkbox value="other">Other</Checkbox>
               </Col>
             </Row>
+            </Checkbox.Group>
           </Form.Item>
-          <div className="gx-main-layout-content">
-            <Widget styleName="gx-card-filter">
-              <Tag color="blue">generalAddress</Tag>
-              <h2>Company Name</h2>
-              <p>address_line_1</p>
-              <p>city, state - zipcode</p>
-            </Widget>
-          </div>
+          {this.props.generalAddress.addresses.map(address => {
+          return  <div className="gx-main-layout-content">
+              <Widget styleName="gx-card-filter">
+                {address.address_type.map(type => {
+                 return <Tag color="#108ee9">{type}</Tag>})}
+                <h2>{this.props.generalSettingsData.name}</h2>
+                <p>{address.address_line_1}</p>
+                <p>{`${address.city}, ${address.state} - ${address.zip_code}`}</p>
+              </Widget>
+            </div>
+          })}
           <Divider/>
           <Form.Item wrapperCol={{span: 12, offset: 6}}>
             <div className="gx-d-flex">
               <Button type="primary" style={{width: 100}} onClick={this.onValidationCheck}>
                 Save
-              </Button>
-              <Button type="default" style={{width: 100}}>
-                Cancel
               </Button>
             </div>
           </Form.Item>

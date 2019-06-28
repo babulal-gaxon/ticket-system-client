@@ -13,7 +13,6 @@ class CustomerImageUpload extends Component {
     }
   }
   onDrop = files => {
-    console.log("files", files);
     files.map(file => Object.assign(file, {
       preview: URL.createObjectURL(file)
     }));

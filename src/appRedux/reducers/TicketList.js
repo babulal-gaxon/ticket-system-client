@@ -2,14 +2,14 @@ import {
   ADD_TICKETS,
   BACK_TO_LIST,
   DELETE_TICKET,
+  GET_TICKET_ID,
   GET_TICKETS,
-  SELECT_CURRENT_TICKET,
   UPDATE_TICKET
 } from "../../constants/TicketList";
 
 const initialState = {
   tickets: [],
-  currentTicket: null
+  ticketId: null
 };
 
 export default (state = initialState, action) => {
@@ -24,21 +24,14 @@ export default (state = initialState, action) => {
       console.log(ADD_TICKETS, action);
       return {
         ...state,
-        tickets: state.tickets.concat(action.payload),
+        tickets: [action.payload,...state.tickets],
         showAddTicket: false
       };
 
-
-    case SELECT_CURRENT_TICKET:
+    case GET_TICKET_ID:
       return {
         ...state,
-        currentTicket: action.payload
-      };
-
-    case BACK_TO_LIST:
-      return {
-        ...state,
-        currentTicket: null
+        ticketId: action.payload
       };
 
     case UPDATE_TICKET:
@@ -52,7 +45,7 @@ export default (state = initialState, action) => {
       const updated = state.tickets.filter((ticket) => ticket.id !== action.payload)
       return {
         ...state,
-        tickets:updated
+        tickets: updated
       };
 
     default:

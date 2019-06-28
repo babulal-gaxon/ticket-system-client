@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, message, Modal, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu,  Modal, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 
 import {
@@ -333,7 +333,7 @@ class CannedResponses extends Component {
                            onEditCannedResponse={this.props.onEditCannedResponse}
                            responses={responses}
           /> : null}
-      <InfoView/>
+        <InfoView/>
       </div>
     );
   }

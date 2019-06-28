@@ -1,4 +1,6 @@
 import {
+  ADD_COMPANY_FAVICON,
+  ADD_COMPANY_LOGO,
   ADD_CUSTOMER_PANEL_DETAILS, ADD_GENERAL_ADDRESS,
   ADD_GENERAL_DETAILS,
   ADD_LOCALIZATION_DETAILS, GET_COUNTRIES_LIST, GET_CUSTOMER_PANEL_DETAILS, GET_GENERAL_ADDRESS,
@@ -11,17 +13,26 @@ const initialState = {
   localizationDetails: null,
   customerPanelDetails: null,
   generalAddress: [],
-  countriesList: []
+  countriesList: [],
+  companyLogo: null,
+  favicon: null
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+
     case GET_GENERAL_DETAILS:
       if (action.payload)
         return {
           ...state,
           generalSettingsData: action.payload
         };
+      else {
+        return {
+          ...state,
+          generalSettingsData: null
+        }
+      }
 
     case ADD_GENERAL_DETAILS:
       return {
@@ -54,7 +65,6 @@ export default (state = initialState, action) => {
       };
 
     case GET_COUNTRIES_LIST:
-      console.log(" i am in countries list")
       return {
         ...state,
         countriesList: action.payload
@@ -67,11 +77,23 @@ export default (state = initialState, action) => {
       };
 
     case GET_GENERAL_ADDRESS:
-      console.log(" i am in countries list")
       return {
         ...state,
         generalAddress: action.payload
       };
+
+    case ADD_COMPANY_LOGO:
+      return {
+        ...state,
+        companyLogo: action.payload
+      };
+
+    case ADD_COMPANY_FAVICON:
+      return {
+        ...state,
+        favicon: action.payload
+      };
+
 
     default: return state;
   }

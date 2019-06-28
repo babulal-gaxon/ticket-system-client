@@ -34,7 +34,7 @@ class SignIn extends React.Component {
           <div className="gx-app-login-main-content">
             <div className="gx-app-logo-content">
               <div className="gx-app-logo-content-bg">
-                {/*<img src="https://via.placeholder.com/272x395" alt='Neature'/>*/}//back ground image here
+                {/*/!*<img src="https://via.placeholder.com/272x395" alt='Neature'/>*!///back ground image here*/}
               </div>
               <div className="gx-app-logo-wid">
                 <h1><IntlMessages id="app.userAuth.signIn"/></h1>

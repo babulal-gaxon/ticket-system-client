@@ -6,7 +6,10 @@ import Addresses from "./Addresses";
 import GeneralDetails from "./GeneralDetails";
 import {connect} from "react-redux";
 import {
-  onGetCountriesList, onGetGeneralAddress,
+  onAddCompanyFavicon,
+  onAddCompanyLogo,
+  onGetCountriesList,
+  onGetGeneralAddress,
   onGetGeneralDetails,
   onSaveGeneralAddress,
   onSaveGeneralDetails
@@ -33,7 +36,6 @@ class GeneralSettings extends Component {
   };
 
   render() {
-    console.log("countriesList",this.props.countriesList)
     const {key} = this.state;
     return (
       <div className="gx-main-layout-content">
@@ -54,12 +56,16 @@ class GeneralSettings extends Component {
             <TabPane tab="General Setup" key="1">
               <GeneralDetails onSaveGeneralDetails={this.props.onSaveGeneralDetails}
                               generalSettingsData={this.props.generalSettingsData}
-                              />
+                              companyLogo={this.props.companyLogo}
+                              onAddCompanyLogo={this.props.onAddCompanyLogo}
+                              onAddCompanyFavicon={this.props.onAddCompanyFavicon}
+                              favicon={this.props.favicon}/>
             </TabPane>
             <TabPane tab="Addresses" key="2">
-              <Addresses countriesList = {this.props.countriesList}
-                         onSaveGeneralAddress = {this.props.onSaveGeneralAddress}
-                         generalAddress = {this.props.generalAddress}/>
+              <Addresses countriesList={this.props.countriesList}
+                         onSaveGeneralAddress={this.props.onSaveGeneralAddress}
+                         generalAddress={this.props.generalAddress}
+                         generalSettingsData={this.props.generalSettingsData}/>
             </TabPane>
           </Tabs>
         </Widget>
@@ -69,8 +75,8 @@ class GeneralSettings extends Component {
 }
 
 const mapStateToProps = ({generalSettings}) => {
-  const {generalSettingsData,countriesList, generalAddress} = generalSettings;
-  return {generalSettingsData, countriesList, generalAddress};
+  const {generalSettingsData, countriesList, generalAddress, companyLogo, favicon} = generalSettings;
+  return {generalSettingsData, countriesList, generalAddress, companyLogo, favicon};
 };
 
 export default connect(mapStateToProps, {
@@ -78,5 +84,7 @@ export default connect(mapStateToProps, {
   onSaveGeneralDetails,
   onGetCountriesList,
   onSaveGeneralAddress,
-  onGetGeneralAddress
+  onGetGeneralAddress,
+  onAddCompanyLogo,
+  onAddCompanyFavicon
 })(GeneralSettings);

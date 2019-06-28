@@ -51,30 +51,36 @@ class AllCustomers extends Component {
       filterStatusDisabled: false
     }
   }
+
   componentWillMount() {
     this.onGetPaginatedData(this.state.current, this.state.itemNumbers);
     this.props.onGetCompaniesData();
     this.props.onGetLabelData();
   }
+
   onGetPaginatedData = (currentPage, itemsPerPage) => {
     this.props.onGetCustomersData(currentPage, itemsPerPage);
   };
+
   onSideBarShow = () => {
-    this.setState({sideBarActive: !this.state.sideBarActive, selectedLabels: [],
-      selectedCompanies:[], filterStatusActive:false, filterStatusDisabled: false})
+    this.setState({
+      sideBarActive: !this.state.sideBarActive, selectedLabels: [],
+      selectedCompanies: [], filterStatusActive: false, filterStatusDisabled: false
+    })
   };
+
   onFilterData = () => {
     console.log(" in filter data", this.props.customersList);
     return this.props.customersList.filter(customer => {
       let flag = true;
       const name = customer.first_name + " " + customer.last_name;
-      if (this.state.selectedCompanies.length >0 && this.state.selectedCompanies.indexOf(customer.company.id) === -1) {
-        flag=false;
+      if (this.state.selectedCompanies.length > 0 && this.state.selectedCompanies.indexOf(customer.company.id) === -1) {
+        flag = false;
       }
       if (this.state.filterText !== "" && name.indexOf(this.state.filterText) === -1) {
-        flag=false;
+        flag = false;
       }
-      if (this.state.selectedLabels.length >0 && customer.labels && customer.labels.filter(label => this.state.selectedLabels.indexOf(label.id) !== -1).length ===0){
+      if (this.state.selectedLabels.length > 0 && customer.labels && customer.labels.filter(label => this.state.selectedLabels.indexOf(label.id) !== -1).length === 0) {
         flag = false;
       }
       if (this.state.filterStatusDisabled && customer.status === 1) {
@@ -88,18 +94,22 @@ class AllCustomers extends Component {
       }
     });
   };
+
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value})
   };
+
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
   };
+
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers)
     });
 
   };
+
   onCurrentIncrement = () => {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
@@ -110,6 +120,7 @@ class AllCustomers extends Component {
       return null;
     }
   };
+
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
       this.setState({current: this.state.current - 1}, () => {
@@ -119,6 +130,7 @@ class AllCustomers extends Component {
       return null;
     }
   };
+
   onGetCustomersShowOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange} className="gx-mx-2">
       <Option value={10}>10</Option>
@@ -126,10 +138,12 @@ class AllCustomers extends Component {
       <Option value={50}>50</Option>
     </Select>
   };
+
   onAddButtonClick = () => {
     this.props.getCustomerId(null);
     this.props.history.push('/customers/add-customers');
   };
+
   onCustomersRowData = () => {
     return [
       {
@@ -138,13 +152,13 @@ class AllCustomers extends Component {
         render: (text, record) => {
           return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
               {record.avatar ?
-              <Avatar className="gx-mr-3 gx-size-50" src={record.avatar.src}/> :
+                <Avatar className="gx-mr-3 gx-size-50" src={record.avatar.src}/> :
                 <Avatar className="gx-mr-3 gx-size-50"
                         style={{backgroundColor: '#f56a00'}}>{record.first_name[0].toUpperCase()}</Avatar>}
               <div className="gx-media-body">
                 <span className="gx-mb-0 gx-text-capitalize">{record.first_name + " " + record.last_name}</span>
                 <div className="gx-mt-1">
-                  <Tag color="#fc895f">{record.company.company_name}</Tag>
+                  <Tag color="#fc895f">{record.company ? record.company.company_name : null}</Tag>
                 </div>
               </div>
             </div>
@@ -170,7 +184,7 @@ class AllCustomers extends Component {
         dataIndex: 'labels',
         render: (text, record) => {
           return (record.labels && record.labels.length > 0) ?
-            record.labels.map(label=> {
+            record.labels.map(label => {
               return <Tag>{label.name}</Tag>
             }) : "NA"
         },
@@ -197,6 +211,7 @@ class AllCustomers extends Component {
       },
     ];
   };
+
   onShowRowDropdown = (customerId) => {
     const menu = (
       <Menu>
@@ -238,17 +253,21 @@ class AllCustomers extends Component {
       </Dropdown>
     )
   };
+
   onDisableCustomerCall = (customerId) => {
     const selectedCustomer = this.props.customersList.find(customer => customer.id === customerId);
     selectedCustomer.status = 0;
     this.props.onDisableCustomer(selectedCustomer, this.onCustomerDisableSuccess);
   };
+
   onDeleteSuccessMessage = () => {
     message.success('The selected Customer(s) has been deleted successfully.');
   };
+
   onCustomerDisableSuccess = () => {
     message.success('The status of Customer has been changed to Disable successfully.');
   };
+
   onSelectCustomer = record => {
     const selectedCompany = this.props.companiesList.find(company => company.id === record.company.id);
     this.setState({
@@ -256,6 +275,7 @@ class AllCustomers extends Component {
       currentCustomerCompany: selectedCompany
     })
   };
+
   onShowBulkDeleteConfirm = () => {
     if (this.state.selectedCustomers.length !== 0) {
       confirm({
@@ -275,6 +295,7 @@ class AllCustomers extends Component {
       })
     }
   };
+
   onSelectOption = () => {
     const menu = (
       <Menu>
@@ -292,14 +313,17 @@ class AllCustomers extends Component {
       </Button>
     </Dropdown>
   };
+
   onPageChange = page => {
     this.setState({current: page}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers)
     });
   };
+
   onBackToList = () => {
     this.setState({currentCustomer: null})
-  }
+  };
+
   onGetSidebar = () => {
     return <div className="gx-main-layout-sidenav gx-d-none gx-d-lg-flex">
       <div className="gx-main-layout-side">
@@ -338,6 +362,7 @@ class AllCustomers extends Component {
       </div>
     </div>
   };
+
   onLabelSelectOption = () => {
     console.log("label list", this.props.labelList)
     const labelOptions = [];
@@ -346,16 +371,20 @@ class AllCustomers extends Component {
     });
     return labelOptions;
   };
+
   onLabelSelect = (id) => {
     this.setState({selectedLabels: this.state.selectedLabels.concat(id)})
   };
+
   onLabelRemove = (value) => {
     const updatedLabels = this.state.selectedLabels.filter(label => label !== value)
     this.setState({selectedLabels: updatedLabels})
   };
+
   onSelectCompanies = checkedList => {
     this.setState({selectedCompanies: checkedList})
   };
+
   onFilterActiveCustomers = event => {
     if (event.target.checked) {
       this.setState({filterStatusActive: true})
@@ -363,6 +392,7 @@ class AllCustomers extends Component {
       this.setState({filterStatusActive: false})
     }
   };
+
   onFilterDisabledCustomers = event => {
     if (event.target.checked) {
       this.setState({filterStatusDisabled: true})
@@ -370,11 +400,9 @@ class AllCustomers extends Component {
       this.setState({filterStatusDisabled: false})
     }
   };
+
   render() {
-    console.log("companies data", this.state.selectedCompanies);
-    console.log("total customers", this.props.customersList);
     const customers = this.onFilterData();
-    // const customers= this.props.customersList;
     const selectedRowKeys = this.state.selectedRowKeys;
     let ids;
     const rowSelection = {
@@ -388,13 +416,14 @@ class AllCustomers extends Component {
     };
     return (
       <div className={`gx-main-content ${this.state.sideBarActive ? "gx-main-layout-has-sider" : ""}`}>
-        {this.state.currentCustomer === null ? <Widget styleName="gx-card-filter">
+        {this.state.currentCustomer === null ?
+          <Widget styleName="gx-card-filter">
           <h4>Customers</h4>
           <p className="gx-text-grey">Customers</p>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
-              <Button type="primary" onClick={this.onAddButtonClick} style={{width: 200}}>Add New
-                Customers
+              <Button type="primary" onClick={this.onAddButtonClick} style={{width: 200}}>
+                Add New Customers
               </Button>
               <span>{this.onSelectOption()}</span>
             </div>
@@ -435,7 +464,7 @@ class AllCustomers extends Component {
                                      currentCustomer={this.state.currentCustomer}
                                      history={this.props.history}
                                      onBackToList={this.onBackToList}
-          currentCustomerCompany={this.state.currentCustomerCompany}
+                                     currentCustomerCompany={this.state.currentCustomerCompany}
         />}
         {this.state.sideBarActive ? this.onGetSidebar() : null}
         <InfoView/>

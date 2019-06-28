@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Form, Input, message, Modal} from "antd";
+import {Button, Form, Input, Modal} from "antd";
 
 class AddNewCompany extends Component {
   constructor(props) {
@@ -76,6 +76,7 @@ class AddNewCompany extends Component {
           <Form layout="vertical">
             <Form.Item label="Company Name">
               {getFieldDecorator('company_name', {
+                initialValue: company_name,
                 rules: [{required: true, message: 'Please Enter Company Name!'}],
               })(<Input type="text" onChange={(e) => {
                 this.setState({company_name: e.target.value})
@@ -83,6 +84,7 @@ class AddNewCompany extends Component {
             </Form.Item>
             <Form.Item label="Website">
               {getFieldDecorator('website', {
+                initialValue:website,
                 rules: [{required: true, message: 'Please Enter Website URL!'}],
               })(<Input type="text" onChange={(e) => {
                 this.setState({website: e.target.value})
@@ -90,6 +92,7 @@ class AddNewCompany extends Component {
             </Form.Item>
             <Form.Item>
               {getFieldDecorator('company_logo', {
+                initialValue:company_logo,
                 rules: [{required: true, message: 'Please Select Logo!'}],
               })(<Input type="file" placeholder="Choose file..." onChange = {this.onLogoSelect}/>)}
             </Form.Item>

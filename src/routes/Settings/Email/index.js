@@ -121,7 +121,6 @@ class Email extends Component {
             <hr/>
             <div className="gx-d-flex">
               <Button type="primary" style={{width: "150px"}} onClick={this.onValidationCheck}>Save</Button>
-              <Button type="default" style={{width: "150px"}}>Reset</Button>
             </div>
           </Form>
         </Widget>

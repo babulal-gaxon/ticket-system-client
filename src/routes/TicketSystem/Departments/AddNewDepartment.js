@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Button, Form, Input, message, Modal, Radio} from "antd";
+import {Button, Form, Input, Modal, Radio} from "antd";
 import PropTypes from "prop-types";
 
 const {TextArea} = Input;

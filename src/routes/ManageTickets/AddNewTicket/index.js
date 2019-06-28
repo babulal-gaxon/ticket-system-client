@@ -1,25 +1,35 @@
 import React, {Component} from "react"
-import {Button, Col, Form, Input, Row, Select} from "antd";
+import {Breadcrumb, Button, Col, Form, Input, Row, Select} from "antd";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
 import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
 import {onGetDepartments} from "../../../appRedux/actions/Departments";
-import {onAddTickets, onBackToList} from "../../../appRedux/actions/TicketList";
+import {onAddTickets, onUpdateTickets} from "../../../appRedux/actions/TicketList";
 import {onGetTicketPriorities} from "../../../appRedux/actions/TicketPriorities";
+import {Link} from "react-router-dom";
+import InfoView from "../../../components/InfoView";
+
+const {Option} = Select;
+const {TextArea} = Input;
 
 class AddNewTicket extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      title: "",
-      message: "",
-      product: "",
-      priority_id: "",
-      user_id: "",
-      department: ""
-    };
-  };
+    if (this.props.ticketId === null) {
+      this.state = {
+        title: "",
+        message: "",
+        product: "",
+        priority_id: "",
+        user_id: "",
+        department: ""
+      };
+    } else {
+      const selectedTicket = this.props.tickets.find(ticket => ticket.id === this.props.ticketId);
+      this.state = {...selectedTicket};
+    }
+  }
 
   componentWillMount() {
     this.props.onGetTicketPriorities();
@@ -28,49 +38,66 @@ class AddNewTicket extends Component {
   }
 
   onReturnTicketsScreen = () => {
-    this.props.history.push('/manage-tickets/all-tickets');
+    this.props.history.goBack();
   };
 
   onAddTicket = () => {
-    console.log("add ticket state", this.state);
-    this.props.onAddTickets(this.state);
-    this.props.history.push('/manage-tickets/all-tickets');
+    if (this.props.ticketId === null) {
+      this.props.onAddTickets({...this.state}, this.props.history);
+    } else {
+      this.props.onUpdateTickets({...this.state}, this.props.history);
+    }
+  };
+
+  onValidationCheck = () => {
+    this.props.form.validateFields(err => {
+      if (!err) {
+        this.onAddTicket();
+      }
+    });
   };
 
   render() {
-    const {title, message, product, priority_id} = this.state;
-    console.log("departments",this.props.dept);
+    const {getFieldDecorator} = this.props.form;
+    const {title, message, product, priority_id, department} = this.state;
     const {priorities} = this.props;
-    console.log("in add ticket", priorities)
-    const {Option} = Select;
     return (
       <div className="gx-main-layout-content">
-        <Widget styleName="gx-card-filter"
-                title={
-                  <i className="icon icon-arrow-left" onClick={this.onReturnTicketsScreen}/>
-                }>
-          <hr/>
-          <div className="gx-mb-4"><h3>Create New Ticket</h3></div>
+        <Widget styleName="gx-card-filter">
+          <h3>{this.props.ticketId === null ? "Create Ticket" : "Edit Ticket Details"}</h3>
+          <Breadcrumb className="gx-mb-4">
+            <Breadcrumb.Item>
+              <Link to="/manage-tickets/all-tickets">Tickets</Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/manage-tickets/add-new-ticket">{this.props.ticketId === null ?
+                "Create ticket" : "Edit ticket"}
+              </Link>
+            </Breadcrumb.Item>
+          </Breadcrumb>
           <Row>
             <Col xl={18} lg={12} md={12} sm={12} xs={24}>
-              <Form layout="vertical" style={{ width: "60%"}}>
-                <Form.Item label="Customer" required={true}>
-                  <Input type="text" value={title} onChange={(e) => {
+              <Form layout="vertical" style={{width: "60%"}}>
+                <Form.Item label="Customer">
+                  {getFieldDecorator('title', {
+                    initialValue: title,
+                    rules: [{required: true, message: 'Please Enter Title!'}],
+                  })(<Input type="text" onChange={(e) => {
                     this.setState({title: e.target.value})
-                  }}/>
+                  }}/>)}
                 </Form.Item>
-                <Form.Item label="Select Product" >
+                <Form.Item label="Select Product">
                   <Select defaultValue={product} onChange={(value) => {
                     this.setState({product: value})
-                  }} >
+                  }}>
                     <Option value="demo1">Demo 1</Option>
                     <Option value="demo2">Demo 2</Option>
                     <Option value="demo3">Demo 3</Option>
                     <Option value="demo4">Demo 4</Option>
                   </Select>
                 </Form.Item>
-                <Form.Item label="Select Department" >
-                  <Select defaultValue={this.state.department} onChange={(value) => {
+                <Form.Item label="Select Department">
+                  <Select defaultValue={department} onChange={(value) => {
                     this.setState({department: value})
                   }}>
                     {this.props.dept.map(department => {
@@ -79,18 +106,21 @@ class AddNewTicket extends Component {
                   </Select>
                 </Form.Item>
                 <Form.Item label="Description">
-                  <Input className="gx-form-control-lg" type="textarea" value={message} onChange={(e) => {
+                  <TextArea rows={4} className="gx-form-control-lg" value={message} onChange={(e) => {
                     this.setState({message: e.target.value})
                   }}/>
                 </Form.Item>
                 <Form.Item label="Set Priority">
-                  <Select defaultValue={priority_id} onChange={(value) => {
+                  {getFieldDecorator('priority_id', {
+                    initialValue: priority_id,
+                    rules: [{required: true, message: 'Please Select Ticket Priority!'}],
+                  })(<Select onChange={(value) => {
                     this.setState({priority_id: value})
                   }}>
                     {priorities.map(priority =>
                       <Option key={priority.id} value={priority.id}>{priority.name}</Option>
                     )}
-                  </Select>
+                  </Select>)}
                 </Form.Item>
                 {/*<Form.Item label="Assign Ticket To">*/}
                 {/*  <Select value={user_id} onChange={(value) => {*/}
@@ -102,7 +132,7 @@ class AddNewTicket extends Component {
                 {/*  </Select>*/}
                 {/*</Form.Item>*/}
                 <Form.Item>
-                  <Button type="primary" onClick={this.onAddTicket}>
+                  <Button type="primary" onClick={this.onValidationCheck}>
                     Add Ticket
                   </Button>
                 </Form.Item>
@@ -113,25 +143,29 @@ class AddNewTicket extends Component {
             </Col>
           </Row>
         </Widget>
+        <InfoView/>
       </div>
     )
   }
 }
 
+AddNewTicket = Form.create({})(AddNewTicket);
 
-const mapStateToProps = ({ticketPriorities, departments, supportStaff}) => {
+
+const mapStateToProps = ({ticketPriorities, departments, supportStaff, ticketList}) => {
   const {priorities} = ticketPriorities;
+  const {tickets, ticketId} = ticketList;
   const {staffList} = supportStaff;
   const {dept} = departments;
-  return {priorities, staffList, dept};
+  return {priorities, staffList, dept, tickets, ticketId};
 };
 
 export default connect(mapStateToProps, {
   onAddTickets,
   onGetTicketPriorities,
   onGetStaff,
-  onBackToList,
-  onGetDepartments
+  onGetDepartments,
+  onUpdateTickets
 })(AddNewTicket);
 
 

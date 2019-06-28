@@ -15,7 +15,6 @@ class ImageUpload extends Component {
   }
 
   onDrop = files => {
-    console.log("files", files);
     files.map(file => Object.assign(file, {
       preview: URL.createObjectURL(file)
     }));
@@ -30,7 +29,6 @@ class ImageUpload extends Component {
     const data = new FormData()
     data.append('file', this.state.file);
     data.append('title', this.state.title);
-    console.log("file to be sent", data)
     this.props.onAddProfileImage(data);
   };
   render() {
