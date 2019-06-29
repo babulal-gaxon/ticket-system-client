@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Breadcrumb, Button, Col, Form, Input, message, Radio, Row, Select} from "antd";
+import {Breadcrumb, Button, Col, Form, Input, Radio, Row, Select} from "antd";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
@@ -30,7 +30,7 @@ class AddNewCustomers extends Component {
       };
     } else {
       const selectedCustomer = this.props.customersList.find(customer => customer.id === this.props.customerId);
-      const {first_name, last_name, email, phone,status, id} = selectedCustomer;
+      const {first_name, last_name, email, phone, status, id} = selectedCustomer;
       const companyId = selectedCustomer.company ? selectedCustomer.company.id : null;
       const labelIds = selectedCustomer.labels.map(label => {
         return label.id
@@ -59,24 +59,25 @@ class AddNewCustomers extends Component {
   onToggleAddressModal = () => {
     this.setState({isModalVisible: !this.state.isModalVisible})
   };
+
   onReturnCustomersScreen = () => {
     this.props.history.goBack();
   };
+
   onCustomerAdd = () => {
     if (this.props.customerId === null) {
       this.setState({profile_pic: this.props.profilePicId},
-        () => {this.props.onAddNewCustomer({...this.state}, this.props.history, this.onAddSuccess)})
+        () => {
+          this.props.onAddNewCustomer({...this.state}, this.props.history)
+        })
     } else {
       this.setState({profile_pic: this.props.profilePicId},
-        () => {this.props.onEditCustomer({...this.state}, this.props.history, this.onEditSuccess)})
-}
-};
-  onAddSuccess = () => {
-    message.success('New Customer has been added successfully.');
+        () => {
+          this.props.onEditCustomer({...this.state}, this.props.history)
+        })
+    }
   };
-  onEditSuccess = () => {
-    message.success(' Customer details has been updated successfully.');
-  };
+
   onReset = () => {
     this.setState({
       first_name: "",
@@ -90,13 +91,16 @@ class AddNewCustomers extends Component {
       status: 1
     })
   };
+
   onLabelSelect = (id) => {
     this.setState({label_ids: this.state.label_ids.concat(id)})
   };
+
   onLabelRemove = (value) => {
     const updatedLabels = this.state.label_ids.filter(label => label !== value)
     this.setState({label_ids: updatedLabels})
   };
+
   onLabeltSelectOption = () => {
     const labelOptions = [];
     this.props.labelList.map(label => {
@@ -104,6 +108,7 @@ class AddNewCustomers extends Component {
     });
     return labelOptions;
   };
+
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
@@ -111,12 +116,14 @@ class AddNewCustomers extends Component {
       }
     });
   };
+
   onCompanySelect = value => {
     this.setState({company_id: value})
   };
+
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {phone, status, label_ids, company_id,first_name,last_name,email} = this.state;
+    const {phone, status, label_ids, company_id, first_name, last_name, email} = this.state;
     const labelOptions = this.onLabeltSelectOption();
     return (
       <div className="gx-main-layout-content">
@@ -139,7 +146,7 @@ class AddNewCustomers extends Component {
                   <Col sm={12} xs={24} className="gx-pl-0">
                     <Form.Item label="First Name">
                       {getFieldDecorator('first_name', {
-                        initialValue:first_name,
+                        initialValue: first_name,
                         rules: [{required: true, message: 'Please Enter First Name!'}],
                       })(<Input type="text" onChange={(e) => {
                         this.setState({first_name: e.target.value})
@@ -149,7 +156,7 @@ class AddNewCustomers extends Component {
                   <Col sm={12} xs={24} className="gx-pr-0">
                     <Form.Item label="Last Name">
                       {getFieldDecorator('last_name', {
-                        initialValue:last_name,
+                        initialValue: last_name,
                         rules: [{required: true, message: 'Please Enter Last Name!'}],
                       })(<Input type="text" onChange={(e) => {
                         this.setState({last_name: e.target.value})
@@ -159,7 +166,7 @@ class AddNewCustomers extends Component {
                 </div>
                 <Form.Item label="Email Address">
                   {getFieldDecorator('email', {
-                    initialValue:email,
+                    initialValue: email,
                     rules: [{
                       type: 'email',
                       message: 'The input is not valid E-mail!',
@@ -174,7 +181,8 @@ class AddNewCustomers extends Component {
                 </Form.Item>
                 <Form.Item label="Password">
                   <Input.Password type="text" onChange={(e) => {
-                    this.setState({password: e.target.value})}}/>
+                    this.setState({password: e.target.value})
+                  }}/>
                 </Form.Item>
                 <Form.Item label="Phone Number">
                   <Input type="text" value={phone} onChange={(e) => {
@@ -225,7 +233,7 @@ class AddNewCustomers extends Component {
                 </span>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
-              <CustomerImageUpload onAddImage = {this.props.onAddImage}/>
+              <CustomerImageUpload onAddImage={this.props.onAddImage}/>
             </Col>
           </Row>
         </Widget>

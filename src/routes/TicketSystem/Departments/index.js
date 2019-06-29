@@ -34,10 +34,9 @@ class Departments extends Component {
       showAddDepartment: false,
       selectedDepartments: []
     };
-    // this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
   };
 
-  componentDidMount() {
+  componentWillMount() {
     this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
   };
 
@@ -136,7 +135,6 @@ class Departments extends Component {
             ids: this.state.selectedDepartments
           };
           this.props.onBulkDeleteDepartments(obj);
-          this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
           this.setState({selectedRowKeys: [], selectedDepartments: []});
         }
       })

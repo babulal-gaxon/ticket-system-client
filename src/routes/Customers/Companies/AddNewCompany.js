@@ -13,7 +13,6 @@ class AddNewCompany extends Component {
     } else {
       setTimeout(this.onSetFieldsValue, 10);
       const selectedCompany = this.props.companiesList.find(company => company.id === this.props.companyId);
-      console.log("selectedCompany", selectedCompany)
       this.state = {...selectedCompany};
     }
   };
@@ -25,6 +24,7 @@ class AddNewCompany extends Component {
       company_logo: this.state.company_logo
     });
   };
+
   onCompanyAdd = () => {
     this.setState({company_logo: this.props.companyLogoId}, () => {
       if (this.props.companyId === 0) {
@@ -37,6 +37,7 @@ class AddNewCompany extends Component {
       }
     })
   };
+
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
@@ -44,6 +45,7 @@ class AddNewCompany extends Component {
       }
     });
   };
+
   onLogoSelect = (e) => {
     let file = e.target.files[0];
     const data = new FormData();
@@ -52,10 +54,7 @@ class AddNewCompany extends Component {
     this.props.onAddProfileImage(data);
   };
 
-
   render() {
-    console.log("file of lofo",this.props.companyLogoId);
-    console.log("state", this.state);
     const {getFieldDecorator} = this.props.form;
     const {company_name, website, company_logo} = this.state;
     const {showAddNewModal, onToggleAddCompany} = this.props;

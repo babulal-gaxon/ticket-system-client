@@ -166,7 +166,7 @@ class RolesList extends Component {
             ids: this.state.selectedRoles
           };
           this.props.onBulkDeleteRoles(obj);
-          this.onGetRolesData(this.state.current, this.state.itemNumbers)
+          this.onGetRolesData(this.state.current, this.state.itemNumbers);
           this.setState({selectedRowKeys: [], selectedRoles: []})
         }
       })

@@ -9,6 +9,7 @@ import {onAddTickets, onUpdateTickets} from "../../../appRedux/actions/TicketLis
 import {onGetTicketPriorities} from "../../../appRedux/actions/TicketPriorities";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
+import {onGetProductsList} from "../../../appRedux/actions/Products";
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -35,6 +36,7 @@ class AddNewTicket extends Component {
     this.props.onGetTicketPriorities();
     this.props.onGetStaff();
     this.props.onGetDepartments();
+    this.props.onGetProductsList();
   }
 
   onReturnTicketsScreen = () => {
@@ -90,10 +92,9 @@ class AddNewTicket extends Component {
                   <Select defaultValue={product} onChange={(value) => {
                     this.setState({product: value})
                   }}>
-                    <Option value="demo1">Demo 1</Option>
-                    <Option value="demo2">Demo 2</Option>
-                    <Option value="demo3">Demo 3</Option>
-                    <Option value="demo4">Demo 4</Option>
+                    {this.props.productsList.map(product => {
+                      return <Option value = {product.id}>{product.title}</Option>
+                    })}
                   </Select>
                 </Form.Item>
                 <Form.Item label="Select Department">
@@ -152,12 +153,13 @@ class AddNewTicket extends Component {
 AddNewTicket = Form.create({})(AddNewTicket);
 
 
-const mapStateToProps = ({ticketPriorities, departments, supportStaff, ticketList}) => {
+const mapStateToProps = ({ticketPriorities, departments, supportStaff, ticketList, products}) => {
   const {priorities} = ticketPriorities;
   const {tickets, ticketId} = ticketList;
   const {staffList} = supportStaff;
   const {dept} = departments;
-  return {priorities, staffList, dept, tickets, ticketId};
+  const {productsList} = products;
+  return {priorities, staffList, dept, tickets, ticketId, productsList};
 };
 
 export default connect(mapStateToProps, {
@@ -165,7 +167,8 @@ export default connect(mapStateToProps, {
   onGetTicketPriorities,
   onGetStaff,
   onGetDepartments,
-  onUpdateTickets
+  onUpdateTickets,
+  onGetProductsList
 })(AddNewTicket);
 
 

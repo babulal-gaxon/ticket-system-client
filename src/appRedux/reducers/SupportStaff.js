@@ -18,8 +18,8 @@ export default (state = initialState, action) => {
     case GET_SUPPORT_STAFF:
       return {
         ...state,
-        staffList: action.payload.items,
-        totalItems: action.payload.paginate.total
+        staffList: action.payload.data,
+        totalItems: action.payload.meta.total
       };
 
     case GET_STAFF_ID:

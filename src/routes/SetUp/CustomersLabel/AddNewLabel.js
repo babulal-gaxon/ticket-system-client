@@ -13,18 +13,9 @@ class AddNewLabel extends Component {
     } else {
       const selectedLabel = this.props.labelList.find((label) => label.id === this.props.labelEditId);
       this.state = {...selectedLabel};
-      setTimeout(this.onSetFieldsValue, 10);
     }
-
   }
 
-  onSetFieldsValue = () => {
-    this.props.form.setFieldsValue({
-      name: this.state.name,
-      description: this.state.desc
-
-    });
-  };
   onSaveData = () => {
     if (this.props.labelEditId === 0) {
       this.props.onAddLabelsData({...this.state});
@@ -34,6 +25,7 @@ class AddNewLabel extends Component {
     this.props.onSetID();
     this.props.onModalState();
   };
+
   check = () => {
     this.props.form.validateFields(err => {
       if (!err) {
@@ -45,7 +37,7 @@ class AddNewLabel extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
     const {visible} = this.props;
-
+    const {name, desc} = this.state;
     return (
 
       <div>
@@ -68,18 +60,16 @@ class AddNewLabel extends Component {
             </Button>,
           ]}
         >
-
           <Form layout="vertical" style={{width: "60%"}}>
-            {console.log("Form", this.props.form)}
             <Form.Item label="Name">{getFieldDecorator('name', {
+              initialValue: name,
               rules: [{required: true, message: 'Please input Name!'}],
             })(<Input type="text" placeholder="Name" onChange={(e) => {
               this.setState({name: e.target.value})
             }}/>)}
             </Form.Item>
-
-
             <Form.Item label="Description">{getFieldDecorator('description', {
+              initialValue: desc,
               rules: [{required: true, message: 'Please input Description!'}],
             })(<Input type="text" placeholder="Description" onChange={(e) => {
               this.setState({desc: e.target.value})
@@ -98,8 +88,6 @@ class AddNewLabel extends Component {
       </div>
     );
   }
-
-
 }
 
 AddNewLabel = Form.create({})(AddNewLabel);

@@ -12,7 +12,7 @@ export const onGetTickets = () => {
       console.info("onGetTickets: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_TICKETS, payload: data.data.items});
+        dispatch({type: GET_TICKETS, payload: data.data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }

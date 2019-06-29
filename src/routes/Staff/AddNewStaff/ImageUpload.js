@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Dropzone from "react-dropzone";
 import {Avatar, Button} from "antd";
+import InfoView from "../../../components/InfoView";
 
 
 class ImageUpload extends Component {

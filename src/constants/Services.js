@@ -1,0 +1,4 @@
+export const GET_SERVICES_LIST = "GET_SERVICES_LIST";
+export const ADD_SERVICE = "ADD_SERVICE";
+export const EDIT_SERVICE = "EDIT_SERVICE";
+export const DELETE_SERVICE = "DELETE_SERVICE";

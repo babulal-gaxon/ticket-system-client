@@ -1,20 +1,6 @@
 import React, {Component} from 'react';
 import Widget from "../../../components/Widget";
-import {
-  Avatar,
-  Button,
-  Checkbox,
-  Dropdown,
-  Icon,
-  Input,
-  Menu,
-  message,
-  Modal,
-  Popconfirm,
-  Select,
-  Table,
-  Tag
-} from "antd";
+import {Avatar, Button, Checkbox, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
 import {
   getCustomerId,
   onDeleteCustomers,
@@ -70,7 +56,6 @@ class AllCustomers extends Component {
   };
 
   onFilterData = () => {
-    console.log(" in filter data", this.props.customersList);
     return this.props.customersList.filter(customer => {
       let flag = true;
       const name = customer.first_name + " " + customer.last_name;
@@ -80,7 +65,8 @@ class AllCustomers extends Component {
       if (this.state.filterText !== "" && name.indexOf(this.state.filterText) === -1) {
         flag = false;
       }
-      if (this.state.selectedLabels.length > 0 && customer.labels && customer.labels.filter(label => this.state.selectedLabels.indexOf(label.id) !== -1).length === 0) {
+      if (this.state.selectedLabels.length > 0 && customer.labels && customer.labels.filter(label =>
+        this.state.selectedLabels.indexOf(label.id) !== -1).length === 0) {
         flag = false;
       }
       if (this.state.filterStatusDisabled && customer.status === 1) {
@@ -237,7 +223,7 @@ class AllCustomers extends Component {
           <Popconfirm
             title="Are you sure to delete this Customer?"
             onConfirm={() => {
-              this.props.onDeleteCustomers({ids: [customerId]}, this.onDeleteSuccessMessage);
+              this.props.onDeleteCustomers({ids: [customerId]});
               this.onGetPaginatedData(this.state.current, this.state.itemNumbers);
             }}
             okText="Yes"
@@ -257,15 +243,7 @@ class AllCustomers extends Component {
   onDisableCustomerCall = (customerId) => {
     const selectedCustomer = this.props.customersList.find(customer => customer.id === customerId);
     selectedCustomer.status = 0;
-    this.props.onDisableCustomer(selectedCustomer, this.onCustomerDisableSuccess);
-  };
-
-  onDeleteSuccessMessage = () => {
-    message.success('The selected Customer(s) has been deleted successfully.');
-  };
-
-  onCustomerDisableSuccess = () => {
-    message.success('The status of Customer has been changed to Disable successfully.');
+    this.props.onDisableCustomer(selectedCustomer);
   };
 
   onSelectCustomer = record => {
@@ -284,7 +262,7 @@ class AllCustomers extends Component {
           const obj = {
             ids: this.state.selectedCustomers
           };
-          this.props.onDeleteCustomers(obj, this.onDeleteSuccessMessage);
+          this.props.onDeleteCustomers(obj);
           this.onGetPaginatedData(this.state.currentPage, this.state.itemNumbers);
           this.setState({selectedRowKeys: [], selectedCustomers: []});
         }
@@ -418,54 +396,54 @@ class AllCustomers extends Component {
       <div className={`gx-main-content ${this.state.sideBarActive ? "gx-main-layout-has-sider" : ""}`}>
         {this.state.currentCustomer === null ?
           <Widget styleName="gx-card-filter">
-          <h4>Customers</h4>
-          <p className="gx-text-grey">Customers</p>
-          <div className="gx-d-flex gx-justify-content-between">
-            <div className="gx-d-flex">
-              <Button type="primary" onClick={this.onAddButtonClick} style={{width: 200}}>
-                Add New Customers
-              </Button>
-              <span>{this.onSelectOption()}</span>
-            </div>
-            <div className="gx-d-flex">
-              <Search
-                placeholder="Search Customers Here"
-                value={this.state.filterText}
-                onChange={this.onFilterTextChange}
-                style={{width: 200}}/>
-              {this.onGetCustomersShowOptions()}
-              <Button.Group>
-                <Button type="default" onClick={this.onCurrentDecrement}>
-                  <i className="icon icon-long-arrow-left"/>
+            <h4>Customers</h4>
+            <p className="gx-text-grey">Customers</p>
+            <div className="gx-d-flex gx-justify-content-between">
+              <div className="gx-d-flex">
+                <Button type="primary" onClick={this.onAddButtonClick} style={{width: 200}}>
+                  Add New Customers
                 </Button>
-                <Button type="default" onClick={this.onCurrentIncrement}>
-                  <i className="icon icon-long-arrow-right"/>
+                <span>{this.onSelectOption()}</span>
+              </div>
+              <div className="gx-d-flex">
+                <Search
+                  placeholder="Search Customers Here"
+                  value={this.state.filterText}
+                  onChange={this.onFilterTextChange}
+                  style={{width: 200}}/>
+                {this.onGetCustomersShowOptions()}
+                <Button.Group>
+                  <Button type="default" onClick={this.onCurrentDecrement}>
+                    <i className="icon icon-long-arrow-left"/>
+                  </Button>
+                  <Button type="default" onClick={this.onCurrentIncrement}>
+                    <i className="icon icon-long-arrow-right"/>
+                  </Button>
+                </Button.Group>
+                <Button type="default" className="gx-filter-btn gx-filter-btn-rtl-round" onClick={this.onSideBarShow}>
+                  <i className="icon icon-filter"/>
                 </Button>
-              </Button.Group>
-              <Button type="default" className="gx-filter-btn gx-filter-btn-rtl-round" onClick={this.onSideBarShow}>
-                <i className="icon icon-filter"/>
-              </Button>
+              </div>
             </div>
-          </div>
-          <Table key={Math.random()} rowSelection={rowSelection} columns={this.onCustomersRowData()}
-                 dataSource={customers}
-                 pagination={{
-                   pageSize: this.state.itemNumbers,
-                   current: this.state.current,
-                   total: this.props.totalItems,
-                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
-                   onChange: this.onPageChange
-                 }}
-                 className="gx-table-responsive"
-                 onRow={(record) => ({
-                   onClick: () => this.onSelectCustomer(record)
-                 })}/>
-        </Widget> : <CustomerDetails getCustomerId={this.props.getCustomerId}
-                                     currentCustomer={this.state.currentCustomer}
-                                     history={this.props.history}
-                                     onBackToList={this.onBackToList}
-                                     currentCustomerCompany={this.state.currentCustomerCompany}
-        />}
+            <Table key={Math.random()} rowSelection={rowSelection} columns={this.onCustomersRowData()}
+                   dataSource={customers}
+                   pagination={{
+                     pageSize: this.state.itemNumbers,
+                     current: this.state.current,
+                     total: this.props.totalItems,
+                     showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                     onChange: this.onPageChange
+                   }}
+                   className="gx-table-responsive"
+                   onRow={(record) => ({
+                     onClick: () => this.onSelectCustomer(record)
+                   })}/>
+          </Widget> : <CustomerDetails getCustomerId={this.props.getCustomerId}
+                                       currentCustomer={this.state.currentCustomer}
+                                       history={this.props.history}
+                                       onBackToList={this.onBackToList}
+                                       currentCustomerCompany={this.state.currentCustomerCompany}
+          />}
         {this.state.sideBarActive ? this.onGetSidebar() : null}
         <InfoView/>
       </div>

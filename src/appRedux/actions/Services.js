@@ -1,38 +1,39 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
-import {ADD_LABELS_DATA, DELETE_LABEL, EDIT_LABEL_DATA, GET_LABELS_DATA} from "../../constants/Labels";
+import {ADD_SERVICE, DELETE_SERVICE, EDIT_SERVICE, GET_SERVICES_LIST} from "../../constants/Services";
 
 
-export const onGetLabelData = () => {
+export const onGetServicesList = (currentPage, itemsPerPage, filterData) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get('/setup/labels').then(({data}) => {
-      console.info("onGetLabels: ", data);
+    const url = filterData ? `/setup/services?search=${filterData}&page=${currentPage}&per_page=${itemsPerPage}` :
+      `/setup/services?page=${currentPage}&per_page=${itemsPerPage}`;
+    axios.get(url).then(({data}) => {
+
       if (data.success) {
+        console.info("onGetServicesList: ", data);
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_LABELS_DATA, payload: data.data.items});
+        dispatch({type: GET_SERVICES_LIST, payload: data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }
     }).catch(function (error) {
-      //dispatch(showErrorMessage(error));
+      dispatch({type: FETCH_ERROR, payload: error.message});
       console.info("Error****:", error.message);
     });
   }
 };
 
-
-export const onAddLabelsData = (label) => {
-  console.log("onAddLabelsData", label);
+export const onAddService = (service) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post('/setup/labels', label).then(({data}) => {
+    axios.post('/setup/services', service).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
         console.log(" sending data", data.data);
-        dispatch({type: ADD_LABELS_DATA, payload: data.data});
+        dispatch({type: ADD_SERVICE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The New Label has been added successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: "The Service has been added successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -43,16 +44,16 @@ export const onAddLabelsData = (label) => {
   }
 };
 
-export const onDeleteLabel = (labelId) => {
-  console.log("onDeleteLabel", labelId);
+export const onEditService = (service) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.delete(`/setup/labels/${labelId}`).then(({data}) => {
-      console.info("data", data);
+    axios.put(`/setup/services/${service.id}`, service).then(({data}) => {
+      console.info("data:", data);
       if (data.success) {
-        dispatch({type: DELETE_LABEL, payload: labelId});
+        console.log(" sending data", data.data);
+        dispatch({type: EDIT_SERVICE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Selected Label has been deleted successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: "The Service details has been updated successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -61,20 +62,16 @@ export const onDeleteLabel = (labelId) => {
       console.info("Error****:", error.message);
     });
   }
-
 };
 
-export const onEditLabelsData = (label) => {
-  console.log("Edit label", label);
+export const onDeleteServices = (serviceId) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.put(`/setup/labels/${label.id}`, label).then(({data}) => {
-      console.info("data:", data);
+    axios.delete(`/setup/services/${serviceId}`).then(({data}) => {
       if (data.success) {
-        console.log(" sending data", data.data);
-        dispatch({type: EDIT_LABEL_DATA, payload: data.data});
+        dispatch({type: DELETE_SERVICE, payload: serviceId});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Label details has been edited successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: "The Service(s) has been deleted successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

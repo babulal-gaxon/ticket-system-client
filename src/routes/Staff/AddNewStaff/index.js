@@ -30,11 +30,10 @@ class AddNewStaff extends Component {
         role_id: null
       };
     } else {
-      setTimeout(this.onSetFieldsValue, 10);
       const selectedStaff = this.props.staffList.find(staff => staff.id === this.props.staffId);
       const {id, first_name, last_name, email, password, mobile, hourly_rate, account_status, role_id} = selectedStaff;
       const department_ids = selectedStaff.departments.map(department => {
-        return department.pivot.department_id
+        return department.id
       });
       this.state = {
         id: id,
@@ -56,43 +55,21 @@ class AddNewStaff extends Component {
     this.props.onGetRoles();
   }
 
-  onSetFieldsValue = () => {
-    this.props.form.setFieldsValue({
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      email: this.state.email,
-      password: this.state.password
-    });
-  };
-  onSetFieldsToReset = () => {
-    this.props.form.setFieldsValue({
-      first_name: "",
-      last_name: "",
-      email: "",
-      password: ""
-    });
-  };
   onReturnStaffScreen = () => {
     this.props.history.goBack();
   };
+
   onStaffAdd = () => {
     if (this.props.staffId === 0) {
       this.setState({profile_pic: this.props.profilePicId},
         () => {
           this.props.onAddSupportStaff({...this.state}, this.props.history, this.onAddSuccess)
         })
-
-
     } else {
       this.props.onEditSupportStaff({...this.state}, this.props.history, this.onEditSuccess);
     }
   };
-  onAddSuccess = () => {
-    message.success('New Staff has been added successfully.');
-  };
-  onEditSuccess = () => {
-    message.success('The Staff details has been updated successfully.');
-  };
+
   onDepartmentSelectOption = () => {
     const deptOptions = [];
     this.props.dept.map(department => {
@@ -100,17 +77,22 @@ class AddNewStaff extends Component {
     });
     return deptOptions;
   };
+
   onDepartmentSelect = (id) => {
-    console.log(this.state.departments_ids)
     this.setState({departments_ids: this.state.departments_ids.concat(id)});
-    console.log("after id", this.state.departments_ids)
   };
+
   onDepartmentRemove = (value) => {
     const updatedDepartments = this.state.departments_ids.filter(department => department !== value)
     this.setState({departments_ids: updatedDepartments})
   };
+
   onReset = () => {
     this.setState({
+      first_name: "",
+      last_name: "",
+      email: "",
+      password: "",
       mobile: "",
       hourly_rate: "",
       department_ids: [],
@@ -118,6 +100,7 @@ class AddNewStaff extends Component {
       role_id: null
     })
   };
+
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
@@ -125,13 +108,14 @@ class AddNewStaff extends Component {
       }
     });
   };
+
   onSelectRole = value => {
     this.setState({role_id: value})
   };
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {mobile, hourly_rate, account_status, departments_ids, role_id} = this.state;
+    const {mobile, hourly_rate, account_status, departments_ids, role_id,first_name,last_name,email,password} = this.state;
     const deptOptions = this.onDepartmentSelectOption();
     return (
       <div className="gx-main-layout-content">
@@ -151,6 +135,7 @@ class AddNewStaff extends Component {
               <Form layout="vertical" style={{width: "60%"}}>
                 <Form.Item label="First Name">
                   {getFieldDecorator('first_name', {
+                    initialValue:first_name,
                     rules: [{required: true, message: 'Please Enter First Name!'}],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({first_name: e.target.value})
@@ -158,6 +143,7 @@ class AddNewStaff extends Component {
                 </Form.Item>
                 <Form.Item label="Last Name">
                   {getFieldDecorator('last_name', {
+                    initialValue:last_name,
                     rules: [{required: true, message: 'Please Enter Last Name!'}],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({last_name: e.target.value})
@@ -165,6 +151,7 @@ class AddNewStaff extends Component {
                 </Form.Item>
                 <Form.Item label="Email Address">
                   {getFieldDecorator('email', {
+                    initialValue:email,
                     rules: [{
                       type: 'email',
                       message: 'The input is not valid E-mail!',
@@ -189,6 +176,7 @@ class AddNewStaff extends Component {
                 </Form.Item>
                 <Form.Item label="Password">
                   {getFieldDecorator('password', {
+                    initialValue: password,
                     rules: [{required: true, message: 'Please Enter Password!'}],
                   })(<Input.Password type="text" onChange={(e) => {
                     this.setState({password: e.target.value})
@@ -225,10 +213,7 @@ class AddNewStaff extends Component {
                 <Button type="primary" onClick={this.onValidationCheck}>
                   Save
                 </Button>
-                     <Button type="primary" onClick={() => {
-                       this.onSetFieldsToReset();
-                       this.onReset();
-                     }}>
+                     <Button type="primary" onClick={this.onReset}>
                   Reset
                 </Button>
                      <Button onClick={this.onReturnStaffScreen}>

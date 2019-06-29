@@ -1,8 +1,10 @@
 import axios from 'util/Api'
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import {
-  ADD_NEW_CUSTOMER, ADD_PROFILE_PICTURE,
-  DELETE_CUSTOMERS, DISABLE_CUSTOMER,
+  ADD_NEW_CUSTOMER,
+  ADD_PROFILE_PICTURE,
+  DELETE_CUSTOMERS,
+  DISABLE_CUSTOMER,
   EDIT_CUSTOMER_DETAILS,
   GET_CUSTOMER_ID,
   GET_CUSTOMERS_DATA
@@ -35,8 +37,7 @@ export const getCustomerId = (id) => {
   }
 };
 
-export const onAddNewCustomer = (customer,history, successMessage) => {
-  console.log("onAddCustomer", customer);
+export const onAddNewCustomer = (customer, history) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/customers', customer).then(({data}) => {
@@ -46,7 +47,7 @@ export const onAddNewCustomer = (customer,history, successMessage) => {
         dispatch({type: ADD_NEW_CUSTOMER, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The New Customer has been added successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -57,8 +58,7 @@ export const onAddNewCustomer = (customer,history, successMessage) => {
   }
 };
 
-export const onEditCustomer = (customer, history, successMessage) => {
-  console.log("onEditCustomer", customer);
+export const onEditCustomer = (customer, history) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/customers/${customer.id}`, customer).then(({data}) => {
@@ -68,7 +68,7 @@ export const onEditCustomer = (customer, history, successMessage) => {
         dispatch({type: EDIT_CUSTOMER_DETAILS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Customer details has been edited successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -79,7 +79,7 @@ export const onEditCustomer = (customer, history, successMessage) => {
   }
 };
 
-export const onDisableCustomer = (customer, successMessage) => {
+export const onDisableCustomer = (customer) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/customers/${customer.id}`, customer).then(({data}) => {
@@ -88,7 +88,10 @@ export const onDisableCustomer = (customer, successMessage) => {
         console.log(" sending data", data.data);
         dispatch({type: DISABLE_CUSTOMER, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: "The Status of selected Customer has been changed to disabled successfully"
+        });
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -99,7 +102,7 @@ export const onDisableCustomer = (customer, successMessage) => {
   }
 };
 
-export const onDeleteCustomers = (customerIds, successMessage) => {
+export const onDeleteCustomers = (customerIds) => {
   console.log("in action", customerIds);
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -107,7 +110,7 @@ export const onDeleteCustomers = (customerIds, successMessage) => {
       if (data.success) {
         dispatch({type: DELETE_CUSTOMERS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Customer has been deleted successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -124,10 +127,12 @@ export const onAddImage = (imageFile) => {
     axios.post("/uploads/temporary/media", imageFile, {
       headers: {
         'Content-Type': "multipart/form-data"
-      }}).then(({data}) => {
+      }
+    }).then(({data}) => {
       if (data.success) {
         dispatch({type: ADD_PROFILE_PICTURE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "The Profile Picture has been added successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

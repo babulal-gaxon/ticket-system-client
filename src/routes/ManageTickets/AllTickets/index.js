@@ -253,90 +253,94 @@ class AllTickets extends Component {
   };
 
   onGetSidebar = () => {
-    const staffs = this.state.showMoreStaff ? this.props.staffList : this.props.staffList.slice(0,5);
-    const customers = this.state.showMoreCustomer ? this.props.customersList : this.props.customersList.slice(0,5);
+    const staffs = this.state.showMoreStaff ? this.props.staffList : this.props.staffList.slice(0, 5);
+    const customers = this.state.showMoreCustomer ? this.props.customersList : this.props.customersList.slice(0, 5);
     return <div className="gx-main-layout-sidenav gx-d-none gx-d-lg-flex">
       <CustomScrollbars className="gx-layout-sider-scrollbar">
-      <div className="gx-main-layout-side">
-        <div className="gx-main-layout-side-header">
-          <h4 className="gx-font-weight-medium">Filter Tickets</h4>
-        </div>
-        <div className="gx-main-layout-nav">
-          <div>
-            <label>Filter By Date</label>
+        <div className="gx-main-layout-side">
+          <div className="gx-main-layout-side-header">
+            <h4 className="gx-font-weight-medium">Filter Tickets</h4>
+          </div>
+          <div className="gx-main-layout-nav">
             <div>
-              <DatePicker
-                value={this.state.startDate}
-                placeholder="Select"
-                onChange={this.onStartDateChange}
-                className="gx-my-3"
-                style={{width: "100%"}}/>
-              <DatePicker
-                value={this.state.endDate}
-                placeholder="Updated"
-                onChange={this.onEndDateChange}
-                style={{width: "100%"}}/>
+              <label>Filter By Date</label>
+              <div>
+                <DatePicker
+                  value={this.state.startDate}
+                  placeholder="Select"
+                  onChange={this.onStartDateChange}
+                  className="gx-my-3"
+                  style={{width: "100%"}}/>
+                <DatePicker
+                  value={this.state.endDate}
+                  placeholder="Updated"
+                  onChange={this.onEndDateChange}
+                  style={{width: "100%"}}/>
+              </div>
             </div>
-          </div>
-          <div>
-            <div className="gx-d-flex gx-justify-content-between gx-mt-5">
-              <h4>Filter By Staff</h4>
-              <span> Reset</span>
+            <div>
+              <div className="gx-d-flex gx-justify-content-between gx-mt-5">
+                <h4>Filter By Staff</h4>
+                <Button type="link" onClick = {() => this.setState({selectedStaff: []})}> Reset</Button>
+              </div>
+              <Input type="text" value={this.state.StaffFilterText}
+                     onChange={(e) => this.setState({StaffFilterText: e.target.value})}/>
+              <Checkbox.Group onChange={this.onSelectStaff} value={this.state.selectedStaff}>
+                {staffs.map(staff => {
+                  return <div className="gx-my-2"><Checkbox value={staff.id}>
+                    {staff.first_name + " " + staff.last_name}</Checkbox></div>
+                })}
+              </Checkbox.Group>
+              <div>
+              <Button type="link" onClick={this.onToggleShowMoreStaff}>
+                {this.state.showMoreStaff ? "View Less" : `${this.props.staffList.length - 5} More`}
+              </Button>
+              </div>
             </div>
-            <Input type="text" value={this.state.StaffFilterText}
-                   onChange = {(e) => this.setState({StaffFilterText: e.target.value})}/>
-            <Checkbox.Group onChange={this.onSelectStaff} value={this.state.selectedStaff}>
-              {staffs.map(staff => {
-                return <div className="gx-my-2"><Checkbox value={staff.id}>
-                  {staff.first_name + " " + staff.last_name}</Checkbox></div>
-              })}
-            </Checkbox.Group>
-            <div onClick={this.onToggleShowMoreStaff}>
-              {this.state.showMoreStaff ?"View Less" : `${this.props.staffList.length - 5} More`}
+            <div>
+              <div className="gx-d-flex gx-justify-content-between gx-mt-5">
+                <h4>Select Customer</h4>
+                <Button type="link" onClick = {() => this.setState({selectedCustomers: []})}> Reset</Button>
+              </div>
+              <Input type="text"/>
+              <Checkbox.Group onChange={this.onSelectCustomer} value={this.state.selectedCustomers}>
+                {customers.map(customer => {
+                  return <div className="gx-my-2">
+                    <Checkbox value={customer.id}>{customer.first_name + " " + customer.last_name}</Checkbox>
+                  </div>
+                })}
+              </Checkbox.Group>
+              <div>
+              <Button type="link" onClick={this.onToggleShowMoreCustomer}>
+                {this.state.showMoreCustomer ? "View Less" : `${this.props.customersList.length - 5} More`}
+              </Button>
+              </div>
             </div>
-          </div>
-          <div>
-            <div className="gx-d-flex gx-justify-content-between gx-mt-5">
-              <h4>Select Customer</h4>
-              <span> Reset</span>
+            <div className="gx-mt-5">
+              <h4>Priority</h4>
+              <Input type="text"/>
+              <Checkbox.Group onChange={this.onSelectPriorities} value={this.state.selectedPriorities}>
+                {this.props.priorities.map(priority => {
+                  return <div className="gx-my-2">
+                    <Checkbox value={priority.id}>{priority.name}</Checkbox>
+                  </div>
+                })}
+              </Checkbox.Group>
             </div>
-            <Input type="text"/>
-            <Checkbox.Group onChange={this.onSelectCustomer} value={this.state.selectedCustomers}>
-              {customers.map(customer => {
-                return <div className="gx-my-2">
-                  <Checkbox value={customer.id}>{customer.first_name + " " + customer.last_name}</Checkbox>
-                </div>
-              })}
-            </Checkbox.Group>
-            <div onClick={this.onToggleShowMoreCustomer}>
-              {this.state.showMoreCustomer ?"View Less" : `${this.props.customersList.length - 5} More`}
+            <div className="gx-mt-5">
+              <h4>Status</h4>
+              <Input type="text"/>
+              <Checkbox.Group onChange={this.onSelectStatuses} value={this.state.selectedStatuses}>
+                {this.props.statuses.map(status => {
+                  return <div className="gx-my-2">
+                    <Checkbox value={status.id}>{status.name}</Checkbox>
+                  </div>
+                })}
+              </Checkbox.Group>
             </div>
-          </div>
-          <div className="gx-mt-5">
-            <h4>Priority</h4>
-            <Input type="text"/>
-            <Checkbox.Group onChange={this.onSelectPriorities} value={this.state.selectedPriorities}>
-              {this.props.priorities.map(priority => {
-                return <div className="gx-my-2">
-                  <Checkbox value={priority.id}>{priority.name}</Checkbox>
-                </div>
-              })}
-            </Checkbox.Group>
-          </div>
-          <div className="gx-mt-5">
-            <h4>Status</h4>
-            <Input type="text"/>
-            <Checkbox.Group onChange={this.onSelectStatuses} value={this.state.selectedStatuses}>
-              {this.props.statuses.map(status => {
-                return <div className="gx-my-2">
-                  <Checkbox value={status.id}>{status.name}</Checkbox>
-                </div>
-              })}
-            </Checkbox.Group>
           </div>
         </div>
-      </div>
-    </CustomScrollbars>
+      </CustomScrollbars>
     </div>
   };
 
@@ -434,7 +438,6 @@ class AllTickets extends Component {
   };
 
   render() {
-    console.log("selectedd", this.state.StaffFilterText);
     const {selectedRowKeys, currentTicket} = this.state;
     const tickets = this.onSortTickets();
     let ids;
@@ -529,12 +532,12 @@ class AllTickets extends Component {
 }
 
 const mapStateToProps = ({ticketList, supportStaff, customers, ticketPriorities, ticketStatuses}) => {
-  const {tickets, currentTicket} = ticketList;
+  const {tickets, currentTicket, totalItems} = ticketList;
   const {staffList} = supportStaff;
   const {customersList} = customers;
   const {priorities} = ticketPriorities;
   const {statuses} = ticketStatuses;
-  return {tickets, priorities, staffList, currentTicket, customersList, statuses};
+  return {tickets, priorities, staffList, currentTicket, customersList, statuses, totalItems};
 };
 
 export default connect(mapStateToProps, {

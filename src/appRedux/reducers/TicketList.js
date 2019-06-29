@@ -1,15 +1,9 @@
-import {
-  ADD_TICKETS,
-  BACK_TO_LIST,
-  DELETE_TICKET,
-  GET_TICKET_ID,
-  GET_TICKETS,
-  UPDATE_TICKET
-} from "../../constants/TicketList";
+import {ADD_TICKETS, DELETE_TICKET, GET_TICKET_ID, GET_TICKETS, UPDATE_TICKET} from "../../constants/TicketList";
 
 const initialState = {
   tickets: [],
-  ticketId: null
+  ticketId: null,
+  totalItems: null
 };
 
 export default (state = initialState, action) => {
@@ -17,15 +11,16 @@ export default (state = initialState, action) => {
     case GET_TICKETS :
       return {
         ...state,
-        tickets: action.payload
+        tickets: action.payload.items,
+        totalItems: action.payload.paginate.total
       };
 
     case ADD_TICKETS:
       console.log(ADD_TICKETS, action);
       return {
         ...state,
-        tickets: [action.payload,...state.tickets],
-        showAddTicket: false
+        tickets: [action.payload, ...state.tickets],
+        totalItems: state.totalItems + 1
       };
 
     case GET_TICKET_ID:
@@ -45,7 +40,8 @@ export default (state = initialState, action) => {
       const updated = state.tickets.filter((ticket) => ticket.id !== action.payload)
       return {
         ...state,
-        tickets: updated
+        tickets: updated,
+        totalItems: state.totalItems - 1
       };
 
     default:

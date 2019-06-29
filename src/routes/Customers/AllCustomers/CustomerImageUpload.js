@@ -12,6 +12,7 @@ class CustomerImageUpload extends Component {
       title: ""
     }
   }
+
   onDrop = files => {
     files.map(file => Object.assign(file, {
       preview: URL.createObjectURL(file)
@@ -23,12 +24,14 @@ class CustomerImageUpload extends Component {
       title: files[0].name
     });
   };
+
   onUploadImage = () => {
     const data = new FormData();
     data.append('file', this.state.file);
     data.append('title', this.state.title);
     this.props.onAddImage(data);
   };
+
   render() {
     const {file, profile_pic} = this.state;
     return (
@@ -57,7 +60,6 @@ class CustomerImageUpload extends Component {
                 })
               }}>Change</span>
             </div>
-            {/*<span>Your Profile Photo</span>*/}
           </div>
         }
         <Button type="primary" className="gx-mt-5" onClick={this.onUploadImage}>Add Profile Image</Button>

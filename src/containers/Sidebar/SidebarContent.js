@@ -39,14 +39,15 @@ class SidebarContent extends Component {
     const selectedKeys = pathname.substr(1);
     const defaultOpenKeys = selectedKeys.split('/')[1];
     return (
-      <Auxiliary>
+      <div className="gx-main-layout-content">
+        <CustomScrollbars className="gx-layout-sider-scrollbar">
         <SidebarLogo/>
         <div className="gx-sidebar-content">
           <div className={`gx-sidebar-notifications ${this.getNoHeaderClass(navStyle)}`}>
             <UserProfile/>
             <AppsNavigation/>
           </div>
-          <CustomScrollbars className="gx-layout-sider-scrollbar">
+
             <Menu
               defaultOpenKeys={[defaultOpenKeys]}
               selectedKeys={[selectedKeys]}
@@ -179,10 +180,21 @@ class SidebarContent extends Component {
                   <IntlMessages id="sidebar.dashboard.roles.and.permissions"/></Link>
               </Menu.Item>
 
+              <Menu.Item key="services">
+                <Link to = "/services"><i className="icon icon-widgets"/>
+                  <IntlMessages id="sidebar.dashboard.services"/></Link>
+              </Menu.Item>
+
+              <Menu.Item key="products">
+                <Link to = "/products"><i className="icon icon-widgets"/>
+                  <IntlMessages id="sidebar.dashboard.products"/></Link>
+              </Menu.Item>
+
             </Menu>
-          </CustomScrollbars>
+
         </div>
-      </Auxiliary>
+        </CustomScrollbars>
+      </div>
     );
   }
 }

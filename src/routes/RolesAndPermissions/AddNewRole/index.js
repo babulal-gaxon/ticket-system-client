@@ -316,7 +316,6 @@ class AddNewRole extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
     const {status, currentMember, name} = this.state;
-    console.log("user permissions", this.props.userPermissions)
 
     return (
       <div className="gx-main-layout-content">

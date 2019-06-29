@@ -39,23 +39,29 @@ class Companies extends Component {
   onToggleAddCompany = () => {
     this.setState({showAddNewModal: !this.state.showAddNewModal})
   };
+
   onGetPaginatedData = (currentPage, itemsPerPage) => {
     this.props.onGetCompaniesData(currentPage, itemsPerPage);
   };
+
   onFilterData = () => {
     return this.props.companiesList.filter(company => company.company_name.indexOf(this.state.filterText) !== -1);
   };
+
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value})
   };
+
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
   };
+
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers)
     });
   };
+
   onCurrentIncrement = () => {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
@@ -66,6 +72,7 @@ class Companies extends Component {
       return null;
     }
   };
+
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
       this.setState({current: this.state.current - 1}, () => {
@@ -75,6 +82,7 @@ class Companies extends Component {
       return null;
     }
   };
+
   onGetCompaniesShowOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange} className="gx-mx-2">
       <Option value={10}>10</Option>
@@ -82,6 +90,7 @@ class Companies extends Component {
       <Option value={50}>50</Option>
     </Select>
   };
+
   onCompaniesRowData = () => {
     return [
       {
@@ -130,6 +139,7 @@ class Companies extends Component {
       },
     ];
   };
+
   onShowRowDropdown = (companyId) => {
     const menu = (
       <Menu>
@@ -157,6 +167,7 @@ class Companies extends Component {
       </Dropdown>
     )
   };
+
   onShowBulkDeleteConfirm = () => {
     if (this.state.selectedCompanies.length !== 0) {
       confirm({
@@ -177,6 +188,7 @@ class Companies extends Component {
       })
     }
   };
+
   onSelectOption = () => {
     const menu = (
       <Menu>
@@ -194,14 +206,17 @@ class Companies extends Component {
       </Button>
     </Dropdown>
   };
+
   onPageChange = page => {
     this.setState({current: page}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers)
     });
   };
+
   onAddButtonClick = () => {
     this.setState({companyId: 0, showAddNewModal: true})
   };
+
   onEditCompanyOption = (id) => {
     this.setState({companyId: id, showAddNewModal: true})
   };
@@ -219,6 +234,7 @@ class Companies extends Component {
         this.setState({selectedCompanies: ids, selectedRowKeys: selectedRowKeys})
       }
     };
+
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">

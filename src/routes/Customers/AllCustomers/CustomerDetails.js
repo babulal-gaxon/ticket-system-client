@@ -13,6 +13,7 @@ class CustomerDetails extends Component {
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
   };
+
   onGetTableColumns = () => {
     return [
       {
@@ -71,6 +72,7 @@ class CustomerDetails extends Component {
       },
     ];
   };
+
   onEditProfile = () => {
     this.props.getCustomerId(this.props.currentCustomer.id);
     this.props.history.push('/customers/add-customers')
@@ -84,7 +86,6 @@ class CustomerDetails extends Component {
     };
     const currentCustomer = this.props.currentCustomer;
     const currentCustomerCompany = this.props.currentCustomerCompany;
-    console.log("current company", this.props.currentCustomerCompany);
     return (
       <div className="gx-main-content">
         <Row>
@@ -106,7 +107,6 @@ class CustomerDetails extends Component {
                     <span><Tag color="blue" onClick={this.onEditProfile}>
                 <i className="icon icon-edit gx-mr-3"/>Edit Profile</Tag></span>
                   </div>
-
                   <div className="gx-mt-2">
                     <Tag color={currentCustomer.status === 1 ? "green" : "red"}>
                       {currentCustomer.status === 1 ? "Active" : "Disabled"}
@@ -141,7 +141,6 @@ class CustomerDetails extends Component {
                 </Col>
                 <Col>{currentCustomer.address}</Col>
               </Row>
-
             </Widget>
           </Col>
           <Col xl={12} lg={12} md={12} sm={12} xs={24}>
@@ -175,7 +174,6 @@ class CustomerDetails extends Component {
                     <span
                       className="gx-mb-0 gx-text-capitalize gx-font-weight-bold">{member.first_name + " " + member.last_name}</span>
                           </div>
-
                           <div className="gx-mt-2">
                             <span>{member.email}</span>
                           </div>
@@ -190,8 +188,7 @@ class CustomerDetails extends Component {
         </Row>
         <Widget title={<span>Assigned Tickets</span>}>
           <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
-                 className="gx-mb-4"
-          />
+                 className="gx-mb-4"/>
         </Widget>
       </div>
     );

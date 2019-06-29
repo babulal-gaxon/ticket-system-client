@@ -34,6 +34,7 @@ class AddCustomerAddress extends Component {
           <Form layout="vertical">
             <Form.Item label="Address">
               {getFieldDecorator('address_line_1', {
+                initialValue: address_line_1,
                 rules: [{required: true, message: 'Please Enter Address!'}],
               })(<Input type="text" value={address_line_1} onChange={(e) => {
                 this.setState({address_line_1: e.target.value})
@@ -43,6 +44,7 @@ class AddCustomerAddress extends Component {
               <Col sm={12} xs={24} className="gx-pl-0">
                 <Form.Item label="City">
                   {getFieldDecorator('city', {
+                    initialValue: city,
                     rules: [{required: true, message: 'Please Enter City Name!'}],
                   })(<Input type="text" value={city} onChange={(e) => {
                     this.setState({city: e.target.value})
@@ -52,6 +54,7 @@ class AddCustomerAddress extends Component {
               <Col sm={12} xs={24} className="gx-pr-0">
                 <Form.Item label="State">
                   {getFieldDecorator('state', {
+                    initialValue: state,
                     rules: [{required: true, message: 'Please Enter State Name!'}],
                   })(<Input type="text" value={state} onChange={(e) => {
                     this.setState({state: e.target.value})
@@ -63,6 +66,7 @@ class AddCustomerAddress extends Component {
               <Col sm={12} xs={24} className="gx-pl-0">
                 <Form.Item label="Country">
                   {getFieldDecorator('country_id', {
+                    initialValue: country_id,
                     rules: [{required: true, message: 'Please Enter Country Name!'}],
                   })(<Input type="text" value={country_id} onChange={(e) => {
                     this.setState({country_id: e.target.value})
@@ -72,6 +76,7 @@ class AddCustomerAddress extends Component {
               <Col sm={12} xs={24} className="gx-pr-0">
                 <Form.Item label="Zip Code">
                   {getFieldDecorator('zip_code', {
+                    initialValue:zip_code,
                     rules: [{required: true, message: 'Please Enter Zip Code!'}],
                   })(<Input type="text" value={zip_code} onChange={(e) => {
                     this.setState({zip_code: e.target.value})
