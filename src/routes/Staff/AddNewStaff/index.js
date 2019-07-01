@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Button, Col, Form, Input, message, Radio, Row} from "antd/lib/index";
+import {Button, Col, Form, Input, Radio, Row} from "antd/lib/index";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
@@ -26,7 +26,7 @@ class AddNewStaff extends Component {
         hourly_rate: "",
         departments_ids: [],
         account_status: 1,
-        profile_pic: "",
+        profile_pic: null,
         role_id: null
       };
     } else {
@@ -45,7 +45,8 @@ class AddNewStaff extends Component {
         hourly_rate: hourly_rate,
         account_status: account_status,
         departments_ids: department_ids,
-        role_id: role_id
+        role_id: role_id,
+        profile_pic: null
       }
     }
   }
@@ -60,14 +61,13 @@ class AddNewStaff extends Component {
   };
 
   onStaffAdd = () => {
-    if (this.props.staffId === 0) {
-      this.setState({profile_pic: this.props.profilePicId},
-        () => {
-          this.props.onAddSupportStaff({...this.state}, this.props.history, this.onAddSuccess)
-        })
-    } else {
-      this.props.onEditSupportStaff({...this.state}, this.props.history, this.onEditSuccess);
-    }
+    this.setState({profile_pic: this.props.profilePicId}, () => {
+      if (this.props.staffId === 0) {
+        this.props.onAddSupportStaff({...this.state}, this.props.history)
+      } else {
+        this.props.onEditSupportStaff({...this.state}, this.props.history);
+      }
+    })
   };
 
   onDepartmentSelectOption = () => {
@@ -115,7 +115,7 @@ class AddNewStaff extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {mobile, hourly_rate, account_status, departments_ids, role_id,first_name,last_name,email,password} = this.state;
+    const {mobile, hourly_rate, account_status, departments_ids, role_id, first_name, last_name, email, password} = this.state;
     const deptOptions = this.onDepartmentSelectOption();
     return (
       <div className="gx-main-layout-content">
@@ -135,7 +135,7 @@ class AddNewStaff extends Component {
               <Form layout="vertical" style={{width: "60%"}}>
                 <Form.Item label="First Name">
                   {getFieldDecorator('first_name', {
-                    initialValue:first_name,
+                    initialValue: first_name,
                     rules: [{required: true, message: 'Please Enter First Name!'}],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({first_name: e.target.value})
@@ -143,7 +143,7 @@ class AddNewStaff extends Component {
                 </Form.Item>
                 <Form.Item label="Last Name">
                   {getFieldDecorator('last_name', {
-                    initialValue:last_name,
+                    initialValue: last_name,
                     rules: [{required: true, message: 'Please Enter Last Name!'}],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({last_name: e.target.value})
@@ -151,7 +151,7 @@ class AddNewStaff extends Component {
                 </Form.Item>
                 <Form.Item label="Email Address">
                   {getFieldDecorator('email', {
-                    initialValue:email,
+                    initialValue: email,
                     rules: [{
                       type: 'email',
                       message: 'The input is not valid E-mail!',

@@ -5,7 +5,14 @@ import {Link} from "react-router-dom";
 import InfoView from "../../components/InfoView";
 import AddNewService from "./AddNewService";
 import {connect} from "react-redux";
-import {onAddService, onDeleteServices, onEditService, onGetServicesList} from "../../appRedux/actions/Services";
+import {
+  onAddService,
+  onBulkActiveServices,
+  onBulkDisableServices,
+  onDeleteServices,
+  onEditService,
+  onGetServicesList
+} from "../../appRedux/actions/Services";
 import PropTypes from "prop-types";
 
 const ButtonGroup = Button.Group;
@@ -77,20 +84,52 @@ class Services extends Component {
     this.setState({serviceId: id, showAddModal: true});
   };
 
+  onShowBulkActiveConfirm = () => {
+    if (this.state.selectedServices.length !== 0) {
+      confirm({
+        title: "Are you sure to change the Support status of selected Service(s) to Enable?",
+        onOk: () => {
+          const obj = {
+            ids: this.state.selectedServices
+          };
+          this.props.onBulkActiveServices(obj);
+          this.setState({selectedRowKeys: [], selectedServices: []})
+        },
+      })
+    } else {
+      confirm({
+        title: "Please Select Service(s) first",
+      })
+    }
+  };
+
+  onShowBulkDisableConfirm = () => {
+    if (this.state.selectedServices.length !== 0) {
+      confirm({
+        title: "Are you sure to change the Support status of selected Services(s) to Disabled?",
+        onOk: () => {
+          const obj = {
+            ids: this.state.selectedServices
+          };
+          this.props.onBulkDisableServices(obj);
+          this.setState({selectedRowKeys: [], selectedServices: []})
+        },
+      })
+    } else {
+      confirm({
+        title: "Please Select Service(s) first",
+      })
+    }
+  };
+
   onSelectOption = () => {
     const menu = (
       <Menu>
-        <Menu.Item key="1" onClick={() => {
-        }}>
+        <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
           Active
         </Menu.Item>
-        <Menu.Item key="2" onClick={() => {
-        }}>
+        <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
           Disable
-        </Menu.Item>
-        <Menu.Item key="3" onClick={() => {
-        }}>
-          Delete
         </Menu.Item>
       </Menu>
     );
@@ -260,7 +299,9 @@ export default connect(mapStateToProps, {
   onGetServicesList,
   onAddService,
   onEditService,
-  onDeleteServices
+  onDeleteServices,
+  onBulkActiveServices,
+  onBulkDisableServices
 })(Services);
 
 Services.defaultProps = {

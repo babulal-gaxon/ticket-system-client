@@ -11,8 +11,8 @@ export default (state = initialState, action) => {
     case GET_TICKETS :
       return {
         ...state,
-        tickets: action.payload.items,
-        totalItems: action.payload.paginate.total
+        tickets: action.payload.data,
+        totalItems: action.payload.meta.total
       };
 
     case ADD_TICKETS:

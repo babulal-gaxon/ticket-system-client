@@ -29,7 +29,6 @@ import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
 import {onGetCustomersData} from "../../../appRedux/actions/Customers";
 import {onGetTicketStatus} from "../../../appRedux/actions/TicketStatuses";
 import {connect} from "react-redux";
-import PropTypes from "prop-types";
 import CustomScrollbars from "../../../util/CustomScrollbars";
 
 const Option = Select.Option;
@@ -72,16 +71,19 @@ class AllTickets extends Component {
   };
 
   componentWillMount() {
-    this.onGetPaginatedData(this.state.current, this.state.itemNumbers);
+    this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.startDate, this.state.endDate, this.state.selectedStaff,this.state.selectedCustomers
+    ,this.state.selectedPriorities, this.state.selectedStatuses);
     this.props.onGetTicketPriorities();
     this.props.onGetStaff();
     this.props.onGetCustomersData();
     this.props.onGetTicketStatus();
   };
 
-  onGetPaginatedData = (currentPage, itemsPerPage) => {
+  onGetPaginatedData = (currentPage, itemsPerPage, startDate, endDate, selectedStaff, selectedCustomers,
+                        selectedPriorities, selectedStatuses) => {
     if (Permissions.canTicketView()) {
-      this.props.onGetTickets(currentPage, itemsPerPage);
+      this.props.onGetTickets(currentPage, itemsPerPage, startDate, endDate, selectedStaff,
+        selectedCustomers, selectedPriorities, selectedStatuses);
     }
   };
 
@@ -99,12 +101,6 @@ class AllTickets extends Component {
 
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
-  };
-
-  onDropdownChange = (value) => {
-    this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers)
-    });
   };
 
   onCurrentIncrement = () => {
@@ -136,6 +132,12 @@ class AllTickets extends Component {
     </Select>
   };
 
+  onDropdownChange = (value) => {
+    this.setState({itemNumbers: value, current: 1}, () => {
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers)
+    });
+  };
+
   onAddButtonClick = () => {
     this.props.getTickedId(null);
     this.props.history.push('/manage-tickets/add-new-ticket')
@@ -163,7 +165,7 @@ class AllTickets extends Component {
               <div className="gx-media-body">
                 <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
                 <Tag className="gx-ml-2" color="blue">Demo Product</Tag>
-                <div>Created on {moment(record.created_at).format('LL')}</div>
+                <div>Created on {moment(record.created_at.date).format('LL')}</div>
               </div>
             </div>
           )
@@ -184,7 +186,7 @@ class AllTickets extends Component {
         title: 'Status',
         dataIndex: 'status_id',
         render: (text, record) => {
-          return <Tag color="red">{record.status_name}</Tag>
+          return <Tag color="green">{record.status_name}</Tag>
         },
       },
       {
@@ -245,11 +247,17 @@ class AllTickets extends Component {
   };
 
   onStartDateChange = value => {
-    this.setState({startDate: value});
+    this.setState({startDate: value}, () => {
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.startDate, this.state.endDate,
+        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses)
+    });
   };
 
   onEndDateChange = value => {
-    this.setState({endDate: value});
+    this.setState({endDate: value}, () => {
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.startDate, this.state.endDate,
+        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses)
+    });
   };
 
   onGetSidebar = () => {
@@ -281,7 +289,7 @@ class AllTickets extends Component {
             <div>
               <div className="gx-d-flex gx-justify-content-between gx-mt-5">
                 <h4>Filter By Staff</h4>
-                <Button type="link" onClick = {() => this.setState({selectedStaff: []})}> Reset</Button>
+                <Button type="link" onClick={() => this.setState({selectedStaff: []})}> Reset</Button>
               </div>
               <Input type="text" value={this.state.StaffFilterText}
                      onChange={(e) => this.setState({StaffFilterText: e.target.value})}/>
@@ -292,15 +300,15 @@ class AllTickets extends Component {
                 })}
               </Checkbox.Group>
               <div>
-              <Button type="link" onClick={this.onToggleShowMoreStaff}>
-                {this.state.showMoreStaff ? "View Less" : `${this.props.staffList.length - 5} More`}
-              </Button>
+                <Button type="link" onClick={this.onToggleShowMoreStaff}>
+                  {this.state.showMoreStaff ? "View Less" : `${this.props.staffList.length - 5} More`}
+                </Button>
               </div>
             </div>
             <div>
               <div className="gx-d-flex gx-justify-content-between gx-mt-5">
                 <h4>Select Customer</h4>
-                <Button type="link" onClick = {() => this.setState({selectedCustomers: []})}> Reset</Button>
+                <Button type="link" onClick={() => this.setState({selectedCustomers: []})}> Reset</Button>
               </div>
               <Input type="text"/>
               <Checkbox.Group onChange={this.onSelectCustomer} value={this.state.selectedCustomers}>
@@ -311,9 +319,9 @@ class AllTickets extends Component {
                 })}
               </Checkbox.Group>
               <div>
-              <Button type="link" onClick={this.onToggleShowMoreCustomer}>
-                {this.state.showMoreCustomer ? "View Less" : `${this.props.customersList.length - 5} More`}
-              </Button>
+                <Button type="link" onClick={this.onToggleShowMoreCustomer}>
+                  {this.state.showMoreCustomer ? "View Less" : `${this.props.customersList.length - 5} More`}
+                </Button>
               </div>
             </div>
             <div className="gx-mt-5">
@@ -345,19 +353,31 @@ class AllTickets extends Component {
   };
 
   onSelectStaff = checkedList => {
-    this.setState({selectedStaff: checkedList});
+    this.setState({selectedStaff: checkedList}, () => {
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.startDate, this.state.endDate,
+        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses)
+    });
   };
 
   onSelectCustomer = checkedList => {
-    this.setState({selectedCustomers: checkedList});
+    this.setState({selectedCustomers: checkedList}, () => {
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.startDate, this.state.endDate,
+        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses)
+    });
   };
 
   onSelectPriorities = checkedList => {
-    this.setState({selectedPriorities: checkedList})
+    this.setState({selectedPriorities: checkedList}, () => {
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.startDate, this.state.endDate,
+        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses)
+    });
   };
 
   onSelectStatuses = checkedList => {
-    this.setState({selectedStatuses: checkedList})
+    this.setState({selectedStatuses: checkedList}, () => {
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.startDate, this.state.endDate,
+        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses)
+    });
   };
 
   onSortDropdown = () => {
@@ -521,8 +541,9 @@ class AllTickets extends Component {
                        })}
                 /> : null}
             </Widget> :
-            <TicketDetail ticket={this.props.currentTicket}
-                          onBackToList={this.onBackToList}/>}
+            <TicketDetail currentTicket={this.state.currentTicket}
+                          priorities={this.props.priorities}
+                          statuses={this.props.statuses}/>}
           <InfoView/>
         </div>
         {this.state.sideBarActive ? this.onGetSidebar() : null}
@@ -532,12 +553,12 @@ class AllTickets extends Component {
 }
 
 const mapStateToProps = ({ticketList, supportStaff, customers, ticketPriorities, ticketStatuses}) => {
-  const {tickets, currentTicket, totalItems} = ticketList;
+  const {tickets, totalItems} = ticketList;
   const {staffList} = supportStaff;
   const {customersList} = customers;
   const {priorities} = ticketPriorities;
   const {statuses} = ticketStatuses;
-  return {tickets, priorities, staffList, currentTicket, customersList, statuses, totalItems};
+  return {tickets, priorities, staffList, customersList, statuses, totalItems};
 };
 
 export default connect(mapStateToProps, {
@@ -550,10 +571,6 @@ export default connect(mapStateToProps, {
   getTickedId
 })(AllTickets);
 
-AllTickets.defaultProps = {
-  currentTicket: ""
-};
+AllTickets.defaultProps = {};
 
-AllTickets.propTypes = {
-  currentTicket: PropTypes.object,
-};
+AllTickets.propTypes = {};

@@ -1,4 +1,11 @@
-import {ADD_SERVICE, DELETE_SERVICE, EDIT_SERVICE, GET_SERVICES_LIST} from "../../constants/Services";
+import {
+  ADD_SERVICE,
+  BULK_ACTIVE_SERVICES,
+  BULK_DISABLE_SERVICES,
+  DELETE_SERVICE,
+  EDIT_SERVICE,
+  GET_SERVICES_LIST
+} from "../../constants/Services";
 
 const initialState = {
   servicesList: [],
@@ -39,6 +46,33 @@ export default (state = initialState, action) => {
         servicesList: updateList,
         totalItems: state.totalItems - 1
       };
+
+    case BULK_ACTIVE_SERVICES:
+      const activateServices = state.servicesList.map(service => {
+        if (action.payload.indexOf(service.id) !== -1) {
+          service.support_enable = 1;
+          return service;
+        }
+        return service;
+      });
+      return {
+        ...state,
+        servicesList: activateServices
+      };
+
+    case BULK_DISABLE_SERVICES:
+      const deActivateProducts = state.servicesList.map(service => {
+        if (action.payload.indexOf(service.id) !== -1) {
+          service.support_enable = 0;
+          return service;
+        }
+        return service;
+      });
+      return {
+        ...state,
+        servicesList: deActivateProducts
+      };
+
 
     default:
       return state

@@ -171,7 +171,7 @@ class AllCustomers extends Component {
         render: (text, record) => {
           return (record.labels && record.labels.length > 0) ?
             record.labels.map(label => {
-              return <Tag>{label.name}</Tag>
+              return <Tag key={label.name}>{label.name}</Tag>
             }) : "NA"
         },
       },
@@ -425,7 +425,7 @@ class AllCustomers extends Component {
                 </Button>
               </div>
             </div>
-            <Table key={Math.random()} rowSelection={rowSelection} columns={this.onCustomersRowData()}
+            <Table rowKey="Id" rowSelection={rowSelection} columns={this.onCustomersRowData()}
                    dataSource={customers}
                    pagination={{
                      pageSize: this.state.itemNumbers,

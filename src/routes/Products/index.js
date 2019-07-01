@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import AddNewProduct from "./AddNewProduct";
 import {
   onAddProduct,
-  onAddProductLogo,
+  onAddProductLogo, onBulkActiveProducts, onBulkDisableProducts,
   onDeleteProduct,
   onEditProduct,
   onGetProductsList
@@ -83,20 +83,58 @@ class Products extends Component {
     this.setState({productId: id, showAddModal: true});
   };
 
+  onShowBulkActiveConfirm = () => {
+    if (this.state.selectedProducts.length !== 0) {
+      confirm({
+        title: "Are you sure to change the status of selected Product(s) to ACTIVE?",
+        onOk: () => {
+          const obj = {
+            ids: this.state.selectedProducts
+          };
+          this.props.onBulkActiveProducts(obj);
+          this.setState({selectedRowKeys: [], selectedResponses: []})
+        },
+        onCancel() {
+          console.log('Cancel');
+        }
+      })
+    } else {
+      confirm({
+        title: "Please Select Product(s) first",
+      })
+    }
+  };
+
+  onShowBulkDisableConfirm = () => {
+    if (this.state.selectedProducts.length !== 0) {
+      confirm({
+        title: "Are you sure to change the status of selected Product(s) to Disabled?",
+        onOk: () => {
+          const obj = {
+            ids: this.state.selectedProducts
+          };
+          this.props.onBulkDisableProducts(obj);
+          this.setState({selectedRowKeys: [], selectedResponses: []})
+        },
+        onCancel() {
+          console.log('Cancel');
+        }
+      })
+    } else {
+      confirm({
+        title: "Please Select Product(s) first",
+      })
+    }
+  };
+
   onSelectOption = () => {
     const menu = (
       <Menu>
-        <Menu.Item key="1" onClick={() => {
-        }}>
+        <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
           Active
         </Menu.Item>
-        <Menu.Item key="2" onClick={() => {
-        }}>
+        <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
           Disable
-        </Menu.Item>
-        <Menu.Item key="3" onClick={() => {
-        }}>
-          Delete
         </Menu.Item>
       </Menu>
     );
@@ -278,7 +316,9 @@ export default connect(mapStateToProps, {
   onAddProduct,
   onEditProduct,
   onDeleteProduct,
-  onAddProductLogo
+  onAddProductLogo,
+  onBulkActiveProducts,
+  onBulkDisableProducts
 })(Products);
 
 Products.defaultProps = {

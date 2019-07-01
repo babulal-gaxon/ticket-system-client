@@ -4,15 +4,16 @@ import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../const
 import {showErrorMessage} from "./Auth";
 
 
-export const onGetTickets = () => {
+export const onGetTickets = (currentPage, itemsPerPage, startDate, endDate, selectedStaff, selectedCustomers,
+                             selectedPriorities, selectedStatuses) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get('/tickets'
+    axios.get(`/tickets?page=${currentPage}&per_page=${itemsPerPage}&customer_id=${selectedCustomers}&priority_id=${selectedPriorities}&status_id=${selectedStatuses}`
     ).then(({data}) => {
       console.info("onGetTickets: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_TICKETS, payload: data.data});
+        dispatch({type: GET_TICKETS, payload: data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }

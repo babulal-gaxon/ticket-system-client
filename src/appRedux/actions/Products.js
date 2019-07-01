@@ -1,7 +1,15 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
-import {ADD_PRODUCT, ADD_PRODUCT_LOGO, DELETE_PRODUCT, EDIT_PRODUCT, GET_PRODUCTS_LIST} from "../../constants/Products";
+import {
+  ADD_PRODUCT,
+  ADD_PRODUCT_LOGO,
+  BULK_ACTIVE_PRODUCTS, BULK_DISABLE_PRODUCTS,
+  DELETE_PRODUCT,
+  EDIT_PRODUCT,
+  GET_PRODUCTS_LIST
+} from "../../constants/Products";
 import {EDIT_COMPANY_LOGO} from "../../constants/Companies";
+import {BULK_ACTIVE_DEPARTMENTS} from "../../constants/Departments";
 
 
 export const onGetProductsList = (currentPage, itemsPerPage, filterData) => {
@@ -103,6 +111,43 @@ export const onAddProductLogo = (imageFile) => {
     });
   }
 };
+
+export const onBulkActiveProducts = (productIds) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post('/setup/products/support/1', productIds).then(({data}) => {
+      if (data.success) {
+        dispatch({type: BULK_ACTIVE_PRODUCTS, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "The Status of Product(s) has been changed to Active successfully"});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onBulkDisableProducts = (productIds) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post('/setup/products/support/0', productIds).then(({data}) => {
+      if (data.success) {
+        dispatch({type: BULK_DISABLE_PRODUCTS, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "The Status of Product(s) has been changed to Disabled successfully"});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
 
 
 

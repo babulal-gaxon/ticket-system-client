@@ -1,6 +1,12 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
-import {ADD_SERVICE, DELETE_SERVICE, EDIT_SERVICE, GET_SERVICES_LIST} from "../../constants/Services";
+import {
+  ADD_SERVICE,
+  BULK_ACTIVE_SERVICES, BULK_DISABLE_SERVICES,
+  DELETE_SERVICE,
+  EDIT_SERVICE,
+  GET_SERVICES_LIST
+} from "../../constants/Services";
 
 
 export const onGetServicesList = (currentPage, itemsPerPage, filterData) => {
@@ -72,6 +78,48 @@ export const onDeleteServices = (serviceId) => {
         dispatch({type: DELETE_SERVICE, payload: serviceId});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Service(s) has been deleted successfully"});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onBulkActiveServices = (serviceIds) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post('/setup/services/support/1', serviceIds).then(({data}) => {
+      if (data.success) {
+        dispatch({type: BULK_ACTIVE_SERVICES, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: "The Support of selected Services(s) has been changed to Enabled successfully"
+        });
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onBulkDisableServices = (serviceIds) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post('/setup/services/support/0', serviceIds).then(({data}) => {
+      if (data.success) {
+        dispatch({type: BULK_DISABLE_SERVICES, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: "The Support of selected Services(s) has been changed to Enabled successfully"
+        });
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

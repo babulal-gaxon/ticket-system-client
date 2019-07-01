@@ -7,7 +7,7 @@ const {TextArea} = Input;
 class AddNewProduct extends Component {
   constructor(props) {
     super(props);
-    this.inputOpenFileRef = React.createRef();
+    // this.inputOpenFileRef = React.createRef();
     if (this.props.productId === 0) {
       this.state = {
         title: "",
@@ -17,7 +17,6 @@ class AddNewProduct extends Component {
       };
     } else {
       const selectedProduct = this.props.productsList.find(product => product.id === this.props.productId);
-      console.log("selected Service", selectedProduct)
       this.state = {...selectedProduct};
     }
   };
@@ -51,9 +50,9 @@ class AddNewProduct extends Component {
     });
   };
 
-  showOpenFileDlg = () => {
-    this.inputOpenFileRef.current.click()
-  }
+  // showOpenFileDlg = () => {
+  //   this.inputOpenFileRef.current.click()
+  // }
 
   render() {
     const {getFieldDecorator} = this.props.form;
@@ -89,8 +88,9 @@ class AddNewProduct extends Component {
             </Form.Item>
             <Form.Item>
               <Input type="file" placeholder="Choose file..." addonAfter="Browse" onChange={this.onLogoSelect}
-                     ref={this.inputOpenFileRef} />
-              <Button onClick={this.showOpenFileDlg}>Choose Picture</Button>
+                     // ref={this.inputOpenFileRef}
+              />
+              {/*<Button onClick={this.showOpenFileDlg}>Choose Picture</Button>*/}
             </Form.Item>
             <Form.Item label="Support Enable">
               <Radio.Group value={support_enable} onChange={(e) => {

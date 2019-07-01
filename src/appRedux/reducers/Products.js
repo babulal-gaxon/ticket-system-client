@@ -1,4 +1,12 @@
-import {ADD_PRODUCT, ADD_PRODUCT_LOGO, DELETE_PRODUCT, EDIT_PRODUCT, GET_PRODUCTS_LIST} from "../../constants/Products";
+import {
+  ADD_PRODUCT,
+  ADD_PRODUCT_LOGO,
+  BULK_ACTIVE_PRODUCTS,
+  BULK_DISABLE_PRODUCTS,
+  DELETE_PRODUCT,
+  EDIT_PRODUCT,
+  GET_PRODUCTS_LIST
+} from "../../constants/Products";
 
 const initialState = {
   productsList: [],
@@ -41,6 +49,32 @@ export default (state = initialState, action) => {
       return {
         ...state,
         productLogoId: action.payload
+      };
+
+    case BULK_ACTIVE_PRODUCTS:
+      const activateProducts = state.productsList.map(product => {
+        if (action.payload.indexOf(product.id) !== -1) {
+          product.support_enable = 1;
+          return product;
+        }
+        return product;
+      });
+      return {
+        ...state,
+        productsList: activateProducts
+      };
+
+    case BULK_DISABLE_PRODUCTS:
+      const deActivateProducts = state.productsList.map(product => {
+        if (action.payload.indexOf(product.id) !== -1) {
+          product.support_enable = 0;
+          return product;
+        }
+        return product;
+      });
+      return {
+        ...state,
+        productsList: deActivateProducts
       };
 
     default:
