@@ -4,12 +4,11 @@ import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
 import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
-import {onGetDepartments} from "../../../appRedux/actions/Departments";
-import {onAddTickets, onUpdateTickets} from "../../../appRedux/actions/TicketList";
+import {onAddTickets, onGetFormDetails, onGetTickets, onUpdateTickets} from "../../../appRedux/actions/TicketList";
 import {onGetTicketPriorities} from "../../../appRedux/actions/TicketPriorities";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
-import {onGetProductsList} from "../../../appRedux/actions/Products";
+import {onGetCustomersData} from "../../../appRedux/actions/Customers";
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -20,11 +19,11 @@ class AddNewTicket extends Component {
     if (this.props.ticketId === null) {
       this.state = {
         title: "",
-        message: "",
-        product: "",
-        priority_id: "",
-        user_id: "",
-        department: ""
+        content: "",
+        priority_id: null,
+        user_id: null,
+        department_id: null,
+        service_id: []
       };
     } else {
       const selectedTicket = this.props.tickets.find(ticket => ticket.id === this.props.ticketId);
@@ -33,10 +32,11 @@ class AddNewTicket extends Component {
   }
 
   componentWillMount() {
+    this.props.onGetTickets();
     this.props.onGetTicketPriorities();
     this.props.onGetStaff();
-    this.props.onGetDepartments();
-    this.props.onGetProductsList();
+    this.props.onGetCustomersData();
+    this.props.onGetFormDetails();
   }
 
   onReturnTicketsScreen = () => {
@@ -51,6 +51,23 @@ class AddNewTicket extends Component {
     }
   };
 
+  onServiceSelectOptions = () => {
+    const serviceOptions = [];
+    // this.props.formData.services.map(service => {
+    //   return serviceOptions.push(<Option value={service.id}>{service.name}</Option>);
+    // });
+    return serviceOptions;
+  };
+
+  onServiceSelect = (id) => {
+    this.setState({service_id: this.state.label_ids.concat(id)})
+  };
+
+  onServiceRemove = (value) => {
+    const updatedServiceIds = this.state.service_id.filter(service => service !== value)
+    this.setState({service_id: updatedServiceIds})
+  };
+
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
@@ -60,9 +77,11 @@ class AddNewTicket extends Component {
   };
 
   render() {
+    console.log("form data", this.props.formData, );
     const {getFieldDecorator} = this.props.form;
-    const {title, message, product, priority_id, department} = this.state;
-    const {priorities} = this.props;
+    const {title, content, product_id, priority_id, department_id, service_id, user_id} = this.state;
+    const {priorities, formData} = this.props;
+    const ServiceOptions = this.onServiceSelectOptions();
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -81,34 +100,56 @@ class AddNewTicket extends Component {
             <Col xl={18} lg={12} md={12} sm={12} xs={24}>
               <Form layout="vertical" style={{width: "60%"}}>
                 <Form.Item label="Customer">
-                  {getFieldDecorator('title', {
-                    initialValue: title,
-                    rules: [{required: true, message: 'Please Enter Title!'}],
-                  })(<Input type="text" onChange={(e) => {
-                    this.setState({title: e.target.value})
-                  }}/>)}
-                </Form.Item>
-                <Form.Item label="Select Product">
-                  <Select defaultValue={product} onChange={(value) => {
-                    this.setState({product: value})
+                  {getFieldDecorator('user_id', {
+                    initialValue: user_id,
+                    rules: [{required: true, message: 'Please Select Customer!'}],
+                  })(<Select onChange={(value) => {
+                    this.setState({user_id: value})
                   }}>
-                    {this.props.productsList.map(product => {
+                    {this.props.customersList.map(customer => {
+                      return <Option value = {customer.id}>{customer.first_name + " " + customer.last_name}</Option>
+                    })}
+                  </Select>)}
+                </Form.Item>
+                  <Form.Item label="Subject">
+                    {getFieldDecorator('title', {
+                      initialValue: title,
+                      rules: [{required: true, message: 'Please enter title!'}],
+                    })(<Input onChange={(e) => {
+                      this.setState({title: e.target.value})}}/>)}
+                  </Form.Item>
+                <Form.Item label="Select Product">
+                  <Select defaultValue={product_id} onChange={(value) => {
+                    this.setState({product_id: value})
+                  }}>
+                    {formData.products.map(product => {
                       return <Option value = {product.id}>{product.title}</Option>
                     })}
                   </Select>
                 </Form.Item>
                 <Form.Item label="Select Department">
-                  <Select defaultValue={department} onChange={(value) => {
-                    this.setState({department: value})
+                  <Select defaultValue={department_id} onChange={(value) => {
+                    this.setState({department_id: value})
                   }}>
-                    {this.props.dept.map(department => {
+                    {formData.departments.map(department => {
                       return <Option value={department.id}>{department.name}</Option>
                     })}
                   </Select>
                 </Form.Item>
+                <Form.Item label="Services">
+                  <Select
+                    mode="multiple"
+                    style={{width: '100%'}}
+                    placeholder="Please select Services"
+                    value={service_id}
+                    onSelect={this.onServiceSelect}
+                    onDeselect={this.onServiceRemove}>
+                    {ServiceOptions}
+                  </Select>
+                </Form.Item>
                 <Form.Item label="Description">
-                  <TextArea rows={4} className="gx-form-control-lg" value={message} onChange={(e) => {
-                    this.setState({message: e.target.value})
+                  <TextArea rows={4} className="gx-form-control-lg" value={content} onChange={(e) => {
+                    this.setState({content: e.target.value})
                   }}/>
                 </Form.Item>
                 <Form.Item label="Set Priority">
@@ -123,15 +164,6 @@ class AddNewTicket extends Component {
                     )}
                   </Select>)}
                 </Form.Item>
-                {/*<Form.Item label="Assign Ticket To">*/}
-                {/*  <Select value={user_id} onChange={(value) => {*/}
-                {/*    this.setState({user_id: value})*/}
-                {/*  }}>*/}
-                {/*    {staffList.map(member => {*/}
-                {/*  return <Option value={member.id} key ={member.id}>{member.staff_name}</Option>*/}
-                {/*    })}*/}
-                {/*  </Select>*/}
-                {/*</Form.Item>*/}
                 <Form.Item>
                   <Button type="primary" onClick={this.onValidationCheck}>
                     Add Ticket
@@ -153,22 +185,22 @@ class AddNewTicket extends Component {
 AddNewTicket = Form.create({})(AddNewTicket);
 
 
-const mapStateToProps = ({ticketPriorities, departments, supportStaff, ticketList, products}) => {
+const mapStateToProps = ({ticketPriorities,  supportStaff, ticketList, customers}) => {
   const {priorities} = ticketPriorities;
-  const {tickets, ticketId} = ticketList;
+  const {tickets, ticketId, formData} = ticketList;
   const {staffList} = supportStaff;
-  const {dept} = departments;
-  const {productsList} = products;
-  return {priorities, staffList, dept, tickets, ticketId, productsList};
+  const {customersList} = customers;
+  return {priorities, staffList,  tickets, ticketId, customersList, formData};
 };
 
 export default connect(mapStateToProps, {
+  onGetTickets,
   onAddTickets,
   onGetTicketPriorities,
   onGetStaff,
-  onGetDepartments,
   onUpdateTickets,
-  onGetProductsList
+  onGetCustomersData,
+  onGetFormDetails
 })(AddNewTicket);
 
 

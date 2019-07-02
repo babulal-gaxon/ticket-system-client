@@ -1,9 +1,19 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Col, Dropdown, Input, Menu, Row, Select} from "antd";
+import {Breadcrumb, Button, Col, Dropdown, Input, Menu, Popconfirm, Row, Select} from "antd";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import moment from "moment";
+import ConversationCell from "./ConversationCell";
+import {connect} from "react-redux";
+import {
+  getTickedId,
+  onDeleteTicket,
+  onGetConversationList,
+  onSendMessage,
+  onUpdateTicketPriority,
+  onUpdateTicketStatus
+} from "../../../appRedux/actions/TicketList";
 
 const Option = Select.Option;
 const {TextArea} = Input;
@@ -12,52 +22,48 @@ class TicketDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
       message: '',
-      conversation: [],
       selectedPriority: null,
-      selectedStatus: null
-    }
+      selectedStatus: null,
+      // conversation:[]
+    };
+    this.props.onGetConversationList(this.props.currentTicket.id)
   };
-
-  _handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      this.submitComment();
-    }
-  };
-
-  // submitComment() {
-  //   if (this.state.message !== '') {
-  //     const updatedConversation = this.state.conversation.concat({
-  //       'name': this.props.user.name,
-  //       'thumb': this.props.user.avatar,
-  //       'message': this.state.message,
-  //       // 'sentAt': Moment().format('ddd DD, YYYY, hh:mm:ss A'),
-  //     });
-  //     this.setState({
-  //       conversation: updatedConversation,
-  //       message: '',
-  //     });
-  //   }
-  // }
 
   onPriorityChange = value => {
-    this.setState({selectedPriority: value})
+    this.setState({selectedPriority: value},
+      () => this.props.onUpdateTicketPriority(this.props.currentTicket.id, this.state.selectedPriority))
   };
 
+  // componentWillReceiveProps(nextProps, nextContext) {
+  //   this.setState({conversation: nextProps.conversation})
+  // }
+
   onStatusChange = value => {
-    this.setState({selectedStatus: value})
+    this.setState({selectedStatus: value},
+      () => this.props.onUpdateTicketStatus(this.props.currentTicket.id, this.state.selectedStatus))
   };
 
   onSelectOption = () => {
+    const ticketId = this.props.currentTicket.id;
     const menu = (
       <Menu>
-        <Menu.Item key="1">
+        <Menu.Item key="1" onClick={() => {
+          this.props.getTickedId(ticketId)
+          this.props.history.push('/manage-tickets/add-new-ticket')
+        }}>
           Edit
         </Menu.Item>
-        <Menu.Item key="2" onClick={() => {
-        }}>
-          Delete
+        <Menu.Item key="4">
+          <Popconfirm
+            title="Are you sure delete this Ticket?"
+            onConfirm={() => {
+              this.props.onDeleteTicket({ids: ticketId}, this.props.onBackToList);
+            }}
+            okText="Yes"
+            cancelText="No">
+            Delete
+          </Popconfirm>
         </Menu.Item>
       </Menu>
     );
@@ -68,10 +74,23 @@ class TicketDetail extends Component {
     </Dropdown>
   };
 
-  render() {
+  onHandleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.onSubmitMessage();
+    }
+  };
 
-    console.log("current priorities", this.props.priorities);
-    const {currentTicket, priorities, statuses} = this.props;
+  onSubmitMessage = () => {
+    if (this.state.message !== '') {
+      this.props.onSendMessage(this.props.currentTicket.id, {message: this.state.message})
+    }
+    this.setState({message: ''})
+  };
+
+  render() {
+    const {message} = this.state;
+    console.log("conversation list", this.props.conversation);
+    const {currentTicket, priorities, statuses, conversation} = this.props;
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -100,8 +119,37 @@ class TicketDetail extends Component {
               </div>
               <div>#{currentTicket.id}</div>
               <h2 className="gx-my-2 gx-font-weight-bold">{currentTicket.title}</h2>
-              <p>created at {moment(currentTicket.created_at).format("LL")}</p>
+              <div>
+                <span>created at: {moment(currentTicket.created_at.date).format("LL")}</span>
+                <span> updated at: {moment(currentTicket.updated_at.date).format("LL")}</span>
+              </div>
+              <div className="gx-my-3">
+                <h3 className="gx-mb-0 gx-mb-sm-1">Comments</h3>
+              </div>
+              {conversation.map((conversation, index) =>
+                <ConversationCell key={index} conversation={conversation}/>
+              )}
 
+              <div className="gx-chat-main-footer gx-todo-main-footer">
+                <div className="gx-flex-row gx-align-items-center">
+                  <div className="gx-col">
+                    <div className="gx-form-group">
+                      <TextArea className="gx-border-0 ant-input gx-chat-textarea"
+                                onKeyUp={this.onHandleKeyPress}
+                                onChange={(e) => this.setState({message: e.target.value})}
+                                value={message}
+                                rows={2}
+                                placeholder="Type and hit enter to send message"/>
+                    </div>
+                  </div>
+
+                  <div className="gx-chat-sent"
+                       onClick={this.onSubmitMessage}
+                       aria-label="Send message">
+                    <i className="gx-icon-btn icon icon-sent"/>
+                  </div>
+                </div>
+              </div>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
               data will come soon
@@ -113,14 +161,24 @@ class TicketDetail extends Component {
   }
 }
 
-export default TicketDetail
+const mapStateToProps = ({ticketList}) => {
+  const {conversation} = ticketList;
+  return {conversation};
+};
+
+export default connect(mapStateToProps, {
+  onDeleteTicket,
+  getTickedId,
+  onUpdateTicketStatus,
+  onUpdateTicketPriority,
+  onGetConversationList,
+  onSendMessage
+})(TicketDetail);
+
+
 
 TicketDetail.defaultProps = {
-  onUpdateTickets: "",
-  onBackToList: ""
 };
 
 TicketDetail.propTypes = {
-  onUpdateTickets: PropTypes.func,
-  onBackToList: PropTypes.func
 };

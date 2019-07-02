@@ -15,10 +15,10 @@ class DropdownButton extends Component {
           Change Priority
         </Menu.Item>
         <Menu.Divider/>
-        <Menu.Item key="4" >
+        <Menu.Item key="4">
           <Popconfirm
             title="Are you sure delete this Ticket?"
-            onConfirm={() => this.props.onDeleteTicket(this.props.ticketId)}
+            onConfirm={() => this.props.onDeleteTicket({ids:this.props.ticketId})}
             okText="Yes"
             cancelText="No">
             Delete

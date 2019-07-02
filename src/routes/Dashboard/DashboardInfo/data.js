@@ -22,7 +22,7 @@ export const ticketListcolumns = [
                 <span>2 days ago</span>
                 <span className="gx-toolbar-separator">&nbsp;</span>
                 <span className="gx-email gx-d-inline-block gx-mr-2">
-        from: {record.assigned_by}
+        from: {record.assigned_by.first_name}
         </span>
               </div>
             </div>
@@ -42,7 +42,8 @@ export const ticketListcolumns = [
     title: 'Assign to',
     dataIndex: '',
     render: (text, record) => {
-      return <p className="gx-mb-0">{record.users.map(user => {
+      console.log("record", record)
+      return <p className="gx-mb-0">{record.assigned_to.map(user => {
         return user.first_name + " " + user.last_name
       })}</p>
     },
