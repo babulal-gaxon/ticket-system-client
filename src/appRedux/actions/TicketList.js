@@ -1,6 +1,6 @@
 import axios from 'util/Api'
 import {
-  ADD_TICKETS,
+  ADD_TICKETS, ASSIGN_STAFF_TO_TICKET,
   DELETE_TICKET,
   GET_CONVERSATION_LIST,
   GET_FORM_DETAILS,
@@ -15,7 +15,8 @@ import {showErrorMessage} from "./Auth";
 
 
 export const onGetTickets = (currentPage, itemsPerPage, filterText, startDate, endDate, selectedStaff, selectedCustomers,
-                             selectedPriorities, selectedStatuses, sortingParam) => {
+                             selectedPriorities, selectedStatuses, sortingParam, archive) => {
+  console.log("archive value", archive)
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get('/tickets', {
@@ -27,7 +28,8 @@ export const onGetTickets = (currentPage, itemsPerPage, filterText, startDate, e
           customer_id: selectedCustomers,
           priority_id: selectedPriorities,
           status_id: selectedStatuses,
-          sortby: sortingParam
+          sortby: sortingParam,
+          // archive: archive
         }
       }
     ).then(({data}) => {
@@ -105,9 +107,9 @@ export const onDeleteTicket = (ticketIds, backToList) => {
         if (data.success) {
           dispatch({type: FETCH_SUCCESS});
           dispatch({type: DELETE_TICKET, payload: data.data});
-         if(backToList) {
-           backToList();
-         }
+          if (backToList) {
+            backToList();
+          }
           dispatch({type: SHOW_MESSAGE, payload: "The Ticket has been deleted successfully"});
         } else {
           dispatch({type: FETCH_ERROR, payload: data.error});
@@ -160,21 +162,21 @@ export const onUpdateTicketPriority = (ticketId, priorityId) => {
 
 export const onGetConversationList = ticketId => {
   return (dispatch) => {
-  dispatch({type: FETCH_START});
-  axios.get(`/tickets/${ticketId}/message`).then(({data}) => {
-    console.log("on get ticket message: ", data);
-    if (data.success) {
-      dispatch({type: FETCH_SUCCESS});
-      dispatch({type: GET_CONVERSATION_LIST, payload: data.data});
-      dispatch({type: FETCH_SUCCESS});
-    } else {
-      dispatch({type: FETCH_ERROR, payload: data.error});
-    }
-  }).catch(function (error) {
-    dispatch({type: FETCH_ERROR, payload: error.message});
-    console.info("Error****:", error.message);
-  })
-}
+    dispatch({type: FETCH_START});
+    axios.get(`/tickets/${ticketId}/message`).then(({data}) => {
+      console.log("on get ticket message: ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_CONVERSATION_LIST, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    })
+  }
 };
 
 export const onSendMessage = (ticketId, message) => {
@@ -202,9 +204,27 @@ export const onGetFormDetails = () => {
     axios.get(`/tickets/support/form`).then(({data}) => {
       console.log("on get ticket form: ", data);
       if (data.success) {
-        console.log(" in success", data.data)
-        dispatch({type: FETCH_SUCCESS});
+        console.log(" in success o formDetail", data.data)
         dispatch({type: GET_FORM_DETAILS, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    })
+  }
+};
+
+export const onAssignStaffToTicket = (ticketId, staffId) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post(`/tickets/${ticketId}/assign`, staffId).then(({data}) => {
+      console.log("on get Staff assigned: ", data);
+      if (data.success) {
+        dispatch({type: ASSIGN_STAFF_TO_TICKET, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }

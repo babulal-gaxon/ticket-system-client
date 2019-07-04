@@ -5,7 +5,7 @@ import moment from "moment";
 
 const ConversationCell = ({conversation}) => {
   return (
-    <div className="gx-flex-row gx-module-detail-item gx-flex-nowrap">
+    <div className="gx-flex-row gx-module-detail-item gx-flex-nowrap gx-pl-0">
       <div className="gx-chat-todo-avatar">
 
         <Avatar className="gx-rounded-circle gx-size-40" src=""

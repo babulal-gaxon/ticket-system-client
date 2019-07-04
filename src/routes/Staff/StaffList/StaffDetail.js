@@ -90,7 +90,10 @@ class StaffDetail extends Component {
             <Widget>
               <i className="icon icon-arrow-left" onClick={() => this.props.onBackToList()}/>
               <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
-                <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>
+                {staff.avatar ?
+                  <Avatar className="gx-mr-3 gx-size-50" src={staff.avatar.src}/> :
+                  <Avatar className="gx-mr-3 gx-size-50"
+                          style={{backgroundColor: '#f56a00'}}>{staff.first_name[0].toUpperCase()}</Avatar>}
                 <div className="gx-media-body">
                   <span className="gx-mb-0 gx-text-capitalize">{staff.first_name + " " + staff.last_name}</span>
                   <div className="gx-mt-2">

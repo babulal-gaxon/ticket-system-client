@@ -1,6 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Col, Dropdown, Input, Menu, Popconfirm, Row, Select} from "antd";
-import PropTypes from "prop-types";
+import {Avatar, Breadcrumb, Button, Col, Dropdown, Input, Menu, Popconfirm, Row, Select, Tag} from "antd";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import moment from "moment";
@@ -123,8 +122,9 @@ class TicketDetail extends Component {
                 <span>created at: {moment(currentTicket.created_at.date).format("LL")}</span>
                 <span> updated at: {moment(currentTicket.updated_at.date).format("LL")}</span>
               </div>
-              <div className="gx-my-3">
-                <h3 className="gx-mb-0 gx-mb-sm-1">Comments</h3>
+              <div className="gx-py-3">{currentTicket.content}</div>
+              <div className="gx-py-3">
+                <h3 className="gx-mb-0 gx-mb-sm-1">Messages</h3>
               </div>
               {conversation.map((conversation, index) =>
                 <ConversationCell key={index} conversation={conversation}/>
@@ -152,7 +152,22 @@ class TicketDetail extends Component {
               </div>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
-              data will come soon
+              <div className="gx-mb-3">Customer</div>
+              <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
+                {currentTicket.assigned_by.avatar ?
+                  <Avatar className="gx-mr-3 gx-size-50" src={currentTicket.assigned_by.avatar.src}/> :
+                  <Avatar className="gx-mr-3 gx-size-50"
+                          style={{backgroundColor: '#f56a00'}}>{currentTicket.assigned_by.first_name[0].toUpperCase()}</Avatar>}
+                <div className="gx-media-body gx-mt-2">
+                  <span
+                    className="gx-mb-0 gx-text-capitalize">{currentTicket.assigned_by.first_name + " " + currentTicket.assigned_by.last_name}</span>
+                  <div className="gx-mt-2">
+                    <Tag color="#f50">
+                      Customer
+                    </Tag>
+                  </div>
+                </div>
+              </div>
             </Col>
           </Row>
         </Widget>
@@ -176,9 +191,6 @@ export default connect(mapStateToProps, {
 })(TicketDetail);
 
 
+TicketDetail.defaultProps = {};
 
-TicketDetail.defaultProps = {
-};
-
-TicketDetail.propTypes = {
-};
+TicketDetail.propTypes = {};

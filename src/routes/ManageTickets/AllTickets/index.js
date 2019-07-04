@@ -10,6 +10,7 @@ import {
   Input,
   Menu,
   Modal,
+  Popconfirm,
   Select,
   Table,
   Tag,
@@ -28,7 +29,6 @@ import {
 import Widget from "../../../components/Widget/index";
 import Permissions from "../../../util/Permissions";
 import moment from "moment";
-import DropdownButton from "./DropdownButton";
 import {Link} from "react-router-dom";
 import TicketDetail from "./TicketDetail";
 import InfoView from "../../../components/InfoView";
@@ -68,7 +68,8 @@ class AllTickets extends Component {
       statusFilterText: "",
       showMoreStaff: false,
       showMoreCustomer: false,
-      sortParam: ""
+      sortParam: "",
+      archive: false
     };
   };
 
@@ -83,7 +84,7 @@ class AllTickets extends Component {
   componentWillMount() {
     this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
       this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-      , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam);
+      , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive);
     this.props.onGetTicketPriorities();
     this.props.onGetStaff();
     this.props.onGetCustomersData();
@@ -91,11 +92,10 @@ class AllTickets extends Component {
   };
 
   onGetPaginatedData = (currentPage, itemsPerPage, filterData, startDate, endDate, selectedStaff, selectedCustomers,
-                        selectedPriorities, selectedStatuses, sortingOrder) => {
-    console.log("sorting oder", filterData);
+                        selectedPriorities, selectedStatuses, sortingOrder, archive) => {
     if (Permissions.canTicketView()) {
       this.props.onGetTickets(currentPage, itemsPerPage, filterData, startDate, endDate, selectedStaff,
-        selectedCustomers, selectedPriorities, selectedStatuses, sortingOrder);
+        selectedCustomers, selectedPriorities, selectedStatuses, sortingOrder, archive);
     }
   };
 
@@ -111,7 +111,7 @@ class AllTickets extends Component {
     this.setState({filterText: e.target.value}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
         this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-        , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam);
+        , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive);
     })
   };
 
@@ -125,7 +125,7 @@ class AllTickets extends Component {
       this.setState({current: this.state.current + 1}, () => {
         this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
           this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-          , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam)
+          , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
       });
     } else {
       return null;
@@ -137,7 +137,7 @@ class AllTickets extends Component {
       this.setState({current: this.state.current - 1}, () => {
         this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
           this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-          , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam)
+          , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
       });
     } else {
       return null;
@@ -156,7 +156,7 @@ class AllTickets extends Component {
     this.setState({itemNumbers: value, current: 1}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
         this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-        , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam)
+        , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
     });
   };
 
@@ -179,14 +179,15 @@ class AllTickets extends Component {
         dataIndex: 'title',
         render: (text, record) => {
           return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
-
-              <Tooltip placement="top" title={record.assigned_by.first_name}>
-                <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>
+              <Tooltip placement="top" title={record.assigned_by.first_name + " " + record.assigned_by.last_name}>
+                {record.assigned_by.avatar ?
+                  <Avatar className="gx-mr-3 gx-size-50" src={record.assigned_by.avatar.src}/> :
+                  <Avatar className="gx-mr-3 gx-size-50"
+                          style={{backgroundColor: '#f56a00'}}>{record.assigned_by.first_name[0].toUpperCase()}</Avatar>}
               </Tooltip>
-
               <div className="gx-media-body">
                 <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
-                <Tag className="gx-ml-2" color="blue">Demo Product</Tag>
+                <Tag className="gx-ml-2" color="blue">{record.product_name}</Tag>
                 <div>Created on {moment(record.created_at.date).format('LL')}</div>
               </div>
             </div>
@@ -226,13 +227,32 @@ class AllTickets extends Component {
             e.stopPropagation();
             e.preventDefault();
           }}>
-      <DropdownButton onDeleteTicket={this.props.onDeleteTicket} ticketId={record.id}>
-        <i className="icon icon-ellipse-h"/>
-      </DropdownButton>
+            {this.onShowRowDropdown(record.id)}
       </span>
         },
       },
     ];
+  };
+
+  onShowRowDropdown = (ticketId) => {
+    const menu = (
+      <Menu>
+        <Menu.Item key="4">
+          <Popconfirm
+            title="Are you sure to Archive this Ticket?"
+            onConfirm={() => this.props.onDeleteTicket({ids: ticketId})}
+            okText="Yes"
+            cancelText="No">
+            Archive
+          </Popconfirm>
+        </Menu.Item>
+      </Menu>
+    );
+    return (
+      <Dropdown overlay={menu} trigger={['click']}>
+        <i className="icon icon-ellipse-h"/>
+      </Dropdown>
+    )
   };
 
   onSelectTicket = record => {
@@ -261,7 +281,7 @@ class AllTickets extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
-        <Menu.Item key="1">
+        <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
           Archive
         </Menu.Item>
         <Menu.Item key="2" onClick={this.onShowBulkDeleteConfirm}>
@@ -280,7 +300,7 @@ class AllTickets extends Component {
     this.setState({current: page}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
         this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-        , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam);
+        , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive);
     });
   };
 
@@ -293,14 +313,14 @@ class AllTickets extends Component {
     this.setState({startDate: value}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
         this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities,
-        this.state.selectedStatuses, this.state.sortParam)
+        this.state.selectedStatuses, this.state.sortParam, this.state.archive)
     });
   };
 
   onEndDateChange = value => {
     this.setState({endDate: value}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
-        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam)
+        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
     });
   };
 
@@ -338,7 +358,7 @@ class AllTickets extends Component {
                   this.setState({selectedStaff: []}, () => {
                     this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
                       this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-                      , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam)
+                      , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
                   })
                 }}> Reset</Button>
               </div>
@@ -364,7 +384,7 @@ class AllTickets extends Component {
                     () => {
                       this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
                         this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-                        , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam)
+                        , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
                     }
                   )
                 }}> Reset</Button>
@@ -405,6 +425,7 @@ class AllTickets extends Component {
                 })}
               </Checkbox.Group>
             </div>
+            <Button type="primary" className="gx-mt-3" onClick={this.onSetArchive}>Archive</Button>
           </div>
         </div>
       </CustomScrollbars>
@@ -414,28 +435,35 @@ class AllTickets extends Component {
   onSelectStaff = checkedList => {
     this.setState({selectedStaff: checkedList}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
-        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam)
+        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
     });
   };
 
   onSelectCustomer = checkedList => {
     this.setState({selectedCustomers: checkedList}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
-        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam)
+        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
     });
   };
 
   onSelectPriorities = checkedList => {
     this.setState({selectedPriorities: checkedList}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
-        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam)
+        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
     });
   };
 
   onSelectStatuses = checkedList => {
     this.setState({selectedStatuses: checkedList}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
-        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam)
+        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
+    });
+  };
+
+  onSetArchive = () => {
+    this.setState({archive: !this.state.archive}, () => {
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
+        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
     });
   };
 
@@ -463,16 +491,14 @@ class AllTickets extends Component {
   };
 
   onSetSortParam = key => {
-    console.log("sort param", key);
     this.setState({sortParam: key}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
-        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam)
+        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
     });
   };
 
 
   render() {
-    console.log("state of srting", this.state.filterText);
     const {selectedRowKeys, currentTicket} = this.state;
     const tickets = this.props.tickets;
     let ids;

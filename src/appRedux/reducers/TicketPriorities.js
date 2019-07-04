@@ -15,7 +15,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_TICKET_PRIORITIES:
-      console.log("i am here")
       return {
         ...state,
         priorities: action.payload.items,

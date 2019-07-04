@@ -1,14 +1,21 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Col, Form, Input, Row, Select} from "antd";
+import {Avatar, Breadcrumb, Button, Col, Form, Input, Row, Select, Tooltip} from "antd";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
 import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
-import {onAddTickets, onGetFormDetails, onGetTickets, onUpdateTickets} from "../../../appRedux/actions/TicketList";
+import {
+  onAddTickets,
+  onAssignStaffToTicket,
+  onGetFormDetails,
+  onGetTickets,
+  onUpdateTickets
+} from "../../../appRedux/actions/TicketList";
 import {onGetTicketPriorities} from "../../../appRedux/actions/TicketPriorities";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
 import {onGetCustomersData} from "../../../appRedux/actions/Customers";
+import TicketAssigning from "./TicketAssigning";
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -23,20 +30,33 @@ class AddNewTicket extends Component {
         priority_id: null,
         user_id: null,
         department_id: null,
-        service_id: []
+        service_id: [],
+        product_id: null
       };
     } else {
       const selectedTicket = this.props.tickets.find(ticket => ticket.id === this.props.ticketId);
-      this.state = {...selectedTicket};
+      const {title, content, priority_id, department_id, product_id, id} = selectedTicket;
+      const user_id = selectedTicket.assigned_by.user_id;
+      const service_id = selectedTicket.services.map(service => service.id);
+      this.state = {
+        id: id,
+        title: title,
+        content: content,
+        priority_id: priority_id,
+        department_id: department_id,
+        product_id: product_id,
+        user_id: user_id,
+        service_id: service_id
+      };
     }
   }
 
   componentWillMount() {
+    this.props.onGetFormDetails();
     this.props.onGetTickets();
     this.props.onGetTicketPriorities();
     this.props.onGetStaff();
     this.props.onGetCustomersData();
-    this.props.onGetFormDetails();
   }
 
   onReturnTicketsScreen = () => {
@@ -53,14 +73,14 @@ class AddNewTicket extends Component {
 
   onServiceSelectOptions = () => {
     const serviceOptions = [];
-    // this.props.formData.services.map(service => {
-    //   return serviceOptions.push(<Option value={service.id}>{service.name}</Option>);
-    // });
+    this.props.formData.services.map(service => {
+      return serviceOptions.push(<Option value={service.id}>{service.title}</Option>);
+    });
     return serviceOptions;
   };
 
   onServiceSelect = (id) => {
-    this.setState({service_id: this.state.label_ids.concat(id)})
+    this.setState({service_id: this.state.service_id.concat(id)})
   };
 
   onServiceRemove = (value) => {
@@ -77,10 +97,10 @@ class AddNewTicket extends Component {
   };
 
   render() {
-    console.log("form data", this.props.formData, );
+    const formData = this.props.formData;
     const {getFieldDecorator} = this.props.form;
     const {title, content, product_id, priority_id, department_id, service_id, user_id} = this.state;
-    const {priorities, formData} = this.props;
+    const {priorities} = this.props;
     const ServiceOptions = this.onServiceSelectOptions();
     return (
       <div className="gx-main-layout-content">
@@ -88,7 +108,7 @@ class AddNewTicket extends Component {
           <h3>{this.props.ticketId === null ? "Create Ticket" : "Edit Ticket Details"}</h3>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
-              <Link to="/manage-tickets/all-tickets">Tickets</Link>
+              <Link to="/manage-tickets/all-tickets">Manage Tickets</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
               <Link to="/manage-tickets/add-new-ticket">{this.props.ticketId === null ?
@@ -119,7 +139,7 @@ class AddNewTicket extends Component {
                       this.setState({title: e.target.value})}}/>)}
                   </Form.Item>
                 <Form.Item label="Select Product">
-                  <Select defaultValue={product_id} onChange={(value) => {
+                  <Select value={product_id} onChange={(value) => {
                     this.setState({product_id: value})
                   }}>
                     {formData.products.map(product => {
@@ -128,7 +148,7 @@ class AddNewTicket extends Component {
                   </Select>
                 </Form.Item>
                 <Form.Item label="Select Department">
-                  <Select defaultValue={department_id} onChange={(value) => {
+                  <Select value={department_id} onChange={(value) => {
                     this.setState({department_id: value})
                   }}>
                     {formData.departments.map(department => {
@@ -166,13 +186,14 @@ class AddNewTicket extends Component {
                 </Form.Item>
                 <Form.Item>
                   <Button type="primary" onClick={this.onValidationCheck}>
-                    Add Ticket
+                    Save
                   </Button>
                 </Form.Item>
               </Form>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
-              <div>data will come soon</div>
+              <TicketAssigning staffList={this.props.staffList}
+                               onAssignStaffToTicket={this.props.onAssignStaffToTicket}/>
             </Col>
           </Row>
         </Widget>
@@ -187,10 +208,10 @@ AddNewTicket = Form.create({})(AddNewTicket);
 
 const mapStateToProps = ({ticketPriorities,  supportStaff, ticketList, customers}) => {
   const {priorities} = ticketPriorities;
-  const {tickets, ticketId, formData} = ticketList;
+  const {tickets, ticketId, formData, assignedStaff} = ticketList;
   const {staffList} = supportStaff;
   const {customersList} = customers;
-  return {priorities, staffList,  tickets, ticketId, customersList, formData};
+  return {priorities, staffList,  tickets, ticketId, customersList, formData, assignedStaff};
 };
 
 export default connect(mapStateToProps, {
@@ -200,7 +221,8 @@ export default connect(mapStateToProps, {
   onGetStaff,
   onUpdateTickets,
   onGetCustomersData,
-  onGetFormDetails
+  onGetFormDetails,
+  onAssignStaffToTicket
 })(AddNewTicket);
 
 

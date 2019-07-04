@@ -1,5 +1,5 @@
 import {
-  ADD_TICKETS,
+  ADD_TICKETS, ASSIGN_STAFF_TO_TICKET,
   DELETE_TICKET,
   GET_CONVERSATION_LIST,
   GET_FORM_DETAILS,
@@ -16,7 +16,12 @@ const initialState = {
   ticketId: null,
   totalItems: null,
   conversation: [],
-  formData: null
+  formData: {
+    departments: [],
+    products: [],
+    services: [],
+  },
+  assignedStaff: null
 };
 
 export default (state = initialState, action) => {
@@ -101,11 +106,16 @@ export default (state = initialState, action) => {
       };
 
     case GET_FORM_DETAILS:
-      console.log("get form details", action.payload)
       return {
         ...state,
         formData: action.payload
       };
+
+    case ASSIGN_STAFF_TO_TICKET:
+        return {
+          ...state,
+          assignedStaff: action.payload
+        };
 
     default:
       return state;

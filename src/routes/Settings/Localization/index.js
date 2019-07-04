@@ -43,7 +43,7 @@ class Localization extends Component {
         disable_language_selection: disable_language_selection
       })
     }
-  }
+  };
 
   onDateSelect = value => {
     this.setState({date_format: value})
