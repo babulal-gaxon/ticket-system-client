@@ -284,9 +284,6 @@ class AllTickets extends Component {
         <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
           Archive
         </Menu.Item>
-        <Menu.Item key="2" onClick={this.onShowBulkDeleteConfirm}>
-          Delete
-        </Menu.Item>
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Avatar, Modal, Select, Tag,Input} from "antd";
+import {Avatar, Input, Modal, Select, Tag} from "antd";
 
 const {Option} = Select;
 const Search = Input.Search;

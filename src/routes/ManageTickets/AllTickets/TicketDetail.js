@@ -23,8 +23,7 @@ class TicketDetail extends Component {
     this.state = {
       message: '',
       selectedPriority: null,
-      selectedStatus: null,
-      // conversation:[]
+      selectedStatus: null
     };
     this.props.onGetConversationList(this.props.currentTicket.id)
   };
@@ -33,10 +32,6 @@ class TicketDetail extends Component {
     this.setState({selectedPriority: value},
       () => this.props.onUpdateTicketPriority(this.props.currentTicket.id, this.state.selectedPriority))
   };
-
-  // componentWillReceiveProps(nextProps, nextContext) {
-  //   this.setState({conversation: nextProps.conversation})
-  // }
 
   onStatusChange = value => {
     this.setState({selectedStatus: value},
@@ -88,7 +83,6 @@ class TicketDetail extends Component {
 
   render() {
     const {message} = this.state;
-    console.log("conversation list", this.props.conversation);
     const {currentTicket, priorities, statuses, conversation} = this.props;
     return (
       <div className="gx-main-layout-content">
@@ -101,7 +95,7 @@ class TicketDetail extends Component {
             <Breadcrumb.Item>Tickets</Breadcrumb.Item>
           </Breadcrumb>
           <Row>
-            <Col xl={18} lg={12} md={12} sm={12} xs={24}>
+            <Col xl={16} lg={12} md={12} sm={12} xs={24}>
               <div className="gx-d-flex">
                 <Select defaultValue={currentTicket.priority_id} onChange={this.onPriorityChange} style={{width: 120}}>
                   {priorities.map(priority => {
@@ -116,9 +110,9 @@ class TicketDetail extends Component {
                 </Select>
                 {this.onSelectOption()}
               </div>
-              <div>#{currentTicket.id}</div>
+              <div className="gx-mt-4">#{currentTicket.id}</div>
               <h2 className="gx-my-2 gx-font-weight-bold">{currentTicket.title}</h2>
-              <div>
+              <div className="gx-mb-3">
                 <span>created at: {moment(currentTicket.created_at.date).format("LL")}</span>
                 <span> updated at: {moment(currentTicket.updated_at.date).format("LL")}</span>
               </div>
@@ -151,7 +145,7 @@ class TicketDetail extends Component {
                 </div>
               </div>
             </Col>
-            <Col xl={6} lg={12} md={12} sm={12} xs={24}>
+            <Col xl={8} lg={12} md={12} sm={12} xs={24}>
               <div className="gx-mb-3">Customer</div>
               <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
                 {currentTicket.assigned_by.avatar ?
