@@ -37,9 +37,8 @@ export default (state = initialState, action) => {
 
     case DELETE_COMPANIES:
       const updateCompanies = state.companiesList.filter(company => {
-        if (action.payload.indexOf(company.id) === -1) {
-          return company
-        }
+        return (action.payload.indexOf(company.id) === -1) ?
+          company : null
       });
       return {
         ...state,

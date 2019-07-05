@@ -1,6 +1,7 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import {
+  ADD_COMPANY_ADDRESS,
   ADD_NEW_CUSTOMER,
   ADD_PROFILE_PICTURE,
   DELETE_CUSTOMERS,
@@ -12,6 +13,7 @@ import {
 
 
 export const onGetCustomersData = (currentPage, itemsPerPage) => {
+  console.log("currentPage", currentPage)
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get(`/setup/customers?page=${currentPage}&per_page=${itemsPerPage}`
@@ -133,6 +135,26 @@ export const onAddImage = (imageFile) => {
         dispatch({type: ADD_PROFILE_PICTURE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Profile Picture has been added successfully"});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onAddCustomerAddress = (details) => {
+  console.log("onAddCustomerAddress", details);
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post('/setup/settings/general/addresses', details).then(({data}) => {
+      console.info("data:", data);
+      if (data.success) {
+        console.log(" sending data", data.data);
+        dispatch({type: ADD_COMPANY_ADDRESS, payload: data.data});
+        dispatch({type: SHOW_MESSAGE, payload: "The Address has been saved successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

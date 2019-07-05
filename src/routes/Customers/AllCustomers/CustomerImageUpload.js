@@ -33,7 +33,9 @@ class CustomerImageUpload extends Component {
   };
 
   render() {
+    console.log("image data", this.props.imageAvatar)
     const {file, profile_pic} = this.state;
+    const imageAvatar = this.props.imageAvatar
     return (
       <div>
         {!profile_pic ?
@@ -43,7 +45,9 @@ class CustomerImageUpload extends Component {
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <Avatar className="gx-mr-3 gx-size-200" src="https://via.placeholder.com/150x150"/>
+                    {imageAvatar ?
+                    <Avatar className="gx-mr-3 gx-size-200" src={imageAvatar.src}/> :
+                    <Avatar className="gx-mr-3 gx-size-200" src="https://via.placeholder.com/150x150"/>}
                   </div>
                 </section>
               )}
@@ -62,7 +66,7 @@ class CustomerImageUpload extends Component {
             </div>
           </div>
         }
-        <Button type="primary" className="gx-mt-5" onClick={this.onUploadImage}>Add Profile Image</Button>
+        <Button type="primary" className="gx-mt-5 gx-mr-2" onClick={this.onUploadImage}>Set Profile Image</Button>
       </div>
     )
   }

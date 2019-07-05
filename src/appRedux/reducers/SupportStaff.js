@@ -53,9 +53,8 @@ export default (state = initialState, action) => {
 
     case BULK_DELETE_SUPPORT_STAFF:
       const updateStaff = state.staffList.filter(member => {
-        if (action.payload.indexOf(member.id) === -1) {
-          return member
-        }
+        return (action.payload.indexOf(member.id) === -1) ?
+          member : null
       });
       return {
         ...state,

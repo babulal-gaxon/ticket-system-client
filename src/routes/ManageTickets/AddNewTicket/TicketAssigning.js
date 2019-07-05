@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Avatar, Input, Modal, Select, Tag} from "antd";
+import {Avatar, Input, Modal, Tag} from "antd";
 
-const {Option} = Select;
 const Search = Input.Search;
 
 class TicketAssigning extends Component {
@@ -27,8 +26,7 @@ class TicketAssigning extends Component {
   };
 
   render() {
-    console.log("selectedStaff", this.state.selectedStaff);
-    const {flag, showStaffModal, selectedStaff} = this.state;
+    const {showStaffModal} = this.state;
     const staffList = this.props.staffList;
     return (
       <div className="gx-main-layout-content">

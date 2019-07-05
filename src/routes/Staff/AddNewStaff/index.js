@@ -31,7 +31,7 @@ class AddNewStaff extends Component {
       };
     } else {
       const selectedStaff = this.props.staffList.find(staff => staff.id === this.props.staffId);
-      const {id, first_name, last_name, email, password, mobile, hourly_rate, account_status, role_id} = selectedStaff;
+      const {id, first_name, last_name, email, password, mobile, hourly_rate, account_status, role_id, avatar} = selectedStaff;
       const department_ids = selectedStaff.departments.map(department => {
         return department.id
       });
@@ -46,7 +46,8 @@ class AddNewStaff extends Component {
         account_status: account_status,
         departments_ids: department_ids,
         role_id: role_id,
-        profile_pic: null
+        profile_pic: null,
+        imageAvatar: avatar
       }
     }
   }
@@ -224,7 +225,8 @@ class AddNewStaff extends Component {
               </Form>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
-              <ImageUpload onAddProfileImage={this.props.onAddProfileImage}/>
+              <ImageUpload onAddProfileImage={this.props.onAddProfileImage}
+                           imageAvatar={this.state.imageAvatar}/>
             </Col>
           </Row>
         </Widget>

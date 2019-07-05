@@ -73,13 +73,13 @@ export default (state = initialState, action) => {
     case ADD_GENERAL_ADDRESS:
       return {
         ...state,
-        generalAddress: action.payload
+        generalAddress: action.payload.addresses
       };
 
     case GET_GENERAL_ADDRESS:
       return {
         ...state,
-        generalAddress: action.payload
+        generalAddress: action.payload.addresses
       };
 
     case ADD_COMPANY_LOGO:

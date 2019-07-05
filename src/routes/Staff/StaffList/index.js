@@ -12,21 +12,7 @@ import {
   onGetStaffId
 } from "../../../appRedux/actions/SupportStaff";
 import StaffDetail from "./StaffDetail";
-import {
-  Avatar,
-  Breadcrumb,
-  Button,
-  Dropdown,
-  Icon,
-  Input,
-  Menu,
-  message,
-  Modal,
-  Popconfirm,
-  Select,
-  Table,
-  Tag
-} from "antd";
+import {Avatar, Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
 import InfoView from "../../../components/InfoView";
 
 
@@ -96,9 +82,8 @@ class StaffList extends Component {
   onFilterData = () => {
     return this.props.staffList.filter(staff => {
       const name = staff.first_name + " " + staff.last_name;
-      if (name.indexOf(this.state.filterText) !== -1) {
-        return staff
-      }
+      return (name.indexOf(this.state.filterText) !== -1) ?
+        staff : null
     });
   };
 
@@ -107,10 +92,7 @@ class StaffList extends Component {
       confirm({
         title: "Are you sure to delete the selected Staffs?",
         onOk: () => {
-          const obj = {
-            ids: this.state.selectedStaff
-          };
-          this.props.onBulkDeleteStaff(obj);
+          this.props.onBulkDeleteStaff({ids: this.state.selectedStaff});
           this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers);
           this.setState({selectedRowKeys: [], selectedStaff: []});
         }
@@ -232,7 +214,9 @@ class StaffList extends Component {
         <Menu.Item key="3">
           <Popconfirm
             title="Are you sure to Disable this Staff?"
-            onConfirm={() => {this.onDisableStaff(staffId)}}
+            onConfirm={() => {
+              this.onDisableStaff(staffId)
+            }}
             okText="Yes"
             cancelText="No">
             Disable
@@ -249,7 +233,7 @@ class StaffList extends Component {
             onConfirm={() => {
               this.props.onBulkDeleteStaff({ids: [staffId]});
               this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)
-          }}
+            }}
             okText="Yes"
             cancelText="No">
             Delete

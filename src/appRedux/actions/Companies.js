@@ -29,7 +29,6 @@ export const onGetCompaniesData = (currentPage, itemsPerPage) => {
 };
 
 export const onAddNewCompany = (company) => {
-  console.log("onAddNewCompany", company);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/customer/companies', company

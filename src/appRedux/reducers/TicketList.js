@@ -83,9 +83,8 @@ export default (state = initialState, action) => {
 
     case DELETE_TICKET:
       const updated = state.tickets.filter(ticket => {
-        if (action.payload.indexOf(ticket.id) === -1) {
-          return ticket
-        }
+        return (action.payload.indexOf(ticket.id) === -1) ?
+          ticket: null
       });
       return {
         ...state,

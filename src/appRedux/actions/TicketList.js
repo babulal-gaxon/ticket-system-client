@@ -12,11 +12,15 @@ import {
 } from "../../constants/TicketList";
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import {showErrorMessage} from "./Auth";
+import moment from "moment";
+
 
 
 export const onGetTickets = (currentPage, itemsPerPage, filterText, startDate, endDate, selectedStaff, selectedCustomers,
                              selectedPriorities, selectedStatuses, sortingParam, archive) => {
-  console.log("archive value", archive)
+  const start = startDate ? moment(startDate).format("YYYY/MM/DD") : '';
+  const end = endDate ? moment(endDate).format("YYYY/MM/DD") : '';
+  console.log("start date", end);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get('/tickets', {
@@ -24,12 +28,14 @@ export const onGetTickets = (currentPage, itemsPerPage, filterText, startDate, e
           page: currentPage,
           per_page: itemsPerPage,
           search: filterText,
+          start_date: start,
+          end_date: end,
           staff_id: selectedStaff,
           customer_id: selectedCustomers,
           priority_id: selectedPriorities,
           status_id: selectedStatuses,
           sortby: sortingParam,
-          // archive: archive
+          // archive: 0
         }
       }
     ).then(({data}) => {
@@ -61,7 +67,7 @@ export const onAddTickets = (ticket, history) => {
     axios.post('/tickets', ticket).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data)
+        console.log(" sending data", data.data);
         dispatch({type: ADD_TICKETS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
@@ -201,7 +207,7 @@ export const onSendMessage = (ticketId, message) => {
 export const onGetFormDetails = () => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get(`/tickets/support/form`).then(({data}) => {
+    axios.get(`/tickets/support/form/options`).then(({data}) => {
       console.log("on get ticket form: ", data);
       if (data.success) {
         console.log(" in success o formDetail", data.data)

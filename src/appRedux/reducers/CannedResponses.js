@@ -10,7 +10,7 @@ import {
 const initialState = {
   responses: [],
   totalItems: null
-}
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -37,9 +37,8 @@ export default (state = initialState, action) => {
 
     case BULK_DELETE_RESPONSE:
       const upResponses = state.responses.filter(response => {
-        if (action.payload.indexOf(response.id) === -1) {
-          return response
-        }
+        return (action.payload.indexOf(response.id) === -1) ?
+          response : null
       });
       return {
         ...state,

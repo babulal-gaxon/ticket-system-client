@@ -13,9 +13,13 @@ class AddNewCompany extends Component {
     } else {
       setTimeout(this.onSetFieldsValue, 10);
       const selectedCompany = this.props.companiesList.find(company => company.id === this.props.companyId);
-      this.state = {...selectedCompany};
+      this.state = {...selectedCompany, company_logo: this.props.companyLogoId};
     }
   };
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    this.setState({company_logo:nextProps.companyLogoId})
+  }
 
   onSetFieldsValue = () => {
     this.props.form.setFieldsValue({
@@ -55,8 +59,9 @@ class AddNewCompany extends Component {
   };
 
   render() {
+    console.log("company_logo", this.props.companyLogoId);
     const {getFieldDecorator} = this.props.form;
-    const {company_name, website, company_logo} = this.state;
+    const {company_name, website} = this.state;
     const {showAddNewModal, onToggleAddCompany} = this.props;
     return (
       <div>
@@ -90,10 +95,7 @@ class AddNewCompany extends Component {
               }}/>)}
             </Form.Item>
             <Form.Item>
-              {getFieldDecorator('company_logo', {
-                initialValue:company_logo,
-                rules: [{required: true, message: 'Please Select Logo!'}],
-              })(<Input type="file" placeholder="Choose file..." onChange = {this.onLogoSelect}/>)}
+              <Input type="file" placeholder="Choose file..." onChange = {this.onLogoSelect}/>
             </Form.Item>
           </Form>
         </Modal>

@@ -135,6 +135,7 @@ class AllCustomers extends Component {
       {
         title: 'Customer',
         dataIndex: 'title',
+        key:'customer',
         render: (text, record) => {
           return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
               {record.avatar ?
@@ -154,6 +155,7 @@ class AllCustomers extends Component {
       {
         title: 'Email',
         dataIndex: 'email',
+        key:'email',
         render: (text, record) => {
           return <span className="gx-text-grey">{record.email ? record.email : "NA"}</span>
         },
@@ -161,6 +163,7 @@ class AllCustomers extends Component {
       {
         title: 'Phone no.',
         dataIndex: 'phone',
+        key:'phone',
         render: (text, record) => {
           return <span className="gx-text-grey">{record.phone ? record.phone : "NA"}</span>
         },
@@ -168,6 +171,7 @@ class AllCustomers extends Component {
       {
         title: 'Labels',
         dataIndex: 'labels',
+        key:'labels',
         render: (text, record) => {
           return (record.labels && record.labels.length > 0) ?
             record.labels.map(label => {
@@ -178,6 +182,7 @@ class AllCustomers extends Component {
       {
         title: 'Date Created',
         dataIndex: 'dateCreated',
+        key:'dateCreated',
         render: (text, record) => {
           return <span className="gx-text-grey">{moment(record.created_at).format('LL')}</span>
         },
@@ -315,7 +320,7 @@ class AllCustomers extends Component {
           <div>
             <Checkbox.Group onChange={this.onSelectCompanies} value={this.state.selectedCompanies}>
               {this.props.companiesList.map(company => {
-                return <div><Checkbox value={company.id}>{company.company_name}</Checkbox></div>
+                return <div key={company.id}><Checkbox value={company.id} >{company.company_name}</Checkbox></div>
               })}
             </Checkbox.Group>
           </div>
@@ -345,7 +350,7 @@ class AllCustomers extends Component {
     console.log("label list", this.props.labelList)
     const labelOptions = [];
     this.props.labelList.map(label => {
-      return labelOptions.push(<Option value={label.id}>{label.name}</Option>)
+      return labelOptions.push(<Option value={label.id} key={label.id}>{label.name}</Option>)
     });
     return labelOptions;
   };
@@ -425,7 +430,7 @@ class AllCustomers extends Component {
                 </Button>
               </div>
             </div>
-            <Table rowKey="Id" rowSelection={rowSelection} columns={this.onCustomersRowData()}
+            <Table rowKey="customersData" rowSelection={rowSelection} columns={this.onCustomersRowData()}
                    dataSource={customers}
                    pagination={{
                      pageSize: this.state.itemNumbers,

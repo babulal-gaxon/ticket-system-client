@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-import {Avatar, Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table} from "antd";
-import Widget from "../../../components/Widget";
-import {Link} from "react-router-dom";
+import {Avatar, Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tooltip} from "antd";
 import AddNewCompany from "./AddNewCompany";
-import {connect} from "react-redux";
 import {
   onAddNewCompany,
   onAddProfileImage,
@@ -11,7 +8,10 @@ import {
   onEditCompany,
   onGetCompaniesData
 } from "../../../appRedux/actions/Companies";
+import Widget from "../../../components/Widget";
+import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
+import {connect} from "react-redux";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -34,7 +34,7 @@ class Companies extends Component {
 
   componentWillMount() {
     this.onGetPaginatedData(this.state.current, this.state.itemNumbers);
-  }
+  };
 
   onToggleAddCompany = () => {
     this.setState({showAddNewModal: !this.state.showAddNewModal})
@@ -121,7 +121,20 @@ class Companies extends Component {
         dataIndex: 'companyMembers',
         render: (text, record) => {
           return <span className="gx-text-grey">
-                        <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/></span>
+            {record.members && record.members.length > 0 ?
+              record.members.map(member => {
+                return member.avatar ?
+                  <Tooltip key={member.id} placement="top" title={member.first_name + " " + member.last_name}>
+                    <Avatar className="gx-mr-3 gx-size-50" src={member.avatar.src}/>
+                  </Tooltip>
+                  :
+                  <Tooltip key={member.id} placement="top" title={member.first_name + " " + member.last_name}>
+                    <Avatar className=" gx-size-50" style={{backgroundColor: '#f56a00'}}>
+                      {member.first_name[0].toUpperCase()}
+                    </Avatar>
+                  </Tooltip>
+              }) : <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>}
+              </span>
         },
       },
       {
@@ -176,8 +189,7 @@ class Companies extends Component {
           const obj = {
             ids: this.state.selectedCompanies
           };
-          this.props.onDeleteCompanies(obj,
-            this.props.onGetCompaniesData, this.state.current, this.state.itemNumbers);
+          this.props.onDeleteCompanies(obj);
           this.onGetPaginatedData(this.state.currentPage, this.state.itemNumbers);
           this.setState({selectedRowKeys: [], selectedCustomers: []});
         }

@@ -102,6 +102,7 @@ class RolesList extends Component {
       {
         title: 'Role Name',
         dataIndex: 'id',
+        key: 'id',
         render: (text, record) => {
           return <span className="gx-text-grey">{record.name}</span>
         },
@@ -109,6 +110,7 @@ class RolesList extends Component {
       {
         title: 'Last Update',
         dataIndex: 'lastUpdate',
+        key: 'lastUpdate',
         render: (text, record) => {
           return <span className="gx-text-grey">{moment(record.updated_at).format('LL')}</span>
         },
@@ -116,6 +118,7 @@ class RolesList extends Component {
       {
         title: 'Users',
         dataIndex: 'users',
+        key: 'users',
         render: (text, record) => {
           return <span className="gx-text-grey">{record.users_count}</span>
         },
@@ -123,6 +126,7 @@ class RolesList extends Component {
       {
         title: 'Status',
         dataIndex: 'status',
+        key: 'status',
         render: (text, record) => {
           return <Tag color={record.status === 1 ? "green" : "red"}>
             {record.status === 1 ? "Active" : "Disabled"}
@@ -252,7 +256,7 @@ class RolesList extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table key={Math.random()} rowSelection={rowSelection} columns={this.rolesRowData()}
+          <Table rowKey="rolesList" rowSelection={rowSelection} columns={this.rolesRowData()}
                  dataSource={roles}
                  pagination={{
                    pageSize: this.state.itemNumbers,

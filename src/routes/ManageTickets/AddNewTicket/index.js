@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Avatar, Breadcrumb, Button, Col, Form, Input, Row, Select, Tooltip} from "antd";
+import {Breadcrumb, Button, Col, Form, Input, Row, Select} from "antd";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
@@ -127,23 +127,24 @@ class AddNewTicket extends Component {
                     this.setState({user_id: value})
                   }}>
                     {this.props.customersList.map(customer => {
-                      return <Option value = {customer.id}>{customer.first_name + " " + customer.last_name}</Option>
+                      return <Option value={customer.id}>{customer.first_name + " " + customer.last_name}</Option>
                     })}
                   </Select>)}
                 </Form.Item>
-                  <Form.Item label="Subject">
-                    {getFieldDecorator('title', {
-                      initialValue: title,
-                      rules: [{required: true, message: 'Please enter title!'}],
-                    })(<Input onChange={(e) => {
-                      this.setState({title: e.target.value})}}/>)}
-                  </Form.Item>
+                <Form.Item label="Subject">
+                  {getFieldDecorator('title', {
+                    initialValue: title,
+                    rules: [{required: true, message: 'Please enter title!'}],
+                  })(<Input onChange={(e) => {
+                    this.setState({title: e.target.value})
+                  }}/>)}
+                </Form.Item>
                 <Form.Item label="Select Product">
                   <Select value={product_id} onChange={(value) => {
                     this.setState({product_id: value})
                   }}>
                     {formData.products.map(product => {
-                      return <Option value = {product.id}>{product.title}</Option>
+                      return <Option value={product.id}>{product.title}</Option>
                     })}
                   </Select>
                 </Form.Item>
@@ -206,12 +207,12 @@ class AddNewTicket extends Component {
 AddNewTicket = Form.create({})(AddNewTicket);
 
 
-const mapStateToProps = ({ticketPriorities,  supportStaff, ticketList, customers}) => {
+const mapStateToProps = ({ticketPriorities, supportStaff, ticketList, customers}) => {
   const {priorities} = ticketPriorities;
   const {tickets, ticketId, formData, assignedStaff} = ticketList;
   const {staffList} = supportStaff;
   const {customersList} = customers;
-  return {priorities, staffList,  tickets, ticketId, customersList, formData, assignedStaff};
+  return {priorities, staffList, tickets, ticketId, customersList, formData, assignedStaff};
 };
 
 export default connect(mapStateToProps, {

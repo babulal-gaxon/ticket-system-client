@@ -161,33 +161,34 @@ class CustomerDetails extends Component {
               </div>
               {currentCustomerCompany.members.length > 1 ?
                 <div>
-                  <div>Other Members</div>
-                  {currentCustomerCompany.members.map(member => {
-                    if (member.id !== currentCustomer.id) {
-                      return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5 ">
-                        {member.avatar ?
-                          <Avatar className="gx-mr-3 gx-size-100" src={member.avatar.src}/> :
-                          <Avatar className="gx-mr-3 gx-size-100"
-                                  style={{backgroundColor: '#f56a00'}}>{member.first_name[0].toUpperCase()}</Avatar>}
-                        <div className="gx-media-body">
-                          <div className="gx-d-flex gx-justify-content-between">
+                  <div className="gx-mb-5">Other Members</div>
+                  <div className="gx-d-flex gx-pl-0">
+                    {currentCustomerCompany.members.map(member => {
+                      return (member.id !== currentCustomer.id) ?
+                        <div key={member.id} className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5 gx-mx-5">
+                          {member.avatar ?
+                            <Avatar className="gx-mr-3 gx-size-50" src={member.avatar.src}/> :
+                            <Avatar className="gx-mr-3 gx-size-50"
+                                    style={{backgroundColor: '#f56a00'}}>{member.first_name[0].toUpperCase()}</Avatar>}
+                          <div className="gx-media-body">
+                            <div className="gx-d-flex gx-justify-content-between">
                     <span
                       className="gx-mb-0 gx-text-capitalize gx-font-weight-bold">{member.first_name + " " + member.last_name}</span>
+                            </div>
+                            <div className="gx-mt-2">
+                              <span>{member.email}</span>
+                            </div>
                           </div>
-                          <div className="gx-mt-2">
-                            <span>{member.email}</span>
-                          </div>
-                        </div>
-                      </div>
-                    }
-                  })}
+                        </div> : null
+                    })}
+                  </div>
                 </div> :
                 <div className="gx-text-center">Currently No Other Members of this company is associated.</div>}
             </Widget>
           </Col>
         </Row>
         <Widget title={<span>Assigned Tickets</span>}>
-          <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
+          <Table rowKey="customerDetails" rowSelection={rowSelection} columns={this.onGetTableColumns()}
                  className="gx-mb-4"/>
         </Widget>
       </div>

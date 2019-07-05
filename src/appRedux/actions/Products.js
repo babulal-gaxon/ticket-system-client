@@ -3,13 +3,12 @@ import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../const
 import {
   ADD_PRODUCT,
   ADD_PRODUCT_LOGO,
-  BULK_ACTIVE_PRODUCTS, BULK_DISABLE_PRODUCTS,
+  BULK_ACTIVE_PRODUCTS,
+  BULK_DISABLE_PRODUCTS,
   DELETE_PRODUCT,
   EDIT_PRODUCT,
   GET_PRODUCTS_LIST
 } from "../../constants/Products";
-import {EDIT_COMPANY_LOGO} from "../../constants/Companies";
-import {BULK_ACTIVE_DEPARTMENTS} from "../../constants/Departments";
 
 
 export const onGetProductsList = (currentPage, itemsPerPage, filterData) => {

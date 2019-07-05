@@ -109,9 +109,16 @@ class AllTickets extends Component {
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
-        this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-        , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive);
+      if(this.state.filterText.length > 2) {
+        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
+          this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
+          , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive);
+      }
+      else {
+        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, "", this.state.startDate,
+          this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
+          , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive);
+      }
     })
   };
 
@@ -306,7 +313,6 @@ class AllTickets extends Component {
   };
 
   onStartDateChange = value => {
-    console.log("start date", value)
     this.setState({startDate: value}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
         this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities,
@@ -560,7 +566,7 @@ class AllTickets extends Component {
                 </div>
               </div>
               {(Permissions.canTicketView()) ?
-                <Table key={Math.random()} rowSelection={rowSelection} columns={this.onTicketRowData()}
+                <Table key="allTickets" rowSelection={rowSelection} columns={this.onTicketRowData()}
                        dataSource={tickets}
                        pagination={{
                          pageSize: this.state.itemNumbers,

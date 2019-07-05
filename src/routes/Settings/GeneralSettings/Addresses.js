@@ -140,7 +140,7 @@ class Addresses extends Component {
             </Row>
             </Checkbox.Group>
           </Form.Item>
-          {this.props.generalAddress.addresses.map(address => {
+          {this.props.generalAddress.map(address => {
           return  <div className="gx-main-layout-content">
               <Widget styleName="gx-card-filter">
                 {address.address_type.map(type => {

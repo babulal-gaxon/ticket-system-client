@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Dropzone from "react-dropzone";
 import {Avatar, Button} from "antd";
-import InfoView from "../../../components/InfoView";
 
 
 class ImageUpload extends Component {
@@ -32,7 +31,9 @@ class ImageUpload extends Component {
     data.append('title', this.state.title);
     this.props.onAddProfileImage(data);
   };
+
   render() {
+    const imageAvatar = this.props.imageAvatar;
     const {file, profile_pic} = this.state;
     return (
       <div>
@@ -43,7 +44,8 @@ class ImageUpload extends Component {
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <Avatar className="gx-mr-3 gx-size-200" src="https://via.placeholder.com/150x150"/>
+                    {imageAvatar ? <Avatar className="gx-mr-3 gx-size-200" src={imageAvatar.src}/> :
+                      <Avatar className="gx-mr-3 gx-size-200" src="https://via.placeholder.com/150x150"/>}
                   </div>
                 </section>
               )}

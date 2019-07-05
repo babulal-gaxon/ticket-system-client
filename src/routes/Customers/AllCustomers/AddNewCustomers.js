@@ -9,6 +9,7 @@ import {onGetLabelData} from "../../../appRedux/actions/Labels";
 import {onGetCompaniesData} from "../../../appRedux/actions/Companies";
 import AddCustomerAddress from "./AddCustomerAddress";
 import CustomerImageUpload from "./CustomerImageUpload";
+import {onGetCountriesList} from "../../../appRedux/actions/GeneralSettings";
 
 const {Option} = Select;
 
@@ -30,7 +31,7 @@ class AddNewCustomers extends Component {
       };
     } else {
       const selectedCustomer = this.props.customersList.find(customer => customer.id === this.props.customerId);
-      const {first_name, last_name, email, phone, status, id} = selectedCustomer;
+      const {first_name, last_name, email, phone, status, id, avatar} = selectedCustomer;
       const companyId = selectedCustomer.company ? selectedCustomer.company.id : null;
       const labelIds = selectedCustomer.labels.map(label => {
         return label.id
@@ -46,7 +47,8 @@ class AddNewCustomers extends Component {
         company_id: companyId,
         label_ids: labelIds,
         isModalVisible: false,
-        profile_pic: imageId
+        profile_pic: imageId,
+        imageAvatar: avatar
       }
     }
   }
@@ -54,6 +56,7 @@ class AddNewCustomers extends Component {
   componentWillMount() {
     this.props.onGetLabelData();
     this.props.onGetCompaniesData();
+    this.props.onGetCountriesList();
   }
 
   onToggleAddressModal = () => {
@@ -97,14 +100,14 @@ class AddNewCustomers extends Component {
   };
 
   onLabelRemove = (value) => {
-    const updatedLabels = this.state.label_ids.filter(label => label !== value)
+    const updatedLabels = this.state.label_ids.filter(label => label !== value);
     this.setState({label_ids: updatedLabels})
   };
 
   onLabeltSelectOption = () => {
     const labelOptions = [];
     this.props.labelList.map(label => {
-      return labelOptions.push(<Option value={label.id}>{label.name}</Option>);
+      return labelOptions.push(<Option value={label.id} key={label.id}>{label.name}</Option>);
     });
     return labelOptions;
   };
@@ -192,7 +195,7 @@ class AddNewCustomers extends Component {
                 <Form.Item label="Select Company">
                   <Select value={company_id} onChange={this.onCompanySelect}>
                     {this.props.companiesList.map(company => {
-                      return <Option value={company.id}>{company.company_name}</Option>
+                      return <Option value={company.id} key={company.id}>{company.company_name}</Option>
                     })}
                   </Select>
                 </Form.Item>
@@ -233,12 +236,14 @@ class AddNewCustomers extends Component {
                 </span>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
-              <CustomerImageUpload onAddImage={this.props.onAddImage}/>
+              <CustomerImageUpload onAddImage={this.props.onAddImage}
+                                   imageAvatar={this.state.imageAvatar}/>
             </Col>
           </Row>
         </Widget>
         {this.state.isModalVisible ? <AddCustomerAddress isModalVisible={this.state.isModalVisible}
-                                                         onToggleAddressModal={this.onToggleAddressModal}/> : null}
+                                                         onToggleAddressModal={this.onToggleAddressModal}
+                                                         countriesList={this.props.countriesList}/> : null}
         <InfoView/>
       </div>
     )
@@ -247,11 +252,12 @@ class AddNewCustomers extends Component {
 
 AddNewCustomers = Form.create({})(AddNewCustomers);
 
-const mapStateToProps = ({customers, labelsList, companies}) => {
+const mapStateToProps = ({customers, labelsList, companies, generalSettings}) => {
   const {customersList, customerId, profilePicId} = customers;
   const {labelList} = labelsList;
   const {companiesList} = companies;
-  return {labelList, customersList, customerId, companiesList, profilePicId};
+  const {countriesList} = generalSettings;
+  return {labelList, customersList, customerId, companiesList, profilePicId, countriesList};
 };
 
 export default connect(mapStateToProps, {
@@ -259,5 +265,6 @@ export default connect(mapStateToProps, {
   onAddNewCustomer,
   onGetLabelData,
   onGetCompaniesData,
-  onAddImage
+  onAddImage,
+  onGetCountriesList
 })(AddNewCustomers);

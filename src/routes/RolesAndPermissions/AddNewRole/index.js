@@ -365,7 +365,7 @@ class AddNewRole extends Component {
                                       value={this.state.customerPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.companies.map(company => {
-                            return <Col span={12} className="gx-mb-2">
+                            return <Col span={12} key = {company.id} className="gx-mb-2">
                               <Checkbox value={company.id}>{company.title}</Checkbox>
                             </Col>
                           })
@@ -387,7 +387,7 @@ class AddNewRole extends Component {
                                       value={this.state.contactPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.contacts.map(contact => {
-                            return <Col span={12} className="gx-mb-2">
+                            return <Col span={12} key={contact.id} className="gx-mb-2">
                               <Checkbox value={contact.id}>{contact.title}</Checkbox>
                             </Col>
                           })
@@ -409,7 +409,7 @@ class AddNewRole extends Component {
                                       value={this.state.departmentsPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.departments.map(department => {
-                            return <Col span={12} className="gx-mb-2">
+                            return <Col span={12} key={department.id} className="gx-mb-2">
                               <Checkbox value={department.id}>{department.title}</Checkbox>
                             </Col>
                           })
@@ -431,7 +431,7 @@ class AddNewRole extends Component {
                                       value={this.state.labelPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.labels.map(label => {
-                            return <Col span={12} className="gx-mb-2">
+                            return <Col span={12} key={label.id} className="gx-mb-2">
                               <Checkbox value={label.id}>{label.title}</Checkbox>
                             </Col>
                           })
@@ -453,7 +453,7 @@ class AddNewRole extends Component {
                                       value={this.state.prioritiesPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.priorities.map(priority => {
-                            return <Col span={12} className="gx-mb-2">
+                            return <Col span={12} key={priority.id} className="gx-mb-2">
                               <Checkbox value={priority.id}>{priority.title}</Checkbox>
                             </Col>
                           })
@@ -475,7 +475,7 @@ class AddNewRole extends Component {
                                       value={this.state.responsesPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.responses.map(response => {
-                            return <Col span={12} className="gx-mb-2">
+                            return <Col span={12} key={response.id} className="gx-mb-2">
                               <Checkbox value={response.id}>{response.title}</Checkbox>
                             </Col>
                           })
@@ -497,7 +497,7 @@ class AddNewRole extends Component {
                                       value={this.state.rolesPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.roles.map(role => {
-                            return <Col span={12} className="gx-mb-2">
+                            return <Col span={12} key={role.id} className="gx-mb-2">
                               <Checkbox value={role.id}>{role.title}</Checkbox>
                             </Col>
                           })
@@ -519,7 +519,7 @@ class AddNewRole extends Component {
                                       value={this.state.settingsPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.settings.map(setting => {
-                            return <Col span={12} className="gx-mb-2">
+                            return <Col span={12} key={setting.id} className="gx-mb-2">
                               <Checkbox value={setting.id}>{setting.title}</Checkbox>
                             </Col>
                           })
@@ -541,7 +541,7 @@ class AddNewRole extends Component {
                                       value={this.state.staffsPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.staffs.map(staff => {
-                            return <Col span={12} className="gx-mb-2">
+                            return <Col span={12} key={staff.id} className="gx-mb-2">
                               <Checkbox value={staff.id}>{staff.title}</Checkbox>
                             </Col>
                           })
@@ -563,7 +563,7 @@ class AddNewRole extends Component {
                                       value={this.state.statusPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.status.map(stat => {
-                            return <Col span={12} className="gx-mb-2">
+                            return <Col span={12} key={stat.id} className="gx-mb-2">
                               <Checkbox value={stat.id}>{stat.title}</Checkbox>
                             </Col>
                           })
@@ -585,7 +585,7 @@ class AddNewRole extends Component {
                                       value={this.state.ticketsPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.tickets.map(ticket => {
-                            return <Col span={12} className="gx-mb-2">
+                            return <Col span={12} key={ticket.id} className="gx-mb-2">
                               <Checkbox value={ticket.id}>{ticket.title}</Checkbox>
                             </Col>
                           })
@@ -607,7 +607,7 @@ class AddNewRole extends Component {
                                       value={this.state.usersPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.users.map(user => {
-                            return <Col span={12} className="gx-mb-2">
+                            return <Col span={12} key={user.id} className="gx-mb-2">
                               <Checkbox value={user.id}>{user.title}</Checkbox>
                             </Col>
                           })
