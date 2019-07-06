@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Form, Input, Modal, Select} from "antd";
-
+import {Button, Form, Input, Modal} from "antd";
 
 
 class AddNewCompany extends Component {
@@ -20,7 +19,7 @@ class AddNewCompany extends Component {
   };
 
   componentWillReceiveProps(nextProps, nextContext) {
-    this.setState({company_logo:nextProps.companyLogoId})
+    this.setState({company_logo: nextProps.companyLogoId})
   }
 
   onSetFieldsValue = () => {
@@ -36,8 +35,7 @@ class AddNewCompany extends Component {
       if (this.props.companyId === 0) {
         this.props.onAddNewCompany({...this.state});
         this.props.onToggleAddCompany();
-      }
-      else {
+      } else {
         this.props.onEditCompany({...this.state});
         this.props.onToggleAddCompany();
       }
@@ -90,14 +88,14 @@ class AddNewCompany extends Component {
             </Form.Item>
             <Form.Item label="Website">
               {getFieldDecorator('website', {
-                initialValue:website,
+                initialValue: website,
                 rules: [{required: true, message: 'Please Enter Website URL!'}],
               })(<Input type="text" onChange={(e) => {
                 this.setState({website: e.target.value})
               }}/>)}
             </Form.Item>
             <Form.Item>
-              <Input type="file" placeholder="Choose file..." onChange = {this.onLogoSelect}/>
+              <Input type="file" placeholder="Choose file..." onChange={this.onLogoSelect}/>
             </Form.Item>
           </Form>
         </Modal>
