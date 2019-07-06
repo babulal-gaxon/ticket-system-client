@@ -10,10 +10,17 @@ import {
 } from "../../constants/TicketPriorities";
 
 
-export const onGetTicketPriorities = (currentPage, itemsPerPage) => {
+export const onGetTicketPriorities = (currentPage, itemsPerPage, filterText) => {
+  console.log("filterText", filterText)
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get(`/setup/priorities?page=${currentPage}&per_page=${itemsPerPage}`
+    axios.get('/setup/priorities', {
+     params: {
+       page: currentPage,
+       per_page: itemsPerPage,
+       search: filterText
+     }
+    }
     ).then(({data}) => {
       console.info("onGetTicketPriorities: ", data);
       if (data.success) {

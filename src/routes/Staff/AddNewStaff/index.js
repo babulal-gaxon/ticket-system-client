@@ -31,7 +31,7 @@ class AddNewStaff extends Component {
       };
     } else {
       const selectedStaff = this.props.staffList.find(staff => staff.id === this.props.staffId);
-      const {id, first_name, last_name, email, password, mobile, hourly_rate, account_status, role_id, avatar} = selectedStaff;
+      const {id, first_name, last_name, email, mobile, hourly_rate, account_status, role_id, avatar} = selectedStaff;
       const department_ids = selectedStaff.departments.map(department => {
         return department.id
       });
@@ -40,7 +40,6 @@ class AddNewStaff extends Component {
         first_name: first_name,
         last_name: last_name,
         email: email,
-        password: password,
         mobile: mobile,
         hourly_rate: hourly_rate,
         account_status: account_status,
@@ -50,9 +49,6 @@ class AddNewStaff extends Component {
         imageAvatar: avatar
       }
     }
-  }
-
-  componentWillMount() {
     this.props.onGetDepartments();
     this.props.onGetRoles();
   }
@@ -84,7 +80,7 @@ class AddNewStaff extends Component {
   };
 
   onDepartmentRemove = (value) => {
-    const updatedDepartments = this.state.departments_ids.filter(department => department !== value)
+    const updatedDepartments = this.state.departments_ids.filter(department => department !== value);
     this.setState({departments_ids: updatedDepartments})
   };
 
@@ -175,6 +171,7 @@ class AddNewStaff extends Component {
                     this.setState({hourly_rate: e.target.value})
                   }}/>
                 </Form.Item>
+                {this.props.staffId === 0 ?
                 <Form.Item label="Password">
                   {getFieldDecorator('password', {
                     initialValue: password,
@@ -182,7 +179,7 @@ class AddNewStaff extends Component {
                   })(<Input.Password type="text" onChange={(e) => {
                     this.setState({password: e.target.value})
                   }}/>)}
-                </Form.Item>
+                </Form.Item> : null}
                 <Form.Item label="Department">
                   <Select
                     mode="multiple"
@@ -254,11 +251,13 @@ export default connect(mapStateToProps, {
 })(AddNewStaff);
 
 AddNewStaff.defaultProps = {
-  staffList: []
+  staffList: [],
+  staffId: null
 };
 
 AddNewStaff.propTypes = {
   staffList: PropTypes.array,
+  staffId: PropTypes.number,
   onAddSupportStaff: PropTypes.func,
   onEditSupportStaff: PropTypes.func
 };

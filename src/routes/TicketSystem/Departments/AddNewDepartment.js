@@ -14,8 +14,7 @@ class AddNewDepartment extends Component {
         status: 1
       };
     } else {
-      const selectedDept = this.props.dept.find(department => department.id === this.props.departmentId)
-      console.log("selectedDepartment", selectedDept)
+      const selectedDept = this.props.dept.find(department => department.id === this.props.departmentId);
       this.state = {...selectedDept};
     }
   };

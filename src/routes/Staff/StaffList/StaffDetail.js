@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Avatar, Col, Divider, Row, Table, Tag} from "antd";
 import Widget from "../../../components/Widget";
+import PropTypes from "prop-types";
 
 class StaffDetail extends Component {
   constructor(props) {
@@ -139,7 +140,7 @@ class StaffDetail extends Component {
                 <Col span={6}>
                   Status
                 </Col>
-                <Col>{staff.status === 1 ? "Active" : "Disabled"}</Col>
+                <Col>{staff.account_status === 1 ? "Active" : "Disabled"}</Col>
               </Row>
               <Divider/>
               <Row>
@@ -182,3 +183,14 @@ class StaffDetail extends Component {
 }
 
 export default StaffDetail;
+
+StaffDetail.defaultProps = {
+  staff: null
+};
+
+StaffDetail.propTypes = {
+  staff: PropTypes.object,
+  onBackToList: PropTypes.func,
+  onGetStaffId: PropTypes.func,
+  history: PropTypes.object
+};

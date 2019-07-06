@@ -29,7 +29,7 @@ export default (state = initialState, action) => {
       };
 
     case EDIT_DEPARTMENT:
-      const updateDepartments = state.dept.map((department) => department.id === action.payload.id ? action.payload : department)
+      const updateDepartments = state.dept.map((department) => department.id === action.payload.id ? action.payload : department);
       return {
         ...state,
         dept: updateDepartments,

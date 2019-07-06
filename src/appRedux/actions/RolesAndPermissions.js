@@ -10,11 +10,16 @@ import {
 } from "../../constants/RolesAndPermissions";
 
 
-export const onGetRoles = (currentPage, itemsPerPage) => {
+export const onGetRoles = (currentPage, itemsPerPage, filterText) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get(`/roles?page=${currentPage}&per_page=${itemsPerPage}`
-    ).then(({data}) => {
+    axios.get('/roles', {
+      params: {
+        page: currentPage,
+        per_page: itemsPerPage,
+        search: filterText
+      }
+    }).then(({data}) => {
       console.info("onGetRoles: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
@@ -42,7 +47,6 @@ export const onAddRole = (newRole, history) => {
     axios.post('/roles', newRole).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" in add new role, server response", data.data)
         dispatch({type: ADD_NEW_ROLE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
@@ -62,9 +66,7 @@ export const onBulkDeleteRoles = (roleIds) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('roles/delete', roleIds).then(({data}) => {
-      console.log("dhow respnse", data)
       if (data.success) {
-        console.log("print success")
         dispatch({type: BULK_DELETE_ROLES, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Role(s) has been deleted successfully"});
@@ -84,7 +86,6 @@ export const onEditRole = (role, history) => {
     axios.put(`/roles/${role.id}`, role).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data)
         dispatch({type: EDIT_ROLE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         history.goBack();

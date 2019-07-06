@@ -34,9 +34,6 @@ class Departments extends Component {
       showAddDepartment: false,
       selectedDepartments: []
     };
-  };
-
-  componentWillMount() {
     this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
   };
 
@@ -62,7 +59,7 @@ class Departments extends Component {
   };
 
   onCurrentDecrement = () => {
-    if (this.state.currentPage !== 1) {
+    if (this.state.currentPage > 1) {
       this.setState({currentPage: this.state.currentPage - 1}, () => {
         this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers)
       });
@@ -98,9 +95,6 @@ class Departments extends Component {
           };
           this.props.onBulkActiveDepartments(obj);
           this.setState({selectedRowKeys: [], selectedDepartments: []})
-        },
-        onCancel() {
-          console.log('Cancel');
         }
       })
     } else {
@@ -121,7 +115,7 @@ class Departments extends Component {
       })
     } else {
       confirm({
-        title: "Please Select Roles first",
+        title: "Please Select Department(s) first",
       })
     }
   };
@@ -140,7 +134,7 @@ class Departments extends Component {
       })
     } else {
       confirm({
-        title: "Please Select Roles first",
+        title: "Please Select Department(s) first",
       })
     }
   };
@@ -148,15 +142,21 @@ class Departments extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
-        <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
-          Active
-        </Menu.Item>
-        <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
-          Disable
-        </Menu.Item>
-        <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
-          Delete
-        </Menu.Item>
+        {Permissions.canDepartmentEdit() ?
+          <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
+            Active
+          </Menu.Item> : null
+        }
+        {Permissions.canDepartmentEdit() ?
+          <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
+            Disable
+          </Menu.Item> : null
+        }
+        {Permissions.canDepartmentDelete() ?
+          <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
+            Delete
+          </Menu.Item> : null
+        }
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
@@ -209,8 +209,7 @@ class Departments extends Component {
         render: (text, record) => {
           return <span> {Permissions.canDepartmentEdit() ? <i className="icon icon-edit gx-mr-3"
                                                               onClick={() => this.onEditDepartment(record.id)}/> : null}
-            {Permissions.canDepartmentDelete() ? this.onDeletePopUp(record.id)
-              : null}
+            {Permissions.canDepartmentDelete() ? this.onDeletePopUp(record.id) : null}
           </span>
         },
       },
@@ -247,9 +246,7 @@ class Departments extends Component {
   };
 
   onPageChange = page => {
-    this.setState({
-      currentPage: page
-    }, () => {
+    this.setState({currentPage: page}, () => {
       this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers)
     });
   };
@@ -270,7 +267,7 @@ class Departments extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4>Departments</h4>
+          <h4 className="gx-font-weight-bold">Departments</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>
               <Link to="/ticket-system/departments">Ticket System</Link></Breadcrumb.Item>
@@ -286,8 +283,8 @@ class Departments extends Component {
             </div>
             <div className="gx-d-flex">
               <Search
-                style={{width: 200}}
-                placeholder="Enter keywords to search tickets"
+                style={{width: 350}}
+                placeholder="Enter keywords to search Departments"
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
               <div className="gx-ml-3">

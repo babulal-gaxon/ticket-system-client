@@ -35,15 +35,12 @@ class TicketStatuses extends Component {
       showAddStatus: false,
       selectedStatus: []
     };
+    this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText);
   };
 
-  componentWillMount() {
-    this.onGetStatusData(this.state.current, this.state.itemNumbers)
-  };
-
-  onGetStatusData = (currentPage, itemsPerPage) => {
+  onGetStatusData = (currentPage, itemsPerPage, filterText) => {
     if (Permissions.canStatusView()) {
-      this.props.onGetTicketStatus(currentPage, itemsPerPage);
+      this.props.onGetTicketStatus(currentPage, itemsPerPage, filterText);
     }
   };
 
@@ -55,7 +52,7 @@ class TicketStatuses extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1}, () => {
-        this.onGetStatusData(this.state.current, this.state.itemNumbers)
+        this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -63,9 +60,9 @@ class TicketStatuses extends Component {
   };
 
   onCurrentDecrement = () => {
-    if (this.state.current !== 1) {
+    if (this.state.current > 1) {
       this.setState({current: this.state.current - 1}, () => {
-        this.onGetStatusData(this.state.current, this.state.itemNumbers)
+        this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -73,11 +70,9 @@ class TicketStatuses extends Component {
   };
 
   onFilterTextChange = (e) => {
-    this.setState({filterText: e.target.value});
-  };
-
-  onFilterData = () => {
-    return this.props.statuses.filter(status => status.name.indexOf(this.state.filterText) !== -1);
+    this.setState({filterText: e.target.value} ,() => {
+      this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText)
+    })
   };
 
   onSelectChange = selectedRowKeys => {
@@ -139,7 +134,7 @@ class TicketStatuses extends Component {
             ids: this.state.selectedStatus
           };
           this.props.onBulkDeleteStatuses(obj);
-          this.onGetStatusData(this.state.current, this.state.itemNumbers);
+          this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText);
           this.setState({selectedRowKeys: [], selectedStatus: []});
         }
       })
@@ -153,15 +148,21 @@ class TicketStatuses extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
-        <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
-          Active
-        </Menu.Item>
-        <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
-          Disable
-        </Menu.Item>
-        <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
-          Delete
-        </Menu.Item>
+        {Permissions.canStatusEdit() ?
+          <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
+            Active
+          </Menu.Item> : null
+        }
+        {Permissions.canStatusEdit() ?
+          <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
+            Disable
+          </Menu.Item> : null
+        }
+        {Permissions.canStatusDelete() ?
+          <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
+            Delete
+          </Menu.Item> : null
+        }
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
@@ -271,13 +272,13 @@ class TicketStatuses extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetStatusData(this.state.current, this.state.itemNumbers)
+      this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText)
     });
   };
 
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;
-    const statuses = this.onFilterData();
+    const statuses = this.props.statuses;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -291,10 +292,10 @@ class TicketStatuses extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4>Ticket Status</h4>
+          <h4 className="gx-font-weight-bold">Ticket Status</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>
-              <Link to="/ticket-system/ticket-Status">Ticket System</Link></Breadcrumb.Item>
+              <Link to="/ticket-system/ticket-Statuses">Ticket System</Link></Breadcrumb.Item>
             <Breadcrumb.Item className="gx-text-primary">Ticket Status</Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
@@ -307,7 +308,7 @@ class TicketStatuses extends Component {
             <div className="gx-d-flex">
               <Search
                 placeholder="Enter keywords to search Status"
-                style={{width: 200}}
+                style={{width: 350}}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}
               />

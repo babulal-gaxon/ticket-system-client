@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu,  Modal, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 
 import {
@@ -34,11 +34,8 @@ class CannedResponses extends Component {
       showAddCanned: false,
       selectedResponses: []
     };
-  };
-
-  componentWillMount() {
     this.onGetResponseData(this.state.current, this.state.itemNumbers)
-  }
+  };
 
   onGetResponseData = (currentPage, itemsPerPage, filterData) => {
     if (Permissions.canResponseView()) {
@@ -62,7 +59,7 @@ class CannedResponses extends Component {
   };
 
   onCurrentDecrement = () => {
-    if (this.state.current !== 1) {
+    if (this.state.current > 1) {
       this.setState({current: this.state.current - 1}, () => {
         this.onGetResponseData(this.state.current, this.state.itemNumbers)
       });
@@ -99,9 +96,6 @@ class CannedResponses extends Component {
           };
           this.props.onBulkActiveResponses(obj);
           this.setState({selectedRowKeys: [], selectedResponses: []})
-        },
-        onCancel() {
-          console.log('Cancel');
         }
       })
     } else {
@@ -153,15 +147,21 @@ class CannedResponses extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
-        <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
-          Active
-        </Menu.Item>
-        <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
-          Disable
-        </Menu.Item>
-        <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
-          Delete
-        </Menu.Item>
+        {Permissions.canResponseEdit() ?
+          <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
+            Active
+          </Menu.Item> : null
+        }
+        {Permissions.canResponseEdit() ?
+          <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
+            Disable
+          </Menu.Item> : null
+        }
+        {Permissions.canResponseDelete() ?
+          <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
+            Delete
+          </Menu.Item> : null
+        }
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
@@ -244,9 +244,7 @@ class CannedResponses extends Component {
   };
 
   onPageChange = page => {
-    this.setState({
-      current: page,
-    }, () => {
+    this.setState({current: page}, () => {
       this.onGetResponseData(this.state.current, this.state.itemNumbers)
     });
   };
@@ -281,7 +279,7 @@ class CannedResponses extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4>Canned Responses</h4>
+          <h4 className="gx-font-weight-bold">Canned Responses</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>
               <Link to="/ticket-system/canned-responses">Ticket System</Link></Breadcrumb.Item>
@@ -297,7 +295,7 @@ class CannedResponses extends Component {
             <div className="gx-d-flex">
               <Search
                 placeholder="Enter keywords to search Responses"
-                style={{width: 200}}
+                style={{width: 350}}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
               <div className="gx-ml-3">

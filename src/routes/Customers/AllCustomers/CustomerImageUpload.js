@@ -45,9 +45,8 @@ class CustomerImageUpload extends Component {
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    {imageAvatar ?
-                    <Avatar className="gx-mr-3 gx-size-200" src={imageAvatar.src}/> :
-                    <Avatar className="gx-mr-3 gx-size-200" src="https://via.placeholder.com/150x150"/>}
+                    <Avatar className="gx-mr-3 gx-size-200"
+                            src={imageAvatar ? imageAvatar.src : "https://via.placeholder.com/150x150"}/>
                   </div>
                 </section>
               )}
@@ -56,13 +55,13 @@ class CustomerImageUpload extends Component {
           :
           <div>
             <div>
-              <img alt="" src={file ? file.preview : ""}/>
-              <span onClick={() => {
+              <Avatar className="gx-mr-3 gx-size-200" src={file ? file.preview : ""}/>
+              <Button type="link" onClick={() => {
                 this.setState({
                   profile_pic: '',
                   type: ''
                 })
-              }}>Change</span>
+              }}>Change</Button>
             </div>
           </div>
         }

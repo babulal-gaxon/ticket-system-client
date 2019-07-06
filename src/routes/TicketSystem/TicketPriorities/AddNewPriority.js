@@ -113,8 +113,8 @@ class AddNewPriority extends Component {
             </Form.Item>
             <Form.Item label="Color Code">
               <div>
-                <div style={styles.swatch} onClick={this.handleColorClick}>
-                  <div style={styles.color}/>
+                <div style={styles.swatch} onClick={this.handleColorClick} className="gx-d-flex">
+                  <div style={styles.color} className="gx-mr-2"/>
                   <span>{color_code}</span>
                 </div>
                 {this.state.displayColorPicker ? <div style={styles.popover}>
@@ -128,7 +128,7 @@ class AddNewPriority extends Component {
                 this.setState({desc: e.target.value})
               }}/>
             </Form.Item>
-            <Form.Item label="Priority Value">
+            <Form.Item label="Priority Weight">
               <Input className="gx-form-control-lg" type="text" value={value} onChange={(e) => {
                 this.setState({value: e.target.value})
               }}/>

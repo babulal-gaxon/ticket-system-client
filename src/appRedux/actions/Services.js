@@ -12,10 +12,13 @@ import {
 export const onGetServicesList = (currentPage, itemsPerPage, filterData) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    const url = filterData ? `/setup/services?search=${filterData}&page=${currentPage}&per_page=${itemsPerPage}` :
-      `/setup/services?page=${currentPage}&per_page=${itemsPerPage}`;
-    axios.get(url).then(({data}) => {
-
+    axios.get('/setup/services', {
+      params: {
+        page: currentPage,
+        per_page: itemsPerPage,
+        search: filterData
+      }
+    }).then(({data}) => {
       if (data.success) {
         console.info("onGetServicesList: ", data);
         dispatch({type: FETCH_SUCCESS});
@@ -36,7 +39,6 @@ export const onAddService = (service) => {
     axios.post('/setup/services', service).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
         dispatch({type: ADD_SERVICE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Service has been added successfully"});
@@ -56,7 +58,6 @@ export const onEditService = (service) => {
     axios.put(`/setup/services/${service.id}`, service).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
         dispatch({type: EDIT_SERVICE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Service details has been updated successfully"});
@@ -95,10 +96,7 @@ export const onBulkActiveServices = (serviceIds) => {
       if (data.success) {
         dispatch({type: BULK_ACTIVE_SERVICES, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({
-          type: SHOW_MESSAGE,
-          payload: "The Support of selected Services(s) has been changed to Enabled successfully"
-        });
+        dispatch({type: SHOW_MESSAGE, payload: "The Support of selected Services(s) has been changed to Enabled successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

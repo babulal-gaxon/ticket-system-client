@@ -37,7 +37,6 @@ export default (state = initialState, action) => {
       };
 
     case ADD_NEW_ROLE:
-      console.log("in add new role reducer", action.payload)
       return {
         ...state,
         roles: [action.payload, ...state.roles],

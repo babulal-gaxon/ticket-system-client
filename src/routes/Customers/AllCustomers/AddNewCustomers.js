@@ -104,7 +104,7 @@ class AddNewCustomers extends Component {
     this.setState({label_ids: updatedLabels})
   };
 
-  onLabeltSelectOption = () => {
+  onLabelSelectOption = () => {
     const labelOptions = [];
     this.props.labelList.map(label => {
       return labelOptions.push(<Option value={label.id} key={label.id}>{label.name}</Option>);
@@ -127,7 +127,7 @@ class AddNewCustomers extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
     const {phone, status, label_ids, company_id, first_name, last_name, email} = this.state;
-    const labelOptions = this.onLabeltSelectOption();
+    const labelOptions = this.onLabelSelectOption();
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">

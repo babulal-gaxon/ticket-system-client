@@ -1,18 +1,25 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import {
-  ADD_SUPPORT_STAFF, BULK_DELETE_SUPPORT_STAFF, DISABLE_STAFF_STATUS,
+  ADD_SUPPORT_STAFF,
+  BULK_DELETE_SUPPORT_STAFF,
+  DISABLE_STAFF_STATUS,
   EDIT_SUPPORT_STAFF,
   GET_STAFF_ID,
-  GET_SUPPORT_STAFF, UPLOAD_PROFILE_IMAGE
+  GET_SUPPORT_STAFF,
+  UPLOAD_PROFILE_IMAGE
 } from "../../constants/SupportStaff";
 
 
 export const onGetStaff = (currentPage, itemsPerPage) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get(`/setup/staffs?page=${currentPage}&per_page=${itemsPerPage}`
-    ).then(({data}) => {
+    axios.get(`/setup/staffs`, {
+      params: {
+        page: currentPage,
+        per_page: itemsPerPage
+      }
+    }).then(({data}) => {
       console.info("onGetStaff: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
@@ -36,11 +43,9 @@ export const onGetStaffId = (id) => {
 
 
 export const onAddSupportStaff = (staffMember, history) => {
-  console.log("onAddSupportStaff", staffMember);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/staffs', staffMember).then((data) => {
-      console.log("i m just before success", data.data);
       if (data.data.success) {
         console.log(" sending data of staff", data.data);
         dispatch({type: ADD_SUPPORT_STAFF, payload: data.data.data});
@@ -81,8 +86,8 @@ export const onEditSupportStaff = (staffMember, history) => {
     axios.put(`/setup/staffs/${staffMember.id}`, staffMember).then(({data}) => {
       if (data.success) {
         dispatch({type: EDIT_SUPPORT_STAFF, payload: data.data});
-        history.goBack();
         dispatch({type: FETCH_SUCCESS});
+        history.goBack();
         dispatch({type: SHOW_MESSAGE, payload: "The Staff details has been edited successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
@@ -98,11 +103,13 @@ export const onDisableSupportStaff = (staffMember) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/staffs/${staffMember.id}`, staffMember).then(({data}) => {
-      console.log("in edit staff", data);
       if (data.success) {
         dispatch({type: DISABLE_STAFF_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status of Selected staff has been changed to disabled successfully"});
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: "The Status of Selected staff has been changed to disabled successfully"
+        });
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -119,7 +126,8 @@ export const onAddProfileImage = (imageFile) => {
     axios.post("/uploads/temporary/media", imageFile, {
       headers: {
         'Content-Type': "multipart/form-data"
-      }}).then(({data}) => {
+      }
+    }).then(({data}) => {
       if (data.success) {
         dispatch({type: UPLOAD_PROFILE_IMAGE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});

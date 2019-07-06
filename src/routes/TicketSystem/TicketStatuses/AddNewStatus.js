@@ -12,14 +12,11 @@ class AddNewStatus extends Component {
         name: "",
         status: 1,
         is_default: 1,
-        displayColorPicker: false,
         color_code: "#8D3C3C"
       };
     } else {
       const selectedStatus = this.props.statuses.find(status => status.id === this.props.statusId);
-      this.state = {
-        ...selectedStatus
-      };
+      this.state = {...selectedStatus};
     }
   };
 
@@ -94,7 +91,7 @@ class AddNewStatus extends Component {
       },
     });
     return (
-      <div>
+      <div className="gx-main-layout-content">
         <Modal
           visible={showAddStatus}
           title={this.props.statusId === 0 ? "Add New Ticket Status" : "Edit Ticket Status Details"}
@@ -119,8 +116,8 @@ class AddNewStatus extends Component {
             </Form.Item>
             <Form.Item label="Color Code">
               <div>
-                <div style={styles.swatch} onClick={this.handleColorClick}>
-                  <div style={styles.color}/>
+                <div style={styles.swatch} onClick={this.handleColorClick} className="gx-d-flex">
+                  <div style={styles.color} className="gx-mr-2"/>
                   <span>{color_code}</span>
                 </div>
                 {this.state.displayColorPicker ? <div style={styles.popover}>
@@ -156,7 +153,7 @@ export default AddNewStatus;
 
 AddNewStatus.defaultProps = {
   statuses: [],
-  statusId: '',
+  statusId: null,
   showAddStatus: true,
 };
 

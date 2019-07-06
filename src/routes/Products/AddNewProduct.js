@@ -7,7 +7,6 @@ const {TextArea} = Input;
 class AddNewProduct extends Component {
   constructor(props) {
     super(props);
-    // this.inputOpenFileRef = React.createRef();
     if (this.props.productId === 0) {
       this.state = {
         title: "",
@@ -26,7 +25,6 @@ class AddNewProduct extends Component {
       if (this.props.productId === 0) {
         this.props.onAddProduct({...this.state});
         this.props.onToggleAddProduct();
-
       } else {
         this.props.onEditProduct({...this.state});
         this.props.onToggleAddProduct();
@@ -50,16 +48,13 @@ class AddNewProduct extends Component {
     });
   };
 
-  // showOpenFileDlg = () => {
-  //   this.inputOpenFileRef.current.click()
-  // }
-
   render() {
     const {getFieldDecorator} = this.props.form;
     const {title, support_enable, desc} = this.state;
     const {showAddModal, onToggleAddProduct} = this.props;
+
     return (
-      <div>
+      <div className="gx-main-layout-content">
         <Modal
           visible={showAddModal}
           title={this.props.productId === 0 ? "Add New Product" : "Edit Product Details"}
@@ -87,10 +82,7 @@ class AddNewProduct extends Component {
               }}/>
             </Form.Item>
             <Form.Item>
-              <Input type="file" placeholder="Choose file..." addonAfter="Browse" onChange={this.onLogoSelect}
-                     // ref={this.inputOpenFileRef}
-              />
-              {/*<Button onClick={this.showOpenFileDlg}>Choose Picture</Button>*/}
+              <Input type="file" placeholder="Choose file..." addonAfter="Browse" onChange={this.onLogoSelect}/>
             </Form.Item>
             <Form.Item label="Support Enable">
               <Radio.Group value={support_enable} onChange={(e) => {

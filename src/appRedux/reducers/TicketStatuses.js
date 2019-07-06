@@ -29,14 +29,13 @@ export default (state = initialState, action) => {
       };
 
     case EDIT_TICKET_STATUS:
-      const updateStatuses = state.statuses.map((status) => status.id === action.payload.id ? action.payload : status)
+      const updateStatuses = state.statuses.map((status) => status.id === action.payload.id ? action.payload : status);
       return {
         ...state,
         statuses: updateStatuses
       };
 
     case BULK_DELETE_STATUS:
-      console.log(action.payload)
       const upStatuses = state.statuses.filter(status => {
         return (action.payload.indexOf(status.id) === -1) ?
           status : null

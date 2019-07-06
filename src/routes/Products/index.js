@@ -8,11 +8,14 @@ import PropTypes from "prop-types";
 import AddNewProduct from "./AddNewProduct";
 import {
   onAddProduct,
-  onAddProductLogo, onBulkActiveProducts, onBulkDisableProducts,
+  onAddProductLogo,
+  onBulkActiveProducts,
+  onBulkDisableProducts,
   onDeleteProduct,
   onEditProduct,
   onGetProductsList
 } from "../../appRedux/actions/Products";
+import Permissions from "../../util/Permissions";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -31,14 +34,13 @@ class Products extends Component {
       showAddModal: false,
       selectedProducts: []
     };
-  };
-
-  componentWillMount() {
-    this.onGetProductsData(this.state.currentPage, this.state.itemNumbers);
+    this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
   };
 
   onGetProductsData = (currentPage, itemNumbers, searchText) => {
-    this.props.onGetProductsList(currentPage, itemNumbers, searchText);
+    if (Permissions.canProductView()) {
+      this.props.onGetProductsList(currentPage, itemNumbers, searchText);
+    }
   };
 
   onToggleAddProduct = () => {
@@ -49,7 +51,7 @@ class Products extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.currentPage < pages) {
       this.setState({currentPage: this.state.currentPage + 1}, () => {
-        this.onGetProductsData(this.state.currentPage, this.state.itemNumbers)
+        this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -57,9 +59,9 @@ class Products extends Component {
   };
 
   onCurrentDecrement = () => {
-    if (this.state.currentPage !== 1) {
+    if (this.state.currentPage > 0) {
       this.setState({currentPage: this.state.currentPage - 1}, () => {
-        this.onGetProductsData(this.state.currentPage, this.state.itemNumbers)
+        this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -67,8 +69,9 @@ class Products extends Component {
   };
 
   onFilterTextChange = (e) => {
-    this.setState({filterText: e.target.value});
-    this.onGetProductsData(1, this.state.itemNumbers, e.target.value)
+    this.setState({filterText: e.target.value}, () => {
+      this.onGetProductsData(1, this.state.itemNumbers, this.state.filterText)
+    });
   };
 
   onSelectChange = selectedRowKeys => {
@@ -92,10 +95,7 @@ class Products extends Component {
             ids: this.state.selectedProducts
           };
           this.props.onBulkActiveProducts(obj);
-          this.setState({selectedRowKeys: [], selectedResponses: []})
-        },
-        onCancel() {
-          console.log('Cancel');
+          this.setState({selectedRowKeys: [], selectedProducts: []})
         }
       })
     } else {
@@ -114,11 +114,8 @@ class Products extends Component {
             ids: this.state.selectedProducts
           };
           this.props.onBulkDisableProducts(obj);
-          this.setState({selectedRowKeys: [], selectedResponses: []})
+          this.setState({selectedRowKeys: [], selectedProducts: []})
         },
-        onCancel() {
-          console.log('Cancel');
-        }
       })
     } else {
       confirm({
@@ -130,12 +127,14 @@ class Products extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
-        <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
-          Active
-        </Menu.Item>
-        <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
-          Disable
-        </Menu.Item>
+        {(Permissions.canProductEdit()) ?
+          <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
+            Active
+          </Menu.Item> : null}
+        {(Permissions.canProductEdit()) ?
+          <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
+            Disable
+          </Menu.Item> : null}
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
@@ -186,8 +185,9 @@ class Products extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <span>  <i className="icon icon-edit gx-mr-3" onClick={() => this.onEditProduct(record.id)}/>
-            {this.onDeletePopUp(record.id)}
+          return <span> {(Permissions.canProductEdit()) ?
+            <i className="icon icon-edit gx-mr-3" onClick={() => this.onEditProduct(record.id)}/> : null}
+            {(Permissions.canProductDelete()) ? this.onDeletePopUp(record.id) : null}
           </span>
         },
       },
@@ -218,7 +218,7 @@ class Products extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, currentPage: 1}, () => {
-      this.onGetProductsData(this.state.currentPage, this.state.itemNumbers)
+      this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
     })
   };
 
@@ -226,12 +226,11 @@ class Products extends Component {
     this.setState({
       currentPage: page
     }, () => {
-      this.onGetProductsData(this.state.currentPage, this.state.itemNumbers)
+      this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
     });
   };
 
   render() {
-    console.log("products list", this.props.productsList);
     const selectedRowKeys = this.state.selectedRowKeys;
     const productsList = this.props.productsList;
     const rowSelection = {
@@ -247,21 +246,22 @@ class Products extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4>Products</h4>
+          <h4 className="gx-font-weight-bold">Products</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item className="gx-text-primary">
               <Link to="/products">Products</Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
-              <Button type="primary" className="gx-btn-lg" onClick={this.onAddButtonClick}>
-                Add New Product
-              </Button>
+              {(Permissions.canProductAdd()) ?
+                <Button type="primary" className="gx-btn-lg" onClick={this.onAddButtonClick}>
+                  Add New Product
+                </Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
-                style={{width: 200}}
+                style={{width: 350}}
                 placeholder="Search Products Here"
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
@@ -279,7 +279,7 @@ class Products extends Component {
             </div>
           </div>
           <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={productsList}
-                 className="gx-mb-4"
+                 className="gx-mb-4" rowKey="products"
                  pagination={{
                    pageSize: this.state.itemNumbers,
                    current: this.state.currentPage,
@@ -323,10 +323,19 @@ export default connect(mapStateToProps, {
 
 Products.defaultProps = {
   productsList: [],
-  totalItems: null
+  totalItems: null,
+  productLogoId: null
 };
 
 Products.propTypes = {
   productsList: PropTypes.array,
-  totalItems: PropTypes.number
+  totalItems: PropTypes.number,
+  productLogoId: PropTypes.number,
+  onGetProductsList: PropTypes.func,
+  onAddProduct: PropTypes.func,
+  onEditProduct: PropTypes.func,
+  onDeleteProduct: PropTypes.func,
+  onAddProductLogo: PropTypes.func,
+  onBulkActiveProducts: PropTypes.func,
+  onBulkDisableProducts: PropTypes.func
 };

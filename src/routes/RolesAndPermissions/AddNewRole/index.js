@@ -9,6 +9,7 @@ import {onBulkDeleteStaff, onGetStaff, onGetStaffId} from "../../../appRedux/act
 import StaffDetail from "../../Staff/StaffList/StaffDetail";
 import StaffWithSelectedRole from "./StaffWithSelectedRole";
 import PropTypes from "prop-types";
+import Permissions from "../../../util/Permissions";
 
 const Panel = Collapse.Panel;
 const customPanelStyle = {
@@ -77,82 +78,57 @@ class AddNewRole extends Component {
         currentMember: null
       }
     }
-  }
-
-  componentWillMount() {
-    this.props.onGetStaff();
+    if (Permissions.canStaffView()) {
+      this.props.onGetStaff();
+    }
   }
 
   onSelectCustomerPermissions = checkedList => {
-    this.setState({
-      customerPermissions: checkedList
-    })
+    this.setState({customerPermissions: checkedList})
   };
 
   onSelectContactPermissions = checkedList => {
-    this.setState({
-      contactPermissions: checkedList
-    })
+    this.setState({contactPermissions: checkedList})
   };
 
   onSelectDepartmentPermissions = checkedList => {
-    this.setState({
-      departmentsPermissions: checkedList
-    })
+    this.setState({departmentsPermissions: checkedList})
   };
 
   onSelectLabelPermissions = checkedList => {
-    this.setState({
-      labelPermissions: checkedList
-    })
+    this.setState({labelPermissions: checkedList})
   };
 
   onSelectPriorityPermissions = checkedList => {
-    this.setState({
-      prioritiesPermissions: checkedList
-    })
+    this.setState({prioritiesPermissions: checkedList})
   };
 
   onSelectResponsesPermissions = checkedList => {
-    this.setState({
-      responsesPermissions: checkedList
-    })
+    this.setState({responsesPermissions: checkedList})
   };
 
   onSelectRolesPermissions = checkedList => {
-    this.setState({
-      rolesPermissions: checkedList
-    })
+    this.setState({rolesPermissions: checkedList})
   };
 
   onSelectSettingsPermissions = checkedList => {
-    this.setState({
-      settingsPermissions: checkedList
-    })
+    this.setState({settingsPermissions: checkedList})
   };
 
   onSelectStaffsPermissions = checkedList => {
-    this.setState({
-      staffsPermissions: checkedList
-    })
+    this.setState({staffsPermissions: checkedList})
   };
 
   onSelectStatusPermissions = checkedList => {
-    this.setState({
-      statusPermissions: checkedList
-    })
+    this.setState({statusPermissions: checkedList})
   };
 
   onSelectTicketsPermissions = checkedList => {
-    this.setState({
-      ticketsPermissions: checkedList
-    })
+    this.setState({ticketsPermissions: checkedList})
   };
 
   onSelectUsersPermissions = checkedList => {
-    this.setState({
-      usersPermissions: checkedList
-    })
+    this.setState({usersPermissions: checkedList})
   };
 
   onCollectAllPermissions = () => {
@@ -193,108 +169,84 @@ class AddNewRole extends Component {
     const allSelected = this.props.userPermissions.companies.map(company => {
       return company.id
     });
-    this.setState({
-      customerPermissions: e.target.checked ? allSelected : []
-    });
+    this.setState({customerPermissions: e.target.checked ? allSelected : []});
   };
 
   onCheckAllContacts = e => {
     const allSelected = this.props.userPermissions.contacts.map(company => {
       return company.id
     });
-    this.setState({
-      contactPermissions: e.target.checked ? allSelected : []
-    });
+    this.setState({contactPermissions: e.target.checked ? allSelected : []});
   };
 
   onCheckAllDepartments = e => {
     const allSelected = this.props.userPermissions.departments.map(department => {
       return department.id
     });
-    this.setState({
-      departmentsPermissions: e.target.checked ? allSelected : []
-    });
+    this.setState({departmentsPermissions: e.target.checked ? allSelected : []});
   };
 
   onCheckAllLabels = e => {
     const allSelected = this.props.userPermissions.labels.map(label => {
       return label.id
     });
-    this.setState({
-      labelPermissions: e.target.checked ? allSelected : []
-    })
+    this.setState({labelPermissions: e.target.checked ? allSelected : []})
   };
 
   onCheckAllPriorities = e => {
     const allSelected = this.props.userPermissions.priorities.map(priority => {
       return priority.id
     });
-    this.setState({
-      prioritiesPermissions: e.target.checked ? allSelected : []
-    })
+    this.setState({prioritiesPermissions: e.target.checked ? allSelected : []})
   };
 
   onCheckAllResponses = e => {
     const allSelected = this.props.userPermissions.responses.map(response => {
       return response.id
     });
-    this.setState({
-      responsesPermissions: e.target.checked ? allSelected : []
-    })
+    this.setState({responsesPermissions: e.target.checked ? allSelected : []})
   };
 
   onCheckAllRoles = e => {
     const allSelected = this.props.userPermissions.roles.map(role => {
       return role.id
     });
-    this.setState({
-      rolesPermissions: e.target.checked ? allSelected : []
-    })
+    this.setState({rolesPermissions: e.target.checked ? allSelected : []})
   };
 
   onCheckAllSettings = e => {
     const allSelected = this.props.userPermissions.settings.map(setting => {
       return setting.id
     });
-    this.setState({
-      settingsPermissions: e.target.checked ? allSelected : []
-    })
+    this.setState({settingsPermissions: e.target.checked ? allSelected : []})
   };
 
   onCheckAllStaffs = e => {
     const allSelected = this.props.userPermissions.staffs.map(staff => {
       return staff.id
     });
-    this.setState({
-      staffsPermissions: e.target.checked ? allSelected : []
-    })
+    this.setState({staffsPermissions: e.target.checked ? allSelected : []})
   };
 
   onCheckAllStatus = e => {
     const allSelected = this.props.userPermissions.status.map(stat => {
       return stat.id
     });
-    this.setState({
-      statusPermissions: e.target.checked ? allSelected : []
-    })
+    this.setState({statusPermissions: e.target.checked ? allSelected : []})
   };
 
   onCheckAllTickets = e => {
     const allSelected = this.props.userPermissions.tickets.map(ticket => {
       return ticket.id
     });
-    this.setState({
-      ticketsPermissions: e.target.checked ? allSelected : []
-    })
+    this.setState({ticketsPermissions: e.target.checked ? allSelected : []})
   };
 
   onCheckAllUsers = e => {
     const allSelected = this.props.userPermissions.users.map(user => {
       return user.id
     });
-    this.setState({
-      usersPermissions: e.target.checked ? allSelected : []
-    })
+    this.setState({usersPermissions: e.target.checked ? allSelected : []})
   };
 
   onSelectStaff = (staff) => {
@@ -320,7 +272,8 @@ class AddNewRole extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h3>{this.props.selectedRole === null ? "Add New Role" : "Edit Role Details"}</h3>
+          <h4
+            className="gx-font-weight-bold">{this.props.selectedRole === null ? "Add New Role" : "Edit Role Details"}</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item onClick={this.props.onDisableSelectedRole}>
               <Link to="/roles-permissions/all">Roles & Permission</Link>
@@ -365,7 +318,7 @@ class AddNewRole extends Component {
                                       value={this.state.customerPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {this.props.userPermissions.companies.map(company => {
-                            return <Col span={12} key = {company.id} className="gx-mb-2">
+                            return <Col span={12} key={company.id} className="gx-mb-2">
                               <Checkbox value={company.id}>{company.title}</Checkbox>
                             </Col>
                           })
@@ -673,5 +626,11 @@ AddNewRole.defaultProps = {
 AddNewRole.propTypes = {
   selectedRole: PropTypes.object,
   userPermissions: PropTypes.object,
-  staffList: PropTypes.array
+  staffList: PropTypes.array,
+  onAddRole: PropTypes.func,
+  onEditRole: PropTypes.func,
+  onDisableSelectedRole: PropTypes.func,
+  onGetStaff: PropTypes.func,
+  onGetStaffId: PropTypes.func,
+  onBulkDeleteStaff: PropTypes.func
 };

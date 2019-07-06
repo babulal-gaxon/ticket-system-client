@@ -1,9 +1,11 @@
 import {
   ADD_SUPPORT_STAFF,
-  BULK_DELETE_SUPPORT_STAFF, DISABLE_STAFF_STATUS,
+  BULK_DELETE_SUPPORT_STAFF,
+  DISABLE_STAFF_STATUS,
   EDIT_SUPPORT_STAFF,
   GET_STAFF_ID,
-  GET_SUPPORT_STAFF, UPLOAD_PROFILE_IMAGE
+  GET_SUPPORT_STAFF,
+  UPLOAD_PROFILE_IMAGE
 } from "../../constants/SupportStaff";
 
 const initialState = {
@@ -29,7 +31,6 @@ export default (state = initialState, action) => {
       };
 
     case ADD_SUPPORT_STAFF:
-      console.log("in reducer of add staff", action.payload)
       return {
         ...state,
         staffList: [action.payload, ...state.staffList],

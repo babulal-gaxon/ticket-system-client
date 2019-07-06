@@ -35,15 +35,12 @@ class TicketPriorities extends Component {
       showAddPriority: false,
       selectedPriorities: []
     };
+    this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText);
   };
 
-  componentWillMount() {
-    this.onGetPriorityData(this.state.current, this.state.itemNumbers);
-  };
-
-  onGetPriorityData = (currentPage, itemsPerPage) => {
+  onGetPriorityData = (currentPage, itemsPerPage, filterText) => {
     if (Permissions.canPriorityView()) {
-      this.props.onGetTicketPriorities(currentPage, itemsPerPage);
+      this.props.onGetTicketPriorities(currentPage, itemsPerPage, filterText);
     }
   };
 
@@ -55,7 +52,7 @@ class TicketPriorities extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1}, () => {
-        this.onGetPriorityData(this.state.current, this.state.itemNumbers)
+        this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -63,9 +60,9 @@ class TicketPriorities extends Component {
   };
 
   onCurrentDecrement = () => {
-    if (this.state.current !== 1) {
+    if (this.state.current > 1) {
       this.setState({current: this.state.current - 1}, () => {
-        this.onGetPriorityData(this.state.current, this.state.itemNumbers)
+        this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -73,11 +70,9 @@ class TicketPriorities extends Component {
   };
 
   onFilterTextChange = (e) => {
-    this.setState({filterText: e.target.value});
-  };
-
-  onFilterData = () => {
-    return this.props.priorities.filter(priority => priority.name.indexOf(this.state.filterText) !== -1);
+    this.setState({filterText: e.target.value}, () => {
+      this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText)
+    });
   };
 
   onSelectChange = selectedRowKeys => {
@@ -102,9 +97,6 @@ class TicketPriorities extends Component {
           };
           this.props.onBulkActivePriorities(obj);
           this.setState({selectedRowKeys: [], selectedPriorities: []})
-        },
-        onCancel() {
-          console.log('Cancel');
         }
       })
     } else {
@@ -156,15 +148,21 @@ class TicketPriorities extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
-        <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
-          Active
-        </Menu.Item>
-        <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
-          Disable
-        </Menu.Item>
-        <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
-          Delete
-        </Menu.Item>
+        {Permissions.canPriorityEdit() ?
+          <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
+            Active
+          </Menu.Item> : null
+        }
+        {Permissions.canPriorityEdit() ?
+          <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
+            Disable
+          </Menu.Item> : null
+        }
+        {Permissions.canPriorityDelete() ?
+          <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
+            Delete
+          </Menu.Item> : null
+        }
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
@@ -202,11 +200,11 @@ class TicketPriorities extends Component {
         },
       },
       {
-        title: 'Priority Value',
+        title: 'Priority Weight',
         dataIndex: 'priorityValue',
         key: 'priorityValue',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{`0${record.value} - some message`}</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2">0{record.value}</span>
         },
       },
       {
@@ -246,7 +244,7 @@ class TicketPriorities extends Component {
       title="Are you sure to delete this Priority?"
       onConfirm={() => {
         this.props.onBulkDeletePriorities({ids: [recordId]});
-        this.onGetPriorityData(this.state.current, this.state.itemNumbers);
+        this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText);
       }}
       okText="Yes"
       cancelText="No">
@@ -258,7 +256,7 @@ class TicketPriorities extends Component {
     this.setState({
       current: page,
     }, () => {
-      this.onGetPriorityData(this.state.current, this.state.itemNumbers)
+      this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText)
     });
   };
 
@@ -272,13 +270,13 @@ class TicketPriorities extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetPriorityData(this.state.current, this.state.itemNumbers)
+      this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText)
     });
   };
 
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;
-    const priorities = this.onFilterData();
+    const priorities = this.props.priorities;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -292,7 +290,7 @@ class TicketPriorities extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4>Ticket Priorities</h4>
+          <h4 className="gx-font-weight-bold">Ticket Priorities</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>
               <Link to="/ticket-system/ticket-priorities">Ticket System</Link></Breadcrumb.Item>
@@ -309,7 +307,7 @@ class TicketPriorities extends Component {
             <div className="gx-d-flex">
               <Search
                 placeholder="Enter keywords to search Priorities"
-                style={{width: 200}}
+                style={{width: 350}}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
               <div className="gx-ml-3">

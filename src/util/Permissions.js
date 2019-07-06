@@ -131,7 +131,7 @@ class Permissions {
   };
 
   // TicketStatuses
-  static canStatusAdd= () => {
+  static canStatusAdd = () => {
     if (this.permissions.status) {
       return this.permissions.status.filter((key) => key.name === "status.store").length > 0
     }
@@ -160,7 +160,7 @@ class Permissions {
   };
 
   // RolesAndPermissions
-  static canRoleAdd= () => {
+  static canRoleAdd = () => {
     if (this.permissions.roles) {
       return this.permissions.roles.filter((key) => key.name === "roles.store").length > 0
     }
@@ -187,11 +187,101 @@ class Permissions {
     }
     return false;
   };
+
+  // Staff Permissions
+  static canStaffAdd = () => {
+    if (this.permissions.staffs) {
+      return this.permissions.staffs.filter((key) => key.name === "staffs.store").length > 0
+    }
+    return false;
+  };
+
+  static canStaffEdit = () => {
+    if (this.permissions.staffs) {
+      return this.permissions.staffs.filter((key) => key.name === "staffs.update").length > 0
+    }
+    return false;
+  };
+
+  static canStaffView = () => {
+    if (this.permissions.staffs) {
+      return this.permissions.staffs.filter((key) => key.name === "staffs.index").length > 0
+    }
+    return false;
+  };
+
+  static canStaffDelete = () => {
+    if (this.permissions.staffs) {
+      return this.permissions.staffs.filter((key) => key.name === "staffs.destroy").length > 0
+    }
+    return false;
+  };
+
+  static canViewStaffDetail = () => {
+    if (this.permissions.staffs) {
+      return this.permissions.staffs.filter((key) => key.name === "staffs.show").length > 0
+    }
+    return false;
+  };
+
+  //Product Permissions
+  static canProductAdd = () => {
+    if (this.permissions.products) {
+      return this.permissions.products.filter((key) => key.name === "products.store").length > 0
+    }
+    return false;
+  };
+
+  static canProductEdit = () => {
+    if (this.permissions.products) {
+      return this.permissions.products.filter((key) => key.name === "products.update").length > 0
+    }
+    return false;
+  };
+
+  static canProductView = () => {
+    if (this.permissions.products) {
+      return this.permissions.products.filter((key) => key.name === "products.index").length > 0
+    }
+    return false;
+  };
+
+  static canProductDelete = () => {
+    if (this.permissions.products) {
+      return this.permissions.products.filter((key) => key.name === "products.destroy").length > 0
+    }
+    return false;
+  };
+
+  //Service Permissions
+  static canServiceAdd = () => {
+    if (this.permissions.services) {
+      return this.permissions.services.filter((key) => key.name === "services.store").length > 0
+    }
+    return false;
+  };
+
+  static canServiceEdit = () => {
+    if (this.permissions.services) {
+      return this.permissions.services.filter((key) => key.name === "services.update").length > 0
+    }
+    return false;
+  };
+
+  static canServiceView = () => {
+    if (this.permissions.services) {
+      return this.permissions.services.filter((key) => key.name === "services.index").length > 0
+    }
+    return false;
+  };
+
+  static canServiceDelete = () => {
+    if (this.permissions.services) {
+      return this.permissions.services.filter((key) => key.name === "services.destroy").length > 0
+    }
+    return false;
+  };
 }
-
-
-
-
 
 
 export default Permissions;

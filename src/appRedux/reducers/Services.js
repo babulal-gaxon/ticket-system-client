@@ -36,11 +36,7 @@ export default (state = initialState, action) => {
       };
 
     case DELETE_SERVICE:
-      const deletedId = action.payload;
-      let updateList = [];
-      console.log("update list before update", updateList);
-      updateList = state.servicesList.filter(service => service.id !== deletedId);
-      console.log("update list", deletedId, updateList);
+      const updateList = state.servicesList.filter(service => service.id !== action.payload);
       return {
         ...state,
         servicesList: updateList,

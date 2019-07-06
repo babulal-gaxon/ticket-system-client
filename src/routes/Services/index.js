@@ -14,6 +14,7 @@ import {
   onGetServicesList
 } from "../../appRedux/actions/Services";
 import PropTypes from "prop-types";
+import Permissions from "../../util/Permissions";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -32,14 +33,13 @@ class Services extends Component {
       showAddModal: false,
       selectedServices: []
     };
-  };
-
-  componentWillMount() {
-    this.onGetServicesData(this.state.currentPage, this.state.itemNumbers);
+    this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
   };
 
   onGetServicesData = (currentPage, itemNumbers, searchText) => {
-    this.props.onGetServicesList(currentPage, itemNumbers, searchText);
+    if (Permissions.canServiceView()) {
+      this.props.onGetServicesList(currentPage, itemNumbers, searchText);
+    }
   };
 
   onToggleAddService = () => {
@@ -50,7 +50,7 @@ class Services extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.currentPage < pages) {
       this.setState({currentPage: this.state.currentPage + 1}, () => {
-        this.onGetServicesData(this.state.currentPage, this.state.itemNumbers)
+        this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -58,9 +58,9 @@ class Services extends Component {
   };
 
   onCurrentDecrement = () => {
-    if (this.state.currentPage !== 1) {
+    if (this.state.currentPage > 1) {
       this.setState({currentPage: this.state.currentPage - 1}, () => {
-        this.onGetServicesData(this.state.currentPage, this.state.itemNumbers)
+        this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -68,8 +68,9 @@ class Services extends Component {
   };
 
   onFilterTextChange = (e) => {
-    this.setState({filterText: e.target.value});
-    this.onGetServicesData(1, this.state.itemNumbers, e.target.value)
+    this.setState({filterText: e.target.value}, () => {
+      this.onGetServicesData(1, this.state.itemNumbers, this.state.filterText)
+    });
   };
 
   onSelectChange = selectedRowKeys => {
@@ -125,12 +126,14 @@ class Services extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
-        <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
-          Active
-        </Menu.Item>
-        <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
-          Disable
-        </Menu.Item>
+        {(Permissions.canServiceEdit()) ?
+          <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
+            Active
+          </Menu.Item> : null}
+        {(Permissions.canServiceEdit()) ?
+          <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
+            Disable
+          </Menu.Item> : null}
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
@@ -173,8 +176,9 @@ class Services extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <span>  <i className="icon icon-edit gx-mr-3" onClick={() => this.onEditIconClick(record.id)}/>
-            {this.onDeletePopUp(record.id)}
+          return <span>  {(Permissions.canServiceEdit()) ?
+            <i className="icon icon-edit gx-mr-3" onClick={() => this.onEditIconClick(record.id)}/> : null}
+            {(Permissions.canServiceDelete()) ? this.onDeletePopUp(record.id) : null}
           </span>
         },
       },
@@ -205,20 +209,17 @@ class Services extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, currentPage: 1}, () => {
-      this.onGetServicesData(this.state.currentPage, this.state.itemNumbers)
+      this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
     })
   };
 
   onPageChange = page => {
-    this.setState({
-      currentPage: page
-    }, () => {
-      this.onGetServicesData(this.state.currentPage, this.state.itemNumbers)
+    this.setState({currentPage: page}, () => {
+      this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
     });
   };
 
   render() {
-    console.log("service list", this.props.servicesList);
     const selectedRowKeys = this.state.selectedRowKeys;
     const servicesList = this.props.servicesList;
     const rowSelection = {
@@ -234,22 +235,23 @@ class Services extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4>Services</h4>
+          <h4 className="gx-font-weight-bold">Services</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item className="gx-text-primary">
               <Link to="/services">Services</Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
-              <Button type="primary" className="gx-btn-lg" onClick={this.onAddButtonClick}>
-                Add New Service
-              </Button>
+              {(Permissions.canServiceAdd()) ?
+                <Button type="primary" className="gx-btn-lg" onClick={this.onAddButtonClick}>
+                  Add New Service
+                </Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
-                style={{width: 200}}
-                placeholder="Search Services Here"
+                style={{width: 350}}
+                placeholder=" Enter keywords to search Services"
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
               <div className="gx-ml-3">
@@ -265,7 +267,8 @@ class Services extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={servicesList}
+          <Table rowKey="services" rowSelection={rowSelection} columns={this.onGetTableColumns()}
+                 dataSource={servicesList}
                  className="gx-mb-4"
                  pagination={{
                    pageSize: this.state.itemNumbers,
@@ -311,5 +314,11 @@ Services.defaultProps = {
 
 Services.propTypes = {
   servicesList: PropTypes.array,
-  totalItems: PropTypes.number
+  totalItems: PropTypes.number,
+  onGetServicesList: PropTypes.func,
+  onAddService: PropTypes.func,
+  onEditService: PropTypes.func,
+  onDeleteServices: PropTypes.func,
+  onBulkActiveServices: PropTypes.func,
+  onBulkDisableServices: PropTypes.func
 };

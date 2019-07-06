@@ -12,9 +12,13 @@ import {
 export const onGetDepartments = (currentPage, itemsPerPage, filterData) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    const url = filterData ? `/setup/departments?search=${filterData}&page=${currentPage}&per_page=${itemsPerPage}` :
-      `/setup/departments?page=${currentPage}&per_page=${itemsPerPage}`;
-    axios.get(url).then(({data}) => {
+    axios.get('/setup/departments', {
+      params: {
+        page: currentPage,
+        per_page: itemsPerPage,
+        search: filterData
+      }
+    }).then(({data}) => {
       console.info("onGetDepartments: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
@@ -35,7 +39,6 @@ export const onAddDepartment = (department) => {
     axios.post('/setup/departments', department).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
         dispatch({type: ADD_DEPARTMENT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Department has been added successfully"});
@@ -89,13 +92,10 @@ export const onBulkInActiveDepartments = (departmentIds) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/departments/status/0', departmentIds).then(({data}) => {
-      console.log("data.data", data);
       if (data.success) {
         dispatch({type: BULK_INACTIVE_DEPARTMENTS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({
-          type: SHOW_MESSAGE,
-          payload: "The Status of Department(s) has been changed to Disabled successfully"
+        dispatch({type: SHOW_MESSAGE, payload: "The Status of Department(s) has been changed to Disabled successfully"
         });
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});

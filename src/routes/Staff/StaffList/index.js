@@ -4,16 +4,15 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {
-  onAddSupportStaff,
   onBulkDeleteStaff,
   onDisableSupportStaff,
-  onEditSupportStaff,
   onGetStaff,
   onGetStaffId
 } from "../../../appRedux/actions/SupportStaff";
 import StaffDetail from "./StaffDetail";
 import {Avatar, Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
 import InfoView from "../../../components/InfoView";
+import Permissions from "../../../util/Permissions";
 
 
 const ButtonGroup = Button.Group;
@@ -33,14 +32,13 @@ class StaffList extends Component {
       currentMember: null,
       selectedStaff: []
     };
-  };
-
-  componentWillMount() {
     this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers);
   };
 
   onGetStaffDataPaginated = (currentPage, itemsPerPage) => {
-    this.props.onGetStaff(currentPage, itemsPerPage);
+    if (Permissions.canStaffView()) {
+      this.props.onGetStaff(currentPage, itemsPerPage);
+    }
   };
 
   onCurrentIncrement = () => {
@@ -56,7 +54,7 @@ class StaffList extends Component {
   };
 
   onCurrentDecrement = () => {
-    if (this.state.currentPage !== 1) {
+    if (this.state.currentPage > 1) {
       this.setState({currentPage: this.state.currentPage - 1},
         () => {
           this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)
@@ -82,8 +80,7 @@ class StaffList extends Component {
   onFilterData = () => {
     return this.props.staffList.filter(staff => {
       const name = staff.first_name + " " + staff.last_name;
-      return (name.indexOf(this.state.filterText) !== -1) ?
-        staff : null
+      return (name.indexOf(this.state.filterText) !== -1) ? staff : null
     });
   };
 
@@ -110,9 +107,11 @@ class StaffList extends Component {
         <Menu.Item key="1">
           Archive
         </Menu.Item>
-        <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
-          Delete
-        </Menu.Item>
+        {(Permissions.canStaffDelete()) ?
+          <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
+            Delete
+          </Menu.Item> : null
+        }
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
@@ -205,40 +204,45 @@ class StaffList extends Component {
   onShowRowDropdown = (staffId) => {
     const menu = (
       <Menu>
-        <Menu.Item key="2" onClick={() => {
-          this.props.onGetStaffId(staffId);
-          this.props.history.push('/staff/add-new-member')
-        }}>
-          Edit
-        </Menu.Item>
-        <Menu.Item key="3">
-          <Popconfirm
-            title="Are you sure to Disable this Staff?"
-            onConfirm={() => {
-              this.onDisableStaff(staffId)
-            }}
-            okText="Yes"
-            cancelText="No">
-            Disable
-          </Popconfirm>
-
-        </Menu.Item>
+        {(Permissions.canStaffEdit()) ?
+          <Menu.Item key="2" onClick={() => {
+            this.props.onGetStaffId(staffId);
+            this.props.history.push('/staff/add-new-member')
+          }}>
+            Edit
+          </Menu.Item> : null
+        }
+        {(Permissions.canStaffEdit()) ?
+          <Menu.Item key="3">
+            <Popconfirm
+              title="Are you sure to Disable this Staff?"
+              onConfirm={() => {
+                this.onDisableStaff(staffId)
+              }}
+              okText="Yes"
+              cancelText="No">
+              Disable
+            </Popconfirm>
+          </Menu.Item> : null
+        }
         <Menu.Item key="3">
           Notes
         </Menu.Item>
         <Menu.Divider/>
-        <Menu.Item key="4">
-          <Popconfirm
-            title="Are you sure to delete this Staff?"
-            onConfirm={() => {
-              this.props.onBulkDeleteStaff({ids: [staffId]});
-              this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)
-            }}
-            okText="Yes"
-            cancelText="No">
-            Delete
-          </Popconfirm>
-        </Menu.Item>
+        {(Permissions.canStaffDelete()) ?
+          <Menu.Item key="4">
+            <Popconfirm
+              title="Are you sure to delete this Staff?"
+              onConfirm={() => {
+                this.props.onBulkDeleteStaff({ids: [staffId]});
+                this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)
+              }}
+              okText="Yes"
+              cancelText="No">
+              Delete
+            </Popconfirm>
+          </Menu.Item> : null
+        }
       </Menu>
     );
     return (
@@ -295,15 +299,16 @@ class StaffList extends Component {
       <div className="gx-main-content">
         {this.state.currentMember === null ?
           <Widget styleName="gx-card-filter">
-            <h4>Staffs</h4>
+            <h4 className="gx-font-weight-bold">Staffs</h4>
             <Breadcrumb className="gx-mb-3">
               <Breadcrumb.Item>Staffs</Breadcrumb.Item>
             </Breadcrumb>
             <div className="gx-d-flex gx-justify-content-between">
               <div className="gx-d-flex">
-                <Button type="primary" className="gx-btn-lg"
-                        onClick={this.onAddButtonClick}>
-                  Add New Staff</Button>
+                {Permissions.canStaffAdd() ?
+                  <Button type="primary" className="gx-btn-lg"
+                          onClick={this.onAddButtonClick}>
+                    Add New Staff</Button> : null}
                 <span>{this.onSelectOption()}</span>
               </div>
               <div className="gx-d-flex">
@@ -311,7 +316,7 @@ class StaffList extends Component {
                   placeholder=" Search Staff Here"
                   value={this.state.filterText}
                   onChange={this.onFilterTextChange}
-                  style={{width: 200}}
+                  style={{width: 350}}
                 />
                 <div className="gx-ml-3">
                   {this.onShowItemOptions()}
@@ -337,7 +342,11 @@ class StaffList extends Component {
                    }}
                    className="gx-table-responsive gx-mb-4"
                    onRow={(record) => ({
-                     onClick: () => this.onSelectStaff(record)
+                     onClick: () => {
+                       if (Permissions.canViewStaffDetail()) {
+                         this.onSelectStaff(record)
+                       }
+                     }
                    })}/>
             <div className="gx-d-flex gx-flex-row">
             </div>
@@ -359,16 +368,20 @@ const mapStateToProps = ({supportStaff}) => {
 export default connect(mapStateToProps, {
   onGetStaff,
   onGetStaffId,
-  onAddSupportStaff,
-  onEditSupportStaff,
   onBulkDeleteStaff,
   onDisableSupportStaff
 })(StaffList);
 
 StaffList.defaultProps = {
-  staffList: []
+  staffList: [],
+  totalItems: null
 };
 
 StaffList.propTypes = {
-  staffList: PropTypes.array
+  staffList: PropTypes.array,
+  totalItems: PropTypes.number,
+  onGetStaff: PropTypes.func,
+  onGetStaffId: PropTypes.func,
+  onBulkDeleteStaff: PropTypes.func,
+  onDisableSupportStaff: PropTypes.func
 };

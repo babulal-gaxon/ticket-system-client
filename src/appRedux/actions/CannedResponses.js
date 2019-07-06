@@ -13,9 +13,13 @@ import {
 export const onGetCannedResponses = (currentPage, itemsPerPage, filterData) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    const url = filterData ? `/setup/canned/responses?search=${filterData}&page=${currentPage}&per_page=${itemsPerPage}` :
-      `/setup/canned/responses?page=${currentPage}&per_page=${itemsPerPage}`;
-    axios.get(url).then(({data}) => {
+    axios.get('/setup/canned/responses', {
+      params: {
+        page: currentPage,
+        per_page: itemsPerPage,
+        search: filterData
+      }
+    }).then(({data}) => {
       console.info("onCannedResponses: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
@@ -31,13 +35,11 @@ export const onGetCannedResponses = (currentPage, itemsPerPage, filterData) => {
 };
 
 export const onAddCannedResponse = (cannedResponse) => {
-  console.log("onAddCannedResponse", cannedResponse);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/canned/responses', cannedResponse).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
         dispatch({type: ADD_CANNED_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Response has been added successfully"});

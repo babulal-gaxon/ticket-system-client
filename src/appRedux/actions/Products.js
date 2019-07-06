@@ -14,9 +14,13 @@ import {
 export const onGetProductsList = (currentPage, itemsPerPage, filterData) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    const url = filterData ? `/setup/products?search=${filterData}&page=${currentPage}&per_page=${itemsPerPage}` :
-      `/setup/products?page=${currentPage}&per_page=${itemsPerPage}`;
-    axios.get(url).then(({data}) => {
+    axios.get('/setup/products', {
+      params: {
+        page: currentPage,
+        per_page: itemsPerPage,
+        search: filterData
+      }
+    }).then(({data}) => {
       console.info("onGetProductsList: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
@@ -37,7 +41,6 @@ export const onAddProduct = (product) => {
     axios.post('/setup/products', product).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
         dispatch({type: ADD_PRODUCT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Product has been added successfully"});
@@ -57,7 +60,6 @@ export const onEditProduct = (product) => {
     axios.put(`/setup/products/${product.id}`, product).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
         dispatch({type: EDIT_PRODUCT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Product details has been updated successfully"});

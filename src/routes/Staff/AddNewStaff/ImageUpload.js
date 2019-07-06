@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Dropzone from "react-dropzone";
 import {Avatar, Button} from "antd";
+import PropTypes from "prop-types";
 
 
 class ImageUpload extends Component {
@@ -54,7 +55,7 @@ class ImageUpload extends Component {
           :
           <div>
             <div>
-              <img alt="" src={file ? file.preview : ""}/>
+              <Avatar className="gx-mr-3 gx-size-200" alt="" src={file ? file.preview : ""}/>
               <span onClick={() => {
                 this.setState({
                   profile_pic: '',
@@ -62,7 +63,6 @@ class ImageUpload extends Component {
                 })
               }}>Change</span>
             </div>
-            {/*<span>Your Profile Photo</span>*/}
           </div>
         }
         <Button type="primary" className="gx-mt-5" onClick={this.onUploadImage}>Add Profile Image</Button>
@@ -71,5 +71,13 @@ class ImageUpload extends Component {
   }
 }
 
-
 export default ImageUpload;
+
+ImageUpload.defaultProps = {
+  imageAvatar: null
+};
+
+ImageUpload.propTypes = {
+  imageAvatar: PropTypes.object,
+  onAddProfileImage: PropTypes.func,
+};

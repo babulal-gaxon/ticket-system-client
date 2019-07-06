@@ -109,12 +109,11 @@ class AllTickets extends Component {
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      if(this.state.filterText.length > 2) {
+      if (this.state.filterText.length > 2) {
         this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
           this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
           , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive);
-      }
-      else {
+      } else {
         this.onGetPaginatedData(this.state.current, this.state.itemNumbers, "", this.state.startDate,
           this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
           , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive);

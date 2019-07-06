@@ -15,7 +15,6 @@ class AddNewService extends Component {
       };
     } else {
       const selectedService = this.props.servicesList.find(service => service.id === this.props.serviceId)
-      console.log("selected Service", selectedService)
       this.state = {...selectedService};
     }
   };

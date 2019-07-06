@@ -30,24 +30,19 @@ class RolesList extends Component {
       filterText: "",
       selectedRoles: []
     };
+    this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText);
   };
 
-  componentWillMount() {
-    this.onGetRolesData(this.state.current, this.state.itemNumbers);
-  };
-
-  onGetRolesData = (currentPage, itemsPerPage) => {
+  onGetRolesData = (currentPage, itemsPerPage, filterText) => {
     if (Permissions.canRoleView()) {
-      this.props.onGetRoles(currentPage, itemsPerPage);
+      this.props.onGetRoles(currentPage, itemsPerPage, filterText);
     }
   };
 
-  onFilterData = () => {
-    return this.props.roles.filter(role => role.name.indexOf(this.state.filterText) !== -1);
-  };
-
   onFilterTextChange = (e) => {
-    this.setState({filterText: e.target.value})
+    this.setState({filterText: e.target.value}, () => {
+      this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText);
+    })
   };
 
   onSelectChange = selectedRowKeys => {
@@ -55,10 +50,9 @@ class RolesList extends Component {
   };
 
   onDropdownChange = (value) => {
-    this.setState({itemNumbers: value, current: 1},
-      () => {
-        this.onGetRolesData(this.state.current, this.state.itemNumbers)
-      });
+    this.setState({itemNumbers: value, current: 1}, () => {
+      this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText)
+    });
   };
 
   onCurrentIncrement = () => {
@@ -66,7 +60,7 @@ class RolesList extends Component {
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1},
         () => {
-          this.onGetRolesData(this.state.current, this.state.itemNumbers)
+          this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText)
         });
     } else {
       return null;
@@ -74,11 +68,10 @@ class RolesList extends Component {
   };
 
   onCurrentDecrement = () => {
-    if (this.state.current !== 1) {
-      this.setState({current: this.state.current - 1},
-        () => {
-          this.onGetRolesData(this.state.current, this.state.itemNumbers)
-        });
+    if (this.state.current > 1) {
+      this.setState({current: this.state.current - 1}, () => {
+        this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      });
     } else {
       return null;
     }
@@ -153,7 +146,7 @@ class RolesList extends Component {
       title="Are you sure to delete this Role?"
       onConfirm={() => {
         this.props.onBulkDeleteRoles({ids: [recordId]});
-        this.onGetRolesData(this.state.current, this.state.itemNumbers)
+        this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText)
       }}
       okText="Yes"
       cancelText="No">
@@ -189,9 +182,8 @@ class RolesList extends Component {
         </Menu.Item>
         {Permissions.canRoleDelete() ?
           <Menu.Item key="2" onClick={this.showBulkDeleteConfirm}>
-          Delete
-        </Menu.Item>
-          : null}
+            Delete
+          </Menu.Item> : null}
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
@@ -202,14 +194,13 @@ class RolesList extends Component {
   };
 
   onPageChange = page => {
-    this.setState({current: page},
-      () => {
-        this.onGetRolesData(this.state.current, this.state.itemNumbers)
+    this.setState({current: page}, () => {
+        this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText)
       });
   };
 
   render() {
-    const roles = this.onFilterData();
+    const roles = this.props.roles;
     const selectedRowKeys = this.state.selectedRowKeys;
     let ids;
     const rowSelection = {
@@ -218,32 +209,32 @@ class RolesList extends Component {
         ids = selectedRows.map(selectedRow => {
           return selectedRow.id
         });
-        this.setState({selectedRoles: ids, selectedRowKeys: selectedRowKeys})
+        this.setState({selectedRoles: ids, selectedRowKeys: selectedRowKeys});
       }
     };
 
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4>Roles & Permission</h4>
+          <h4 className="gx-font-weight-bold">Roles & Permission</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item className="gx-text-primary">Roles & Permission</Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
               {(Permissions.canRoleAdd()) ?
-              <Button type="primary" className="gx-btn-lg"
-                      onClick={this.onAddButtonClick}>
-                Add New Role
-              </Button> : null}
+                <Button type="primary" className="gx-btn-lg"
+                        onClick={this.onAddButtonClick}>
+                  Add New Role
+                </Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
-                placeholder="Search Roles here"
+                placeholder="Enter keywords to Search Roles"
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}
-                style={{width: 200}}
+                style={{width: 350}}
               />
               {this.onGetRolesShowOptions()}
               <ButtonGroup>
@@ -287,11 +278,15 @@ export default connect(mapStateToProps, {
 })(RolesList);
 
 RolesList.defaultProps = {
-  roles:[],
+  roles: [],
   totalItems: null
 };
 
 RolesList.propTypes = {
-  roles:PropTypes.array,
-  totalItems: PropTypes.number
+  roles: PropTypes.array,
+  totalItems: PropTypes.number,
+  onGetRoles: PropTypes.func,
+  onBulkDeleteRoles: PropTypes.func,
+  onGetRoleDetail: PropTypes.func,
+  onDisableSelectedRole: PropTypes.func
 };
