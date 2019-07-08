@@ -37,9 +37,9 @@ class Departments extends Component {
     this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
   };
 
-  onGetDepartmentData = (currentPage, itemsPerPage, data) => {
+  onGetDepartmentData = (currentPage, itemsPerPage, filterData) => {
     if (Permissions.canDepartmentView()) {
-      this.props.onGetDepartments(currentPage, itemsPerPage, data)
+      this.props.onGetDepartments(currentPage, itemsPerPage, filterData)
     }
   };
 
@@ -300,7 +300,8 @@ class Departments extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={dept} className="gx-mb-4"
+          <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={dept}
+                 className="gx-mb-4"
                  pagination={{
                    pageSize: this.state.itemNumbers,
                    current: this.state.currentPage,

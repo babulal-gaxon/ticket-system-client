@@ -88,6 +88,7 @@ class AddNewPriority extends Component {
       },
     });
 
+    console.log("this.state.displayColorPicker", this.state.displayColorPicker);
     return (
       <div>
         <Modal

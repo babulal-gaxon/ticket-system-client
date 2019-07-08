@@ -16,7 +16,13 @@ import {
   Tag,
   Tooltip
 } from "antd";
-
+import Widget from "../../../components/Widget/index";
+import Permissions from "../../../util/Permissions";
+import moment from "moment";
+import {Link} from "react-router-dom";
+import TicketDetail from "./TicketDetail";
+import InfoView from "../../../components/InfoView";
+import CustomScrollbars from "../../../util/CustomScrollbars";
 import {
   getTickedId,
   onDeleteTicket,
@@ -24,20 +30,13 @@ import {
   onGetTickets,
   onSendMessage,
   onUpdateTicketPriority,
-  onUpdateTicketStatus,
+  onUpdateTicketStatus
 } from "../../../appRedux/actions/TicketList";
-import Widget from "../../../components/Widget/index";
-import Permissions from "../../../util/Permissions";
-import moment from "moment";
-import {Link} from "react-router-dom";
-import TicketDetail from "./TicketDetail";
-import InfoView from "../../../components/InfoView";
 import {onGetTicketPriorities} from "../../../appRedux/actions/TicketPriorities";
 import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
 import {onGetCustomersData} from "../../../appRedux/actions/Customers";
 import {onGetTicketStatus} from "../../../appRedux/actions/TicketStatuses";
 import {connect} from "react-redux";
-import CustomScrollbars from "../../../util/CustomScrollbars";
 
 const Option = Select.Option;
 const Search = Input.Search;
@@ -54,8 +53,6 @@ class AllTickets extends Component {
       startDate: null,
       endDate: null,
       filterText: "",
-      tickets: [],
-      filteredCustomers: [],
       currentTicket: null,
       selectedTickets: [],
       selectedStaff: [],
@@ -71,6 +68,13 @@ class AllTickets extends Component {
       sortParam: "",
       archive: false
     };
+    this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
+      this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities,
+      this.state.selectedStatuses, this.state.sortParam, this.state.archive);
+    this.props.onGetTicketPriorities();
+    this.props.onGetStaff();
+    this.props.onGetCustomersData();
+    this.props.onGetTicketStatus();
   };
 
   onToggleShowMoreStaff = () => {
@@ -81,15 +85,6 @@ class AllTickets extends Component {
     this.setState({showMoreCustomer: !this.state.showMoreCustomer});
   };
 
-  componentWillMount() {
-    this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
-      this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-      , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive);
-    this.props.onGetTicketPriorities();
-    this.props.onGetStaff();
-    this.props.onGetCustomersData();
-    this.props.onGetTicketStatus();
-  };
 
   onGetPaginatedData = (currentPage, itemsPerPage, filterData, startDate, endDate, selectedStaff, selectedCustomers,
                         selectedPriorities, selectedStatuses, sortingOrder, archive) => {
@@ -99,25 +94,18 @@ class AllTickets extends Component {
     }
   };
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    this.setState({tickets: nextProps.tickets})
-  };
-
   onSideBarActive = () => {
     this.setState({sideBarActive: !this.state.sideBarActive});
   };
 
   onFilterTextChange = (e) => {
+    const {
+      current, itemNumbers, startDate, endDate, selectedStaff,
+      selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive
+    } = this.state;
     this.setState({filterText: e.target.value}, () => {
-      if (this.state.filterText.length > 2) {
-        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
-          this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-          , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive);
-      } else {
-        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, "", this.state.startDate,
-          this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-          , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive);
-      }
+      this.onGetPaginatedData(current, itemNumbers, this.state.filterText, startDate, endDate, selectedStaff,
+        selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive)
     })
   };
 
@@ -126,25 +114,31 @@ class AllTickets extends Component {
   };
 
   onCurrentIncrement = () => {
+    const {
+      itemNumbers, filterText, startDate, endDate, selectedStaff,
+      selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive
+    } = this.state;
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1}, () => {
-        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
-          this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-          , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
-      });
+        this.onGetPaginatedData(this.state.current, itemNumbers, filterText, startDate, endDate, selectedStaff,
+          selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive)
+      })
     } else {
       return null;
     }
   };
 
   onCurrentDecrement = () => {
-    if (this.state.current !== 1) {
+    const {
+      itemNumbers, filterText, startDate, endDate, selectedStaff,
+      selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive
+    } = this.state;
+    if (this.state.current > 1) {
       this.setState({current: this.state.current - 1}, () => {
-        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
-          this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-          , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
-      });
+        this.onGetPaginatedData(this.state.current, itemNumbers, filterText, startDate, endDate, selectedStaff,
+          selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive)
+      })
     } else {
       return null;
     }
@@ -159,10 +153,13 @@ class AllTickets extends Component {
   };
 
   onDropdownChange = (value) => {
+    const {
+      filterText, startDate, endDate, selectedStaff, selectedCustomers,
+      selectedPriorities, selectedStatuses, sortParam, archive
+    } = this.state;
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
-        this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-        , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, filterText, startDate, endDate,
+        selectedStaff, selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive)
     });
   };
 
@@ -185,12 +182,13 @@ class AllTickets extends Component {
         dataIndex: 'title',
         render: (text, record) => {
           return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
-              <Tooltip placement="top" title={record.assigned_by.first_name + " " + record.assigned_by.last_name}>
-                {record.assigned_by.avatar ?
-                  <Avatar className="gx-mr-3 gx-size-50" src={record.assigned_by.avatar.src}/> :
-                  <Avatar className="gx-mr-3 gx-size-50"
-                          style={{backgroundColor: '#f56a00'}}>{record.assigned_by.first_name[0].toUpperCase()}</Avatar>}
-              </Tooltip>
+              {record.assigned_by ?
+                <Tooltip placement="top" title={record.assigned_by.first_name + " " + record.assigned_by.last_name}>
+                  {record.assigned_by.avatar ?
+                    <Avatar className="gx-mr-3 gx-size-50" src={record.assigned_by.avatar.src}/> :
+                    <Avatar className="gx-mr-3 gx-size-50"
+                            style={{backgroundColor: '#f56a00'}}>{record.assigned_by.first_name[0].toUpperCase()}</Avatar>}
+                </Tooltip> : <Avatar className="gx-size-50 gx-mr-3" src="https://via.placeholder.com/150x150"/>}
               <div className="gx-media-body">
                 <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
                 <Tag className="gx-ml-2" color="blue">{record.product_name}</Tag>
@@ -268,7 +266,7 @@ class AllTickets extends Component {
   onShowBulkDeleteConfirm = () => {
     if (this.state.selectedTickets.length !== 0) {
       confirm({
-        title: "Are you sure to delete the selected Tickets?",
+        title: "Are you sure to delete the selected Ticket(s)?",
         onOk: () => {
           const obj = {
             ids: this.state.selectedTickets
@@ -279,7 +277,7 @@ class AllTickets extends Component {
       })
     } else {
       confirm({
-        title: "Please Select Roles first",
+        title: "Please Select Ticket(s) first",
       })
     }
   };
@@ -300,10 +298,13 @@ class AllTickets extends Component {
   };
 
   onPageChange = page => {
+    const {
+      itemNumbers, filterText, startDate, endDate, selectedStaff,
+      selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive
+    } = this.state;
     this.setState({current: page}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
-        this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-        , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive);
+      this.onGetPaginatedData(this.state.current, itemNumbers, filterText, startDate, endDate, selectedStaff,
+        selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive)
     });
   };
 
@@ -312,23 +313,36 @@ class AllTickets extends Component {
   };
 
   onStartDateChange = value => {
+    const {
+      current, itemNumbers, filterText, endDate, selectedStaff,
+      selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive
+    } = this.state;
     this.setState({startDate: value}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
-        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities,
-        this.state.selectedStatuses, this.state.sortParam, this.state.archive)
+      this.onGetPaginatedData(current, itemNumbers, filterText, this.state.startDate, endDate, selectedStaff,
+        selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive)
     });
   };
 
   onEndDateChange = value => {
+    const {
+      current, itemNumbers, filterText, startDate, selectedStaff,
+      selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive
+    } = this.state;
     this.setState({endDate: value}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
-        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
+      this.onGetPaginatedData(current, itemNumbers, filterText, startDate, this.state.endDate, selectedStaff,
+        selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive)
     });
   };
 
   onGetSidebar = () => {
-    const staffs = this.state.showMoreStaff ? this.props.staffList : this.props.staffList.slice(0, 5);
-    const customers = this.state.showMoreCustomer ? this.props.customersList : this.props.customersList.slice(0, 5);
+    const {
+      current, itemNumbers, filterText, startDate, endDate, selectedStaff, selectedCustomers, customerFilterText,
+      selectedPriorities, selectedStatuses, sortParam, archive, staffFilterText, showMoreStaff, showMoreCustomer
+    } = this.state;
+    const staffs = showMoreStaff ? this.props.staffList.filter(staff => staff.first_name.indexOf(staffFilterText) !== -1)
+      : this.props.staffList.filter(staff => staff.first_name.indexOf(staffFilterText) !== -1).slice(0, 5);
+    const customers = showMoreCustomer ? this.props.customersList.filter(customer => customer.first_name.indexOf(customerFilterText) !== -1)
+      : this.props.customersList.filter(customer => customer.first_name.indexOf(customerFilterText) !== -1).slice(0, 5);
     return <div className="gx-main-layout-sidenav gx-d-none gx-d-lg-flex">
       <CustomScrollbars className="gx-layout-sider-scrollbar">
         <div className="gx-main-layout-side">
@@ -340,14 +354,14 @@ class AllTickets extends Component {
               <label>Filter By Date</label>
               <div>
                 <DatePicker
-                  value={this.state.startDate}
+                  value={startDate}
                   placeholder="Select"
                   onChange={this.onStartDateChange}
                   className="gx-my-3"
                   style={{width: "100%"}}
                   format='YYYY/MM/DD'/>
                 <DatePicker
-                  value={this.state.endDate}
+                  value={endDate}
                   placeholder="Updated"
                   onChange={this.onEndDateChange}
                   style={{width: "100%"}}/>
@@ -358,15 +372,14 @@ class AllTickets extends Component {
                 <h4>Filter By Staff</h4>
                 <Button type="link" onClick={() => {
                   this.setState({selectedStaff: []}, () => {
-                    this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
-                      this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-                      , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
+                    this.onGetPaginatedData(current, itemNumbers, filterText, startDate, endDate, this.state.selectedStaff,
+                      selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive)
                   })
                 }}> Reset</Button>
               </div>
-              <Input type="text" value={this.state.StaffFilterText}
-                     onChange={(e) => this.setState({StaffFilterText: e.target.value})}/>
-              <Checkbox.Group onChange={this.onSelectStaff} value={this.state.selectedStaff}>
+              <Input type="text" value={staffFilterText}
+                     onChange={(e) => this.setState({staffFilterText: e.target.value})}/>
+              <Checkbox.Group onChange={this.onSelectStaff} value={selectedStaff}>
                 {staffs.map(staff => {
                   return <div className="gx-my-2"><Checkbox value={staff.id}>
                     {staff.first_name + " " + staff.last_name}</Checkbox></div>
@@ -384,15 +397,15 @@ class AllTickets extends Component {
                 <Button type="link" onClick={() => {
                   this.setState({selectedCustomers: []},
                     () => {
-                      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate,
-                        this.state.endDate, this.state.selectedStaff, this.state.selectedCustomers
-                        , this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
+                      this.onGetPaginatedData(current, itemNumbers, filterText, startDate, endDate, selectedStaff,
+                        this.state.selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive)
                     }
                   )
                 }}> Reset</Button>
               </div>
-              <Input type="text"/>
-              <Checkbox.Group onChange={this.onSelectCustomer} value={this.state.selectedCustomers}>
+              <Input type="text" value={customerFilterText}
+                     onChange={(e) => this.setState({customerFilterText: e.target.value})}/>
+              <Checkbox.Group onChange={this.onSelectCustomer} value={selectedCustomers}>
                 {customers.map(customer => {
                   return <div className="gx-my-2">
                     <Checkbox value={customer.id}>{customer.first_name + " " + customer.last_name}</Checkbox>
@@ -408,7 +421,7 @@ class AllTickets extends Component {
             <div className="gx-mt-5">
               <h4>Priority</h4>
               <Input type="text"/>
-              <Checkbox.Group onChange={this.onSelectPriorities} value={this.state.selectedPriorities}>
+              <Checkbox.Group onChange={this.onSelectPriorities} value={selectedPriorities}>
                 {this.props.priorities.map(priority => {
                   return <div className="gx-my-2">
                     <Checkbox value={priority.id}>{priority.name}</Checkbox>
@@ -419,7 +432,7 @@ class AllTickets extends Component {
             <div className="gx-mt-5">
               <h4>Status</h4>
               <Input type="text"/>
-              <Checkbox.Group onChange={this.onSelectStatuses} value={this.state.selectedStatuses}>
+              <Checkbox.Group onChange={this.onSelectStatuses} value={selectedStatuses}>
                 {this.props.statuses.map(status => {
                   return <div className="gx-my-2">
                     <Checkbox value={status.id}>{status.name}</Checkbox>
@@ -435,37 +448,57 @@ class AllTickets extends Component {
   };
 
   onSelectStaff = checkedList => {
+    const {
+      current, itemNumbers, filterText, startDate, endDate,
+      selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive
+    } = this.state;
     this.setState({selectedStaff: checkedList}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
-        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
+      this.onGetPaginatedData(current, itemNumbers, filterText, startDate, endDate, this.state.selectedStaff,
+        selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive)
     });
   };
 
   onSelectCustomer = checkedList => {
+    const {
+      current, itemNumbers, filterText, startDate, endDate, selectedStaff,
+      selectedPriorities, selectedStatuses, sortParam, archive
+    } = this.state;
     this.setState({selectedCustomers: checkedList}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
-        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
+      this.onGetPaginatedData(current, itemNumbers, filterText, startDate, endDate, selectedStaff,
+        this.state.selectedCustomers, selectedPriorities, selectedStatuses, sortParam, archive)
     });
   };
 
   onSelectPriorities = checkedList => {
+    const {
+      current, itemNumbers, filterText, startDate, endDate, selectedStaff,
+      selectedCustomers, selectedStatuses, sortParam, archive
+    } = this.state;
     this.setState({selectedPriorities: checkedList}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
-        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
+      this.onGetPaginatedData(current, itemNumbers, filterText, startDate, endDate, selectedStaff,
+        selectedCustomers, this.state.selectedPriorities, selectedStatuses, sortParam, archive)
     });
   };
 
   onSelectStatuses = checkedList => {
+    const {
+      current, itemNumbers, filterText, startDate, endDate, selectedStaff,
+      selectedCustomers, selectedPriorities, sortParam, archive
+    } = this.state;
     this.setState({selectedStatuses: checkedList}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
-        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
+      this.onGetPaginatedData(current, itemNumbers, filterText, startDate, endDate, selectedStaff,
+        selectedCustomers, selectedPriorities, this.state.selectedStatuses, sortParam, archive)
     });
   };
 
   onSetArchive = () => {
+    const {
+      current, itemNumbers, filterText, startDate, endDate, selectedStaff,
+      selectedCustomers, selectedPriorities, selectedStatuses, sortParam
+    } = this.state;
     this.setState({archive: !this.state.archive}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
-        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
+      this.onGetPaginatedData(current, itemNumbers, filterText, startDate, endDate, selectedStaff,
+        selectedCustomers, selectedPriorities, selectedStatuses, sortParam, this.state.archive)
     });
   };
 
@@ -493,9 +526,13 @@ class AllTickets extends Component {
   };
 
   onSetSortParam = key => {
+    const {
+      current, itemNumbers, filterText, startDate, endDate, selectedStaff,
+      selectedCustomers, selectedPriorities, selectedStatuses, archive
+    } = this.state;
     this.setState({sortParam: key}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.startDate, this.state.endDate,
-        this.state.selectedStaff, this.state.selectedCustomers, this.state.selectedPriorities, this.state.selectedStatuses, this.state.sortParam, this.state.archive)
+      this.onGetPaginatedData(current, itemNumbers, filterText, startDate, endDate, selectedStaff,
+        selectedCustomers, selectedPriorities, selectedStatuses, this.state.sortParam, archive)
     });
   };
 
@@ -618,7 +655,8 @@ export default connect(mapStateToProps, {
   onUpdateTicketPriority,
   onGetConversationList,
   onSendMessage
-})(AllTickets);
+})(AllTickets)
+;
 
 AllTickets.defaultProps = {};
 

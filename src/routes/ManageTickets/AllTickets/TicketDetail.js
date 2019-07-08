@@ -43,7 +43,7 @@ class TicketDetail extends Component {
     const menu = (
       <Menu>
         <Menu.Item key="1" onClick={() => {
-          this.props.getTickedId(ticketId)
+          this.props.getTickedId(ticketId);
           this.props.history.push('/manage-tickets/add-new-ticket')
         }}>
           Edit
@@ -147,6 +147,7 @@ class TicketDetail extends Component {
             </Col>
             <Col xl={8} lg={12} md={12} sm={12} xs={24}>
               <div className="gx-mb-3">Customer</div>
+              {currentTicket.assigned_by ?
               <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
                 {currentTicket.assigned_by.avatar ?
                   <Avatar className="gx-mr-3 gx-size-50" src={currentTicket.assigned_by.avatar.src}/> :
@@ -161,7 +162,7 @@ class TicketDetail extends Component {
                     </Tag>
                   </div>
                 </div>
-              </div>
+              </div> : null}
             </Col>
           </Row>
         </Widget>

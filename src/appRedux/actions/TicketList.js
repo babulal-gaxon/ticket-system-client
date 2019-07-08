@@ -20,7 +20,7 @@ export const onGetTickets = (currentPage, itemsPerPage, filterText, startDate, e
                              selectedPriorities, selectedStatuses, sortingParam, archive) => {
   const start = startDate ? moment(startDate).format("YYYY/MM/DD") : '';
   const end = endDate ? moment(endDate).format("YYYY/MM/DD") : '';
-  console.log("start date", end);
+  console.log("selectedCustomers", selectedCustomers);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get('/tickets', {
@@ -210,7 +210,7 @@ export const onGetFormDetails = () => {
     axios.get(`/tickets/support/form/options`).then(({data}) => {
       console.log("on get ticket form: ", data);
       if (data.success) {
-        console.log(" in success o formDetail", data.data)
+        console.log(" in success o formDetail", data.data);
         dispatch({type: GET_FORM_DETAILS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
       } else {
