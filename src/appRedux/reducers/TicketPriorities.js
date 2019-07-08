@@ -17,8 +17,8 @@ export default (state = initialState, action) => {
     case GET_TICKET_PRIORITIES:
       return {
         ...state,
-        priorities: action.payload.items,
-        totalItems: action.payload.paginate.total
+        priorities: action.payload.data,
+        totalItems: action.payload.meta.total
       };
 
     case ADD_TICKET_PRIORITY:

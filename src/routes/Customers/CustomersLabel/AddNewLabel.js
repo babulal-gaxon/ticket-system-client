@@ -1,32 +1,33 @@
 import React, {Component} from 'react';
-import {Button, Form, Input, Modal, Radio} from "antd";
+import {Button, Form, Input, Modal, Radio} from "antd/lib/index";
+
+const {TextArea} = Input;
 
 class AddNewLabel extends Component {
   constructor(props) {
     super(props);
-    if (this.props.labelEditId === 0) {
+    if (this.props.labelId === 0) {
       this.state = {
         name: "",
         desc: "",
         status: 1,
       };
     } else {
-      const selectedLabel = this.props.labelList.find((label) => label.id === this.props.labelEditId);
+      const selectedLabel = this.props.labelList.find(label => label.id === this.props.labelId);
       this.state = {...selectedLabel};
     }
   }
 
   onSaveData = () => {
-    if (this.props.labelEditId === 0) {
+    if (this.props.labelId === 0) {
       this.props.onAddLabelsData({...this.state});
     } else {
       this.props.onEditLabelsData({...this.state});
     }
-    this.props.onSetID();
-    this.props.onModalState();
+    this.props.onToggleModalState();
   };
 
-  check = () => {
+  onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
         this.onSaveData();
@@ -36,32 +37,25 @@ class AddNewLabel extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {visible} = this.props;
-    const {name, desc} = this.state;
+    const {showAddLabel, onToggleModalState} = this.props;
+    const {name, desc, status} = this.state;
     return (
-
       <div>
         <Modal
-          title="Add New Label"
-          visible={visible}
-          onCancel={() => {
-            this.props.onModalState();
-            this.props.onSetID()
-          }}
+          visible={showAddLabel}
+          title={this.props.labelId === 0 ? "Add New Label" : "Edit Label Details"}
+          onCancel={() => onToggleModalState()}
           footer={[
-            <Button key="Save" type="primary" onClick={this.check}>
+            <Button key="submit" type="primary" onClick={this.onValidationCheck}>
               Save
             </Button>,
-            <Button key="Cancel" onClick={() => {
-              this.props.onModalState();
-              this.props.onSetID()
-            }}>
+            <Button key="cancel" onClick={() => onToggleModalState()}>
               Cancel
-            </Button>,
-          ]}
-        >
-          <Form layout="vertical" style={{width: "60%"}}>
-            <Form.Item label="Name">{getFieldDecorator('name', {
+            </Button>
+            ]}>
+          <Form layout="vertical">
+            <Form.Item label="Name">
+              {getFieldDecorator('name', {
               initialValue: name,
               rules: [{required: true, message: 'Please input Name!'}],
             })(<Input type="text" placeholder="Name" onChange={(e) => {
@@ -71,14 +65,14 @@ class AddNewLabel extends Component {
             <Form.Item label="Description">{getFieldDecorator('description', {
               initialValue: desc,
               rules: [{required: true, message: 'Please input Description!'}],
-            })(<Input type="text" placeholder="Description" onChange={(e) => {
+            })(<TextArea rows={4} onChange={(e) => {
               this.setState({desc: e.target.value})
             }}/>)}
             </Form.Item>
             <Form.Item label={"Set Priority"}>
-              <Radio.Group onChange={(e) => {
+              <Radio.Group value={status} onChange={(e) => {
                 this.setState({status: e.target.value})
-              }} value={this.state.status}>
+              }}>
                 <Radio value={1}>Active</Radio>
                 <Radio value={0}>Disabled</Radio>
               </Radio.Group>

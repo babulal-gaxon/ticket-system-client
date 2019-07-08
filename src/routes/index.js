@@ -9,13 +9,10 @@ const App = ({match}) => (
             <Route path={`${match.url}dashboard`} component={asyncComponent(() => import('./Dashboard'))}/>
             <Route path={`${match.url}manage-tickets`} component={asyncComponent(() => import('./ManageTickets'))}/>
             <Route path={`${match.url}staff`} component={asyncComponent(() => import('./Staff'))}/>
-            <Route path={`${match.url}ticket-system`} component={asyncComponent(() => import('./TicketSystem'))}/>
             <Route path={`${match.url}roles-permissions`}component={asyncComponent(() => import('./RolesAndPermissions'))}/>
             <Route path={`${match.url}customers`} component={asyncComponent(() => import('./Customers'))}/>
             <Route path={`${match.url}setup`} component={asyncComponent(() => import('./SetUp'))}/>
             <Route path={`${match.url}settings`} component={asyncComponent(() => import('./Settings'))}/>
-            <Route path={`${match.url}services`} component={asyncComponent(() => import('./Services'))}/>
-            <Route path={`${match.url}products`} component={asyncComponent(() => import('./Products'))}/>
         </Switch>
     </div>
 );

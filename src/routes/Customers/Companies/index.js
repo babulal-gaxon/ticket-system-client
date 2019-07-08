@@ -29,27 +29,22 @@ class Companies extends Component {
       selectedCompanies: [],
       companyId: 0,
       showAddNewModal: false
-    }
+    };
+    this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
   }
-
-  componentWillMount() {
-    this.onGetPaginatedData(this.state.current, this.state.itemNumbers);
-  };
 
   onToggleAddCompany = () => {
     this.setState({showAddNewModal: !this.state.showAddNewModal})
   };
 
-  onGetPaginatedData = (currentPage, itemsPerPage) => {
-    this.props.onGetCompaniesData(currentPage, itemsPerPage);
-  };
-
-  onFilterData = () => {
-    return this.props.companiesList.filter(company => company.company_name.indexOf(this.state.filterText) !== -1);
+  onGetPaginatedData = (currentPage, itemsPerPage, filterText) => {
+    this.props.onGetCompaniesData(currentPage, itemsPerPage, filterText);
   };
 
   onFilterTextChange = (e) => {
-    this.setState({filterText: e.target.value})
+    this.setState({filterText: e.target.value}, () => {
+      this.onGetPaginatedData(1, this.state.itemNumbers, this.state.filterText);
+    })
   };
 
   onSelectChange = selectedRowKeys => {
@@ -58,7 +53,7 @@ class Companies extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers)
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText)
     });
   };
 
@@ -66,7 +61,7 @@ class Companies extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1}, () => {
-        this.onGetPaginatedData(this.state.current, this.state.itemNumbers)
+        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -76,7 +71,7 @@ class Companies extends Component {
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
       this.setState({current: this.state.current - 1}, () => {
-        this.onGetPaginatedData(this.state.current, this.state.itemNumbers)
+        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -163,9 +158,8 @@ class Companies extends Component {
           <Popconfirm
             title="Are you sure to delete this Company?"
             onConfirm={() => {
-              this.props.onDeleteCompanies({ids: [companyId]},
-                this.props.onGetCompaniesData, this.state.current, this.state.itemNumbers);
-              this.onGetPaginatedData(this.state.current, this.state.itemNumbers);
+              this.props.onDeleteCompanies({ids: [companyId]});
+              this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
             }}
             okText="Yes"
             cancelText="No">
@@ -190,7 +184,7 @@ class Companies extends Component {
             ids: this.state.selectedCompanies
           };
           this.props.onDeleteCompanies(obj);
-          this.onGetPaginatedData(this.state.currentPage, this.state.itemNumbers);
+          this.onGetPaginatedData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
           this.setState({selectedRowKeys: [], selectedCustomers: []});
         }
       })
@@ -221,7 +215,7 @@ class Companies extends Component {
 
   onPageChange = page => {
     this.setState({current: page}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers)
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText)
     });
   };
 
@@ -234,7 +228,7 @@ class Companies extends Component {
   };
 
   render() {
-    const companiesList = this.onFilterData();
+    const companiesList = this.props.companiesList;
     const selectedRowKeys = this.state.selectedRowKeys;
     let ids;
     const rowSelection = {
@@ -269,7 +263,7 @@ class Companies extends Component {
             <div className="gx-d-flex">
               <Search
                 placeholder="Search Companies here"
-                style={{width: 200}}
+                style={{width: 350}}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
               <div className="gx-ml-3">

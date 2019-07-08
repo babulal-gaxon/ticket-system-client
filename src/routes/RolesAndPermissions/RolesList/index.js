@@ -41,7 +41,7 @@ class RolesList extends Component {
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText);
+      this.onGetRolesData(1, this.state.itemNumbers, this.state.filterText);
     })
   };
 
@@ -105,7 +105,7 @@ class RolesList extends Component {
         dataIndex: 'lastUpdate',
         key: 'lastUpdate',
         render: (text, record) => {
-          return <span className="gx-text-grey">{moment(record.updated_at).format('LL')}</span>
+          return <span className="gx-text-grey">{moment(record.updated_at.date).format('LL')}</span>
         },
       },
       {
@@ -131,11 +131,12 @@ class RolesList extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <span> {Permissions.canRoleEdit() ? <i className="icon icon-edit gx-mr-3" onClick={() => {
+          return <div> {!record.is_locked ?<span>{Permissions.canRoleEdit() ? <i className="icon icon-edit gx-mr-3" onClick={() => {
             this.props.onGetRoleDetail(record.id, this.props.history);
           }}/> : null}
             {Permissions.canRoleDelete() ? this.onDeletePopUp(record.id) : null}
-          </span>
+          </span> : null}
+          </div>
         },
       },
     ];

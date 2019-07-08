@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd/lib/index";
 import {connect} from "react-redux";
 
 import {
@@ -11,7 +11,7 @@ import {
   onGetCannedResponses
 } from "../../../appRedux/actions/CannedResponses";
 import AddNewResponses from "./AddNewResponses";
-import Widget from "../../../components/Widget/index";
+import Widget from "../../../components/Widget";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
@@ -34,7 +34,7 @@ class CannedResponses extends Component {
       showAddCanned: false,
       selectedResponses: []
     };
-    this.onGetResponseData(this.state.current, this.state.itemNumbers)
+    this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
   };
 
   onGetResponseData = (currentPage, itemsPerPage, filterData) => {
@@ -51,7 +51,7 @@ class CannedResponses extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1}, () => {
-        this.onGetResponseData(this.state.current, this.state.itemNumbers)
+        this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -61,7 +61,7 @@ class CannedResponses extends Component {
   onCurrentDecrement = () => {
     if (this.state.current > 1) {
       this.setState({current: this.state.current - 1}, () => {
-        this.onGetResponseData(this.state.current, this.state.itemNumbers)
+        this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -74,7 +74,7 @@ class CannedResponses extends Component {
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      this.onGetResponseData(1, this.state.itemNumbers, this.state.filterText)
     })
   };
 
@@ -133,7 +133,7 @@ class CannedResponses extends Component {
             ids: this.state.selectedResponses
           };
           this.props.onBulkDeleteResponses(obj);
-          this.onGetResponseData(this.state.current, this.state.itemNumbers);
+          this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText);
           this.setState({selectedRowKeys: [], selectedResponses: []});
         }
       })
@@ -234,8 +234,8 @@ class CannedResponses extends Component {
     return <Popconfirm
       title="Are you sure to delete this Response?"
       onConfirm={() => {
-        this.props.onBulkDeleteResponses({ids: [recordId]})
-        this.onGetResponseData(this.state.current, this.state.itemNumbers)
+        this.props.onBulkDeleteResponses({ids: [recordId]});
+        this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
       }}
       okText="Yes"
       cancelText="No">
@@ -245,7 +245,7 @@ class CannedResponses extends Component {
 
   onPageChange = page => {
     this.setState({current: page}, () => {
-      this.onGetResponseData(this.state.current, this.state.itemNumbers)
+      this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
     });
   };
 
@@ -259,7 +259,7 @@ class CannedResponses extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetResponseData(this.state.current, this.state.itemNumbers)
+      this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
     })
   };
 

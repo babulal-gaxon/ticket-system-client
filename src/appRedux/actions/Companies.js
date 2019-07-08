@@ -8,10 +8,16 @@ import {
   GET_COMPANY_DATA
 } from "../../constants/Companies";
 
-export const onGetCompaniesData = (currentPage, itemsPerPage) => {
+export const onGetCompaniesData = (currentPage, itemsPerPage, filterData) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get(`/setup/customer/companies?page=${currentPage}&per_page=${itemsPerPage}`
+    axios.get(`/setup/customer/companies`, {
+      params: {
+        page: currentPage,
+        per_page: itemsPerPage,
+        search: filterData
+      }
+      }
     ).then(({data}) => {
       console.info("onGetCompaniesData: ", data);
       if (data.success) {

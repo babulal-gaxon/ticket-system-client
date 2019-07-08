@@ -12,11 +12,17 @@ import {
 } from "../../constants/Customers";
 
 
-export const onGetCustomersData = (currentPage, itemsPerPage) => {
+export const onGetCustomersData = (currentPage, itemsPerPage, filterData) => {
   console.log("currentPage", currentPage)
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get(`/setup/customers?page=${currentPage}&per_page=${itemsPerPage}`
+    axios.get(`/setup/customers`, {
+      params: {
+        page: currentPage,
+        per_page: itemsPerPage,
+        search: filterData
+      }
+      }
     ).then(({data}) => {
       console.info("onGetCustomersData: ", data);
       if (data.success) {

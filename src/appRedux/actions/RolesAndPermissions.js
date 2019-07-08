@@ -23,7 +23,7 @@ export const onGetRoles = (currentPage, itemsPerPage, filterText) => {
       console.info("onGetRoles: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_ROLES, payload: data.data});
+        dispatch({type: GET_ROLES, payload: data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }

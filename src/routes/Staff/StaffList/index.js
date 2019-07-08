@@ -32,12 +32,12 @@ class StaffList extends Component {
       currentMember: null,
       selectedStaff: []
     };
-    this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers);
+    this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
   };
 
-  onGetStaffDataPaginated = (currentPage, itemsPerPage) => {
+  onGetStaffDataPaginated = (currentPage, itemsPerPage, filterText) => {
     if (Permissions.canStaffView()) {
-      this.props.onGetStaff(currentPage, itemsPerPage);
+      this.props.onGetStaff(currentPage, itemsPerPage, filterText);
     }
   };
 
@@ -46,7 +46,7 @@ class StaffList extends Component {
     if (this.state.currentPage < pages) {
       this.setState({currentPage: this.state.currentPage + 1},
         () => {
-          this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)
+          this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
         });
     } else {
       return null;
@@ -57,7 +57,7 @@ class StaffList extends Component {
     if (this.state.currentPage > 1) {
       this.setState({currentPage: this.state.currentPage - 1},
         () => {
-          this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)
+          this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
         });
     } else {
       return null;
@@ -69,7 +69,9 @@ class StaffList extends Component {
   };
 
   onFilterTextChange = (e) => {
-    this.setState({filterText: e.target.value})
+    this.setState({filterText: e.target.value}, () => {
+      this.onGetStaffDataPaginated(1, this.state.itemNumbers, this.state.filterText)
+    })
   };
 
   onAddButtonClick = () => {
@@ -77,12 +79,6 @@ class StaffList extends Component {
     this.props.history.push('/staff/add-new-member')
   };
 
-  onFilterData = () => {
-    return this.props.staffList.filter(staff => {
-      const name = staff.first_name + " " + staff.last_name;
-      return (name.indexOf(this.state.filterText) !== -1) ? staff : null
-    });
-  };
 
   onShowBulkDeleteConfirm = () => {
     if (this.state.selectedStaff.length !== 0) {
@@ -235,7 +231,7 @@ class StaffList extends Component {
               title="Are you sure to delete this Staff?"
               onConfirm={() => {
                 this.props.onBulkDeleteStaff({ids: [staffId]});
-                this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)
+                this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
               }}
               okText="Yes"
               cancelText="No">
@@ -260,7 +256,7 @@ class StaffList extends Component {
     this.setState({
       currentPage: page,
     }, () => {
-      this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)
+      this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
     });
   };
 
@@ -274,7 +270,7 @@ class StaffList extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers)
+      this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
     })
   };
 
@@ -284,7 +280,7 @@ class StaffList extends Component {
 
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;
-    const staffList = this.onFilterData();
+    const staffList = this.props.staffList;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {

@@ -17,8 +17,8 @@ export default (state = initialState, action) => {
     case GET_TICKET_STATUSES:
       return {
         ...state,
-        statuses: action.payload.items,
-        totalItems: action.payload.paginate.total
+        statuses: action.payload.data,
+        totalItems: action.payload.meta.total
       };
 
     case ADD_TICKET_STATUS:

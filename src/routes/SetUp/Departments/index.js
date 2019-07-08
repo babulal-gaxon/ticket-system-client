@@ -1,9 +1,9 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd/lib/index";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
-import Widget from "../../../components/Widget/index";
+import Widget from "../../../components/Widget";
 import {
   onAddDepartment,
   onBulkActiveDepartments,
@@ -34,7 +34,7 @@ class Departments extends Component {
       showAddDepartment: false,
       selectedDepartments: []
     };
-    this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
+    this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
   };
 
   onGetDepartmentData = (currentPage, itemsPerPage, filterData) => {
@@ -51,7 +51,7 @@ class Departments extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.currentPage < pages) {
       this.setState({currentPage: this.state.currentPage + 1}, () => {
-        this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers)
+        this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -61,7 +61,7 @@ class Departments extends Component {
   onCurrentDecrement = () => {
     if (this.state.currentPage > 1) {
       this.setState({currentPage: this.state.currentPage - 1}, () => {
-        this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers)
+        this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -69,8 +69,9 @@ class Departments extends Component {
   };
 
   onFilterTextChange = (e) => {
-    this.setState({filterText: e.target.value});
-    this.onGetDepartmentData(1, this.state.itemNumbers, e.target.value)
+    this.setState({filterText: e.target.value}, () => {
+      this.onGetDepartmentData(1, this.state.itemNumbers, this.state.filterText)
+    })
   };
 
   onSelectChange = selectedRowKeys => {
@@ -99,7 +100,7 @@ class Departments extends Component {
       })
     } else {
       confirm({
-        title: "Please Select Roles first",
+        title: "Please Select Labels first",
       })
     }
   };
@@ -222,7 +223,7 @@ class Departments extends Component {
         title="Are you sure to delete this Department?"
         onConfirm={() => {
           this.props.onBulkDeleteDepartments({ids: [recordId]});
-          this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers);
+          this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
         }}
         okText="Yes"
         cancelText="No">
@@ -241,13 +242,13 @@ class Departments extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, currentPage: 1}, () => {
-      this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers)
+      this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
     })
   };
 
   onPageChange = page => {
     this.setState({currentPage: page}, () => {
-      this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers)
+      this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
     });
   };
 
@@ -309,8 +310,6 @@ class Departments extends Component {
                    showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
                    onChange: this.onPageChange
                  }}/>
-          <div className="gx-d-flex gx-flex-row">
-          </div>
         </Widget>
         <InfoView/>
         {this.state.showAddDepartment ?

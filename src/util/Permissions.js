@@ -281,6 +281,35 @@ class Permissions {
     }
     return false;
   };
+
+  //Label Permissions
+  static canLabelAdd = () => {
+    if (this.permissions.labels) {
+      return this.permissions.labels.filter((key) => key.name === "labels.store").length > 0
+    }
+    return false;
+  };
+
+  static canLabelEdit = () => {
+    if (this.permissions.labels) {
+      return this.permissions.labels.filter((key) => key.name === "labels.update").length > 0
+    }
+    return false;
+  };
+
+  static canLabelView = () => {
+    if (this.permissions.labels) {
+      return this.permissions.labels.filter((key) => key.name === "labels.index").length > 0
+    }
+    return false;
+  };
+
+  static canLabelDelete = () => {
+    if (this.permissions.labels) {
+      return this.permissions.labels.filter((key) => key.name === "labels.destroy").length > 0
+    }
+    return false;
+  };
 }
 
 

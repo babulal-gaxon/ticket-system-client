@@ -11,13 +11,15 @@ import {
 } from "../../constants/SupportStaff";
 
 
-export const onGetStaff = (currentPage, itemsPerPage) => {
+export const onGetStaff = (currentPage, itemsPerPage, filterText) => {
+  console.log("filterText", filterText)
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get(`/setup/staffs`, {
       params: {
         page: currentPage,
-        per_page: itemsPerPage
+        per_page: itemsPerPage,
+        search: filterText
       }
     }).then(({data}) => {
       console.info("onGetStaff: ", data);

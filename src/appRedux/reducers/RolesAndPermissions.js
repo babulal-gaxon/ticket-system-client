@@ -20,8 +20,8 @@ export default (state = initialState, action) => {
     case GET_ROLES:
       return {
         ...state,
-        roles: action.payload.items,
-        totalItems: action.payload.paginate.total
+        roles: action.payload.data,
+        totalItems: action.payload.meta.total
       };
 
     case NULLIFY_SELECTED_ROLE:

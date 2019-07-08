@@ -16,8 +16,8 @@ import moment from "moment";
 
 
 
-export const onGetTickets = (currentPage, itemsPerPage, filterText, startDate, endDate, selectedStaff, selectedCustomers,
-                             selectedPriorities, selectedStatuses, sortingParam, archive) => {
+export const onGetTickets = (currentPage, itemsPerPage, filterText, sortingParam, startDate, endDate, selectedStaff,
+                             selectedCustomers, selectedPriorities, selectedStatuses, archive) => {
   const start = startDate ? moment(startDate).format("YYYY/MM/DD") : '';
   const end = endDate ? moment(endDate).format("YYYY/MM/DD") : '';
   console.log("selectedCustomers", selectedCustomers);

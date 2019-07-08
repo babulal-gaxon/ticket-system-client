@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd/lib/index";
 import {connect} from "react-redux";
 import {
   onAddTicketPriority,
@@ -10,7 +10,7 @@ import {
   onGetTicketPriorities
 } from "../../../appRedux/actions/TicketPriorities";
 
-import Widget from "../../../components/Widget/index";
+import Widget from "../../../components/Widget";
 import AddNewPriority from "./AddNewPriority";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
@@ -71,7 +71,7 @@ class TicketPriorities extends Component {
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      this.onGetPriorityData(1, this.state.itemNumbers, this.state.filterText)
     });
   };
 

@@ -1,49 +1,48 @@
 import React, {Component} from 'react';
-import {Avatar, Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
-import Widget from "../../components/Widget";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd/lib/index";
+import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
-import InfoView from "../../components/InfoView";
+import InfoView from "../../../components/InfoView";
+import AddNewService from "./AddNewService";
 import {connect} from "react-redux";
-import PropTypes from "prop-types";
-import AddNewProduct from "./AddNewProduct";
 import {
-  onAddProduct,
-  onAddProductLogo,
-  onBulkActiveProducts,
-  onBulkDisableProducts,
-  onDeleteProduct,
-  onEditProduct,
-  onGetProductsList
-} from "../../appRedux/actions/Products";
-import Permissions from "../../util/Permissions";
+  onAddService,
+  onBulkActiveServices,
+  onBulkDisableServices,
+  onDeleteServices,
+  onEditService,
+  onGetServicesList
+} from "../../../appRedux/actions/Services";
+import PropTypes from "prop-types";
+import Permissions from "../../../util/Permissions";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
 const Search = Input.Search;
 const confirm = Modal.confirm;
 
-class Products extends Component {
+class Services extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      productId: 0,
+      serviceId: 0,
       filterText: "",
       itemNumbers: 10,
       currentPage: 1,
       showAddModal: false,
-      selectedProducts: []
+      selectedServices: []
     };
-    this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
+    this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
   };
 
-  onGetProductsData = (currentPage, itemNumbers, searchText) => {
-    if (Permissions.canProductView()) {
-      this.props.onGetProductsList(currentPage, itemNumbers, searchText);
+  onGetServicesData = (currentPage, itemNumbers, searchText) => {
+    if (Permissions.canServiceView()) {
+      this.props.onGetServicesList(currentPage, itemNumbers, searchText);
     }
   };
 
-  onToggleAddProduct = () => {
+  onToggleAddService = () => {
     this.setState({showAddModal: !this.state.showAddModal})
   };
 
@@ -51,7 +50,7 @@ class Products extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.currentPage < pages) {
       this.setState({currentPage: this.state.currentPage + 1}, () => {
-        this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+        this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -59,9 +58,9 @@ class Products extends Component {
   };
 
   onCurrentDecrement = () => {
-    if (this.state.currentPage > 0) {
+    if (this.state.currentPage > 1) {
       this.setState({currentPage: this.state.currentPage - 1}, () => {
-        this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+        this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -70,7 +69,7 @@ class Products extends Component {
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetProductsData(1, this.state.itemNumbers, this.state.filterText)
+      this.onGetServicesData(1, this.state.itemNumbers, this.state.filterText)
     });
   };
 
@@ -79,47 +78,47 @@ class Products extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({productId: 0, showAddModal: true});
+    this.setState({serviceId: 0, showAddModal: true});
   };
 
-  onEditProduct = (id) => {
-    this.setState({productId: id, showAddModal: true});
+  onEditIconClick = (id) => {
+    this.setState({serviceId: id, showAddModal: true});
   };
 
   onShowBulkActiveConfirm = () => {
-    if (this.state.selectedProducts.length !== 0) {
+    if (this.state.selectedServices.length !== 0) {
       confirm({
-        title: "Are you sure to change the status of selected Product(s) to ACTIVE?",
+        title: "Are you sure to change the Support status of selected Service(s) to Enable?",
         onOk: () => {
           const obj = {
-            ids: this.state.selectedProducts
+            ids: this.state.selectedServices
           };
-          this.props.onBulkActiveProducts(obj);
-          this.setState({selectedRowKeys: [], selectedProducts: []})
-        }
+          this.props.onBulkActiveServices(obj);
+          this.setState({selectedRowKeys: [], selectedServices: []})
+        },
       })
     } else {
       confirm({
-        title: "Please Select Product(s) first",
+        title: "Please Select Service(s) first",
       })
     }
   };
 
   onShowBulkDisableConfirm = () => {
-    if (this.state.selectedProducts.length !== 0) {
+    if (this.state.selectedServices.length !== 0) {
       confirm({
-        title: "Are you sure to change the status of selected Product(s) to Disabled?",
+        title: "Are you sure to change the Support status of selected Services(s) to Disabled?",
         onOk: () => {
           const obj = {
-            ids: this.state.selectedProducts
+            ids: this.state.selectedServices
           };
-          this.props.onBulkDisableProducts(obj);
-          this.setState({selectedRowKeys: [], selectedProducts: []})
+          this.props.onBulkDisableServices(obj);
+          this.setState({selectedRowKeys: [], selectedServices: []})
         },
       })
     } else {
       confirm({
-        title: "Please Select Product(s) first",
+        title: "Please Select Service(s) first",
       })
     }
   };
@@ -127,11 +126,11 @@ class Products extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
-        {(Permissions.canProductEdit()) ?
+        {(Permissions.canServiceEdit()) ?
           <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
             Active
           </Menu.Item> : null}
-        {(Permissions.canProductEdit()) ?
+        {(Permissions.canServiceEdit()) ?
           <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
             Disable
           </Menu.Item> : null}
@@ -147,20 +146,12 @@ class Products extends Component {
   onGetTableColumns = () => {
     return [
       {
-        title: 'Product Name',
-        dataIndex: 'productName',
+        title: 'Title',
+        dataIndex: 'title',
+        key: 'title',
         render: (text, record) => {
-          return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
-              {record.avatar ?
-                <Avatar className="gx-mr-3 gx-size-80" src={record.avatar.src}/> :
-                <Avatar className="gx-mr-3 gx-size-80"
-                        style={{backgroundColor: '#f56a00'}}>{record.title[0].toUpperCase()}</Avatar>}
-              <div className="gx-media-body">
-                <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
-              </div>
-            </div>
-          )
-        }
+          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.title}</span>
+        },
       },
       {
         title: 'Description',
@@ -173,7 +164,7 @@ class Products extends Component {
       {
         title: 'Support',
         dataIndex: 'support_enable',
-        key: 'support',
+        key: 'Support',
         render: (text, record) => {
           return <Tag color={record.support_enable === 1 ? "green" : "red"}>
             {record.support_enable === 1 ? "Enabled" : "Disabled"}
@@ -185,9 +176,9 @@ class Products extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <span> {(Permissions.canProductEdit()) ?
-            <i className="icon icon-edit gx-mr-3" onClick={() => this.onEditProduct(record.id)}/> : null}
-            {(Permissions.canProductDelete()) ? this.onDeletePopUp(record.id) : null}
+          return <span>  {(Permissions.canServiceEdit()) ?
+            <i className="icon icon-edit gx-mr-3" onClick={() => this.onEditIconClick(record.id)}/> : null}
+            {(Permissions.canServiceDelete()) ? this.onDeletePopUp(record.id) : null}
           </span>
         },
       },
@@ -197,9 +188,9 @@ class Products extends Component {
   onDeletePopUp = (recordId) => {
     return (
       <Popconfirm
-        title="Are you sure to delete this Product?"
+        title="Are you sure to delete this Service?"
         onConfirm={() => {
-          this.props.onDeleteProduct(recordId);
+          this.props.onDeleteServices(recordId);
         }}
         okText="Yes"
         cancelText="No">
@@ -218,51 +209,49 @@ class Products extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, currentPage: 1}, () => {
-      this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+      this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
     })
   };
 
   onPageChange = page => {
-    this.setState({
-      currentPage: page
-    }, () => {
-      this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+    this.setState({currentPage: page}, () => {
+      this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
     });
   };
 
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;
-    const productsList = this.props.productsList;
+    const servicesList = this.props.servicesList;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
         const ids = selectedRows.map(selectedRow => {
           return selectedRow.id
         });
-        this.setState({selectedProducts: ids, selectedRowKeys: selectedRowKeys})
+        this.setState({selectedServices: ids, selectedRowKeys: selectedRowKeys})
       }
     };
 
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-font-weight-bold">Products</h4>
+          <h4 className="gx-font-weight-bold">Services</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item className="gx-text-primary">
-              <Link to="/products">Products</Link></Breadcrumb.Item>
+              <Link to="/services">Services</Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
-              {(Permissions.canProductAdd()) ?
+              {(Permissions.canServiceAdd()) ?
                 <Button type="primary" className="gx-btn-lg" onClick={this.onAddButtonClick}>
-                  Add New Product
+                  Add New Service
                 </Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
                 style={{width: 350}}
-                placeholder="Search Products Here"
+                placeholder=" Enter keywords to search Services"
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
               <div className="gx-ml-3">
@@ -278,8 +267,9 @@ class Products extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={productsList}
-                 className="gx-mb-4" rowKey="products"
+          <Table rowKey="services" rowSelection={rowSelection} columns={this.onGetTableColumns()}
+                 dataSource={servicesList}
+                 className="gx-mb-4"
                  pagination={{
                    pageSize: this.state.itemNumbers,
                    current: this.state.currentPage,
@@ -292,50 +282,43 @@ class Products extends Component {
         </Widget>
         <InfoView/>
         {this.state.showAddModal ?
-          <AddNewProduct showAddModal={this.state.showAddModal}
-                         onToggleAddProduct={this.onToggleAddProduct}
-                         onAddProduct={this.props.onAddProduct}
-                         productId={this.state.productId}
-                         onEditProduct={this.props.onEditProduct}
-                         productsList={productsList}
-                         onAddProductLogo={this.props.onAddProductLogo}
-                         productLogoId={this.props.productLogoId}/> : null}
-
+          <AddNewService showAddModal={this.state.showAddModal}
+                         onToggleAddService={this.onToggleAddService}
+                         onAddService={this.props.onAddService}
+                         serviceId={this.state.serviceId}
+                         onEditService={this.props.onEditService}
+                         servicesList={servicesList}/> : null}
       </div>
     );
   }
 }
 
-const mapStateToProps = ({products}) => {
-  const {productsList, totalItems, productLogoId} = products;
-  return {productsList, totalItems, productLogoId};
+const mapStateToProps = ({services}) => {
+  const {servicesList, totalItems} = services;
+  return {servicesList, totalItems};
 };
 
 export default connect(mapStateToProps, {
-  onGetProductsList,
-  onAddProduct,
-  onEditProduct,
-  onDeleteProduct,
-  onAddProductLogo,
-  onBulkActiveProducts,
-  onBulkDisableProducts
-})(Products);
+  onGetServicesList,
+  onAddService,
+  onEditService,
+  onDeleteServices,
+  onBulkActiveServices,
+  onBulkDisableServices
+})(Services);
 
-Products.defaultProps = {
-  productsList: [],
-  totalItems: null,
-  productLogoId: null
+Services.defaultProps = {
+  servicesList: [],
+  totalItems: null
 };
 
-Products.propTypes = {
-  productsList: PropTypes.array,
+Services.propTypes = {
+  servicesList: PropTypes.array,
   totalItems: PropTypes.number,
-  productLogoId: PropTypes.number,
-  onGetProductsList: PropTypes.func,
-  onAddProduct: PropTypes.func,
-  onEditProduct: PropTypes.func,
-  onDeleteProduct: PropTypes.func,
-  onAddProductLogo: PropTypes.func,
-  onBulkActiveProducts: PropTypes.func,
-  onBulkDisableProducts: PropTypes.func
+  onGetServicesList: PropTypes.func,
+  onAddService: PropTypes.func,
+  onEditService: PropTypes.func,
+  onDeleteServices: PropTypes.func,
+  onBulkActiveServices: PropTypes.func,
+  onBulkDisableServices: PropTypes.func
 };

@@ -39,13 +39,13 @@ class AllCustomers extends Component {
   }
 
   componentWillMount() {
-    this.onGetPaginatedData(this.state.current, this.state.itemNumbers);
+    this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
     this.props.onGetCompaniesData();
     this.props.onGetLabelData();
   }
 
-  onGetPaginatedData = (currentPage, itemsPerPage) => {
-    this.props.onGetCustomersData(currentPage, itemsPerPage);
+  onGetPaginatedData = (currentPage, itemsPerPage, filterText) => {
+    this.props.onGetCustomersData(currentPage, itemsPerPage, filterText);
   };
 
   onSideBarShow = () => {
@@ -82,7 +82,9 @@ class AllCustomers extends Component {
   };
 
   onFilterTextChange = (e) => {
-    this.setState({filterText: e.target.value})
+    this.setState({filterText: e.target.value}, () => {
+      this.onGetPaginatedData(1, this.state.itemNumbers, this.state.filterText)
+    })
   };
 
   onSelectChange = selectedRowKeys => {
@@ -91,7 +93,7 @@ class AllCustomers extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers)
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText)
     });
 
   };
@@ -100,7 +102,7 @@ class AllCustomers extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1}, () => {
-        this.onGetPaginatedData(this.state.current, this.state.itemNumbers)
+        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -110,7 +112,7 @@ class AllCustomers extends Component {
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
       this.setState({current: this.state.current - 1}, () => {
-        this.onGetPaginatedData(this.state.current, this.state.itemNumbers)
+        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText)
       });
     } else {
       return null;
@@ -229,7 +231,7 @@ class AllCustomers extends Component {
             title="Are you sure to delete this Customer?"
             onConfirm={() => {
               this.props.onDeleteCustomers({ids: [customerId]});
-              this.onGetPaginatedData(this.state.current, this.state.itemNumbers);
+              this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
             }}
             okText="Yes"
             cancelText="No">
@@ -268,7 +270,7 @@ class AllCustomers extends Component {
             ids: this.state.selectedCustomers
           };
           this.props.onDeleteCustomers(obj);
-          this.onGetPaginatedData(this.state.currentPage, this.state.itemNumbers);
+          this.onGetPaginatedData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
           this.setState({selectedRowKeys: [], selectedCustomers: []});
         }
       })
@@ -299,7 +301,7 @@ class AllCustomers extends Component {
 
   onPageChange = page => {
     this.setState({current: page}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers)
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText)
     });
   };
 
@@ -347,7 +349,6 @@ class AllCustomers extends Component {
   };
 
   onLabelSelectOption = () => {
-    console.log("label list", this.props.labelList)
     const labelOptions = [];
     this.props.labelList.map(label => {
       return labelOptions.push(<Option value={label.id} key={label.id}>{label.name}</Option>)
@@ -360,7 +361,7 @@ class AllCustomers extends Component {
   };
 
   onLabelRemove = (value) => {
-    const updatedLabels = this.state.selectedLabels.filter(label => label !== value)
+    const updatedLabels = this.state.selectedLabels.filter(label => label !== value);
     this.setState({selectedLabels: updatedLabels})
   };
 
@@ -415,7 +416,7 @@ class AllCustomers extends Component {
                   placeholder="Search Customers Here"
                   value={this.state.filterText}
                   onChange={this.onFilterTextChange}
-                  style={{width: 200}}/>
+                  style={{width: 350}}/>
                 {this.onGetCustomersShowOptions()}
                 <Button.Group>
                   <Button type="default" onClick={this.onCurrentDecrement}>

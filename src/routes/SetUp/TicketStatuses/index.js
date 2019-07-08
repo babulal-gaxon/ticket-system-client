@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd/lib/index";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -12,7 +12,7 @@ import {
   onGetTicketStatus
 } from "../../../appRedux/actions/TicketStatuses";
 import AddNewStatus from "./AddNewStatus";
-import Widget from "../../../components/Widget/index";
+import Widget from "../../../components/Widget";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
@@ -71,7 +71,7 @@ class TicketStatuses extends Component {
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value} ,() => {
-      this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      this.onGetStatusData(1, this.state.itemNumbers, this.state.filterText)
     })
   };
 
@@ -246,7 +246,7 @@ class TicketStatuses extends Component {
       title="Are you sure to delete this Status?"
       onConfirm={() => {
         this.props.onBulkDeleteStatuses({ids: [recordId]});
-        this.onGetStatusData(this.state.current, this.state.itemNumbers);
+        this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText);
       }}
       okText="Yes"
       cancelText="No">
@@ -258,7 +258,7 @@ class TicketStatuses extends Component {
     this.setState({
       current: page
     }, () => {
-      this.onGetStatusData(this.state.current, this.state.itemNumbers)
+      this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText)
     })
   };
 

@@ -52,20 +52,15 @@ class SidebarContent extends Component {
               theme={themeType === THEME_TYPE_LITE ? 'lite' : 'dark'}
               mode="inline">
 
-                <Menu.Item key="dashboard">
-                  <Link to="/dashboard"><i className="icon icon-dashboard"/>
-                    <IntlMessages id="sidebar.dashboard"/></Link>
-                </Menu.Item>
+              <Menu.Item key="dashboard">
+                <Link to="/dashboard"><i className="icon icon-dashboard"/>
+                  <IntlMessages id="sidebar.dashboard"/></Link>
+              </Menu.Item>
 
 
-                <Menu.Item key="manageTickets">
-                  <Link to="/manage-tickets/all-tickets"><i className="icon icon-widgets"/>
-                    <IntlMessages id="sidebar.dashboard.manage.tickets"/></Link>
-                </Menu.Item>
-
-              <Menu.Item key="allStaffMembers">
-                <Link to="/staff/all-members"><i className="icon icon-customers"/>
-                  <IntlMessages id="sidebar.dashboard.staff"/></Link>
+              <Menu.Item key="manageTickets">
+                <Link to="/manage-tickets/all-tickets"><i className="icon icon-widgets"/>
+                  <IntlMessages id="sidebar.dashboard.manage.tickets"/></Link>
               </Menu.Item>
 
               <SubMenu key="Customers"
@@ -81,53 +76,22 @@ class SidebarContent extends Component {
                   <Link to="/customers/companies"><i className="icon icon-company"/>
                     <IntlMessages id="sidebar.dashboard.companies"/></Link>
                 </Menu.Item>
-              </SubMenu>
-
-              <SubMenu key="Setup"
-                       title={<span><i className="icon icon-setup-outline"/>
-                       <IntlMessages id="sidebar.dashboard.setup"/></span>}>
 
                 <Menu.Item key="customersLabel">
-                  <Link to="/setup/customers-label"><i className="icon icon-tag"/>
+                  <Link to="/customers/labels"><i className="icon icon-tag"/>
                     <IntlMessages id="sidebar.dashboard.customers.label"/></Link>
                 </Menu.Item>
-
               </SubMenu>
 
-              <SubMenu key="TicketSystem"
-                       title={<span><i className="icon icon-ticket-new"/>
-                       <IntlMessages id="sidebar.dashboard.ticket.system"/></span>}>
+              <Menu.Item key="allStaffMembers">
+                <Link to="/staff/all-members"><i className="icon icon-customers"/>
+                  <IntlMessages id="sidebar.dashboard.staff"/></Link>
+              </Menu.Item>
 
-                <Menu.Item key="Departments">
-                  <Link to="/ticket-system/departments"><i className="icon icon-company"/>
-                    <IntlMessages id="sidebar.dashboard.departments"/></Link>
-                </Menu.Item>
-
-                <Menu.Item key="CannedResponses">
-                  <Link to="/ticket-system/canned-responses"><i className="icon icon-chat-bubble"/>
-                    <IntlMessages id="sidebar.dashboard.canned.responses"/></Link>
-                </Menu.Item>
-
-                <Menu.Item key="TicketPriorities">
-                  <Link to="/ticket-system/ticket-priorities"><i className="icon icon-attendance"/>
-                    <IntlMessages id="sidebar.dashboard.ticket.priorities"/></Link>
-                </Menu.Item>
-
-                <Menu.Item key="TicketStatuses">
-                  <Link to="/ticket-system/ticket-statuses"><i className="icon icon-assignment"/>
-                    <IntlMessages id="sidebar.dashboard.ticket.statuses"/></Link>
-                </Menu.Item>
-
-                <Menu.Item key="EmailTemplates">
-                  <Link to="/ticket-system/email-templates"><i className="icon icon-email-template"/>
-                    <IntlMessages id="sidebar.dashboard.email.templates"/></Link>
-                </Menu.Item>
-
-                <Menu.Item key="TicketSettings">
-                  <Link to="/ticket-system/ticket-settings"><i className="icon icon-customizer"/>
-                    <IntlMessages id="sidebar.dashboard.ticket.settings"/></Link>
-                </Menu.Item>
-              </SubMenu>
+              <Menu.Item key="rolesAndPermissions">
+                <Link to="/roles-permissions/all"><i className="icon icon-lock-screen"/>
+                  <IntlMessages id="sidebar.dashboard.roles.and.permissions"/></Link>
+              </Menu.Item>
 
               <SubMenu key="settings"
                        title={<span><i className="icon icon-setting"/>
@@ -152,22 +116,53 @@ class SidebarContent extends Component {
                   <Link to="/settings/customer-panel"><i className="icon icon-customer-panel"/>
                     <IntlMessages id="sidebar.dashboard.customer.panel"/></Link>
                 </Menu.Item>
+
+                <Menu.Item key="TicketSettings">
+                  <Link to="/settings/ticket-settings"><i className="icon icon-customizer"/>
+                    <IntlMessages id="sidebar.dashboard.ticket.settings"/></Link>
+                </Menu.Item>
               </SubMenu>
 
-              <Menu.Item key="rolesAndPermissions">
-                <Link to="/roles-permissions/all"><i className="icon icon-lock-screen"/>
-                  <IntlMessages id="sidebar.dashboard.roles.and.permissions"/></Link>
-              </Menu.Item>
+              <SubMenu key="Setup"
+                       title={<span><i className="icon icon-setup-outline"/>
+                       <IntlMessages id="sidebar.dashboard.setup"/></span>}>
 
-              <Menu.Item key="services">
-                <Link to="/services"><i className="icon icon-message"/>
-                  <IntlMessages id="sidebar.dashboard.services"/></Link>
-              </Menu.Item>
+                <Menu.Item key="Departments">
+                  <Link to="/setup/departments"><i className="icon icon-company"/>
+                    <IntlMessages id="sidebar.dashboard.departments"/></Link>
+                </Menu.Item>
 
-              <Menu.Item key="products">
-                <Link to="/products"><i className="icon icon-product-list"/>
-                  <IntlMessages id="sidebar.dashboard.products"/></Link>
-              </Menu.Item>
+                <Menu.Item key="CannedResponses">
+                  <Link to="/setup/canned-responses"><i className="icon icon-chat-bubble"/>
+                    <IntlMessages id="sidebar.dashboard.canned.responses"/></Link>
+                </Menu.Item>
+
+                <Menu.Item key="TicketPriorities">
+                  <Link to="/setup/ticket-priorities"><i className="icon icon-attendance"/>
+                    <IntlMessages id="sidebar.dashboard.ticket.priorities"/></Link>
+                </Menu.Item>
+
+                <Menu.Item key="TicketStatuses">
+                  <Link to="/setup/ticket-statuses"><i className="icon icon-assignment"/>
+                    <IntlMessages id="sidebar.dashboard.ticket.statuses"/></Link>
+                </Menu.Item>
+
+                <Menu.Item key="EmailTemplates">
+                  <Link to="/setup/email-templates"><i className="icon icon-email-template"/>
+                    <IntlMessages id="sidebar.dashboard.email.templates"/></Link>
+                </Menu.Item>
+
+                <Menu.Item key="services">
+                  <Link to="/setup/services"><i className="icon icon-message"/>
+                    <IntlMessages id="sidebar.dashboard.services"/></Link>
+                </Menu.Item>
+
+                <Menu.Item key="products">
+                  <Link to="/setup/products"><i className="icon icon-product-list"/>
+                    <IntlMessages id="sidebar.dashboard.products"/></Link>
+                </Menu.Item>
+              </SubMenu>
+
 
             </Menu>
 

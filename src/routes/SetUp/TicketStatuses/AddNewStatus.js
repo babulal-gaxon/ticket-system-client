@@ -1,45 +1,23 @@
 import React, {Component} from "react"
-import {Button, Form, Input, Modal, Radio} from "antd";
-import PropTypes from "prop-types";
+import {Button, Checkbox, Form, Input, Modal, Radio} from "antd/lib/index";
 import {SketchPicker} from "react-color";
-import reactCSS from 'reactcss';
+import PropTypes from "prop-types";
+import reactCSS from 'reactcss'
 
-const {TextArea} = Input;
-
-class AddNewPriority extends Component {
+class AddNewStatus extends Component {
   constructor(props) {
     super(props);
-    if (this.props.priorityId === 0) {
+    if (this.props.statusId === 0) {
       this.state = {
         name: "",
-        color_code: "#8D3C3C",
-        desc: "",
         status: 1,
-        value: 1
+        is_default: 1,
+        color_code: "#8D3C3C"
       };
     } else {
-      const selectedPriority = this.props.priorities.find(priority => priority.id === this.props.priorityId);
-      this.state = {
-        ...selectedPriority
-      };
+      const selectedStatus = this.props.statuses.find(status => status.id === this.props.statusId);
+      this.state = {...selectedStatus};
     }
-  };
-
-  onPriorityAdd = () => {
-    if (this.props.priorityId === 0) {
-      this.props.onAddTicketPriority({...this.state});
-      this.props.onToggleAddPriority();
-    } else {
-      this.props.onEditTicketPriority({...this.state});
-      this.props.onToggleAddPriority();
-    }
-  };
-  onValidationCheck = () => {
-    this.props.form.validateFields(err => {
-      if (!err) {
-        this.onPriorityAdd();
-      }
-    });
   };
 
   handleColorClick = () => {
@@ -54,10 +32,35 @@ class AddNewPriority extends Component {
     this.setState({color_code: color.hex})
   };
 
+  onStatusAdd = () => {
+    if (this.props.statusId === 0) {
+      this.props.onAddTicketStatus({...this.state});
+      this.props.onToggleAddStatus();
+    } else {
+      this.props.onEditTicketStatus({...this.state});
+      this.props.onToggleAddStatus();
+    }
+  };
+
+  onValidationCheck = () => {
+    this.props.form.validateFields(err => {
+      if (!err) {
+        this.onStatusAdd();
+      }
+    });
+  };
+  onCheckBoxChange = (e) => {
+    if (e.target.checked) {
+      this.setState({is_default: 1})
+    } else {
+      this.setState({is_default: 0})
+    }
+  };
+
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {name, value, desc, status, color_code} = this.state;
-    const {showAddPriority, onToggleAddPriority} = this.props;
+    const {name, color_code, status, is_default} = this.state;
+    const {showAddStatus, onToggleAddStatus} = this.props;
     const styles = reactCSS({
       'default': {
         color: {
@@ -87,19 +90,17 @@ class AddNewPriority extends Component {
         },
       },
     });
-
-    console.log("this.state.displayColorPicker", this.state.displayColorPicker);
     return (
-      <div>
+      <div className="gx-main-layout-content">
         <Modal
-          visible={showAddPriority}
-          title={this.props.priorityId === 0 ? "Add New Priority" : "Edit Priority Details"}
-          onCancel={onToggleAddPriority}
+          visible={showAddStatus}
+          title={this.props.statusId === 0 ? "Add New Ticket Status" : "Edit Ticket Status Details"}
+          onCancel={onToggleAddStatus}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
               Save
             </Button>,
-            <Button key="cancel" onClick={() => onToggleAddPriority()}>
+            <Button key="cancel" onClick={() => onToggleAddStatus()}>
               Cancel
             </Button>,
           ]}>
@@ -107,10 +108,11 @@ class AddNewPriority extends Component {
             <Form.Item label="Name">
               {getFieldDecorator('name', {
                 initialValue: name,
-                rules: [{required: true, message: 'Please Enter Priority Name!'}],
+                rules: [{required: true, message: 'Please Enter Status Name!'}],
               })(<Input type="text" onChange={(e) => {
                 this.setState({name: e.target.value})
               }}/>)}
+
             </Form.Item>
             <Form.Item label="Color Code">
               <div>
@@ -124,15 +126,10 @@ class AddNewPriority extends Component {
                 </div> : null}
               </div>
             </Form.Item>
-            <Form.Item label="Description">
-              <TextArea rows={4} className="gx-form-control-lg" type="textarea" value={desc} onChange={(e) => {
-                this.setState({desc: e.target.value})
-              }}/>
-            </Form.Item>
-            <Form.Item label="Priority Weight">
-              <Input className="gx-form-control-lg" type="text" value={value} onChange={(e) => {
-                this.setState({value: e.target.value})
-              }}/>
+            <Form.Item>
+              <Checkbox className="gx-form-control-lg" checked={is_default} onChange={this.onCheckBoxChange}>
+                Set as Default
+              </Checkbox>
             </Form.Item>
             <Form.Item label="Status">
               <Radio.Group value={status} onChange={(e) => {
@@ -149,22 +146,22 @@ class AddNewPriority extends Component {
   }
 }
 
-AddNewPriority = Form.create({})(AddNewPriority);
+AddNewStatus = Form.create({})(AddNewStatus);
 
-export default AddNewPriority;
+export default AddNewStatus;
 
 
-AddNewPriority.defaultProps = {
-  priorities: [],
-  priorityId: 0,
-  showAddPriority: true
+AddNewStatus.defaultProps = {
+  statuses: [],
+  statusId: null,
+  showAddStatus: true,
 };
 
-AddNewPriority.propTypes = {
-  priorities: PropTypes.array,
-  priorityId: PropTypes.number,
-  showAddPriority: PropTypes.bool,
-  onToggleAddPriority: PropTypes.func,
-  onAddTicketPriority: PropTypes.func,
-  onEditTicketPriority: PropTypes.func
+AddNewStatus.propTypes = {
+  statuses: PropTypes.array,
+  statusId: PropTypes.number,
+  showAddStatus: PropTypes.bool,
+  onToggleAddStatus: PropTypes.func,
+  onAddTicketStatus: PropTypes.func,
+  onEditTicketStatus: PropTypes.func
 };
