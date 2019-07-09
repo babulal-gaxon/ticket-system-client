@@ -4,13 +4,7 @@ import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
 import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
-import {
-  onAddTickets,
-  onAssignStaffToTicket,
-  onGetFormDetails,
-  onGetTickets,
-  onUpdateTickets
-} from "../../../appRedux/actions/TicketList";
+import {onAddTickets, onGetFormDetails, onGetTickets, onUpdateTickets} from "../../../appRedux/actions/TicketList";
 import {onGetTicketPriorities} from "../../../appRedux/actions/TicketPriorities";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
@@ -31,7 +25,9 @@ class AddNewTicket extends Component {
         user_id: null,
         department_id: null,
         service_id: [],
-        product_id: null
+        product_id: null,
+        assign_to: null,
+        tags:[]
       };
     } else {
       const selectedTicket = this.props.tickets.find(ticket => ticket.id === this.props.ticketId);
@@ -46,12 +42,13 @@ class AddNewTicket extends Component {
         department_id: department_id,
         product_id: product_id,
         user_id: user_id,
-        service_id: service_id
+        service_id: service_id,
+        assign_to: null
       };
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.onGetFormDetails();
     this.props.onGetTickets();
     this.props.onGetTicketPriorities();
@@ -61,6 +58,10 @@ class AddNewTicket extends Component {
 
   onReturnTicketsScreen = () => {
     this.props.history.goBack();
+  };
+
+  onAssignStaff = (id) => {
+    this.setState({assign_to: id})
   };
 
   onAddTicket = () => {
@@ -88,6 +89,10 @@ class AddNewTicket extends Component {
     this.setState({service_id: updatedServiceIds})
   };
 
+  onAddTags = value => {
+    this.setState({tags: value})
+  };
+
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
@@ -105,7 +110,7 @@ class AddNewTicket extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h3>{this.props.ticketId === null ? "Create Ticket" : "Edit Ticket Details"}</h3>
+          <h4 className="gx-font-weight-bold">{this.props.ticketId === null ? "Create Ticket" : "Edit Ticket Details"}</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/manage-tickets/all-tickets">Manage Tickets</Link>
@@ -194,7 +199,10 @@ class AddNewTicket extends Component {
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
               <TicketAssigning staffList={this.props.staffList}
-                               onAssignStaffToTicket={this.props.onAssignStaffToTicket}/>
+                               onAssignStaff={this.onAssignStaff}
+              />
+              <div className="gx-mb-3">Tags</div>
+              <Select mode="tags" style={{ width: '100%' }} placeholder="Type to add tags" onChange={this.onAddTags}/>
             </Col>
           </Row>
         </Widget>
@@ -209,10 +217,10 @@ AddNewTicket = Form.create({})(AddNewTicket);
 
 const mapStateToProps = ({ticketPriorities, supportStaff, ticketList, customers}) => {
   const {priorities} = ticketPriorities;
-  const {tickets, ticketId, formData, assignedStaff} = ticketList;
+  const {tickets, ticketId, formData} = ticketList;
   const {staffList} = supportStaff;
   const {customersList} = customers;
-  return {priorities, staffList, tickets, ticketId, customersList, formData, assignedStaff};
+  return {priorities, staffList, tickets, ticketId, customersList, formData};
 };
 
 export default connect(mapStateToProps, {
@@ -222,8 +230,7 @@ export default connect(mapStateToProps, {
   onGetStaff,
   onUpdateTickets,
   onGetCustomersData,
-  onGetFormDetails,
-  onAssignStaffToTicket
+  onGetFormDetails
 })(AddNewTicket);
 
 

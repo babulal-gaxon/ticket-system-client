@@ -6,12 +6,13 @@ import {
   ADD_CUSTOMER_PANEL_DETAILS,
   ADD_GENERAL_ADDRESS,
   ADD_GENERAL_DETAILS,
-  ADD_LOCALIZATION_DETAILS,
+  ADD_LOCALIZATION_DETAILS, ADD_TICKET_SETTINGS,
   GET_COUNTRIES_LIST,
   GET_CUSTOMER_PANEL_DETAILS,
   GET_GENERAL_ADDRESS,
   GET_GENERAL_DETAILS,
-  GET_LOCALIZATION_DETAILS
+  GET_LOCALIZATION_DETAILS,
+  GET_TICKET_SETTINGS
 } from "../../constants/GeneralSettings";
 
 
@@ -226,6 +227,45 @@ export const onAddCompanyFavicon = (imageFile) => {
         dispatch({type: FETCH_SUCCESS});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onGetTicketSettings = () => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.get("/setup/settings/ticket"
+    ).then(({data}) => {
+      console.info("onGetTicketSettings ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_TICKET_SETTINGS, payload: data.data});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onSaveTicketSettings = (details) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post("/setup/settings/ticket", details
+    ).then(({data}) => {
+      console.info("onSaveTicketSettings ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: ADD_TICKET_SETTINGS, payload: data.data});
+        dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});

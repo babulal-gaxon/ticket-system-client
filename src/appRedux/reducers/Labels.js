@@ -3,10 +3,9 @@ import {
   DELETE_LABEL,
   EDIT_LABEL_DATA,
   GET_LABELS_DATA,
-  STATUS_TO_ACTIVE, STATUS_TO_DISABLED
+  STATUS_TO_ACTIVE,
+  STATUS_TO_DISABLED
 } from "../../constants/Labels";
-import department from "recharts/es6/component/ResponsiveContainer";
-import {BULK_ACTIVE_DEPARTMENTS, BULK_INACTIVE_DEPARTMENTS} from "../../constants/Departments";
 
 const initialState = {
   labelList: [],
@@ -18,8 +17,8 @@ export default (state = initialState, action) => {
     case GET_LABELS_DATA :
       return {
         ...state,
-        labelList: action.payload.items,
-        totalItems: action.payload.paginate.total
+        labelList: action.payload.data,
+        totalItems: action.payload.meta.total
       };
 
     case ADD_LABELS_DATA :

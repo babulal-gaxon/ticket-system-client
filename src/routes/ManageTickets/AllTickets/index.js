@@ -21,7 +21,7 @@ import {Link} from "react-router-dom";
 import TicketDetail from "./TicketDetail";
 import InfoView from "../../../components/InfoView";
 import {
-  getTickedId,
+  getTickedId, onAssignStaffToTicket,
   onDeleteTicket,
   onGetConversationList,
   onGetTickets,
@@ -166,10 +166,19 @@ class AllTickets extends Component {
         dataIndex: 'assignTo',
         key: 'assign_to',
         render: (text, record) => {
-          return (
-            <Tooltip placement="top" title="dummy data">
-              <Avatar className="gx-size-36" src="https://via.placeholder.com/150x150"/>
-            </Tooltip>
+          return (<div>
+              { record.assigned_to.length > 0 ? record.assigned_to.map(assign => {
+                return <Tooltip placement="top" title={assign.first_name + " " + assign.last_name} key={assign.user_id}>
+                  {assign.avatar ?
+                    <Avatar className="gx-mr-3 gx-size-36" src={assign.avatar.src}/> :
+                    <Avatar className="gx-mr-3 gx-size-36"
+                            style={{backgroundColor: '#f56a00'}}>{assign.first_name[0].toUpperCase()}</Avatar>}
+                </Tooltip>
+              }) :
+                <Tooltip placement="top" title="Not assigned">
+                <Avatar className="gx-size-36" />
+                </Tooltip> }
+            </div>
           )
         },
       },
@@ -393,7 +402,11 @@ class AllTickets extends Component {
                           priorities={this.props.priorities}
                           statuses={this.props.statuses}
                           onBackToList={this.onBackToList}
-                          history={this.props.history}/>}
+                          history={this.props.history}
+                          onAssignStaffToTicket={this.props.onAssignStaffToTicket}
+                          staffList={this.props.staffList}
+            />
+          }
           <InfoView/>
         </div>
         {this.state.sideBarActive ?
@@ -434,7 +447,8 @@ export default connect(mapStateToProps, {
   onUpdateTicketStatus,
   onUpdateTicketPriority,
   onGetConversationList,
-  onSendMessage
+  onSendMessage,
+  onAssignStaffToTicket
 })(AllTickets)
 ;
 

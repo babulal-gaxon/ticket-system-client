@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Breadcrumb, Button, Col, Form, Input, Radio, Row, Select} from "antd";
+import {Breadcrumb, Button, Col, Form, Input, Radio, Row, Select, Tag} from "antd";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
 import {connect} from "react-redux";
-import {onAddImage, onAddNewCustomer, onEditCustomer} from "../../../appRedux/actions/Customers";
+import {onAddCustomerAddress, onAddImage, onAddNewCustomer, onEditCustomer} from "../../../appRedux/actions/Customers";
 import {onGetLabelData} from "../../../appRedux/actions/Labels";
 import {onGetCompaniesData} from "../../../appRedux/actions/Companies";
 import AddCustomerAddress from "./AddCustomerAddress";
@@ -27,7 +27,8 @@ class AddNewCustomers extends Component {
         label_ids: [],
         isModalVisible: false,
         status: 1,
-        profile_pic: null
+        profile_pic: null,
+        address: null
       };
     } else {
       const selectedCustomer = this.props.customersList.find(customer => customer.id === this.props.customerId);
@@ -128,6 +129,7 @@ class AddNewCustomers extends Component {
     const {getFieldDecorator} = this.props.form;
     const {phone, status, label_ids, company_id, first_name, last_name, email} = this.state;
     const labelOptions = this.onLabelSelectOption();
+    const customerAddress = this.props.customerAddress;
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -222,7 +224,17 @@ class AddNewCustomers extends Component {
                   <Button type="default" style={{width: "100%", color: "blue"}} onClick={this.onToggleAddressModal}>
                     <i className="icon icon-add-circle gx-mr-1"/>Add New Address</Button>
                 </Form.Item>
+
               </Form>
+              {this.props.customerAddress ?
+              <div className="gx-main-layout-content" style={{width: "60%"}}>
+                <Widget styleName="gx-card-filter">
+                  {customerAddress.address_type.map(type => {
+                    return <Tag color="#108ee9">{type}</Tag>})}
+                  <p>{customerAddress.address_line_1}</p>
+                  <p>{`${customerAddress.city}, ${customerAddress.state} - ${customerAddress.zip_code}`}</p>
+                </Widget>
+              </div> : null}
               <span>
                 <Button type="primary" onClick={this.onValidationCheck}>
                   Save
@@ -243,7 +255,8 @@ class AddNewCustomers extends Component {
         </Widget>
         {this.state.isModalVisible ? <AddCustomerAddress isModalVisible={this.state.isModalVisible}
                                                          onToggleAddressModal={this.onToggleAddressModal}
-                                                         countriesList={this.props.countriesList}/> : null}
+                                                         countriesList={this.props.countriesList}
+                                                         onAddCustomerAddress={this.props.onAddCustomerAddress}/> : null}
         <InfoView/>
       </div>
     )
@@ -253,11 +266,11 @@ class AddNewCustomers extends Component {
 AddNewCustomers = Form.create({})(AddNewCustomers);
 
 const mapStateToProps = ({customers, labelsList, companies, generalSettings}) => {
-  const {customersList, customerId, profilePicId} = customers;
+  const {customersList, customerId, profilePicId, customerAddress} = customers;
   const {labelList} = labelsList;
   const {companiesList} = companies;
   const {countriesList} = generalSettings;
-  return {labelList, customersList, customerId, companiesList, profilePicId, countriesList};
+  return {labelList, customersList, customerId, companiesList, profilePicId, countriesList, customerAddress};
 };
 
 export default connect(mapStateToProps, {
@@ -266,5 +279,6 @@ export default connect(mapStateToProps, {
   onGetLabelData,
   onGetCompaniesData,
   onAddImage,
-  onGetCountriesList
+  onGetCountriesList,
+  onAddCustomerAddress
 })(AddNewCustomers);

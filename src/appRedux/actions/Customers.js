@@ -13,15 +13,14 @@ import {
 
 
 export const onGetCustomersData = (currentPage, itemsPerPage, filterData) => {
-  console.log("currentPage", currentPage)
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get(`/setup/customers`, {
-      params: {
-        page: currentPage,
-        per_page: itemsPerPage,
-        search: filterData
-      }
+        params: {
+          page: currentPage,
+          per_page: itemsPerPage,
+          search: filterData
+        }
       }
     ).then(({data}) => {
       console.info("onGetCustomersData: ", data);
@@ -155,7 +154,7 @@ export const onAddCustomerAddress = (details) => {
   console.log("onAddCustomerAddress", details);
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post('/setup/settings/general/addresses', details).then(({data}) => {
+    axios.post('/setup/customer/address', details).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
         console.log(" sending data", data.data);

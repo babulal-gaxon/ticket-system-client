@@ -99,7 +99,7 @@ class CustomerPanel extends Component {
                 rules: [{required: true, message: 'Please Enter Country!'}],
               })(<Select style={{width: "100%"}} onChange={this.onCountrySelect}>
                 {Object.keys(this.props.countriesList).map(country => {
-                  return <Option value={country}>{this.props.countriesList[country]}</Option>
+                  return <Option value={country} key={country}>{this.props.countriesList[country]}</Option>
                 })}
               </Select>)}
             </Form.Item>
@@ -107,7 +107,7 @@ class CustomerPanel extends Component {
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
                 <p>Allow customer to Register</p>
-                <Switch checked={parseInt(registration_enable)}
+                <Switch checked={!!registration_enable}
                         onChange={(checked) => this.setState({registration_enable: Number(checked)})}/>
               </div>
               <Divider/>
@@ -115,7 +115,7 @@ class CustomerPanel extends Component {
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
                 <p>Require registration confirmation from administrator after customer register</p>
-                <Switch checked={parseInt(register_verification)}
+                <Switch checked={!!register_verification}
                         onChange={(checked) => this.setState({register_verification: Number(checked)})}/>
               </div>
               <Divider/>
@@ -123,7 +123,7 @@ class CustomerPanel extends Component {
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
                 <p>Allow primary contact to view/edit billing & shipping details</p>
-                <Switch checked={parseInt(allow_primary_contact)}
+                <Switch checked={!!allow_primary_contact}
                         onChange={(checked) => this.setState({allow_primary_contact: Number(checked)})}/>
               </div>
               <Divider/>
@@ -131,7 +131,7 @@ class CustomerPanel extends Component {
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
                 <p>Allow contacts to delete own files uploaded from customers area</p>
-                <Switch checked={parseInt(delete_own_files)}
+                <Switch checked={!!delete_own_files}
                         onChange={(checked) => this.setState({delete_own_files: Number(checked)})}/>
               </div>
               <Divider/>

@@ -1,6 +1,7 @@
 import axios from 'util/Api'
 import {
-  ADD_TICKETS, ASSIGN_STAFF_TO_TICKET,
+  ADD_TICKETS,
+  ASSIGN_STAFF_TO_TICKET,
   DELETE_TICKET,
   GET_CONVERSATION_LIST,
   GET_FORM_DETAILS,
@@ -13,7 +14,6 @@ import {
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import {showErrorMessage} from "./Auth";
 import moment from "moment";
-
 
 
 export const onGetTickets = (currentPage, itemsPerPage, filterText, sortingParam, startDate, endDate, selectedStaff,
@@ -226,7 +226,7 @@ export const onGetFormDetails = () => {
 export const onAssignStaffToTicket = (ticketId, staffId) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post(`/tickets/${ticketId}/assign`, staffId).then(({data}) => {
+    axios.post(`/tickets/${ticketId}/assign`, {user_id: staffId}).then(({data}) => {
       console.log("on get Staff assigned: ", data);
       if (data.success) {
         dispatch({type: ASSIGN_STAFF_TO_TICKET, payload: data.data});

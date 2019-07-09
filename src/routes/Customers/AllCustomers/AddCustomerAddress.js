@@ -26,6 +26,15 @@ class AddCustomerAddress extends Component {
     this.setState({country_id: value})
   };
 
+  onValidationCheck = () => {
+    this.props.form.validateFields(err => {
+      if (!err) {
+        this.props.onAddCustomerAddress({...this.state});
+      }
+    });
+    this.props.onToggleAddressModal();
+  };
+
   render() {
     const {getFieldDecorator} = this.props.form;
     const {address_line_1, city, state, country_id, zip_code, address_type} = this.state;
@@ -35,14 +44,14 @@ class AddCustomerAddress extends Component {
           title="Add Address"
           centered
           visible={this.props.isModalVisible}
-          onOk={() => this.props.onToggleAddressModal()}
+          onOk={this.onValidationCheck}
           onCancel={() => this.props.onToggleAddressModal()}>
           <Form layout="vertical">
             <Form.Item label="Address">
               {getFieldDecorator('address_line_1', {
                 initialValue: address_line_1,
                 rules: [{required: true, message: 'Please Enter Address!'}],
-              })(<Input type="text" value={address_line_1} onChange={(e) => {
+              })(<Input type="text" onChange={(e) => {
                 this.setState({address_line_1: e.target.value})
               }}/>)}
             </Form.Item>
@@ -52,7 +61,7 @@ class AddCustomerAddress extends Component {
                   {getFieldDecorator('city', {
                     initialValue: city,
                     rules: [{required: true, message: 'Please Enter City Name!'}],
-                  })(<Input type="text" value={city} onChange={(e) => {
+                  })(<Input type="text" onChange={(e) => {
                     this.setState({city: e.target.value})
                   }}/>)}
                 </Form.Item>
@@ -62,7 +71,7 @@ class AddCustomerAddress extends Component {
                   {getFieldDecorator('state', {
                     initialValue: state,
                     rules: [{required: true, message: 'Please Enter State Name!'}],
-                  })(<Input type="text" value={state} onChange={(e) => {
+                  })(<Input type="text" onChange={(e) => {
                     this.setState({state: e.target.value})
                   }}/>)}
                 </Form.Item>
@@ -86,7 +95,7 @@ class AddCustomerAddress extends Component {
                   {getFieldDecorator('zip_code', {
                     initialValue: zip_code,
                     rules: [{required: true, message: 'Please Enter Zip Code!'}],
-                  })(<Input type="text" value={zip_code} onChange={(e) => {
+                  })(<Input type="text" onChange={(e) => {
                     this.setState({zip_code: e.target.value})
                   }}/>)}
                 </Form.Item>

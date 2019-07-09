@@ -13,6 +13,7 @@ import {
   onUpdateTicketPriority,
   onUpdateTicketStatus
 } from "../../../appRedux/actions/TicketList";
+import TicketAssigning from "../AddNewTicket/TicketAssigning";
 
 const Option = Select.Option;
 const {TextArea} = Input;
@@ -94,22 +95,23 @@ class TicketDetail extends Component {
             </Breadcrumb.Item>
             <Breadcrumb.Item>Tickets</Breadcrumb.Item>
           </Breadcrumb>
+
+          <div className="gx-d-flex">
+            <Select defaultValue={currentTicket.priority_id} onChange={this.onPriorityChange} style={{width: 120}}>
+              {priorities.map(priority => {
+                return <Option value={priority.id} key={priority.name}>{priority.name}</Option>
+              })}
+            </Select>
+            <Select className="gx-mx-3" defaultValue={currentTicket.status_id} style={{width: 120}}
+                    onChange={this.onStatusChange}>
+              {statuses.map(status => {
+                return <Option value={status.id} key={status.name}>{status.name}</Option>
+              })}
+            </Select>
+            {this.onSelectOption()}
+          </div>
           <Row>
             <Col xl={16} lg={12} md={12} sm={12} xs={24}>
-              <div className="gx-d-flex">
-                <Select defaultValue={currentTicket.priority_id} onChange={this.onPriorityChange} style={{width: 120}}>
-                  {priorities.map(priority => {
-                    return <Option value={priority.id} key={priority.name}>{priority.name}</Option>
-                  })}
-                </Select>
-                <Select className="gx-mx-3" defaultValue={currentTicket.status_id} style={{width: 120}}
-                        onChange={this.onStatusChange}>
-                  {statuses.map(status => {
-                    return <Option value={status.id} key={status.name}>{status.name}</Option>
-                  })}
-                </Select>
-                {this.onSelectOption()}
-              </div>
               <div className="gx-mt-4">#{currentTicket.id}</div>
               <h2 className="gx-my-2 gx-font-weight-bold">{currentTicket.title}</h2>
               <div className="gx-mb-3">
@@ -146,23 +148,45 @@ class TicketDetail extends Component {
               </div>
             </Col>
             <Col xl={8} lg={12} md={12} sm={12} xs={24}>
-              <div className="gx-mb-3">Customer</div>
-              {currentTicket.assigned_by ?
-              <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
-                {currentTicket.assigned_by.avatar ?
-                  <Avatar className="gx-mr-3 gx-size-50" src={currentTicket.assigned_by.avatar.src}/> :
-                  <Avatar className="gx-mr-3 gx-size-50"
-                          style={{backgroundColor: '#f56a00'}}>{currentTicket.assigned_by.first_name[0].toUpperCase()}</Avatar>}
-                <div className="gx-media-body gx-mt-2">
+              <div className="gx-justify-content-between gx-ml-5">
+                <div className="gx-mb-3">Customer</div>
+                {currentTicket.assigned_by ?
+                  <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
+                    {currentTicket.assigned_by.avatar ?
+                      <Avatar className="gx-mr-3 gx-size-50" src={currentTicket.assigned_by.avatar.src}/> :
+                      <Avatar className="gx-mr-3 gx-size-50"
+                              style={{backgroundColor: '#f56a00'}}>{currentTicket.assigned_by.first_name[0].toUpperCase()}</Avatar>}
+                    <div className="gx-media-body gx-mt-2">
                   <span
                     className="gx-mb-0 gx-text-capitalize">{currentTicket.assigned_by.first_name + " " + currentTicket.assigned_by.last_name}</span>
-                  <div className="gx-mt-2">
-                    <Tag color="#f50">
-                      Customer
-                    </Tag>
-                  </div>
-                </div>
-              </div> : null}
+                      <div className="gx-mt-2">
+                        <Tag color="#f50">
+                          Customer
+                        </Tag>
+                      </div>
+                    </div>
+                  </div> : null}
+                <div className="gx-my-3">Assigned to</div>
+                {currentTicket.assigned_to.length > 0 ? currentTicket.assigned_to.map(assign => {
+                    return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
+                      {assign.avatar ?
+                        <Avatar className="gx-mr-3 gx-size-50" src={assign.avatar.src}/> :
+                        <Avatar className="gx-mr-3 gx-size-50"
+                                style={{backgroundColor: '#f56a00'}}>{assign.first_name[0].toUpperCase()}</Avatar>}
+                      <div className="gx-media-body gx-mt-2">
+                  <span
+                    className="gx-mb-0 gx-text-capitalize">{assign.first_name + " " + assign.last_name}</span>
+                        <div className="gx-mt-2">
+                          date here
+                        </div>
+                      </div>
+                    </div>
+                  }) :
+                  <TicketAssigning staffList={this.props.staffList}
+                                   onAssignStaff={this.props.onAssignStaffToTicket}
+                                   ticketId={currentTicket.id}/>
+                }
+              </div>
             </Col>
           </Row>
         </Widget>

@@ -1,4 +1,5 @@
 import {
+  ADD_COMPANY_ADDRESS,
   ADD_NEW_CUSTOMER,
   ADD_PROFILE_PICTURE,
   DELETE_CUSTOMERS,
@@ -12,7 +13,8 @@ const initialState = {
   customersList: [],
   totalItems: null,
   customerId: null,
-  profilePicId: null
+  profilePicId: null,
+  customerAddress: null
 };
 
 export default (state = initialState, action) => {
@@ -66,6 +68,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         profilePicId: action.payload
+      };
+
+    case ADD_COMPANY_ADDRESS:
+      return {
+        ...state,
+        customerAddress: action.payload
       };
 
     default:
