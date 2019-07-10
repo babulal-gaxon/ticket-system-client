@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Avatar, Col, Divider, Row, Table, Tag} from "antd";
+import {Avatar, Button, Col, Divider, Row, Table, Tag} from "antd";
 import Widget from "../../../components/Widget";
 import PropTypes from "prop-types";
 
@@ -166,7 +166,12 @@ class StaffDetail extends Component {
             <Row>
               <Col xl={24} lg={24} md={24} sm={24} xs={24}>
                 <Widget>
-                  Notes prepared by staff will come here
+                  <div className="gx-d-flex gx-justify-content-between">
+                    <span className="gx-font-weight-bold">Useful Notes</span>
+                    <Button type="primary" ghost>
+                      Add New
+                    </Button>
+                  </div>
                 </Widget>
               </Col>
             </Row>

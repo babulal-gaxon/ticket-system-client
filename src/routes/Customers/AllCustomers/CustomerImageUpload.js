@@ -44,7 +44,7 @@ class CustomerImageUpload extends Component {
               {({getRootProps, getInputProps}) => (
                 <section>
                   <div {...getRootProps()}>
-                    <input {...getInputProps()} />
+                    <input {...getInputProps()} />-
                     <Avatar className="gx-mr-3 gx-size-200"
                             src={imageAvatar ? imageAvatar.src : "https://via.placeholder.com/150x150"}/>
                   </div>

@@ -93,6 +93,24 @@ class FilterBar extends Component {
     });
   };
 
+  onStaffReset = () => {
+    const {endDate, selectedCustomers, selectedPriorities, selectedStatuses, startDate, archive} = this.state;
+    const {current, itemNumbers, filterText, sortParam} = this.props;
+    this.setState({selectedStaff: []}, () => {
+      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
+        this.state.selectedStaff, selectedCustomers, selectedPriorities, selectedStatuses, archive)
+    })
+  };
+
+  onCustomerReset = () => {
+    const {endDate, selectedPriorities, selectedStaff, selectedStatuses, startDate, archive} = this.state;
+    const {current, itemNumbers, filterText, sortParam} = this.props;
+    this.setState({selectedCustomers: []}, () => {
+      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
+        this.state.selectedCustomers, selectedStaff, selectedPriorities, selectedStatuses, archive)
+    })
+  };
+
   render() {
     console.log("archive", this.state.archive);
     const {
@@ -117,117 +135,108 @@ class FilterBar extends Component {
               <h4 className="gx-font-weight-medium">Filter Tickets</h4>
             </div>
             <div className="gx-main-layout-nav">
-                <label>Filter By Date</label>
-                <div>
-                  <DatePicker
-                    value={startDate}
-                    placeholder="Select"
-                    onChange={this.onStartDateChange}
-                    className="gx-my-3"
-                    style={{width: "100%"}}
-                    format='YYYY/MM/DD'/>
-                  <DatePicker
-                    value={endDate}
-                    placeholder="Updated"
-                    onChange={this.onEndDateChange}
-                    style={{width: "100%"}}/>
-                </div>
+              <label>Filter By Date</label>
+              <div>
+                <DatePicker
+                  value={startDate}
+                  placeholder="Select"
+                  onChange={this.onStartDateChange}
+                  className="gx-my-3"
+                  style={{width: "100%"}}
+                  format='YYYY/MM/DD'/>
+                <DatePicker
+                  value={endDate}
+                  placeholder="Updated"
+                  onChange={this.onEndDateChange}
+                  style={{width: "100%"}}/>
               </div>
-              <Checkbox className="gx-my-4" onChange={this.onSetArchive}>
-                Show Archived Tickets
-              </Checkbox>
-              <div className="gx-mb-4">
-                <div className="gx-d-flex gx-justify-content-between">
-                  <h4>Filter By Staff</h4>
-                  {selectedStaff.length > 0 ? <Button type="link" onClick={() => {
-                    this.setState({selectedStaff: []}, () => {
+            </div>
+            <Checkbox className="gx-my-4" onChange={this.onSetArchive}>
+              Show Archived Tickets
+            </Checkbox>
+            <div className="gx-mb-4">
+              <div className="gx-d-flex gx-justify-content-between">
+                <h4>Filter By Staff</h4>
+                {selectedStaff.length > 0 ? <Button type="link" onClick={this.onStaffReset}>
+                  Reset</Button> : null}
+              </div>
+              <Input type="text" value={staffFilterText}
+                     onChange={(e) => this.setState({staffFilterText: e.target.value})}/>
+              <Checkbox.Group onChange={this.onSelectStaff} value={selectedStaff}>
+                {staffs.map(staff => {
+                  return <div key={staff.id} className="gx-my-2"><Checkbox value={staff.id}>
+                    {staff.first_name + " " + staff.last_name}</Checkbox></div>
+                })}
+              </Checkbox.Group>
+              <div>
+                <Button type="link" onClick={this.onToggleShowMoreStaff}>
+                  {this.state.showMoreStaff ? "View Less" : `${this.props.staffList.length - 5} More`}
+                </Button>
+              </div>
+            </div>
+            <div className="gx-mb-4">
+              <div className="gx-d-flex gx-justify-content-between">
+                <h4>Select Customer</h4>
+                {selectedCustomers.length > 0 ? <Button type="link" onClick={this.onCustomerReset}>
+                  Reset</Button> : null}
+              </div>
+              <Input type="text" value={customerFilterText}
+                     onChange={(e) => this.setState({customerFilterText: e.target.value})}/>
+              <Checkbox.Group onChange={this.onSelectCustomer} value={selectedCustomers}>
+                {customers.map(customer => {
+                  return <div key={customer.id} className="gx-my-2">
+                    <Checkbox value={customer.id}>{customer.first_name + " " + customer.last_name}</Checkbox>
+                  </div>
+                })}
+              </Checkbox.Group>
+              <div>
+                <Button type="link" onClick={this.onToggleShowMoreCustomer}>
+                  {this.state.showMoreCustomer ? "View Less" : `${this.props.customersList.length - 5} More`}
+                </Button>
+              </div>
+            </div>
+            <div className="gx-mb-4">
+              <div className="gx-d-flex gx-justify-content-between">
+                <h4>Priority</h4>
+                {selectedPriorities.length > 0 ? <Button type="link" onClick={() => {
+                  this.setState({selectedPriorities: []},
+                    () => {
                       this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
-                        this.state.selectedStaff, selectedCustomers, selectedPriorities, selectedStatuses, archive)
+                        selectedStaff, selectedCustomers, this.state.selectedPriorities, selectedStatuses, archive)
                     })
-                  }}> Reset</Button> : null}
-                </div>
-                <Input type="text" value={staffFilterText}
-                       onChange={(e) => this.setState({staffFilterText: e.target.value})}/>
-                <Checkbox.Group onChange={this.onSelectStaff} value={selectedStaff}>
-                  {staffs.map(staff => {
-                    return <div key={staff.id} className="gx-my-2"><Checkbox value={staff.id}>
-                      {staff.first_name + " " + staff.last_name}</Checkbox></div>
-                  })}
-                </Checkbox.Group>
-                <div>
-                  <Button type="link" onClick={this.onToggleShowMoreStaff}>
-                    {this.state.showMoreStaff ? "View Less" : `${this.props.staffList.length - 5} More`}
-                  </Button>
-                </div>
+                }}> Reset</Button> : null}
               </div>
-              <div className="gx-mb-4">
-                <div className="gx-d-flex gx-justify-content-between">
-                  <h4>Select Customer</h4>
-                  {selectedCustomers.length > 0 ? <Button type="link" onClick={() => {
-                    this.setState({selectedCustomers: []},
-                      () => {
-                        this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
-                          selectedStaff, this.state.selectedCustomers, selectedPriorities, selectedStatuses, archive)
-                      })
-                  }}> Reset</Button> : null}
-                </div>
-                <Input type="text" value={customerFilterText}
-                       onChange={(e) => this.setState({customerFilterText: e.target.value})}/>
-                <Checkbox.Group onChange={this.onSelectCustomer} value={selectedCustomers}>
-                  {customers.map(customer => {
-                    return <div key={customer.id} className="gx-my-2">
-                      <Checkbox value={customer.id}>{customer.first_name + " " + customer.last_name}</Checkbox>
-                    </div>
-                  })}
-                </Checkbox.Group>
-                <div>
-                  <Button type="link" onClick={this.onToggleShowMoreCustomer}>
-                    {this.state.showMoreCustomer ? "View Less" : `${this.props.customersList.length - 5} More`}
-                  </Button>
-                </div>
+              <Input type="text" value={priorityFilterText}
+                     onChange={(e) => this.setState({priorityFilterText: e.target.value})}/>
+              <Checkbox.Group onChange={this.onSelectPriorities} value={selectedPriorities}>
+                {priorities.map(priority => {
+                  return <div className="gx-my-2" key={priority.id}>
+                    <Checkbox value={priority.id}>{priority.name}</Checkbox>
+                  </div>
+                })}
+              </Checkbox.Group>
+            </div>
+            <div className="gx-mb-4">
+              <div className="gx-d-flex gx-justify-content-between">
+                <h4>Status</h4>
+                {selectedStatuses.length > 0 ? <Button type="link" onClick={() => {
+                  this.setState({selectedStatuses: []},
+                    () => {
+                      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
+                        selectedStaff, selectedCustomers, selectedPriorities, this.state.selectedStatuses, archive)
+                    })
+                }}> Reset</Button> : null}
               </div>
-              <div className="gx-mb-4">
-                <div className="gx-d-flex gx-justify-content-between">
-                  <h4>Priority</h4>
-                  {selectedPriorities.length > 0 ? <Button type="link" onClick={() => {
-                    this.setState({selectedPriorities: []},
-                      () => {
-                        this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
-                          selectedStaff, selectedCustomers, this.state.selectedPriorities, selectedStatuses, archive)
-                      })
-                  }}> Reset</Button> : null}
-                </div>
-                <Input type="text" value={priorityFilterText}
-                       onChange={(e) => this.setState({priorityFilterText: e.target.value})}/>
-                <Checkbox.Group onChange={this.onSelectPriorities} value={selectedPriorities}>
-                  {priorities.map(priority => {
-                    return <div className="gx-my-2" key={priority.id}>
-                      <Checkbox value={priority.id}>{priority.name}</Checkbox>
-                    </div>
-                  })}
-                </Checkbox.Group>
-              </div>
-              <div className="gx-mb-4">
-                <div className="gx-d-flex gx-justify-content-between">
-                  <h4>Status</h4>
-                  {selectedStatuses.length > 0 ? <Button type="link" onClick={() => {
-                    this.setState({selectedStatuses: []},
-                      () => {
-                        this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
-                          selectedStaff, selectedCustomers, selectedPriorities, this.state.selectedStatuses, archive)
-                      })
-                  }}> Reset</Button> : null}
-                </div>
-                <Input type="text" value={statusFilterText}
-                       onChange={(e) => this.setState({statusFilterText: e.target.value})}/>
-                <Checkbox.Group onChange={this.onSelectStatuses} value={selectedStatuses}>
-                  {statuses.map(status => {
-                    return <div className="gx-my-2" key={status.id}>
-                      <Checkbox value={status.id}>{status.name}</Checkbox>
-                    </div>
-                  })}
-                </Checkbox.Group>
-              </div>
+              <Input type="text" value={statusFilterText}
+                     onChange={(e) => this.setState({statusFilterText: e.target.value})}/>
+              <Checkbox.Group onChange={this.onSelectStatuses} value={selectedStatuses}>
+                {statuses.map(status => {
+                  return <div className="gx-my-2" key={status.id}>
+                    <Checkbox value={status.id}>{status.name}</Checkbox>
+                  </div>
+                })}
+              </Checkbox.Group>
+            </div>
           </div>
         </CustomScrollbars>
       </div>

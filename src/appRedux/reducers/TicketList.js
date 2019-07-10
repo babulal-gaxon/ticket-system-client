@@ -1,5 +1,6 @@
 import {
-  ADD_TICKETS, ASSIGN_STAFF_TO_TICKET,
+  ADD_TICKETS,
+  ASSIGN_STAFF_TO_TICKET,
   DELETE_TICKET,
   GET_CONVERSATION_LIST,
   GET_FORM_DETAILS,
@@ -84,7 +85,7 @@ export default (state = initialState, action) => {
     case DELETE_TICKET:
       const updated = state.tickets.filter(ticket => {
         return (action.payload.indexOf(ticket.id) === -1) ?
-          ticket: null
+          ticket : null
       });
       return {
         ...state,

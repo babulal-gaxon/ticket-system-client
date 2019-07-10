@@ -149,7 +149,10 @@ class CustomerDetails extends Component {
                 <span className="gx-font-weight-bold">Company Details</span>
               </div>
               <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
-                <Avatar className="gx-mr-3 gx-size-100" src="https://via.placeholder.com/150x150"/>
+                {currentCustomerCompany.avatar ?
+                  <Avatar className="gx-mr-3 gx-size-80" src={currentCustomerCompany.avatar.src}/> :
+                  <Avatar className="gx-mr-3 gx-size-80"
+                          style={{backgroundColor: '#f56a00'}}>{currentCustomerCompany.company_name[0].toUpperCase()}</Avatar>}
                 <div className="gx-media-body">
                 <span>
                   <span className="gx-mb-0 gx-text-capitalize">
@@ -165,7 +168,8 @@ class CustomerDetails extends Component {
                   <div className="gx-d-flex gx-pl-0">
                     {currentCustomerCompany.members.map(member => {
                       return (member.id !== currentCustomer.id) ?
-                        <div key={member.id} className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5 gx-mx-5">
+                        <div key={member.id}
+                             className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5 gx-mx-5">
                           {member.avatar ?
                             <Avatar className="gx-mr-3 gx-size-50" src={member.avatar.src}/> :
                             <Avatar className="gx-mr-3 gx-size-50"

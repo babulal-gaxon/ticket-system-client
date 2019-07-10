@@ -120,7 +120,7 @@ class Companies extends Component {
               record.members.map(member => {
                 return member.avatar ?
                   <Tooltip key={member.id} placement="top" title={member.first_name + " " + member.last_name}>
-                    <Avatar className="gx-mr-3 gx-size-50" src={member.avatar.src}/>
+                    <Avatar className="gx-size-50" src={member.avatar.src}/>
                   </Tooltip>
                   :
                   <Tooltip key={member.id} placement="top" title={member.first_name + " " + member.last_name}>

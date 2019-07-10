@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Form, Input, Modal} from "antd";
+import {Button, Form, Input, Modal, Upload} from "antd";
 
 
 class AddNewCompany extends Component {
@@ -12,7 +12,6 @@ class AddNewCompany extends Component {
         company_logo: this.props.companyLogoId
       };
     } else {
-      setTimeout(this.onSetFieldsValue, 10);
       const selectedCompany = this.props.companiesList.find(company => company.id === this.props.companyId);
       this.state = {...selectedCompany, company_logo: this.props.companyLogoId};
     }
@@ -22,13 +21,6 @@ class AddNewCompany extends Component {
     this.setState({company_logo: nextProps.companyLogoId})
   }
 
-  onSetFieldsValue = () => {
-    this.props.form.setFieldsValue({
-      company_name: this.state.company_name,
-      website: this.state.website,
-      company_logo: this.state.company_logo
-    });
-  };
 
   onCompanyAdd = () => {
     this.setState({company_logo: this.props.companyLogoId}, () => {

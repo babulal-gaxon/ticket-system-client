@@ -34,18 +34,21 @@ class AllCustomers extends Component {
       currentCustomerCompany: null,
       selectedLabels: [],
       filterStatusActive: false,
-      filterStatusDisabled: false
+      filterStatusDisabled: false,
+      companyFilterText: "",
+      showMoreCompany: false,
+      status: []
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
     this.props.onGetCompaniesData();
     this.props.onGetLabelData();
   }
 
-  onGetPaginatedData = (currentPage, itemsPerPage, filterText) => {
-    this.props.onGetCustomersData(currentPage, itemsPerPage, filterText);
+  onGetPaginatedData = (currentPage, itemsPerPage, filterText, companies, labels, status) => {
+    this.props.onGetCustomersData(currentPage, itemsPerPage, filterText, companies, labels, status);
   };
 
   onSideBarShow = () => {
@@ -53,32 +56,6 @@ class AllCustomers extends Component {
       sideBarActive: !this.state.sideBarActive, selectedLabels: [],
       selectedCompanies: [], filterStatusActive: false, filterStatusDisabled: false
     })
-  };
-
-  onFilterData = () => {
-    return this.props.customersList.filter(customer => {
-      let flag = true;
-      const name = customer.first_name + " " + customer.last_name;
-      if (this.state.selectedCompanies.length > 0 && this.state.selectedCompanies.indexOf(customer.company.id) === -1) {
-        flag = false;
-      }
-      if (this.state.filterText !== "" && name.indexOf(this.state.filterText) === -1) {
-        flag = false;
-      }
-      if (this.state.selectedLabels.length > 0 && customer.labels && customer.labels.filter(label =>
-        this.state.selectedLabels.indexOf(label.id) !== -1).length === 0) {
-        flag = false;
-      }
-      if (this.state.filterStatusDisabled && customer.status === 1) {
-        flag = false;
-      }
-      if (this.state.filterStatusActive && customer.status === 0) {
-        flag = false;
-      }
-      if (flag) {
-        return customer;
-      }
-    });
   };
 
   onFilterTextChange = (e) => {
@@ -137,7 +114,7 @@ class AllCustomers extends Component {
       {
         title: 'Customer',
         dataIndex: 'title',
-        key:'customer',
+        key: 'customer',
         render: (text, record) => {
           return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
               {record.avatar ?
@@ -157,7 +134,7 @@ class AllCustomers extends Component {
       {
         title: 'Email',
         dataIndex: 'email',
-        key:'email',
+        key: 'email',
         render: (text, record) => {
           return <span className="gx-text-grey">{record.email ? record.email : "NA"}</span>
         },
@@ -165,7 +142,7 @@ class AllCustomers extends Component {
       {
         title: 'Phone no.',
         dataIndex: 'phone',
-        key:'phone',
+        key: 'phone',
         render: (text, record) => {
           return <span className="gx-text-grey">{record.phone ? record.phone : "NA"}</span>
         },
@@ -173,7 +150,7 @@ class AllCustomers extends Component {
       {
         title: 'Labels',
         dataIndex: 'labels',
-        key:'labels',
+        key: 'labels',
         render: (text, record) => {
           return (record.labels && record.labels.length > 0) ?
             record.labels.map(label => {
@@ -184,7 +161,7 @@ class AllCustomers extends Component {
       {
         title: 'Date Created',
         dataIndex: 'dateCreated',
-        key:'dateCreated',
+        key: 'dateCreated',
         render: (text, record) => {
           return <span className="gx-text-grey">{moment(record.created_at).format('LL')}</span>
         },
@@ -310,21 +287,37 @@ class AllCustomers extends Component {
   };
 
   onGetSidebar = () => {
+    const {companyFilterText, showMoreCompany, selectedCompanies} = this.state;
+    const companiesList = showMoreCompany ?
+      this.props.companiesList.filter(company => company.company_name.indexOf(companyFilterText) !== -1)
+      : this.props.companiesList.filter(company => company.company_name.indexOf(companyFilterText) !== -1).slice(0, 5);
     return <div className="gx-main-layout-sidenav gx-d-none gx-d-lg-flex">
       <div className="gx-main-layout-side">
         <div className="gx-main-layout-side-header">
           <h4 className="gx-font-weight-medium">Filter Tickets</h4>
         </div>
         <div className="gx-main-layout-nav">
-          <div className="gx-mr-5 gx-mb-4"><label>Filter By Company</label>
-            <span className="gx-ml-5">Reset</span>
-          </div>
           <div>
-            <Checkbox.Group onChange={this.onSelectCompanies} value={this.state.selectedCompanies}>
-              {this.props.companiesList.map(company => {
-                return <div key={company.id}><Checkbox value={company.id} >{company.company_name}</Checkbox></div>
-              })}
-            </Checkbox.Group>
+            <div className="gx-d-flex gx-justify-content-between">
+              <label>Filter By Company</label>
+              {selectedCompanies.length > 0 ? <span onClick={this.onCompanyReset}>Reset</span> : null}
+            </div>
+            <Search className="gx-mt-4" value={companyFilterText}
+                    onChange={(e) => this.setState({companyFilterText: e.target.value})}/>
+            <div className="gx-my-2">
+              <Checkbox.Group onChange={this.onSelectCompanies} value={this.state.selectedCompanies}>
+                {companiesList.map(company => {
+                  return <div key={company.id} className="gx-mb-2"><Checkbox
+                    value={company.id}>{company.company_name}</Checkbox></div>
+                })}
+              </Checkbox.Group>
+            </div>
+            <div>
+            <span className="gx-text-primary"
+                  onClick={() => this.setState({showMoreCompany: !this.state.showMoreCompany})}>
+              {this.state.showMoreCompany ? "View Less" : `${this.props.companiesList.length - 5} More`}
+            </span>
+            </div>
           </div>
           <div className="gx-mt-5">
             <div className="gx-mb-3">Filter by labels</div>
@@ -348,6 +341,10 @@ class AllCustomers extends Component {
     </div>
   };
 
+  onCompanyReset = () => {
+    this.setState({selectedCompanies: []})
+  };
+
   onLabelSelectOption = () => {
     const labelOptions = [];
     this.props.labelList.map(label => {
@@ -366,7 +363,9 @@ class AllCustomers extends Component {
   };
 
   onSelectCompanies = checkedList => {
-    this.setState({selectedCompanies: checkedList})
+    this.setState({selectedCompanies: checkedList}, () => {
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.selectedCompanies)
+    })
   };
 
   onFilterActiveCustomers = event => {
@@ -386,7 +385,7 @@ class AllCustomers extends Component {
   };
 
   render() {
-    const customers = this.onFilterData();
+    const customers = this.props.customersList;
     const selectedRowKeys = this.state.selectedRowKeys;
     let ids;
     const rowSelection = {
@@ -463,6 +462,7 @@ const mapPropsToState = ({customers, companies, labelsList}) => {
   const {labelList} = labelsList;
   return {customersList, totalItems, companiesList, labelList};
 };
+
 export default connect(mapPropsToState, {
   onGetCustomersData,
   onDeleteCustomers,

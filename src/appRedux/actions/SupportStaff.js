@@ -1,11 +1,12 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import {
+  ADD_STAFF_NOTE,
   ADD_SUPPORT_STAFF,
-  BULK_DELETE_SUPPORT_STAFF,
-  DISABLE_STAFF_STATUS,
+  BULK_DELETE_SUPPORT_STAFF, DELETE_STAFF_NOTE,
+  DISABLE_STAFF_STATUS, EDIT_STAFF_NOTE,
   EDIT_SUPPORT_STAFF,
-  GET_STAFF_ID,
+  GET_STAFF_ID, GET_STAFF_NOTES,
   GET_SUPPORT_STAFF,
   UPLOAD_PROFILE_IMAGE
 } from "../../constants/SupportStaff";
@@ -144,3 +145,77 @@ export const onAddProfileImage = (imageFile) => {
   }
 };
 
+export const onGetStaffNotes = (staffId) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.get(`staffs/${staffId}/notes`).then(({data}) => {
+      console.info("onGetStaffNotes: ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_STAFF_NOTES, payload: data.data});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onAddStaffNote = (staffId, Note) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post(`staffs/${staffId}/notes`, Note).then((data) => {
+      if (data.data.success) {
+        console.log(" sending data of staff", data.data);
+        dispatch({type: ADD_STAFF_NOTE, payload: data.data.data});
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "The Notes has been added successfully"});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onEditStaffNotes = (noteId, Note) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.put(`staffs/notes/${noteId}`, Note).then(({data}) => {
+      if (data.success) {
+        dispatch({type: EDIT_STAFF_NOTE, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+        history.goBack();
+        dispatch({type: SHOW_MESSAGE, payload: "The Note has been edited successfully"});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onDeleteStaffNotes = (noteId) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.delete(`staffs/notes/${noteId}`).then(({data}) => {
+      if (data.success) {
+        dispatch({type: DELETE_STAFF_NOTE, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+        history.goBack();
+        dispatch({type: SHOW_MESSAGE, payload: "The Note has been Deleted successfully"});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};

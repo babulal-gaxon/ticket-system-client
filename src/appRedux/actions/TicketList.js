@@ -20,7 +20,7 @@ export const onGetTickets = (currentPage, itemsPerPage, filterText, sortingParam
                              selectedCustomers, selectedPriorities, selectedStatuses, archive) => {
   const start = startDate ? moment(startDate).format("YYYY/MM/DD") : '';
   const end = endDate ? moment(endDate).format("YYYY/MM/DD") : '';
-  console.log("selectedCustomers", selectedCustomers);
+  console.log("selectedCustomers", ~~archive);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get('/tickets', {
@@ -35,7 +35,7 @@ export const onGetTickets = (currentPage, itemsPerPage, filterText, sortingParam
           priority_id: selectedPriorities,
           status_id: selectedStatuses,
           sortby: sortingParam,
-          // archive: 0
+          archive: ~~archive
         }
       }
     ).then(({data}) => {
@@ -83,16 +83,14 @@ export const onAddTickets = (ticket, history) => {
 };
 
 
-export const onUpdateTickets = (ticket, history) => {
+export const onUpdateTickets = (ticketId, ticket) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.put(`/tickets/${ticket.id}`, ticket)
+    axios.put(`/tickets/${ticketId}`, ticket)
       .then(({data}) => {
-        console.log("on Update ticket: ", data);
         if (data.success) {
           dispatch({type: FETCH_SUCCESS});
           dispatch({type: UPDATE_TICKET, payload: data.data});
-          history.goBack();
           dispatch({type: SHOW_MESSAGE, payload: "The Ticket has been updated successfully"});
         } else {
           dispatch({type: FETCH_ERROR, payload: data.error});

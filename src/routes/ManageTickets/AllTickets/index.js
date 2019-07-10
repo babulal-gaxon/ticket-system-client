@@ -21,12 +21,13 @@ import {Link} from "react-router-dom";
 import TicketDetail from "./TicketDetail";
 import InfoView from "../../../components/InfoView";
 import {
-  getTickedId, onAssignStaffToTicket,
+  getTickedId,
+  onAssignStaffToTicket,
   onDeleteTicket,
   onGetConversationList,
   onGetTickets,
   onSendMessage,
-  onUpdateTicketPriority,
+  onUpdateTicketPriority, onUpdateTickets,
   onUpdateTicketStatus
 } from "../../../appRedux/actions/TicketList";
 import {onGetTicketPriorities} from "../../../appRedux/actions/TicketPriorities";
@@ -167,17 +168,18 @@ class AllTickets extends Component {
         key: 'assign_to',
         render: (text, record) => {
           return (<div>
-              { record.assigned_to.length > 0 ? record.assigned_to.map(assign => {
-                return <Tooltip placement="top" title={assign.first_name + " " + assign.last_name} key={assign.user_id}>
-                  {assign.avatar ?
-                    <Avatar className="gx-mr-3 gx-size-36" src={assign.avatar.src}/> :
+              {record.assigned_to ?
+                <Tooltip placement="top" title={record.assigned_to.first_name + " " + record.assigned_to.last_name}
+                         key={record.assigned_to.user_id}>
+                  {record.assigned_to.avatar ?
+                    <Avatar className="gx-mr-3 gx-size-36" src={record.assigned_to.avatar.src}/> :
                     <Avatar className="gx-mr-3 gx-size-36"
-                            style={{backgroundColor: '#f56a00'}}>{assign.first_name[0].toUpperCase()}</Avatar>}
+                            style={{backgroundColor: '#f56a00'}}>{record.assigned_to.first_name[0].toUpperCase()}</Avatar>}
                 </Tooltip>
-              }) :
+                :
                 <Tooltip placement="top" title="Not assigned">
-                <Avatar className="gx-size-36" />
-                </Tooltip> }
+                  <Avatar className="gx-size-36"/>
+                </Tooltip>}
             </div>
           )
         },
@@ -405,6 +407,7 @@ class AllTickets extends Component {
                           history={this.props.history}
                           onAssignStaffToTicket={this.props.onAssignStaffToTicket}
                           staffList={this.props.staffList}
+                          onUpdateTickets={this.props.onUpdateTickets}
             />
           }
           <InfoView/>
@@ -448,7 +451,8 @@ export default connect(mapStateToProps, {
   onUpdateTicketPriority,
   onGetConversationList,
   onSendMessage,
-  onAssignStaffToTicket
+  onAssignStaffToTicket,
+  onUpdateTickets
 })(AllTickets)
 ;
 

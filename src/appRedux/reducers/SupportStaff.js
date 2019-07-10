@@ -1,9 +1,13 @@
 import {
+  ADD_STAFF_NOTE,
   ADD_SUPPORT_STAFF,
   BULK_DELETE_SUPPORT_STAFF,
+  DELETE_STAFF_NOTE,
   DISABLE_STAFF_STATUS,
+  EDIT_STAFF_NOTE,
   EDIT_SUPPORT_STAFF,
   GET_STAFF_ID,
+  GET_STAFF_NOTES,
   GET_SUPPORT_STAFF,
   UPLOAD_PROFILE_IMAGE
 } from "../../constants/SupportStaff";
@@ -12,7 +16,8 @@ const initialState = {
   staffList: [],
   staffId: 0,
   totalItems: null,
-  profilePicId: ""
+  profilePicId: "",
+  staffNotes: []
 };
 
 export default (state = initialState, action) => {
@@ -67,6 +72,32 @@ export default (state = initialState, action) => {
       return {
         ...state,
         profilePicId: action.payload
+      };
+
+    case GET_STAFF_NOTES:
+      return {
+        ...state,
+        staffNotes: action.payload
+      };
+
+    case ADD_STAFF_NOTE:
+      return {
+        ...state,
+        staffNotes: [action.payload, ...state.staffNotes]
+      };
+
+    case EDIT_STAFF_NOTE:
+      const updatedStaffNotes = state.staffNotes.map((note) => note.id === action.payload.id ? action.payload : note);
+      return {
+        ...state,
+        staffNotes: updatedStaffNotes
+      };
+
+    case DELETE_STAFF_NOTE:
+      const updated = state.staffNotes.filter(note => note.id !== action.payload);
+      return {
+        ...state,
+        staffNotes: updated
       };
 
     default:

@@ -131,6 +131,7 @@ class Departments extends Component {
           };
           this.props.onBulkDeleteDepartments(obj);
           this.setState({selectedRowKeys: [], selectedDepartments: []});
+          this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
         }
       })
     } else {

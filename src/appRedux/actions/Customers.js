@@ -12,14 +12,17 @@ import {
 } from "../../constants/Customers";
 
 
-export const onGetCustomersData = (currentPage, itemsPerPage, filterData) => {
+export const onGetCustomersData = (currentPage, itemsPerPage, filterData, companies, labels, status) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get(`/setup/customers`, {
         params: {
           page: currentPage,
           per_page: itemsPerPage,
-          search: filterData
+          search: filterData,
+          company: companies,
+          labels: labels,
+          status: status
         }
       }
     ).then(({data}) => {

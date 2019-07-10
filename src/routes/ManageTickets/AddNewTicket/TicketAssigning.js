@@ -19,12 +19,11 @@ class TicketAssigning extends Component {
   };
 
   onSelectStaff = (id) => {
-    const staff = this.props.staffList.find(staff=> staff.id === id);
+    const staff = this.props.staffList.find(staff => staff.id === id);
     this.setState({assignedStaff: staff});
-    if(this.props.ticketId) {
+    if (this.props.ticketId) {
       this.props.onAssignStaff(this.props.ticketId, id)
-    }
-    else {
+    } else {
       this.props.onAssignStaff(id);
     }
     this.onToggleStaffModal();
@@ -33,14 +32,12 @@ class TicketAssigning extends Component {
   onFilterData = () => {
     return this.props.staffList.filter(staff => {
       const name = staff.first_name + " " + staff.last_name;
-      if (name.indexOf(this.state.filterStaffText) !== -1) {
-        return staff;
-      }
+      return (name.indexOf(this.state.filterStaffText) !== -1) ?
+        staff : null
     })
   };
 
   render() {
-    console.log("ticketid", this.props.ticketId)
     const {showStaffModal, filterStaffText, assignedStaff} = this.state;
     const staffList = this.onFilterData();
     return (
@@ -54,21 +51,22 @@ class TicketAssigning extends Component {
               <Avatar className="gx-mr-3 gx-size-50"
                       style={{backgroundColor: '#f56a00'}}>{assignedStaff.first_name[0].toUpperCase()}</Avatar>}
             <div className="gx-media-body gx-mt-2">
-              <span className="gx-mb-0 gx-text-capitalize">{assignedStaff.first_name + " " + assignedStaff.last_name}</span>
+              <span
+                className="gx-mb-0 gx-text-capitalize">{assignedStaff.first_name + " " + assignedStaff.last_name}</span>
               <div>{assignedStaff.email}</div>
             </div>
           </div> :
-        <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5" onClick={this.onToggleStaffModal}>
-          <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>
-          <div className="gx-media-body gx-mt-2">
-            <span className="gx-mb-0 gx-text-capitalize">Currently Unassigned</span>
-            <div className="gx-mt-2">
-              <Tag>
-                Click to Assign
-              </Tag>
+          <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5" onClick={this.onToggleStaffModal}>
+            <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>
+            <div className="gx-media-body gx-mt-2">
+              <span className="gx-mb-0 gx-text-capitalize">Currently Unassigned</span>
+              <div className="gx-mt-2">
+                <Tag>
+                  Click to Assign
+                </Tag>
+              </div>
             </div>
-          </div>
-        </div>}
+          </div>}
         <Modal
           title="Select Staff"
           centered

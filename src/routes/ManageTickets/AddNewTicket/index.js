@@ -10,6 +10,7 @@ import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
 import {onGetCustomersData} from "../../../appRedux/actions/Customers";
 import TicketAssigning from "./TicketAssigning";
+import TicketAttachments from "./TicketAttachments";
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -198,11 +199,14 @@ class AddNewTicket extends Component {
               </Form>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
+              <div>
               <TicketAssigning staffList={this.props.staffList}
                                onAssignStaff={this.onAssignStaff}
               />
               <div className="gx-mb-3">Tags</div>
               <Select mode="tags" style={{ width: '100%' }} placeholder="Type to add tags" onChange={this.onAddTags}/>
+              <TicketAttachments/>
+              </div>
             </Col>
           </Row>
         </Widget>

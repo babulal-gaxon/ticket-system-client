@@ -1,4 +1,4 @@
-import {Avatar} from "antd";
+import {Avatar, Tooltip} from "antd";
 import React from "react";
 
 export const ticketListcolumns = [
@@ -43,9 +43,21 @@ export const ticketListcolumns = [
     dataIndex: '',
     render: (text, record) => {
       console.log("record", record)
-      return <p className="gx-mb-0">{record.assigned_to.map(user => {
-        return user.first_name + " " + user.last_name
-      })}</p>
+      return (<div>
+          {record.assigned_to ?
+            <Tooltip placement="top" title={record.assigned_to.first_name + " " + record.assigned_to.last_name}
+                     key={record.assigned_to.user_id}>
+              {record.assigned_to.avatar ?
+                <Avatar className="gx-mr-3 gx-size-36" src={record.assigned_to.avatar.src}/> :
+                <Avatar className="gx-mr-3 gx-size-36"
+                        style={{backgroundColor: '#f56a00'}}>{record.assigned_to.first_name[0].toUpperCase()}</Avatar>}
+            </Tooltip>
+            :
+            <Tooltip placement="top" title="Not assigned">
+              <Avatar className="gx-size-36"/>
+            </Tooltip>}
+        </div>
+      )
     },
   },
   {
