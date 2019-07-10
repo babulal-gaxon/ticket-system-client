@@ -189,7 +189,6 @@ export const onEditStaffNotes = (noteId, Note) => {
       if (data.success) {
         dispatch({type: EDIT_STAFF_NOTE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        history.goBack();
         dispatch({type: SHOW_MESSAGE, payload: "The Note has been edited successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
@@ -208,7 +207,6 @@ export const onDeleteStaffNotes = (noteId) => {
       if (data.success) {
         dispatch({type: DELETE_STAFF_NOTE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        history.goBack();
         dispatch({type: SHOW_MESSAGE, payload: "The Note has been Deleted successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
