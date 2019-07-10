@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c249039c-5683-456a-9b9b-29c60c26deea" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/GeneralSettings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/GeneralSettings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appRedux/reducers/GeneralSettings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/reducers/GeneralSettings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/GeneralSettings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/GeneralSettings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Settings/CustomerPanel/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Settings/CustomerPanel/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Settings/Localization/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Settings/Localization/index.js" afterDir="false" />
+    <list default="true" id="c249039c-5683-456a-9b9b-29c60c26deea" name="Default Changelist" comment="worked on settings panel">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -23,7 +19,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/appRedux/actions/GeneralSettings.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2788">
+            <state relative-caret-position="2924">
               <caret line="172" column="25" selection-start-line="172" selection-start-column="25" selection-end-line="172" selection-end-column="25" />
               <folding>
                 <element signature="e#0#84#0" expanded="true" />
@@ -35,8 +31,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/routes/Settings/CustomerPanel/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1479">
-              <caret line="96" column="59" selection-start-line="96" selection-start-column="59" selection-end-line="96" selection-end-column="59" />
+            <state relative-caret-position="595">
+              <caret line="35" column="9" selection-start-line="35" selection-start-column="9" selection-end-line="35" selection-end-column="9" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -47,7 +43,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/Settings/Localization/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="799">
+            <state relative-caret-position="884">
               <caret line="52" column="4" selection-start-line="50" selection-start-column="2" selection-end-line="52" selection-end-column="4" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
@@ -194,8 +190,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -314,6 +310,7 @@
       <workItem from="1561437996857" duration="24957000" />
       <workItem from="1561522418313" duration="30037000" />
       <workItem from="1561568806465" duration="3000" />
+      <workItem from="1561607448330" duration="90000" />
     </task>
     <task id="LOCAL-00001" summary="add api">
       <created>1558429986835</created>
@@ -567,11 +564,18 @@
       <option name="project" value="LOCAL" />
       <updated>1561522936824</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="worked on settings panel">
+      <created>1561607506995</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1561607506995</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="820353000" />
+    <option name="totallyTimeSpent" value="820443000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -583,9 +587,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.42880523" visible="true" weight="0.21428572" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.42880523" visible="true" weight="0.21428572" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.57119477" side_tool="true" weight="0.21428572" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -668,7 +672,8 @@
     <MESSAGE value="Worked on Customers Section" />
     <MESSAGE value="Worked on settings and Customer section" />
     <MESSAGE value="Taking pull" />
-    <option name="LAST_COMMIT_MESSAGE" value="Taking pull" />
+    <MESSAGE value="worked on settings panel" />
+    <option name="LAST_COMMIT_MESSAGE" value="worked on settings panel" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1165,7 +1170,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/appRedux/actions/GeneralSettings.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2788">
+        <state relative-caret-position="2924">
           <caret line="172" column="25" selection-start-line="172" selection-start-column="25" selection-end-line="172" selection-end-column="25" />
           <folding>
             <element signature="e#0#84#0" expanded="true" />
@@ -1175,7 +1180,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/Settings/Localization/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
+        <state relative-caret-position="884">
           <caret line="52" column="4" selection-start-line="50" selection-start-column="2" selection-end-line="52" selection-end-column="4" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
@@ -1192,8 +1197,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/Settings/CustomerPanel/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1479">
-          <caret line="96" column="59" selection-start-line="96" selection-start-column="59" selection-end-line="96" selection-end-column="59" />
+        <state relative-caret-position="595">
+          <caret line="35" column="9" selection-start-line="35" selection-start-column="9" selection-end-line="35" selection-end-column="9" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
