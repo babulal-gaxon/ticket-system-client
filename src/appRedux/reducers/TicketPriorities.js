@@ -15,11 +15,10 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_TICKET_PRIORITIES:
-      console.log("i am here")
       return {
         ...state,
-        priorities: action.payload.items,
-        totalItems: action.payload.paginate.total
+        priorities: action.payload.data,
+        totalItems: action.payload.meta.total
       };
 
     case ADD_TICKET_PRIORITY:
@@ -38,9 +37,8 @@ export default (state = initialState, action) => {
 
     case BULK_DELETE_PRIORITY:
       const upPriorities = state.priorities.filter(priority => {
-        if (action.payload.indexOf(priority.id) === -1) {
-          return priority
-        }
+        return (action.payload.indexOf(priority.id) === -1) ?
+           priority : null
       });
       return {
         ...state,

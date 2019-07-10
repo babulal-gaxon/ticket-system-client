@@ -12,8 +12,8 @@ class CustomerImageUpload extends Component {
       title: ""
     }
   }
+
   onDrop = files => {
-    console.log("files", files);
     files.map(file => Object.assign(file, {
       preview: URL.createObjectURL(file)
     }));
@@ -24,14 +24,18 @@ class CustomerImageUpload extends Component {
       title: files[0].name
     });
   };
+
   onUploadImage = () => {
     const data = new FormData();
     data.append('file', this.state.file);
     data.append('title', this.state.title);
     this.props.onAddImage(data);
   };
+
   render() {
+    console.log("image data", this.props.imageAvatar)
     const {file, profile_pic} = this.state;
+    const imageAvatar = this.props.imageAvatar
     return (
       <div>
         {!profile_pic ?
@@ -40,8 +44,9 @@ class CustomerImageUpload extends Component {
               {({getRootProps, getInputProps}) => (
                 <section>
                   <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <Avatar className="gx-mr-3 gx-size-200" src="https://via.placeholder.com/150x150"/>
+                    <input {...getInputProps()} />-
+                    <Avatar className="gx-mr-3 gx-size-200"
+                            src={imageAvatar ? imageAvatar.src : "https://via.placeholder.com/150x150"}/>
                   </div>
                 </section>
               )}
@@ -50,18 +55,17 @@ class CustomerImageUpload extends Component {
           :
           <div>
             <div>
-              <img alt="" src={file ? file.preview : ""}/>
-              <span onClick={() => {
+              <Avatar className="gx-mr-3 gx-size-200" src={file ? file.preview : ""}/>
+              <Button type="link" onClick={() => {
                 this.setState({
                   profile_pic: '',
                   type: ''
                 })
-              }}>Change</span>
+              }}>Change</Button>
             </div>
-            {/*<span>Your Profile Photo</span>*/}
           </div>
         }
-        <Button type="primary" className="gx-mt-5" onClick={this.onUploadImage}>Add Profile Image</Button>
+        <Button type="primary" className="gx-mt-5 gx-mr-2" onClick={this.onUploadImage}>Set Profile Image</Button>
       </div>
     )
   }

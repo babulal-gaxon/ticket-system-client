@@ -1,5 +1,5 @@
 import axios from 'util/Api'
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import {
   ADD_TICKET_PRIORITY,
   BULK_ACTIVE_PRIORITY,
@@ -10,15 +10,22 @@ import {
 } from "../../constants/TicketPriorities";
 
 
-export const onGetTicketPriorities = (currentPage, itemsPerPage) => {
+export const onGetTicketPriorities = (currentPage, itemsPerPage, filterText) => {
+  console.log("filterText", filterText)
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get(`/setup/priorities?page=${currentPage}&per_page=${itemsPerPage}`
+    axios.get('/setup/priorities', {
+     params: {
+       page: currentPage,
+       per_page: itemsPerPage,
+       search: filterText
+     }
+    }
     ).then(({data}) => {
       console.info("onGetTicketPriorities: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_TICKET_PRIORITIES, payload: data.data});
+        dispatch({type: GET_TICKET_PRIORITIES, payload: data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }
@@ -29,7 +36,7 @@ export const onGetTicketPriorities = (currentPage, itemsPerPage) => {
   }
 };
 
-export const onAddTicketPriority = (priority, successMessage) => {
+export const onAddTicketPriority = (priority) => {
   console.log("onAddTicketPriority", priority);
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -39,7 +46,7 @@ export const onAddTicketPriority = (priority, successMessage) => {
         console.log(" sending data", data.data);
         dispatch({type: ADD_TICKET_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Priority has been added successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -50,7 +57,7 @@ export const onAddTicketPriority = (priority, successMessage) => {
   }
 };
 
-export const onEditTicketPriority = (priority, successMessage) => {
+export const onEditTicketPriority = (priority) => {
   console.log("onEditTicketPriority", priority);
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -60,7 +67,7 @@ export const onEditTicketPriority = (priority, successMessage) => {
         console.log(" sending data", data.data);
         dispatch({type: EDIT_TICKET_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Priority details has been updated successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -71,14 +78,14 @@ export const onEditTicketPriority = (priority, successMessage) => {
   }
 };
 
-export const onBulkActivePriorities = (priorityIds, successMessage) => {
+export const onBulkActivePriorities = (priorityIds) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/priorities/status/1', priorityIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_ACTIVE_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Status of Priority(s) has been changed to Active successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -89,14 +96,14 @@ export const onBulkActivePriorities = (priorityIds, successMessage) => {
   }
 };
 
-export const onBulkInActivePriorities = (priorityIds, successMessage) => {
+export const onBulkInActivePriorities = (priorityIds) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/priorities/status/0', priorityIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DISABLE_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Status of Priority(s) has been changed to Disabled successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -107,14 +114,14 @@ export const onBulkInActivePriorities = (priorityIds, successMessage) => {
   }
 };
 
-export const onBulkDeletePriorities = (priorityIds, successMessage) => {
+export const onBulkDeletePriorities = (priorityIds) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/priorities/delete', priorityIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DELETE_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Priority(s) has been deleted successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

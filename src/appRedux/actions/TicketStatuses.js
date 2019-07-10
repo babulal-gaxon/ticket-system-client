@@ -1,5 +1,5 @@
 import axios from 'util/Api'
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import {
   ADD_TICKET_STATUS,
   BULK_ACTIVE_STATUS,
@@ -10,15 +10,20 @@ import {
 } from "../../constants/TicketStatuses";
 
 
-export const onGetTicketStatus = (currentPage, itemsPerPage) => {
+export const onGetTicketStatus = (currentPage, itemsPerPage,filterText) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get(`/setup/status?page=${currentPage}&per_page=${itemsPerPage}`
-    ).then(({data}) => {
+    axios.get(`/setup/status`,{
+      params: {
+        page: currentPage,
+        per_page: itemsPerPage,
+        search: filterText
+      }
+      }).then(({data}) => {
       console.info("onGetTicketStatuses: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_TICKET_STATUSES, payload: data.data});
+        dispatch({type: GET_TICKET_STATUSES, payload: data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }
@@ -29,17 +34,15 @@ export const onGetTicketStatus = (currentPage, itemsPerPage) => {
   }
 };
 
-export const onAddTicketStatus = (status, successMessage) => {
-  console.log("onAddTicketStatus", status);
+export const onAddTicketStatus = (status) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/status', status).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
         dispatch({type: ADD_TICKET_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Status has been added successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -50,17 +53,15 @@ export const onAddTicketStatus = (status, successMessage) => {
   }
 };
 
-export const onEditTicketStatus = (status, successMessage) => {
-  console.log("onEditTicketStatus", status);
+export const onEditTicketStatus = (status) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/status/${status.id}`, status).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
         dispatch({type: EDIT_TICKET_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Status details has been updated successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -71,14 +72,14 @@ export const onEditTicketStatus = (status, successMessage) => {
   }
 };
 
-export const onBulkActiveStatuses = (statusIds, successMessage) => {
+export const onBulkActiveStatuses = (statusIds) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/status/status/1', statusIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_ACTIVE_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Status of Status(s) has been changed to Active successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -89,14 +90,14 @@ export const onBulkActiveStatuses = (statusIds, successMessage) => {
   }
 };
 
-export const onBulkInActiveStatuses = (statusIds, successMessage) => {
+export const onBulkInActiveStatuses = (statusIds) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/status/status/0', statusIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DISABLE_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Status of Status(s) has been changed to Disabled successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -107,14 +108,14 @@ export const onBulkInActiveStatuses = (statusIds, successMessage) => {
   }
 };
 
-export const onBulkDeleteStatuses = (statusIds, successMessage) => {
+export const onBulkDeleteStatuses = (statusIds) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/status/delete', statusIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DELETE_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        successMessage();
+        dispatch({type: SHOW_MESSAGE, payload: "The Status(s) has been deleted successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

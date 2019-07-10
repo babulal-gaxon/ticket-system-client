@@ -1,16 +1,23 @@
 import {
+  ADD_STAFF_NOTE,
   ADD_SUPPORT_STAFF,
-  BULK_DELETE_SUPPORT_STAFF, DISABLE_STAFF_STATUS,
+  BULK_DELETE_SUPPORT_STAFF,
+  DELETE_STAFF_NOTE,
+  DISABLE_STAFF_STATUS,
+  EDIT_STAFF_NOTE,
   EDIT_SUPPORT_STAFF,
   GET_STAFF_ID,
-  GET_SUPPORT_STAFF, UPLOAD_PROFILE_IMAGE
+  GET_STAFF_NOTES,
+  GET_SUPPORT_STAFF,
+  UPLOAD_PROFILE_IMAGE
 } from "../../constants/SupportStaff";
 
 const initialState = {
   staffList: [],
   staffId: 0,
   totalItems: null,
-  profilePicId: ""
+  profilePicId: "",
+  staffNotes: []
 };
 
 export default (state = initialState, action) => {
@@ -18,8 +25,8 @@ export default (state = initialState, action) => {
     case GET_SUPPORT_STAFF:
       return {
         ...state,
-        staffList: action.payload.items,
-        totalItems: action.payload.paginate.total
+        staffList: action.payload.data,
+        totalItems: action.payload.meta.total
       };
 
     case GET_STAFF_ID:
@@ -29,7 +36,6 @@ export default (state = initialState, action) => {
       };
 
     case ADD_SUPPORT_STAFF:
-      console.log("in reducer of add staff", action.payload)
       return {
         ...state,
         staffList: [action.payload, ...state.staffList],
@@ -53,9 +59,8 @@ export default (state = initialState, action) => {
 
     case BULK_DELETE_SUPPORT_STAFF:
       const updateStaff = state.staffList.filter(member => {
-        if (action.payload.indexOf(member.id) === -1) {
-          return member
-        }
+        return (action.payload.indexOf(member.id) === -1) ?
+          member : null
       });
       return {
         ...state,
@@ -67,6 +72,32 @@ export default (state = initialState, action) => {
       return {
         ...state,
         profilePicId: action.payload
+      };
+
+    case GET_STAFF_NOTES:
+      return {
+        ...state,
+        staffNotes: action.payload
+      };
+
+    case ADD_STAFF_NOTE:
+      return {
+        ...state,
+        staffNotes: [action.payload, ...state.staffNotes]
+      };
+
+    case EDIT_STAFF_NOTE:
+      const updatedStaffNotes = state.staffNotes.map((note) => note.id === action.payload.id ? action.payload : note);
+      return {
+        ...state,
+        staffNotes: updatedStaffNotes
+      };
+
+    case DELETE_STAFF_NOTE:
+      const updated = state.staffNotes.filter(note => note.id !== action.payload);
+      return {
+        ...state,
+        staffNotes: updated
       };
 
     default:

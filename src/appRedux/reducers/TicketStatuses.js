@@ -17,8 +17,8 @@ export default (state = initialState, action) => {
     case GET_TICKET_STATUSES:
       return {
         ...state,
-        statuses: action.payload.items,
-        totalItems: action.payload.paginate.total
+        statuses: action.payload.data,
+        totalItems: action.payload.meta.total
       };
 
     case ADD_TICKET_STATUS:
@@ -29,18 +29,16 @@ export default (state = initialState, action) => {
       };
 
     case EDIT_TICKET_STATUS:
-      const updateStatuses = state.statuses.map((status) => status.id === action.payload.id ? action.payload : status)
+      const updateStatuses = state.statuses.map((status) => status.id === action.payload.id ? action.payload : status);
       return {
         ...state,
         statuses: updateStatuses
       };
 
     case BULK_DELETE_STATUS:
-      console.log(action.payload)
       const upStatuses = state.statuses.filter(status => {
-        if (action.payload.indexOf(status.id) === -1) {
-          return status
-        }
+        return (action.payload.indexOf(status.id) === -1) ?
+          status : null
       });
       return {
         ...state,

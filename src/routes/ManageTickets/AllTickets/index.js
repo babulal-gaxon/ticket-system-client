@@ -1,29 +1,45 @@
 import React, {Component} from "react";
-import {Avatar, Button, DatePicker, Dropdown, Icon, Input, Menu, Select, Table, Tag, Tooltip} from "antd";
-import {connect} from "react-redux";
-
 import {
-  onAddTickets,
-  onBackToList,
-  onDeleteTicket,
-  onGetTickets,
-  onSelectTicket,
-  onUpdateTickets
-} from "../../../appRedux/actions/TicketList";
+  Avatar,
+  Breadcrumb,
+  Button,
+  Dropdown,
+  Icon,
+  Input,
+  Menu,
+  Modal,
+  Popconfirm,
+  Select,
+  Table,
+  Tag,
+  Tooltip
+} from "antd";
 import Widget from "../../../components/Widget/index";
-import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
-import TicketDetail from "./TicketDetail";
-import InfoView from '../../../components/InfoView'
 import Permissions from "../../../util/Permissions";
-import PropTypes from "prop-types";
-import {onGetTicketPriorities} from "../../../appRedux/actions/TicketPriorities";
-import {onGetTicketStatus} from "../../../appRedux/actions/TicketStatuses";
 import moment from "moment";
-import DropdownButton from "./DropdownButton";
+import {Link} from "react-router-dom";
+import TicketDetail from "./TicketDetail";
+import InfoView from "../../../components/InfoView";
+import {
+  getTickedId,
+  onAssignStaffToTicket,
+  onDeleteTicket,
+  onGetConversationList,
+  onGetTickets,
+  onSendMessage,
+  onUpdateTicketPriority, onUpdateTickets,
+  onUpdateTicketStatus
+} from "../../../appRedux/actions/TicketList";
+import {onGetTicketPriorities} from "../../../appRedux/actions/TicketPriorities";
+import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
 import {onGetCustomersData} from "../../../appRedux/actions/Customers";
+import {onGetTicketStatus} from "../../../appRedux/actions/TicketStatuses";
+import {connect} from "react-redux";
+import FilterBar from "./FilterBar";
 
-const ButtonGroup = Button.Group;
 const Option = Select.Option;
+const Search = Input.Search;
+const confirm = Modal.confirm;
 
 class AllTickets extends Component {
   constructor(props) {
@@ -33,191 +49,93 @@ class AllTickets extends Component {
       itemNumbers: 10,
       current: 1,
       sideBarActive: false,
-      startDate: null,
-      endDate: null,
       filterText: "",
-      tickets: [],
-      filteredCustomers: []
+      currentTicket: null,
+      selectedTickets: [],
+      sortParam: "",
     };
-  };
-  onFilteredCustomerData = (e, data) =>{
-    console.log("khasjhda", data)
-    data.checked = e.target.checked;
-    const obj =
-      {checked: data.checked,
-    id: data.id};
-    if(e.target.checked) {
-      this.setState({ filteredCustomers: this.state.filteredCustomers.concat(obj)})
-    }
-    else {
-      this.state.filteredCustomers.filter(item=>!item.check)
-    }
-    console.log("filteredCustomers in Function", this.state.filteredCustomers)
-  };
-  componentWillMount() {
-    if (Permissions.canTicketView()) {
-      this.props.onGetTickets();
-    }
+    this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.sortParam);
     this.props.onGetTicketPriorities();
     this.props.onGetStaff();
     this.props.onGetCustomersData();
     this.props.onGetTicketStatus();
   };
-  componentWillReceiveProps(nextProps, nextContext) {
-    this.setState({tickets: nextProps.tickets})
+
+
+  onGetPaginatedData = (currentPage, itemsPerPage, filterData, sortingOrder, startDate, endDate, selectedStaff,
+                        selectedCustomers, selectedPriorities, selectedStatuses, archive) => {
+    if (Permissions.canTicketView()) {
+      this.props.onGetTickets(currentPage, itemsPerPage, filterData, sortingOrder, startDate, endDate, selectedStaff,
+        selectedCustomers, selectedPriorities, selectedStatuses, archive);
+    }
   };
+
+  onSideBarActive = () => {
+    const {current, itemNumbers, filterText, sortParam} = this.state;
+    this.setState({sideBarActive: !this.state.sideBarActive});
+    this.onGetPaginatedData(current, itemNumbers, filterText, sortParam)
+  };
+
   onFilterTextChange = (e) => {
-    this.setState({filterText: e.target.value})
+    const {itemNumbers, sortParam} = this.state;
+    this.setState({filterText: e.target.value}, () => {
+      this.onGetPaginatedData(1, itemNumbers, this.state.filterText, sortParam)
+    })
   };
+
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
   };
-  onDropdownChange = (value) => {
-    this.setState({itemNumbers: value});
-  };
+
   onCurrentIncrement = () => {
-    const pages = Math.ceil(this.props.tickets.length/this.state.itemNumbers);
-    if(this.state.current < pages ) {
-      this.setState({current: this.state.current + 1});
-    }
-    else {
+    const {itemNumbers, filterText, sortParam} = this.state;
+    const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
+    if (this.state.current < pages) {
+      this.setState({current: this.state.current + 1}, () => {
+        this.onGetPaginatedData(this.state.current, itemNumbers, filterText, sortParam)
+      })
+    } else {
       return null;
     }
   };
+
   onCurrentDecrement = () => {
-    if(this.state.current !== 1) {
-      this.setState({current: this.state.current - 1});
-    }
-    else {
+    const {itemNumbers, filterText, sortParam} = this.state;
+    if (this.state.current > 1) {
+      this.setState({current: this.state.current - 1}, () => {
+        this.onGetPaginatedData(this.state.current, itemNumbers, filterText, sortParam)
+      })
+    } else {
       return null;
     }
-    };
-  onSideBarActive = () => {
-    this.setState({sideBarActive: !this.state.sideBarActive});
   };
-  onStartDateChange = value => {
-    this.setState({startDate: value});
-  };
-  onEndDateChange = value => {
-    this.setState({endDate: value});
-  };
-  onGetSidebar = () => {
-    return <div className="gx-main-layout-sidenav gx-d-none gx-d-lg-flex">
-      <div className="gx-main-layout-side">
-        <div className="gx-main-layout-side-header">
-          <h4 className="gx-font-weight-medium">Filter Tickets</h4>
-        </div>
-        <div className="gx-main-layout-nav">
-          <div>
-          <label>Filter By Date</label>
-          <div>
-            <DatePicker
-              value={this.state.startDate}
-              showTime
-              format="YYYY-MM-DD HH:mm:ss"
-              placeholder="Select"
-              onChange={this.onStartDateChange}/>
-            <DatePicker
-              showTime
-              format="YYYY-MM-DD HH:mm:ss"
-              value={this.state.endDate}
-              placeholder="Updated"
-              onChange={this.onEndDateChange}/>
-          </div>
-          </div>
 
-          <div>
-            <span>
-            <label>Filter By Product</label>
-              <span> Reset</span>
-            </span>
-            <Input type="text"/>
-            {this.props.staffList.map(employee=> {
-              employee.checked= false;
-             return <div>
-               <input type="checkbox" checked={employee.checked} onChange = {(e) => this.onFilteredCustomerData(e,employee)}/>
-            <span>{employee.staff_name}</span>
-            </div>
-            })}
-          </div>
-
-
-
-          <div>
-            <span>
-            <label>Select Customer</label>
-              <span> Reset</span>
-            </span>
-            <Input type="text"/>
-            {this.props.customersList.map(customer=> {
-              customer.checked = false;
-              return <div>
-                <input type="checkbox" checked={customer.checked} onChange = {(e) => this.onFilteredCustomerData(e,customer)}/>
-                <span>{customer.company_name}</span>
-              </div>
-            })}
-          </div>
-          <div>
-            <label>Priority</label>
-            <Input type="text"/>
-            {this.props.priorities.map(priority=> {
-              return <div>
-                <input type="checkbox"/>
-                <span>{priority.name}</span>
-              </div>
-            })}
-          </div>
-          <div>
-            <label>Status</label>
-            <Input type="text"/>
-            {this.props.statuses.map(status=> {
-              return <div>
-                <input type="checkbox"/>
-                <span>{status.name}</span>
-              </div>
-            })}
-          </div>
-        </div>
-      </div>
-    </div>
-  };
   onGetTicketShowOptions = () => {
-    return <Select defaultValue={10} onChange={this.onDropdownChange}>
+    return <Select defaultValue={10} onChange={this.onDropdownChange} className="gx-mx-2">
       <Option value={10}>10</Option>
       <Option value={25}>25</Option>
       <Option value={50}>50</Option>
     </Select>
   };
+
+  onDropdownChange = (value) => {
+    const {filterText, sortParam} = this.state;
+    this.setState({itemNumbers: value, current: 1}, () => {
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, filterText, sortParam)
+    });
+  };
+
   onAddButtonClick = () => {
-  this.props.history.push('/manage-tickets/add-new-ticket')
+    this.props.getTickedId(null);
+    this.props.history.push('/manage-tickets/add-new-ticket')
   };
-  onSortDropdown = () => {
-    const menu = (
-      <Menu>
-        <Menu.Item key="1" onClick = {this.onSortByEarliest}>
-         By Earliest
-        </Menu.Item>
-        <Menu.Item key="2" onClick = {this.onSortByLatest}>
-          By latest
-        </Menu.Item>
-        <Menu.Item key="3" onClick = {this.onSortByPriority}>
-          By Highest Priority
-        </Menu.Item>
-      </Menu>
-    );
-    return (
-      <Dropdown overlay={menu} trigger={['click']}>
-      <Button>
-        Sort By <Icon type="down" />
-      </Button>
-    </Dropdown>
-    )
-  };
-  ticketRowData = () => {
+
+  onTicketRowData = () => {
     return [
       {
         title: 'ID',
         dataIndex: 'id',
+        key: 'id',
         render: (text, record) => {
           return <span className="gx-text-grey">{record.id}</span>
         },
@@ -225,17 +143,20 @@ class AllTickets extends Component {
       {
         title: 'Ticket Detail',
         dataIndex: 'title',
+        key: 'title',
         render: (text, record) => {
           return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
-
-              <Tooltip placement="top" title={record.assigned_by}>
-                <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>
-              </Tooltip>
-
+              {record.assigned_by ?
+                <Tooltip placement="top" title={record.assigned_by.first_name + " " + record.assigned_by.last_name}>
+                  {record.assigned_by.avatar ?
+                    <Avatar className="gx-mr-3 gx-size-50" src={record.assigned_by.avatar.src}/> :
+                    <Avatar className="gx-mr-3 gx-size-50"
+                            style={{backgroundColor: '#f56a00'}}>{record.assigned_by.first_name[0].toUpperCase()}</Avatar>}
+                </Tooltip> : <Avatar className="gx-size-50 gx-mr-3" src="https://via.placeholder.com/150x150"/>}
               <div className="gx-media-body">
                 <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
-                <Tag className="gx-ml-2" color="blue">Demo Product</Tag>
-                <div>Created at {record.created_at}</div>
+                <Tag className="gx-ml-2" color="blue">{record.product_name}</Tag>
+                <div>Created on {moment(record.created_at.date).format('LL')}</div>
               </div>
             </div>
           )
@@ -243,25 +164,38 @@ class AllTickets extends Component {
       },
       {
         title: 'Assign to',
-        dataIndex: '',
+        dataIndex: 'assignTo',
+        key: 'assign_to',
         render: (text, record) => {
-          return (
-            <Tooltip placement="top" title="dummy data">
-              <Avatar className="gx-size-36" src="https://via.placeholder.com/150x150"/>
-            </Tooltip>
+          return (<div>
+              {record.assigned_to ?
+                <Tooltip placement="top" title={record.assigned_to.first_name + " " + record.assigned_to.last_name}
+                         key={record.assigned_to.user_id}>
+                  {record.assigned_to.avatar ?
+                    <Avatar className="gx-mr-3 gx-size-36" src={record.assigned_to.avatar.src}/> :
+                    <Avatar className="gx-mr-3 gx-size-36"
+                            style={{backgroundColor: '#f56a00'}}>{record.assigned_to.first_name[0].toUpperCase()}</Avatar>}
+                </Tooltip>
+                :
+                <Tooltip placement="top" title="Not assigned">
+                  <Avatar className="gx-size-36"/>
+                </Tooltip>}
+            </div>
           )
         },
       },
       {
         title: 'Status',
         dataIndex: 'status_id',
+        key: 'status_id',
         render: (text, record) => {
-          return <Tag color="red">{record.status_name}</Tag>
+          return <Tag color="green">{record.status_name}</Tag>
         },
       },
       {
         title: 'Priority',
         dataIndex: 'priority_name',
+        key: 'priority_name',
         render: (text, record) => {
           return <Tag color={record.priority_color_code}> {record.priority_name}</Tag>
         },
@@ -269,126 +203,190 @@ class AllTickets extends Component {
       {
         title: '',
         dataIndex: '',
+        key: 'empty',
         render: (text, record) => {
-          return <span onClick = {(e) => {
+          return <span onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();
           }}>
-      <DropdownButton onDeleteTicket ={this.props.onDeleteTicket} ticketId = {record.id}>
-        <i className="icon icon-ellipse-h" />
-      </DropdownButton>
+            {this.onShowRowDropdown(record.id)}
       </span>
         },
       },
     ];
   };
-  onSortByLatest = () => {
-    const updatedTickets = this.state.tickets.sort((a,b) => {
-      const aMoment = moment(a.created_at);
-      const bMoment = moment(b.created_at);
-      return bMoment.valueOf() - aMoment.valueOf();
-    });
-    this.setState({tickets:updatedTickets});
+
+  onShowRowDropdown = (ticketId) => {
+    const menu = (
+      <Menu>
+        <Menu.Item key="4">
+          <Popconfirm
+            title="Are you sure to Archive this Ticket?"
+            onConfirm={() => this.props.onDeleteTicket({ids: ticketId})}
+            okText="Yes"
+            cancelText="No">
+            Archive
+          </Popconfirm>
+        </Menu.Item>
+      </Menu>
+    );
+    return (
+      <Dropdown overlay={menu} trigger={['click']}>
+        <i className="icon icon-ellipse-h"/>
+      </Dropdown>
+    )
   };
-  onSortByEarliest = () => {
-    const updatedTickets = this.state.tickets.sort((a,b) => {
-      const aMoment = moment(a.created_at);
-      const bMoment = moment(b.created_at);
-      return aMoment.valueOf() - bMoment.valueOf();
-    });
-    this.setState({tickets:updatedTickets});
+
+  onSelectTicket = record => {
+    this.setState({currentTicket: record})
   };
-  onSortByPriority = () => {
-    console.log("in sorting of priorities", this.state.tickets)
-    const updatedTickets = this.state.tickets.sort((a,b) => {
-      return b.priority_id -  a.priority_id
-    });
-    console.log("after sorting of priorities", updatedTickets)
-    this.setState({tickets:updatedTickets});
+
+  onShowBulkDeleteConfirm = () => {
+    if (this.state.selectedTickets.length !== 0) {
+      confirm({
+        title: "Are you sure to delete the selected Ticket(s)?",
+        onOk: () => {
+          const obj = {
+            ids: this.state.selectedTickets
+          };
+          this.props.onDeleteTicket(obj);
+          this.setState({selectedRowKeys: [], selectedTickets: []});
+        }
+      })
+    } else {
+      confirm({
+        title: "Please Select Ticket(s) first",
+      })
+    }
   };
+
+  onSelectOption = () => {
+    const menu = (
+      <Menu>
+        <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
+          Archive
+        </Menu.Item>
+      </Menu>
+    );
+    return <Dropdown overlay={menu} trigger={['click']}>
+      <Button>
+        Bulk Actions <Icon type="down"/>
+      </Button>
+    </Dropdown>
+  };
+
   onPageChange = page => {
-    this.setState({
-      current: page,
+    const {itemNumbers, filterText, sortParam} = this.state;
+    this.setState({current: page}, () => {
+      this.onGetPaginatedData(this.state.current, itemNumbers, filterText, sortParam)
     });
   };
-  onSortTickets = () => {
-    return this.state.tickets.filter(ticket => {
-      let flag = true;
-      const aMoment = moment(ticket.created_at);
-      const bMoment = moment(this.state.startDate);
-     if(ticket.title.indexOf(this.state.filterText) === -1)
-      {
-        flag = false;
-      }
-     if(!flag && aMoment.valueOf() !== bMoment.valueOf()){
-       console.log("Date checking", this.state.startDate);
-       flag = false;
-     }
-     this.state.filteredCustomers.map(filtered => {
-       if(filtered === ticket.user_id) {
-         return ticket;
-       }
-     });
-      if(flag){
-        return ticket;
-      }
+
+  onBackToList = () => {
+    this.setState({currentTicket: null})
+  };
+
+  onSortDropdown = () => {
+    const menu = (
+      <Menu>
+        <Menu.Item key="earliest" value="earliest" onClick={(e) => this.onSetSortParam(e.key)}>
+          By Earliest
+        </Menu.Item>
+        <Menu.Item key="latest" onClick={(e) => this.onSetSortParam(e.key)}>
+          By latest
+        </Menu.Item>
+        <Menu.Item key="priority" onClick={(e) => this.onSetSortParam(e.key)}>
+          By Highest Priority
+        </Menu.Item>
+      </Menu>
+    );
+    return (
+      <Dropdown overlay={menu} trigger={['click']}>
+        <Button>
+          Sort By <Icon type="down"/>
+        </Button>
+      </Dropdown>
+    )
+  };
+
+  onSetSortParam = key => {
+    const {current, itemNumbers, filterText} = this.state;
+    this.setState({sortParam: key}, () => {
+      this.onGetPaginatedData(current, itemNumbers, filterText, this.state.sortParam)
     });
   };
+
   render() {
-    console.log("onFilteredCustomerData in Render", this.state.filteredCustomers)
-    const {selectedRowKeys} = this.state;
-    const tickets = this.onSortTickets();
+    const {selectedRowKeys, currentTicket} = this.state;
+    const tickets = this.props.tickets;
+    let ids;
     const rowSelection = {
       selectedRowKeys,
-      onChange: this.onSelectChange,
+      onChange: (selectedRowKeys, selectedRows) => {
+        ids = selectedRows.map(selectedRow => {
+          return selectedRow.id
+        });
+        this.setState({selectedTickets: ids, selectedRowKeys: selectedRowKeys})
+      }
     };
     return (
       <div className={`gx-main-content ${this.state.sideBarActive ? "gx-main-layout-has-sider" : ""}`}>
-        {this.state.sideBarActive ? this.onGetSidebar() : null}
         <div className="gx-main-layout-content">
-          {this.props.currentTicket === null ?
-          <Widget styleName="gx-card-filter"
-             title={<div className="gx-filter-btn-view gx-filter-btn-view-mins">
-                    <Button type="default" className="gx-filter-btn gx-filter-btn-rtl-round"
-                            onClick={this.onSideBarActive}>
-                      <i className="icon icon-filter"/>
-                    </Button>
-                    {Permissions.canTicketAdd() ? <Button type="primary" className="gx-btn-lg"
-                                                          onClick={this.onAddButtonClick}>
+          {currentTicket === null ?
+            <Widget styleName="gx-card-filter">
+              <h4>Tickets</h4>
+              <Breadcrumb className="gx-mb-4">
+                <Breadcrumb.Item>
+                  <Link to="/manage-tickets/all-tickets">Manage Tickets</Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item className="gx-text-primary">
+                  <Link to="/manage-tickets/all-tickets">Tickets</Link>
+                </Breadcrumb.Item>
+              </Breadcrumb>
+              <div className="gx-d-flex gx-justify-content-between">
+                <div className="gx-d-flex">
+                  {Permissions.canTicketAdd() ?
+                    <Button type="primary" onClick={this.onAddButtonClick}>
                       Add New
-                    </Button> : null}
-                  </div>}
-                  extra={
-                    <div className="gx-d-flex gx-align-items-center">
-                      <Input
-                        placeholder="Enter keywords to search tickets"
-                        prefix={<Icon type="search" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                        value={this.state.filterText}
-                      onChange ={this.onFilterTextChange}/>
-                      <div className="gx-ml-3">
-                        {this.onGetTicketShowOptions()}
-                      </div>
-                      <div className="gx-ml-3">
-                        {this.onSortDropdown()}
-                      </div>
-                      <div className="gx-ml-3">
-                        <ButtonGroup className="gx-btn-group-flex">
-                          <Button className="gx-mb-0" type="default" onClick={this.onCurrentDecrement}>
-                            <i className="icon icon-long-arrow-left"/>
-                          </Button>
-                          <Button className="gx-mb-0" type="default" onClick={this.onCurrentIncrement}>
-                            <i className="icon icon-long-arrow-right"/>
-                          </Button>
-                        </ButtonGroup>
-                      </div>
-                    </div>} >
-
-            { (Permissions.canTicketView()) ?
-                <Table key={Math.random()} rowSelection={rowSelection} columns={this.ticketRowData()}
+                    </Button>
+                    : null}
+                  <span>{this.onSelectOption()}</span>
+                </div>
+                <div className="gx-d-flex">
+                  <div className="gx-mr-3">
+                    {this.onSortDropdown()}
+                  </div>
+                  <Search
+                    placeholder="Search tickets here"
+                    style={{width: 350}}
+                    value={this.state.filterText}
+                    onChange={this.onFilterTextChange}/>
+                  <div className="gx-ml-3">
+                    {this.onGetTicketShowOptions()}
+                  </div>
+                  <div className="gx-mx-3">
+                    <Button.Group>
+                      <Button type="default" onClick={this.onCurrentDecrement}>
+                        <i className="icon icon-long-arrow-left"/>
+                      </Button>
+                      <Button type="default" onClick={this.onCurrentIncrement}>
+                        <i className="icon icon-long-arrow-right"/>
+                      </Button>
+                    </Button.Group>
+                  </div>
+                  <Button type="default" style={{marginRight: -25}} className="gx-filter-btn gx-filter-btn-rtl-round"
+                          onClick={this.onSideBarActive}>
+                    <i className="icon icon-filter"/>
+                  </Button>
+                </div>
+              </div>
+              {(Permissions.canTicketView()) ?
+                <Table rowKey="id" rowSelection={rowSelection} columns={this.onTicketRowData()}
                        dataSource={tickets}
-                       pagination={{pageSize: this.state.itemNumbers,
+                       pagination={{
+                         pageSize: this.state.itemNumbers,
                          current: this.state.current,
-                         total: tickets.length,
+                         total: this.props.totalItems,
                          showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
                          onChange: this.onPageChange
                        }}
@@ -396,51 +394,68 @@ class AllTickets extends Component {
                        onRow={(record) => ({
                          onClick: () => {
                            if (Permissions.canViewTicketDetail()) {
-                             this.props.onSelectTicket(record)
+                             this.onSelectTicket(record)
                            }
                          }
                        })}
                 /> : null}
-            <div className="gx-d-flex gx-flex-row">
-              {this.onGetTicketShowOptions()}
-            </div>
-            <div>
-            </div>
-          </Widget> :  <TicketDetail ticket={this.props.currentTicket} onUpdateTickets={this.props.onUpdateTickets}
-                                     onBackToList={this.props.onBackToList}/>}
+            </Widget> :
+            <TicketDetail currentTicket={this.state.currentTicket}
+                          priorities={this.props.priorities}
+                          statuses={this.props.statuses}
+                          onBackToList={this.onBackToList}
+                          history={this.props.history}
+                          onAssignStaffToTicket={this.props.onAssignStaffToTicket}
+                          staffList={this.props.staffList}
+                          onUpdateTickets={this.props.onUpdateTickets}
+            />
+          }
+          <InfoView/>
         </div>
-        <InfoView/>
+        {this.state.sideBarActive ?
+          <FilterBar current={this.state.current}
+                     itemNumbers={this.state.itemNumbers}
+                     filterText={this.state.filterText}
+                     sortParam={this.state.sortParam}
+                     onGetPaginatedData={this.onGetPaginatedData}
+                     staffList={this.props.staffList}
+                     customersList={this.props.customersList}
+                     priorities={this.props.priorities}
+                     statuses={this.props.statuses}
+          />
+
+          : null}
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ticketList, supportStaff, customers,ticketPriorities, ticketStatuses}) => {
-  const {tickets, currentTicket} = ticketList;
+const mapStateToProps = ({ticketList, supportStaff, customers, ticketPriorities, ticketStatuses}) => {
+  const {tickets, totalItems, conversation} = ticketList;
   const {staffList} = supportStaff;
-  const {customersList} =  customers;
+  const {customersList} = customers;
   const {priorities} = ticketPriorities;
   const {statuses} = ticketStatuses;
-  return {tickets, priorities, staffList, currentTicket,customersList, statuses};
+  return {tickets, priorities, staffList, customersList, statuses, totalItems, conversation};
 };
 
 export default connect(mapStateToProps, {
   onGetTickets,
-  onAddTickets,
   onGetTicketPriorities,
   onGetStaff,
-  onSelectTicket,
-  onUpdateTickets,
-  onBackToList,
   onGetCustomersData,
   onGetTicketStatus,
-  onDeleteTicket
-})(AllTickets);
+  onDeleteTicket,
+  getTickedId,
+  onUpdateTicketStatus,
+  onUpdateTicketPriority,
+  onGetConversationList,
+  onSendMessage,
+  onAssignStaffToTicket,
+  onUpdateTickets
+})(AllTickets)
+;
 
-AllTickets.defaultProps = {
-  currentTicket: ""
-};
+AllTickets.defaultProps = {};
 
-AllTickets.propTypes = {
-  currentTicket: PropTypes.object,
-};
+AllTickets.propTypes = {};

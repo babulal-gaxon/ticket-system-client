@@ -14,6 +14,8 @@ import Labels from "./Labels";
 import Customers from "./Customers";
 import Companies from "./Companies";
 import GeneralSettings from "./GeneralSettings";
+import Services from "./Services";
+import Products from "./Products";
 
 
 const reducers = combineReducers({
@@ -31,7 +33,9 @@ const reducers = combineReducers({
   labelsList: Labels,
   customers: Customers,
   companies: Companies,
-  generalSettings: GeneralSettings
+  generalSettings: GeneralSettings,
+  services: Services,
+  products: Products
 });
 
 export default reducers;

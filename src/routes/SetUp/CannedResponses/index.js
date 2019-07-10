@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, message, Modal, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd/lib/index";
 import {connect} from "react-redux";
 
 import {
@@ -11,10 +11,11 @@ import {
   onGetCannedResponses
 } from "../../../appRedux/actions/CannedResponses";
 import AddNewResponses from "./AddNewResponses";
-import Widget from "../../../components/Widget/index";
+import Widget from "../../../components/Widget";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
+import InfoView from "../../../components/InfoView";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -33,133 +34,143 @@ class CannedResponses extends Component {
       showAddCanned: false,
       selectedResponses: []
     };
+    this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
   };
-  componentWillMount() {
-    this.onGetResponseData(this.state.current, this.state.itemNumbers)
-  }
-  onGetResponseData = (currentPage, itemsPerPage) => {
+
+  onGetResponseData = (currentPage, itemsPerPage, filterData) => {
     if (Permissions.canResponseView()) {
-      this.props.onGetCannedResponses(currentPage, itemsPerPage);
+      this.props.onGetCannedResponses(currentPage, itemsPerPage, filterData);
     }
   };
+
   onToggleAddCanned = () => {
     this.setState({showAddCanned: !this.state.showAddCanned})
   };
+
   onCurrentIncrement = () => {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
-      this.setState({current: this.state.current + 1}, () => {this.onGetResponseData(this.state.current, this.state.itemNumbers)});
+      this.setState({current: this.state.current + 1}, () => {
+        this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      });
     } else {
       return null;
     }
   };
+
   onCurrentDecrement = () => {
-    if (this.state.current !== 1) {
-      this.setState({current: this.state.current - 1}, () => {this.onGetResponseData(this.state.current, this.state.itemNumbers)});
+    if (this.state.current > 1) {
+      this.setState({current: this.state.current - 1}, () => {
+        this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      });
     } else {
       return null;
     }
   };
+
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
   };
+
   onFilterTextChange = (e) => {
-    this.setState({filterText: e.target.value})
+    this.setState({filterText: e.target.value}, () => {
+      this.onGetResponseData(1, this.state.itemNumbers, this.state.filterText)
+    })
   };
+
   onAddButtonClick = () => {
     this.setState({responseId: 0, showAddCanned: true});
   };
+
   onEditResponse = (id) => {
     this.setState({responseId: id, showAddCanned: true});
   };
-  onFilterData = () => {
-    return this.props.responses.filter(response => response.short_title.indexOf(this.state.filterText) !== -1);
-  };
+
   onShowBulkActiveConfirm = () => {
-    if(this.state.selectedResponses.length !== 0) {
+    if (this.state.selectedResponses.length !== 0) {
       confirm({
         title: "Are you sure to change the status of selected Response(s) to ACTIVE?",
         onOk: () => {
           const obj = {
             ids: this.state.selectedResponses
           };
-          this.props.onBulkActiveResponses(obj, this.onStatusChangeMessage);
-          this.setState({selectedRowKeys: [], selectedResponses:[]})
-        },
-        onCancel() {
-          console.log('Cancel');
+          this.props.onBulkActiveResponses(obj);
+          this.setState({selectedRowKeys: [], selectedResponses: []})
         }
       })
-    }
-    else {
+    } else {
       confirm({
         title: "Please Select Response(s) first",
       })
     }
   };
+
   onShowBulkDisableConfirm = () => {
-    if(this.state.selectedResponses.length !== 0) {
+    if (this.state.selectedResponses.length !== 0) {
       confirm({
         title: "Are you sure to change the status of selected Response(s) to DISABLED?",
         onOk: () => {
           const obj = {
             ids: this.state.selectedResponses
           };
-          this.props.onBulkInActiveResponses(obj, this.onStatusChangeMessage);
-          this.setState({selectedRowKeys: [], selectedResponses:[]})
+          this.props.onBulkInActiveResponses(obj);
+          this.setState({selectedRowKeys: [], selectedResponses: []})
         }
       })
-    }
-    else {
+    } else {
       confirm({
         title: "Please Select Response(s) first",
       })
     }
   };
+
   onShowBulkDeleteConfirm = () => {
-    if(this.state.selectedResponses.length !== 0) {
+    if (this.state.selectedResponses.length !== 0) {
       confirm({
         title: "Are you sure to delete the selected Response(s)?",
         onOk: () => {
           const obj = {
             ids: this.state.selectedResponses
           };
-          this.props.onBulkDeleteResponses(obj, this.onDeleteSuccessMessage)
-          this.onGetResponseData(this.state.current, this.state.itemNumbers);
-          this.setState({selectedRowKeys: [], selectedResponses:[]});
+          this.props.onBulkDeleteResponses(obj);
+          this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText);
+          this.setState({selectedRowKeys: [], selectedResponses: []});
         }
       })
-    }
-    else {
+    } else {
       confirm({
         title: "Please Select Response(s) first",
       })
     }
   };
+
   onSelectOption = () => {
     const menu = (
       <Menu>
-        <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
-          Active
-        </Menu.Item>
-        <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
-          Disable
-        </Menu.Item>
-        <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
-          Delete
-        </Menu.Item>
+        {Permissions.canResponseEdit() ?
+          <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
+            Active
+          </Menu.Item> : null
+        }
+        {Permissions.canResponseEdit() ?
+          <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
+            Disable
+          </Menu.Item> : null
+        }
+        {Permissions.canResponseDelete() ?
+          <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
+            Delete
+          </Menu.Item> : null
+        }
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        Bulk Actions <Icon type="down" />
+        Bulk Actions <Icon type="down"/>
       </Button>
     </Dropdown>
   };
 
-  onStatusChangeMessage = () => {
-    message.success('The status of selected Responses has been changed successfully.');
-  };
   onGetTableColumns = () => {
     return [
       {
@@ -218,26 +229,26 @@ class CannedResponses extends Component {
       },
     ];
   };
+
   onDeletePopUp = (recordId) => {
     return <Popconfirm
       title="Are you sure to delete this Response?"
       onConfirm={() => {
-        this.props.onBulkDeleteResponses({ids: [recordId]}, this.onDeleteSuccessMessage)
-        this.onGetResponseData(this.state.current, this.state.itemNumbers)
+        this.props.onBulkDeleteResponses({ids: [recordId]});
+        this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
       }}
       okText="Yes"
       cancelText="No">
       <i className="icon icon-trash"/>
     </Popconfirm>
   };
-  onDeleteSuccessMessage = () => {
-    message.success('The selected Response has been deleted successfully.');
-  };
+
   onPageChange = page => {
-    this.setState({
-      current: page,
-    },() => {this.onGetResponseData(this.state.current, this.state.itemNumbers)});
+    this.setState({current: page}, () => {
+      this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
+    });
   };
+
   onShowItemOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>
       <Option value={10}>10</Option>
@@ -245,12 +256,16 @@ class CannedResponses extends Component {
       <Option value={50}>50</Option>
     </Select>
   };
+
   onDropdownChange = (value) => {
-    this.setState({itemNumbers: value, current: 1}, () => {this.onGetResponseData(this.state.current, this.state.itemNumbers)})
+    this.setState({itemNumbers: value, current: 1}, () => {
+      this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
+    })
   };
+
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;
-    const responses = this.onFilterData();
+    const responses = this.props.responses;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -260,10 +275,11 @@ class CannedResponses extends Component {
         this.setState({selectedResponses: ids, selectedRowKeys: selectedRowKeys})
       }
     };
+
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4>Canned Responses</h4>
+          <h4 className="gx-font-weight-bold">Canned Responses</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>
               <Link to="/ticket-system/canned-responses">Ticket System</Link></Breadcrumb.Item>
@@ -279,7 +295,7 @@ class CannedResponses extends Component {
             <div className="gx-d-flex">
               <Search
                 placeholder="Enter keywords to search Responses"
-                style={{width: 200}}
+                style={{width: 350}}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
               <div className="gx-ml-3">
@@ -315,6 +331,7 @@ class CannedResponses extends Component {
                            onEditCannedResponse={this.props.onEditCannedResponse}
                            responses={responses}
           /> : null}
+        <InfoView/>
       </div>
     );
   }

@@ -20,8 +20,8 @@ export default (state = initialState, action) => {
     case GET_ROLES:
       return {
         ...state,
-        roles: action.payload.items,
-        totalItems: action.payload.paginate.total
+        roles: action.payload.data,
+        totalItems: action.payload.meta.total
       };
 
     case NULLIFY_SELECTED_ROLE:
@@ -37,7 +37,6 @@ export default (state = initialState, action) => {
       };
 
     case ADD_NEW_ROLE:
-      console.log("in add new role reducer", action.payload)
       return {
         ...state,
         roles: [action.payload, ...state.roles],
@@ -54,10 +53,8 @@ export default (state = initialState, action) => {
 
     case BULK_DELETE_ROLES:
       const upRoles = state.roles.filter(role => {
-        console.log("action.payload", action.payload)
-        if (action.payload.indexOf(role.id) === -1) {
-          return role
-        }
+        return (action.payload.indexOf(role.id) === -1) ?
+          role : null
       });
       return {
         ...state,

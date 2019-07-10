@@ -17,8 +17,8 @@ export default (state = initialState, action) => {
     case GET_DEPARTMENTS:
       return {
         ...state,
-        dept: action.payload.items,
-        totalItems: action.payload.paginate.total
+        dept: action.payload.data,
+        totalItems: action.payload.meta.total
       };
 
     case ADD_DEPARTMENT:
@@ -29,7 +29,7 @@ export default (state = initialState, action) => {
       };
 
     case EDIT_DEPARTMENT:
-      const updateDepartments = state.dept.map((department) => department.id === action.payload.id ? action.payload : department)
+      const updateDepartments = state.dept.map((department) => department.id === action.payload.id ? action.payload : department);
       return {
         ...state,
         dept: updateDepartments,
@@ -37,9 +37,8 @@ export default (state = initialState, action) => {
 
     case BULK_DELETE_DEPARTMENTS:
       const upDepartments = state.dept.filter(department => {
-        if (action.payload.indexOf(department.id) === -1) {
-          return department
-        }
+        return (action.payload.indexOf(department.id) === -1) ?
+          department : null
       });
       return {
         ...state,

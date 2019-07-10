@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {Button, Divider, Form, Input} from "antd/lib/index";
+import InfoView from "../../../components/InfoView";
 
 class GeneralDetails extends Component {
   constructor(props) {
     super(props);
-    if(this.props.generalSettingsData ===  null) {
+    if (this.props.generalSettingsData === null) {
       this.state = {
         name: "",
         url: "",
@@ -15,26 +16,9 @@ class GeneralDetails extends Component {
         email: "",
         mobile: ""
       }
-    }
-    // else {
-    //   const {name, website, file_upload_max_size, email, mobile, logo, favicon, allowed_ext} = this.props.generalSettingsData;
-    //   this.state = {
-    //     name: name,
-    //     url: website,
-    //     logo: logo,
-    //     favicon: favicon,
-    //     allowed_ext: allowed_ext,
-    //     file_upload_max_size: file_upload_max_size,
-    //     email: email,
-    //     mobile: mobile
-    //   }
-    // }
-  }
-
-  componentWillReceiveProps(nextProps, nextContext) {
-    const {name, allowed_ext, file_upload_max_size, email, mobile, logo, favicon, website} =nextProps.generalSettingsData;
-    if(JSON.stringify(nextProps.generalSettingsData) !== JSON.stringify(this.props.generalSettingsData)) {
-      this.setState({
+    } else {
+      const {name, website, file_upload_max_size, email, logo, favicon, allowed_ext} = this.props.generalSettingsData;
+      this.state = {
         name: name,
         url: website,
         logo: logo,
@@ -42,22 +26,57 @@ class GeneralDetails extends Component {
         allowed_ext: allowed_ext,
         file_upload_max_size: file_upload_max_size,
         email: email,
-        mobile: mobile
-      })
+        // mobile: mobile
+      }
+    }
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (nextProps.generalSettingsData) {
+      const {name, allowed_ext, file_upload_max_size, email, logo, favicon, website} = nextProps.generalSettingsData;
+      if (JSON.stringify(nextProps.generalSettingsData) !== JSON.stringify(this.props.generalSettingsData)) {
+        this.setState({
+          name: name,
+          url: website,
+          logo: logo,
+          favicon: favicon,
+          allowed_ext: allowed_ext,
+          file_upload_max_size: file_upload_max_size,
+          email: email,
+          // mobile: mobile
+        })
+      }
     }
   }
 
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.props.onSaveGeneralDetails({...this.state});
+        this.setState({logo: this.props.companyLogo, favicon: this.props.favicon}, () => {
+          this.props.onSaveGeneralDetails({...this.state});
+        });
       }
     });
   };
 
+  onLogoSelect = (e) => {
+    let file = e.target.files[0];
+    const data = new FormData();
+    data.append('file', file);
+    data.append('title', file.name);
+    this.props.onAddCompanyLogo(data);
+  };
+
+  onFaviconSelect = (e) => {
+    let file = e.target.files[0];
+    const data = new FormData();
+    data.append('file', file);
+    data.append('title', file.name);
+    this.props.onAddCompanyFavicon(data);
+  };
+
   render() {
-    console.log("general Settings Data", this.state);
-    const {mobile,name,url,email,allowed_ext,file_upload_max_size} = this.state;
+    const {name, url, email, allowed_ext, file_upload_max_size} = this.state;
     const {getFieldDecorator} = this.props.form;
     return (
       <div>
@@ -81,16 +100,16 @@ class GeneralDetails extends Component {
           <Form.Item label="Company Logo" extra="Size should be 250X100px, Maximum image size 50kb">
             {getFieldDecorator('logo', {
               rules: [{required: true, message: 'Please Select Logo!'}],
-            })(<Input type="file" placeholder="Choose file..." addonAfter="Browse"/>)}
+            })(<Input type="file" placeholder="Choose file..." addonAfter="Browse" onChange={this.onLogoSelect}/>)}
           </Form.Item>
           <Form.Item label="Favicon" extra="Size should be 40X40px, Maximum image size 50kb">
             {getFieldDecorator('favicon', {
               rules: [{required: true, message: 'Please Select Favicon!'}],
-            })(<Input type="file" placeholder="Choose file..." addonAfter="Browse"/>)}
+            })(<Input type="file" placeholder="Choose file..." addonAfter="Browse" onChange={this.onFaviconSelect}/>)}
           </Form.Item>
           <Form.Item label="Email">
             {getFieldDecorator('email', {
-              initialValue:email,
+              initialValue: email,
               rules: [{
                 type: 'email',
                 message: 'The input is not valid E-mail!',
@@ -103,14 +122,14 @@ class GeneralDetails extends Component {
               this.setState({email: e.target.value})
             }}/>)}
           </Form.Item>
-          <Form.Item label="Phone no.">
-            <Input type="text" value={mobile} onChange={(e) => {
-              this.setState({mobile: e.target.value})
-            }}/>
-          </Form.Item>
+          {/*<Form.Item label="Phone no.">*/}
+          {/*  <Input type="text" value={mobile} onChange={(e) => {*/}
+          {/*    this.setState({mobile: e.target.value})*/}
+          {/*  }}/>*/}
+          {/*</Form.Item>*/}
           <Form.Item label="Allowed Extensions">
             {getFieldDecorator('allowed_ext', {
-              initialValue:allowed_ext,
+              initialValue: allowed_ext,
               rules: [{required: true, message: 'Please Select Allowed Extensions!'}],
             })(<Input type="text" onChange={(e) => {
               this.setState({allowed_ext: e.target.value})
@@ -118,7 +137,7 @@ class GeneralDetails extends Component {
           </Form.Item>
           <Form.Item label="File upload max size">
             {getFieldDecorator('file_upload_max_size', {
-              initialValue:file_upload_max_size,
+              initialValue: file_upload_max_size,
               rules: [{required: true, message: 'Please Select File upload size!'}],
             })(<Input type="text" addonAfter="MB" onChange={(e) => {
               this.setState({file_upload_max_size: e.target.value})
@@ -131,11 +150,9 @@ class GeneralDetails extends Component {
             <Button type="primary" style={{width: 100}} onClick={this.onValidationCheck}>
               Save
             </Button>
-            <Button type="default" style={{width: 100}}>
-              Cancel
-            </Button>
           </div>
         </Form.Item>
+        <InfoView/>
       </div>
     );
   }

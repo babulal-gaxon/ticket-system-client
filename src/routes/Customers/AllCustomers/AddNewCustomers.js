@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
-import {Breadcrumb, Button, Col, Form, Input, message, Radio, Row, Select} from "antd";
+import {Breadcrumb, Button, Col, Form, Input, Radio, Row, Select, Tag} from "antd";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
 import {connect} from "react-redux";
-import {onAddImage, onAddNewCustomer, onEditCustomer} from "../../../appRedux/actions/Customers";
+import {onAddCustomerAddress, onAddImage, onAddNewCustomer, onEditCustomer} from "../../../appRedux/actions/Customers";
 import {onGetLabelData} from "../../../appRedux/actions/Labels";
 import {onGetCompaniesData} from "../../../appRedux/actions/Companies";
 import AddCustomerAddress from "./AddCustomerAddress";
 import CustomerImageUpload from "./CustomerImageUpload";
+import {onGetCountriesList} from "../../../appRedux/actions/GeneralSettings";
 
 const {Option} = Select;
 
@@ -26,14 +27,13 @@ class AddNewCustomers extends Component {
         label_ids: [],
         isModalVisible: false,
         status: 1,
-        profile_pic: null
+        profile_pic: null,
+        address: null
       };
     } else {
-      setTimeout(this.onSetFieldsValue, 10);
       const selectedCustomer = this.props.customersList.find(customer => customer.id === this.props.customerId);
-      console.log("selected Customer", selectedCustomer);
-      const {first_name, last_name, email, phone,status, id} = selectedCustomer;
-      const companyId = selectedCustomer.company.id;
+      const {first_name, last_name, email, phone, status, id, avatar} = selectedCustomer;
+      const companyId = selectedCustomer.company ? selectedCustomer.company.id : null;
       const labelIds = selectedCustomer.labels.map(label => {
         return label.id
       });
@@ -48,7 +48,8 @@ class AddNewCustomers extends Component {
         company_id: companyId,
         label_ids: labelIds,
         isModalVisible: false,
-        profile_pic: imageId
+        profile_pic: imageId,
+        imageAvatar: avatar
       }
     }
   }
@@ -56,43 +57,36 @@ class AddNewCustomers extends Component {
   componentWillMount() {
     this.props.onGetLabelData();
     this.props.onGetCompaniesData();
+    this.props.onGetCountriesList();
   }
 
-  onSetFieldsValue = () => {
-    this.props.form.setFieldsValue({
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      email: this.state.email
-    });
-  };
   onToggleAddressModal = () => {
     this.setState({isModalVisible: !this.state.isModalVisible})
   };
+
   onReturnCustomersScreen = () => {
     this.props.history.goBack();
   };
+
   onCustomerAdd = () => {
     if (this.props.customerId === null) {
       this.setState({profile_pic: this.props.profilePicId},
-        () => {this.props.onAddNewCustomer({...this.state}, this.props.history, this.onAddSuccess)})
+        () => {
+          this.props.onAddNewCustomer({...this.state}, this.props.history)
+        })
     } else {
       this.setState({profile_pic: this.props.profilePicId},
-        () => {this.props.onEditCustomer({...this.state}, this.props.history, this.onEditSuccess)})
-}
-};
-  onAddSuccess = () => {
-    message.success('New Customer has been added successfully.');
+        () => {
+          this.props.onEditCustomer({...this.state}, this.props.history)
+        })
+    }
   };
-  onEditSuccess = () => {
-    message.success(' Customer details has been updated successfully.');
-  };
+
   onReset = () => {
-    this.props.form.setFieldsValue({
+    this.setState({
       first_name: "",
       last_name: "",
-      email: ""
-    });
-    this.setState({
+      email: "",
       phone: "",
       company_id: null,
       position: "",
@@ -101,20 +95,24 @@ class AddNewCustomers extends Component {
       status: 1
     })
   };
+
   onLabelSelect = (id) => {
     this.setState({label_ids: this.state.label_ids.concat(id)})
   };
+
   onLabelRemove = (value) => {
-    const updatedLabels = this.state.label_ids.filter(label => label !== value)
+    const updatedLabels = this.state.label_ids.filter(label => label !== value);
     this.setState({label_ids: updatedLabels})
   };
-  onLabeltSelectOption = () => {
+
+  onLabelSelectOption = () => {
     const labelOptions = [];
     this.props.labelList.map(label => {
-      return labelOptions.push(<Option value={label.id}>{label.name}</Option>);
+      return labelOptions.push(<Option value={label.id} key={label.id}>{label.name}</Option>);
     });
     return labelOptions;
   };
+
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
@@ -122,13 +120,16 @@ class AddNewCustomers extends Component {
       }
     });
   };
+
   onCompanySelect = value => {
     this.setState({company_id: value})
   };
+
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {phone, status, label_ids, company_id, password} = this.state;
-    const labelOptions = this.onLabeltSelectOption();
+    const {phone, status, label_ids, company_id, first_name, last_name, email} = this.state;
+    const labelOptions = this.onLabelSelectOption();
+    const customerAddress = this.props.customerAddress;
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -138,8 +139,8 @@ class AddNewCustomers extends Component {
               <Link to="/customers">Customers</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link
-                to="/customers/add-customers">{this.props.customerId === null ? "Add New Customer" : "Edit Customer Details"}</Link>
+              <Link to="/customers/add-customers">{this.props.customerId === null ?
+                "Add New Customer" : "Edit Customer Details"}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <hr/>
@@ -150,6 +151,7 @@ class AddNewCustomers extends Component {
                   <Col sm={12} xs={24} className="gx-pl-0">
                     <Form.Item label="First Name">
                       {getFieldDecorator('first_name', {
+                        initialValue: first_name,
                         rules: [{required: true, message: 'Please Enter First Name!'}],
                       })(<Input type="text" onChange={(e) => {
                         this.setState({first_name: e.target.value})
@@ -159,6 +161,7 @@ class AddNewCustomers extends Component {
                   <Col sm={12} xs={24} className="gx-pr-0">
                     <Form.Item label="Last Name">
                       {getFieldDecorator('last_name', {
+                        initialValue: last_name,
                         rules: [{required: true, message: 'Please Enter Last Name!'}],
                       })(<Input type="text" onChange={(e) => {
                         this.setState({last_name: e.target.value})
@@ -168,6 +171,7 @@ class AddNewCustomers extends Component {
                 </div>
                 <Form.Item label="Email Address">
                   {getFieldDecorator('email', {
+                    initialValue: email,
                     rules: [{
                       type: 'email',
                       message: 'The input is not valid E-mail!',
@@ -182,7 +186,8 @@ class AddNewCustomers extends Component {
                 </Form.Item>
                 <Form.Item label="Password">
                   <Input.Password type="text" onChange={(e) => {
-                    this.setState({password: e.target.value})}}/>
+                    this.setState({password: e.target.value})
+                  }}/>
                 </Form.Item>
                 <Form.Item label="Phone Number">
                   <Input type="text" value={phone} onChange={(e) => {
@@ -192,7 +197,7 @@ class AddNewCustomers extends Component {
                 <Form.Item label="Select Company">
                   <Select value={company_id} onChange={this.onCompanySelect}>
                     {this.props.companiesList.map(company => {
-                      return <Option value={company.id}>{company.company_name}</Option>
+                      return <Option value={company.id} key={company.id}>{company.company_name}</Option>
                     })}
                   </Select>
                 </Form.Item>
@@ -219,7 +224,17 @@ class AddNewCustomers extends Component {
                   <Button type="default" style={{width: "100%", color: "blue"}} onClick={this.onToggleAddressModal}>
                     <i className="icon icon-add-circle gx-mr-1"/>Add New Address</Button>
                 </Form.Item>
+
               </Form>
+              {this.props.customerAddress ?
+              <div className="gx-main-layout-content" style={{width: "60%"}}>
+                <Widget styleName="gx-card-filter">
+                  {customerAddress.address_type.map(type => {
+                    return <Tag color="#108ee9">{type}</Tag>})}
+                  <p>{customerAddress.address_line_1}</p>
+                  <p>{`${customerAddress.city}, ${customerAddress.state} - ${customerAddress.zip_code}`}</p>
+                </Widget>
+              </div> : null}
               <span>
                 <Button type="primary" onClick={this.onValidationCheck}>
                   Save
@@ -233,12 +248,15 @@ class AddNewCustomers extends Component {
                 </span>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
-              <CustomerImageUpload onAddImage = {this.props.onAddImage}/>
+              <CustomerImageUpload onAddImage={this.props.onAddImage}
+                                   imageAvatar={this.state.imageAvatar}/>
             </Col>
           </Row>
         </Widget>
         {this.state.isModalVisible ? <AddCustomerAddress isModalVisible={this.state.isModalVisible}
-                                                         onToggleAddressModal={this.onToggleAddressModal}/> : null}
+                                                         onToggleAddressModal={this.onToggleAddressModal}
+                                                         countriesList={this.props.countriesList}
+                                                         onAddCustomerAddress={this.props.onAddCustomerAddress}/> : null}
         <InfoView/>
       </div>
     )
@@ -247,11 +265,12 @@ class AddNewCustomers extends Component {
 
 AddNewCustomers = Form.create({})(AddNewCustomers);
 
-const mapStateToProps = ({customers, labelsList, companies}) => {
-  const {customersList, customerId, profilePicId} = customers;
+const mapStateToProps = ({customers, labelsList, companies, generalSettings}) => {
+  const {customersList, customerId, profilePicId, customerAddress} = customers;
   const {labelList} = labelsList;
   const {companiesList} = companies;
-  return {labelList, customersList, customerId, companiesList, profilePicId};
+  const {countriesList} = generalSettings;
+  return {labelList, customersList, customerId, companiesList, profilePicId, countriesList, customerAddress};
 };
 
 export default connect(mapStateToProps, {
@@ -259,5 +278,7 @@ export default connect(mapStateToProps, {
   onAddNewCustomer,
   onGetLabelData,
   onGetCompaniesData,
-  onAddImage
+  onAddImage,
+  onGetCountriesList,
+  onAddCustomerAddress
 })(AddNewCustomers);

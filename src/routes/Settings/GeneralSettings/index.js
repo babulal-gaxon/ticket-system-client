@@ -5,7 +5,15 @@ import {Link} from "react-router-dom";
 import Addresses from "./Addresses";
 import GeneralDetails from "./GeneralDetails";
 import {connect} from "react-redux";
-import {onGetGeneralDetails, onSaveGeneralDetails} from "../../../appRedux/actions/GeneralSettings";
+import {
+  onAddCompanyFavicon,
+  onAddCompanyLogo,
+  onGetCountriesList,
+  onGetGeneralAddress,
+  onGetGeneralDetails,
+  onSaveGeneralAddress,
+  onSaveGeneralDetails
+} from "../../../appRedux/actions/GeneralSettings";
 
 const {TabPane} = Tabs;
 
@@ -19,6 +27,8 @@ class GeneralSettings extends Component {
 
   componentWillMount() {
     this.props.onGetGeneralDetails();
+    this.props.onGetCountriesList();
+    this.props.onGetGeneralAddress();
   }
 
   onTabChange = key => {
@@ -30,7 +40,7 @@ class GeneralSettings extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h3>General Setting</h3>
+          <h4 className="gx-font-weight-bold">General Setting</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               Settings
@@ -45,10 +55,17 @@ class GeneralSettings extends Component {
           <Tabs defaultActiveKey="1" size="large" onChange={this.onTabChange}>
             <TabPane tab="General Setup" key="1">
               <GeneralDetails onSaveGeneralDetails={this.props.onSaveGeneralDetails}
-                              generalSettingsData={this.props.generalSettingsData}/>
+                              generalSettingsData={this.props.generalSettingsData}
+                              companyLogo={this.props.companyLogo}
+                              onAddCompanyLogo={this.props.onAddCompanyLogo}
+                              onAddCompanyFavicon={this.props.onAddCompanyFavicon}
+                              favicon={this.props.favicon}/>
             </TabPane>
             <TabPane tab="Addresses" key="2">
-              <Addresses/>
+              <Addresses countriesList={this.props.countriesList}
+                         onSaveGeneralAddress={this.props.onSaveGeneralAddress}
+                         generalAddress={this.props.generalAddress}
+                         generalSettingsData={this.props.generalSettingsData}/>
             </TabPane>
           </Tabs>
         </Widget>
@@ -58,11 +75,16 @@ class GeneralSettings extends Component {
 }
 
 const mapStateToProps = ({generalSettings}) => {
-  const {generalSettingsData} = generalSettings;
-  return {generalSettingsData};
+  const {generalSettingsData, countriesList, generalAddress, companyLogo, favicon} = generalSettings;
+  return {generalSettingsData, countriesList, generalAddress, companyLogo, favicon};
 };
 
 export default connect(mapStateToProps, {
   onGetGeneralDetails,
-  onSaveGeneralDetails
+  onSaveGeneralDetails,
+  onGetCountriesList,
+  onSaveGeneralAddress,
+  onGetGeneralAddress,
+  onAddCompanyLogo,
+  onAddCompanyFavicon
 })(GeneralSettings);

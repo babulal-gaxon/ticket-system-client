@@ -9,6 +9,7 @@ const Customers = ({match}) => (
         <Route path={`${match.url}/all-customers`} component={asyncComponent(() => import('./AllCustomers/index'))}/>
         <Route path={`${match.url}/add-customers`} component={asyncComponent(() => import('./AllCustomers/AddNewCustomers'))}/>
         <Route path={`${match.url}/companies`} component={asyncComponent(() => import('./Companies/index'))}/>
+      <Route path={`${match.url}/labels`} component={asyncComponent(() => import('./CustomersLabel/index'))}/>
     </Switch>
 );
 

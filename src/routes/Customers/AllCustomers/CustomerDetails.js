@@ -9,9 +9,11 @@ class CustomerDetails extends Component {
       selectedRowKeys: []
     }
   }
+
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
   };
+
   onGetTableColumns = () => {
     return [
       {
@@ -70,6 +72,7 @@ class CustomerDetails extends Component {
       },
     ];
   };
+
   onEditProfile = () => {
     this.props.getCustomerId(this.props.currentCustomer.id);
     this.props.history.push('/customers/add-customers')
@@ -89,8 +92,8 @@ class CustomerDetails extends Component {
           <Col xl={12} lg={12} md={12} sm={12} xs={24}>
             <Widget>
               <div className="gx-d-flex gx-justify-content-between gx-mb-5">
-              <span className="gx-font-weight-bold">Customer Details</span>
-              <i className="icon icon-arrow-left" onClick={() => this.props.onBackToList()}/>
+                <span className="gx-font-weight-bold">Customer Details</span>
+                <i className="icon icon-arrow-left" onClick={() => this.props.onBackToList()}/>
               </div>
               <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
                 {currentCustomer.avatar ?
@@ -99,12 +102,11 @@ class CustomerDetails extends Component {
                           style={{backgroundColor: '#f56a00'}}>{currentCustomer.first_name[0].toUpperCase()}</Avatar>}
                 <div className="gx-media-body">
                   <div className="gx-d-flex gx-justify-content-between">
-                    <span
-                      className="gx-mb-0 gx-text-capitalize gx-font-weight-bold">{currentCustomer.first_name + " " + currentCustomer.last_name}</span>
+                    <span className="gx-mb-0 gx-text-capitalize gx-font-weight-bold">
+                      {currentCustomer.first_name + " " + currentCustomer.last_name}</span>
                     <span><Tag color="blue" onClick={this.onEditProfile}>
                 <i className="icon icon-edit gx-mr-3"/>Edit Profile</Tag></span>
                   </div>
-
                   <div className="gx-mt-2">
                     <Tag color={currentCustomer.status === 1 ? "green" : "red"}>
                       {currentCustomer.status === 1 ? "Active" : "Disabled"}
@@ -139,36 +141,59 @@ class CustomerDetails extends Component {
                 </Col>
                 <Col>{currentCustomer.address}</Col>
               </Row>
-
             </Widget>
           </Col>
           <Col xl={12} lg={12} md={12} sm={12} xs={24}>
             <Widget>
               <div className="gx-d-flex gx-justify-content-between gx-mb-5">
-              <span className="gx-font-weight-bold">Company Details</span>
+                <span className="gx-font-weight-bold">Company Details</span>
               </div>
               <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
-              <Avatar className="gx-mr-3 gx-size-100" src="https://via.placeholder.com/150x150"/>
-              <div className="gx-media-body">
+                {currentCustomerCompany.avatar ?
+                  <Avatar className="gx-mr-3 gx-size-80" src={currentCustomerCompany.avatar.src}/> :
+                  <Avatar className="gx-mr-3 gx-size-80"
+                          style={{backgroundColor: '#f56a00'}}>{currentCustomerCompany.company_name[0].toUpperCase()}</Avatar>}
+                <div className="gx-media-body">
                 <span>
                   <span className="gx-mb-0 gx-text-capitalize">
                     {currentCustomerCompany.company_name}
                   </span>
                   <div>{currentCustomerCompany.website}</div>
                 </span>
+                </div>
               </div>
-              </div>
-                <div className="gx-ml-0 gx-text-capitalize">
-                  Other Members
-            </div>
-              <div className="gx-mb-5">Currently No Members of this company is associated.</div>
+              {currentCustomerCompany.members.length > 1 ?
+                <div>
+                  <div className="gx-mb-5">Other Members</div>
+                  <div className="gx-d-flex gx-pl-0">
+                    {currentCustomerCompany.members.map(member => {
+                      return (member.id !== currentCustomer.id) ?
+                        <div key={member.id}
+                             className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5 gx-mx-5">
+                          {member.avatar ?
+                            <Avatar className="gx-mr-3 gx-size-50" src={member.avatar.src}/> :
+                            <Avatar className="gx-mr-3 gx-size-50"
+                                    style={{backgroundColor: '#f56a00'}}>{member.first_name[0].toUpperCase()}</Avatar>}
+                          <div className="gx-media-body">
+                            <div className="gx-d-flex gx-justify-content-between">
+                    <span
+                      className="gx-mb-0 gx-text-capitalize gx-font-weight-bold">{member.first_name + " " + member.last_name}</span>
+                            </div>
+                            <div className="gx-mt-2">
+                              <span>{member.email}</span>
+                            </div>
+                          </div>
+                        </div> : null
+                    })}
+                  </div>
+                </div> :
+                <div className="gx-text-center">Currently No Other Members of this company is associated.</div>}
             </Widget>
           </Col>
         </Row>
         <Widget title={<span>Assigned Tickets</span>}>
-          <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
-                 className="gx-mb-4"
-          />
+          <Table rowKey="customerDetails" rowSelection={rowSelection} columns={this.onGetTableColumns()}
+                 className="gx-mb-4"/>
         </Widget>
       </div>
     );

@@ -4,22 +4,22 @@ import {Breadcrumb, Button, Col, Form, Radio, Select} from "antd";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {onGetLocalizationDetails, onSaveLocalizationDetails} from "../../../appRedux/actions/GeneralSettings";
+import InfoView from "../../../components/InfoView";
 
 const {Option} = Select;
 
 class Localization extends Component {
   constructor(props) {
     super(props);
-    if(this.props.localizationDetails ===  null) {
-    this.state = {
-      date_format: "",
-      time_format: "",
-      default_language: "",
-      disable_language_selection: "0"
-    }
-  }
-    else {
-      const {date_format,time_format,default_language,disable_language_selection} =this.props.localizationDetails;
+    if (this.props.localizationDetails === null) {
+      this.state = {
+        date_format: "",
+        time_format: "",
+        default_language: "",
+        disable_language_selection: "0"
+      }
+    } else {
+      const {date_format, time_format, default_language, disable_language_selection} = this.props.localizationDetails;
       this.state = {
         date_format: date_format,
         time_format: time_format,
@@ -34,8 +34,8 @@ class Localization extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-      const {date_format, time_format, default_language, disable_language_selection} = nextProps.localizationDetails;
-      if(JSON.stringify(nextProps.localizationDetails) !== JSON.stringify(this.props.localizationDetails)) {
+    const {date_format, time_format, default_language, disable_language_selection} = nextProps.localizationDetails;
+    if (JSON.stringify(nextProps.localizationDetails) !== JSON.stringify(this.props.localizationDetails)) {
       this.setState({
         date_format: date_format,
         time_format: time_format,
@@ -43,7 +43,7 @@ class Localization extends Component {
         disable_language_selection: disable_language_selection
       })
     }
-  }
+  };
 
   onDateSelect = value => {
     this.setState({date_format: value})
@@ -67,9 +67,8 @@ class Localization extends Component {
   };
 
   render() {
-    console.log("sate local", this.state)
     const {getFieldDecorator} = this.props.form;
-    const {date_format,time_format, default_language, disable_language_selection} = this.state;
+    const {date_format, time_format, default_language, disable_language_selection} = this.state;
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -102,11 +101,11 @@ class Localization extends Component {
               <Col sm={12} xs={24} className="gx-pr-0">
                 <Form.Item label="Time Format">
                   {getFieldDecorator('time_format', {
-                    initialValue:time_format,
+                    initialValue: time_format,
                     rules: [{required: true, message: 'Please Enter State Name!'}],
                   })(<Select style={{width: "100%"}} onChange={this.onTimeSelect}>
-                    <Option value="24 Hours">24 Hours</Option>
-                    <Option value="12 Hours">12 Hours</Option>
+                    <Option value="24 Hours">24 Hours (20:30)</Option>
+                    <Option value="12 Hours">12 Hours (08:30)</Option>
                   </Select>)}
                 </Form.Item>
               </Col>
@@ -135,10 +134,10 @@ class Localization extends Component {
             <hr/>
             <div className="gx-d-flex">
               <Button type="primary" style={{width: "150px"}} onClick={this.onValidationCheck}>Save</Button>
-              <Button type="default" style={{width: "150px"}}>Reset</Button>
             </div>
           </Form>
         </Widget>
+        <InfoView/>
       </div>
     );
   }

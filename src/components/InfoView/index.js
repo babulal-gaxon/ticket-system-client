@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import CircularProgress from "components/CircularProgress/index";
 import {message} from 'antd';
 import Auxiliary from "util/Auxiliary";
 import {connect} from "react-redux";
 import {hideMessage} from "appRedux/actions/Common";
 
-class InfoView extends React.Component {
+class InfoView extends PureComponent {
   componentWillReceiveProps(nextProps) {
     if (nextProps.error || nextProps.message || nextProps.displayMessage) {
       setTimeout(() => {
@@ -13,6 +13,13 @@ class InfoView extends React.Component {
       }, 3000);
     }
   }
+
+  showMessage = (displayMessage) => {
+    message.success(displayMessage)
+  };
+  showError = (error) => {
+    message.error(error)
+  };
 
   render() {
     const {error, loading, displayMessage} = this.props;
@@ -22,8 +29,10 @@ class InfoView extends React.Component {
         {loading && <div className="gx-loader-view">
           <CircularProgress className=""/>
         </div>}
-        {displayMessage && message.success(displayMessage)}
-        {error && message.error(error)}
+
+        {displayMessage && this.showMessage(displayMessage)}
+        {error && this.showError(error)}
+
       </Auxiliary>
     );
   }

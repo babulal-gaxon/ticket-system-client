@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Dropzone from "react-dropzone";
 import {Avatar, Button} from "antd";
+import PropTypes from "prop-types";
 
 
 class ImageUpload extends Component {
@@ -15,7 +16,7 @@ class ImageUpload extends Component {
   }
 
   onDrop = files => {
-    console.log("files", files);
+    console.log("files", files)
     files.map(file => Object.assign(file, {
       preview: URL.createObjectURL(file)
     }));
@@ -30,10 +31,11 @@ class ImageUpload extends Component {
     const data = new FormData()
     data.append('file', this.state.file);
     data.append('title', this.state.title);
-    console.log("file to be sent", data)
     this.props.onAddProfileImage(data);
   };
+
   render() {
+    const imageAvatar = this.props.imageAvatar;
     const {file, profile_pic} = this.state;
     return (
       <div>
@@ -44,7 +46,8 @@ class ImageUpload extends Component {
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <Avatar className="gx-mr-3 gx-size-200" src="https://via.placeholder.com/150x150"/>
+                    {imageAvatar ? <Avatar className="gx-mr-3 gx-size-200" src={imageAvatar.src}/> :
+                      <Avatar className="gx-mr-3 gx-size-200" src="https://via.placeholder.com/150x150"/>}
                   </div>
                 </section>
               )}
@@ -53,7 +56,7 @@ class ImageUpload extends Component {
           :
           <div>
             <div>
-              <img alt="" src={file ? file.preview : ""}/>
+              <Avatar className="gx-mr-3 gx-size-200" alt="" src={file ? file.preview : ""}/>
               <span onClick={() => {
                 this.setState({
                   profile_pic: '',
@@ -61,7 +64,6 @@ class ImageUpload extends Component {
                 })
               }}>Change</span>
             </div>
-            {/*<span>Your Profile Photo</span>*/}
           </div>
         }
         <Button type="primary" className="gx-mt-5" onClick={this.onUploadImage}>Add Profile Image</Button>
@@ -70,5 +72,13 @@ class ImageUpload extends Component {
   }
 }
 
-
 export default ImageUpload;
+
+ImageUpload.defaultProps = {
+  imageAvatar: null
+};
+
+ImageUpload.propTypes = {
+  imageAvatar: PropTypes.object,
+  onAddProfileImage: PropTypes.func,
+};
