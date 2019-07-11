@@ -5,7 +5,7 @@ import {
   DELETE_CUSTOMERS,
   DISABLE_CUSTOMER,
   EDIT_CUSTOMER_DETAILS,
-  GET_CUSTOMER_ID,
+  GET_CUSTOMER_ID, GET_CUSTOMER_TICKETS,
   GET_CUSTOMERS_DATA
 } from "../../constants/Customers";
 
@@ -14,7 +14,8 @@ const initialState = {
   totalItems: null,
   customerId: null,
   profilePicId: null,
-  customerAddress: null
+  customerAddress: [],
+  customerTickets: null
 };
 
 export default (state = initialState, action) => {
@@ -73,7 +74,13 @@ export default (state = initialState, action) => {
     case ADD_COMPANY_ADDRESS:
       return {
         ...state,
-        customerAddress: action.payload
+        customerAddress: state.customerAddress.concat(action.payload)
+      };
+
+    case GET_CUSTOMER_TICKETS:
+      return {
+        ...state,
+        customerTickets: action.payload.data
       };
 
     default:

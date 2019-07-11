@@ -8,11 +8,13 @@ import {
   DISABLE_CUSTOMER,
   EDIT_CUSTOMER_DETAILS,
   GET_CUSTOMER_ID,
+  GET_CUSTOMER_TICKETS,
   GET_CUSTOMERS_DATA
 } from "../../constants/Customers";
 
 
 export const onGetCustomersData = (currentPage, itemsPerPage, filterData, companies, labels, status) => {
+  console.log("status", status)
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get(`/setup/customers`, {
@@ -157,7 +159,7 @@ export const onAddCustomerAddress = (details) => {
   console.log("onAddCustomerAddress", details);
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post('/setup/customer/address', details).then(({data}) => {
+    axios.post('/setup/customers/address', details).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
         console.log(" sending data", data.data);
@@ -165,6 +167,24 @@ export const onAddCustomerAddress = (details) => {
         dispatch({type: SHOW_MESSAGE, payload: "The Address has been saved successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onGetCustomerTickets = (customerId) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.get(`/setup/customers/${customerId}/tickets`).then(({data}) => {
+      console.info("onGetCustomerTickets: ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_CUSTOMER_TICKETS, payload: data});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});

@@ -28,7 +28,7 @@ class AddNewCustomers extends Component {
         isModalVisible: false,
         status: 1,
         profile_pic: null,
-        address: null
+        addresses: []
       };
     } else {
       const selectedCustomer = this.props.customersList.find(customer => customer.id === this.props.customerId);
@@ -54,7 +54,7 @@ class AddNewCustomers extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.onGetLabelData();
     this.props.onGetCompaniesData();
     this.props.onGetCountriesList();
@@ -70,7 +70,10 @@ class AddNewCustomers extends Component {
 
   onCustomerAdd = () => {
     if (this.props.customerId === null) {
-      this.setState({profile_pic: this.props.profilePicId},
+      this.setState({
+          profile_pic: this.props.profilePicId,
+          addresses: this.props.customerAddress.map(address => address.id)
+        },
         () => {
           this.props.onAddNewCustomer({...this.state}, this.props.history)
         })
@@ -126,6 +129,7 @@ class AddNewCustomers extends Component {
   };
 
   render() {
+    console.log("customerAddress", this.props.customerAddress);
     const {getFieldDecorator} = this.props.form;
     const {phone, status, label_ids, company_id, first_name, last_name, email} = this.state;
     const labelOptions = this.onLabelSelectOption();
@@ -226,15 +230,19 @@ class AddNewCustomers extends Component {
                 </Form.Item>
 
               </Form>
-              {this.props.customerAddress ?
-              <div className="gx-main-layout-content" style={{width: "60%"}}>
-                <Widget styleName="gx-card-filter">
-                  {customerAddress.address_type.map(type => {
-                    return <Tag color="#108ee9">{type}</Tag>})}
-                  <p>{customerAddress.address_line_1}</p>
-                  <p>{`${customerAddress.city}, ${customerAddress.state} - ${customerAddress.zip_code}`}</p>
-                </Widget>
-              </div> : null}
+              {this.props.customerAddress.length > 0 ?
+                <div className="gx-main-layout-content" style={{width: "60%"}}>
+                  {customerAddress.map(address => {
+                    return <Widget styleName="gx-card-filter">
+
+                      {address.address_type.map(type => {
+                        return <Tag color="#108ee9">{type}</Tag>
+                      })}
+                      <p>{address.address_line_1}</p>
+                      <p>{`${address.city}, ${address.state} - ${address.zip_code}`}</p>
+                    </Widget>
+                  })}
+                </div> : null}
               <span>
                 <Button type="primary" onClick={this.onValidationCheck}>
                   Save

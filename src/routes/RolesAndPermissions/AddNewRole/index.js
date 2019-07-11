@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
 import {onBulkDeleteStaff, onGetStaff, onGetStaffId} from "../../../appRedux/actions/SupportStaff";
-import StaffDetail from "../../Staff/StaffList/StaffDetail";
+import StaffDetail from "../../Staff/StaffList/StaffDetail/index";
 import StaffWithSelectedRole from "./StaffWithSelectedRole";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";

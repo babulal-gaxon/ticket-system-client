@@ -22,12 +22,11 @@ import TicketDetail from "./TicketDetail";
 import InfoView from "../../../components/InfoView";
 import {
   getTickedId,
-  onAssignStaffToTicket,
   onDeleteTicket,
   onGetConversationList,
   onGetTickets,
   onSendMessage,
-  onUpdateTicketPriority, onUpdateTickets,
+  onUpdateTicketPriority,
   onUpdateTicketStatus
 } from "../../../appRedux/actions/TicketList";
 import {onGetTicketPriorities} from "../../../appRedux/actions/TicketPriorities";
@@ -71,9 +70,7 @@ class AllTickets extends Component {
   };
 
   onSideBarActive = () => {
-    const {current, itemNumbers, filterText, sortParam} = this.state;
     this.setState({sideBarActive: !this.state.sideBarActive});
-    this.onGetPaginatedData(current, itemNumbers, filterText, sortParam)
   };
 
   onFilterTextChange = (e) => {
@@ -401,13 +398,6 @@ class AllTickets extends Component {
                 /> : null}
             </Widget> :
             <TicketDetail currentTicket={this.state.currentTicket}
-                          priorities={this.props.priorities}
-                          statuses={this.props.statuses}
-                          onBackToList={this.onBackToList}
-                          history={this.props.history}
-                          onAssignStaffToTicket={this.props.onAssignStaffToTicket}
-                          staffList={this.props.staffList}
-                          onUpdateTickets={this.props.onUpdateTickets}
             />
           }
           <InfoView/>
@@ -451,8 +441,6 @@ export default connect(mapStateToProps, {
   onUpdateTicketPriority,
   onGetConversationList,
   onSendMessage,
-  onAssignStaffToTicket,
-  onUpdateTickets
 })(AllTickets)
 ;
 

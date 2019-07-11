@@ -1,13 +1,21 @@
 import React, {Component} from "react"
-import {Avatar, Col, Divider, Row, Table, Tag} from "antd";
+import {Avatar, Col, Divider, Row, Table, Tag, Tooltip} from "antd";
 import Widget from "../../../components/Widget";
+import TicketDetail from "../../ManageTickets/AllTickets/TicketDetail";
+import moment from "moment";
 
 class CustomerDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRowKeys: []
+      selectedRowKeys: [],
+      currentTicket: null
     }
+  }
+
+  componentDidMount() {
+    const currentCustomer = this.props.currentCustomer;
+    this.props.onGetCustomerTickets(currentCustomer.id);
   }
 
   onSelectChange = selectedRowKeys => {
@@ -18,18 +26,24 @@ class CustomerDetails extends Component {
     return [
       {
         title: 'Ticket Detail',
-        dataIndex: 'ticketDetail',
-        key: 'ticketDetail',
+        dataIndex: 'title',
+        key: 'title',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">Demo</span>
-        },
-      },
-      {
-        title: 'Product',
-        dataIndex: 'product',
-        key: 'product',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">Demo Product</span>
+          return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
+              {record.assigned_by ?
+                <Tooltip placement="top" title={record.assigned_by.first_name + " " + record.assigned_by.last_name}>
+                  {record.assigned_by.avatar ?
+                    <Avatar className="gx-mr-3 gx-size-50" src={record.assigned_by.avatar.src}/> :
+                    <Avatar className="gx-mr-3 gx-size-50"
+                            style={{backgroundColor: '#f56a00'}}>{record.assigned_by.first_name[0].toUpperCase()}</Avatar>}
+                </Tooltip> : <Avatar className="gx-size-50 gx-mr-3" src="https://via.placeholder.com/150x150"/>}
+              <div className="gx-media-body">
+                <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
+                <Tag className="gx-ml-2" color="blue">{record.product_name}</Tag>
+                <div>{record.content}</div>
+              </div>
+            </div>
+          )
         },
       },
       {
@@ -37,40 +51,30 @@ class CustomerDetails extends Component {
         dataIndex: 'assignDate',
         key: 'assignDate',
         render: (text, record) => {
-          return <Tag color={record.color_code}>Demo Date</Tag>
+          return <span className="gx-text-grey">{moment(record.created_at.date).format('LL')}</span>
         },
       },
       {
         title: 'Status',
         dataIndex: 'status_id',
-        key: 'Status',
+        key: 'status_id',
         render: (text, record) => {
-          return <Tag color="blue">
-            status
-          </Tag>
+          return <Tag color="green">{record.status_name}</Tag>
         },
       },
       {
         title: 'Priority',
-        dataIndex: 'priority',
-        key: 'priority',
+        dataIndex: 'priority_name',
+        key: 'priority_name',
         render: (text, record) => {
-          return <Tag color="red">
-            Priority
-          </Tag>
-        },
-      },
-      {
-        title: '',
-        dataIndex: '',
-        key: 'empty',
-        render: (text, record) => {
-          return <span><i className="icon icon-edit gx-mr-3"/>
-            <i className="icon icon-trash"/>
-          </span>
+          return <Tag color={record.priority_color_code}> {record.priority_name}</Tag>
         },
       },
     ];
+  };
+
+  onSelectTicket = record => {
+    this.setState({currentTicket: record})
   };
 
   onEditProfile = () => {
@@ -79,14 +83,16 @@ class CustomerDetails extends Component {
   };
 
   render() {
-    const {selectedRowKeys} = this.state;
+    console.log("customerTickets", this.props.currentCustomerCompany);
+    const {selectedRowKeys, currentTicket} = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
-    const currentCustomer = this.props.currentCustomer;
-    const currentCustomerCompany = this.props.currentCustomerCompany;
+    const {currentCustomer, currentCustomerCompany, customerTickets} = this.props;
     return (
+      <div>
+        {currentTicket === null ?
       <div className="gx-main-content">
         <Row>
           <Col xl={12} lg={12} md={12} sm={12} xs={24}>
@@ -192,9 +198,16 @@ class CustomerDetails extends Component {
           </Col>
         </Row>
         <Widget title={<span>Assigned Tickets</span>}>
-          <Table rowKey="customerDetails" rowSelection={rowSelection} columns={this.onGetTableColumns()}
-                 className="gx-mb-4"/>
+          <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()}
+                 className="gx-mb-4" dataSource={customerTickets}
+                 onRow={(record) => ({
+                   onClick: () => {
+                     this.onSelectTicket(record)
+                   }
+                 })}
+          />
         </Widget>
+      </div> : <TicketDetail currentTicket={currentTicket}/>}
       </div>
     );
   }

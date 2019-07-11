@@ -3,17 +3,19 @@ import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../const
 import {
   ADD_STAFF_NOTE,
   ADD_SUPPORT_STAFF,
-  BULK_DELETE_SUPPORT_STAFF, DELETE_STAFF_NOTE,
-  DISABLE_STAFF_STATUS, EDIT_STAFF_NOTE,
+  BULK_DELETE_SUPPORT_STAFF,
+  DELETE_STAFF_NOTE,
+  DISABLE_STAFF_STATUS,
+  EDIT_STAFF_NOTE,
   EDIT_SUPPORT_STAFF,
-  GET_STAFF_ID, GET_STAFF_NOTES,
+  GET_STAFF_ID,
+  GET_STAFF_NOTES,
+  GET_STAFF_TICKETS,
   GET_SUPPORT_STAFF,
   UPLOAD_PROFILE_IMAGE
 } from "../../constants/SupportStaff";
 
-
 export const onGetStaff = (currentPage, itemsPerPage, filterText) => {
-  console.log("filterText", filterText)
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get(`/setup/staffs`, {
@@ -65,13 +67,16 @@ export const onAddSupportStaff = (staffMember, history) => {
   }
 };
 
-export const onBulkDeleteStaff = (staffIds) => {
+export const onBulkDeleteStaff = (staffIds, history) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/staffs/delete', staffIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DELETE_SUPPORT_STAFF, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
+        if (history) {
+          history.goBack();
+        }
         dispatch({type: SHOW_MESSAGE, payload: "The Staff(s) has been deleted successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
@@ -148,11 +153,11 @@ export const onAddProfileImage = (imageFile) => {
 export const onGetStaffNotes = (staffId) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get(`staffs/${staffId}/notes`).then(({data}) => {
+    axios.get(`/setup/staffs/${staffId}/notes`).then(({data}) => {
       console.info("onGetStaffNotes: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_STAFF_NOTES, payload: data.data});
+        dispatch({type: GET_STAFF_NOTES, payload: data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }
@@ -166,7 +171,7 @@ export const onGetStaffNotes = (staffId) => {
 export const onAddStaffNote = (staffId, Note) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post(`staffs/${staffId}/notes`, Note).then((data) => {
+    axios.post(`/setup/staffs/${staffId}/notes`, Note).then((data) => {
       if (data.data.success) {
         console.log(" sending data of staff", data.data);
         dispatch({type: ADD_STAFF_NOTE, payload: data.data.data});
@@ -182,10 +187,10 @@ export const onAddStaffNote = (staffId, Note) => {
   }
 };
 
-export const onEditStaffNotes = (noteId, Note) => {
+export const onEditStaffNotes = (note) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.put(`staffs/notes/${noteId}`, Note).then(({data}) => {
+    axios.put(`/setup/staffs/notes/${note.id}`, note).then(({data}) => {
       if (data.success) {
         dispatch({type: EDIT_STAFF_NOTE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
@@ -203,13 +208,31 @@ export const onEditStaffNotes = (noteId, Note) => {
 export const onDeleteStaffNotes = (noteId) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.delete(`staffs/notes/${noteId}`).then(({data}) => {
+    axios.delete(`/setup/staffs/notes/${noteId}`).then(({data}) => {
       if (data.success) {
-        dispatch({type: DELETE_STAFF_NOTE, payload: data.data});
+        dispatch({type: DELETE_STAFF_NOTE, payload: noteId});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Note has been Deleted successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onGetStaffTickets = (staffId) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.get(`/setup/staffs/${staffId}/tickets`).then(({data}) => {
+      console.info("onGetStaffTickets: ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_STAFF_TICKETS, payload: data});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});

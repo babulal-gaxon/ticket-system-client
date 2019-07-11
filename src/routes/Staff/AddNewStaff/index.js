@@ -1,17 +1,23 @@
 import React, {Component} from "react"
-import {Button, Col, Form, Input, Radio, Row} from "antd/lib/index";
+import {Button, Col, Form, Input, Modal, Radio, Row} from "antd/lib/index";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
-import {onAddProfileImage, onAddSupportStaff, onEditSupportStaff} from "../../../appRedux/actions/SupportStaff";
+import {
+  onAddProfileImage,
+  onAddSupportStaff,
+  onBulkDeleteStaff,
+  onEditSupportStaff
+} from "../../../appRedux/actions/SupportStaff";
 import {onGetDepartments} from "../../../appRedux/actions/Departments";
-import {Breadcrumb, Select} from "antd";
+import {Breadcrumb, Divider, Select} from "antd";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
 import {onGetRoles} from "../../../appRedux/actions/RolesAndPermissions";
 import ImageUpload from "./ImageUpload";
 
 const {Option} = Select;
+const {confirm} = Modal;
 
 class AddNewStaff extends Component {
   constructor(props) {
@@ -27,11 +33,12 @@ class AddNewStaff extends Component {
         departments_ids: [],
         account_status: 1,
         profile_pic: null,
-        role_id: null
+        role_id: null,
+        designation: ""
       };
     } else {
       const selectedStaff = this.props.staffList.find(staff => staff.id === this.props.staffId);
-      const {id, first_name, last_name, email, mobile, hourly_rate, account_status, role_id, avatar} = selectedStaff;
+      const {id, first_name, last_name, email, mobile, hourly_rate, status, role_id, avatar, designation} = selectedStaff;
       const department_ids = selectedStaff.departments.map(department => {
         return department.id
       });
@@ -42,11 +49,13 @@ class AddNewStaff extends Component {
         email: email,
         mobile: mobile,
         hourly_rate: hourly_rate,
-        account_status: account_status,
+        account_status: status,
         departments_ids: department_ids,
         role_id: role_id,
         profile_pic: null,
-        imageAvatar: avatar
+        imageAvatar: avatar,
+        password: "",
+        designation: designation
       }
     }
     this.props.onGetDepartments();
@@ -110,20 +119,35 @@ class AddNewStaff extends Component {
     this.setState({role_id: value})
   };
 
+  showDeleteConfirm = () => {
+    confirm({
+      title: 'Are you sure you want to delete this profile ?',
+      okText: "Yes, Delete Profile",
+      cancelText: "Cancel",
+      onOk: () => {
+        this.props.onBulkDeleteStaff({ids: this.props.staffId}, this.props.history)
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
+
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {mobile, hourly_rate, account_status, departments_ids, role_id, first_name, last_name, email, password} = this.state;
+    const {mobile, hourly_rate, account_status, departments_ids, role_id, first_name, last_name, email, password, designation} = this.state;
     const deptOptions = this.onDepartmentSelectOption();
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h3>{this.props.staffId === 0 ? "Add Staff Member" : "Edit Staff Details"}</h3>
+          <h4 className="gx-font-weight-bold">{this.props.staffId === 0 ? "Add Staff Member" : "Edit Staff Details"}</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/staff/all-members">Staffs</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/staff/add-new-member">{this.props.staffId === 0 ? "Add Staff" : "Edit Staff"}</Link>
+              <Link to="/staff/add-new-member"
+                    className="gx-text-primary">{this.props.staffId === 0 ? "Add Staff" : "Edit Staff"}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <hr/>
@@ -166,20 +190,37 @@ class AddNewStaff extends Component {
                     this.setState({mobile: e.target.value})
                   }}/>
                 </Form.Item>
+                <Form.Item label="Role">
+                  <Select value={role_id} onChange={this.onSelectRole} placeholder="Select a Role">
+                    {this.props.roles.map(role => {
+                      return <Option value={role.id}>{role.name}</Option>
+                    })}
+                  </Select>
+                </Form.Item>
                 <Form.Item label="Hourly Rate">
                   <Input type="text" addonAfter={<div>$</div>} value={hourly_rate} onChange={(e) => {
                     this.setState({hourly_rate: e.target.value})
                   }}/>
                 </Form.Item>
-                {this.props.staffId === 0 ?
-                <Form.Item label="Password">
-                  {getFieldDecorator('password', {
-                    initialValue: password,
-                    rules: [{required: true, message: 'Please Enter Password!'}],
-                  })(<Input.Password type="text" onChange={(e) => {
-                    this.setState({password: e.target.value})
-                  }}/>)}
-                </Form.Item> : null}
+                <Form.Item label="Designation">
+                  <Input type="text" value={designation} onChange={(e) => {
+                    this.setState({designation: e.target.value})
+                  }}/>
+                </Form.Item>
+                <Form.Item label="Password"
+                           extra={this.props.staffId === 0 ? "" : "Note: Leave it blank if you don't want to update password."}>
+                  {this.props.staffId === 0 ?
+                    getFieldDecorator('password', {
+                      initialValue: password,
+                      rules: [{required: true, message: 'Please Enter Password!'}],
+                    })(<Input.Password type="text" onChange={(e) => {
+                      this.setState({password: e.target.value})
+                    }}/>) :
+                    <Input.Password type="text" onChange={(e) => {
+                      this.setState({password: e.target.value})
+                    }}/>}
+                </Form.Item>
+
                 <Form.Item label="Department">
                   <Select
                     mode="multiple"
@@ -191,13 +232,7 @@ class AddNewStaff extends Component {
                     {deptOptions}
                   </Select>
                 </Form.Item>
-                <Form.Item label="Role">
-                  <Select value={role_id} onChange={this.onSelectRole}>
-                    {this.props.roles.map(role => {
-                      return <Option value={role.id}>{role.name}</Option>
-                    })}
-                  </Select>
-                </Form.Item>
+
                 <Form.Item label="Status">
                   <Radio.Group value={account_status} onChange={(e) => {
                     this.setState({account_status: e.target.value})
@@ -206,19 +241,6 @@ class AddNewStaff extends Component {
                     <Radio value={0}>Disabled</Radio>
                   </Radio.Group>
                 </Form.Item>
-                <Form.Item>
-                <span>
-                <Button type="primary" onClick={this.onValidationCheck}>
-                  Save
-                </Button>
-                     <Button type="primary" onClick={this.onReset}>
-                  Reset
-                </Button>
-                     <Button onClick={this.onReturnStaffScreen}>
-                  Cancel
-                </Button>
-                </span>
-                </Form.Item>
               </Form>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
@@ -226,6 +248,25 @@ class AddNewStaff extends Component {
                            imageAvatar={this.state.imageAvatar}/>
             </Col>
           </Row>
+          <Divider/>
+          <div className="gx-d-flex gx-justify-content-between">
+            <span>
+                <Button type="primary" onClick={this.onValidationCheck} style={{width: 150}}>
+                  Save
+                </Button>
+              {this.props.staffId === 0 ?
+                <Button type="primary" onClick={this.onReset} style={{width: 150}}>
+                  Reset
+                </Button> : null}
+              <Button onClick={this.onReturnStaffScreen} style={{width: 150}}>
+                  Cancel
+                </Button>
+            </span>
+            {this.props.staffId !== 0 ?
+              <span>
+              <Button type="danger" ghost style={{width: 150}} onClick={this.showDeleteConfirm}>Delete</Button>
+            </span> : null}
+          </div>
         </Widget>
         <InfoView/>
       </div>
@@ -247,7 +288,8 @@ export default connect(mapStateToProps, {
   onAddSupportStaff,
   onGetDepartments,
   onAddProfileImage,
-  onGetRoles
+  onGetRoles,
+  onBulkDeleteStaff
 })(AddNewStaff);
 
 AddNewStaff.defaultProps = {

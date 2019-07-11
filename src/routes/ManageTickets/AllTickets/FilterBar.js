@@ -111,6 +111,25 @@ class FilterBar extends Component {
     })
   };
 
+  onPrioritiesReset = () => {
+    const {endDate, selectedCustomers, selectedStaff, selectedStatuses, startDate, archive} = this.state;
+    const {current, itemNumbers, filterText, sortParam} = this.props;
+    this.setState({selectedPriorities: []}, () => {
+      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
+        selectedCustomers, selectedStaff, this.state.selectedPriorities, selectedStatuses, archive)
+    })
+  };
+
+  onStatusReset = () => {
+    const {endDate, selectedCustomers, selectedStaff, selectedPriorities, startDate, archive} = this.state;
+    const {current, itemNumbers, filterText, sortParam} = this.props;
+    this.setState({selectedStatuses: []}, () => {
+      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
+        selectedCustomers, selectedStaff, selectedPriorities, this.state.selectedStatuses, archive)
+    })
+  };
+
+
   render() {
     console.log("archive", this.state.archive);
     const {
@@ -198,13 +217,8 @@ class FilterBar extends Component {
             <div className="gx-mb-4">
               <div className="gx-d-flex gx-justify-content-between">
                 <h4>Priority</h4>
-                {selectedPriorities.length > 0 ? <Button type="link" onClick={() => {
-                  this.setState({selectedPriorities: []},
-                    () => {
-                      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
-                        selectedStaff, selectedCustomers, this.state.selectedPriorities, selectedStatuses, archive)
-                    })
-                }}> Reset</Button> : null}
+                {selectedPriorities.length > 0 ?
+                  <Button type="link" onClick={this.onPrioritiesReset}> Reset</Button> : null}
               </div>
               <Input type="text" value={priorityFilterText}
                      onChange={(e) => this.setState({priorityFilterText: e.target.value})}/>
@@ -219,13 +233,7 @@ class FilterBar extends Component {
             <div className="gx-mb-4">
               <div className="gx-d-flex gx-justify-content-between">
                 <h4>Status</h4>
-                {selectedStatuses.length > 0 ? <Button type="link" onClick={() => {
-                  this.setState({selectedStatuses: []},
-                    () => {
-                      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
-                        selectedStaff, selectedCustomers, selectedPriorities, this.state.selectedStatuses, archive)
-                    })
-                }}> Reset</Button> : null}
+                {selectedStatuses.length > 0 ? <Button type="link" onClick={this.onStatusReset}> Reset</Button> : null}
               </div>
               <Input type="text" value={statusFilterText}
                      onChange={(e) => this.setState({statusFilterText: e.target.value})}/>
