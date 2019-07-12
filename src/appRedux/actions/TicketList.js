@@ -1,12 +1,13 @@
 import axios from 'util/Api'
 import {
+  ADD_ATTACHMENTS,
   ADD_TICKETS,
   ASSIGN_STAFF_TO_TICKET,
   DELETE_TICKET,
-  GET_CONVERSATION_LIST,
+  GET_CONVERSATION_LIST, GET_FILTER_OPTIONS,
   GET_FORM_DETAILS,
   GET_TICKET_ID,
-  GET_TICKETS,
+  GET_TICKETS, SELECT_CURRENT_TICKET,
   SEND_MESSAGE,
   UPDATE_TICKET,
   UPDATE_TICKET_STATUS
@@ -14,6 +15,7 @@ import {
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import {showErrorMessage} from "./Auth";
 import moment from "moment";
+import {ADD_PROFILE_PICTURE, GET_CUSTOMER_FILTER_OPTIONS} from "../../constants/Customers";
 
 
 export const onGetTickets = (currentPage, itemsPerPage, filterText, sortingParam, startDate, endDate, selectedStaff,
@@ -102,6 +104,13 @@ export const onUpdateTickets = (ticketId, ticket) => {
   }
 };
 
+export const onSelectTicket = (ticket) => {
+  return {
+    type: SELECT_CURRENT_TICKET,
+    payload: ticket
+  }
+};
+
 export const onDeleteTicket = (ticketIds, backToList) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -119,6 +128,24 @@ export const onDeleteTicket = (ticketIds, backToList) => {
           dispatch({type: FETCH_ERROR, payload: data.error});
         }
       }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onGetFilterOptions = () => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.get('/tickets/filter/options').then(({data}) => {
+      if (data.success) {
+        console.log("onGetFilterOptions", data)
+        dispatch({type: GET_FILTER_OPTIONS, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
       console.info("Error****:", error.message);
     });
@@ -238,4 +265,27 @@ export const onAssignStaffToTicket = (ticketId, staffId) => {
     })
   }
 };
+
+export const onAddAttachments = (imageFile) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post("/uploads/temporary/media", imageFile, {
+      headers: {
+        'Content-Type': "multipart/form-data"
+      }
+    }).then(({data}) => {
+      if (data.success) {
+        dispatch({type: ADD_ATTACHMENTS, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "The Profile Picture has been added successfully"});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
 

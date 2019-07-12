@@ -7,6 +7,7 @@ import {
   DELETE_CUSTOMERS,
   DISABLE_CUSTOMER,
   EDIT_CUSTOMER_DETAILS,
+  GET_CUSTOMER_COMPANY, GET_CUSTOMER_FILTER_OPTIONS,
   GET_CUSTOMER_ID,
   GET_CUSTOMER_TICKETS,
   GET_CUSTOMERS_DATA
@@ -14,7 +15,6 @@ import {
 
 
 export const onGetCustomersData = (currentPage, itemsPerPage, filterData, companies, labels, status) => {
-  console.log("status", status)
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get(`/setup/customers`, {
@@ -133,6 +133,26 @@ export const onDeleteCustomers = (customerIds) => {
   }
 };
 
+export const onGetCustomerFilterOptions = () => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.get('/setup/customers/filter/options').then(({data}) => {
+      if (data.success) {
+        console.log("onGetCustomerFilterOptions", data)
+        dispatch({type: GET_CUSTOMER_FILTER_OPTIONS, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+
+
 export const onAddImage = (imageFile) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -183,6 +203,42 @@ export const onGetCustomerTickets = (customerId) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_CUSTOMER_TICKETS, payload: data});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onGetCustomerCompany = (companyId) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.get(`/setup/customer/companies/${companyId}/members`).then(({data}) => {
+      console.info("onGetCustomerCompany: ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_CUSTOMER_COMPANY, payload: data.data});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onResetPassword = (customerId, password) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post(`/setup/customers/${customerId}/reset/password`, password).then(({data}) => {
+      console.info("onResetPassword: ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "The Password has been changed successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }

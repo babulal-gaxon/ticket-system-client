@@ -5,15 +5,16 @@ class ResetCustomerPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      confirmPassword: "",
-      newPassword: ""
+      password_confirmation: "",
+      password: ""
     }
   }
 
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-
+        this.props.onResetPassword(this.props.customerId, {...this.state});
+        this.props.onTogglePasswordModal();
       }
     });
   };
@@ -25,7 +26,7 @@ class ResetCustomerPassword extends Component {
 
   compareToFirstPassword = (rule, value, callback) => {
     const {form} = this.props;
-    if (value && value !== form.getFieldValue('newPassword')) {
+    if (value && value !== form.getFieldValue('password')) {
       callback('Two passwords that you enter is inconsistent!');
     } else {
       callback();
@@ -35,13 +36,12 @@ class ResetCustomerPassword extends Component {
   validateToNextPassword = (rule, value, callback) => {
     const {form} = this.props;
     if (value && this.state.confirmDirty) {
-      form.validateFields(['confirmPassword'], {force: true});
+      form.validateFields(['password_confirmation'], {force: true});
     }
     callback();
   };
 
   render() {
-    console.log(this.state.newPassword, this.state.confirmPassword);
     const {getFieldDecorator} = this.props.form;
     const {resetPasswordModal, onTogglePasswordModal} = this.props;
     return (
@@ -60,7 +60,7 @@ class ResetCustomerPassword extends Component {
           ]}>
           <Form layout="vertical">
             <Form.Item label="Password" hasFeedback>
-              {getFieldDecorator('newPassword', {
+              {getFieldDecorator('password', {
                 rules: [
                   {
                     required: true,
@@ -70,10 +70,10 @@ class ResetCustomerPassword extends Component {
                     validator: this.validateToNextPassword,
                   },
                 ],
-              })(<Input.Password onChange={(e) => this.setState({newPassword: e.target.value})}/>)}
+              })(<Input.Password onChange={(e) => this.setState({password: e.target.value})}/>)}
             </Form.Item>
             <Form.Item label="Confirm Password" hasFeedback>
-              {getFieldDecorator('confirmPassword', {
+              {getFieldDecorator('password_confirmation', {
                 rules: [
                   {
                     required: true,
@@ -84,7 +84,7 @@ class ResetCustomerPassword extends Component {
                   },
                 ],
               })(<Input.Password onBlur={this.handleConfirmBlur}
-                                 onChange={(e) => this.setState({confirmPassword: e.target.value})}/>)}
+                                 onChange={(e) => this.setState({password_confirmation: e.target.value})}/>)}
             </Form.Item>
           </Form>
         </Modal>

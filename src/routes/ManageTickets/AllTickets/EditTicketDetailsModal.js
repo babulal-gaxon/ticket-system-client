@@ -5,8 +5,8 @@ class EditTicketDetailsModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: this.props.currentTicket.title,
-      content: this.props.currentTicket.content
+      title: props.currentTicket.title,
+      content: props.currentTicket.content
     };
   }
   onEditDetails = () => {
@@ -21,7 +21,7 @@ class EditTicketDetailsModal extends Component {
       <div>
         <Modal
           visible={showEditModal}
-          title={"Edit Detail"}
+          title="Edit Detail"
           onCancel={() => onToggleEditModal()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onEditDetails}>

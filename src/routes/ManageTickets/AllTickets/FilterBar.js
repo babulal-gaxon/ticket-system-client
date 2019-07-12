@@ -131,13 +131,11 @@ class FilterBar extends Component {
 
 
   render() {
-    console.log("archive", this.state.archive);
     const {
       endDate, showMoreStaff, selectedStaff, selectedCustomers, selectedPriorities,
       selectedStatuses, startDate, staffFilterText, showMoreCustomer, customerFilterText, archive,
       priorityFilterText, statusFilterText
     } = this.state;
-    const {current, itemNumbers, filterText, sortParam} = this.props;
     const staffs = showMoreStaff ?
       this.props.staffList.filter(staff => staff.first_name.indexOf(staffFilterText) !== -1)
       : this.props.staffList.filter(staff => staff.first_name.indexOf(staffFilterText) !== -1).slice(0, 5);

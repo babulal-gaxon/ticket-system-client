@@ -29,7 +29,7 @@ class AddCustomerAddress extends Component {
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.props.onAddCustomerAddress({...this.state});
+        this.props.onSaveAddress({...this.state});
       }
     });
     this.props.onToggleAddressModal();

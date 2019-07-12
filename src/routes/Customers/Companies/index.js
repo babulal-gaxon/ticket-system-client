@@ -198,7 +198,7 @@ class Companies extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
-        <Menu.Item key="1">
+        <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
           Archive
         </Menu.Item>
         <Menu.Item key="2" onClick={this.onShowBulkDeleteConfirm}>

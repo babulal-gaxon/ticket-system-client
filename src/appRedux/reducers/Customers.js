@@ -4,7 +4,7 @@ import {
   ADD_PROFILE_PICTURE,
   DELETE_CUSTOMERS,
   DISABLE_CUSTOMER,
-  EDIT_CUSTOMER_DETAILS,
+  EDIT_CUSTOMER_DETAILS, GET_CUSTOMER_COMPANY, GET_CUSTOMER_FILTER_OPTIONS,
   GET_CUSTOMER_ID, GET_CUSTOMER_TICKETS,
   GET_CUSTOMERS_DATA
 } from "../../constants/Customers";
@@ -15,7 +15,10 @@ const initialState = {
   customerId: null,
   profilePicId: null,
   customerAddress: [],
-  customerTickets: null
+  customerTickets: null,
+  customerCompanyMembers: [],
+  company: [],
+  labels: []
 };
 
 export default (state = initialState, action) => {
@@ -81,6 +84,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
         customerTickets: action.payload.data
+      };
+
+    case GET_CUSTOMER_COMPANY:
+      return {
+        ...state,
+        customerCompanyMembers: action.payload
+      };
+
+    case GET_CUSTOMER_FILTER_OPTIONS:
+      return {
+        ...state,
+        company: action.payload.company,
+        labels: action.payload.lables
       };
 
     default:

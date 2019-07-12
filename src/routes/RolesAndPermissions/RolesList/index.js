@@ -178,7 +178,7 @@ class RolesList extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
-        <Menu.Item key="1">
+        <Menu.Item key="1" onClick={this.showBulkDeleteConfirm}>
           Archive
         </Menu.Item>
         {Permissions.canRoleDelete() ?

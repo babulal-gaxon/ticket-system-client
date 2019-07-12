@@ -106,7 +106,7 @@ class StaffList extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
-        <Menu.Item key="1">
+        <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
           Archive
         </Menu.Item>
         {(Permissions.canStaffDelete()) ?

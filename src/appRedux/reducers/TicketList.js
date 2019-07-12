@@ -1,11 +1,12 @@
 import {
+  ADD_ATTACHMENTS,
   ADD_TICKETS,
   ASSIGN_STAFF_TO_TICKET,
   DELETE_TICKET,
-  GET_CONVERSATION_LIST,
+  GET_CONVERSATION_LIST, GET_FILTER_OPTIONS,
   GET_FORM_DETAILS,
   GET_TICKET_ID,
-  GET_TICKETS,
+  GET_TICKETS, SELECT_CURRENT_TICKET,
   SEND_MESSAGE,
   UPDATE_TICKET,
   UPDATE_TICKET_PRIORITY,
@@ -22,7 +23,14 @@ const initialState = {
     products: [],
     services: [],
   },
-  assignedStaff: null
+  assignedStaff: null,
+  currentTicket: null,
+  filterData: {
+    staffs: [],
+    status: [],
+    priority: []
+  },
+  attachments: []
 };
 
 export default (state = initialState, action) => {
@@ -49,10 +57,17 @@ export default (state = initialState, action) => {
       };
 
     case UPDATE_TICKET:
-      const updatedTickets = state.tickets.map(ticket => ticket.id === action.payload.id ? action.payload : ticket)
+      const updatedTickets = state.tickets.map(ticket => ticket.id === action.payload.id ? action.payload : ticket);
       return {
         ...state,
-        tickets: updatedTickets
+        tickets: updatedTickets,
+        currentTicket: action.payload
+      };
+
+      case SELECT_CURRENT_TICKET:
+      return {
+        ...state,
+        currentTicket: action.payload
       };
 
     case UPDATE_TICKET_STATUS:
@@ -80,7 +95,6 @@ export default (state = initialState, action) => {
         ...state,
         tickets: updatedPriorityTickets
       };
-
 
     case DELETE_TICKET:
       const updated = state.tickets.filter(ticket => {
@@ -116,6 +130,18 @@ export default (state = initialState, action) => {
           ...state,
           assignedStaff: action.payload
         };
+
+    case GET_FILTER_OPTIONS:
+      return {
+        ...state,
+        filterData: action.payload
+      };
+
+    case ADD_ATTACHMENTS:
+      return {
+        ...state,
+        attachments: state.attachments.concat(action.payload)
+      };
 
     default:
       return state;

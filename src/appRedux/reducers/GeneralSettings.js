@@ -80,13 +80,13 @@ export default (state = initialState, action) => {
     case ADD_GENERAL_ADDRESS:
       return {
         ...state,
-        generalAddress: action.payload.addresses
+        generalAddress: action.payload
       };
 
     case GET_GENERAL_ADDRESS:
       return {
         ...state,
-        generalAddress: action.payload.addresses
+        generalAddress: action.payload
       };
 
     case ADD_COMPANY_LOGO:

@@ -10,7 +10,7 @@ class TicketAssigning extends Component {
       showStaffModal: false,
       selectedStaff: null,
       filterStaffText: "",
-      assignedStaff: null
+      assignedStaff: props.assignedTo ? props.assignedTo : null
     };
   };
 
@@ -42,7 +42,6 @@ class TicketAssigning extends Component {
     const staffList = this.onFilterData();
     return (
       <div className="gx-main-layout-content">
-        <div className="gx-mb-2">Assign To</div>
         {assignedStaff ?
           <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5"
                onClick={this.onToggleStaffModal}>
@@ -53,7 +52,10 @@ class TicketAssigning extends Component {
             <div className="gx-media-body gx-mt-2">
               <span
                 className="gx-mb-0 gx-text-capitalize">{assignedStaff.first_name + " " + assignedStaff.last_name}</span>
-              <div>{assignedStaff.email}</div>
+              <div className="gx-mb-2">{assignedStaff.email}</div>
+              <Tag>
+                Click to Change
+              </Tag>
             </div>
           </div> :
           <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5" onClick={this.onToggleStaffModal}>

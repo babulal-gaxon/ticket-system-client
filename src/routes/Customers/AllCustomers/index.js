@@ -5,13 +5,14 @@ import {
   getCustomerId,
   onDeleteCustomers,
   onDisableCustomer,
+  onGetCustomerCompany,
+  onGetCustomerFilterOptions,
   onGetCustomersData,
-  onGetCustomerTickets
+  onGetCustomerTickets,
+  onResetPassword
 } from "../../../appRedux/actions/Customers";
 import moment from "moment";
 import CustomerDetails from "./CustomerDetails";
-import {onGetLabelData} from "../../../appRedux/actions/Labels";
-import {onGetCompaniesData} from "../../../appRedux/actions/Companies";
 import {connect} from "react-redux";
 import InfoView from "../../../components/InfoView";
 import ResetCustomerPassword from "./ResetCustomerPassword";
@@ -33,19 +34,18 @@ class AllCustomers extends Component {
       sideBarActive: false,
       selectedCompanies: [],
       currentCustomer: null,
-      currentCustomerCompany: null,
       selectedLabels: [],
       companyFilterText: "",
       showMoreCompany: false,
       status: [],
-      resetPasswordModal: false
+      resetPasswordModal: false,
+      resetPasswordCustomerId: null
     }
   }
 
   componentDidMount() {
     this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
-    this.props.onGetCompaniesData();
-    this.props.onGetLabelData();
+    this.props.onGetCustomerFilterOptions();
   }
 
   onGetPaginatedData = (currentPage, itemsPerPage, filterText, companies, labels, status) => {
@@ -53,9 +53,7 @@ class AllCustomers extends Component {
   };
 
   onSideBarShow = () => {
-    this.setState({
-      sideBarActive: !this.state.sideBarActive
-    })
+    this.setState({sideBarActive: !this.state.sideBarActive})
   };
 
   onFilterTextChange = (e) => {
@@ -195,7 +193,11 @@ class AllCustomers extends Component {
         }}>
           Edit
         </Menu.Item>
-        <Menu.Item key="2" onClick={this.onTogglePasswordModal}>
+        <Menu.Item key="2" onClick={() => {
+          this.setState({resetPasswordCustomerId: customerId}, () => {
+            this.onTogglePasswordModal()
+          })
+        }}>
           Reset Password
         </Menu.Item>
 
@@ -239,11 +241,7 @@ class AllCustomers extends Component {
   };
 
   onSelectCustomer = record => {
-    const selectedCompany = this.props.companiesList.find(company => company.id === record.company.id);
-    this.setState({
-      currentCustomer: record,
-      currentCustomerCompany: selectedCompany
-    })
+    this.setState({currentCustomer: record, sideBarActive: false})
   };
 
   onShowBulkDeleteConfirm = () => {
@@ -270,7 +268,7 @@ class AllCustomers extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
-        <Menu.Item key="1">
+        <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
           Archive
         </Menu.Item>
         <Menu.Item key="2" onClick={this.onShowBulkDeleteConfirm}>
@@ -299,8 +297,8 @@ class AllCustomers extends Component {
   onGetSidebar = () => {
     const {companyFilterText, showMoreCompany, selectedCompanies, status} = this.state;
     const companiesList = showMoreCompany ?
-      this.props.companiesList.filter(company => company.company_name.indexOf(companyFilterText) !== -1)
-      : this.props.companiesList.filter(company => company.company_name.indexOf(companyFilterText) !== -1).slice(0, 5);
+      this.props.company.filter(company => company.company_name.indexOf(companyFilterText) !== -1)
+      : this.props.company.filter(company => company.company_name.indexOf(companyFilterText) !== -1).slice(0, 5);
     return <div className="gx-main-layout-sidenav gx-d-none gx-d-lg-flex">
       <div className="gx-main-layout-side">
         <div className="gx-main-layout-side-header">
@@ -325,7 +323,7 @@ class AllCustomers extends Component {
             <div>
             <span className="gx-text-primary"
                   onClick={() => this.setState({showMoreCompany: !this.state.showMoreCompany})}>
-              {this.state.showMoreCompany ? "View Less" : `${this.props.companiesList.length - 5} More`}
+              {this.state.showMoreCompany ? "View Less" : `${this.props.company.length - 5} More`}
             </span>
             </div>
           </div>
@@ -362,7 +360,7 @@ class AllCustomers extends Component {
 
   onLabelSelectOption = () => {
     const labelOptions = [];
-    this.props.labelList.map(label => {
+    this.props.labels.map(label => {
       return labelOptions.push(<Option value={label.id} key={label.id}>{label.name}</Option>)
     });
     return labelOptions;
@@ -399,8 +397,9 @@ class AllCustomers extends Component {
   };
 
   render() {
+    console.log("company, labels", this.props.company)
     const customers = this.props.customersList;
-    const {selectedRowKeys, resetPasswordModal, currentCustomer, sideBarActive, filterText} = this.state;
+    const {selectedRowKeys, resetPasswordModal, currentCustomer, sideBarActive, filterText, resetPasswordCustomerId} = this.state;
     let ids;
     const rowSelection = {
       selectedRowKeys,
@@ -461,15 +460,13 @@ class AllCustomers extends Component {
                                        currentCustomer={currentCustomer}
                                        history={this.props.history}
                                        onBackToList={this.onBackToList}
-                                       currentCustomerCompany={this.state.currentCustomerCompany}
-                                       onGetCustomerTickets={this.props.onGetCustomerTickets}
-                                       customerTickets={this.props.customerTickets}
-
           />}
         {sideBarActive ? this.onGetSidebar() : null}
         {resetPasswordModal ? <ResetCustomerPassword
           resetPasswordModal={resetPasswordModal}
-          onTogglePasswordModal={this.onTogglePasswordModal}/> : null}
+          onTogglePasswordModal={this.onTogglePasswordModal}
+          onResetPassword={this.props.onResetPassword}
+          customerId={resetPasswordCustomerId}/> : null}
         <InfoView/>
       </div>
     )
@@ -477,10 +474,10 @@ class AllCustomers extends Component {
 }
 
 const mapPropsToState = ({customers, companies, labelsList}) => {
-  const {customersList, totalItems, customerTickets} = customers;
+  const {customersList, totalItems, customerTickets, customerCompany, labels, company} = customers;
   const {companiesList} = companies;
   const {labelList} = labelsList;
-  return {customersList, totalItems, companiesList, labelList, customerTickets};
+  return {customersList, totalItems, companiesList, labelList, customerTickets, customerCompany, labels, company};
 };
 
 export default connect(mapPropsToState, {
@@ -488,7 +485,8 @@ export default connect(mapPropsToState, {
   onDeleteCustomers,
   getCustomerId,
   onDisableCustomer,
-  onGetCompaniesData,
-  onGetLabelData,
-  onGetCustomerTickets
+  onGetCustomerTickets,
+  onGetCustomerCompany,
+  onResetPassword,
+  onGetCustomerFilterOptions
 })(AllCustomers);

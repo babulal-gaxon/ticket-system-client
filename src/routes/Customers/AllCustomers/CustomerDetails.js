@@ -3,6 +3,8 @@ import {Avatar, Col, Divider, Row, Table, Tag, Tooltip} from "antd";
 import Widget from "../../../components/Widget";
 import TicketDetail from "../../ManageTickets/AllTickets/TicketDetail";
 import moment from "moment";
+import {connect} from "react-redux";
+import {onGetCustomerCompany, onGetCustomerTickets} from "../../../appRedux/actions/Customers";
 
 class CustomerDetails extends Component {
   constructor(props) {
@@ -16,6 +18,9 @@ class CustomerDetails extends Component {
   componentDidMount() {
     const currentCustomer = this.props.currentCustomer;
     this.props.onGetCustomerTickets(currentCustomer.id);
+    if (currentCustomer.company) {
+      this.props.onGetCustomerCompany(currentCustomer.company.id);
+    }
   }
 
   onSelectChange = selectedRowKeys => {
@@ -83,134 +88,159 @@ class CustomerDetails extends Component {
   };
 
   render() {
-    console.log("customerTickets", this.props.currentCustomerCompany);
+    console.log("customerCompany", this.props.currentCustomer);
     const {selectedRowKeys, currentTicket} = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
-    const {currentCustomer, currentCustomerCompany, customerTickets} = this.props;
+    const {currentCustomer, customerCompanyMembers, customerTickets} = this.props;
     return (
       <div>
         {currentTicket === null ?
-      <div className="gx-main-content">
-        <Row>
-          <Col xl={12} lg={12} md={12} sm={12} xs={24}>
-            <Widget>
-              <div className="gx-d-flex gx-justify-content-between gx-mb-5">
-                <span className="gx-font-weight-bold">Customer Details</span>
-                <i className="icon icon-arrow-left" onClick={() => this.props.onBackToList()}/>
-              </div>
-              <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
-                {currentCustomer.avatar ?
-                  <Avatar className="gx-mr-3 gx-size-100" src={currentCustomer.avatar.src}/> :
-                  <Avatar className="gx-mr-3 gx-size-100"
-                          style={{backgroundColor: '#f56a00'}}>{currentCustomer.first_name[0].toUpperCase()}</Avatar>}
-                <div className="gx-media-body">
-                  <div className="gx-d-flex gx-justify-content-between">
+          <div className="gx-main-content">
+            <Row>
+              <Col xl={12} lg={12} md={12} sm={12} xs={24}>
+                <Widget>
+                  <div className="gx-d-flex gx-justify-content-between gx-mb-5">
+                    <span className="gx-font-weight-bold">Customer Details</span>
+                    <i className="icon icon-arrow-left" onClick={() => this.props.onBackToList()}/>
+                  </div>
+                  <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
+                    {currentCustomer.avatar ?
+                      <Avatar className="gx-mr-3 gx-size-100" src={currentCustomer.avatar.src}/> :
+                      <Avatar className="gx-mr-3 gx-size-100"
+                              style={{backgroundColor: '#f56a00'}}>{currentCustomer.first_name[0].toUpperCase()}</Avatar>}
+                    <div className="gx-media-body">
+                      <div className="gx-d-flex gx-justify-content-between">
                     <span className="gx-mb-0 gx-text-capitalize gx-font-weight-bold">
                       {currentCustomer.first_name + " " + currentCustomer.last_name}</span>
-                    <span><Tag color="blue" onClick={this.onEditProfile}>
+                        <span><Tag color="blue" onClick={this.onEditProfile}>
                 <i className="icon icon-edit gx-mr-3"/>Edit Profile</Tag></span>
+                      </div>
+                      <div className="gx-mt-2">
+                        <Tag color={currentCustomer.status === 1 ? "green" : "red"}>
+                          {currentCustomer.status === 1 ? "Active" : "Disabled"}
+                        </Tag>
+                      </div>
+                    </div>
                   </div>
-                  <div className="gx-mt-2">
-                    <Tag color={currentCustomer.status === 1 ? "green" : "red"}>
-                      {currentCustomer.status === 1 ? "Active" : "Disabled"}
-                    </Tag>
+                  <Row>
+                    <Col span={6}>
+                      Email
+                    </Col>
+                    <Col>{currentCustomer.email}</Col>
+                  </Row>
+                  <Divider/>
+                  <Row>
+                    <Col span={6}>
+                      Phone
+                    </Col>
+                    <Col>{currentCustomer.phone ? <span>{currentCustomer.phone}</span> : "NA"}</Col>
+                  </Row>
+                  <Divider/>
+                  <Row>
+                    <Col span={6}>
+                      Status
+                    </Col>
+                    <Col>{currentCustomer.status === 1 ? "Active" : "Disabled"}</Col>
+                  </Row>
+                  <Divider/>
+                  <Row>
+                    <Col span={6}>
+                      Address
+                    </Col>
+                    <Col>
+                      {currentCustomer.addresses.length > 0 ?
+                        <div>
+                          <div className="gx-d-flex gx-justify-content-between">
+                            <p>{currentCustomer.addresses[0].address_line_1}</p>
+                            {currentCustomer.addresses[0].address_type.map(type => {
+                              return <Tag color="#108ee9">{type}</Tag>
+                            })}
+                          </div>
+                          <p>{`${currentCustomer.addresses[0].city}, ${currentCustomer.addresses[0].state} - ${currentCustomer.addresses[0].zip_code}`}</p>
+                          <div>{currentCustomer.addresses.length > 1 ? `+ ${currentCustomer.addresses.length - 1} more` : null}</div>
+                        </div>
+                        : "NA"}
+                    </Col>
+                  </Row>
+                </Widget>
+              </Col>
+              <Col xl={12} lg={12} md={12} sm={12} xs={24}>
+                <Widget>
+                  <div className="gx-d-flex gx-justify-content-between gx-mb-5">
+                    <span className="gx-font-weight-bold">Company Details</span>
                   </div>
-                </div>
-              </div>
-              <Row>
-                <Col span={6}>
-                  Email
-                </Col>
-                <Col>{currentCustomer.email}</Col>
-              </Row>
-              <Divider/>
-              <Row>
-                <Col span={6}>
-                  Phone
-                </Col>
-                <Col>{currentCustomer.phone}</Col>
-              </Row>
-              <Divider/>
-              <Row>
-                <Col span={6}>
-                  Status
-                </Col>
-                <Col>{currentCustomer.status === 1 ? "Active" : "Disabled"}</Col>
-              </Row>
-              <Divider/>
-              <Row>
-                <Col span={6}>
-                  Address
-                </Col>
-                <Col>{currentCustomer.address}</Col>
-              </Row>
-            </Widget>
-          </Col>
-          <Col xl={12} lg={12} md={12} sm={12} xs={24}>
-            <Widget>
-              <div className="gx-d-flex gx-justify-content-between gx-mb-5">
-                <span className="gx-font-weight-bold">Company Details</span>
-              </div>
-              <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
-                {currentCustomerCompany.avatar ?
-                  <Avatar className="gx-mr-3 gx-size-80" src={currentCustomerCompany.avatar.src}/> :
-                  <Avatar className="gx-mr-3 gx-size-80"
-                          style={{backgroundColor: '#f56a00'}}>{currentCustomerCompany.company_name[0].toUpperCase()}</Avatar>}
-                <div className="gx-media-body">
+                  {currentCustomer.company ?
+                    <div>
+                      <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
+                        {currentCustomer.company.avatar ?
+                          <Avatar className="gx-mr-3 gx-size-80" src={currentCustomer.company.avatar.src}/> :
+                          <Avatar className="gx-mr-3 gx-size-80"
+                                  style={{backgroundColor: '#f56a00'}}>{currentCustomer.company.company_name[0].toUpperCase()}</Avatar>}
+                        <div className="gx-media-body">
                 <span>
-                  <span className="gx-mb-0 gx-text-capitalize">
-                    {currentCustomerCompany.company_name}
-                  </span>
-                  <div>{currentCustomerCompany.website}</div>
+                  <h3 className="gx-mb-2 gx-text-capitalize gx-font-weight-bold">
+                    {currentCustomer.company.company_name}
+                  </h3>
+                  <div>{currentCustomer.company.website}</div>
                 </span>
-                </div>
-              </div>
-              {currentCustomerCompany.members.length > 1 ?
-                <div>
-                  <div className="gx-mb-5">Other Members</div>
-                  <div className="gx-d-flex gx-pl-0">
-                    {currentCustomerCompany.members.map(member => {
-                      return (member.id !== currentCustomer.id) ?
-                        <div key={member.id}
-                             className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5 gx-mx-5">
-                          {member.avatar ?
-                            <Avatar className="gx-mr-3 gx-size-50" src={member.avatar.src}/> :
-                            <Avatar className="gx-mr-3 gx-size-50"
-                                    style={{backgroundColor: '#f56a00'}}>{member.first_name[0].toUpperCase()}</Avatar>}
-                          <div className="gx-media-body">
-                            <div className="gx-d-flex gx-justify-content-between">
+                        </div>
+                      </div>
+                      {customerCompanyMembers.length > 1 ?
+                        <div>
+                          <div className="gx-mb-5">Other Members</div>
+                          <div className="gx-d-flex gx-pl-0 gx-flex-sm-wrap">
+                            {customerCompanyMembers.map(member => {
+                              return (member.id !== currentCustomer.id) ?
+                                <div key={member.id}
+                                     className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5 gx-mx-5">
+                                  {member.avatar ?
+                                    <Avatar className="gx-mr-3 gx-size-50" src={member.avatar.src}/> :
+                                    <Avatar className="gx-mr-3 gx-size-50"
+                                            style={{backgroundColor: '#f56a00'}}>{member.first_name[0].toUpperCase()}</Avatar>}
+                                  <div className="gx-media-body">
+                                    <div className="gx-d-flex gx-justify-content-between">
                     <span
                       className="gx-mb-0 gx-text-capitalize gx-font-weight-bold">{member.first_name + " " + member.last_name}</span>
-                            </div>
-                            <div className="gx-mt-2">
-                              <span>{member.email}</span>
-                            </div>
+                                    </div>
+                                    <div className="gx-mt-2">
+                                      <span>{member.email}</span>
+                                    </div>
+                                  </div>
+                                </div> : null
+                            })}
                           </div>
-                        </div> : null
-                    })}
-                  </div>
-                </div> :
-                <div className="gx-text-center">Currently No Other Members of this company is associated.</div>}
+                        </div> :
+                        <div className="gx-text-center">Currently No Other Members of this company is associated.</div>}
+                    </div> : <div>Not associated with any Company</div>}
+                </Widget>
+              </Col>
+            </Row>
+            <Widget title={<span>Assigned Tickets</span>}>
+              <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()}
+                     className="gx-mb-4" dataSource={customerTickets}
+                     onRow={(record) => ({
+                       onClick: () => {
+                         this.onSelectTicket(record)
+                       }
+                     })}
+              />
             </Widget>
-          </Col>
-        </Row>
-        <Widget title={<span>Assigned Tickets</span>}>
-          <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()}
-                 className="gx-mb-4" dataSource={customerTickets}
-                 onRow={(record) => ({
-                   onClick: () => {
-                     this.onSelectTicket(record)
-                   }
-                 })}
-          />
-        </Widget>
-      </div> : <TicketDetail currentTicket={currentTicket}/>}
+          </div> : <TicketDetail currentTicket={currentTicket}/>}
       </div>
     );
   }
 }
 
-export default CustomerDetails
+const mapPropsToState = ({customers}) => {
+  const {customerTickets, customerCompanyMembers} = customers;
+  return {customerTickets, customerCompanyMembers};
+};
+
+export default connect(mapPropsToState, {
+  onGetCustomerTickets,
+  onGetCustomerCompany
+})(CustomerDetails);
+

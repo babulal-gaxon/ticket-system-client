@@ -24,7 +24,9 @@ import {
   getTickedId,
   onDeleteTicket,
   onGetConversationList,
+  onGetFilterOptions,
   onGetTickets,
+  onSelectTicket,
   onSendMessage,
   onUpdateTicketPriority,
   onUpdateTicketStatus
@@ -49,16 +51,19 @@ class AllTickets extends Component {
       current: 1,
       sideBarActive: false,
       filterText: "",
-      currentTicket: null,
       selectedTickets: [],
       sortParam: "",
     };
+  };
+
+  componentDidMount() {
     this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.sortParam);
     this.props.onGetTicketPriorities();
     this.props.onGetStaff();
     this.props.onGetCustomersData();
     this.props.onGetTicketStatus();
-  };
+    this.props.onGetFilterOptions();
+  }
 
 
   onGetPaginatedData = (currentPage, itemsPerPage, filterData, sortingOrder, startDate, endDate, selectedStaff,
@@ -235,7 +240,8 @@ class AllTickets extends Component {
   };
 
   onSelectTicket = record => {
-    this.setState({currentTicket: record})
+   this.props.onSelectTicket(record);
+   this.setState({sideBarActive: false})
   };
 
   onShowBulkDeleteConfirm = () => {
@@ -314,8 +320,8 @@ class AllTickets extends Component {
   };
 
   render() {
-    const {selectedRowKeys, currentTicket} = this.state;
-    const tickets = this.props.tickets;
+    const {selectedRowKeys} = this.state;
+    const {tickets, currentTicket} = this.props;
     let ids;
     const rowSelection = {
       selectedRowKeys,
@@ -397,8 +403,7 @@ class AllTickets extends Component {
                        })}
                 /> : null}
             </Widget> :
-            <TicketDetail currentTicket={this.state.currentTicket}
-            />
+            <TicketDetail/>
           }
           <InfoView/>
         </div>
@@ -408,10 +413,10 @@ class AllTickets extends Component {
                      filterText={this.state.filterText}
                      sortParam={this.state.sortParam}
                      onGetPaginatedData={this.onGetPaginatedData}
-                     staffList={this.props.staffList}
+                     staffList={this.props.filterData.staffs}
                      customersList={this.props.customersList}
-                     priorities={this.props.priorities}
-                     statuses={this.props.statuses}
+                     priorities={this.props.filterData.priority}
+                     statuses={this.props.filterData.status}
           />
 
           : null}
@@ -421,12 +426,12 @@ class AllTickets extends Component {
 }
 
 const mapStateToProps = ({ticketList, supportStaff, customers, ticketPriorities, ticketStatuses}) => {
-  const {tickets, totalItems, conversation} = ticketList;
+  const {tickets, totalItems, conversation, currentTicket,filterData} = ticketList;
   const {staffList} = supportStaff;
   const {customersList} = customers;
   const {priorities} = ticketPriorities;
   const {statuses} = ticketStatuses;
-  return {tickets, priorities, staffList, customersList, statuses, totalItems, conversation};
+  return {tickets, priorities, staffList, customersList, statuses, totalItems, conversation, currentTicket,filterData};
 };
 
 export default connect(mapStateToProps, {
@@ -441,6 +446,8 @@ export default connect(mapStateToProps, {
   onUpdateTicketPriority,
   onGetConversationList,
   onSendMessage,
+  onSelectTicket,
+  onGetFilterOptions
 })(AllTickets)
 ;
 

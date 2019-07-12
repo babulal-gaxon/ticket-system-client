@@ -4,7 +4,14 @@ import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
 import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
-import {onAddTickets, onGetFormDetails, onGetTickets, onUpdateTickets} from "../../../appRedux/actions/TicketList";
+import {
+  onAddAttachments,
+  onAddTickets,
+  onGetFilterOptions,
+  onGetFormDetails,
+  onGetTickets,
+  onUpdateTickets
+} from "../../../appRedux/actions/TicketList";
 import {onGetTicketPriorities} from "../../../appRedux/actions/TicketPriorities";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
@@ -28,7 +35,8 @@ class AddNewTicket extends Component {
         service_id: [],
         product_id: null,
         assign_to: null,
-        tags:[]
+        tags:[],
+        attachments:[]
       };
     } else {
       const selectedTicket = this.props.tickets.find(ticket => ticket.id === this.props.ticketId);
@@ -55,6 +63,7 @@ class AddNewTicket extends Component {
     this.props.onGetTicketPriorities();
     this.props.onGetStaff();
     this.props.onGetCustomersData();
+    this.props.onGetFilterOptions();
   }
 
   onReturnTicketsScreen = () => {
@@ -67,7 +76,9 @@ class AddNewTicket extends Component {
 
   onAddTicket = () => {
     if (this.props.ticketId === null) {
-      this.props.onAddTickets({...this.state}, this.props.history);
+      this.setState({attachments: this.props.attachments}, () => {
+        this.props.onAddTickets({...this.state}, this.props.history);
+      })
     } else {
       this.props.onUpdateTickets({...this.state}, this.props.history);
     }
@@ -200,13 +211,15 @@ class AddNewTicket extends Component {
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
               <div>
-              <TicketAssigning staffList={this.props.staffList}
+                <div>Assign to</div>
+              <TicketAssigning staffList={this.props.filterData.staffs}
                                onAssignStaff={this.onAssignStaff}
               />
               <div className="gx-mb-3">Tags</div>
               <Select mode="tags" style={{ width: '100%' }} placeholder="Type to add tags" onChange={this.onAddTags}/>
-              <TicketAttachments/>
               </div>
+              <div className="gx-my-5">Attachments</div>
+              <TicketAttachments onAddAttachments={this.props.onAddAttachments}/>
             </Col>
           </Row>
         </Widget>
@@ -221,10 +234,10 @@ AddNewTicket = Form.create({})(AddNewTicket);
 
 const mapStateToProps = ({ticketPriorities, supportStaff, ticketList, customers}) => {
   const {priorities} = ticketPriorities;
-  const {tickets, ticketId, formData} = ticketList;
+  const {tickets, ticketId, formData, filterData, attachments} = ticketList;
   const {staffList} = supportStaff;
   const {customersList} = customers;
-  return {priorities, staffList, tickets, ticketId, customersList, formData};
+  return {priorities, staffList, tickets, ticketId, customersList, formData, filterData, attachments};
 };
 
 export default connect(mapStateToProps, {
@@ -234,7 +247,9 @@ export default connect(mapStateToProps, {
   onGetStaff,
   onUpdateTickets,
   onGetCustomersData,
-  onGetFormDetails
+  onGetFormDetails,
+  onGetFilterOptions,
+  onAddAttachments
 })(AddNewTicket);
 
 
