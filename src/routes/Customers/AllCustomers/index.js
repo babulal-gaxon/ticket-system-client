@@ -51,9 +51,8 @@ class AllCustomers extends Component {
   }
 
   onGetPaginatedData = (currentPage, itemsPerPage, filterText, companies, labels, status) => {
-    if (Permissions.canCustomerView()) {
       this.props.onGetCustomersData(currentPage, itemsPerPage, filterText, companies, labels, status);
-    }
+
   };
 
   onSideBarShow = () => {
@@ -404,7 +403,7 @@ class AllCustomers extends Component {
   };
 
   render() {
-    const {customers, getCustomerId} = this.props;
+    const {customersList, getCustomerId} = this.props;
     const {
       selectedRowKeys, resetPasswordModal, currentCustomer, sideBarActive, filterText,
       resetPasswordCustomerId, itemNumbers, current, totalItems
@@ -454,7 +453,7 @@ class AllCustomers extends Component {
               </div>
             </div>
             <Table rowKey="customersData" rowSelection={rowSelection} columns={this.onCustomersRowData()}
-                   dataSource={customers}
+                   dataSource={customersList}
                    pagination={{
                      pageSize: itemNumbers,
                      current: current,
