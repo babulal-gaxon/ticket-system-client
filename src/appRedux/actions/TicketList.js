@@ -4,10 +4,12 @@ import {
   ADD_TICKETS,
   ASSIGN_STAFF_TO_TICKET,
   DELETE_TICKET,
-  GET_CONVERSATION_LIST, GET_FILTER_OPTIONS,
+  GET_CONVERSATION_LIST,
+  GET_FILTER_OPTIONS,
   GET_FORM_DETAILS,
   GET_TICKET_ID,
-  GET_TICKETS, SELECT_CURRENT_TICKET,
+  GET_TICKETS,
+  SELECT_CURRENT_TICKET,
   SEND_MESSAGE,
   UPDATE_TICKET,
   UPDATE_TICKET_STATUS
@@ -15,14 +17,13 @@ import {
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import {showErrorMessage} from "./Auth";
 import moment from "moment";
-import {ADD_PROFILE_PICTURE, GET_CUSTOMER_FILTER_OPTIONS} from "../../constants/Customers";
 
 
 export const onGetTickets = (currentPage, itemsPerPage, filterText, sortingParam, startDate, endDate, selectedStaff,
                              selectedCustomers, selectedPriorities, selectedStatuses, archive) => {
   const start = startDate ? moment(startDate).format("YYYY/MM/DD") : '';
   const end = endDate ? moment(endDate).format("YYYY/MM/DD") : '';
-  console.log("selectedCustomers", ~~archive);
+  console.log("selectedCustomers", selectedCustomers);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get('/tickets', {

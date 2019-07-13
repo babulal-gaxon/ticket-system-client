@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import {Button, Select} from "antd/lib/index";
-import Widget from "../../../components/Widget";
-import {Tag} from "antd";
-import AddCustomerAddress from "../../Customers/AllCustomers/AddCustomerAddress";
 
-const {Option} = Select;
+import Widget from "../../../components/Widget";
+import {Button, Tag} from "antd";
+import AddCustomerAddress from "../../Customers/AllCustomers/AddCustomerAddress";
 
 class Addresses extends Component {
   constructor(props) {

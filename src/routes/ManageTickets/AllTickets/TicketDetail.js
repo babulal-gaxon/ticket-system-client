@@ -1,15 +1,14 @@
 import React, {Component} from "react"
-import {Avatar, Breadcrumb, Col, Input, Row, Select, Tag, Upload, message} from "antd";
+import {Avatar, Breadcrumb, Col, Input, Row, Select, Tag, Upload} from "antd";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import moment from "moment";
 import ConversationCell from "./ConversationCell";
 import {connect} from "react-redux";
 import {
-  getTickedId,
   onAssignStaffToTicket,
-  onDeleteTicket,
   onGetConversationList,
+  onGetFilterOptions,
   onSelectTicket,
   onSendMessage,
   onUpdateTicketPriority,
@@ -18,10 +17,9 @@ import {
 } from "../../../appRedux/actions/TicketList";
 import TicketAssigning from "../AddNewTicket/TicketAssigning";
 import EditTicketDetailsModal from "./EditTicketDetailsModal";
-import {onGetTicketPriorities} from "../../../appRedux/actions/TicketPriorities";
-import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
-import {onGetTicketStatus} from "../../../appRedux/actions/TicketStatuses";
-import * as axios from "axios";
+import axios from 'util/Api'
+import Permissions from "../../../util/Permissions";
+import PropTypes from "prop-types";
 
 const Option = Select.Option;
 const {TextArea} = Input;
@@ -38,14 +36,13 @@ class TicketDetail extends Component {
       currentTicket: {...props.currentTicket},
       fileList: [],
       uploading: false,
+      attachments: []
     };
   };
 
   componentDidMount() {
     this.props.onGetConversationList(this.props.currentTicket.id);
-    this.props.onGetTicketPriorities();
-    this.props.onGetStaff();
-    this.props.onGetTicketStatus();
+    this.props.onGetFilterOptions();
   }
 
   componentWillUnmount() {
@@ -58,15 +55,16 @@ class TicketDetail extends Component {
   }
 
   onPriorityChange = value => {
+    const currentTicket = this.props.currentTicket;
     this.setState({selectedPriority: value},
-      () => this.props.onUpdateTicketPriority(this.props.currentTicket.id, this.state.selectedPriority))
+      () => this.props.onUpdateTicketPriority(currentTicket.id, this.state.selectedPriority))
   };
 
   onStatusChange = value => {
+    const currentTicket = this.props.currentTicket;
     this.setState({selectedStatus: value},
-      () => this.props.onUpdateTicketStatus(this.props.currentTicket.id, this.state.selectedStatus))
+      () => this.props.onUpdateTicketStatus(currentTicket.id, this.state.selectedStatus))
   };
-
 
   onHandleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -75,10 +73,15 @@ class TicketDetail extends Component {
   };
 
   onSubmitMessage = () => {
+    const currentTicket = this.props.currentTicket;
+    const attachments = this.state.attachments;
     if (this.state.message !== '') {
-      this.props.onSendMessage(this.props.currentTicket.id, {message: this.state.message})
+      this.props.onSendMessage(currentTicket.id, {
+        message: this.state.message,
+        attachments: attachments
+      })
     }
-    this.setState({message: ''})
+    this.setState({message: '', attachments: []})
   };
 
   onToggleEditModal = () => {
@@ -86,51 +89,37 @@ class TicketDetail extends Component {
   };
 
   onEditTags = value => {
+    const currentTicket = this.props.currentTicket;
     this.setState({ticketTags: value}, () => {
-      this.props.onUpdateTickets(this.props.currentTicket.id, {tags: this.state.ticketTags})
+      this.props.onUpdateTickets(currentTicket.id, {tags: this.state.ticketTags})
     })
   };
 
-  handleUpload = () => {
-    const { fileList } = this.state;
+  handleUpload = (info) => {
     const formData = new FormData();
-    fileList.map(file => {
-      formData.append('file', file);
+    info.fileList.map(file => {
+      formData.append('file', file.originFileObj);
       formData.append('title', file.name)
-    });
+    }, this.imageUpload(formData));
+  };
 
-    this.setState({
-      uploading: true,
-    });
-
-    axios({
-      url: 'http://gaxonlab.com/dev/ticket-system/public/api/uploads/temporary/media',
-      method: 'post',
+  imageUpload = (file) => {
+    axios.post("/uploads/temporary/media", file, {
       headers: {
         'Content-Type': "multipart/form-data"
-      },
-      processData: false,
-      data: formData,
-      success: () => {
-        this.setState({
-          fileList: [],
-          uploading: false,
-        });
-        message.success('upload successfully.');
-      },
-      error: () => {
-        this.setState({
-          uploading: false,
-        });
-        message.error('upload failed.');
-      },
+      }
+    }).then(({data}) => {
+      if (data.success) {
+        this.setState({attachments: this.state.attachments.concat(data.data)})
+      }
+    }).catch(function (error) {
+      console.log("Error****:", error.message);
     });
   };
 
-
   render() {
-    const {fileList} = this.state;
     const props = {
+      multiple: true,
       onRemove: file => {
         this.setState(state => {
           const index = state.fileList.indexOf(file);
@@ -142,15 +131,11 @@ class TicketDetail extends Component {
         });
       },
       beforeUpload: file => {
-        this.setState(state => ({
-          fileList: [...state.fileList, file],
-        }));
         return false;
-      },
-      fileList,
+      }
     };
     const {message, showEditModal, ticketTags, currentTicket} = this.state;
-    const {priorities, statuses, conversation} = this.props;
+    const {filterData, conversation} = this.props;
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -159,28 +144,30 @@ class TicketDetail extends Component {
             <Breadcrumb.Item>
               <Link to="/manage-tickets/all-tickets">Manage Tickets</Link>
             </Breadcrumb.Item>
-            <Breadcrumb.Item>Tickets</Breadcrumb.Item>
+            <Breadcrumb.Item className="gx-text-primary">Tickets</Breadcrumb.Item>
           </Breadcrumb>
-
           <div className="gx-d-flex">
-            <Select defaultValue={currentTicket.priority_id} onChange={this.onPriorityChange} style={{width: 120}}>
-              {priorities.map(priority => {
-                return <Option value={priority.id} key={priority.name}>{priority.name}</Option>
-              })}
-            </Select>
-            <Select className="gx-mx-3" defaultValue={currentTicket.status_id} style={{width: 120}}
-                    onChange={this.onStatusChange}>
-              {statuses.map(status => {
-                return <Option value={status.id} key={status.name}>{status.name}</Option>
-              })}
-            </Select>
+            {(Permissions.canTicketEdit()) ?
+              <Select defaultValue={currentTicket.priority_id} onChange={this.onPriorityChange} style={{width: 120}}>
+                {filterData.priority.map(priority => {
+                  return <Option value={priority.id} key={priority.name}>{priority.name}</Option>
+                })}
+              </Select> : null}
+            {(Permissions.canTicketEdit()) ?
+              <Select className="gx-mx-3" defaultValue={currentTicket.status_id} style={{width: 120}}
+                      onChange={this.onStatusChange}>
+                {filterData.status.map(status => {
+                  return <Option value={status.id} key={status.name}>{status.name}</Option>
+                })}
+              </Select> : null}
           </div>
           <Row>
             <Col xl={16} lg={12} md={12} sm={12} xs={24}>
               <div className="gx-d-flex gx-justify-content-between gx-mt-4">
                 <span>#{currentTicket.id}</span>
-                <span className="gx-text-primary" onClick={this.onToggleEditModal}><i
-                  className="icon icon-edit gx-mr-2"/>Edit</span>
+                {(Permissions.canTicketEdit()) ?
+                  <span className="gx-text-primary" onClick={this.onToggleEditModal}><i
+                    className="icon icon-edit gx-mr-2"/>Edit</span> : null}
               </div>
               <h2 className="gx-my-2 gx-font-weight-bold">{currentTicket.title}</h2>
               <div className="gx-mb-3">
@@ -188,13 +175,26 @@ class TicketDetail extends Component {
                 <span> updated at: {moment(currentTicket.updated_at.date).format("LL")}</span>
               </div>
               <div className="gx-py-3">{currentTicket.content}</div>
+              {currentTicket.attachments.length > 0 ?
+                <div className="gx-mt-4">
+                  <div className="gx-mb-3">Attachments</div>
+                  <div className="gx-d-flex">
+                    {currentTicket.attachments.map(attachment => {
+                      return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
+                        <Widget styleName="gx-card-filter gx-mr-2">
+                          <div>{attachment.title}</div>
+                          <div>{attachment.size / 1000} kb</div>
+                        </Widget>
+                      </div>
+                    })}
+                  </div>
+                </div> : null}
               <div className="gx-py-3">
                 <h3 className="gx-mb-0 gx-mb-sm-1">Messages</h3>
               </div>
               {conversation.map((conversation, index) =>
                 <ConversationCell key={index} conversation={conversation}/>
               )}
-
               <div className="gx-chat-main-footer gx-todo-main-footer">
                 <div className="gx-flex-row gx-align-items-center">
                   <div className="gx-col">
@@ -240,7 +240,7 @@ class TicketDetail extends Component {
                     </div>
                   </div> : null}
                 <div className="gx-my-3">Assigned to</div>
-                <TicketAssigning staffList={this.props.staffList}
+                <TicketAssigning staffList={filterData.staffs}
                                  onAssignStaff={this.props.onAssignStaffToTicket}
                                  ticketId={currentTicket.id}
                                  assignedTo={currentTicket.assigned_to}/>
@@ -248,9 +248,9 @@ class TicketDetail extends Component {
                 <Select mode="tags" style={{width: '100%'}} placeholder="Type to add tags" value={ticketTags}
                         onChange={this.onEditTags}/>
                 <div className="gx-my-3">Attachments</div>
-                {currentTicket.attachments.map(attachment => {
+                {currentTicket.attachments.length > 0 ? currentTicket.attachments.map(attachment => {
                   return <Avatar shape="square" icon="user" src={attachment.src} className="gx-mr-2 gx-size-100"/>
-                })}
+                }) : <div>No attachments added with this ticket.</div>}
               </div>
             </Col>
           </Row>
@@ -268,30 +268,35 @@ class TicketDetail extends Component {
   }
 }
 
-const mapStateToProps = ({ticketList, ticketPriorities, ticketStatuses, supportStaff}) => {
-  const {conversation, currentTicket} = ticketList;
-  const {priorities} = ticketPriorities;
-  const {statuses} = ticketStatuses;
-  const {staffList} = supportStaff;
-  return {conversation, priorities, statuses, staffList, currentTicket};
+const mapStateToProps = ({ticketList}) => {
+  const {conversation, currentTicket, filterData} = ticketList;
+  return {conversation, currentTicket, filterData};
 };
 
 export default connect(mapStateToProps, {
-  onDeleteTicket,
-  getTickedId,
   onUpdateTicketStatus,
   onUpdateTicketPriority,
   onGetConversationList,
   onSendMessage,
   onAssignStaffToTicket,
   onUpdateTickets,
-  onGetTicketPriorities,
-  onGetStaff,
-  onGetTicketStatus,
-  onSelectTicket
+  onSelectTicket,
+  onGetFilterOptions
 })(TicketDetail);
 
 
-TicketDetail.defaultProps = {};
+TicketDetail.defaultProps = {
+  conversation: [],
+  currentTicket: null,
+  filterData: {
+    status: [],
+    priority: [],
+    staffs: []
+  },
+};
 
-TicketDetail.propTypes = {};
+TicketDetail.propTypes = {
+  conversation: PropTypes.array,
+  currentTicket: PropTypes.object,
+  filterData: PropTypes.object,
+};

@@ -310,6 +310,42 @@ class Permissions {
     }
     return false;
   };
+
+  // Customer Permissions
+  static canCustomerAdd = () => {
+    if (this.permissions.customers) {
+      return this.permissions.customers.filter((key) => key.name === "customers.store").length > 0
+    }
+    return false;
+  };
+
+  static canCustomerEdit = () => {
+    if (this.permissions.customers) {
+      return this.permissions.customers.filter((key) => key.name === "customers.update").length > 0
+    }
+    return false;
+  };
+
+  static canCustomerView = () => {
+    if (this.permissions.customers) {
+      return this.permissions.customers.filter((key) => key.name === "customers.index").length > 0
+    }
+    return false;
+  };
+
+  static canCustomerDelete = () => {
+    if (this.permissions.customers) {
+      return this.permissions.customers.filter((key) => key.name === "customers.destroy").length > 0
+    }
+    return false;
+  };
+
+  static canViewCustomerDetail = () => {
+    if (this.permissions.customers) {
+      return this.permissions.customers.filter((key) => key.name === "customers.show").length > 0
+    }
+    return false;
+  };
 }
 
 

@@ -123,6 +123,26 @@ class Services extends Component {
     }
   };
 
+  onShowBulkDeleteConfirm = () => {
+    if (this.state.selectedServices.length !== 0) {
+      confirm({
+        title: "Are you sure to delete the selected Service(s)?",
+        onOk: () => {
+          const obj = {
+            ids: this.state.selectedServices
+          };
+          this.props.onDeleteServices(obj);
+          this.onGetServicesData(this.state.current, this.state.itemNumbers);
+          this.setState({selectedRowKeys: [], selectedServices: []});
+        }
+      })
+    } else {
+      confirm({
+        title: "Please Select Service(s) first",
+      })
+    }
+  };
+
   onSelectOption = () => {
     const menu = (
       <Menu>
@@ -133,6 +153,10 @@ class Services extends Component {
         {(Permissions.canServiceEdit()) ?
           <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
             Disable
+          </Menu.Item> : null}
+        {(Permissions.canServiceDelete()) ?
+          <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
+            Delete
           </Menu.Item> : null}
       </Menu>
     );
@@ -190,15 +214,14 @@ class Services extends Component {
       <Popconfirm
         title="Are you sure to delete this Service?"
         onConfirm={() => {
-          this.props.onDeleteServices(recordId);
+          this.props.onDeleteServices({ids: [recordId]});
         }}
         okText="Yes"
         cancelText="No">
         <i className="icon icon-trash"/>
       </Popconfirm>
     )
-  };
-
+  }
   onShowItemOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>
       <Option value={10}>10</Option>

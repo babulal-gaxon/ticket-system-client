@@ -36,11 +36,14 @@ export default (state = initialState, action) => {
       };
 
     case DELETE_SERVICE:
-      const updateList = state.servicesList.filter(service => service.id !== action.payload);
+      const updateList = state.servicesList.filter(service => {
+        return (action.payload.indexOf(service.id) === -1) ?
+          service : null
+      });
       return {
         ...state,
         servicesList: updateList,
-        totalItems: state.totalItems - 1
+        totalItems: state.totalItems - action.payload.length
       };
 
     case BULK_ACTIVE_SERVICES:

@@ -13,6 +13,8 @@ import {
 } from "../../../../appRedux/actions/SupportStaff";
 import moment from "moment/moment";
 import TicketDetail from "../../../ManageTickets/AllTickets/TicketDetail";
+import {onSelectTicket} from "../../../../appRedux/actions/TicketList";
+import Permissions from "../../../../util/Permissions";
 
 class StaffDetail extends Component {
   constructor(props) {
@@ -20,8 +22,7 @@ class StaffDetail extends Component {
     this.state = {
       selectedRowKeys: [],
       addNotesModal: false,
-      noteId: null,
-      currentTicket: null
+      noteId: null
     }
   }
 
@@ -104,7 +105,7 @@ class StaffDetail extends Component {
   };
 
   onSelectTicket = record => {
-    this.setState({currentTicket: record})
+    this.props.onSelectTicket(record);
   };
 
   onDeletePopUp = (recordId) => {
@@ -122,12 +123,12 @@ class StaffDetail extends Component {
   };
 
   render() {
-    const {selectedRowKeys, addNotesModal, noteId, currentTicket} = this.state;
+    const {selectedRowKeys, addNotesModal, noteId} = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
-    const {staff, staffNotes, staffTickets} = this.props;
+    const {staff, staffNotes, staffTickets, currentTicket} = this.props;
     return (
       <div>
         {currentTicket === null ?
@@ -197,8 +198,9 @@ class StaffDetail extends Component {
                     <Col>{staff.designation}</Col>
                   </Row>
                   <Divider/>
+                  {(Permissions.canStaffEdit()) ?
                   <Tag color="blue" onClick={this.onEditProfile}>
-                    <i className="icon icon-edit gx-mr-3"/>Edit Profile</Tag>
+                    <i className="icon icon-edit gx-mr-3"/>Edit Profile</Tag> : null}
                 </Widget>
               </Col>
               <Col xl={12} lg={12} md={12} sm={12} xs={24}>
@@ -250,7 +252,9 @@ class StaffDetail extends Component {
                      className="gx-mb-4" dataSource={staffTickets}
                      onRow={(record) => ({
                        onClick: () => {
-                         this.onSelectTicket(record)
+                         if (Permissions.canViewTicketDetail()) {
+                           this.onSelectTicket(record)
+                         }
                        }
                      })}
               />
@@ -264,15 +268,16 @@ class StaffDetail extends Component {
                 noteId={noteId}
                 staffNotes={staffNotes}
                 staffId={staff.id}/> : null}
-          </div> : <TicketDetail currentTicket={currentTicket}/>}
+          </div> : <TicketDetail/>}
       </div>
     );
   }
 }
 
-const mapStateToProps = ({supportStaff}) => {
+const mapStateToProps = ({supportStaff, ticketList}) => {
+  const {currentTicket} = ticketList;
   const {staffNotes, staffTickets, staffList} = supportStaff;
-  return {staffNotes, staffTickets, staffList};
+  return {staffNotes, staffTickets, staffList, currentTicket};
 };
 
 
@@ -281,7 +286,8 @@ export default connect(mapStateToProps, {
   onAddStaffNote,
   onEditStaffNotes,
   onDeleteStaffNotes,
-  onGetStaffTickets
+  onGetStaffTickets,
+  onSelectTicket
 })(StaffDetail);
 
 StaffDetail.defaultProps = {

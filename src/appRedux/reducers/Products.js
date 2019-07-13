@@ -38,11 +38,14 @@ export default (state = initialState, action) => {
       };
 
     case DELETE_PRODUCT:
-      const updateList = state.productsList.filter(product => product.id !== action.payload);
+      const updateList = state.productsList.filter(product => {
+        return (action.payload.indexOf(product.id) === -1) ?
+          product : null
+      });
       return {
         ...state,
         productsList: updateList,
-        totalItems: state.totalItems - 1
+        totalItems: state.totalItems - action.payload.length
       };
 
     case ADD_PRODUCT_LOGO:

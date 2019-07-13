@@ -76,9 +76,9 @@ export const onEditProduct = (product) => {
 export const onDeleteProduct = (productId) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.delete(`/setup/products/${productId}`).then(({data}) => {
+    axios.post('/setup/products/delete', productId).then(({data}) => {
       if (data.success) {
-        dispatch({type: DELETE_PRODUCT, payload: productId});
+        dispatch({type: DELETE_PRODUCT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Product(s) has been deleted successfully"});
       } else {

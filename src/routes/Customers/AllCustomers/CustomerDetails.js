@@ -4,14 +4,16 @@ import Widget from "../../../components/Widget";
 import TicketDetail from "../../ManageTickets/AllTickets/TicketDetail";
 import moment from "moment";
 import {connect} from "react-redux";
-import {onGetCustomerCompany, onGetCustomerTickets} from "../../../appRedux/actions/Customers";
+import {getCustomerId, onGetCustomerCompany, onGetCustomerTickets} from "../../../appRedux/actions/Customers";
+import {onSelectTicket} from "../../../appRedux/actions/TicketList";
+import Permissions from "../../../util/Permissions";
+import PropTypes from "prop-types";
 
 class CustomerDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      currentTicket: null
     }
   }
 
@@ -79,7 +81,7 @@ class CustomerDetails extends Component {
   };
 
   onSelectTicket = record => {
-    this.setState({currentTicket: record})
+    this.props.onSelectTicket(record);
   };
 
   onEditProfile = () => {
@@ -88,13 +90,12 @@ class CustomerDetails extends Component {
   };
 
   render() {
-    console.log("customerCompany", this.props.currentCustomer);
-    const {selectedRowKeys, currentTicket} = this.state;
+    const {selectedRowKeys} = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
-    const {currentCustomer, customerCompanyMembers, customerTickets} = this.props;
+    const {currentCustomer, customerCompanyMembers, customerTickets, currentTicket, onBackToList} = this.props;
     return (
       <div>
         {currentTicket === null ?
@@ -104,7 +105,7 @@ class CustomerDetails extends Component {
                 <Widget>
                   <div className="gx-d-flex gx-justify-content-between gx-mb-5">
                     <span className="gx-font-weight-bold">Customer Details</span>
-                    <i className="icon icon-arrow-left" onClick={() => this.props.onBackToList()}/>
+                    <i className="icon icon-arrow-left" onClick={() => onBackToList()}/>
                   </div>
                   <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
                     {currentCustomer.avatar ?
@@ -115,8 +116,9 @@ class CustomerDetails extends Component {
                       <div className="gx-d-flex gx-justify-content-between">
                     <span className="gx-mb-0 gx-text-capitalize gx-font-weight-bold">
                       {currentCustomer.first_name + " " + currentCustomer.last_name}</span>
-                        <span><Tag color="blue" onClick={this.onEditProfile}>
-                <i className="icon icon-edit gx-mr-3"/>Edit Profile</Tag></span>
+                        {(Permissions.canCustomerEdit()) ?
+                          <span><Tag color="blue" onClick={this.onEditProfile}>
+                <i className="icon icon-edit gx-mr-3"/>Edit Profile</Tag></span> : null}
                       </div>
                       <div className="gx-mt-2">
                         <Tag color={currentCustomer.status === 1 ? "green" : "red"}>
@@ -223,24 +225,43 @@ class CustomerDetails extends Component {
                      className="gx-mb-4" dataSource={customerTickets}
                      onRow={(record) => ({
                        onClick: () => {
+                         if (Permissions.canViewTicketDetail()) {
                          this.onSelectTicket(record)
+                     }
                        }
                      })}
               />
             </Widget>
-          </div> : <TicketDetail currentTicket={currentTicket}/>}
+          </div> : <TicketDetail/>}
       </div>
     );
   }
 }
 
-const mapPropsToState = ({customers}) => {
+const mapPropsToState = ({customers, ticketList}) => {
+  const{currentTicket} =ticketList;
   const {customerTickets, customerCompanyMembers} = customers;
-  return {customerTickets, customerCompanyMembers};
+  return {customerTickets, customerCompanyMembers, currentTicket};
 };
 
-export default connect(mapPropsToState, {
+export default connect(mapPropsToState,{
+  getCustomerId,
   onGetCustomerTickets,
-  onGetCustomerCompany
+  onGetCustomerCompany,
+  onSelectTicket
 })(CustomerDetails);
+
+CustomerDetails.defaultProps = {
+  customerTickets: [],
+  currentTicket: null,
+  customerCompanyMembers: [],
+  currentCustomer: null
+};
+
+CustomerDetails.propTypes = {
+  customerTickets: PropTypes.array,
+  currentTicket: PropTypes.object,
+  customerCompanyMembers: PropTypes.array,
+  currentCustomer: PropTypes.object,
+};
 

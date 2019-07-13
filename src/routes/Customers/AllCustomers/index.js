@@ -16,6 +16,8 @@ import CustomerDetails from "./CustomerDetails";
 import {connect} from "react-redux";
 import InfoView from "../../../components/InfoView";
 import ResetCustomerPassword from "./ResetCustomerPassword";
+import Permissions from "../../../util/Permissions";
+import PropTypes from "prop-types";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -49,7 +51,9 @@ class AllCustomers extends Component {
   }
 
   onGetPaginatedData = (currentPage, itemsPerPage, filterText, companies, labels, status) => {
-    this.props.onGetCustomersData(currentPage, itemsPerPage, filterText, companies, labels, status);
+    if (Permissions.canCustomerView()) {
+      this.props.onGetCustomersData(currentPage, itemsPerPage, filterText, companies, labels, status);
+    }
   };
 
   onSideBarShow = () => {
@@ -76,7 +80,6 @@ class AllCustomers extends Component {
     this.setState({itemNumbers: value, current: 1}, () => {
       this.onGetPaginatedData(this.state.current, this.state.itemNumbers, filterText, selectedCompanies, selectedLabels, status)
     });
-
   };
 
   onCurrentIncrement = () => {
@@ -187,44 +190,47 @@ class AllCustomers extends Component {
   onShowRowDropdown = (customerId) => {
     const menu = (
       <Menu>
-        <Menu.Item key="2" onClick={() => {
-          this.props.getCustomerId(customerId);
-          this.props.history.push('/customers/add-customers')
-        }}>
-          Edit
-        </Menu.Item>
-        <Menu.Item key="2" onClick={() => {
-          this.setState({resetPasswordCustomerId: customerId}, () => {
-            this.onTogglePasswordModal()
-          })
-        }}>
-          Reset Password
-        </Menu.Item>
-
-        <Menu.Item key="3">
-          <Popconfirm
-            title="Are you sure to disable this Customer?"
-            onConfirm={() => {
-              this.onDisableCustomerCall(customerId)
-            }}
-            okText="Yes"
-            cancelText="No">
-            Disable
-          </Popconfirm>
-        </Menu.Item>
+        {(Permissions.canCustomerEdit()) ?
+          <Menu.Item key="2" onClick={() => {
+            this.props.getCustomerId(customerId);
+            this.props.history.push('/customers/add-customers')
+          }}>
+            Edit
+          </Menu.Item> : null}
+        {(Permissions.canCustomerEdit()) ?
+          <Menu.Item key="2" onClick={() => {
+            this.setState({resetPasswordCustomerId: customerId}, () => {
+              this.onTogglePasswordModal()
+            })
+          }}>
+            Reset Password
+          </Menu.Item> : null}
+        {(Permissions.canCustomerEdit()) ?
+          <Menu.Item key="3">
+            <Popconfirm
+              title="Are you sure to disable this Customer?"
+              onConfirm={() => {
+                this.onDisableCustomerCall(customerId)
+              }}
+              okText="Yes"
+              cancelText="No">
+              Disable
+            </Popconfirm>
+          </Menu.Item> : null}
         <Menu.Divider/>
-        <Menu.Item key="4">
-          <Popconfirm
-            title="Are you sure to delete this Customer?"
-            onConfirm={() => {
-              this.props.onDeleteCustomers({ids: [customerId]});
-              this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
-            }}
-            okText="Yes"
-            cancelText="No">
-            Delete
-          </Popconfirm>
-        </Menu.Item>
+        {(Permissions.canCustomerDelete()) ?
+          <Menu.Item key="4">
+            <Popconfirm
+              title="Are you sure to delete this Customer?"
+              onConfirm={() => {
+                this.props.onDeleteCustomers({ids: [customerId]});
+                this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
+              }}
+              okText="Yes"
+              cancelText="No">
+              Delete
+            </Popconfirm>
+          </Menu.Item> : null}
       </Menu>
     );
     return (
@@ -245,13 +251,13 @@ class AllCustomers extends Component {
   };
 
   onShowBulkDeleteConfirm = () => {
-    const {filterText, itemNumbers, selectedCompanies, selectedLabels, status, current} = this.state;
-    if (this.state.selectedCustomers.length !== 0) {
+    const {filterText, itemNumbers, selectedCompanies, selectedLabels, status, current, selectedCustomers} = this.state;
+    if (selectedCustomers.length !== 0) {
       confirm({
         title: "Are you sure to delete the selected Customer(s)?",
         onOk: () => {
           const obj = {
-            ids: this.state.selectedCustomers
+            ids: selectedCustomers
           };
           this.props.onDeleteCustomers(obj);
           this.onGetPaginatedData(current, itemNumbers, filterText, selectedCompanies, selectedLabels, status);
@@ -295,10 +301,11 @@ class AllCustomers extends Component {
   };
 
   onGetSidebar = () => {
-    const {companyFilterText, showMoreCompany, selectedCompanies, status} = this.state;
+    const {companyFilterText, showMoreCompany, selectedCompanies, status, selectedLabels} = this.state;
+    const {company} = this.props;
     const companiesList = showMoreCompany ?
-      this.props.company.filter(company => company.company_name.indexOf(companyFilterText) !== -1)
-      : this.props.company.filter(company => company.company_name.indexOf(companyFilterText) !== -1).slice(0, 5);
+      company.filter(company => company.company_name.indexOf(companyFilterText) !== -1)
+      : company.filter(company => company.company_name.indexOf(companyFilterText) !== -1).slice(0, 5);
     return <div className="gx-main-layout-sidenav gx-d-none gx-d-lg-flex">
       <div className="gx-main-layout-side">
         <div className="gx-main-layout-side-header">
@@ -313,7 +320,7 @@ class AllCustomers extends Component {
             <Search className="gx-mt-4" value={companyFilterText}
                     onChange={(e) => this.setState({companyFilterText: e.target.value})}/>
             <div className="gx-my-2">
-              <Checkbox.Group onChange={this.onSelectCompanies} value={this.state.selectedCompanies}>
+              <Checkbox.Group onChange={this.onSelectCompanies} value={selectedCompanies}>
                 {companiesList.map(company => {
                   return <div key={company.id} className="gx-mb-2"><Checkbox
                     value={company.id}>{company.company_name}</Checkbox></div>
@@ -323,7 +330,7 @@ class AllCustomers extends Component {
             <div>
             <span className="gx-text-primary"
                   onClick={() => this.setState({showMoreCompany: !this.state.showMoreCompany})}>
-              {this.state.showMoreCompany ? "View Less" : `${this.props.company.length - 5} More`}
+              {showMoreCompany ? "View Less" : `${this.props.company.length - 5} More`}
             </span>
             </div>
           </div>
@@ -333,7 +340,7 @@ class AllCustomers extends Component {
               mode="multiple"
               style={{width: '100%'}}
               placeholder="Please select Labels"
-              value={this.state.selectedLabels}
+              value={selectedLabels}
               onSelect={this.onLabelSelect}
               onDeselect={this.onLabelRemove}>
               {this.onLabelSelectOption()}
@@ -397,9 +404,11 @@ class AllCustomers extends Component {
   };
 
   render() {
-    console.log("company, labels", this.props.company)
-    const customers = this.props.customersList;
-    const {selectedRowKeys, resetPasswordModal, currentCustomer, sideBarActive, filterText, resetPasswordCustomerId} = this.state;
+    const {customers, getCustomerId} = this.props;
+    const {
+      selectedRowKeys, resetPasswordModal, currentCustomer, sideBarActive, filterText,
+      resetPasswordCustomerId, itemNumbers, current, totalItems
+    } = this.state;
     let ids;
     const rowSelection = {
       selectedRowKeys,
@@ -418,9 +427,10 @@ class AllCustomers extends Component {
             <p className="gx-text-grey">Customers</p>
             <div className="gx-d-flex gx-justify-content-between">
               <div className="gx-d-flex">
-                <Button type="primary" onClick={this.onAddButtonClick} style={{width: 200}}>
-                  Add New Customers
-                </Button>
+                {Permissions.canCustomerAdd() ?
+                  <Button type="primary" onClick={this.onAddButtonClick} style={{width: 200}}>
+                    Add New Customers
+                  </Button> : null}
                 <span>{this.onSelectOption()}</span>
               </div>
               <div className="gx-d-flex">
@@ -446,38 +456,41 @@ class AllCustomers extends Component {
             <Table rowKey="customersData" rowSelection={rowSelection} columns={this.onCustomersRowData()}
                    dataSource={customers}
                    pagination={{
-                     pageSize: this.state.itemNumbers,
-                     current: this.state.current,
-                     total: this.props.totalItems,
+                     pageSize: itemNumbers,
+                     current: current,
+                     total: totalItems,
                      showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
                      onChange: this.onPageChange
                    }}
                    className="gx-table-responsive"
                    onRow={(record) => ({
-                     onClick: () => this.onSelectCustomer(record)
+                     onClick: () => {
+                       if (Permissions.canViewCustomerDetail()) {
+                         this.onSelectCustomer(record)
+                       }
+                     }
                    })}/>
-          </Widget> : <CustomerDetails getCustomerId={this.props.getCustomerId}
+          </Widget> : <CustomerDetails
                                        currentCustomer={currentCustomer}
                                        history={this.props.history}
                                        onBackToList={this.onBackToList}
           />}
         {sideBarActive ? this.onGetSidebar() : null}
-        {resetPasswordModal ? <ResetCustomerPassword
-          resetPasswordModal={resetPasswordModal}
-          onTogglePasswordModal={this.onTogglePasswordModal}
-          onResetPassword={this.props.onResetPassword}
-          customerId={resetPasswordCustomerId}/> : null}
+        {resetPasswordModal ?
+          <ResetCustomerPassword
+            resetPasswordModal={resetPasswordModal}
+            onTogglePasswordModal={this.onTogglePasswordModal}
+            onResetPassword={this.props.onResetPassword}
+            customerId={resetPasswordCustomerId}/> : null}
         <InfoView/>
       </div>
     )
   }
 }
 
-const mapPropsToState = ({customers, companies, labelsList}) => {
-  const {customersList, totalItems, customerTickets, customerCompany, labels, company} = customers;
-  const {companiesList} = companies;
-  const {labelList} = labelsList;
-  return {customersList, totalItems, companiesList, labelList, customerTickets, customerCompany, labels, company};
+const mapPropsToState = ({customers}) => {
+  const {customersList, totalItems, labels, company} = customers;
+  return {customersList, totalItems, labels, company};
 };
 
 export default connect(mapPropsToState, {
@@ -488,5 +501,19 @@ export default connect(mapPropsToState, {
   onGetCustomerTickets,
   onGetCustomerCompany,
   onResetPassword,
-  onGetCustomerFilterOptions
+  onGetCustomerFilterOptions,
 })(AllCustomers);
+
+AllCustomers.defaultProps = {
+  customersList: [],
+  totalItems: null,
+  labels: [],
+  company: []
+};
+
+AllCustomers.propTypes = {
+  customersList: PropTypes.array,
+  totalItems: PropTypes.number,
+  labels: PropTypes.array,
+  company: PropTypes.array,
+};

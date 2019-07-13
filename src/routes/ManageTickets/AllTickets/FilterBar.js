@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import CustomScrollbars from "../../../util/CustomScrollbars";
-import {Button, Checkbox, DatePicker, Input} from "antd";
+import {Button, Checkbox, DatePicker, Input, Select} from "antd";
+import PropTypes from "prop-types";
+
+const {Option} = Select;
 
 class FilterBar extends Component {
   constructor(props) {
@@ -13,11 +16,9 @@ class FilterBar extends Component {
       selectedPriorities: [],
       selectedStatuses: [],
       staffFilterText: "",
-      customerFilterText: "",
       priorityFilterText: "",
       statusFilterText: "",
       showMoreStaff: false,
-      showMoreCustomer: false,
       archive: false
     }
   }
@@ -107,7 +108,7 @@ class FilterBar extends Component {
     const {current, itemNumbers, filterText, sortParam} = this.props;
     this.setState({selectedCustomers: []}, () => {
       this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
-        this.state.selectedCustomers, selectedStaff, selectedPriorities, selectedStatuses, archive)
+        selectedStaff, this.state.selectedCustomers, selectedPriorities, selectedStatuses, archive)
     })
   };
 
@@ -116,7 +117,7 @@ class FilterBar extends Component {
     const {current, itemNumbers, filterText, sortParam} = this.props;
     this.setState({selectedPriorities: []}, () => {
       this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
-        selectedCustomers, selectedStaff, this.state.selectedPriorities, selectedStatuses, archive)
+        selectedStaff, selectedCustomers, this.state.selectedPriorities, selectedStatuses, archive)
     })
   };
 
@@ -125,23 +126,34 @@ class FilterBar extends Component {
     const {current, itemNumbers, filterText, sortParam} = this.props;
     this.setState({selectedStatuses: []}, () => {
       this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
-        selectedCustomers, selectedStaff, selectedPriorities, this.state.selectedStatuses, archive)
+        selectedStaff, selectedCustomers, selectedPriorities, this.state.selectedStatuses, archive)
     })
   };
 
+  handleSearch = (value) => {
+    this.props.onGetCustomersData(null, null, value)
+  };
+
+  handleChange = (value) => {
+    const {endDate, selectedStatuses, selectedStaff, selectedPriorities, startDate, archive} = this.state;
+    const {current, itemNumbers, filterText, sortParam} = this.props;
+    this.setState({selectedCustomers: value}, () => {
+      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
+        selectedStaff, this.state.selectedCustomers, selectedPriorities, selectedStatuses, archive)
+    });
+  };
 
   render() {
+    console.log("selectedCustomerNames", this.state.selectedCustomerNames)
     const {
       endDate, showMoreStaff, selectedStaff, selectedCustomers, selectedPriorities,
-      selectedStatuses, startDate, staffFilterText, showMoreCustomer, customerFilterText, archive,
+      selectedStatuses, startDate, staffFilterText,
       priorityFilterText, statusFilterText
     } = this.state;
     const staffs = showMoreStaff ?
       this.props.staffList.filter(staff => staff.first_name.indexOf(staffFilterText) !== -1)
       : this.props.staffList.filter(staff => staff.first_name.indexOf(staffFilterText) !== -1).slice(0, 5);
-    const customers = showMoreCustomer ?
-      this.props.customersList.filter(customer => customer.first_name.indexOf(customerFilterText) !== -1)
-      : this.props.customersList.filter(customer => customer.first_name.indexOf(customerFilterText) !== -1).slice(0, 5);
+    const customers = this.props.customersList;
     const priorities = this.props.priorities.filter(priority => priority.name.indexOf(priorityFilterText) !== -1);
     const statuses = this.props.statuses.filter(status => status.name.indexOf(statusFilterText) !== -1);
     return (
@@ -187,7 +199,7 @@ class FilterBar extends Component {
               </Checkbox.Group>
               <div>
                 <Button type="link" onClick={this.onToggleShowMoreStaff}>
-                  {this.state.showMoreStaff ? "View Less" : `${this.props.staffList.length - 5} More`}
+                  {showMoreStaff ? "View Less" : `${this.props.staffList.length - 5} More`}
                 </Button>
               </div>
             </div>
@@ -197,20 +209,22 @@ class FilterBar extends Component {
                 {selectedCustomers.length > 0 ? <Button type="link" onClick={this.onCustomerReset}>
                   Reset</Button> : null}
               </div>
-              <Input type="text" value={customerFilterText}
-                     onChange={(e) => this.setState({customerFilterText: e.target.value})}/>
-              <Checkbox.Group onChange={this.onSelectCustomer} value={selectedCustomers}>
+              <Select
+                style={{width: "100%"}}
+                mode="multiple"
+                showSearch
+                placeholder="Type to search Customers"
+                defaultActiveFirstOption={false}
+                showArrow={false}
+                filterOption={false}
+                onSearch={this.handleSearch}
+                onChange={this.handleChange}
+                notFoundContent={null}
+              >
                 {customers.map(customer => {
-                  return <div key={customer.id} className="gx-my-2">
-                    <Checkbox value={customer.id}>{customer.first_name + " " + customer.last_name}</Checkbox>
-                  </div>
+                  return <Option value={customer.id}>{customer.first_name + " " + customer.last_name}</Option>
                 })}
-              </Checkbox.Group>
-              <div>
-                <Button type="link" onClick={this.onToggleShowMoreCustomer}>
-                  {this.state.showMoreCustomer ? "View Less" : `${this.props.customersList.length - 5} More`}
-                </Button>
-              </div>
+              </Select>
             </div>
             <div className="gx-mb-4">
               <div className="gx-d-flex gx-justify-content-between">
@@ -243,6 +257,7 @@ class FilterBar extends Component {
                 })}
               </Checkbox.Group>
             </div>
+
           </div>
         </CustomScrollbars>
       </div>
@@ -251,3 +266,25 @@ class FilterBar extends Component {
 }
 
 export default FilterBar;
+
+FilterBar.defaultProps = {
+  current: 1,
+  itemNumbers: 10,
+  filterText: "",
+  sortParam: "",
+  staffList: [],
+  customersList: [],
+  priorities: [],
+  statuses: []
+};
+
+FilterBar.propTypes = {
+  current: PropTypes.number,
+  itemNumbers: PropTypes.number,
+  filterText: PropTypes.string,
+  sortParam: PropTypes.string,
+  staffList: PropTypes.array,
+  customersList: PropTypes.array,
+  priorities: PropTypes.array,
+  statuses: PropTypes.array
+};

@@ -124,6 +124,26 @@ class Products extends Component {
     }
   };
 
+  onShowBulkDeleteConfirm = () => {
+    if (this.state.selectedProducts.length !== 0) {
+      confirm({
+        title: "Are you sure to delete the selected Product(s)?",
+        onOk: () => {
+          const obj = {
+            ids: this.state.selectedProducts
+          };
+          this.props.onDeleteProduct(obj);
+          this.onGetProductsData(this.state.current, this.state.itemNumbers);
+          this.setState({selectedRowKeys: [], selectedProducts: []});
+        }
+      })
+    } else {
+      confirm({
+        title: "Please Select Product(s) first",
+      })
+    }
+  };
+
   onSelectOption = () => {
     const menu = (
       <Menu>
@@ -135,6 +155,11 @@ class Products extends Component {
           <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
             Disable
           </Menu.Item> : null}
+        {(Permissions.canProductDelete()) ?
+          <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
+            Delete
+          </Menu.Item> : null}
+
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
@@ -199,7 +224,7 @@ class Products extends Component {
       <Popconfirm
         title="Are you sure to delete this Product?"
         onConfirm={() => {
-          this.props.onDeleteProduct(recordId);
+          this.props.onDeleteProduct({ids: [recordId]});
         }}
         okText="Yes"
         cancelText="No">

@@ -74,9 +74,9 @@ export const onEditService = (service) => {
 export const onDeleteServices = (serviceId) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.delete(`/setup/services/${serviceId}`).then(({data}) => {
+    axios.post(`/setup/services/delete`, serviceId).then(({data}) => {
       if (data.success) {
-        dispatch({type: DELETE_SERVICE, payload: serviceId});
+        dispatch({type: DELETE_SERVICE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Service(s) has been deleted successfully"});
       } else {

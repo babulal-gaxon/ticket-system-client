@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Form, Input, Modal, Upload} from "antd";
+import {Button, Form, Input, Modal} from "antd";
 
 
 class AddNewCompany extends Component {

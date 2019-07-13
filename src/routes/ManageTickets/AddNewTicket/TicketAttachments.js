@@ -61,6 +61,7 @@ class TicketAttachments extends Component {
         <div style={thumbInner}>
           <img
             src={URL.createObjectURL(file)}
+            alt=""
             style={img}
           />
         </div>

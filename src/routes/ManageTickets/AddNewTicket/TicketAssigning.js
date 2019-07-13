@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Avatar, Input, Modal, Tag} from "antd";
+import PropTypes from "prop-types";
 
 const Search = Input.Search;
 
@@ -96,3 +97,15 @@ class TicketAssigning extends Component {
 }
 
 export default TicketAssigning;
+
+TicketAssigning.defaultProps = {
+  staffList: [],
+  assignedTo: null,
+  ticketId: null
+};
+
+TicketAssigning.propTypes = {
+  staffList: PropTypes.array,
+  assignedTo: PropTypes.object,
+  ticketId: PropTypes.number
+};

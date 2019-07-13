@@ -1,6 +1,8 @@
 import React from "react";
-import {Avatar} from "antd/lib/index";
 import moment from "moment";
+import Widget from "../../../components/Widget";
+import {Avatar} from "antd";
+import PropTypes from "prop-types";
 
 
 const ConversationCell = ({conversation}) => {
@@ -15,10 +17,28 @@ const ConversationCell = ({conversation}) => {
           <div className="gx-name gx-mr-2">{conversation.author.display_name}</div>
           <div className="gx-time gx-text-muted">{moment(conversation.created_at.date).format('LLL')}</div>
         </div>
-        <div className="gx-message gx-mt-2">{conversation.message}</div>
+        <div className="gx-message gx-my-2">{conversation.message}</div>
+        <div className="gx-d-flex">
+          {conversation.attachments.map(attachment => {
+            return <div className="gx-media gx-flex-nowrap gx-align-items-center">
+            <Widget styleName="gx-card-filter gx-mr-2">
+              <div>{attachment.title}</div>
+              <div>{attachment.size/1000} kb</div>
+            </Widget>
+            </div>
+          })}
+        </div>
       </div>
     </div>
   )
 };
 
 export default ConversationCell;
+
+ConversationCell.defaultProps = {
+  conversation: null
+};
+
+ConversationCell.propTypes = {
+  conversation: PropTypes.object
+};

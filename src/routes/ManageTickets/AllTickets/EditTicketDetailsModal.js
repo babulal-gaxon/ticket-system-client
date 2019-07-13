@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Form, Input, Modal} from "antd";
+import PropTypes from "prop-types";
 
 class EditTicketDetailsModal extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class EditTicketDetailsModal extends Component {
       content: props.currentTicket.content
     };
   }
+
   onEditDetails = () => {
     this.props.onUpdateTickets(this.props.ticketId, {...this.state});
     this.props.onToggleEditModal();
@@ -50,3 +52,15 @@ class EditTicketDetailsModal extends Component {
 }
 
 export default EditTicketDetailsModal;
+
+EditTicketDetailsModal.defaultProps = {
+  currentTicket: null,
+  showEditModal: false,
+  ticketId: null
+};
+
+EditTicketDetailsModal.propTypes = {
+  currentTicket: PropTypes.object,
+  showEditModal: PropTypes.bool,
+  ticketId: PropTypes.number,
+};

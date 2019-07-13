@@ -3,16 +3,12 @@ import {Breadcrumb, Button, Col, Form, Input, Row, Select} from "antd";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
-import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
 import {
   onAddAttachments,
   onAddTickets,
   onGetFilterOptions,
-  onGetFormDetails,
-  onGetTickets,
-  onUpdateTickets
+  onGetFormDetails
 } from "../../../appRedux/actions/TicketList";
-import {onGetTicketPriorities} from "../../../appRedux/actions/TicketPriorities";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
 import {onGetCustomersData} from "../../../appRedux/actions/Customers";
@@ -25,44 +21,23 @@ const {TextArea} = Input;
 class AddNewTicket extends Component {
   constructor(props) {
     super(props);
-    if (this.props.ticketId === null) {
-      this.state = {
-        title: "",
-        content: "",
-        priority_id: null,
-        user_id: null,
-        department_id: null,
-        service_id: [],
-        product_id: null,
-        assign_to: null,
-        tags:[],
-        attachments:[]
-      };
-    } else {
-      const selectedTicket = this.props.tickets.find(ticket => ticket.id === this.props.ticketId);
-      const {title, content, priority_id, department_id, product_id, id} = selectedTicket;
-      const user_id = selectedTicket.assigned_by.user_id;
-      const service_id = selectedTicket.services.map(service => service.id);
-      this.state = {
-        id: id,
-        title: title,
-        content: content,
-        priority_id: priority_id,
-        department_id: department_id,
-        product_id: product_id,
-        user_id: user_id,
-        service_id: service_id,
-        assign_to: null
-      };
-    }
+    this.state = {
+      title: "",
+      content: "",
+      priority_id: null,
+      user_id: null,
+      department_id: null,
+      service_id: [],
+      product_id: null,
+      assign_to: null,
+      tags: [],
+      attachments: []
+    };
   }
 
   componentDidMount() {
     this.props.onGetFormDetails();
-    this.props.onGetTickets();
-    this.props.onGetTicketPriorities();
-    this.props.onGetStaff();
-    this.props.onGetCustomersData();
+    // this.props.onGetCustomersData();
     this.props.onGetFilterOptions();
   }
 
@@ -75,13 +50,9 @@ class AddNewTicket extends Component {
   };
 
   onAddTicket = () => {
-    if (this.props.ticketId === null) {
-      this.setState({attachments: this.props.attachments}, () => {
-        this.props.onAddTickets({...this.state}, this.props.history);
-      })
-    } else {
-      this.props.onUpdateTickets({...this.state}, this.props.history);
-    }
+    this.setState({attachments: this.props.attachments}, () => {
+      this.props.onAddTickets({...this.state}, this.props.history);
+    })
   };
 
   onServiceSelectOptions = () => {
@@ -97,7 +68,7 @@ class AddNewTicket extends Component {
   };
 
   onServiceRemove = (value) => {
-    const updatedServiceIds = this.state.service_id.filter(service => service !== value)
+    const updatedServiceIds = this.state.service_id.filter(service => service !== value);
     this.setState({service_id: updatedServiceIds})
   };
 
@@ -113,23 +84,30 @@ class AddNewTicket extends Component {
     });
   };
 
+  handleSearch = (value) => {
+    this.props.onGetCustomersData(null, null, value)
+  };
+
+  handleChange = (value) => {
+    this.setState({user_id: value})
+  };
+
   render() {
-    const formData = this.props.formData;
     const {getFieldDecorator} = this.props.form;
     const {title, content, product_id, priority_id, department_id, service_id, user_id} = this.state;
-    const {priorities} = this.props;
+    const {filterData, formData, customersList} = this.props;
     const ServiceOptions = this.onServiceSelectOptions();
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-font-weight-bold">{this.props.ticketId === null ? "Create Ticket" : "Edit Ticket Details"}</h4>
+          <h4 className="gx-font-weight-bold">Create Ticket</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/manage-tickets/all-tickets">Manage Tickets</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/manage-tickets/add-new-ticket">{this.props.ticketId === null ?
-                "Create ticket" : "Edit ticket"}
+              <Link to="/manage-tickets/add-new-ticket">
+                Create ticket
               </Link>
             </Breadcrumb.Item>
           </Breadcrumb>
@@ -140,10 +118,17 @@ class AddNewTicket extends Component {
                   {getFieldDecorator('user_id', {
                     initialValue: user_id,
                     rules: [{required: true, message: 'Please Select Customer!'}],
-                  })(<Select onChange={(value) => {
-                    this.setState({user_id: value})
-                  }}>
-                    {this.props.customersList.map(customer => {
+                  })(<Select
+                    showSearch
+                    placeholder="Search customer"
+                    defaultActiveFirstOption={false}
+                    showArrow={false}
+                    filterOption={false}
+                    onSearch={this.handleSearch}
+                    onChange={this.handleChange}
+                    notFoundContent={null}
+                  >
+                    {customersList.map(customer => {
                       return <Option value={customer.id}>{customer.first_name + " " + customer.last_name}</Option>
                     })}
                   </Select>)}
@@ -197,7 +182,7 @@ class AddNewTicket extends Component {
                   })(<Select onChange={(value) => {
                     this.setState({priority_id: value})
                   }}>
-                    {priorities.map(priority =>
+                    {filterData.priority.map(priority =>
                       <Option key={priority.id} value={priority.id}>{priority.name}</Option>
                     )}
                   </Select>)}
@@ -212,11 +197,14 @@ class AddNewTicket extends Component {
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
               <div>
                 <div>Assign to</div>
-              <TicketAssigning staffList={this.props.filterData.staffs}
-                               onAssignStaff={this.onAssignStaff}
-              />
-              <div className="gx-mb-3">Tags</div>
-              <Select mode="tags" style={{ width: '100%' }} placeholder="Type to add tags" onChange={this.onAddTags}/>
+                <TicketAssigning staffList={filterData.staffs}
+                                 onAssignStaff={this.onAssignStaff}
+                />
+                <div className="gx-mb-3">Tags</div>
+                <Select mode="tags" style={{width: '100%'}} placeholder="Type to add tags" onChange={this.onAddTags}
+                        showSearch
+                        showArrow={false}
+                        notFoundContent={null}/>
               </div>
               <div className="gx-my-5">Attachments</div>
               <TicketAttachments onAddAttachments={this.props.onAddAttachments}/>
@@ -232,20 +220,14 @@ class AddNewTicket extends Component {
 AddNewTicket = Form.create({})(AddNewTicket);
 
 
-const mapStateToProps = ({ticketPriorities, supportStaff, ticketList, customers}) => {
-  const {priorities} = ticketPriorities;
-  const {tickets, ticketId, formData, filterData, attachments} = ticketList;
-  const {staffList} = supportStaff;
+const mapStateToProps = ({ticketList, customers}) => {
+  const {formData, filterData, attachments} = ticketList;
   const {customersList} = customers;
-  return {priorities, staffList, tickets, ticketId, customersList, formData, filterData, attachments};
+  return {customersList, formData, filterData, attachments};
 };
 
 export default connect(mapStateToProps, {
-  onGetTickets,
   onAddTickets,
-  onGetTicketPriorities,
-  onGetStaff,
-  onUpdateTickets,
   onGetCustomersData,
   onGetFormDetails,
   onGetFilterOptions,
@@ -254,14 +236,23 @@ export default connect(mapStateToProps, {
 
 
 AddNewTicket.defaultProps = {
-  staffList: [],
-  priorities: [],
-  showAddTicket: true
+  attachments: [],
+  formData: {
+    departments: [],
+    products: [],
+    services: [],
+  },
+  filterData: {
+    status: [],
+    priority: [],
+    staffs: []
+  },
+  customersList: []
 };
 
 AddNewTicket.propTypes = {
-  staffList: PropTypes.array,
-  priorities: PropTypes.array,
-  onAddTickets: PropTypes.func,
-  showAddTicket: PropTypes.bool
+  attachments: PropTypes.array,
+  formData: PropTypes.object,
+  filterData: PropTypes.object,
+  customersList: PropTypes.array
 };
