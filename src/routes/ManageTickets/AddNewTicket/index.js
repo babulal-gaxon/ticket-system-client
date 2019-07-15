@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Col, Form, Input, Row, Select} from "antd";
+import {Avatar, Breadcrumb, Button, Col, Form, Input, Row, Select} from "antd";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
@@ -129,7 +129,14 @@ class AddNewTicket extends Component {
                     notFoundContent={null}
                   >
                     {customersList.map(customer => {
-                      return <Option value={customer.id}>{customer.first_name + " " + customer.last_name}</Option>
+                      return <Option value={customer.id}>
+                        <span>{customer.avatar ?
+                          <Avatar className="gx-mr-3 gx-size-30" src={customer.avatar.src}/> :
+                          <Avatar className="gx-mr-3 gx-size-30"
+                                  style={{backgroundColor: '#f56a00'}}>{customer.first_name[0].toUpperCase()}</Avatar>}</span>
+                        <span className="gx-mx-5">{customer.first_name + " " + customer.last_name}</span>
+                        <span>{customer.email}</span>
+                      </Option>
                     })}
                   </Select>)}
                 </Form.Item>

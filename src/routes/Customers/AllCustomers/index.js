@@ -403,7 +403,7 @@ class AllCustomers extends Component {
   };
 
   render() {
-    const {customersList, getCustomerId} = this.props;
+    const {customersList} = this.props;
     const {
       selectedRowKeys, resetPasswordModal, currentCustomer, sideBarActive, filterText,
       resetPasswordCustomerId, itemNumbers, current, totalItems
