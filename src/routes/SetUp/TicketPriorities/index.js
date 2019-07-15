@@ -292,9 +292,9 @@ class TicketPriorities extends Component {
         <Widget styleName="gx-card-filter">
           <h4 className="gx-font-weight-bold">Ticket Priorities</h4>
           <Breadcrumb className="gx-mb-3">
-            <Breadcrumb.Item>
-              <Link to="/ticket-system/ticket-priorities">Ticket System</Link></Breadcrumb.Item>
-            <Breadcrumb.Item className="gx-text-primary">Ticket Priorities</Breadcrumb.Item>
+            <Breadcrumb.Item>Ticket System</Breadcrumb.Item>
+            <Breadcrumb.Item className="gx-text-primary">
+              <Link to="/setup/ticket-priorities" className="gx-text-primary">Ticket Priorities</Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">

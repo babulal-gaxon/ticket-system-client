@@ -14,6 +14,7 @@ import {
 import moment from "moment";
 import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
 const ButtonGroup = Button.Group;
 const Option = Select.Option;
@@ -131,10 +132,11 @@ class RolesList extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <div> {!record.is_locked ?<span>{Permissions.canRoleEdit() ? <i className="icon icon-edit gx-mr-3" onClick={() => {
-            this.props.onGetRoleDetail(record.id, this.props.history);
-          }}/> : null}
-            {Permissions.canRoleDelete() ? this.onDeletePopUp(record.id) : null}
+          return <div> {!record.is_locked ?
+            <span>{Permissions.canRoleEdit() ? <i className="icon icon-edit gx-mr-3" onClick={() => {
+              this.props.onGetRoleDetail(record.id, this.props.history);
+            }}/> : null}
+              {Permissions.canRoleDelete() ? this.onDeletePopUp(record.id) : null}
           </span> : null}
           </div>
         },
@@ -178,9 +180,10 @@ class RolesList extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
+        {Permissions.canRoleDelete() ?
         <Menu.Item key="1" onClick={this.showBulkDeleteConfirm}>
           Archive
-        </Menu.Item>
+        </Menu.Item> : null}
         {Permissions.canRoleDelete() ?
           <Menu.Item key="2" onClick={this.showBulkDeleteConfirm}>
             Delete
@@ -196,8 +199,8 @@ class RolesList extends Component {
 
   onPageChange = page => {
     this.setState({current: page}, () => {
-        this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText)
-      });
+      this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText)
+    });
   };
 
   render() {
@@ -219,7 +222,8 @@ class RolesList extends Component {
         <Widget styleName="gx-card-filter">
           <h4 className="gx-font-weight-bold">Roles & Permission</h4>
           <Breadcrumb className="gx-mb-3">
-            <Breadcrumb.Item className="gx-text-primary">Roles & Permission</Breadcrumb.Item>
+            <Breadcrumb.Item className="gx-text-primary"> <Link to="/roles-permissions/all" className="gx-text-primary">
+              Roles & Permission</Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">

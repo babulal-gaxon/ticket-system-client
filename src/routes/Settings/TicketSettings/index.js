@@ -14,40 +14,36 @@ class TicketSettings extends Component {
     super(props);
     if (this.props.ticketSettings === null) {
       this.state = {
-        allow_customer_service: 0,
-        staff_access_belong_department: 0,
-        open_ticket_all_customers: 0,
-        customer_own_tickets: 0,
-        ticket_reply_order: "desc",
+        enable_service_selection: 0,
+        staff_access_own_department: 0,
+        ticket_reply_order: "",
         default_status_reply: null,
-        allowed_file_ext: ".jpg",
+        allowed_file_ext: "",
         max_upload_size: null,
-        notify_raise_ticket: 0,
-        notify_reply_ticket: 0,
-        notify_status_ticket: 0,
-        notify_priority_ticket: 0,
-        notify_archive_ticket: 0
+        notify_raise: 0,
+        notify_reply: 0,
+        notify_status_change: 0,
+        notify_priority_change: 0,
+        notify_on_archive: 0
       }
     } else {
       const {
-        allow_customer_service, staff_access_belong_department, open_ticket_all_customers, customer_own_tickets,
-        ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise_ticket,
-        notify_reply_ticket, notify_status_ticket, notify_priority_ticket, notify_archive_ticket
+        enable_service_selection, staff_access_own_department,
+        ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,
+        notify_reply, notify_status_change, notify_priority_change, notify_on_archive
       } = this.props.ticketSettings;
       this.state = {
-        allow_customer_service: parseInt(allow_customer_service),
-        staff_access_belong_department: parseInt(staff_access_belong_department),
-        open_ticket_all_customers: parseInt(open_ticket_all_customers),
-        customer_own_tickets: parseInt(customer_own_tickets),
+        enable_service_selection: parseInt(enable_service_selection),
+        staff_access_own_department: parseInt(staff_access_own_department),
         ticket_reply_order: ticket_reply_order,
         default_status_reply: parseInt(default_status_reply),
         allowed_file_ext: allowed_file_ext,
         max_upload_size: parseInt(max_upload_size),
-        notify_raise_ticket: parseInt(notify_raise_ticket),
-        notify_reply_ticket: parseInt(notify_reply_ticket),
-        notify_status_ticket: parseInt(notify_status_ticket),
-        notify_priority_ticket: parseInt(notify_priority_ticket),
-        notify_archive_ticket: parseInt(notify_archive_ticket)
+        notify_raise: parseInt(notify_raise),
+        notify_reply: parseInt(notify_reply),
+        notify_status_change: parseInt(notify_status_change),
+        notify_priority_change: parseInt(notify_priority_change),
+        notify_on_archive: parseInt(notify_on_archive)
       }
     }
   };
@@ -61,25 +57,23 @@ class TicketSettings extends Component {
   componentWillReceiveProps(nextProps, nextContext) {
     if (nextProps.ticketSettings) {
       const {
-        allow_customer_service, staff_access_belong_department, open_ticket_all_customers, customer_own_tickets,
-        ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise_ticket,
-        notify_reply_ticket, notify_status_ticket, notify_priority_ticket, notify_archive_ticket
+        enable_service_selection, staff_access_own_department,
+        ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,
+        notify_reply, notify_status_change, notify_priority_change, notify_on_archive
       } = nextProps.ticketSettings;
       if (JSON.stringify(nextProps.ticketSettings) !== JSON.stringify(this.props.ticketSettings)) {
         this.setState({
-          allow_customer_service: parseInt(allow_customer_service),
-          staff_access_belong_department: parseInt(staff_access_belong_department),
-          open_ticket_all_customers: parseInt(open_ticket_all_customers),
-          customer_own_tickets: parseInt(customer_own_tickets),
+          enable_service_selection: parseInt(enable_service_selection),
+          staff_access_own_department: parseInt(staff_access_own_department),
           ticket_reply_order: ticket_reply_order,
-          default_status_reply: parseInt(default_status_reply),
+          default_status_reply: default_status_reply,
           allowed_file_ext: allowed_file_ext,
           max_upload_size: max_upload_size,
-          notify_raise_ticket: parseInt(notify_raise_ticket),
-          notify_reply_ticket: parseInt(notify_reply_ticket),
-          notify_status_ticket: parseInt(notify_status_ticket),
-          notify_priority_ticket: parseInt(notify_priority_ticket),
-          notify_archive_ticket: parseInt(notify_archive_ticket)
+          notify_raise: parseInt(notify_raise),
+          notify_reply: parseInt(notify_reply),
+          notify_status_change: parseInt(notify_status_change),
+          notify_priority_change: parseInt(notify_priority_change),
+          notify_on_archive: parseInt(notify_on_archive)
         })
       }
     }
@@ -92,9 +86,9 @@ class TicketSettings extends Component {
 
   render() {
     const {
-      allow_customer_service, staff_access_belong_department, open_ticket_all_customers, customer_own_tickets,
-      ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise_ticket,
-      notify_reply_ticket, notify_status_ticket, notify_priority_ticket, notify_archive_ticket
+      enable_service_selection, staff_access_own_department,
+      ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,
+      notify_reply, notify_status_change, notify_priority_change, notify_on_archive
     } = this.state;
     return (
       <div className="gx-main-layout-content">
@@ -104,41 +98,25 @@ class TicketSettings extends Component {
             <Breadcrumb.Item>
               <Link to="/settings/general-settings">Settings</Link>
             </Breadcrumb.Item>
-            <Breadcrumb.Item className="gx-text-primary">
-              <Link to="/settings/ticket-settings">Ticket Settings</Link>
+            <Breadcrumb.Item >
+              <Link to="/settings/ticket-settings" className="gx-text-primary">Ticket Settings</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <Form layout="vertical" style={{width: "50%"}}>
             <Divider orientation="left" className="gx-mb-4">General Settings</Divider>
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
-                <p>Allow customer to Select Service</p>
-                <Switch checked={!!allow_customer_service}
-                        onChange={(checked) => this.setState({allow_customer_service: Number(checked)})}/>
+                <p>Enable service selection while creating a ticket</p>
+                <Switch checked={!!enable_service_selection}
+                        onChange={(checked) => this.setState({enable_service_selection: Number(checked)})}/>
               </div>
               <Divider/>
             </Form.Item>
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
-                <p>Staff can only access tickets belonging to staff department</p>
-                <Switch checked={!!staff_access_belong_department}
-                        onChange={(checked) => this.setState({staff_access_belong_department: Number(checked)})}/>
-              </div>
-              <Divider/>
-            </Form.Item>
-            <Form.Item>
-              <div className="gx-d-flex gx-justify-content-between">
-                <p>All staff members to open ticket to all contacts</p>
-                <Switch checked={!!open_ticket_all_customers}
-                        onChange={(checked) => this.setState({open_ticket_all_customers: Number(checked)})}/>
-              </div>
-              <Divider/>
-            </Form.Item>
-            <Form.Item>
-              <div className="gx-d-flex gx-justify-content-between">
-                <p>In customer area, only show tickets related to the logged in contact</p>
-                <Switch checked={!!customer_own_tickets}
-                        onChange={(checked) => this.setState({customer_own_tickets: Number(checked)})}/>
+                <p>Enable department selection while creating a ticket</p>
+                <Switch checked={!!staff_access_own_department}
+                        onChange={(checked) => this.setState({staff_access_own_department: Number(checked)})}/>
               </div>
               <Divider/>
             </Form.Item>
@@ -172,13 +150,17 @@ class TicketSettings extends Component {
                   this.setState({allowed_file_ext: e.target.value})
                 }}/>
               </div>
+              <div>"Enter the formats separated by comma, example - .jpg, .png"</div>
               <Divider/>
             </Form.Item>
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
                 <p>Maximum File upload size(MB)</p>
                 <Input type="text" value={max_upload_size} style={{width: 100}} onChange={(e) => {
-                  this.setState({max_upload_size: e.target.value})
+                  const re = /^[0-9\b]+$/;
+                  if (e.target.value === '' || re.test(e.target.value)) {
+                    this.setState({max_upload_size: e.target.value})
+                  }
                 }}/>
               </div>
               <Divider/>
@@ -187,40 +169,40 @@ class TicketSettings extends Component {
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
                 <p>New Ticket Received</p>
-                <Switch checked={!!notify_raise_ticket}
-                        onChange={(checked) => this.setState({notify_raise_ticket: Number(checked)})}/>
+                <Switch checked={!!notify_raise}
+                        onChange={(checked) => this.setState({notify_raise: Number(checked)})}/>
               </div>
               <Divider/>
             </Form.Item>
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
                 <p>Reply a Ticket</p>
-                <Switch checked={!!notify_reply_ticket}
-                        onChange={(checked) => this.setState({notify_reply_ticket: Number(checked)})}/>
+                <Switch checked={!!notify_reply}
+                        onChange={(checked) => this.setState({notify_reply: Number(checked)})}/>
               </div>
               <Divider/>
             </Form.Item>
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
                 <p>Ticket status change</p>
-                <Switch checked={!!notify_status_ticket}
-                        onChange={(checked) => this.setState({notify_status_ticket: Number(checked)})}/>
+                <Switch checked={!!notify_status_change}
+                        onChange={(checked) => this.setState({notify_status_change: Number(checked)})}/>
               </div>
               <Divider/>
             </Form.Item>
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
                 <p>On priority change</p>
-                <Switch checked={!!notify_priority_ticket}
-                        onChange={(checked) => this.setState({notify_priority_ticket: Number(checked)})}/>
+                <Switch checked={!!notify_priority_change}
+                        onChange={(checked) => this.setState({notify_priority_change: Number(checked)})}/>
               </div>
               <Divider/>
             </Form.Item>
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
                 <p>On Archive</p>
-                <Switch checked={!!notify_archive_ticket}
-                        onChange={(checked) => this.setState({notify_archive_ticket: Number(checked)})}/>
+                <Switch checked={!!notify_on_archive}
+                        onChange={(checked) => this.setState({notify_on_archive: Number(checked)})}/>
               </div>
               <Divider/>
             </Form.Item>

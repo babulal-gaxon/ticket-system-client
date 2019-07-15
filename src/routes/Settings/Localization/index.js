@@ -72,13 +72,13 @@ class Localization extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h3>Localization Settings</h3>
+          <h4 className="gx-font-weight-bold">Localization Settings</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/settings/general-settings">Settings</Link>
             </Breadcrumb.Item>
-            <Breadcrumb.Item className="gx-text-primary">
-              <Link to="/settings/localization">Localization</Link>
+            <Breadcrumb.Item>
+              <Link to="/settings/localization" className="gx-text-primary">Localization</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <Form layout="vertical">

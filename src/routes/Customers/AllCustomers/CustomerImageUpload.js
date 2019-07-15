@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Dropzone from "react-dropzone";
 import {Avatar, Button} from "antd";
+import PropTypes from "prop-types";
+import AddCustomerAddress from "./AddCustomerAddress";
 
 class CustomerImageUpload extends Component {
   constructor(props) {
@@ -72,3 +74,11 @@ class CustomerImageUpload extends Component {
 }
 
 export default CustomerImageUpload;
+
+CustomerImageUpload.defaultProps = {
+  imageAvatar: null
+};
+
+CustomerImageUpload.propTypes = {
+  imageAvatar: PropTypes.object
+};

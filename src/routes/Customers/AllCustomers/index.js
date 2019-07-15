@@ -1,14 +1,26 @@
 import React, {Component} from 'react';
 import Widget from "../../../components/Widget";
-import {Avatar, Button, Checkbox, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
+import {
+  Avatar,
+  Breadcrumb,
+  Button,
+  Checkbox,
+  Dropdown,
+  Icon,
+  Input,
+  Menu,
+  Modal,
+  Popconfirm,
+  Select,
+  Table,
+  Tag
+} from "antd";
 import {
   getCustomerId,
   onDeleteCustomers,
   onDisableCustomer,
-  onGetCustomerCompany,
   onGetCustomerFilterOptions,
   onGetCustomersData,
-  onGetCustomerTickets,
   onResetPassword
 } from "../../../appRedux/actions/Customers";
 import moment from "moment";
@@ -18,6 +30,7 @@ import InfoView from "../../../components/InfoView";
 import ResetCustomerPassword from "./ResetCustomerPassword";
 import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -51,8 +64,9 @@ class AllCustomers extends Component {
   }
 
   onGetPaginatedData = (currentPage, itemsPerPage, filterText, companies, labels, status) => {
+    if (Permissions.canCustomerView()) {
       this.props.onGetCustomersData(currentPage, itemsPerPage, filterText, companies, labels, status);
-
+    }
   };
 
   onSideBarShow = () => {
@@ -423,7 +437,11 @@ class AllCustomers extends Component {
         {currentCustomer === null ?
           <Widget styleName="gx-card-filter">
             <h4 className="gx-font-weight-bold">Customers</h4>
-            <p className="gx-text-grey">Customers</p>
+            <Breadcrumb className="gx-mb-4">
+              <Breadcrumb.Item>
+                <Link to="/customers" className="gx-text-primary">Customers</Link>
+              </Breadcrumb.Item>
+            </Breadcrumb>
             <div className="gx-d-flex gx-justify-content-between">
               <div className="gx-d-flex">
                 {Permissions.canCustomerAdd() ?
@@ -447,9 +465,10 @@ class AllCustomers extends Component {
                     <i className="icon icon-long-arrow-right"/>
                   </Button>
                 </Button.Group>
-                <Button type="default" className="gx-filter-btn gx-filter-btn-rtl-round" onClick={this.onSideBarShow}>
-                  <i className="icon icon-filter"/>
-                </Button>
+                {(Permissions.canCustomerView()) ?
+                  <Button type="default" className="gx-filter-btn gx-filter-btn-rtl-round" onClick={this.onSideBarShow}>
+                    <i className="icon icon-filter"/>
+                  </Button> : null}
               </div>
             </div>
             <Table rowKey="customersData" rowSelection={rowSelection} columns={this.onCustomersRowData()}
@@ -470,9 +489,9 @@ class AllCustomers extends Component {
                      }
                    })}/>
           </Widget> : <CustomerDetails
-                                       currentCustomer={currentCustomer}
-                                       history={this.props.history}
-                                       onBackToList={this.onBackToList}
+            currentCustomer={currentCustomer}
+            history={this.props.history}
+            onBackToList={this.onBackToList}
           />}
         {sideBarActive ? this.onGetSidebar() : null}
         {resetPasswordModal ?
@@ -497,8 +516,6 @@ export default connect(mapPropsToState, {
   onDeleteCustomers,
   getCustomerId,
   onDisableCustomer,
-  onGetCustomerTickets,
-  onGetCustomerCompany,
   onResetPassword,
   onGetCustomerFilterOptions,
 })(AllCustomers);

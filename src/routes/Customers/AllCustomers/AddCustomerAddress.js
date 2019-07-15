@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Checkbox, Col, Form, Input, Modal, Row, Select} from "antd";
+import PropTypes from "prop-types";
+import ResetCustomerPassword from "./ResetCustomerPassword";
 
 const {Option} = Select;
 
@@ -30,9 +32,9 @@ class AddCustomerAddress extends Component {
     this.props.form.validateFields(err => {
       if (!err) {
         this.props.onSaveAddress({...this.state});
+        this.props.onToggleAddressModal();
       }
     });
-    this.props.onToggleAddressModal();
   };
 
   render() {
@@ -82,7 +84,12 @@ class AddCustomerAddress extends Component {
                 <Form.Item label="Country">
                   {getFieldDecorator('country_id', {
                     initialValue: country_id,
-                    rules: [{required: true, message: 'Please Enter Country Name!'}],
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Please Enter Country Name!'
+                      }
+                      ],
                   })(<Select style={{width: "100%"}} onChange={this.onCountrySelect}>
                     {Object.keys(this.props.countriesList).map(country => {
                       return <Option value={country}>{this.props.countriesList[country]}</Option>
@@ -94,9 +101,18 @@ class AddCustomerAddress extends Component {
                 <Form.Item label="Zip Code">
                   {getFieldDecorator('zip_code', {
                     initialValue: zip_code,
-                    rules: [{required: true, message: 'Please Enter Zip Code!'}],
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Please Enter Zip Code!'
+                      },
+                      {
+                        pattern: /^[0-9\b]+$/,
+                        message: 'Please enter only numerical values'
+                      }
+                        ],
                   })(<Input type="text" onChange={(e) => {
-                    this.setState({zip_code: e.target.value})
+                      this.setState({zip_code: e.target.value})
                   }}/>)}
                 </Form.Item>
               </Col>
@@ -126,3 +142,13 @@ class AddCustomerAddress extends Component {
 AddCustomerAddress = Form.create({})(AddCustomerAddress);
 
 export default AddCustomerAddress;
+
+AddCustomerAddress.defaultProps = {
+  isModalVisible: false,
+  countriesList: []
+};
+
+AddCustomerAddress.propTypes = {
+  isModalVisible: PropTypes.bool,
+  countriesList: PropTypes.array
+};

@@ -13,6 +13,7 @@ import {
 import AddCustomerAddress from "./AddCustomerAddress";
 import CustomerImageUpload from "./CustomerImageUpload";
 import {onGetCountriesList} from "../../../appRedux/actions/GeneralSettings";
+import PropTypes from "prop-types";
 
 const {Option} = Select;
 
@@ -142,13 +143,13 @@ class AddNewCustomers extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h3>{this.props.customerId === null ? "Add New Customer" : "Edit Customer Details"}</h3>
+          <h4 className="gx-font-weight-bold">{this.props.customerId === null ? "Add New Customer" : "Edit Customer Details"}</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/customers">Customers</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/customers/add-customers">{this.props.customerId === null ?
+              <Link to="/customers/add-customers" className="gx-text-primary">{this.props.customerId === null ?
                 "Add New Customer" : "Edit Customer Details"}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
@@ -193,16 +194,35 @@ class AddNewCustomers extends Component {
                     this.setState({email: e.target.value})
                   }}/>)}
                 </Form.Item>
+
                 <Form.Item label="Password"
                            extra={this.props.customerId === null ? "" : "Note: Leave it blank if you don't want to update password."}>
-                  <Input.Password type="text" onChange={(e) => {
+                  {getFieldDecorator('password', {
+                    initialValue: "",
+                    rules: [{
+                      min: 8,
+                      message: 'Length should be at least 8 characters long',
+                    },
+                      ],
+                  })
+                  (<Input.Password type="text" onChange={(e) => {
                     this.setState({password: e.target.value})
-                  }}/>
+                  }}/>)}
                 </Form.Item>
                 <Form.Item label="Phone Number">
-                  <Input type="text" value={phone} onChange={(e) => {
-                    this.setState({phone: e.target.value})
-                  }}/>
+                  {getFieldDecorator('phone', {
+                    initialValue: phone,
+                    rules: [{
+                      pattern: /^[0-9\b]+$/,
+                      message: 'Please enter only numerical values',
+                    },
+                    ],
+                  })
+                  (
+                  <Input type="text" onChange={(e) => {
+                      this.setState({phone: e.target.value})
+
+                  }}/>)}
                 </Form.Item>
                 <Form.Item label="Select Company">
                   <Select value={company_id} onChange={this.onCompanySelect}>
@@ -292,3 +312,24 @@ export default connect(mapStateToProps, {
   onAddCustomerAddress,
   onGetCustomerFilterOptions
 })(AddNewCustomers);
+
+AddNewCustomers.defaultProps = {
+  customersList: [],
+  customerId: null,
+  labels: [],
+  company: [],
+  profilePicId: null,
+  countriesList: [],
+  customerAddress: []
+};
+
+AddNewCustomers.propTypes = {
+  customersList: PropTypes.array,
+  customerId: PropTypes.number,
+  labels: PropTypes.array,
+  company: PropTypes.array,
+  profilePicId: PropTypes.number,
+  countriesList: PropTypes.array,
+  customerAddress: PropTypes.array
+
+};

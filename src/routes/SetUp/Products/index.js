@@ -1,5 +1,18 @@
 import React, {Component} from 'react';
-import {Avatar, Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd/lib/index";
+import {
+  Avatar,
+  Breadcrumb,
+  Button,
+  Dropdown,
+  Icon,
+  Input,
+  Menu,
+  Modal,
+  Popconfirm,
+  Select,
+  Table,
+  Tag
+} from "antd/lib/index";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
@@ -8,7 +21,6 @@ import PropTypes from "prop-types";
 import AddNewProduct from "./AddNewProduct";
 import {
   onAddProduct,
-  onAddProductLogo,
   onBulkActiveProducts,
   onBulkDisableProducts,
   onDeleteProduct,
@@ -16,6 +28,7 @@ import {
   onGetProductsList
 } from "../../../appRedux/actions/Products";
 import Permissions from "../../../util/Permissions";
+import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -273,8 +286,8 @@ class Products extends Component {
         <Widget styleName="gx-card-filter">
           <h4 className="gx-font-weight-bold">Products</h4>
           <Breadcrumb className="gx-mb-3">
-            <Breadcrumb.Item className="gx-text-primary">
-              <Link to="/products">Products</Link></Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/setup/products" className="gx-text-primary">Products</Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
@@ -323,17 +336,17 @@ class Products extends Component {
                          productId={this.state.productId}
                          onEditProduct={this.props.onEditProduct}
                          productsList={productsList}
-                         onAddProductLogo={this.props.onAddProductLogo}
-                         productLogoId={this.props.productLogoId}/> : null}
-
+                         fetchSuccess={this.props.fetchSuccess}
+                         fetchStart={this.props.fetchStart}
+                         fetchError={this.props.fetchError}/> : null}
       </div>
     );
   }
 }
 
 const mapStateToProps = ({products}) => {
-  const {productsList, totalItems, productLogoId} = products;
-  return {productsList, totalItems, productLogoId};
+  const {productsList, totalItems} = products;
+  return {productsList, totalItems};
 };
 
 export default connect(mapStateToProps, {
@@ -341,15 +354,16 @@ export default connect(mapStateToProps, {
   onAddProduct,
   onEditProduct,
   onDeleteProduct,
-  onAddProductLogo,
   onBulkActiveProducts,
-  onBulkDisableProducts
+  onBulkDisableProducts,
+  fetchSuccess,
+  fetchStart,
+  fetchError
 })(Products);
 
 Products.defaultProps = {
   productsList: [],
-  totalItems: null,
-  productLogoId: null
+  totalItems: null
 };
 
 Products.propTypes = {
@@ -360,7 +374,6 @@ Products.propTypes = {
   onAddProduct: PropTypes.func,
   onEditProduct: PropTypes.func,
   onDeleteProduct: PropTypes.func,
-  onAddProductLogo: PropTypes.func,
   onBulkActiveProducts: PropTypes.func,
   onBulkDisableProducts: PropTypes.func
 };

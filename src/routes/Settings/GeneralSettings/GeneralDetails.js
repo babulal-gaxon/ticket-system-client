@@ -13,8 +13,7 @@ class GeneralDetails extends Component {
         favicon: null,
         allowed_ext: "",
         file_upload_max_size: null,
-        email: "",
-        mobile: ""
+        email: ""
       }
     } else {
       const {name, website, file_upload_max_size, email, logo, favicon, allowed_ext} = this.props.generalSettingsData;
@@ -25,8 +24,7 @@ class GeneralDetails extends Component {
         favicon: favicon,
         allowed_ext: allowed_ext,
         file_upload_max_size: file_upload_max_size,
-        email: email,
-        // mobile: mobile
+        email: email
       }
     }
   }
@@ -42,8 +40,7 @@ class GeneralDetails extends Component {
           favicon: favicon,
           allowed_ext: allowed_ext,
           file_upload_max_size: file_upload_max_size,
-          email: email,
-          // mobile: mobile
+          email: email
         })
       }
     }
@@ -89,7 +86,7 @@ class GeneralDetails extends Component {
               this.setState({name: e.target.value})
             }}/>)}
           </Form.Item>
-          <Form.Item label="Company Website">
+          <Form.Item label="Company Website" extra="Please enter website in 'http//www.example.com' format">
             {getFieldDecorator('url', {
               initialValue: url,
               rules: [{required: true, message: 'Please Enter Company Website!'}],
@@ -122,11 +119,6 @@ class GeneralDetails extends Component {
               this.setState({email: e.target.value})
             }}/>)}
           </Form.Item>
-          {/*<Form.Item label="Phone no.">*/}
-          {/*  <Input type="text" value={mobile} onChange={(e) => {*/}
-          {/*    this.setState({mobile: e.target.value})*/}
-          {/*  }}/>*/}
-          {/*</Form.Item>*/}
           <Form.Item label="Allowed Extensions">
             {getFieldDecorator('allowed_ext', {
               initialValue: allowed_ext,
@@ -138,7 +130,14 @@ class GeneralDetails extends Component {
           <Form.Item label="File upload max size">
             {getFieldDecorator('file_upload_max_size', {
               initialValue: file_upload_max_size,
-              rules: [{required: true, message: 'Please Select File upload size!'}],
+              rules: [
+                {
+                  required: true,
+                  message: 'Please Select File upload size!'},
+                {
+                  pattern: /^[0-9\b]+$/,
+                  message: 'Please enter only numerical values',
+                }],
             })(<Input type="text" addonAfter="MB" onChange={(e) => {
               this.setState({file_upload_max_size: e.target.value})
             }}/>)}

@@ -2,14 +2,12 @@ import {
   ADD_NEW_COMPANY,
   DELETE_COMPANIES,
   EDIT_COMPANY_DETAILS,
-  EDIT_COMPANY_LOGO,
   GET_COMPANY_DATA
 } from "../../constants/Companies";
 
 const initialState = {
   companiesList: [],
-  totalItems: null,
-  companyLogoId: null
+  totalItems: null
 };
 
 export default (state = initialState, action) => {
@@ -29,7 +27,7 @@ export default (state = initialState, action) => {
       };
 
     case EDIT_COMPANY_DETAILS:
-      const updatedCompanies = state.companiesList.map(company => company.id === action.payload.id ? action.payload : company)
+      const updatedCompanies = state.companiesList.map(company => company.id === action.payload.id ? action.payload : company);
       return {
         ...state,
         companiesList: updatedCompanies
@@ -44,12 +42,6 @@ export default (state = initialState, action) => {
         ...state,
         companiesList: updateCompanies,
         totalItems: state.totalItems - action.payload.length
-      };
-
-    case EDIT_COMPANY_LOGO:
-      return {
-        ...state,
-        companyLogoId: action.payload
       };
 
     default:

@@ -1,6 +1,5 @@
 import {
   ADD_PRODUCT,
-  ADD_PRODUCT_LOGO,
   BULK_ACTIVE_PRODUCTS,
   BULK_DISABLE_PRODUCTS,
   DELETE_PRODUCT,
@@ -10,8 +9,7 @@ import {
 
 const initialState = {
   productsList: [],
-  totalItems: null,
-  productLogoId: null
+  totalItems: null
 };
 
 export default (state = initialState, action) => {
@@ -48,11 +46,6 @@ export default (state = initialState, action) => {
         totalItems: state.totalItems - action.payload.length
       };
 
-    case ADD_PRODUCT_LOGO:
-      return {
-        ...state,
-        productLogoId: action.payload
-      };
 
     case BULK_ACTIVE_PRODUCTS:
       const activateProducts = state.productsList.map(product => {

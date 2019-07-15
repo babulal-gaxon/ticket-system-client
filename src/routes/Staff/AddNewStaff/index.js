@@ -186,21 +186,47 @@ class AddNewStaff extends Component {
                   }}/>)}
                 </Form.Item>
                 <Form.Item label="Phone Number">
-                  <Input type="text" value={mobile} onChange={(e) => {
-                    this.setState({mobile: e.target.value})
-                  }}/>
+                  {getFieldDecorator('mobile', {
+                    initialValue: mobile,
+                    rules: [{
+                      pattern: /^[0-9\b]+$/,
+                      message: 'Please enter only numerical values',
+                    },
+                    ],
+                  })
+                  (
+                    <Input type="text" onChange={(e) => {
+                      this.setState({phone: e.target.value})
+
+                    }}/>)}
                 </Form.Item>
                 <Form.Item label="Role">
-                  <Select value={role_id} onChange={this.onSelectRole} placeholder="Select a Role">
+                  {getFieldDecorator('role_id', {
+                  initialValue: role_id,
+                  rules: [{
+                  required: true,
+                  message: 'Please Select role!'
+                }] ,
+                })
+                 ( <Select value={role_id} onChange={this.onSelectRole} placeholder="Select a Role">
                     {this.props.roles.map(role => {
                       return <Option value={role.id}>{role.name}</Option>
                     })}
-                  </Select>
+                  </Select>)}
                 </Form.Item>
                 <Form.Item label="Hourly Rate">
+                  {getFieldDecorator('hourly_rate', {
+                    initialValue: hourly_rate,
+                    rules: [{
+                      pattern: /^[0-9\b]+$/,
+                      message: 'Please enter only numerical values',
+                    },
+                    ],
+                  })
+                  (
                   <Input type="text" addonAfter={<div>$</div>} value={hourly_rate} onChange={(e) => {
                     this.setState({hourly_rate: e.target.value})
-                  }}/>
+                  }}/>)}
                 </Form.Item>
                 <Form.Item label="Designation">
                   <Input type="text" value={designation} onChange={(e) => {
@@ -212,7 +238,14 @@ class AddNewStaff extends Component {
                   {this.props.staffId === 0 ?
                     getFieldDecorator('password', {
                       initialValue: password,
-                      rules: [{required: true, message: 'Please Enter Password!'}],
+                      rules: [{
+                        required: true,
+                        message: 'Please Enter Password!'
+                      },
+                        {
+                          min: 8,
+                          message: 'Length should be at least 8 characters long',
+                        }] ,
                     })(<Input.Password type="text" onChange={(e) => {
                       this.setState({password: e.target.value})
                     }}/>) :

@@ -66,9 +66,16 @@ class AddNewService extends Component {
               }}/>)}
             </Form.Item>
             <Form.Item label="Description">
-              <TextArea rows={4} className="gx-form-control-lg" value={desc} onChange={(e) => {
+              {getFieldDecorator('desc', {
+                initialValue: desc,
+                rules: [{
+                  min: 30,
+                  message: 'Message should be at least 30 characters long',
+                }],
+              })(
+              <TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                 this.setState({desc: e.target.value})
-              }}/>
+              }}/>)}
             </Form.Item>
             <Form.Item label="Support Enable">
               <Radio.Group value={support_enable} onChange={(e) => {

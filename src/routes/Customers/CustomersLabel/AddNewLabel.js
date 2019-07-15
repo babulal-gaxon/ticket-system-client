@@ -64,7 +64,15 @@ class AddNewLabel extends Component {
             </Form.Item>
             <Form.Item label="Description">{getFieldDecorator('description', {
               initialValue: desc,
-              rules: [{required: true, message: 'Please input Description!'}],
+              rules: [
+                {required: true,
+                  message: 'Please input Description!'
+                },
+                {
+                  min: 30,
+                  message: 'Description should be atleast 30 characters long',
+                }
+                ],
             })(<TextArea rows={4} onChange={(e) => {
               this.setState({desc: e.target.value})
             }}/>)}

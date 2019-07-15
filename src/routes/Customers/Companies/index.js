@@ -3,7 +3,6 @@ import {Avatar, Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfi
 import AddNewCompany from "./AddNewCompany";
 import {
   onAddNewCompany,
-  onAddProfileImage,
   onDeleteCompanies,
   onEditCompany,
   onGetCompaniesData
@@ -12,6 +11,8 @@ import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import InfoView from "../../../components/InfoView";
 import {connect} from "react-redux";
+import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
+import Permissions from "../../../util/Permissions";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -38,7 +39,9 @@ class Companies extends Component {
   };
 
   onGetPaginatedData = (currentPage, itemsPerPage, filterText) => {
-    this.props.onGetCompaniesData(currentPage, itemsPerPage, filterText);
+    if (Permissions.canCompanyView()) {
+      this.props.onGetCompaniesData(currentPage, itemsPerPage, filterText);
+    }
   };
 
   onFilterTextChange = (e) => {
@@ -151,9 +154,11 @@ class Companies extends Component {
   onShowRowDropdown = (companyId) => {
     const menu = (
       <Menu>
+        {(Permissions.canCompanyEdit()) ?
         <Menu.Item key="2" onClick={() => this.onEditCompanyOption(companyId)}>
           Edit
-        </Menu.Item>
+        </Menu.Item> : null}
+        {(Permissions.canCompanyDelete()) ?
         <Menu.Item key="4">
           <Popconfirm
             title="Are you sure to delete this Company?"
@@ -165,7 +170,7 @@ class Companies extends Component {
             cancelText="No">
             Delete
           </Popconfirm>
-        </Menu.Item>
+        </Menu.Item> : null}
       </Menu>
     );
     return (
@@ -198,12 +203,14 @@ class Companies extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
+        {(Permissions.canCompanyDelete()) ?
         <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
           Archive
-        </Menu.Item>
+        </Menu.Item> : null}
+        {(Permissions.canCompanyDelete()) ?
         <Menu.Item key="2" onClick={this.onShowBulkDeleteConfirm}>
           Delete
-        </Menu.Item>
+        </Menu.Item> : null}
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
@@ -244,20 +251,21 @@ class Companies extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4>Companies</h4>
+          <h4 className="gx-font-weight-bold">Companies</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/customers">Customers</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/customers/companies">Companies</Link>
+              <Link to="/customers/companies" className="gx-text-primary">Companies</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
+              {(Permissions.canCompanyAdd()) ?
               <Button type="primary" onClick={this.onAddButtonClick} style={{width: 200}}>
                 Add New
-              </Button>
+              </Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
@@ -296,8 +304,9 @@ class Companies extends Component {
                          companyId={this.state.companyId}
                          onEditCompany={this.props.onEditCompany}
                          companiesList={companiesList}
-                         onAddProfileImage={this.props.onAddProfileImage}
-                         companyLogoId={this.props.companyLogoId}
+                         fetchSuccess={this.props.fetchSuccess}
+                         fetchStart={this.props.fetchStart}
+                         fetchError={this.props.fetchError}
           /> : null}
         <InfoView/>
       </div>
@@ -306,8 +315,8 @@ class Companies extends Component {
 }
 
 const mapStateToProps = ({companies}) => {
-  const {companiesList, totalItems, companyLogoId} = companies;
-  return {companiesList, totalItems, companyLogoId};
+  const {companiesList, totalItems} = companies;
+  return {companiesList, totalItems};
 };
 
 export default connect(mapStateToProps, {
@@ -315,5 +324,7 @@ export default connect(mapStateToProps, {
   onAddNewCompany,
   onEditCompany,
   onDeleteCompanies,
-  onAddProfileImage
+  fetchSuccess,
+  fetchStart,
+  fetchError
 })(Companies);

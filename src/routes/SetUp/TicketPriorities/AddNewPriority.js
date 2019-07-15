@@ -125,9 +125,16 @@ class AddNewPriority extends Component {
               </div>
             </Form.Item>
             <Form.Item label="Description">
-              <TextArea rows={4} className="gx-form-control-lg" type="textarea" value={desc} onChange={(e) => {
+              {getFieldDecorator('desc', {
+                initialValue: desc,
+                rules: [{
+                  min: 30,
+                  message: 'Message should be at least 30 characters long',
+                }],
+              })(
+              <TextArea rows={4} className="gx-form-control-lg" type="textarea" onChange={(e) => {
                 this.setState({desc: e.target.value})
-              }}/>
+              }}/>)}
             </Form.Item>
             <Form.Item label="Priority Weight">
               <Input className="gx-form-control-lg" type="text" value={value} onChange={(e) => {

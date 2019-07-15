@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Button, Form, Input, Modal} from "antd";
+import axios from 'util/Api'
+import {Button, Form, Input, Modal, Upload} from "antd";
 
 
 class AddNewCompany extends Component {
@@ -9,11 +10,14 @@ class AddNewCompany extends Component {
       this.state = {
         company_name: "",
         website: "",
-        company_logo: this.props.companyLogoId
+        uploadedLogo: null,
+        company_logo: this.props.companyLogoId,
+        logoName: ""
       };
     } else {
       const selectedCompany = this.props.companiesList.find(company => company.id === this.props.companyId);
-      this.state = {...selectedCompany, company_logo: this.props.companyLogoId};
+      console.log("selectedCompanye", selectedCompany);
+      this.state = {...selectedCompany, logoName: selectedCompany.avatar.title, uploadedLogo: selectedCompany.avatar, company_logo: selectedCompany.avatar.id};
     }
   };
 
@@ -21,39 +25,72 @@ class AddNewCompany extends Component {
     this.setState({company_logo: nextProps.companyLogoId})
   }
 
-
-  onCompanyAdd = () => {
-    this.setState({company_logo: this.props.companyLogoId}, () => {
-      if (this.props.companyId === 0) {
-        this.props.onAddNewCompany({...this.state});
-        this.props.onToggleAddCompany();
-      } else {
-        this.props.onEditCompany({...this.state});
-        this.props.onToggleAddCompany();
-      }
-    })
-  };
-
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.onCompanyAdd();
+        this.onSubmitForm();
       }
     });
   };
 
-  onLogoSelect = (e) => {
-    let file = e.target.files[0];
+  onSubmitForm = () => {
+    if(this.state.uploadedLogo) {
+      this.onLogoSelect();
+    }
+    else {
+      this.onCompanyAdd();
+    }
+  };
+
+  onCompanyAdd = () => {
+      if (this.props.companyId === 0) {
+        this.props.onAddNewCompany({...this.state});
+      } else {
+        this.props.onEditCompany({...this.state});
+      }
+    this.props.onToggleAddCompany();
+  };
+
+  onLogoSelect = () => {
+    let file = this.state.uploadedLogo;
     const data = new FormData();
     data.append('file', file);
     data.append('title', file.name);
-    this.props.onAddProfileImage(data);
+    this.onAddLogo(data);
+  };
+
+  onAddLogo = (file) => {
+    this.props.fetchStart();
+    axios.post("/uploads/temporary/media", file, {
+      headers: {
+        'Content-Type': "multipart/form-data"
+      }
+    }).then(({data}) => {
+      if (data.success) {
+        this.props.fetchSuccess();
+        this.setState({company_logo: data.data}, () => {
+            this.onCompanyAdd();
+            this.setState({uploadedLogo: null})
+        })
+      }
+    }).catch(function (error) {
+      this.props.fetchError(error.message)
+    });
   };
 
   render() {
-    console.log("company_logo", this.props.companyLogoId);
+    console.log("image", this.state.uploadedLogo)
+    const {company_name, website, uploadedLogo, logoName} = this.state;
+    const props = {
+      onRemove: () => {
+        this.setState({uploadedLogo: null})
+      },
+      beforeUpload: file => {
+          this.setState({uploadedLogo: file});
+        return false;
+      },
+    };
     const {getFieldDecorator} = this.props.form;
-    const {company_name, website} = this.state;
     const {showAddNewModal, onToggleAddCompany} = this.props;
     return (
       <div>
@@ -78,7 +115,7 @@ class AddNewCompany extends Component {
                 this.setState({company_name: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Website">
+            <Form.Item label="Website" extra="Please enter website in 'http//www.example.com' format">
               {getFieldDecorator('website', {
                 initialValue: website,
                 rules: [{required: true, message: 'Please Enter Website URL!'}],
@@ -86,8 +123,14 @@ class AddNewCompany extends Component {
                 this.setState({website: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item>
-              <Input type="file" placeholder="Choose file..." onChange={this.onLogoSelect}/>
+            <Form.Item label="Upload Logo" extra={uploadedLogo ? "" : logoName}>
+              {getFieldDecorator('uploadedLogo',
+              {
+                rules: [{required: true, message: 'Please Upload Company Logo!'}],
+              })(
+              <Upload {...props}>
+                <Input placeholder="Choose file..." addonAfter="Browse" />
+              </Upload>)}
             </Form.Item>
           </Form>
         </Modal>

@@ -260,8 +260,8 @@ class Services extends Component {
         <Widget styleName="gx-card-filter">
           <h4 className="gx-font-weight-bold">Services</h4>
           <Breadcrumb className="gx-mb-3">
-            <Breadcrumb.Item className="gx-text-primary">
-              <Link to="/services">Services</Link></Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/setup/services" className="gx-text-primary">Services</Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">

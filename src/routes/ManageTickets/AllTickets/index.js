@@ -207,6 +207,7 @@ class AllTickets extends Component {
   onShowRowDropdown = (ticketId) => {
     const menu = (
       <Menu>
+        {(Permissions.canTicketDelete()) ?
         <Menu.Item key="4">
           <Popconfirm
             title="Are you sure to Archive this Ticket?"
@@ -215,7 +216,7 @@ class AllTickets extends Component {
             cancelText="No">
             Archive
           </Popconfirm>
-        </Menu.Item>
+        </Menu.Item> : null}
       </Menu>
     );
     return (
@@ -252,9 +253,10 @@ class AllTickets extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
+        {(Permissions.canTicketView()) ?
         <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
           Archive
-        </Menu.Item>
+        </Menu.Item> : null}
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
@@ -324,13 +326,13 @@ class AllTickets extends Component {
         <div className="gx-main-layout-content">
           {currentTicket === null ?
             <Widget styleName="gx-card-filter">
-              <h4>Tickets</h4>
+              <h4 className="gx-font-weight-bold">Tickets</h4>
               <Breadcrumb className="gx-mb-4">
                 <Breadcrumb.Item>
                   <Link to="/manage-tickets/all-tickets">Manage Tickets</Link>
                 </Breadcrumb.Item>
-                <Breadcrumb.Item className="gx-text-primary">
-                  <Link to="/manage-tickets/all-tickets">Tickets</Link>
+                <Breadcrumb.Item>
+                  <Link to="/manage-tickets/all-tickets" className="gx-text-primary" >Tickets</Link>
                 </Breadcrumb.Item>
               </Breadcrumb>
               <div className="gx-d-flex gx-justify-content-between">
@@ -364,13 +366,13 @@ class AllTickets extends Component {
                       </Button>
                     </Button.Group>
                   </div>
+                  {(Permissions.canTicketView()) ?
                   <Button type="default" style={{marginRight: -25}} className="gx-filter-btn gx-filter-btn-rtl-round"
                           onClick={this.onSideBarActive}>
                     <i className="icon icon-filter"/>
-                  </Button>
+                  </Button> : null}
                 </div>
               </div>
-              {(Permissions.canTicketView()) ?
                 <Table rowKey="id" rowSelection={rowSelection} columns={this.onTicketRowData()}
                        dataSource={tickets}
                        pagination={{
@@ -388,7 +390,7 @@ class AllTickets extends Component {
                            }
                          }
                        })}
-                /> : null}
+                />
             </Widget> :
             <TicketDetail/>
           }

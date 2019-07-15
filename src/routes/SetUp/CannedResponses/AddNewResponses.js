@@ -78,7 +78,15 @@ class AddNewResponses extends Component {
             <Form.Item label="Message">
               {getFieldDecorator('message', {
                 initialValue: message,
-                rules: [{required: true, message: 'Please Enter Message!'}],
+                rules: [{
+                  required: true,
+                  message: 'Please Enter Message!'
+                },
+                  {
+                    min: 30,
+                    message: 'Message should be at least 30 characters long',
+                  }
+                ],
               })(<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                 this.setState({message: e.target.value})
               }}/>)}

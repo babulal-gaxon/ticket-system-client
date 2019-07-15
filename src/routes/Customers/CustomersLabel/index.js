@@ -262,9 +262,11 @@ class CustomersLabel extends Component {
         <Widget styleName="gx-card-filter">
           <h4 className="gx-font-weight-bold">Customers Label</h4>
           <Breadcrumb className="gx-mb-3">
-            <Breadcrumb.Item>Customers</Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to={""} className="gx-text-primary">Customers Label</Link>
+              <Link to="/customers">Customers</Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/customers/labels" className="gx-text-primary">Customers Label</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">

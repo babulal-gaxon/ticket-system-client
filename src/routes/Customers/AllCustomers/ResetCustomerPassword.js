@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Form, Input, Modal} from "antd";
+import PropTypes from "prop-types";
 
 class ResetCustomerPassword extends Component {
   constructor(props) {
@@ -96,3 +97,13 @@ class ResetCustomerPassword extends Component {
 ResetCustomerPassword = Form.create({})(ResetCustomerPassword);
 
 export default ResetCustomerPassword;
+
+ResetCustomerPassword.defaultProps = {
+  resetPasswordModal: false,
+  customerId: null
+};
+
+ResetCustomerPassword.propTypes = {
+  resetPasswordModal: PropTypes.bool,
+  customerId: PropTypes.number
+};

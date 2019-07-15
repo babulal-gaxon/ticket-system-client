@@ -294,9 +294,9 @@ class TicketStatuses extends Component {
         <Widget styleName="gx-card-filter">
           <h4 className="gx-font-weight-bold">Ticket Status</h4>
           <Breadcrumb className="gx-mb-3">
-            <Breadcrumb.Item>
-              <Link to="/ticket-system/ticket-Statuses">Ticket System</Link></Breadcrumb.Item>
-            <Breadcrumb.Item className="gx-text-primary">Ticket Status</Breadcrumb.Item>
+            <Breadcrumb.Item>Ticket System</Breadcrumb.Item>
+          <Breadcrumb.Item >
+            <Link to="/setup/ticket-Statuses" className="gx-text-primary">Ticket Status</Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">

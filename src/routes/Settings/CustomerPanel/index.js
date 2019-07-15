@@ -21,17 +21,17 @@ class CustomerPanel extends Component {
         country: "",
         registration_enable: 0,
         register_verification: 0,
-        allow_primary_contact: 0,
+        allow_primary_contact_view: 0,
         delete_own_files: 0
       }
     } else {
-      const {theme, country, registration_enable, register_verification, allow_primary_contact, delete_own_files} = this.props.customerPanelDetails;
+      const {theme, country, registration_enable, register_verification, allow_primary_contact_view, delete_own_files} = this.props.customerPanelDetails;
       this.state = {
         theme: theme,
         country: country,
         registration_enable: parseInt(registration_enable),
         register_verification: parseInt(register_verification),
-        allow_primary_contact: parseInt(allow_primary_contact),
+        allow_primary_contact_view: parseInt(allow_primary_contact_view),
         delete_own_files: parseInt(delete_own_files)
       }
     }
@@ -44,14 +44,14 @@ class CustomerPanel extends Component {
 
   componentWillReceiveProps(nextProps, nextContext) {
     if (nextProps.customerPanelDetails) {
-      const {theme, country, registration_enable, register_verification, allow_primary_contact, delete_own_files} = nextProps.customerPanelDetails;
+      const {theme, country, registration_enable, register_verification, allow_primary_contact_view, delete_own_files} = nextProps.customerPanelDetails;
       if (JSON.stringify(nextProps.customerPanelDetails) !== JSON.stringify(this.props.customerPanelDetails)) {
         this.setState({
           theme: theme,
           country: country,
           registration_enable: parseInt(registration_enable),
           register_verification: parseInt(register_verification),
-          allow_primary_contact: parseInt(allow_primary_contact),
+          allow_primary_contact_view: parseInt(allow_primary_contact_view),
           delete_own_files: parseInt(delete_own_files)
         })
       }
@@ -72,18 +72,18 @@ class CustomerPanel extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {theme, country, registration_enable, register_verification, allow_primary_contact, delete_own_files} = this.state;
+    const {theme, country, registration_enable, register_verification, allow_primary_contact_view, delete_own_files} = this.state;
     console.log("state", this.state);
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h3>Customer Panel Settings</h3>
+          <h4 className="gx-font-weight-bold">Customer Panel Settings</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/settings/general-settings">Settings</Link>
             </Breadcrumb.Item>
-            <Breadcrumb.Item className="gx-text-primary">
-              <Link to="/settings/customer-panel">Customer Panel</Link>
+            <Breadcrumb.Item>
+              <Link to="/settings/customer-panel" className="gx-text-primary">Customer Panel</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <Form layout="vertical" style={{width: "50%"}}>
@@ -123,8 +123,8 @@ class CustomerPanel extends Component {
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
                 <p>Allow primary contact to view/edit billing & shipping details</p>
-                <Switch checked={!!allow_primary_contact}
-                        onChange={(checked) => this.setState({allow_primary_contact: Number(checked)})}/>
+                <Switch checked={!!allow_primary_contact_view}
+                        onChange={(checked) => this.setState({allow_primary_contact_view: Number(checked)})}/>
               </div>
               <Divider/>
             </Form.Item>

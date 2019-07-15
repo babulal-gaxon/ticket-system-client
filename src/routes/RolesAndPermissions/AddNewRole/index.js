@@ -280,7 +280,8 @@ class AddNewRole extends Component {
             </Breadcrumb.Item>
             <Breadcrumb.Item className="gx-text-primary">
               <Link
-                to="/roles-permissions/add-new">{this.props.selectedRole === null ? "Add New Role" : "Edit Role Details"}</Link>
+                to="/roles-permissions/add-new"
+                className="gx-text-primary">{this.props.selectedRole === null ? "Add New Role" : "Edit Role Details"}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           {currentMember === null ? <Row>

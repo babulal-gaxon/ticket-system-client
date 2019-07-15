@@ -281,9 +281,9 @@ class CannedResponses extends Component {
         <Widget styleName="gx-card-filter">
           <h4 className="gx-font-weight-bold">Canned Responses</h4>
           <Breadcrumb className="gx-mb-3">
-            <Breadcrumb.Item>
-              <Link to="/ticket-system/canned-responses">Ticket System</Link></Breadcrumb.Item>
-            <Breadcrumb.Item className="gx-text-primary">Canned Responses</Breadcrumb.Item>
+            <Breadcrumb.Item>Ticket System</Breadcrumb.Item>
+            <Breadcrumb.Item className="gx-text-primary">
+              <Link to="/setup/canned-responses" className="gx-text-primary">Canned Responses</Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">

@@ -106,7 +106,7 @@ class AddNewTicket extends Component {
               <Link to="/manage-tickets/all-tickets">Manage Tickets</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/manage-tickets/add-new-ticket">
+              <Link to="/manage-tickets/add-new-ticket" className="gx-text-primary">
                 Create ticket
               </Link>
             </Breadcrumb.Item>
@@ -130,13 +130,21 @@ class AddNewTicket extends Component {
                   >
                     {customersList.map(customer => {
                       return <Option value={customer.id}>
+                        <Row>
+                          <Col span={2}>
                         <span>{customer.avatar ?
                           <Avatar className="gx-mr-3 gx-size-30" src={customer.avatar.src}/> :
                           <Avatar className="gx-mr-3 gx-size-30"
                                   style={{backgroundColor: '#f56a00'}}>{customer.first_name[0].toUpperCase()}</Avatar>}</span>
-                        <span className="gx-mx-5">{customer.first_name + " " + customer.last_name}</span>
-                        <span>{customer.email}</span>
-                      </Option>
+                          </Col>
+                          <Col span={10}>
+                            <span className="gx-mx-5">{customer.first_name + " " + customer.last_name}</span>
+                          </Col>
+                          <Col span={12}>
+                            <span>{customer.email}</span>
+                          </Col>
+                        </Row>
+                        </Option>
                     })}
                   </Select>)}
                 </Form.Item>
@@ -178,9 +186,23 @@ class AddNewTicket extends Component {
                   </Select>
                 </Form.Item>
                 <Form.Item label="Description">
-                  <TextArea rows={4} className="gx-form-control-lg" value={content} onChange={(e) => {
+                  {getFieldDecorator('content', {
+                    initialValue: content,
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Please enter the details!'
+                      },
+                      {
+                      min: 30,
+                      message: 'Please enter atleast 30 characters',
+                    },
+                    ],
+                  })
+                  (
+                  <TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                     this.setState({content: e.target.value})
-                  }}/>
+                  }}/>)}
                 </Form.Item>
                 <Form.Item label="Set Priority">
                   {getFieldDecorator('priority_id', {

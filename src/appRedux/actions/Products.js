@@ -2,7 +2,6 @@ import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import {
   ADD_PRODUCT,
-  ADD_PRODUCT_LOGO,
   BULK_ACTIVE_PRODUCTS,
   BULK_DISABLE_PRODUCTS,
   DELETE_PRODUCT,
@@ -81,28 +80,6 @@ export const onDeleteProduct = (productId) => {
         dispatch({type: DELETE_PRODUCT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Product(s) has been deleted successfully"});
-      } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
-      }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.info("Error****:", error.message);
-    });
-  }
-};
-
-export const onAddProductLogo = (imageFile) => {
-  return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.post("/uploads/temporary/media", imageFile, {
-      headers: {
-        'Content-Type': "multipart/form-data"
-      }
-    }).then(({data}) => {
-      console.log("profile pic add", data);
-      if (data.success) {
-        dispatch({type: ADD_PRODUCT_LOGO, payload: data.data});
-        dispatch({type: FETCH_SUCCESS});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

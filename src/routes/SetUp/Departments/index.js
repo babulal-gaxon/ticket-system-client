@@ -271,9 +271,9 @@ class Departments extends Component {
         <Widget styleName="gx-card-filter">
           <h4 className="gx-font-weight-bold">Departments</h4>
           <Breadcrumb className="gx-mb-3">
+            <Breadcrumb.Item>Ticket System</Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/ticket-system/departments">Ticket System</Link></Breadcrumb.Item>
-            <Breadcrumb.Item className="gx-text-primary">Departments</Breadcrumb.Item>
+              <Link to="/setup/departments" className="gx-text-primary">Departments</Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">

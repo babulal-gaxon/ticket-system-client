@@ -16,6 +16,7 @@ import {
 import {Avatar, Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
 import InfoView from "../../../components/InfoView";
 import Permissions from "../../../util/Permissions";
+import {Link} from "react-router-dom";
 
 
 const ButtonGroup = Button.Group;
@@ -300,7 +301,9 @@ class StaffList extends Component {
           <Widget styleName="gx-card-filter">
             <h4 className="gx-font-weight-bold">Staffs</h4>
             <Breadcrumb className="gx-mb-3">
-              <Breadcrumb.Item>Staffs</Breadcrumb.Item>
+              <Breadcrumb.Item>
+                <Link to="/staff/all-members" className="gx-text-primary">Staffs</Link>
+              </Breadcrumb.Item>
             </Breadcrumb>
             <div className="gx-d-flex gx-justify-content-between">
               <div className="gx-d-flex">

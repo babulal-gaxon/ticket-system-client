@@ -20,6 +20,8 @@ import EditTicketDetailsModal from "./EditTicketDetailsModal";
 import axios from 'util/Api'
 import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
+import InfoView from "../../../components/InfoView";
+import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 
 const Option = Select.Option;
 const {TextArea} = Input;
@@ -35,7 +37,6 @@ class TicketDetail extends Component {
       ticketTags: props.currentTicket.tags.map(tag => tag.title),
       currentTicket: {...props.currentTicket},
       fileList: [],
-      uploading: false,
       attachments: []
     };
   };
@@ -73,6 +74,15 @@ class TicketDetail extends Component {
   };
 
   onSubmitMessage = () => {
+    if(this.state.fileList.length > 0) {
+      this.handleUpload()
+    }
+    else {
+      this.onSendMessage();
+    }
+  };
+
+  onSendMessage = () => {
     const currentTicket = this.props.currentTicket;
     const attachments = this.state.attachments;
     if (this.state.message !== '') {
@@ -82,7 +92,7 @@ class TicketDetail extends Component {
       })
     }
     this.setState({message: '', attachments: []})
-  };
+  }
 
   onToggleEditModal = () => {
     this.setState({showEditModal: !this.state.showEditModal})
@@ -95,29 +105,39 @@ class TicketDetail extends Component {
     })
   };
 
-  handleUpload = (info) => {
-    const formData = new FormData();
-    info.fileList.map(file => {
-      formData.append('file', file.originFileObj);
-      formData.append('title', file.name)
-    }, this.imageUpload(formData));
+  handleUpload =() => {
+    let formData = new FormData();
+    this.state.fileList.map(file => {
+      formData = new FormData();
+      formData.append('file', file);
+      formData.append('title', file.name);
+      this.imageUpload(formData);
+    });
   };
 
   imageUpload = (file) => {
+    this.props.fetchStart();
     axios.post("/uploads/temporary/media", file, {
       headers: {
         'Content-Type': "multipart/form-data"
       }
     }).then(({data}) => {
       if (data.success) {
-        this.setState({attachments: this.state.attachments.concat(data.data)})
+        this.props.fetchSuccess();
+        this.setState({attachments: this.state.attachments.concat(data.data)}, () => {
+          if(this.state.attachments.length === this.state.fileList.length){
+            this.onSendMessage();
+            this.setState({fileList: []})
+          }
+        })
       }
     }).catch(function (error) {
-      console.log("Error****:", error.message);
+      this.props.fetchError(error.message)
     });
   };
 
   render() {
+    const {fileList, message, showEditModal, ticketTags, currentTicket} = this.state;
     const props = {
       multiple: true,
       onRemove: file => {
@@ -131,15 +151,18 @@ class TicketDetail extends Component {
         });
       },
       beforeUpload: file => {
+        this.setState(state => ({
+          fileList: [...state.fileList, file],
+        }));
         return false;
-      }
+      },
+      fileList,
     };
-    const {message, showEditModal, ticketTags, currentTicket} = this.state;
     const {filterData, conversation} = this.props;
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h3>Tickets</h3>
+          <h4 className="gx-font-weight-bold">Tickets</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/manage-tickets/all-tickets">Manage Tickets</Link>
@@ -213,7 +236,7 @@ class TicketDetail extends Component {
                     <i className="gx-icon-btn icon icon-sent"/>
                   </div>
                   <div>
-                    <Upload {...props} onChange={this.handleUpload}>
+                    <Upload {...props}>
                       <i className="gx-icon-btn icon icon-attachment"/>
                     </Upload>
                   </div>
@@ -263,6 +286,7 @@ class TicketDetail extends Component {
             onUpdateTickets={this.props.onUpdateTickets}
             ticketId={currentTicket.id}/>
           : null}
+          <InfoView/>
       </div>
     )
   }
@@ -281,7 +305,10 @@ export default connect(mapStateToProps, {
   onAssignStaffToTicket,
   onUpdateTickets,
   onSelectTicket,
-  onGetFilterOptions
+  onGetFilterOptions,
+  fetchError,
+  fetchStart,
+  fetchSuccess
 })(TicketDetail);
 
 
