@@ -144,7 +144,6 @@ class FilterBar extends Component {
   };
 
   render() {
-    console.log("selectedCustomerNames", this.state.selectedCustomerNames)
     const {
       endDate, showMoreStaff, selectedStaff, selectedCustomers, selectedPriorities,
       selectedStatuses, startDate, staffFilterText,

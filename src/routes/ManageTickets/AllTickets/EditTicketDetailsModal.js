@@ -20,7 +20,7 @@ class EditTicketDetailsModal extends Component {
     const {title, content} = this.state;
     const {showEditModal, onToggleEditModal} = this.props;
     return (
-      <div>
+      <div className="gx-main-layout-content">
         <Modal
           visible={showEditModal}
           title="Edit Detail"

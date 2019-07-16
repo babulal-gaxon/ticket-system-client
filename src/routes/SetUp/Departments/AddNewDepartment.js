@@ -42,7 +42,7 @@ class AddNewDepartment extends Component {
     const {name, status, desc} = this.state;
     const {showAddDepartment, onToggleAddDepartment} = this.props;
     return (
-      <div>
+      <div className="gx-main-layout-content">
         <Modal
           visible={showAddDepartment}
           title={this.props.departmentId === 0 ? "Add New Department" : "Edit Department Detail"}
@@ -71,8 +71,7 @@ class AddNewDepartment extends Component {
                   min: 30,
                   message: 'Message should be at least 30 characters long',
                 }],
-              })
-              (<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
+              })(<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                 this.setState({desc: e.target.value})
               }}/>)}
             </Form.Item>

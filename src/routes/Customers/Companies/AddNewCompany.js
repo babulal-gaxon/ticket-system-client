@@ -78,8 +78,11 @@ class AddNewCompany extends Component {
     });
   };
 
+  onSelectFile = (info) => {
+    this.setState({uploadedLogo: info.file.originFileObj});
+  };
+
   render() {
-    console.log("image", this.state.uploadedLogo)
     const {company_name, website, uploadedLogo, logoName} = this.state;
     const props = {
       onRemove: () => {
@@ -93,7 +96,7 @@ class AddNewCompany extends Component {
     const {getFieldDecorator} = this.props.form;
     const {showAddNewModal, onToggleAddCompany} = this.props;
     return (
-      <div>
+      <div className="gx-main-layout-content">
         <Modal
           visible={showAddNewModal}
           title={this.props.companyId === 0 ? "Add New Company" : "Edit Company Detail"}
@@ -128,7 +131,7 @@ class AddNewCompany extends Component {
               {
                 rules: [{required: true, message: 'Please Upload Company Logo!'}],
               })(
-              <Upload {...props}>
+              <Upload onChange={this.onSelectFile}>
                 <Input placeholder="Choose file..." addonAfter="Browse" />
               </Upload>)}
             </Form.Item>

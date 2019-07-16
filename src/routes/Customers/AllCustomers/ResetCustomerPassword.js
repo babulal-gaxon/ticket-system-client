@@ -46,7 +46,7 @@ class ResetCustomerPassword extends Component {
     const {getFieldDecorator} = this.props.form;
     const {resetPasswordModal, onTogglePasswordModal} = this.props;
     return (
-      <div>
+      <div className="gx-main-layout-content">
         <Modal
           visible={resetPasswordModal}
           title="Reset Password"

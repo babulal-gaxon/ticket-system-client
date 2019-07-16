@@ -191,11 +191,8 @@ class AddNewStaff extends Component {
                     rules: [{
                       pattern: /^[0-9\b]+$/,
                       message: 'Please enter only numerical values',
-                    },
-                    ],
-                  })
-                  (
-                    <Input type="text" onChange={(e) => {
+                    }],
+                  })(<Input type="text" onChange={(e) => {
                       this.setState({phone: e.target.value})
 
                     }}/>)}
@@ -207,8 +204,7 @@ class AddNewStaff extends Component {
                   required: true,
                   message: 'Please Select role!'
                 }] ,
-                })
-                 ( <Select value={role_id} onChange={this.onSelectRole} placeholder="Select a Role">
+                })( <Select value={role_id} onChange={this.onSelectRole} placeholder="Select a Role">
                     {this.props.roles.map(role => {
                       return <Option value={role.id}>{role.name}</Option>
                     })}
@@ -220,11 +216,8 @@ class AddNewStaff extends Component {
                     rules: [{
                       pattern: /^[0-9\b]+$/,
                       message: 'Please enter only numerical values',
-                    },
-                    ],
-                  })
-                  (
-                  <Input type="text" addonAfter={<div>$</div>} value={hourly_rate} onChange={(e) => {
+                    }]
+                  })(<Input type="text" addonAfter={<div>$</div>} value={hourly_rate} onChange={(e) => {
                     this.setState({hourly_rate: e.target.value})
                   }}/>)}
                 </Form.Item>

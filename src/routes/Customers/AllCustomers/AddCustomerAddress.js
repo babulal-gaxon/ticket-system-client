@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Checkbox, Col, Form, Input, Modal, Row, Select} from "antd";
 import PropTypes from "prop-types";
-import ResetCustomerPassword from "./ResetCustomerPassword";
 
 const {Option} = Select;
 
@@ -41,7 +40,7 @@ class AddCustomerAddress extends Component {
     const {getFieldDecorator} = this.props.form;
     const {address_line_1, city, state, country_id, zip_code, address_type} = this.state;
     return (
-      <div>
+      <div className="gx-main-layout-content">
         <Modal
           title="Add Address"
           centered
@@ -89,7 +88,7 @@ class AddCustomerAddress extends Component {
                         required: true,
                         message: 'Please Enter Country Name!'
                       }
-                      ],
+                    ],
                   })(<Select style={{width: "100%"}} onChange={this.onCountrySelect}>
                     {Object.keys(this.props.countriesList).map(country => {
                       return <Option value={country}>{this.props.countriesList[country]}</Option>
@@ -110,9 +109,9 @@ class AddCustomerAddress extends Component {
                         pattern: /^[0-9\b]+$/,
                         message: 'Please enter only numerical values'
                       }
-                        ],
+                    ],
                   })(<Input type="text" onChange={(e) => {
-                      this.setState({zip_code: e.target.value})
+                    this.setState({zip_code: e.target.value})
                   }}/>)}
                 </Form.Item>
               </Col>

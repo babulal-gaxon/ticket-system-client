@@ -39,7 +39,7 @@ class AddStaffNotes extends Component {
     const {title, content} = this.state;
     const {addNotesModal, onToggleAddNoteModal, noteId} = this.props;
     return (
-      <div>
+      <div className="gx-main-layout-content">
         <Modal
           visible={addNotesModal}
           title={noteId === null ? "Add New Note" : "Edit Note Details"}

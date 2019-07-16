@@ -202,10 +202,8 @@ class AddNewCustomers extends Component {
                     rules: [{
                       min: 8,
                       message: 'Length should be at least 8 characters long',
-                    },
-                      ],
-                  })
-                  (<Input.Password type="text" onChange={(e) => {
+                    }],
+                  })(<Input.Password type="text" onChange={(e) => {
                     this.setState({password: e.target.value})
                   }}/>)}
                 </Form.Item>
@@ -215,11 +213,8 @@ class AddNewCustomers extends Component {
                     rules: [{
                       pattern: /^[0-9\b]+$/,
                       message: 'Please enter only numerical values',
-                    },
-                    ],
-                  })
-                  (
-                  <Input type="text" onChange={(e) => {
+                    }],
+                  })(<Input type="text" onChange={(e) => {
                       this.setState({phone: e.target.value})
 
                   }}/>)}

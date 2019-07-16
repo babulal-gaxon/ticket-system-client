@@ -76,7 +76,7 @@ class GeneralDetails extends Component {
     const {name, url, email, allowed_ext, file_upload_max_size} = this.state;
     const {getFieldDecorator} = this.props.form;
     return (
-      <div>
+      <div className="gx-main-layout-content">
         <Form layout="vertical" style={{width: "50%"}}>
           <Form.Item label="Company Name">
             {getFieldDecorator('name', {

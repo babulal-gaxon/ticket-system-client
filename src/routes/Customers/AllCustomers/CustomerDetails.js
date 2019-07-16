@@ -97,7 +97,7 @@ class CustomerDetails extends Component {
     };
     const {currentCustomer, customerCompanyMembers, customerTickets, currentTicket, onBackToList} = this.props;
     return (
-      <div>
+      <div className="gx-main-layout-content">
         {currentTicket === null ?
           <div className="gx-main-content">
             <Row>

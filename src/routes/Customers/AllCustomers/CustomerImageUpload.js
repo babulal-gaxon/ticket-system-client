@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Dropzone from "react-dropzone";
 import {Avatar, Button} from "antd";
 import PropTypes from "prop-types";
-import AddCustomerAddress from "./AddCustomerAddress";
 
 class CustomerImageUpload extends Component {
   constructor(props) {
@@ -39,7 +38,7 @@ class CustomerImageUpload extends Component {
     const {file, profile_pic} = this.state;
     const imageAvatar = this.props.imageAvatar
     return (
-      <div>
+      <div className="gx-main-layout-content">
         {!profile_pic ?
           <div>
             <Dropzone onDrop={this.onDrop}>

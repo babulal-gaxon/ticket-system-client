@@ -38,7 +38,7 @@ class ImageUpload extends Component {
     const imageAvatar = this.props.imageAvatar;
     const {file, profile_pic} = this.state;
     return (
-      <div>
+      <div className="gx-main-layout-content">
         {!profile_pic ?
           <div>
             <Dropzone onDrop={this.onDrop}>

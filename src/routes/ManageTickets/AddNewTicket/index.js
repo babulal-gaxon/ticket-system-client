@@ -196,11 +196,8 @@ class AddNewTicket extends Component {
                       {
                       min: 30,
                       message: 'Please enter atleast 30 characters',
-                    },
-                    ],
-                  })
-                  (
-                  <TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
+                    }],
+                  })(<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                     this.setState({content: e.target.value})
                   }}/>)}
                 </Form.Item>

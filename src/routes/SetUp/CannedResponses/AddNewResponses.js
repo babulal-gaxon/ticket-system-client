@@ -45,7 +45,7 @@ class AddNewResponses extends Component {
     const {status, short_title, short_code, message} = this.state;
     const {showAddCanned, onToggleAddCanned} = this.props;
     return (
-      <div>
+      <div className="gx-main-layout-content">
         <Modal
           visible={showAddCanned}
           title={this.props.responseId === 0 ? "Add New Response" : "Edit Response Details"}

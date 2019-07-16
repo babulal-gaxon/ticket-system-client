@@ -34,8 +34,11 @@ class CannedResponses extends Component {
       showAddCanned: false,
       selectedResponses: []
     };
-    this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
   };
+
+  componentDidMount() {
+    this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
+  }
 
   onGetResponseData = (currentPage, itemsPerPage, filterData) => {
     if (Permissions.canResponseView()) {

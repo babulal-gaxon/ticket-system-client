@@ -130,7 +130,7 @@ class StaffDetail extends Component {
     };
     const {staff, staffNotes, staffTickets, currentTicket} = this.props;
     return (
-      <div>
+      <div className="gx-main-layout-content">
         {currentTicket === null ?
           <div className="gx-main-content">
             <Row>

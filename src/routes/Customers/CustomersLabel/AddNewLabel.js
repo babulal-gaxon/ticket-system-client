@@ -40,7 +40,7 @@ class AddNewLabel extends Component {
     const {showAddLabel, onToggleModalState} = this.props;
     const {name, desc, status} = this.state;
     return (
-      <div>
+      <div className="gx-main-layout-content">
         <Modal
           visible={showAddLabel}
           title={this.props.labelId === 0 ? "Add New Label" : "Edit Label Details"}

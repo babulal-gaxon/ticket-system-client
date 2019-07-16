@@ -43,7 +43,7 @@ class AddNewService extends Component {
     const {title, support_enable, desc} = this.state;
     const {showAddModal, onToggleAddService} = this.props;
     return (
-      <div>
+      <div className="gx-main-layout-content">
         <Modal
           visible={showAddModal}
           title={this.props.serviceId === 0 ? "Add New Service" : "Edit Service Details"}

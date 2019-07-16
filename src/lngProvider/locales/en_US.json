@@ -343,5 +343,6 @@
   "sidebar.dashboard.customer.panel": "Customer Panel",
   "sidebar.dashboard.about.system": "About System",
   "sidebar.dashboard.services": "Services",
-  "sidebar.dashboard.products": "Products"
+  "sidebar.dashboard.products": "Products",
+  "sidebar.dashboard.customer.page": "Customer Page"
 }

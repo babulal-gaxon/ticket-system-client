@@ -1,5 +1,7 @@
-import {Avatar, Tooltip} from "antd";
+import {Avatar, Tag, Tooltip} from "antd";
 import React from "react";
+import moment from "moment";
+
 
 export const ticketListcolumns = [
   {
@@ -13,19 +15,18 @@ export const ticketListcolumns = [
     title: 'Ticket Detail',
     dataIndex: 'title',
     render: (text, record) => {
-      return (<div className="gx-media gx-task-list-item gx-flex-nowrap">
-          <Avatar className="gx-mr-3 gx-size-36" src="https://via.placeholder.com/150x150"/>
-          <div className="gx-media-body gx-task-item-content">
-            <div>
-              <p className="gx-mb-0">{record.title}</p>
-              <div className="gx-text-muted">
-                <span>2 days ago</span>
-                <span className="gx-toolbar-separator">&nbsp;</span>
-                <span className="gx-email gx-d-inline-block gx-mr-2">
-        from: {record.assigned_by.first_name}
-        </span>
-              </div>
-            </div>
+      return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
+          {record.assigned_by ?
+            <Tooltip placement="top" title={record.assigned_by.first_name + " " + record.assigned_by.last_name}>
+              {record.assigned_by.avatar ?
+                <Avatar className="gx-mr-3 gx-size-50" src={record.assigned_by.avatar.src}/> :
+                <Avatar className="gx-mr-3 gx-size-50"
+                        style={{backgroundColor: '#f56a00'}}>{record.assigned_by.first_name[0].toUpperCase()}</Avatar>}
+            </Tooltip> : <Avatar className="gx-size-50 gx-mr-3" src="https://via.placeholder.com/150x150"/>}
+          <div className="gx-media-body">
+            <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
+            <Tag className="gx-ml-2" color="blue">{record.product_name}</Tag>
+            <div>Created on {moment(record.created_at.date).format('LL')}</div>
           </div>
         </div>
       )

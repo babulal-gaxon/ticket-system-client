@@ -88,9 +88,8 @@ class AddNewPriority extends Component {
       },
     });
 
-    console.log("this.state.displayColorPicker", this.state.displayColorPicker);
     return (
-      <div>
+      <div className="gx-main-layout-content">
         <Modal
           visible={showAddPriority}
           title={this.props.priorityId === 0 ? "Add New Priority" : "Edit Priority Details"}

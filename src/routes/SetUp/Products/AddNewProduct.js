@@ -77,8 +77,6 @@ class AddNewProduct extends Component {
     });
   };
 
-
-
   render() {
     const props = {
       onRemove: () => {

@@ -24,7 +24,7 @@ class Addresses extends Component {
   render() {
     const generalAddress = this.props.generalAddress;
     return (
-      <div>
+      <div className="gx-main-layout-content">
         <Button type="default" style={{width: "50%", color: "blue"}} onClick={this.onToggleAddressModal}>
           <i className="icon icon-add-circle gx-mr-1"/>Add New Address</Button>
         {generalAddress.length > 0 ?
