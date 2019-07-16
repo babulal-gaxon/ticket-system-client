@@ -16,7 +16,6 @@ import Companies from "./Companies";
 import GeneralSettings from "./GeneralSettings";
 import Services from "./Services";
 import Products from "./Products";
-import CustomerPage from "./CustomerPage";
 
 
 const reducers = combineReducers({
@@ -36,8 +35,7 @@ const reducers = combineReducers({
   companies: Companies,
   generalSettings: GeneralSettings,
   services: Services,
-  products: Products,
-  customerPage: CustomerPage
+  products: Products
 });
 
 export default reducers;
