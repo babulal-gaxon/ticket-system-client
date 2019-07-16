@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {onGetFormOptions, onGetRaisedTickets} from "../../../appRedux/actions/CustomerDetails";
+import {onGetFormOptions, onGetRaisedTickets, onRaiseNewTicket} from "../../../appRedux/actions/CustomerDetails";
 import {connect} from "react-redux";
 import {Button, Input, Select, Table, Tag} from "antd";
 import Widget from "../../../components/Widget";
@@ -18,7 +18,8 @@ class AllTickets extends Component {
       itemNumbers: 10,
       current: 1,
       showAddTicket: false,
-      selectedTickets: []
+      selectedTickets: [],
+      ticketId: null
     };
   }
 
@@ -81,7 +82,12 @@ class AllTickets extends Component {
         dataIndex: 'subject',
         key: 'subject',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.subject}</span>
+          return <div className="gx-d-flex gx-justify-content-start">
+          <span>{record.title}</span>
+            <span className="gx-ml-2">
+              <Tag color="blue">{record.product_name}</Tag>
+            </span>
+          </div>
         },
       },
       {
@@ -97,7 +103,7 @@ class AllTickets extends Component {
         dataIndex: 'department',
         key: 'department',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">Department</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.department_name}</span>
         },
       },
       {
@@ -106,8 +112,8 @@ class AllTickets extends Component {
         key: 'Status',
         render: (text, record) => {
 
-          return <Tag color={record.status === 1 ? "green" : "red"}>
-            {record.status === 1 ? "Active" : "Disabled"}
+          return <Tag color="green" >
+            {record.status_name}
           </Tag>
         },
       },
@@ -143,8 +149,8 @@ class AllTickets extends Component {
   };
 
   render() {
-    const {selectedRowKeys, filterText, showAddTicket} = this.state;
-    const raisedTickets = this.props.raisedTickets;
+    const {selectedRowKeys, filterText, showAddTicket, ticketId} = this.state;
+    const {raisedTickets, formOptions} = this.props;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -157,13 +163,11 @@ class AllTickets extends Component {
     return (
       <div className="gx-main-layout-content">
         {raisedTickets.length > 0 ?
-          <Widget styleName="gx-card-filter">
-            <h4 className="gx-font-weight-bold">Tickets</h4>
+         <div>
             <div className="gx-d-flex gx-justify-content-between">
               <div className="gx-d-flex">
                 <Button type="primary" className="gx-btn-lg" onClick={this.onToggleAddTicket}>
                   Raise a Ticket</Button>
-                <span>{this.onSelectOption()}</span>
               </div>
               <div className="gx-d-flex">
                 <Search
@@ -193,26 +197,33 @@ class AllTickets extends Component {
                      showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
                      onChange: this.onPageChange
                    }}/>
-          </Widget> : <div className="gx-main-layout-content">
-            <div style={{display: 'flex',
+          </div> : <div className="gx-main-layout-content">
+            <div style={{
+              display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              minHeight: 700}}>
+              minHeight: 700
+            }}>
               <div>No records Found</div>
               <h3 className="gx-font-weight-bold gx-my-4">You have not raised any support request</h3>
               <Button type="primary" onClick={this.onToggleAddTicket}>Raise a Ticket</Button>
             </div>
           </div>}
-        {showAddTicket ? <RaiseTicketModal/> : null}
+        {showAddTicket ? <RaiseTicketModal ticketId={ticketId}
+                                           formOptions={formOptions}
+                                           onToggleAddTicket={this.onToggleAddTicket}
+                                           showAddTicket={showAddTicket}
+                                           onRaiseNewTicket={this.props.onRaiseNewTicket}
+        /> : null}
       </div>
     );
   }
 }
 
 const mapPropsToState = ({customerDetails}) => {
-  const {raisedTickets, totalTickets} = customerDetails;
-  return {raisedTickets, totalTickets};
+  const {raisedTickets, totalTickets, formOptions} = customerDetails;
+  return {raisedTickets, totalTickets, formOptions};
 };
 
-export default connect(mapPropsToState, {onGetRaisedTickets, onGetFormOptions})(AllTickets);
+export default connect(mapPropsToState, {onGetRaisedTickets, onGetFormOptions, onRaiseNewTicket})(AllTickets);

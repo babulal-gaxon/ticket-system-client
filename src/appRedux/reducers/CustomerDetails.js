@@ -1,4 +1,4 @@
-import {GET_FORM_OPTIONS, GET_RAISED_TICKETS} from "../../constants/CustomerDetails";
+import {GET_FORM_OPTIONS, GET_RAISED_TICKETS, RAISE_NEW_TICKET} from "../../constants/CustomerDetails";
 
 const initialState = {
   raisedTickets: [],
@@ -6,9 +6,10 @@ const initialState = {
   formOptions: {
     services: [],
     departments: [],
-    products: []
+    products: [],
+    priorities: []
   }
-}
+};
 
 export default(state = initialState, action) => {
   switch(action.type) {
@@ -19,13 +20,22 @@ export default(state = initialState, action) => {
         totalTickets: action.payload.meta.total
       };
 
+    case RAISE_NEW_TICKET:
+      return {
+        ...state,
+        raisedTickets: [action.payload, ...state.raisedTickets],
+        totalTickets: state.totalTickets + 1
+      };
+
     case GET_FORM_OPTIONS:
+      console.log("in reucer", action.payload)
       return {
         ...state,
         formOptions: {
           services: action.payload.services,
           departments: action.payload.departments,
-          products: action.payload.products
+          products: action.payload.products,
+          priorities: action.payload.priorities
         }
       };
 
