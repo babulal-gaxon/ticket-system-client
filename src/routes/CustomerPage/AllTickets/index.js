@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {onGetFormOptions, onGetRaisedTickets} from "../../../appRedux/actions/CustomerPage";
+import {onGetFormOptions, onGetRaisedTickets} from "../../../appRedux/actions/Page";
 import {connect} from "react-redux";
 import InitialScreen from "./InitialScreen";
 import TicketList from "./TicketsList";

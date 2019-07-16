@@ -2,7 +2,7 @@ import {SWITCH_LANGUAGE, TOGGLE_COLLAPSED_NAV, WINDOW_WIDTH} from "constants/Act
 import {
   LAYOUT_TYPE,
   LAYOUT_TYPE_FULL,
-  NAV_STYLE,
+  NAV_STYLE, NAV_STYLE_ABOVE_HEADER,
   NAV_STYLE_FIXED,
   THEME_COLOR_SELECTION,
   THEME_COLOR_SELECTION_PRESET,
@@ -12,7 +12,7 @@ import {
 
 const initialSettings = {
   navCollapsed: true,
-  navStyle: NAV_STYLE_FIXED,
+  navStyle: NAV_STYLE_ABOVE_HEADER,
   layoutType: LAYOUT_TYPE_FULL,
   themeType: THEME_TYPE_SEMI_DARK,
   colorSelection: THEME_COLOR_SELECTION_PRESET,

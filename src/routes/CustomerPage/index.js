@@ -7,7 +7,6 @@ const CustomerPage = ({match}) => (
   <Switch>
     <Redirect exact from={`${match.url}/`} to={`${match.url}/all-tickets`}/>
     <Route path={`${match.url}/all-tickets`} component={asyncComponent(() => import('./AllTickets/index'))}/>
-
   </Switch>
 );
 
