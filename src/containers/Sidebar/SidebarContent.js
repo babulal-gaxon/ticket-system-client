@@ -163,10 +163,6 @@ class SidebarContent extends Component {
                 </Menu.Item>
               </SubMenu>
 
-              <Menu.Item key="customerPage">
-                <Link to="/customer-page/all-tickets"><i className="icon icon-lock-screen"/>
-                  <IntlMessages id="sidebar.dashboard.customer.page"/></Link>
-              </Menu.Item>
 
             </Menu>
 
