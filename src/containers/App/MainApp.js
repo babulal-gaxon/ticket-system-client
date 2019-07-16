@@ -1,9 +1,7 @@
 import React, {Component} from "react";
 import {Layout} from "antd";
 
-import Sidebar from "../Sidebar/index";
-
-import Topbar from "../Topbar/index";
+import InsideHeader from "../Topbar/InsideHeader/index";
 import App from "routes/index";
 
 const {Content} = Layout;
@@ -15,9 +13,8 @@ export class MainApp extends Component {
 
     return (
       <Layout className="gx-app-layout">
-        <Sidebar/>
         <Layout>
-          <Topbar/>
+          <InsideHeader/>
           <Content className="gx-layout-content">
             <App match={match}/>
           </Content>
