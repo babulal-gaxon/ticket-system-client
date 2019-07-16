@@ -1,6 +1,6 @@
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
 import axios from 'util/Api'
-import {GET_FORM_OPTIONS, GET_RAISED_TICKETS} from "../../constants/CustomerPage";
+import {GET_FORM_OPTIONS, GET_RAISED_TICKETS} from "../../constants/CustomerDetails";
 
 export const onGetRaisedTickets = () => {
   return (dispatch) => {

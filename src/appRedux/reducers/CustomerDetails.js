@@ -1,4 +1,4 @@
-import {GET_FORM_OPTIONS, GET_RAISED_TICKETS} from "../../constants/CustomerPage";
+import {GET_FORM_OPTIONS, GET_RAISED_TICKETS} from "../../constants/CustomerDetails";
 
 const initialState = {
   raisedTickets: [],

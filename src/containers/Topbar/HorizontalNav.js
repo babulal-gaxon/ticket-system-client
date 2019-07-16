@@ -45,8 +45,8 @@ class HorizontalNav extends Component {
         <SubMenu className={this.getNavStyleSubMenuClass(navStyle)} key="main"
                  title={<IntlMessages id="sidebar.main"/>}>
           <Menu.Item key="sample">
-            <Link to="/sample"><i className="icon icon-widgets"/>
-              <IntlMessages id="sidebar.samplePage"/></Link>
+            <Link to="/customer/all-tickets"><i className="icon icon-widgets"/>
+              <IntlMessages id="sidebar.all.tickets"/></Link>
           </Menu.Item>
         </SubMenu>
       </Menu>
