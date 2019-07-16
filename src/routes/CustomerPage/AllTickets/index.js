@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {onGetFormOptions, onGetRaisedTickets, onRaiseNewTicket} from "../../../appRedux/actions/CustomerDetails";
 import {connect} from "react-redux";
-import {Button, Input, Select, Table, Tag} from "antd";
-import Widget from "../../../components/Widget";
+import {Avatar, Button, Input, Select, Table, Tag} from "antd";
 import RaiseTicketModal from "./RaiseTicketModal";
+import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -19,7 +19,8 @@ class AllTickets extends Component {
       current: 1,
       showAddTicket: false,
       selectedTickets: [],
-      ticketId: null
+      ticketId: null,
+      currentTicket: null
     };
   }
 
@@ -83,7 +84,7 @@ class AllTickets extends Component {
         key: 'subject',
         render: (text, record) => {
           return <div className="gx-d-flex gx-justify-content-start">
-          <span>{record.title}</span>
+            <span>{record.title}</span>
             <span className="gx-ml-2">
               <Tag color="blue">{record.product_name}</Tag>
             </span>
@@ -95,7 +96,7 @@ class AllTickets extends Component {
         dataIndex: 'assignTo',
         key: 'assignTo',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">dummy</span>
+          return <Avatar size={50} icon="user" />
         },
       },
       {
@@ -112,7 +113,7 @@ class AllTickets extends Component {
         key: 'Status',
         render: (text, record) => {
 
-          return <Tag color="green" >
+          return <Tag color="green">
             {record.status_name}
           </Tag>
         },
@@ -163,7 +164,7 @@ class AllTickets extends Component {
     return (
       <div className="gx-main-layout-content">
         {raisedTickets.length > 0 ?
-         <div>
+          <div>
             <div className="gx-d-flex gx-justify-content-between">
               <div className="gx-d-flex">
                 <Button type="primary" className="gx-btn-lg" onClick={this.onToggleAddTicket}>
@@ -189,7 +190,7 @@ class AllTickets extends Component {
               </div>
             </div>
             <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
-                   dataSource={raisedTickets} className="gx-mb-4"
+                   dataSource={raisedTickets} className="gx-mb-4" rowKey="id"
                    pagination={{
                      pageSize: this.state.itemNumbers,
                      current: this.state.current,
@@ -215,6 +216,9 @@ class AllTickets extends Component {
                                            onToggleAddTicket={this.onToggleAddTicket}
                                            showAddTicket={showAddTicket}
                                            onRaiseNewTicket={this.props.onRaiseNewTicket}
+                                           fetchStart={this.props.fetchStart}
+                                           fetchSuccess={this.props.fetchSuccess}
+                                           fetchError={this.props.fetchError}
         /> : null}
       </div>
     );
@@ -226,4 +230,7 @@ const mapPropsToState = ({customerDetails}) => {
   return {raisedTickets, totalTickets, formOptions};
 };
 
-export default connect(mapPropsToState, {onGetRaisedTickets, onGetFormOptions, onRaiseNewTicket})(AllTickets);
+export default connect(mapPropsToState, {
+  onGetRaisedTickets, onGetFormOptions, onRaiseNewTicket,
+  fetchSuccess, fetchError, fetchStart
+})(AllTickets);

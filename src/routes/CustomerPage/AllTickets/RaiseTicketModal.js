@@ -1,41 +1,25 @@
-
 import React, {Component} from "react"
-import {Button, Form, Input, Modal, Radio, Select} from "antd";
-import PropTypes from "prop-types";
+import {Button, Form, Input, Modal, Select, Upload} from "antd";
+import axios from 'util/Api'
 
 const {TextArea} = Input;
-const { Option } = Select;
+const {Option} = Select;
 
 
 class RaiseTicketModal extends Component {
   constructor(props) {
     super(props);
-    if (this.props.ticketId === null) {
-      this.state = {
-        title: "",
-        content: "",
-        attachment: [],
-        product_id: null,
-        department_id: null,
-        priority_id: null,
-        service_id: []
-      };
-      // } else {
-      //   const selectedDept = this.props.dept.find(department => department.id === this.props.departmentId);
-      //   this.state = {...selectedDept};
-      // }
+    this.state = {
+      title: "",
+      content: "",
+      attachment: [],
+      product_id: null,
+      department_id: null,
+      priority_id: null,
+      service_id: [],
+      fileList: []
     }
   }
-
-  onTicketAdd = () => {
-    if (this.props.ticketId === 0) {
-      this.props.onRaiseNewTicket({...this.state});
-
-    } else {
-      this.props.onRaiseNewTicket({...this.state});
-    }
-    this.props.onToggleAddTicket();
-  };
 
   onServiceSelect = (id) => {
     this.setState({service_id: this.state.service_id.concat(id)})
@@ -54,20 +38,84 @@ class RaiseTicketModal extends Component {
     return serviceOptions;
   };
 
-
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.onTicketAdd();
+        this.onSubmitForm();
       }
     });
+  };
+
+  onSubmitForm = () => {
+    if (this.state.fileList.length > 0) {
+      this.handleUpload()
+    } else {
+      this.onTicketAdd();
+    }
+  };
+
+  handleUpload = () => {
+    let formData = new FormData();
+    this.state.fileList.map(file => {
+      formData = new FormData();
+      formData.append('file', file);
+      formData.append('title', file.name);
+      this.imageUpload(formData);
+    });
+  };
+
+  imageUpload = (file) => {
+    this.props.fetchStart();
+    axios.post("/uploads/temporary/media", file, {
+      headers: {
+        'Content-Type': "multipart/form-data"
+      }
+    }).then(({data}) => {
+      if (data.success) {
+        this.props.fetchSuccess();
+        this.setState({attachment: this.state.attachment.concat(data.data)}, () => {
+          if (this.state.attachment.length === this.state.fileList.length) {
+            this.onTicketAdd();
+            this.setState({fileList: []})
+          }
+        })
+      }
+    }).catch(function (error) {
+      this.props.fetchError(error.message)
+    });
+  };
+
+  onTicketAdd = () => {
+    this.props.onRaiseNewTicket({...this.state});
+    this.props.onToggleAddTicket();
+    this.setState({fileList: []})
   };
 
   render() {
     const {getFieldDecorator} = this.props.form;
     const serviceOptions = this.onServiceSelectOption();
-    const {title, content, attachment, product_id, department_id, priority_id, service_id} = this.state;
+    const {title, content, product_id, department_id, priority_id, service_id, fileList} = this.state;
     const {showAddTicket, onToggleAddTicket, formOptions} = this.props;
+    const props = {
+      multiple: true,
+      onRemove: file => {
+        this.setState(state => {
+          const index = state.fileList.indexOf(file);
+          const newFileList = state.fileList.slice();
+          newFileList.splice(index, 1);
+          return {
+            fileList: newFileList,
+          };
+        });
+      },
+      beforeUpload: file => {
+        this.setState(state => ({
+          fileList: [...state.fileList, file],
+        }));
+        return false;
+      },
+      fileList,
+    };
     return (
       <div className="gx-main-layout-content">
         <Modal
@@ -97,9 +145,9 @@ class RaiseTicketModal extends Component {
               })(<Select type="text" onChange={(value) => {
                 this.setState({product_id: value})
               }}>
-                  {formOptions.products.map(product => {
-                    return <Option key={product.id} value={product.id}>{product.title}</Option>
-                  })}
+                {formOptions.products.map(product => {
+                  return <Option key={product.id} value={product.id}>{product.title}</Option>
+                })}
               </Select>)}
             </Form.Item>
             <Form.Item label="Select Department">
@@ -119,7 +167,6 @@ class RaiseTicketModal extends Component {
               })(<Select
                 mode="multiple"
                 placeholder="Please select Services"
-                value={service_id}
                 onSelect={this.onServiceSelect}
                 onDeselect={this.onServiceRemove}>
                 {serviceOptions}
@@ -147,6 +194,11 @@ class RaiseTicketModal extends Component {
                 })}
               </Select>)}
             </Form.Item>
+            <Form.Item>
+              <Upload {...props}>
+                <Input placeholder='Add Files' prefix={<i className="icon gx-icon-attachment"/>}/>
+              </Upload>
+            </Form.Item>
           </Form>
         </Modal>
       </div>
@@ -160,17 +212,6 @@ RaiseTicketModal = Form.create({})(RaiseTicketModal);
 export default RaiseTicketModal;
 
 
-RaiseTicketModal.defaultProps = {
-  dept: [],
-  departmentId: '',
-  showAddDepartment: true
-};
+RaiseTicketModal.defaultProps = {};
 
-RaiseTicketModal.propTypes = {
-  dept: PropTypes.array,
-  departmentId: PropTypes.number,
-  showAddDepartment: PropTypes.bool,
-  onToggleAddDepartment: PropTypes.func,
-  onAddDepartment: PropTypes.func,
-  onEditDepartment: PropTypes.func
-};
+RaiseTicketModal.propTypes = {};

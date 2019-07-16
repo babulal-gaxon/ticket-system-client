@@ -21,14 +21,14 @@ export default(state = initialState, action) => {
       };
 
     case RAISE_NEW_TICKET:
+      console.log("in recucser", action.payload)
       return {
         ...state,
-        raisedTickets: [action.payload, ...state.raisedTickets],
+        raisedTickets: [ action.payload, ...state.raisedTickets],
         totalTickets: state.totalTickets + 1
       };
 
     case GET_FORM_OPTIONS:
-      console.log("in reucer", action.payload)
       return {
         ...state,
         formOptions: {
