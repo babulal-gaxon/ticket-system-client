@@ -18,7 +18,7 @@ class RaiseTicketModal extends Component {
         product_id: null,
         department_id: null,
         priority_id: null,
-        service_id: null
+        service_id: []
       };
       // } else {
       //   const selectedDept = this.props.dept.find(department => department.id === this.props.departmentId);
@@ -36,6 +36,25 @@ class RaiseTicketModal extends Component {
     }
     this.props.onToggleAddTicket();
   };
+
+  onServiceSelect = (id) => {
+    this.setState({service_id: this.state.service_id.concat(id)})
+  };
+
+  onServiceRemove = (value) => {
+    const updatedServices = this.state.service_id.filter(service => service !== value);
+    this.setState({service_id: updatedServices})
+  };
+
+  onServiceSelectOption = () => {
+    const serviceOptions = [];
+    this.props.formOptions.services.map(service => {
+      return serviceOptions.push(<Option value={service.id} key={service.id}>{service.title}</Option>);
+    });
+    return serviceOptions;
+  };
+
+
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
@@ -46,6 +65,7 @@ class RaiseTicketModal extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
+    const serviceOptions = this.onServiceSelectOption();
     const {title, content, attachment, product_id, department_id, priority_id, service_id} = this.state;
     const {showAddTicket, onToggleAddTicket, formOptions} = this.props;
     return (
@@ -96,12 +116,13 @@ class RaiseTicketModal extends Component {
             <Form.Item label="Select Service">
               {getFieldDecorator('service_id', {
                 initialValue: service_id,
-              })(<Select type="text" onChange={(value) => {
-                this.setState({service_id: value})
-              }}>
-                {formOptions.services.map(service => {
-                  return <Option key={service.id} value={service.id}>{service.title}</Option>
-                })}
+              })(<Select
+                mode="multiple"
+                placeholder="Please select Services"
+                value={service_id}
+                onSelect={this.onServiceSelect}
+                onDeselect={this.onServiceRemove}>
+                {serviceOptions}
               </Select>)}
             </Form.Item>
             <Form.Item label="Description">
