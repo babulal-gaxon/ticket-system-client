@@ -4,6 +4,8 @@ import {connect} from "react-redux";
 import {Avatar, Button, Input, Select, Table, Tag} from "antd";
 import RaiseTicketModal from "./RaiseTicketModal";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
+import Permissions from "../../../util/Permissions";
+import TicketDetails from "./TicketDetails";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -149,8 +151,13 @@ class AllTickets extends Component {
     })
   };
 
+  onSelectTicket = (record) => {
+    this.setState({currentTicket: record})
+  };
+
   render() {
-    const {selectedRowKeys, filterText, showAddTicket, ticketId} = this.state;
+    console.log("current Ticket", this.state.currentTicket);
+    const {selectedRowKeys, filterText, showAddTicket, ticketId, currentTicket} = this.state;
     const {raisedTickets, formOptions} = this.props;
     const rowSelection = {
       selectedRowKeys,
@@ -163,6 +170,8 @@ class AllTickets extends Component {
     };
     return (
       <div className="gx-main-layout-content">
+        {currentTicket === null ?
+        <div>
         {raisedTickets.length > 0 ?
           <div>
             <div className="gx-d-flex gx-justify-content-between">
@@ -194,10 +203,15 @@ class AllTickets extends Component {
                    pagination={{
                      pageSize: this.state.itemNumbers,
                      current: this.state.current,
-                     total: this.props.totalItems,
+                     total: this.props.totalTickets,
                      showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
-                     onChange: this.onPageChange
-                   }}/>
+                     onChange: this.onPageChange,
+                   }}
+                   onRow = {(record) => ({
+                     onClick: () => {
+                       this.onSelectTicket(record)
+                     }
+                   })}/>
           </div> : <div className="gx-main-layout-content">
             <div style={{
               display: 'flex',
@@ -220,6 +234,7 @@ class AllTickets extends Component {
                                            fetchSuccess={this.props.fetchSuccess}
                                            fetchError={this.props.fetchError}
         /> : null}
+        </div> : <TicketDetails/>}
       </div>
     );
   }
