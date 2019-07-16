@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Divider, Form, Input} from "antd/lib/index";
 import InfoView from "../../../components/InfoView";
+import PropTypes from "prop-types";
 
 class GeneralDetails extends Component {
   constructor(props) {
@@ -161,3 +162,14 @@ GeneralDetails = Form.create({})(GeneralDetails);
 
 export default GeneralDetails;
 
+GeneralDetails.defaultProps = {
+  generalSettingsData: null,
+  companyLogo: null,
+  favicon: null
+};
+
+GeneralDetails.propTypes = {
+  generalSettingsData: PropTypes.object,
+  companyLogo: PropTypes.number,
+  favicon: PropTypes.number
+};

@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import Widget from "../../../components/Widget";
 import {Button, Tag} from "antd";
 import AddCustomerAddress from "../../Customers/AllCustomers/AddCustomerAddress";
+import PropTypes from "prop-types";
 
 class Addresses extends Component {
   constructor(props) {
@@ -49,5 +50,14 @@ class Addresses extends Component {
   }
 }
 
-
 export default Addresses;
+
+Addresses.defaultProps = {
+  countriesList: [],
+  generalAddress: [],
+};
+
+Addresses.propTypes = {
+  countriesList: PropTypes.array,
+  generalAddress: PropTypes.array
+};

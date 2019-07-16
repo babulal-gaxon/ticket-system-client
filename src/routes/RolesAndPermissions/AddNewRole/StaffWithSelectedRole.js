@@ -33,13 +33,19 @@ class StaffWithSelectedRole extends Component {
 
   onFilterStaffList = () => {
     if (this.state.staffWithSelectedRole.length !== 0) {
-      return this.state.staffWithSelectedRole.filter(staff => staff.first_name.indexOf(this.state.filterText) !== -1)
+      return this.state.staffWithSelectedRole.filter(staff => {
+        const name = staff.first_name + " " + staff.last_name;
+        if(name.indexOf(this.state.filterText) !== -1) {
+          return staff;
+        }
+      })
     } else {
       return [];
     }
   };
 
   render() {
+    const {filterText} = this.state;
     const staffList = this.onFilterStaffList();
     return (
       <div className="gx-main-layout-content">
@@ -47,7 +53,7 @@ class StaffWithSelectedRole extends Component {
         <div className="gx-d-flex gx-align-items-center">
           <Search
             placeholder="Enter keywords to search roles"
-            value={this.state.filterText}
+            value={filterText}
             onChange={(e) => this.setState({filterText: e.target.value})}/>
         </div>
         {staffList.length !== 0 ?
@@ -75,7 +81,7 @@ class StaffWithSelectedRole extends Component {
                 </div>
               </Widget>
             })}
-          </div> : this.state.filterText === "" ?
+          </div> : filterText === "" ?
             <div className="gx-justify-content-between">No staff member assigned to this role yet!</div> :
             <div className="gx-justify-content-between">No record found</div>}
       </div>

@@ -14,6 +14,7 @@ import {
   onSaveGeneralAddress,
   onSaveGeneralDetails
 } from "../../../appRedux/actions/GeneralSettings";
+import PropTypes from "prop-types";
 
 const {TabPane} = Tabs;
 
@@ -25,7 +26,7 @@ class GeneralSettings extends Component {
     }
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.onGetGeneralDetails();
     this.props.onGetCountriesList();
     this.props.onGetGeneralAddress();
@@ -88,3 +89,19 @@ export default connect(mapStateToProps, {
   onAddCompanyLogo,
   onAddCompanyFavicon
 })(GeneralSettings);
+
+GeneralSettings.defaultProps = {
+  countriesList: [],
+  generalSettingsData: null,
+  generalAddress: [],
+  companyLogo: null,
+  favicon: null
+};
+
+GeneralSettings.propTypes = {
+  countriesList: PropTypes.array,
+  generalSettingsData: PropTypes.object,
+  generalAddress: PropTypes.array,
+  companyLogo: PropTypes.number,
+  favicon: PropTypes.number
+};

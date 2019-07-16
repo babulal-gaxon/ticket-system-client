@@ -267,21 +267,25 @@ class AddNewRole extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {status, currentMember, name} = this.state;
-
+    const {
+      status, currentMember, name, customerPermissions, contactPermissions, departmentsPermissions,
+      labelPermissions, prioritiesPermissions, responsesPermissions, rolesPermissions, settingsPermissions,
+      staffsPermissions, statusPermissions, ticketsPermissions, usersPermissions
+    } = this.state;
+    const {selectedRole, onDisableSelectedRole, userPermissions, staffList, onGetStaffId, history} = this.props;
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
           <h4
-            className="gx-font-weight-bold">{this.props.selectedRole === null ? "Add New Role" : "Edit Role Details"}</h4>
+            className="gx-font-weight-bold">{selectedRole === null ? "Add New Role" : "Edit Role Details"}</h4>
           <Breadcrumb className="gx-mb-4">
-            <Breadcrumb.Item onClick={this.props.onDisableSelectedRole}>
+            <Breadcrumb.Item onClick={onDisableSelectedRole}>
               <Link to="/roles-permissions/all">Roles & Permission</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item className="gx-text-primary">
               <Link
                 to="/roles-permissions/add-new"
-                className="gx-text-primary">{this.props.selectedRole === null ? "Add New Role" : "Edit Role Details"}</Link>
+                className="gx-text-primary">{selectedRole === null ? "Add New Role" : "Edit Role Details"}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           {currentMember === null ? <Row>
@@ -308,17 +312,17 @@ class AddNewRole extends Component {
                     <Panel header="Customers" key="1" showArrow={false} extra={<i className="icon icon-add-circle"/>}
                            style={customPanelStyle}>
                       <Checkbox className="gx-ml-auto"
-                                indeterminate={this.state.customerPermissions.length > 0
-                                && this.props.userPermissions.companies.length > this.state.customerPermissions.length}
+                                indeterminate={customerPermissions.length > 0
+                                && userPermissions.companies.length > customerPermissions.length}
                                 onChange={this.onCheckAllCustomers}
-                                checked={this.props.userPermissions.companies.length === this.state.customerPermissions.length}>
+                                checked={userPermissions.companies.length === customerPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectCustomerPermissions}
                                       value={this.state.customerPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
-                          {this.props.userPermissions.companies.map(company => {
+                          {userPermissions.companies.map(company => {
                             return <Col span={12} key={company.id} className="gx-mb-2">
                               <Checkbox value={company.id}>{company.title}</Checkbox>
                             </Col>
@@ -330,17 +334,17 @@ class AddNewRole extends Component {
                     <Panel header="Company Contracts" key="2" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.contactPermissions.length > 0
-                        && this.props.userPermissions.contacts.length > this.state.contactPermissions.length}
+                        indeterminate={contactPermissions.length > 0
+                        && userPermissions.contacts.length > contactPermissions.length}
                         onChange={this.onCheckAllContacts}
-                        checked={this.props.userPermissions.contacts.length === this.state.contactPermissions.length}>
+                        checked={userPermissions.contacts.length === contactPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectContactPermissions}
-                                      value={this.state.contactPermissions}>
+                                      value={contactPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
-                          {this.props.userPermissions.contacts.map(contact => {
+                          {userPermissions.contacts.map(contact => {
                             return <Col span={12} key={contact.id} className="gx-mb-2">
                               <Checkbox value={contact.id}>{contact.title}</Checkbox>
                             </Col>
@@ -352,17 +356,17 @@ class AddNewRole extends Component {
                     <Panel header="Departments" key="3" style={customPanelStyle} showArrow={false}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.departmentsPermissions.length > 0
-                        && this.props.userPermissions.departments.length > this.state.departmentsPermissions.length}
+                        indeterminate={departmentsPermissions.length > 0
+                        && userPermissions.departments.length > departmentsPermissions.length}
                         onChange={this.onCheckAllDepartments}
-                        checked={this.props.userPermissions.departments.length === this.state.departmentsPermissions.length}>
+                        checked={userPermissions.departments.length === departmentsPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectDepartmentPermissions}
-                                      value={this.state.departmentsPermissions}>
+                                      value={departmentsPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
-                          {this.props.userPermissions.departments.map(department => {
+                          {userPermissions.departments.map(department => {
                             return <Col span={12} key={department.id} className="gx-mb-2">
                               <Checkbox value={department.id}>{department.title}</Checkbox>
                             </Col>
@@ -374,17 +378,17 @@ class AddNewRole extends Component {
                     <Panel header="Labels" key="4" style={customPanelStyle} showArrow={false}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.labelPermissions.length > 0
-                        && this.props.userPermissions.labels.length > this.state.labelPermissions.length}
+                        indeterminate={labelPermissions.length > 0
+                        && userPermissions.labels.length > labelPermissions.length}
                         onChange={this.onCheckAllLabels}
-                        checked={this.props.userPermissions.labels.length === this.state.labelPermissions.length}>
+                        checked={userPermissions.labels.length === labelPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectLabelPermissions}
-                                      value={this.state.labelPermissions}>
+                                      value={labelPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
-                          {this.props.userPermissions.labels.map(label => {
+                          {userPermissions.labels.map(label => {
                             return <Col span={12} key={label.id} className="gx-mb-2">
                               <Checkbox value={label.id}>{label.title}</Checkbox>
                             </Col>
@@ -396,17 +400,17 @@ class AddNewRole extends Component {
                     <Panel header="Priorities" key="5" style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>} showArrow={false}>
                       <Checkbox
-                        indeterminate={this.state.prioritiesPermissions.length > 0
-                        && this.props.userPermissions.priorities.length > this.state.prioritiesPermissions.length}
+                        indeterminate={prioritiesPermissions.length > 0
+                        && userPermissions.priorities.length > prioritiesPermissions.length}
                         onChange={this.onCheckAllPriorities}
-                        checked={this.props.userPermissions.priorities.length === this.state.prioritiesPermissions.length}>
+                        checked={userPermissions.priorities.length === prioritiesPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectPriorityPermissions}
-                                      value={this.state.prioritiesPermissions}>
+                                      value={prioritiesPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
-                          {this.props.userPermissions.priorities.map(priority => {
+                          {userPermissions.priorities.map(priority => {
                             return <Col span={12} key={priority.id} className="gx-mb-2">
                               <Checkbox value={priority.id}>{priority.title}</Checkbox>
                             </Col>
@@ -418,17 +422,17 @@ class AddNewRole extends Component {
                     <Panel header="Responses" key="6" style={customPanelStyle} showArrow={false}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.responsesPermissions.length > 0
-                        && this.props.userPermissions.responses.length > this.state.responsesPermissions.length}
+                        indeterminate={responsesPermissions.length > 0
+                        && userPermissions.responses.length > responsesPermissions.length}
                         onChange={this.onCheckAllResponses}
-                        checked={this.props.userPermissions.responses.length === this.state.responsesPermissions.length}>
+                        checked={userPermissions.responses.length === responsesPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectResponsesPermissions}
-                                      value={this.state.responsesPermissions}>
+                                      value={responsesPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
-                          {this.props.userPermissions.responses.map(response => {
+                          {userPermissions.responses.map(response => {
                             return <Col span={12} key={response.id} className="gx-mb-2">
                               <Checkbox value={response.id}>{response.title}</Checkbox>
                             </Col>
@@ -440,17 +444,17 @@ class AddNewRole extends Component {
                     <Panel header="Roles" key="7" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.rolesPermissions.length > 0
-                        && this.props.userPermissions.roles.length > this.state.rolesPermissions.length}
+                        indeterminate={rolesPermissions.length > 0
+                        && userPermissions.roles.length > rolesPermissions.length}
                         onChange={this.onCheckAllRoles}
-                        checked={this.props.userPermissions.roles.length === this.state.rolesPermissions.length}>
+                        checked={userPermissions.roles.length === rolesPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectRolesPermissions}
-                                      value={this.state.rolesPermissions}>
+                                      value={rolesPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
-                          {this.props.userPermissions.roles.map(role => {
+                          {userPermissions.roles.map(role => {
                             return <Col span={12} key={role.id} className="gx-mb-2">
                               <Checkbox value={role.id}>{role.title}</Checkbox>
                             </Col>
@@ -462,17 +466,17 @@ class AddNewRole extends Component {
                     <Panel header="Settings" key="8" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.settingsPermissions.length > 0
-                        && this.props.userPermissions.settings.length > this.state.settingsPermissions.length}
+                        indeterminate={settingsPermissions.length > 0
+                        && userPermissions.settings.length > settingsPermissions.length}
                         onChange={this.onCheckAllSettings}
-                        checked={this.props.userPermissions.settings.length === this.state.settingsPermissions.length}>
+                        checked={userPermissions.settings.length === settingsPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectSettingsPermissions}
-                                      value={this.state.settingsPermissions}>
+                                      value={settingsPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
-                          {this.props.userPermissions.settings.map(setting => {
+                          {userPermissions.settings.map(setting => {
                             return <Col span={12} key={setting.id} className="gx-mb-2">
                               <Checkbox value={setting.id}>{setting.title}</Checkbox>
                             </Col>
@@ -484,17 +488,17 @@ class AddNewRole extends Component {
                     <Panel header="Staffs" key="9" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.staffsPermissions.length > 0
-                        && this.props.userPermissions.staffs.length > this.state.staffsPermissions.length}
+                        indeterminate={staffsPermissions.length > 0
+                        && userPermissions.staffs.length > staffsPermissions.length}
                         onChange={this.onCheckAllStaffs}
-                        checked={this.props.userPermissions.staffs.length === this.state.staffsPermissions.length}>
+                        checked={userPermissions.staffs.length === staffsPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectStaffsPermissions}
-                                      value={this.state.staffsPermissions}>
+                                      value={staffsPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
-                          {this.props.userPermissions.staffs.map(staff => {
+                          {userPermissions.staffs.map(staff => {
                             return <Col span={12} key={staff.id} className="gx-mb-2">
                               <Checkbox value={staff.id}>{staff.title}</Checkbox>
                             </Col>
@@ -506,17 +510,17 @@ class AddNewRole extends Component {
                     <Panel header="Status" key="10" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.statusPermissions.length > 0
-                        && this.props.userPermissions.status.length > this.state.statusPermissions.length}
+                        indeterminate={statusPermissions.length > 0
+                        && userPermissions.status.length > statusPermissions.length}
                         onChange={this.onCheckAllStatus}
-                        checked={this.props.userPermissions.status.length === this.state.statusPermissions.length}>
+                        checked={userPermissions.status.length === statusPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectStatusPermissions}
-                                      value={this.state.statusPermissions}>
+                                      value={statusPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
-                          {this.props.userPermissions.status.map(stat => {
+                          {userPermissions.status.map(stat => {
                             return <Col span={12} key={stat.id} className="gx-mb-2">
                               <Checkbox value={stat.id}>{stat.title}</Checkbox>
                             </Col>
@@ -528,17 +532,17 @@ class AddNewRole extends Component {
                     <Panel header="Tickets" key="11" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.ticketsPermissions.length > 0
-                        && this.props.userPermissions.tickets.length > this.state.ticketsPermissions.length}
+                        indeterminate={ticketsPermissions.length > 0
+                        && userPermissions.tickets.length > ticketsPermissions.length}
                         onChange={this.onCheckAllTickets}
-                        checked={this.props.userPermissions.tickets.length === this.state.ticketsPermissions.length}>
+                        checked={userPermissions.tickets.length === ticketsPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectTicketsPermissions}
-                                      value={this.state.ticketsPermissions}>
+                                      value={ticketsPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
-                          {this.props.userPermissions.tickets.map(ticket => {
+                          {userPermissions.tickets.map(ticket => {
                             return <Col span={12} key={ticket.id} className="gx-mb-2">
                               <Checkbox value={ticket.id}>{ticket.title}</Checkbox>
                             </Col>
@@ -550,17 +554,17 @@ class AddNewRole extends Component {
                     <Panel header="Users" key="12" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
-                        indeterminate={this.state.usersPermissions.length > 0
-                        && this.props.userPermissions.users.length > this.state.usersPermissions.length}
+                        indeterminate={usersPermissions.length > 0
+                        && userPermissions.users.length > usersPermissions.length}
                         onChange={this.onCheckAllUsers}
-                        checked={this.props.userPermissions.users.length === this.state.usersPermissions.length}>
+                        checked={userPermissions.users.length === usersPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectUsersPermissions}
-                                      value={this.state.usersPermissions}>
+                                      value={usersPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
-                          {this.props.userPermissions.users.map(user => {
+                          {userPermissions.users.map(user => {
                             return <Col span={12} key={user.id} className="gx-mb-2">
                               <Checkbox value={user.id}>{user.title}</Checkbox>
                             </Col>
@@ -577,21 +581,21 @@ class AddNewRole extends Component {
                 <Button type="primary" onClick={this.onValidationCheck}>
                   Save
                 </Button>
-                     <Button onClick={() => this.props.history.goBack()}>
+                     <Button onClick={() => history.goBack()}>
                   Cancel
                 </Button>
                 </span>
             </Col>
-            {this.props.selectedRole !== null ?
+            {selectedRole !== null ?
               <Col xl={9} lg={12} md={12} sm={12} xs={24}>
-                <StaffWithSelectedRole staffList={this.props.staffList}
-                                       selectedRole={this.props.selectedRole}
-                                       onGetStaffId={this.props.onGetStaffId}
+                <StaffWithSelectedRole staffList={staffList}
+                                       selectedRole={selectedRole}
+                                       onGetStaffId={onGetStaffId}
                                        onSelectStaff={this.onSelectStaff}
-                                       history={this.props.history}/>
+                                       history={history}/>
               </Col> : null}
-          </Row> : <StaffDetail staff={currentMember} onGetStaffId={this.props.onGetStaffId}
-                                history={this.props.history} onSelectStaff={this.onSelectStaff}
+          </Row> : <StaffDetail staff={currentMember} onGetStaffId={onGetStaffId}
+                                history={history} onSelectStaff={this.onSelectStaff}
                                 onBackToList={this.onBackToList}/>}
         </Widget>
         <InfoView/>

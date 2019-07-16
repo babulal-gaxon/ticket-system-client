@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
 import {connect} from "react-redux";
 
-
 import Widget from "../../../components/Widget/index";
 import InfoView from '../../../components/InfoView'
 import {
@@ -31,8 +30,11 @@ class RolesList extends Component {
       filterText: "",
       selectedRoles: []
     };
-    this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText);
   };
+
+  componentDidMount() {
+    this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText);
+  }
 
   onGetRolesData = (currentPage, itemsPerPage, filterText) => {
     if (Permissions.canRoleView()) {
@@ -204,6 +206,7 @@ class RolesList extends Component {
   };
 
   render() {
+    const {current, totalItems, itemNumbers} = this.state;
     const roles = this.props.roles;
     const selectedRowKeys = this.state.selectedRowKeys;
     let ids;
@@ -255,9 +258,9 @@ class RolesList extends Component {
           <Table rowKey="rolesList" rowSelection={rowSelection} columns={this.rolesRowData()}
                  dataSource={roles}
                  pagination={{
-                   pageSize: this.state.itemNumbers,
-                   current: this.state.current,
-                   total: this.props.totalItems,
+                   pageSize: itemNumbers,
+                   current: current,
+                   total: totalItems,
                    showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
                    onChange: this.onPageChange
                  }}

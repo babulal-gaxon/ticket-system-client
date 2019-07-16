@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {onGetTicketStatus} from "../../../appRedux/actions/TicketStatuses";
 import {onGetTicketSettings, onSaveTicketSettings} from "../../../appRedux/actions/GeneralSettings";
 import InfoView from "../../../components/InfoView";
+import PropTypes from "prop-types";
 
 const {Option} = Select;
 
@@ -98,7 +99,7 @@ class TicketSettings extends Component {
             <Breadcrumb.Item>
               <Link to="/settings/general-settings">Settings</Link>
             </Breadcrumb.Item>
-            <Breadcrumb.Item >
+            <Breadcrumb.Item>
               <Link to="/settings/ticket-settings" className="gx-text-primary">Ticket Settings</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
@@ -136,7 +137,7 @@ class TicketSettings extends Component {
                 <p>Default status when a ticket is replied</p>
                 <Select style={{width: 200}} value={default_status_reply}
                         onChange={(value) => this.setState({default_status_reply: value})}>
-                  {this.props.statuses.map(status => {
+                  {this.props.filterData.status.map(status => {
                     return <Option key={status.id} value={status.id}>{status.name}</Option>
                   })}
                 </Select>
@@ -218,10 +219,22 @@ class TicketSettings extends Component {
 }
 
 
-const mapStateToProps = ({generalSettings, ticketStatuses}) => {
+const mapStateToProps = ({generalSettings, ticketList}) => {
   const {ticketSettings} = generalSettings;
-  const {statuses} = ticketStatuses;
-  return {ticketSettings, statuses};
+  const {filterData} = ticketList;
+  return {ticketSettings, filterData};
 };
 
 export default connect(mapStateToProps, {onGetTicketStatus, onGetTicketSettings, onSaveTicketSettings})(TicketSettings);
+
+TicketSettings.defaultProps = {
+  ticketSettings: null,
+  filterData: {
+    status: []
+  }
+};
+
+TicketSettings.propTypes = {
+  ticketSettings: PropTypes.object,
+  filterData: PropTypes.object
+};

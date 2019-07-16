@@ -9,6 +9,7 @@ import {
   onSaveCustomerPanelDetails
 } from "../../../appRedux/actions/GeneralSettings";
 import InfoView from "../../../components/InfoView";
+import PropTypes from "prop-types";
 
 const {Option} = Select;
 
@@ -37,7 +38,7 @@ class CustomerPanel extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.onGetCustomerPanelDetails();
     this.props.onGetCountriesList();
   }
@@ -56,7 +57,7 @@ class CustomerPanel extends Component {
         })
       }
     }
-  }
+  };
 
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
@@ -73,7 +74,6 @@ class CustomerPanel extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
     const {theme, country, registration_enable, register_verification, allow_primary_contact_view, delete_own_files} = this.state;
-    console.log("state", this.state);
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -160,3 +160,13 @@ export default connect(mapStateToProps, {
   onSaveCustomerPanelDetails,
   onGetCountriesList
 })(CustomerPanel);
+
+CustomerPanel.defaultProps = {
+  countriesList: [],
+  customerPanelDetails: null
+};
+
+CustomerPanel.propTypes = {
+  countriesList: PropTypes.array,
+  customerPanelDetails: PropTypes.object
+};

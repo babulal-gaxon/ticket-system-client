@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {onGetLocalizationDetails, onSaveLocalizationDetails} from "../../../appRedux/actions/GeneralSettings";
 import InfoView from "../../../components/InfoView";
+import PropTypes from "prop-types";
 
 const {Option} = Select;
 
@@ -29,7 +30,7 @@ class Localization extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.onGetLocalizationDetails();
   }
 
@@ -154,3 +155,11 @@ export default connect(mapStateToProps, {
   onGetLocalizationDetails,
   onSaveLocalizationDetails
 })(Localization);
+
+Localization.defaultProps = {
+  localizationDetails: null,
+};
+
+Localization.propTypes = {
+  localizationDetails: PropTypes.object
+};
