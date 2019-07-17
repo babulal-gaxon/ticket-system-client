@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {Avatar, Button, Input, Select, Table, Tag} from "antd";
 import RaiseTicketModal from "./RaiseTicketModal";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
-import Permissions from "../../../util/Permissions";
 import TicketDetails from "./TicketDetails";
 
 const ButtonGroup = Button.Group;
@@ -98,7 +97,7 @@ class AllTickets extends Component {
         dataIndex: 'assignTo',
         key: 'assignTo',
         render: (text, record) => {
-          return <Avatar size={50} icon="user" />
+          return <Avatar size={50} icon="user"/>
         },
       },
       {
@@ -171,70 +170,70 @@ class AllTickets extends Component {
     return (
       <div className="gx-main-layout-content">
         {currentTicket === null ?
-        <div>
-        {raisedTickets.length > 0 ?
           <div>
-            <div className="gx-d-flex gx-justify-content-between">
-              <div className="gx-d-flex">
-                <Button type="primary" className="gx-btn-lg" onClick={this.onToggleAddTicket}>
-                  Raise a Ticket</Button>
-              </div>
-              <div className="gx-d-flex">
-                <Search
-                  placeholder="Enter keywords to search Tickets"
-                  style={{width: 350}}
-                  value={filterText}
-                  onChange={this.onFilterTextChange}/>
-                <div className="gx-ml-3">
-                  {this.onShowItemOptions()}
+            {raisedTickets.length > 0 ?
+              <div>
+                <div className="gx-d-flex gx-justify-content-between">
+                  <div className="gx-d-flex">
+                    <Button type="primary" className="gx-btn-lg" onClick={this.onToggleAddTicket}>
+                      Raise a Ticket</Button>
+                  </div>
+                  <div className="gx-d-flex">
+                    <Search
+                      placeholder="Enter keywords to search Tickets"
+                      style={{width: 350}}
+                      value={filterText}
+                      onChange={this.onFilterTextChange}/>
+                    <div className="gx-ml-3">
+                      {this.onShowItemOptions()}
+                    </div>
+                    <ButtonGroup className="gx-ml-3">
+                      <Button type="default" onClick={this.onCurrentDecrement}>
+                        <i className="icon icon-long-arrow-left"/>
+                      </Button>
+                      <Button type="default" onClick={this.onCurrentIncrement}>
+                        <i className="icon icon-long-arrow-right"/>
+                      </Button>
+                    </ButtonGroup>
+                  </div>
                 </div>
-                <ButtonGroup className="gx-ml-3">
-                  <Button type="default" onClick={this.onCurrentDecrement}>
-                    <i className="icon icon-long-arrow-left"/>
-                  </Button>
-                  <Button type="default" onClick={this.onCurrentIncrement}>
-                    <i className="icon icon-long-arrow-right"/>
-                  </Button>
-                </ButtonGroup>
-              </div>
-            </div>
-            <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
-                   dataSource={raisedTickets} className="gx-mb-4" rowKey="id"
-                   pagination={{
-                     pageSize: this.state.itemNumbers,
-                     current: this.state.current,
-                     total: this.props.totalTickets,
-                     showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
-                     onChange: this.onPageChange,
-                   }}
-                   onRow = {(record) => ({
-                     onClick: () => {
-                       this.onSelectTicket(record)
-                     }
-                   })}/>
-          </div> : <div className="gx-main-layout-content">
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              minHeight: 700
-            }}>
-              <div>No records Found</div>
-              <h3 className="gx-font-weight-bold gx-my-4">You have not raised any support request</h3>
-              <Button type="primary" onClick={this.onToggleAddTicket}>Raise a Ticket</Button>
-            </div>
-          </div>}
-        {showAddTicket ? <RaiseTicketModal ticketId={ticketId}
-                                           formOptions={formOptions}
-                                           onToggleAddTicket={this.onToggleAddTicket}
-                                           showAddTicket={showAddTicket}
-                                           onRaiseNewTicket={this.props.onRaiseNewTicket}
-                                           fetchStart={this.props.fetchStart}
-                                           fetchSuccess={this.props.fetchSuccess}
-                                           fetchError={this.props.fetchError}
-        /> : null}
-        </div> : <TicketDetails/>}
+                <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
+                       dataSource={raisedTickets} className="gx-mb-4" rowKey="id"
+                       pagination={{
+                         pageSize: this.state.itemNumbers,
+                         current: this.state.current,
+                         total: this.props.totalTickets,
+                         showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                         onChange: this.onPageChange,
+                       }}
+                       onRow={(record) => ({
+                         onClick: () => {
+                           this.onSelectTicket(record)
+                         }
+                       })}/>
+              </div> : <div className="gx-main-layout-content">
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  minHeight: 700
+                }}>
+                  <div>No records Found</div>
+                  <h3 className="gx-font-weight-bold gx-my-4">You have not raised any support request</h3>
+                  <Button type="primary" onClick={this.onToggleAddTicket}>Raise a Ticket</Button>
+                </div>
+              </div>}
+            {showAddTicket ? <RaiseTicketModal ticketId={ticketId}
+                                               formOptions={formOptions}
+                                               onToggleAddTicket={this.onToggleAddTicket}
+                                               showAddTicket={showAddTicket}
+                                               onRaiseNewTicket={this.props.onRaiseNewTicket}
+                                               fetchStart={this.props.fetchStart}
+                                               fetchSuccess={this.props.fetchSuccess}
+                                               fetchError={this.props.fetchError}
+            /> : null}
+          </div> : <TicketDetails/>}
       </div>
     );
   }
