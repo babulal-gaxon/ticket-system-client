@@ -15,6 +15,8 @@ import axios from 'util/Api'
 import {Avatar, Button, Divider, Input, Select, Upload} from "antd";
 import moment from "moment";
 import ConversationCell from "./ConversationCell";
+import InfoView from "../../../components/InfoView";
+import EditTicketDetailsModal from "./EditTicketDetailsModal";
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -105,8 +107,7 @@ class TicketDetails extends Component {
   };
 
   render() {
-    console.log("current ticket", this.props.currentTicket, this.props.ticketMessages)
-    const {fileList, currentTicket} = this.state;
+    const {fileList, currentTicket, showEditModal} = this.state;
     const {ticketMessages} = this.props;
     const props = {
       multiple: true,
@@ -215,6 +216,15 @@ class TicketDetails extends Component {
               </div>
             <Button type="primary" className="gx-my-3" onClick={this.onSubmitMessage}>Update Ticket</Button>
           </div> : null}
+        {showEditModal ?
+          <EditTicketDetailsModal
+            onToggleEditModal={this.onToggleEditModal}
+            currentTicket={currentTicket}
+            showEditModal={showEditModal}
+            />
+          : null}
+
+        <InfoView/>
       </div>
     )
   }
