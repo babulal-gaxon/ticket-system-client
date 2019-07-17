@@ -138,6 +138,8 @@ class TicketDetails extends Component {
                 <h2 className="gx-font-weight-bold">{currentTicket.title}</h2>
                 <div>Ticket Id: {currentTicket.id}</div>
               </div>
+              <span className="gx-text-primary" onClick={this.onToggleEditModal}><i
+                className="icon icon-edit gx-mr-2"/>Edit</span>
               <Select value={currentTicket.priority_id} onChange={(value) => {
                 this.setState({selectedPriority: value})
               }}>
