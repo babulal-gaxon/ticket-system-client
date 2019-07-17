@@ -3,9 +3,11 @@ import axios from 'util/Api'
 import {
   ADD_TICKET_MESSAGE,
   GET_FORM_OPTIONS,
-  GET_RAISED_TICKETS, GET_TICKET_MESSAGES,
-  RAISE_NEW_TICKET,
-  SELECT_CURRENT_TICKET
+  GET_RAISED_TICKETS,
+  GET_TICKET_DETAIL,
+  GET_TICKET_MESSAGES,
+  NULLIFY_TICKET,
+  RAISE_NEW_TICKET
 } from "../../constants/CustomerDetails";
 
 export const onGetRaisedTickets = (currentPage, totalItems, filterText) => {
@@ -68,10 +70,9 @@ export const onRaiseNewTicket = (ticket) => {
   }
 };
 
-export const onSelectTicket = (ticket) => {
+export const onNullifyTicket = () => {
   return {
-    type: SELECT_CURRENT_TICKET,
-    payload: ticket
+    type: NULLIFY_TICKET,
   }
 };
 
@@ -101,6 +102,24 @@ export const onSendNewMessage = (ticketId, message) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: ADD_TICKET_MESSAGE, payload: data.data});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onGetTicketDetail = (ticketId) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.get(`/customer/panel/tickets/${ticketId}`).then(({data}) => {
+      console.info("onGetTicketDetail: ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: GET_TICKET_DETAIL, payload: data.data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }

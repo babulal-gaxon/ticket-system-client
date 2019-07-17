@@ -1,9 +1,10 @@
 import {
   ADD_TICKET_MESSAGE,
   GET_FORM_OPTIONS,
-  GET_RAISED_TICKETS, GET_TICKET_MESSAGES,
-  RAISE_NEW_TICKET,
-  SELECT_CURRENT_TICKET
+  GET_RAISED_TICKETS,
+  GET_TICKET_DETAIL,
+  GET_TICKET_MESSAGES, NULLIFY_TICKET,
+  RAISE_NEW_TICKET
 } from "../../constants/CustomerDetails";
 
 const initialState = {
@@ -19,8 +20,8 @@ const initialState = {
   ticketMessages: []
 };
 
-export default(state = initialState, action) => {
-  switch(action.type) {
+export default (state = initialState, action) => {
+  switch (action.type) {
     case GET_RAISED_TICKETS:
       return {
         ...state,
@@ -32,7 +33,7 @@ export default(state = initialState, action) => {
       console.log("in recucser", action.payload)
       return {
         ...state,
-        raisedTickets: [ action.payload, ...state.raisedTickets],
+        raisedTickets: [action.payload, ...state.raisedTickets],
         totalTickets: state.totalTickets + 1
       };
 
@@ -47,7 +48,7 @@ export default(state = initialState, action) => {
         }
       };
 
-    case SELECT_CURRENT_TICKET:
+    case GET_TICKET_DETAIL:
       return {
         ...state,
         currentTicket: action.payload
@@ -63,6 +64,12 @@ export default(state = initialState, action) => {
       return {
         ...state,
         ticketMessages: state.ticketMessages.concat(action.payload)
+      };
+
+    case NULLIFY_TICKET:
+      return {
+        ...state,
+        currentTicket: null
       };
 
     default:

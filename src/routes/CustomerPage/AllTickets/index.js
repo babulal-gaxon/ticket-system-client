@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {onGetFormOptions, onGetRaisedTickets, onRaiseNewTicket} from "../../../appRedux/actions/CustomerDetails";
 import {connect} from "react-redux";
-import {Avatar, Button, Input, Select, Table, Tag} from "antd";
+import {Avatar, Button, Input, Select, Table, Tag, Tooltip} from "antd";
 import RaiseTicketModal from "./RaiseTicketModal";
-import {fetchError, fetchStart, fetchSuccess, onSelectTicket} from "../../../appRedux/actions";
-import TicketDetails from "./TicketDetails";
+import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -96,7 +95,20 @@ class AllTickets extends Component {
         dataIndex: 'assignTo',
         key: 'assignTo',
         render: (text, record) => {
-          return <Avatar size={50} icon="user"/>
+          return (<div>
+            {record.assigned_to ?
+              <Tooltip placement="top" title={record.assigned_to.first_name + " " + record.assigned_to.last_name}
+                       key={record.assigned_to.user_id}>
+                {record.assigned_to.avatar ?
+                  <Avatar className="gx-mr-3 gx-size-36" src={record.assigned_to.avatar.src}/> :
+                  <Avatar className="gx-mr-3 gx-size-36"
+                          style={{backgroundColor: '#f56a00'}}>{record.assigned_to.first_name[0].toUpperCase()}</Avatar>}
+              </Tooltip>
+              :
+              <Tooltip placement="top" title="Not assigned">
+                <Avatar className="gx-size-36"/>
+              </Tooltip>}
+          </div>)
         },
       },
       {
@@ -150,14 +162,12 @@ class AllTickets extends Component {
   };
 
   onSelectTicket = record => {
-    this.props.onSelectTicket(record);
-    this.props.history.push('/customer/ticket-detail');
+    this.props.history.push(`/customer/ticket-detail?id=${record.id}`);
   };
-
 
   render() {
     const {selectedRowKeys, filterText, showAddTicket, ticketId} = this.state;
-    const {raisedTickets, formOptions, currentTicket} = this.props;
+    const {raisedTickets, formOptions} = this.props;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -169,7 +179,6 @@ class AllTickets extends Component {
     };
     return (
       <div className="gx-main-layout-content">
-        {currentTicket === null ?
           <div>
             {raisedTickets.length > 0 ?
               <div>
@@ -233,18 +242,18 @@ class AllTickets extends Component {
                                                fetchSuccess={this.props.fetchSuccess}
                                                fetchError={this.props.fetchError}
             /> : null}
-          </div> : <TicketDetails/>}
+          </div>
       </div>
     );
   }
 }
 
 const mapPropsToState = ({customerDetails}) => {
-  const {raisedTickets, totalTickets, formOptions, currentTicket} = customerDetails;
-  return {raisedTickets, totalTickets, formOptions, currentTicket};
+  const {raisedTickets, totalTickets, formOptions} = customerDetails;
+  return {raisedTickets, totalTickets, formOptions};
 };
 
 export default connect(mapPropsToState, {
   onGetRaisedTickets, onGetFormOptions, onRaiseNewTicket,
-  fetchSuccess, fetchError, fetchStart, onSelectTicket
+  fetchSuccess, fetchError, fetchStart
 })(AllTickets);
