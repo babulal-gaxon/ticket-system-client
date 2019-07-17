@@ -64,13 +64,11 @@ export const getTickedId = (id) => {
 };
 
 export const onAddTickets = (ticket, history) => {
-  console.log("onAddTickets ticket data is ", ticket);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/tickets', ticket).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
         dispatch({type: ADD_TICKETS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         history.goBack();

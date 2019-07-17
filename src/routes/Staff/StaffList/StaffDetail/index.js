@@ -146,8 +146,8 @@ class StaffDetail extends Component {
                       <span className="gx-mb-0 gx-text-capitalize gx-font-weight-bold">
                         {staff.first_name + " " + staff.last_name}</span>
                       <div className="gx-mt-2">
-                        <Tag color={staff.account_status === 1 ? "green" : "red"}>
-                          {staff.account_status === 1 ? "Active" : "Disabled"}
+                        <Tag color={staff.status === 1 ? "green" : "red"}>
+                          {staff.status === 1 ? "Active" : "Disabled"}
                         </Tag>
                       </div>
                     </div>
