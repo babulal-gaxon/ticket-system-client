@@ -4,9 +4,14 @@ import {
   ADD_PROFILE_PICTURE,
   DELETE_CUSTOMERS,
   DISABLE_CUSTOMER,
-  EDIT_CUSTOMER_DETAILS, GET_CUSTOMER_COMPANY, GET_CUSTOMER_FILTER_OPTIONS,
-  GET_CUSTOMER_ID, GET_CUSTOMER_TICKETS,
-  GET_CUSTOMERS_DATA
+  EDIT_CUSTOMER_DETAILS,
+  GET_CUSTOMER_COMPANY,
+  GET_CUSTOMER_FILTER_OPTIONS,
+  GET_CUSTOMER_ID,
+  GET_CUSTOMER_TICKETS,
+  GET_CUSTOMERS_DATA,
+  NULLIFY_CUSTOMER,
+  SELECT_CURRENT_CUSTOMER
 } from "../../constants/Customers";
 
 const initialState = {
@@ -18,7 +23,8 @@ const initialState = {
   customerTickets: null,
   customerCompanyMembers: [],
   company: [],
-  labels: []
+  labels: [],
+  currentCustomer: null
 };
 
 export default (state = initialState, action) => {
@@ -97,6 +103,18 @@ export default (state = initialState, action) => {
         ...state,
         company: action.payload.company,
         labels: action.payload.lables
+      };
+
+    case SELECT_CURRENT_CUSTOMER:
+      return {
+        ...state,
+        currentCustomer: action.payload
+      };
+
+    case NULLIFY_CUSTOMER:
+      return {
+        ...state,
+        currentCustomer: null
       };
 
     default:

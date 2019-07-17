@@ -8,13 +8,15 @@ import {
   onAddStaffNote,
   onDeleteStaffNotes,
   onEditStaffNotes,
+  onGetStaffDetail,
+  onGetStaffId,
   onGetStaffNotes,
-  onGetStaffTickets
+  onGetStaffTickets, onNullifyCurrentStaff
 } from "../../../../appRedux/actions/SupportStaff";
 import moment from "moment/moment";
-import TicketDetail from "../../../ManageTickets/AllTickets/TicketDetail";
-import {onSelectTicket} from "../../../../appRedux/actions/TicketList";
 import Permissions from "../../../../util/Permissions";
+import qs from "qs";
+import InfoView from "../../../../components/InfoView";
 
 class StaffDetail extends Component {
   constructor(props) {
@@ -27,9 +29,14 @@ class StaffDetail extends Component {
   }
 
   componentDidMount() {
-    const id = this.props.staff.id;
-    this.props.onGetStaffNotes(id);
-    this.props.onGetStaffTickets(id);
+    const queryParams = qs.parse(this.props.location.search, {ignoreQueryPrefix: true});
+    this.props.onGetStaffDetail(queryParams.id)
+    this.props.onGetStaffNotes(queryParams.id);
+    this.props.onGetStaffTickets(queryParams.id);
+  }
+
+  componentWillUnmount() {
+    this.props.onNullifyCurrentStaff();
   }
 
   onToggleAddNoteModal = () => {
@@ -100,12 +107,12 @@ class StaffDetail extends Component {
   };
 
   onEditProfile = () => {
-    this.props.onGetStaffId(this.props.staff.id);
+    this.props.onGetStaffId(this.props.currentStaff.id);
     this.props.history.push('/staff/add-new-member')
   };
 
-  onSelectTicket = record => {
-    this.props.onSelectTicket(record);
+  onGetTicketDetail = record => {
+    this.props.history.push(`/manage-tickets/ticket-detail?id=${record.id}`);
   };
 
   onDeletePopUp = (recordId) => {
@@ -122,32 +129,36 @@ class StaffDetail extends Component {
     )
   };
 
+  onBackToList = () => {
+    this.props.history.goBack();
+  };
+
   render() {
     const {selectedRowKeys, addNotesModal, noteId} = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
-    const {staff, staffNotes, staffTickets, currentTicket} = this.props;
+    const {currentStaff, staffNotes, staffTickets} = this.props;
     return (
       <div className="gx-main-layout-content">
-        {currentTicket === null ?
+        {currentStaff ?
           <div className="gx-main-content">
             <Row>
               <Col xl={12} lg={12} md={12} sm={12} xs={24}>
                 <Widget>
-                  <i className="icon icon-arrow-left" onClick={() => this.props.onBackToList()}/>
+                  <i className="icon icon-arrow-left" onClick={this.onBackToList}/>
                   <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-4 gx-mt-3">
-                    {staff.avatar ?
-                      <Avatar className="gx-mr-3 gx-size-80" src={staff.avatar.src}/> :
+                    {currentStaff.avatar ?
+                      <Avatar className="gx-mr-3 gx-size-80" src={currentStaff.avatar.src}/> :
                       <Avatar className="gx-mr-3 gx-size-80"
-                              style={{backgroundColor: '#f56a00'}}>{staff.first_name[0].toUpperCase()}</Avatar>}
+                              style={{backgroundColor: '#f56a00'}}>{currentStaff.first_name[0].toUpperCase()}</Avatar>}
                     <div className="gx-media-body">
                       <span className="gx-mb-0 gx-text-capitalize gx-font-weight-bold">
-                        {staff.first_name + " " + staff.last_name}</span>
+                        {currentStaff.first_name + " " + currentStaff.last_name}</span>
                       <div className="gx-mt-2">
-                        <Tag color={staff.status === 1 ? "green" : "red"}>
-                          {staff.status === 1 ? "Active" : "Disabled"}
+                        <Tag color={currentStaff.status === 1 ? "green" : "red"}>
+                          {currentStaff.status === 1 ? "Active" : "Disabled"}
                         </Tag>
                       </div>
                     </div>
@@ -156,28 +167,28 @@ class StaffDetail extends Component {
                     <Col span={6}>
                       Email
                     </Col>
-                    <Col>{staff.email}</Col>
+                    <Col>{currentStaff.email}</Col>
                   </Row>
                   <Divider/>
                   <Row>
                     <Col span={6}>
                       Phone
                     </Col>
-                    <Col>{staff.mobile}</Col>
+                    <Col>{currentStaff.mobile}</Col>
                   </Row>
                   <Divider/>
                   <Row>
                     <Col span={6}>
                       Hourly Rate
                     </Col>
-                    <Col>{staff.hourly_rate}</Col>
+                    <Col>{currentStaff.hourly_rate}</Col>
                   </Row>
                   <Divider/>
                   <Row>
                     <Col span={6}>
                       Departments
                     </Col>
-                    <Col>{staff.departments.map(department => {
+                    <Col>{currentStaff.departments.map(department => {
                       return department.name
                     }).join()
                     }
@@ -188,14 +199,14 @@ class StaffDetail extends Component {
                     <Col span={6}>
                       Status
                     </Col>
-                    <Col>{staff.account_status === 1 ? "Active" : "Disabled"}</Col>
+                    <Col>{currentStaff.account_status === 1 ? "Active" : "Disabled"}</Col>
                   </Row>
                   <Divider/>
                   <Row>
                     <Col span={6}>
                       Designation
                     </Col>
-                    <Col>{staff.designation}</Col>
+                    <Col>{currentStaff.designation}</Col>
                   </Row>
                   <Divider/>
                   {(Permissions.canStaffEdit()) ?
@@ -253,7 +264,7 @@ class StaffDetail extends Component {
                      onRow={(record) => ({
                        onClick: () => {
                          if (Permissions.canViewTicketDetail()) {
-                           this.onSelectTicket(record)
+                           this.onGetTicketDetail(record)
                          }
                        }
                      })}
@@ -267,8 +278,9 @@ class StaffDetail extends Component {
                 onEditStaffNotes={this.props.onEditStaffNotes}
                 noteId={noteId}
                 staffNotes={staffNotes}
-                staffId={staff.id}/> : null}
-          </div> : <TicketDetail/>}
+                staffId={currentStaff.id}/> : null}
+          </div> : null}
+          <InfoView/>
       </div>
     );
   }
@@ -276,8 +288,8 @@ class StaffDetail extends Component {
 
 const mapStateToProps = ({supportStaff, ticketList}) => {
   const {currentTicket} = ticketList;
-  const {staffNotes, staffTickets, staffList} = supportStaff;
-  return {staffNotes, staffTickets, staffList, currentTicket};
+  const {staffNotes, staffTickets, currentStaff} = supportStaff;
+  return {staffNotes, staffTickets, currentTicket, currentStaff};
 };
 
 
@@ -287,11 +299,12 @@ export default connect(mapStateToProps, {
   onEditStaffNotes,
   onDeleteStaffNotes,
   onGetStaffTickets,
-  onSelectTicket
+  onGetStaffId,
+  onGetStaffDetail,
+  onNullifyCurrentStaff
 })(StaffDetail);
 
 StaffDetail.defaultProps = {
-  staffList: [],
   totalItems: null
 };
 

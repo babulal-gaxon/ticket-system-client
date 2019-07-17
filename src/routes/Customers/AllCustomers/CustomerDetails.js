@@ -1,13 +1,18 @@
 import React, {Component} from "react"
 import {Avatar, Col, Divider, Row, Table, Tag, Tooltip} from "antd";
 import Widget from "../../../components/Widget";
-import TicketDetail from "../../ManageTickets/AllTickets/TicketDetail";
 import moment from "moment";
 import {connect} from "react-redux";
-import {getCustomerId, onGetCustomerCompany, onGetCustomerTickets} from "../../../appRedux/actions/Customers";
-import {onSelectTicket} from "../../../appRedux/actions/TicketList";
+import {
+  getCustomerId,
+  onGetCustomerCompany,
+  onGetCustomerDetail,
+  onGetCustomerTickets, onNullifyCurrentCustomer
+} from "../../../appRedux/actions/Customers";
 import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
+import qs from "qs";
+import InfoView from "../../../components/InfoView";
 
 class CustomerDetails extends Component {
   constructor(props) {
@@ -18,16 +23,18 @@ class CustomerDetails extends Component {
   }
 
   componentDidMount() {
-    const currentCustomer = this.props.currentCustomer;
-    this.props.onGetCustomerTickets(currentCustomer.id);
-    if (currentCustomer.company) {
-      this.props.onGetCustomerCompany(currentCustomer.company.id);
-    }
+    const queryParams = qs.parse(this.props.location.search, {ignoreQueryPrefix: true});
+    this.props.onGetCustomerDetail(queryParams.id);
+        this.props.onGetCustomerTickets(queryParams.id);
   }
 
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
   };
+
+  componentWillUnmount() {
+    this.props.onNullifyCurrentCustomer();
+  }
 
   onGetTableColumns = () => {
     return [
@@ -80,13 +87,17 @@ class CustomerDetails extends Component {
     ];
   };
 
-  onSelectTicket = record => {
-    this.props.onSelectTicket(record);
+  onGetTicketDetail = record => {
+    this.props.history.push(`/manage-tickets/ticket-detail?id=${record.id}`);
   };
 
   onEditProfile = () => {
     this.props.getCustomerId(this.props.currentCustomer.id);
     this.props.history.push('/customers/add-customers')
+  };
+
+  onBackToList = () => {
+    this.props.history.goBack();
   };
 
   render() {
@@ -95,17 +106,17 @@ class CustomerDetails extends Component {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
-    const {currentCustomer, customerCompanyMembers, customerTickets, currentTicket, onBackToList} = this.props;
+    const {currentCustomer, customerCompanyMembers, customerTickets} = this.props;
     return (
       <div className="gx-main-layout-content">
-        {currentTicket === null ?
+        {currentCustomer ?
           <div className="gx-main-content">
             <Row>
               <Col xl={12} lg={12} md={12} sm={12} xs={24}>
                 <Widget>
                   <div className="gx-d-flex gx-justify-content-between gx-mb-5">
                     <span className="gx-font-weight-bold">Customer Details</span>
-                    <i className="icon icon-arrow-left" onClick={() => onBackToList()}/>
+                    <i className="icon icon-arrow-left" onClick={this.onBackToList}/>
                   </div>
                   <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
                     {currentCustomer.avatar ?
@@ -226,29 +237,31 @@ class CustomerDetails extends Component {
                      onRow={(record) => ({
                        onClick: () => {
                          if (Permissions.canViewTicketDetail()) {
-                         this.onSelectTicket(record)
-                     }
+                           this.onGetTicketDetail(record)
+                         }
                        }
                      })}
               />
             </Widget>
-          </div> : <TicketDetail/>}
+          </div> : null}
+          <InfoView/>
       </div>
     );
   }
 }
 
 const mapPropsToState = ({customers, ticketList}) => {
-  const{currentTicket} =ticketList;
-  const {customerTickets, customerCompanyMembers} = customers;
-  return {customerTickets, customerCompanyMembers, currentTicket};
+  const {currentTicket} = ticketList;
+  const {customerTickets, customerCompanyMembers, currentCustomer} = customers;
+  return {customerTickets, customerCompanyMembers, currentTicket, currentCustomer};
 };
 
-export default connect(mapPropsToState,{
+export default connect(mapPropsToState, {
   getCustomerId,
   onGetCustomerTickets,
   onGetCustomerCompany,
-  onSelectTicket
+  onGetCustomerDetail,
+  onNullifyCurrentCustomer
 })(CustomerDetails);
 
 CustomerDetails.defaultProps = {

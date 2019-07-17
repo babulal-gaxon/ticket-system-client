@@ -1,17 +1,12 @@
 import React, {Component} from "react"
 import {connect} from "react-redux";
-import StaffDetail from "./StaffDetail/index";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {
-  onAddStaffNote,
   onBulkDeleteStaff,
-  onDeleteStaffNotes,
   onDisableSupportStaff,
-  onEditStaffNotes,
   onGetStaff,
-  onGetStaffId,
-  onGetStaffNotes
+  onGetStaffId
 } from "../../../appRedux/actions/SupportStaff";
 import {Avatar, Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
 import InfoView from "../../../components/InfoView";
@@ -33,7 +28,6 @@ class StaffList extends Component {
       itemNumbers: 10,
       currentPage: 1,
       showAddStaff: false,
-      currentMember: null,
       selectedStaff: []
     };
   };
@@ -253,7 +247,7 @@ class StaffList extends Component {
   };
 
   onSelectStaff = (currentMember) => {
-    this.setState({currentMember: currentMember})
+    this.props.history.push(`/staff/member-detail?id=${currentMember.id}`)
   };
 
   onPageChange = page => {
@@ -297,69 +291,61 @@ class StaffList extends Component {
 
     return (
       <div className="gx-main-content">
-        {this.state.currentMember === null ?
-          <Widget styleName="gx-card-filter">
-            <h4 className="gx-font-weight-bold">Staffs</h4>
-            <Breadcrumb className="gx-mb-3">
-              <Breadcrumb.Item>
-                <Link to="/staff/all-members" className="gx-text-primary">Staffs</Link>
-              </Breadcrumb.Item>
-            </Breadcrumb>
-            <div className="gx-d-flex gx-justify-content-between">
-              <div className="gx-d-flex">
-                {Permissions.canStaffAdd() ?
-                  <Button type="primary" className="gx-btn-lg"
-                          onClick={this.onAddButtonClick}>
-                    Add New Staff</Button> : null}
-                <span>{this.onSelectOption()}</span>
-              </div>
-              <div className="gx-d-flex">
-                <Search
-                  placeholder=" Search Staff Here"
-                  value={this.state.filterText}
-                  onChange={this.onFilterTextChange}
-                  style={{width: 350}}
-                />
-                <div className="gx-ml-3">
-                  {this.onShowItemOptions()}
-                </div>
-                <ButtonGroup className="gx-ml-3">
-                  <Button type="default" onClick={this.onCurrentDecrement}>
-                    <i className="icon icon-long-arrow-left"/>
-                  </Button>
-                  <Button type="default" onClick={this.onCurrentIncrement}>
-                    <i className="icon icon-long-arrow-right"/>
-                  </Button>
-                </ButtonGroup>
-              </div>
+        <Widget styleName="gx-card-filter">
+          <h4 className="gx-font-weight-bold">Staffs</h4>
+          <Breadcrumb className="gx-mb-3">
+            <Breadcrumb.Item>
+              <Link to="/staff/all-members" className="gx-text-primary">Staffs</Link>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="gx-d-flex gx-justify-content-between">
+            <div className="gx-d-flex">
+              {Permissions.canStaffAdd() ?
+                <Button type="primary" className="gx-btn-lg"
+                        onClick={this.onAddButtonClick}>
+                  Add New Staff</Button> : null}
+              <span>{this.onSelectOption()}</span>
             </div>
-            <Table rowSelection={rowSelection} columns={this.staffRowData()}
-                   dataSource={staffList}
-                   pagination={{
-                     pageSize: this.state.itemNumbers,
-                     current: this.state.currentPage,
-                     total: this.props.totalItems,
-                     showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
-                     onChange: this.onPageChange
-                   }}
-                   className="gx-table-responsive gx-mb-4"
-                   onRow={(record) => ({
-                     onClick: () => {
-                       if (Permissions.canViewStaffDetail()) {
-                         this.onSelectStaff(record)
-                       }
+            <div className="gx-d-flex">
+              <Search
+                placeholder=" Search Staff Here"
+                value={this.state.filterText}
+                onChange={this.onFilterTextChange}
+                style={{width: 350}}
+              />
+              <div className="gx-ml-3">
+                {this.onShowItemOptions()}
+              </div>
+              <ButtonGroup className="gx-ml-3">
+                <Button type="default" onClick={this.onCurrentDecrement}>
+                  <i className="icon icon-long-arrow-left"/>
+                </Button>
+                <Button type="default" onClick={this.onCurrentIncrement}>
+                  <i className="icon icon-long-arrow-right"/>
+                </Button>
+              </ButtonGroup>
+            </div>
+          </div>
+          <Table rowSelection={rowSelection} columns={this.staffRowData()}
+                 dataSource={staffList}
+                 pagination={{
+                   pageSize: this.state.itemNumbers,
+                   current: this.state.currentPage,
+                   total: this.props.totalItems,
+                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   onChange: this.onPageChange
+                 }}
+                 className="gx-table-responsive gx-mb-4"
+                 onRow={(record) => ({
+                   onClick: () => {
+                     if (Permissions.canViewStaffDetail()) {
+                       this.onSelectStaff(record)
                      }
-                   })}/>
-            <div className="gx-d-flex gx-flex-row">
-            </div>
-          </Widget> : <StaffDetail staff={this.state.currentMember} onBackToList={this.onBackToList}
-                                   onGetStaffId={this.props.onGetStaffId} history={this.props.history}
-                                   onGetStaffNotes={this.props.onGetStaffNotes}
-                                   onAddStaffNote={this.props.onAddStaffNote}
-                                   onEditStaffNotes={this.props.onEditStaffNotes}
-                                   onDeleteStaffNotes={this.props.onDeleteStaffNotes}
-
-          />}
+                   }
+                 })}/>
+          <div className="gx-d-flex gx-flex-row">
+          </div>
+        </Widget>
         <InfoView/>
       </div>
     );
@@ -377,11 +363,7 @@ export default connect(mapStateToProps, {
   onGetStaff,
   onGetStaffId,
   onBulkDeleteStaff,
-  onDisableSupportStaff,
-  onGetStaffNotes,
-  onAddStaffNote,
-  onEditStaffNotes,
-  onDeleteStaffNotes
+  onDisableSupportStaff
 })(StaffList);
 
 StaffList.defaultProps = {

@@ -12,8 +12,11 @@ import {
   GET_STAFF_NOTES,
   GET_STAFF_TICKETS,
   GET_SUPPORT_STAFF,
+  NULLIFY_STAFF,
+  SELECT_CURRENT_STAFF,
   UPLOAD_PROFILE_IMAGE
 } from "../../constants/SupportStaff";
+import {showErrorMessage} from "./Auth";
 
 export const onGetStaff = (currentPage, itemsPerPage, filterText) => {
   return (dispatch) => {
@@ -238,5 +241,29 @@ export const onGetStaffTickets = (staffId) => {
       dispatch({type: FETCH_ERROR, payload: error.message});
       console.info("Error****:", error.message);
     });
+  }
+};
+
+export const onGetStaffDetail = (staffId) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.get(`/setup/staffs/${staffId}`).then(({data}) => {
+      console.info("onGetStaffDetail: ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SELECT_CURRENT_STAFF, payload: data.data});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
+      }
+    }).catch(function (error) {
+      dispatch(showErrorMessage(error));
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onNullifyCurrentStaff = () => {
+  return {
+    type: NULLIFY_STAFF
   }
 };

@@ -37,7 +37,6 @@ class AddNewTicket extends Component {
 
   componentDidMount() {
     this.props.onGetFormDetails();
-    // this.props.onGetCustomersData();
     this.props.onGetFilterOptions();
   }
 
@@ -130,20 +129,12 @@ class AddNewTicket extends Component {
                   >
                     {customersList.map(customer => {
                       return <Option value={customer.id}>
-                        <Row>
-                          <Col span={2}>
                         <span>{customer.avatar ?
                           <Avatar className="gx-mr-3 gx-size-30" src={customer.avatar.src}/> :
                           <Avatar className="gx-mr-3 gx-size-30"
                                   style={{backgroundColor: '#f56a00'}}>{customer.first_name[0].toUpperCase()}</Avatar>}</span>
-                          </Col>
-                          <Col span={10}>
                             <span className="gx-mx-5">{customer.first_name + " " + customer.last_name}</span>
-                          </Col>
-                          <Col span={12}>
                             <span>{customer.email}</span>
-                          </Col>
-                        </Row>
                         </Option>
                     })}
                   </Select>)}

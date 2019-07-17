@@ -7,11 +7,15 @@ import {
   DELETE_CUSTOMERS,
   DISABLE_CUSTOMER,
   EDIT_CUSTOMER_DETAILS,
-  GET_CUSTOMER_COMPANY, GET_CUSTOMER_FILTER_OPTIONS,
+  GET_CUSTOMER_COMPANY,
+  GET_CUSTOMER_FILTER_OPTIONS,
   GET_CUSTOMER_ID,
   GET_CUSTOMER_TICKETS,
-  GET_CUSTOMERS_DATA
+  GET_CUSTOMERS_DATA,
+  NULLIFY_CUSTOMER,
+  SELECT_CURRENT_CUSTOMER
 } from "../../constants/Customers";
+import {showErrorMessage} from "./Auth";
 
 
 export const onGetCustomersData = (currentPage, itemsPerPage, filterData, companies, labels, status) => {
@@ -152,7 +156,6 @@ export const onGetCustomerFilterOptions = () => {
 };
 
 
-
 export const onAddImage = (imageFile) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -248,3 +251,27 @@ export const onResetPassword = (customerId, password) => {
     });
   }
 };
+
+export const onGetCustomerDetail = (customerId) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.get(`/setup/customers/${customerId}`).then(({data}) => {
+      console.info("onGetCustomerDetail: ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SELECT_CURRENT_CUSTOMER, payload: data.data});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
+      }
+    }).catch(function (error) {
+      dispatch(showErrorMessage(error));
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onNullifyCurrentCustomer = () => {
+  return {
+    type: NULLIFY_CUSTOMER
+  }
+}

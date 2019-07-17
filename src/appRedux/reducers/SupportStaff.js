@@ -8,7 +8,7 @@ import {
   EDIT_SUPPORT_STAFF,
   GET_STAFF_ID,
   GET_STAFF_NOTES, GET_STAFF_TICKETS,
-  GET_SUPPORT_STAFF,
+  GET_SUPPORT_STAFF, NULLIFY_STAFF, SELECT_CURRENT_STAFF,
   UPLOAD_PROFILE_IMAGE
 } from "../../constants/SupportStaff";
 
@@ -18,7 +18,8 @@ const initialState = {
   totalItems: null,
   profilePicId: "",
   staffNotes: [],
-  staffTickets: []
+  staffTickets: [],
+  currentStaff: null
 };
 
 export default (state = initialState, action) => {
@@ -105,6 +106,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         staffTickets: action.payload.data
+      };
+
+    case SELECT_CURRENT_STAFF:
+      return {
+        ...state,
+        currentStaff: action.payload
+      };
+
+    case NULLIFY_STAFF:
+      return {
+        ...state,
+        currentStaff: null
       };
 
     default:

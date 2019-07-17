@@ -9,7 +9,7 @@ import {
   onAssignStaffToTicket,
   onGetConversationList,
   onGetFilterOptions,
-  onSelectTicket,
+  onGetTicketDetail, onNullifyCurrentTicket,
   onSendMessage,
   onUpdateTicketPriority,
   onUpdateTickets,
@@ -22,6 +22,7 @@ import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
 import InfoView from "../../../components/InfoView";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
+import qs from "qs";
 
 const Option = Select.Option;
 const {TextArea} = Input;
@@ -34,25 +35,30 @@ class TicketDetail extends Component {
       selectedPriority: null,
       selectedStatus: null,
       showEditModal: false,
-      ticketTags: props.currentTicket.tags.map(tag => tag.title),
-      currentTicket: {...props.currentTicket},
+      ticketTags: [],
+      currentTicket: null,
       fileList: [],
       attachments: []
     };
   };
 
   componentDidMount() {
-    this.props.onGetConversationList(this.props.currentTicket.id);
+    const queryParams = qs.parse(this.props.location.search, {ignoreQueryPrefix: true});
+    console.log("queryParams", queryParams)
+    this.props.onGetTicketDetail(queryParams.id);
+    this.props.onGetConversationList(queryParams.id);
     this.props.onGetFilterOptions();
   }
 
   componentWillUnmount() {
-    this.props.onSelectTicket(null);
-  }
+    this.props.onNullifyCurrentTicket();
+  };
 
   componentWillReceiveProps(nextProps, nextContext) {
+    console.log("nextProps", nextProps)
     if (nextProps.currentTicket !== null && nextProps.currentTicket !== this.props.currentTicket)
-      this.setState({currentTicket: nextProps.currentTicket});
+      this.setState({currentTicket: nextProps.currentTicket,
+      ticketTags: nextProps.currentTicket.tags.map(tag => tag.title)});
   }
 
   onPriorityChange = value => {
@@ -74,10 +80,9 @@ class TicketDetail extends Component {
   };
 
   onSubmitMessage = () => {
-    if(this.state.fileList.length > 0) {
+    if (this.state.fileList.length > 0) {
       this.handleUpload()
-    }
-    else {
+    } else {
       this.onSendMessage();
     }
   };
@@ -105,7 +110,7 @@ class TicketDetail extends Component {
     })
   };
 
-  handleUpload =() => {
+  handleUpload = () => {
     let formData = new FormData();
     this.state.fileList.map(file => {
       formData = new FormData();
@@ -125,7 +130,7 @@ class TicketDetail extends Component {
       if (data.success) {
         this.props.fetchSuccess();
         this.setState({attachments: this.state.attachments.concat(data.data)}, () => {
-          if(this.state.attachments.length === this.state.fileList.length){
+          if (this.state.attachments.length === this.state.fileList.length) {
             this.onSendMessage();
             this.setState({fileList: []})
           }
@@ -137,6 +142,7 @@ class TicketDetail extends Component {
   };
 
   render() {
+
     const {fileList, message, showEditModal, ticketTags, currentTicket} = this.state;
     const props = {
       multiple: true,
@@ -158,10 +164,11 @@ class TicketDetail extends Component {
       },
       fileList,
     };
+    console.log("current ticket", this.props.currentTicket, this.state.currentTicket)
     const {filterData, conversation} = this.props;
     return (
       <div className="gx-main-layout-content">
-        <Widget styleName="gx-card-filter">
+        {currentTicket ?<Widget styleName="gx-card-filter">
           <h4 className="gx-font-weight-bold">Tickets</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
@@ -277,7 +284,7 @@ class TicketDetail extends Component {
               </div>
             </Col>
           </Row>
-        </Widget>
+        </Widget> : null}
         {showEditModal ?
           <EditTicketDetailsModal
             onToggleEditModal={this.onToggleEditModal}
@@ -286,7 +293,7 @@ class TicketDetail extends Component {
             onUpdateTickets={this.props.onUpdateTickets}
             ticketId={currentTicket.id}/>
           : null}
-          <InfoView/>
+        <InfoView/>
       </div>
     )
   }
@@ -304,11 +311,12 @@ export default connect(mapStateToProps, {
   onSendMessage,
   onAssignStaffToTicket,
   onUpdateTickets,
-  onSelectTicket,
+  onGetTicketDetail,
   onGetFilterOptions,
   fetchError,
   fetchStart,
-  fetchSuccess
+  fetchSuccess,
+  onNullifyCurrentTicket
 })(TicketDetail);
 
 

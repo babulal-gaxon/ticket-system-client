@@ -13,6 +13,7 @@ export const store = configureStore();
 const NextApp = () =>
   <Provider store={store}>
     <BrowserRouter>
+
       <Switch>
         <Route path="/" component={App}/>
       </Switch>

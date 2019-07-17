@@ -18,15 +18,8 @@ import Widget from "../../../components/Widget/index";
 import Permissions from "../../../util/Permissions";
 import moment from "moment";
 import {Link} from "react-router-dom";
-import TicketDetail from "./TicketDetail";
 import InfoView from "../../../components/InfoView";
-import {
-  getTickedId,
-  onDeleteTicket,
-  onGetFilterOptions,
-  onGetTickets,
-  onSelectTicket
-} from "../../../appRedux/actions/TicketList";
+import {onDeleteTicket, onGetFilterOptions, onGetTickets} from "../../../appRedux/actions/TicketList";
 import {onGetCustomersData} from "../../../appRedux/actions/Customers";
 import {connect} from "react-redux";
 import FilterBar from "./FilterBar";
@@ -114,7 +107,6 @@ class AllTickets extends Component {
   };
 
   onAddButtonClick = () => {
-    this.props.getTickedId(null);
     this.props.history.push('/manage-tickets/add-new-ticket')
   };
 
@@ -208,15 +200,15 @@ class AllTickets extends Component {
     const menu = (
       <Menu>
         {(Permissions.canTicketDelete()) ?
-        <Menu.Item key="4">
-          <Popconfirm
-            title="Are you sure to Archive this Ticket?"
-            onConfirm={() => this.props.onDeleteTicket({ids: ticketId})}
-            okText="Yes"
-            cancelText="No">
-            Archive
-          </Popconfirm>
-        </Menu.Item> : null}
+          <Menu.Item key="4">
+            <Popconfirm
+              title="Are you sure to Archive this Ticket?"
+              onConfirm={() => this.props.onDeleteTicket({ids: ticketId})}
+              okText="Yes"
+              cancelText="No">
+              Archive
+            </Popconfirm>
+          </Menu.Item> : null}
       </Menu>
     );
     return (
@@ -226,8 +218,8 @@ class AllTickets extends Component {
     )
   };
 
-  onSelectTicket = record => {
-    this.props.onSelectTicket(record);
+  onGetTicketDetail = record => {
+    this.props.history.push(`/manage-tickets/ticket-detail?id=${record.id}`);
     this.setState({sideBarActive: false})
   };
 
@@ -254,9 +246,9 @@ class AllTickets extends Component {
     const menu = (
       <Menu>
         {(Permissions.canTicketView()) ?
-        <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
-          Archive
-        </Menu.Item> : null}
+          <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
+            Archive
+          </Menu.Item> : null}
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
@@ -304,9 +296,9 @@ class AllTickets extends Component {
   };
 
   render() {
-    const {current, filterText, itemNumbers, totalItems, sortParam} = this.state;
+    const {current, filterText, itemNumbers, sortParam} = this.state;
     const {selectedRowKeys} = this.state;
-    const {tickets, currentTicket, filterData, customersList} = this.props;
+    const {tickets, filterData, customersList} = this.props;
     let ids;
     const rowSelection = {
       selectedRowKeys,
@@ -320,76 +312,73 @@ class AllTickets extends Component {
     return (
       <div className={`gx-main-content ${this.state.sideBarActive ? "gx-main-layout-has-sider" : ""}`}>
         <div className="gx-main-layout-content">
-          {currentTicket === null ?
-            <Widget styleName="gx-card-filter">
-              <h4 className="gx-font-weight-bold">Tickets</h4>
-              <Breadcrumb className="gx-mb-4">
-                <Breadcrumb.Item>
-                  <Link to="/manage-tickets/all-tickets">Manage Tickets</Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                  <Link to="/manage-tickets/all-tickets" className="gx-text-primary" >Tickets</Link>
-                </Breadcrumb.Item>
-              </Breadcrumb>
-              <div className="gx-d-flex gx-justify-content-between">
-                <div className="gx-d-flex">
-                  {Permissions.canTicketAdd() ?
-                    <Button type="primary" onClick={this.onAddButtonClick}>
-                      Add New
-                    </Button>
-                    : null}
-                  <span>{this.onSelectOption()}</span>
+          <Widget styleName="gx-card-filter">
+            <h4 className="gx-font-weight-bold">Tickets</h4>
+            <Breadcrumb className="gx-mb-4">
+              <Breadcrumb.Item>
+                <Link to="/manage-tickets/all-tickets">Manage Tickets</Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Item>
+                <Link to="/manage-tickets/all-tickets" className="gx-text-primary">Tickets</Link>
+              </Breadcrumb.Item>
+            </Breadcrumb>
+            <div className="gx-d-flex gx-justify-content-between">
+              <div className="gx-d-flex">
+                {Permissions.canTicketAdd() ?
+                  <Button type="primary" onClick={this.onAddButtonClick}>
+                    Add New
+                  </Button>
+                  : null}
+                <span>{this.onSelectOption()}</span>
+              </div>
+              <div className="gx-d-flex">
+                <div className="gx-mr-3">
+                  {this.onSortDropdown()}
                 </div>
-                <div className="gx-d-flex">
-                  <div className="gx-mr-3">
-                    {this.onSortDropdown()}
-                  </div>
-                  <Search
-                    placeholder="Search tickets here"
-                    style={{width: 350}}
-                    value={filterText}
-                    onChange={this.onFilterTextChange}/>
-                  <div className="gx-ml-3">
-                    {this.onGetTicketShowOptions()}
-                  </div>
-                  <div className="gx-mx-3">
-                    <Button.Group>
-                      <Button type="default" onClick={this.onCurrentDecrement}>
-                        <i className="icon icon-long-arrow-left"/>
-                      </Button>
-                      <Button type="default" onClick={this.onCurrentIncrement}>
-                        <i className="icon icon-long-arrow-right"/>
-                      </Button>
-                    </Button.Group>
-                  </div>
-                  {(Permissions.canTicketView()) ?
+                <Search
+                  placeholder="Search tickets here"
+                  style={{width: 350}}
+                  value={filterText}
+                  onChange={this.onFilterTextChange}/>
+                <div className="gx-ml-3">
+                  {this.onGetTicketShowOptions()}
+                </div>
+                <div className="gx-mx-3">
+                  <Button.Group>
+                    <Button type="default" onClick={this.onCurrentDecrement}>
+                      <i className="icon icon-long-arrow-left"/>
+                    </Button>
+                    <Button type="default" onClick={this.onCurrentIncrement}>
+                      <i className="icon icon-long-arrow-right"/>
+                    </Button>
+                  </Button.Group>
+                </div>
+                {(Permissions.canTicketView()) ?
                   <Button type="default" style={{marginRight: -25}} className="gx-filter-btn gx-filter-btn-rtl-round"
                           onClick={this.onSideBarActive}>
                     <i className="icon icon-filter"/>
                   </Button> : null}
-                </div>
               </div>
-                <Table rowKey="id" rowSelection={rowSelection} columns={this.onTicketRowData()}
-                       dataSource={tickets}
-                       pagination={{
-                         pageSize: itemNumbers,
-                         current: current,
-                         total: totalItems,
-                         showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
-                         onChange: this.onPageChange
-                       }}
-                       className="gx-table-responsive"
-                       onRow={(record) => ({
-                         onClick: () => {
-                           if (Permissions.canViewTicketDetail()) {
-                             this.onSelectTicket(record)
-                           }
-                         }
-                       })}
-                />
-            </Widget> :
-            <TicketDetail/>
-          }
+            </div>
+            <Table rowKey="id" rowSelection={rowSelection} columns={this.onTicketRowData()}
+                   dataSource={tickets}
+                   pagination={{
+                     pageSize: itemNumbers,
+                     current: current,
+                     total: this.props.totalItems,
+                     showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                     onChange: this.onPageChange
+                   }}
+                   className="gx-table-responsive"
+                   onRow={(record) => ({
+                     onClick: () => {
+                       if (Permissions.canViewTicketDetail()) {
+                         this.onGetTicketDetail(record)
+                       }
+                     }
+                   })}
+            />
+          </Widget>
           <InfoView/>
         </div>
         {this.state.sideBarActive ?
@@ -412,17 +401,15 @@ class AllTickets extends Component {
 }
 
 const mapStateToProps = ({ticketList, customers}) => {
-  const {tickets, totalItems, currentTicket, filterData} = ticketList;
+  const {tickets, totalItems, filterData} = ticketList;
   const {customersList} = customers;
-  return {tickets, customersList, totalItems, currentTicket, filterData};
+  return {tickets, customersList, totalItems, filterData};
 };
 
 export default connect(mapStateToProps, {
   onGetTickets,
   onGetCustomersData,
   onDeleteTicket,
-  getTickedId,
-  onSelectTicket,
   onGetFilterOptions
 })(AllTickets)
 ;
@@ -430,7 +417,6 @@ export default connect(mapStateToProps, {
 AllTickets.defaultProps = {
   tickets: [],
   totalItems: null,
-  currentTicket: null,
   filterData: {
     status: [],
     priority: [],
@@ -442,7 +428,6 @@ AllTickets.defaultProps = {
 AllTickets.propTypes = {
   tickets: PropTypes.array,
   totalItems: PropTypes.number,
-  currentTicket: PropTypes.object,
   filterData: PropTypes.object,
   customersList: PropTypes.array
 };

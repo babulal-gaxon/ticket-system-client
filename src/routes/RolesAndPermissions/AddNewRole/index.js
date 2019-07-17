@@ -123,7 +123,7 @@ class AddNewRole extends Component {
     this.setState({statusPermissions: checkedList})
   };
 
-  onSelectTicketsPermissions = checkedList => {
+  onGetTicketDetailsPermissions = checkedList => {
     this.setState({ticketsPermissions: checkedList})
   };
 
@@ -539,7 +539,7 @@ class AddNewRole extends Component {
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
-                                      onChange={this.onSelectTicketsPermissions}
+                                      onChange={this.onGetTicketDetailsPermissions}
                                       value={ticketsPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
                           {userPermissions.tickets.map(ticket => {

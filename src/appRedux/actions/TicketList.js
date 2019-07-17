@@ -7,8 +7,8 @@ import {
   GET_CONVERSATION_LIST,
   GET_FILTER_OPTIONS,
   GET_FORM_DETAILS,
-  GET_TICKET_ID,
   GET_TICKETS,
+  NULLIFY_TICKET,
   SELECT_CURRENT_TICKET,
   SEND_MESSAGE,
   UPDATE_TICKET,
@@ -56,13 +56,6 @@ export const onGetTickets = (currentPage, itemsPerPage, filterText, sortingParam
   }
 };
 
-export const getTickedId = (id) => {
-  return {
-    type: GET_TICKET_ID,
-    payload: id
-  }
-};
-
 export const onAddTickets = (ticket, history) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -103,12 +96,25 @@ export const onUpdateTickets = (ticketId, ticket) => {
   }
 };
 
-export const onSelectTicket = (ticket) => {
-  return {
-    type: SELECT_CURRENT_TICKET,
-    payload: ticket
+export const onGetTicketDetail = (ticketId) => {
+  console.log("ticket id in action", ticketId);
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.get(`/tickets/${ticketId}`).then(({data}) => {
+      console.info("onGetTickets: ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SELECT_CURRENT_TICKET, payload: data.data});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
+      }
+    }).catch(function (error) {
+      dispatch(showErrorMessage(error));
+      console.info("Error****:", error.message);
+    });
   }
 };
+
 
 export const onDeleteTicket = (ticketIds, backToList) => {
   return (dispatch) => {
@@ -284,6 +290,12 @@ export const onAddAttachments = (imageFile) => {
       dispatch({type: FETCH_ERROR, payload: error.message});
       console.info("Error****:", error.message);
     });
+  }
+};
+
+export const onNullifyCurrentTicket = () => {
+  return {
+    type: NULLIFY_TICKET
   }
 };
 

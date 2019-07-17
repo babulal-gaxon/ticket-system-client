@@ -3,10 +3,11 @@ import {
   ADD_TICKETS,
   ASSIGN_STAFF_TO_TICKET,
   DELETE_TICKET,
-  GET_CONVERSATION_LIST, GET_FILTER_OPTIONS,
+  GET_CONVERSATION_LIST,
+  GET_FILTER_OPTIONS,
   GET_FORM_DETAILS,
-  GET_TICKET_ID,
-  GET_TICKETS, SELECT_CURRENT_TICKET,
+  GET_TICKETS, NULLIFY_TICKET,
+  SELECT_CURRENT_TICKET,
   SEND_MESSAGE,
   UPDATE_TICKET,
   UPDATE_TICKET_PRIORITY,
@@ -50,12 +51,6 @@ export default (state = initialState, action) => {
         totalItems: state.totalItems + 1
       };
 
-    case GET_TICKET_ID:
-      return {
-        ...state,
-        ticketId: action.payload
-      };
-
     case UPDATE_TICKET:
       const updatedTickets = state.tickets.map(ticket => ticket.id === action.payload.id ? action.payload : ticket);
       return {
@@ -68,6 +63,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentTicket: action.payload
+      };
+
+    case NULLIFY_TICKET:
+      return {
+        ...state,
+        currentTicket: null
       };
 
     case UPDATE_TICKET_STATUS:

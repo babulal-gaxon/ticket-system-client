@@ -24,7 +24,6 @@ import {
   onResetPassword
 } from "../../../appRedux/actions/Customers";
 import moment from "moment";
-import CustomerDetails from "./CustomerDetails";
 import {connect} from "react-redux";
 import InfoView from "../../../components/InfoView";
 import ResetCustomerPassword from "./ResetCustomerPassword";
@@ -48,7 +47,6 @@ class AllCustomers extends Component {
       selectedCustomers: [],
       sideBarActive: false,
       selectedCompanies: [],
-      currentCustomer: null,
       selectedLabels: [],
       companyFilterText: "",
       showMoreCompany: false,
@@ -260,7 +258,7 @@ class AllCustomers extends Component {
   };
 
   onSelectCustomer = record => {
-    this.setState({currentCustomer: record, sideBarActive: false})
+    this.props.history.push(`/customers/customer-detail?id=${record.id}`)
   };
 
   onShowBulkDeleteConfirm = () => {
@@ -309,9 +307,6 @@ class AllCustomers extends Component {
     });
   };
 
-  onBackToList = () => {
-    this.setState({currentCustomer: null})
-  };
 
   onGetSidebar = () => {
     const {companyFilterText, showMoreCompany, selectedCompanies, status, selectedLabels} = this.state;
@@ -419,7 +414,7 @@ class AllCustomers extends Component {
   render() {
     const {customersList} = this.props;
     const {
-      selectedRowKeys, resetPasswordModal, currentCustomer, sideBarActive, filterText,
+      selectedRowKeys, resetPasswordModal, sideBarActive, filterText,
       resetPasswordCustomerId, itemNumbers, current, totalItems
     } = this.state;
     let ids;
@@ -434,65 +429,60 @@ class AllCustomers extends Component {
     };
     return (
       <div className={`gx-main-content ${sideBarActive ? "gx-main-layout-has-sider" : ""}`}>
-        {currentCustomer === null ?
-          <Widget styleName="gx-card-filter">
-            <h4 className="gx-font-weight-bold">Customers</h4>
-            <Breadcrumb className="gx-mb-4">
-              <Breadcrumb.Item>
-                <Link to="/customers" className="gx-text-primary">Customers</Link>
-              </Breadcrumb.Item>
-            </Breadcrumb>
-            <div className="gx-d-flex gx-justify-content-between">
-              <div className="gx-d-flex">
-                {Permissions.canCustomerAdd() ?
-                  <Button type="primary" onClick={this.onAddButtonClick} style={{width: 200}}>
-                    Add New Customers
-                  </Button> : null}
-                <span>{this.onSelectOption()}</span>
-              </div>
-              <div className="gx-d-flex">
-                <Search
-                  placeholder="Search Customers Here"
-                  value={filterText}
-                  onChange={this.onFilterTextChange}
-                  style={{width: 350}}/>
-                {this.onGetCustomersShowOptions()}
-                <Button.Group>
-                  <Button type="default" onClick={this.onCurrentDecrement}>
-                    <i className="icon icon-long-arrow-left"/>
-                  </Button>
-                  <Button type="default" onClick={this.onCurrentIncrement}>
-                    <i className="icon icon-long-arrow-right"/>
-                  </Button>
-                </Button.Group>
-                {(Permissions.canCustomerView()) ?
-                  <Button type="default" className="gx-filter-btn gx-filter-btn-rtl-round" onClick={this.onSideBarShow}>
-                    <i className="icon icon-filter"/>
-                  </Button> : null}
-              </div>
+        <Widget styleName="gx-card-filter">
+          <h4 className="gx-font-weight-bold">Customers</h4>
+          <Breadcrumb className="gx-mb-4">
+            <Breadcrumb.Item>
+              <Link to="/customers" className="gx-text-primary">Customers</Link>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="gx-d-flex gx-justify-content-between">
+            <div className="gx-d-flex">
+              {Permissions.canCustomerAdd() ?
+                <Button type="primary" onClick={this.onAddButtonClick} style={{width: 200}}>
+                  Add New Customers
+                </Button> : null}
+              <span>{this.onSelectOption()}</span>
             </div>
-            <Table rowKey="customersData" rowSelection={rowSelection} columns={this.onCustomersRowData()}
-                   dataSource={customersList}
-                   pagination={{
-                     pageSize: itemNumbers,
-                     current: current,
-                     total: totalItems,
-                     showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
-                     onChange: this.onPageChange
-                   }}
-                   className="gx-table-responsive"
-                   onRow={(record) => ({
-                     onClick: () => {
-                       if (Permissions.canViewCustomerDetail()) {
-                         this.onSelectCustomer(record)
-                       }
+            <div className="gx-d-flex">
+              <Search
+                placeholder="Search Customers Here"
+                value={filterText}
+                onChange={this.onFilterTextChange}
+                style={{width: 350}}/>
+              {this.onGetCustomersShowOptions()}
+              <Button.Group>
+                <Button type="default" onClick={this.onCurrentDecrement}>
+                  <i className="icon icon-long-arrow-left"/>
+                </Button>
+                <Button type="default" onClick={this.onCurrentIncrement}>
+                  <i className="icon icon-long-arrow-right"/>
+                </Button>
+              </Button.Group>
+              {(Permissions.canCustomerView()) ?
+                <Button type="default" className="gx-filter-btn gx-filter-btn-rtl-round" onClick={this.onSideBarShow}>
+                  <i className="icon icon-filter"/>
+                </Button> : null}
+            </div>
+          </div>
+          <Table rowKey="customersData" rowSelection={rowSelection} columns={this.onCustomersRowData()}
+                 dataSource={customersList}
+                 pagination={{
+                   pageSize: itemNumbers,
+                   current: current,
+                   total: totalItems,
+                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   onChange: this.onPageChange
+                 }}
+                 className="gx-table-responsive"
+                 onRow={(record) => ({
+                   onClick: () => {
+                     if (Permissions.canViewCustomerDetail()) {
+                       this.onSelectCustomer(record)
                      }
-                   })}/>
-          </Widget> : <CustomerDetails
-            currentCustomer={currentCustomer}
-            history={this.props.history}
-            onBackToList={this.onBackToList}
-          />}
+                   }
+                 })}/>
+        </Widget>
         {sideBarActive ? this.onGetSidebar() : null}
         {resetPasswordModal ?
           <ResetCustomerPassword
