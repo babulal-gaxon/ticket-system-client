@@ -4,6 +4,8 @@ import {connect} from "react-redux";
 import {Avatar, Button, Input, Select, Table, Tag, Tooltip} from "antd";
 import RaiseTicketModal from "./RaiseTicketModal";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
+import moment from "moment";
+import InfoView from "../../../components/InfoView";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -135,7 +137,7 @@ class AllTickets extends Component {
         dataIndex: 'lastActivity',
         key: 'lastActivity',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">Last Activity</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2">{moment(record.updated_at.date).fromNow()}</span>
         },
       },
     ];
@@ -243,6 +245,7 @@ class AllTickets extends Component {
                                                fetchError={this.props.fetchError}
             /> : null}
           </div>
+        <InfoView/>
       </div>
     );
   }

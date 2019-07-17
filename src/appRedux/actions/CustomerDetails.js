@@ -1,4 +1,4 @@
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import axios from 'util/Api'
 import {
   ADD_TICKET_MESSAGE,
@@ -60,6 +60,7 @@ export const onRaiseNewTicket = (ticket) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: RAISE_NEW_TICKET, payload: data.data});
+        dispatch({type: SHOW_MESSAGE, payload: "The Ticket has been raised successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }
@@ -103,6 +104,7 @@ export const onSendNewMessage = (ticketId, message) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: ADD_TICKET_MESSAGE, payload: data.data});
+        dispatch({type: SHOW_MESSAGE, payload: "The Message has been sent successfully"})
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }

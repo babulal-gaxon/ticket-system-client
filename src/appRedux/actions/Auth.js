@@ -25,7 +25,7 @@ export const onUserSignUp = ({email, password, first_name, last_name}) => {
   console.info(email, password);
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post('/signup', {
+    axios.post('/customer/panel/register', {
         email: email,
         password: password,
       first_name: first_name, last_name: last_name

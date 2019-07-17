@@ -18,7 +18,7 @@ const ConversationCell = ({conversation}) => {
           <div className="gx-name gx-mr-2">{conversation.author.display_name}</div>
           <div>
           <span className="gx-time gx-text-muted"> Created at: {moment(conversation.created_at.date).format('LL')}</span>
-            <span className="gx-mr-2 gx-text-grey"> Last Updated: 2 Days ago</span>
+            <span className="gx-mr-2 gx-text-grey"> Last Updated: {moment(conversation.updated_at.date).fromNow()}</span>
           </div>
         </div>
         <div className="gx-message gx-my-2">{conversation.message}</div>

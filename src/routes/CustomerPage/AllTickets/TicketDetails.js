@@ -107,7 +107,7 @@ class TicketDetails extends Component {
   };
 
   render() {
-    const {fileList, currentTicket, showEditModal} = this.state;
+    const {fileList, currentTicket, showEditModal, message} = this.state;
     const {ticketMessages} = this.props;
     const props = {
       multiple: true,
@@ -152,28 +152,28 @@ class TicketDetails extends Component {
             </div>
             <div className="gx-d-flex gx-justify-content-between gx-my-5">
               <div className="gx-media-body gx-mt-2">
-              {currentTicket.assigned_to ?
-                <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
-                  {currentTicket.assigned_to.avatar ?
-                    <Avatar className="gx-mr-3 gx-size-50" src={currentTicket.assigned_by.avatar.src}/> :
-                    <Avatar className="gx-mr-3 gx-size-50"
-                            style={{backgroundColor: '#f56a00'}}>{currentTicket.assigned_by.first_name[0].toUpperCase()}</Avatar>}
-                  <div className="gx-media-body gx-mt-2">
+                {currentTicket.assigned_to ?
+                  <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
+                    {currentTicket.assigned_to.avatar ?
+                      <Avatar className="gx-mr-3 gx-size-50" src={currentTicket.assigned_by.avatar.src}/> :
+                      <Avatar className="gx-mr-3 gx-size-50"
+                              style={{backgroundColor: '#f56a00'}}>{currentTicket.assigned_by.first_name[0].toUpperCase()}</Avatar>}
+                    <div className="gx-media-body gx-mt-2">
                   <span
                     className="gx-mb-0 gx-text-capitalize">Assigned To</span>
-                    <div className="gx-mt-2">
-                      {currentTicket.assigned_to.display_name}
+                      <div className="gx-mt-2">
+                        {currentTicket.assigned_to.display_name}
+                      </div>
                     </div>
-                  </div>
-                </div> : null}
+                  </div> : null}
               </div>
-                <div className="gx-media-body gx-mt-2">
+              <div className="gx-media-body gx-mt-2">
                   <span
                     className="gx-mb-0 gx-text-capitalize">Created</span>
                 <div className="gx-mt-2">
                   <div className="gx-time gx-text-muted">{moment(currentTicket.created_at.date).format('LLL')}</div>
                 </div>
-            </div>
+              </div>
               <div className="gx-media-body gx-mt-2">
                   <span
                     className="gx-mb-0 gx-text-capitalize">Last Update</span>
@@ -186,7 +186,8 @@ class TicketDetails extends Component {
                     className="gx-mb-0 gx-text-capitalize">Current Status</span>
                 <div className="gx-mt-2">
                   <div className="gx-time gx-text-muted">
-                    <Select value={currentTicket.status_id} onChange={(value) => this.setState({selectedStatus: value})}>
+                    <Select value={currentTicket.status_id}
+                            onChange={(value) => this.setState({selectedStatus: value})}>
                     </Select>
                   </div>
                 </div>
@@ -203,25 +204,26 @@ class TicketDetails extends Component {
               <h3 className="gx-mb-0 gx-mb-sm-1">Update the Ticket</h3>
             </div>
             <div className="gx-flex-column">
-            <label className="gx-mr-2">Enter Detail</label>
-             <TextArea rows={3} className="gx-form-control-lg gx-my-3" onChange={(e) => {
+              <label className="gx-mr-2">Enter Detail</label>
+              <TextArea rows={3} className="gx-form-control-lg gx-my-3" onChange={(e) => {
                 this.setState({message: e.target.value})
               }}/>
             </div>
-              <div className="gx-flex-column">
-            <label >Upload</label>
-            <Upload {...props} >
-              <Input placeholder='Add Files' className="gx-my-3" prefix={<i className="icon gx-icon-attachment"/>}/>
-            </Upload>
-              </div>
-            <Button type="primary" className="gx-my-3" onClick={this.onSubmitMessage}>Update Ticket</Button>
+            <div className="gx-flex-column">
+              <label>Upload</label>
+              <Upload {...props} >
+                <Input placeholder='Add Files' className="gx-my-3" prefix={<i className="icon gx-icon-attachment"/>}/>
+              </Upload>
+            </div>
+            <Button type="primary" className="gx-my-3" onClick={this.onSubmitMessage} disabled={message === ""}>Update
+              Ticket</Button>
           </div> : null}
         {showEditModal ?
           <EditTicketDetailsModal
             onToggleEditModal={this.onToggleEditModal}
             currentTicket={currentTicket}
             showEditModal={showEditModal}
-            />
+          />
           : null}
 
         <InfoView/>
