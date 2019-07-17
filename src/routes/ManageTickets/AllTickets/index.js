@@ -273,10 +273,6 @@ class AllTickets extends Component {
     });
   };
 
-  onBackToList = () => {
-    this.setState({currentTicket: null})
-  };
-
   onSortDropdown = () => {
     const menu = (
       <Menu>
