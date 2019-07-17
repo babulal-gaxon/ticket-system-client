@@ -12,6 +12,9 @@ import {
 } from "../../../appRedux/actions";
 import qs from "qs";
 import axios from 'util/Api'
+import {Select} from "antd";
+
+const {Option} = Select;
 
 class TicketDetails extends Component {
   constructor(props) {
@@ -20,8 +23,9 @@ class TicketDetails extends Component {
       message: '',
       fileList: [],
       attachments: [],
-      currentTicket: {...props.currentTicket},
-      showEditModal: false
+      currentTicket: null,
+      showEditModal: false,
+      selectedPriority: null
     }
   }
 
@@ -29,11 +33,12 @@ class TicketDetails extends Component {
     const queryParams = qs.parse(this.props.location.search, {ignoreQueryPrefix: true});
     this.props.onGetTicketDetail(queryParams.id);
     this.props.onGetTicketMessages(queryParams.id);
+    this.props.onGetFormOptions();
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if (this.props.currentTicket !== null && nextProps.currentTicket !== this.props.currentTicket)
-      this.setState({currentTicket: nextProps.currentTicket})
+    if (nextProps.currentTicket !== null && nextProps.currentTicket !== this.props.currentTicket)
+      this.setState({currentTicket: nextProps.currentTicket});
   }
 
   componentWillUnmount() {
@@ -102,7 +107,7 @@ class TicketDetails extends Component {
   };
 
   render() {
-    console.log("current ticket", this.props.currentTicket)
+    console.log("current ticket", this.props.currentTicket, this.state.currentTicket)
     const {fileList, currentTicket} = this.state;
     const props = {
       multiple: true,
@@ -129,10 +134,23 @@ class TicketDetails extends Component {
       <div className="gx-main-layout-content">
         {currentTicket ?
           <div>
-        <div className="gx-d-flex gx-justify-content-end">
-          <span>{currentTicket.title}</span>
-        </div>
-          </div>: null}
+            <div className="gx-d-flex gx-justify-content-between">
+              <div>
+                <h2 className="gx-font-weight-bold">{currentTicket.title}</h2>
+                <div>Ticket Id: {currentTicket.id}</div>
+              </div>
+              <Select value={currentTicket.priority_id} onChange={(value) => {
+                this.setState({selectedPriority: value})
+              }}>
+                {this.props.formOptions.priorities.map(priority => {
+                  return <Option value={priority.id}>{priority.name}</Option>
+                })
+                }
+              </Select>
+            </div>
+            <div className="gx-d-flex gx-justify-content-between">
+            </div>
+          </div> : null}
       </div>
     )
   }
