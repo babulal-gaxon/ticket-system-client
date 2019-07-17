@@ -165,7 +165,7 @@ class TicketDetails extends Component {
                         {currentTicket.assigned_to.display_name}
                       </div>
                     </div>
-                  </div> : null}
+                  </div> : <div>Yet to be assigned</div>}
               </div>
               <div className="gx-media-body gx-mt-2">
                   <span
