@@ -1,6 +1,7 @@
 import {
+  ADD_TICKET_MESSAGE,
   GET_FORM_OPTIONS,
-  GET_RAISED_TICKETS,
+  GET_RAISED_TICKETS, GET_TICKET_MESSAGES,
   RAISE_NEW_TICKET,
   SELECT_CURRENT_TICKET
 } from "../../constants/CustomerDetails";
@@ -14,7 +15,8 @@ const initialState = {
     products: [],
     priorities: []
   },
-  currentTicket: null
+  currentTicket: null,
+  ticketMessages: []
 };
 
 export default(state = initialState, action) => {
@@ -51,6 +53,17 @@ export default(state = initialState, action) => {
         currentTicket: action.payload
       };
 
+    case GET_TICKET_MESSAGES:
+      return {
+        ...state,
+        ticketMessages: action.payload
+      };
+
+    case ADD_TICKET_MESSAGE:
+      return {
+        ...state,
+        ticketMessages: state.ticketMessages.concat(action.payload)
+      };
 
     default:
       return state;
