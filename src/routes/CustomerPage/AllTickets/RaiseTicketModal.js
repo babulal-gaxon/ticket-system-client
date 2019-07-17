@@ -88,7 +88,7 @@ class RaiseTicketModal extends Component {
   onTicketAdd = () => {
     this.props.onRaiseNewTicket({...this.state});
     this.props.onToggleAddTicket();
-    this.setState({fileList: []})
+    this.setState({fileList: []});
   };
 
   render() {
