@@ -82,6 +82,7 @@ export const onGetTicketMessages = (ticketId) => {
     axios.get(`/customer/panel/tickets/${ticketId}/messages`).then(({data}) => {
       console.info("onGetTicketMessages: ", data);
       if (data.success) {
+        console.log("messages", data.data)
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_TICKET_MESSAGES, payload: data.data});
       } else {

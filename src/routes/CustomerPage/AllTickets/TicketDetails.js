@@ -12,9 +12,12 @@ import {
 } from "../../../appRedux/actions";
 import qs from "qs";
 import axios from 'util/Api'
-import {Select} from "antd";
+import {Avatar, Button, Divider, Input, Select, Upload} from "antd";
+import moment from "moment";
+import ConversationCell from "./ConversationCell";
 
 const {Option} = Select;
+const {TextArea} = Input;
 
 class TicketDetails extends Component {
   constructor(props) {
@@ -25,7 +28,8 @@ class TicketDetails extends Component {
       attachments: [],
       currentTicket: null,
       showEditModal: false,
-      selectedPriority: null
+      selectedPriority: null,
+      selectedStatus: null
     }
   }
 
@@ -45,12 +49,6 @@ class TicketDetails extends Component {
     this.props.onNullifyTicket();
   }
 
-  onHandleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      this.onSubmitMessage();
-    }
-  };
-
   onSubmitMessage = () => {
     if (this.state.fileList.length > 0) {
       this.handleUpload()
@@ -63,7 +61,7 @@ class TicketDetails extends Component {
     const currentTicket = this.props.currentTicket;
     const attachments = this.state.attachments;
     if (this.state.message !== '') {
-      this.props.onSendMessage(currentTicket.id, {
+      this.props.onSendNewMessage(currentTicket.id, {
         message: this.state.message,
         attachments: attachments
       })
@@ -107,8 +105,9 @@ class TicketDetails extends Component {
   };
 
   render() {
-    console.log("current ticket", this.props.currentTicket, this.state.currentTicket)
+    console.log("current ticket", this.props.currentTicket, this.props.ticketMessages)
     const {fileList, currentTicket} = this.state;
+    const {ticketMessages} = this.props;
     const props = {
       multiple: true,
       onRemove: file => {
@@ -148,8 +147,71 @@ class TicketDetails extends Component {
                 }
               </Select>
             </div>
-            <div className="gx-d-flex gx-justify-content-between">
+            <div className="gx-d-flex gx-justify-content-between gx-my-5">
+              <div className="gx-media-body gx-mt-2">
+              {currentTicket.assigned_to ?
+                <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
+                  {currentTicket.assigned_to.avatar ?
+                    <Avatar className="gx-mr-3 gx-size-50" src={currentTicket.assigned_by.avatar.src}/> :
+                    <Avatar className="gx-mr-3 gx-size-50"
+                            style={{backgroundColor: '#f56a00'}}>{currentTicket.assigned_by.first_name[0].toUpperCase()}</Avatar>}
+                  <div className="gx-media-body gx-mt-2">
+                  <span
+                    className="gx-mb-0 gx-text-capitalize">Assigned To</span>
+                    <div className="gx-mt-2">
+                      {currentTicket.assigned_to.display_name}
+                    </div>
+                  </div>
+                </div> : null}
+              </div>
+                <div className="gx-media-body gx-mt-2">
+                  <span
+                    className="gx-mb-0 gx-text-capitalize">Created</span>
+                <div className="gx-mt-2">
+                  <div className="gx-time gx-text-muted">{moment(currentTicket.created_at.date).format('LLL')}</div>
+                </div>
             </div>
+              <div className="gx-media-body gx-mt-2">
+                  <span
+                    className="gx-mb-0 gx-text-capitalize">Last Update</span>
+                <div className="gx-mt-2">
+                  <div className="gx-time gx-text-muted">{moment(currentTicket.updated_at.date).format('LLL')}</div>
+                </div>
+              </div>
+              <div className="gx-media-body gx-mt-2">
+                  <span
+                    className="gx-mb-0 gx-text-capitalize">Current Status</span>
+                <div className="gx-mt-2">
+                  <div className="gx-time gx-text-muted">
+                    <Select value={currentTicket.status_id} onChange={(value) => this.setState({selectedStatus: value})}>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <Divider/>
+            <div className="gx-py-3">
+              <h3 className="gx-mb-0 gx-mb-sm-1">Messages</h3>
+            </div>
+            {ticketMessages.map((conversation, index) =>
+              <ConversationCell key={index} conversation={conversation}/>
+            )}
+            <div className="gx-py-3">
+              <h3 className="gx-mb-0 gx-mb-sm-1">Update the Ticket</h3>
+            </div>
+            <div className="gx-flex-column">
+            <label className="gx-mr-2">Enter Detail</label>
+             <TextArea rows={3} className="gx-form-control-lg gx-my-3" onChange={(e) => {
+                this.setState({message: e.target.value})
+              }}/>
+            </div>
+              <div className="gx-flex-column">
+            <label >Upload</label>
+            <Upload {...props} >
+              <Input placeholder='Add Files' className="gx-my-3" prefix={<i className="icon gx-icon-attachment"/>}/>
+            </Upload>
+              </div>
+            <Button type="primary" className="gx-my-3" onClick={this.onSubmitMessage}>Update Ticket</Button>
           </div> : null}
       </div>
     )
@@ -158,8 +220,8 @@ class TicketDetails extends Component {
 
 
 const mapPropsToState = ({customerDetails}) => {
-  const {formOptions, currentTicket} = customerDetails;
-  return {formOptions, currentTicket};
+  const {formOptions, currentTicket, ticketMessages} = customerDetails;
+  return {formOptions, currentTicket, ticketMessages};
 };
 
 export default connect(mapPropsToState, {
