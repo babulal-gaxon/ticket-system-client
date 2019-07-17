@@ -20,7 +20,7 @@ class TicketDetails extends Component {
       message: '',
       fileList: [],
       attachments: [],
-      currentTicket: null,
+      currentTicket: {...props.currentTicket},
       showEditModal: false
     }
   }
@@ -102,6 +102,7 @@ class TicketDetails extends Component {
   };
 
   render() {
+    console.log("current ticket", this.props.currentTicket)
     const {fileList, currentTicket} = this.state;
     const props = {
       multiple: true,
@@ -126,10 +127,12 @@ class TicketDetails extends Component {
 
     return (
       <div className="gx-main-layout-content">
+        {currentTicket ?
+          <div>
         <div className="gx-d-flex gx-justify-content-end">
           <span>{currentTicket.title}</span>
         </div>
-        <div>Ticket Id: {currentTicket.id}</div>
+          </div>: null}
       </div>
     )
   }
