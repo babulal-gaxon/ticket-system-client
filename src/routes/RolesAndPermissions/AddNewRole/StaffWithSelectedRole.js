@@ -35,10 +35,9 @@ class StaffWithSelectedRole extends Component {
     if (this.state.staffWithSelectedRole.length !== 0) {
       return this.state.staffWithSelectedRole.filter(staff => {
         const name = staff.first_name + " " + staff.last_name;
-        if(name.indexOf(this.state.filterText) !== -1) {
-          return staff;
+        return (name.indexOf(this.state.filterText) !== -1) ? staff : null
         }
-      })
+      )
     } else {
       return [];
     }

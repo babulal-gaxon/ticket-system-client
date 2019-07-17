@@ -78,10 +78,6 @@ class AddNewCompany extends Component {
     });
   };
 
-  onSelectFile = (info) => {
-    this.setState({uploadedLogo: info.file.originFileObj});
-  };
-
   render() {
     const {company_name, website, uploadedLogo, logoName} = this.state;
     const props = {
@@ -131,7 +127,7 @@ class AddNewCompany extends Component {
               {
                 rules: [{required: true, message: 'Please Upload Company Logo!'}],
               })(
-              <Upload onChange={this.onSelectFile}>
+              <Upload {...props}>
                 <Input placeholder="Choose file..." addonAfter="Browse" />
               </Upload>)}
             </Form.Item>
