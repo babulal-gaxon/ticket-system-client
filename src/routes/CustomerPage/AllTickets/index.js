@@ -3,7 +3,7 @@ import {onGetFormOptions, onGetRaisedTickets, onRaiseNewTicket} from "../../../a
 import {connect} from "react-redux";
 import {Avatar, Button, Input, Select, Table, Tag} from "antd";
 import RaiseTicketModal from "./RaiseTicketModal";
-import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
+import {fetchError, fetchStart, fetchSuccess, onSelectTicket} from "../../../appRedux/actions";
 import TicketDetails from "./TicketDetails";
 
 const ButtonGroup = Button.Group;
@@ -20,8 +20,7 @@ class AllTickets extends Component {
       current: 1,
       showAddTicket: false,
       selectedTickets: [],
-      ticketId: null,
-      currentTicket: null
+      ticketId: null
     };
   }
 
@@ -150,14 +149,15 @@ class AllTickets extends Component {
     })
   };
 
-  onSelectTicket = (record) => {
-    this.setState({currentTicket: record})
+  onSelectTicket = record => {
+    this.props.onSelectTicket(record);
+    this.props.history.push('/customer/ticket-detail');
   };
 
+
   render() {
-    console.log("current Ticket", this.state.currentTicket);
-    const {selectedRowKeys, filterText, showAddTicket, ticketId, currentTicket} = this.state;
-    const {raisedTickets, formOptions} = this.props;
+    const {selectedRowKeys, filterText, showAddTicket, ticketId} = this.state;
+    const {raisedTickets, formOptions, currentTicket} = this.props;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -240,11 +240,11 @@ class AllTickets extends Component {
 }
 
 const mapPropsToState = ({customerDetails}) => {
-  const {raisedTickets, totalTickets, formOptions} = customerDetails;
-  return {raisedTickets, totalTickets, formOptions};
+  const {raisedTickets, totalTickets, formOptions, currentTicket} = customerDetails;
+  return {raisedTickets, totalTickets, formOptions, currentTicket};
 };
 
 export default connect(mapPropsToState, {
   onGetRaisedTickets, onGetFormOptions, onRaiseNewTicket,
-  fetchSuccess, fetchError, fetchStart
+  fetchSuccess, fetchError, fetchStart, onSelectTicket
 })(AllTickets);

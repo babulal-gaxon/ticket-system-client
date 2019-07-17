@@ -1,6 +1,11 @@
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS} from "../../constants/ActionTypes";
 import axios from 'util/Api'
-import {GET_FORM_OPTIONS, GET_RAISED_TICKETS, RAISE_NEW_TICKET} from "../../constants/CustomerDetails";
+import {
+  GET_FORM_OPTIONS,
+  GET_RAISED_TICKETS,
+  RAISE_NEW_TICKET,
+  SELECT_CURRENT_TICKET
+} from "../../constants/CustomerDetails";
 
 export const onGetRaisedTickets = (currentPage, totalItems, filterText) => {
   return (dispatch) => {
@@ -59,5 +64,12 @@ export const onRaiseNewTicket = (ticket) => {
       dispatch({type: FETCH_ERROR, payload: error.message});
       console.info("Error****:", error.message);
     });
+  }
+};
+
+export const onSelectTicket = (ticket) => {
+  return {
+    type: SELECT_CURRENT_TICKET,
+    payload: ticket
   }
 };

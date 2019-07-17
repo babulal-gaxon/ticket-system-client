@@ -1,4 +1,9 @@
-import {GET_FORM_OPTIONS, GET_RAISED_TICKETS, RAISE_NEW_TICKET} from "../../constants/CustomerDetails";
+import {
+  GET_FORM_OPTIONS,
+  GET_RAISED_TICKETS,
+  RAISE_NEW_TICKET,
+  SELECT_CURRENT_TICKET
+} from "../../constants/CustomerDetails";
 
 const initialState = {
   raisedTickets: [],
@@ -8,7 +13,8 @@ const initialState = {
     departments: [],
     products: [],
     priorities: []
-  }
+  },
+  currentTicket: null
 };
 
 export default(state = initialState, action) => {
@@ -38,6 +44,13 @@ export default(state = initialState, action) => {
           priorities: action.payload.priorities
         }
       };
+
+    case SELECT_CURRENT_TICKET:
+      return {
+        ...state,
+        currentTicket: action.payload
+      };
+
 
     default:
       return state;
