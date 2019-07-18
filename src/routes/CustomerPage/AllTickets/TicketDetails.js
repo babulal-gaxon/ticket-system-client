@@ -9,7 +9,8 @@ import {
   onGetTicketMessages,
   onNullifyTicket,
   onSendNewMessage,
-  onUpdateTicketPriority, onUpdateTickets,
+  onUpdateTicketPriority,
+  onUpdateTickets,
   onUpdateTicketStatus
 } from "../../../appRedux/actions";
 import qs from "qs";
@@ -62,7 +63,7 @@ class TicketDetails extends Component {
   onStatusChange = value => {
     const currentTicket = this.props.currentTicket;
     this.setState({selectedStatus: value},
-      () => this.props.onUpdateTicketPriority(currentTicket.id, this.state.selectedStatus))
+      () => this.props.onUpdateTicketStatus(currentTicket.id, this.state.selectedStatus))
   };
 
   onSubmitMessage = () => {
@@ -121,6 +122,7 @@ class TicketDetails extends Component {
   };
 
   render() {
+    console.log("formOptions", this.props.formOptions)
     const {fileList, currentTicket, showEditModal, message} = this.state;
     const {ticketMessages} = this.props;
     const props = {
@@ -177,7 +179,9 @@ class TicketDetails extends Component {
                         {currentTicket.assigned_to.display_name}
                       </div>
                     </div>
-                  </div> : <div>Yet to be assigned</div>}
+                  </div> : <div>
+                    <Avatar className="gx-mr-3 gx-size-50" src=""/>
+                    Yet to be assigned</div>}
               </div>
               <div className="gx-media-body gx-mt-2">
                   <span
@@ -198,8 +202,12 @@ class TicketDetails extends Component {
                     className="gx-mb-0 gx-text-capitalize">Current Status</span>
                 <div className="gx-mt-2">
                   <div className="gx-time gx-text-muted">
-                    <Select value={currentTicket.status_id}
-                            onChange={(value) => this.setState({selectedStatus: value})}>
+                    <Select defaultValue={currentTicket.status_id}
+                            onChange={this.onStatusChange}>
+                      {this.props.formOptions.status.map(status => {
+                        return <Option value={status.id} key={status.id}>{status.name}</Option>
+                      })
+                      }
                     </Select>
                   </div>
                 </div>
@@ -217,7 +225,7 @@ class TicketDetails extends Component {
             </div>
             <div className="gx-flex-column">
               <label className="gx-mr-2">Enter Detail</label>
-              <TextArea rows={3} className="gx-form-control-lg gx-my-3" onChange={(e) => {
+              <TextArea rows={3} value={message} className="gx-form-control-lg gx-my-3" onChange={(e) => {
                 this.setState({message: e.target.value})
               }}/>
             </div>

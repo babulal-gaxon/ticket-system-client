@@ -18,7 +18,8 @@ const initialState = {
     services: [],
     departments: [],
     products: [],
-    priorities: []
+    priorities: [],
+    status: []
   },
   currentTicket: null,
   ticketMessages: []
@@ -48,7 +49,8 @@ export default (state = initialState, action) => {
           services: action.payload.services,
           departments: action.payload.departments,
           products: action.payload.products,
-          priorities: action.payload.priorities
+          priorities: action.payload.priorities,
+          status: action.payload.status
         }
       };
 
@@ -103,11 +105,11 @@ export default (state = initialState, action) => {
       };
 
     case UPDATE_TICKET:
-      console.log("uodate", action.payload)
       const updatedTickets = state.raisedTickets.map(ticket => ticket.id === action.payload.id ? action.payload : ticket);
       return {
         ...state,
-        raisedTickets: updatedTickets
+        raisedTickets: updatedTickets,
+        currentTicket: action.payload
       };
 
     default:
