@@ -9,7 +9,7 @@ import {
   onGetTicketMessages,
   onNullifyTicket,
   onSendNewMessage,
-  onUpdateTicketPriority,
+  onUpdateTicketPriority, onUpdateTickets,
   onUpdateTicketStatus
 } from "../../../appRedux/actions";
 import qs from "qs";
@@ -67,7 +67,7 @@ class TicketDetails extends Component {
 
   onSubmitMessage = () => {
     if (this.state.fileList.length > 0) {
-      this.handleUpload()
+      this.handleUpload();
     } else {
       this.onSendMessage();
     }
@@ -155,7 +155,7 @@ class TicketDetails extends Component {
               </div>
               <span className="gx-text-primary" onClick={this.onToggleEditModal}><i
                 className="icon icon-edit gx-mr-2"/>Edit</span>
-              <Select defaultValue={currentTicket.priority_id} oonChange={this.onPriorityChange} style={{width: 120}}>
+              <Select defaultValue={currentTicket.priority_id} onChange={this.onPriorityChange} style={{width: 120}}>
                 {this.props.formOptions.priorities.map(priority => {
                   return <Option value={priority.id}>{priority.name}</Option>
                 })
@@ -235,6 +235,7 @@ class TicketDetails extends Component {
             onToggleEditModal={this.onToggleEditModal}
             currentTicket={currentTicket}
             showEditModal={showEditModal}
+            onUpdateTickets={this.props.onUpdateTickets}
           />
           : null}
 
@@ -256,5 +257,6 @@ export default connect(mapPropsToState, {
   onGetTicketMessages, onSendNewMessage,
   onGetTicketDetail,
   onUpdateTicketPriority,
-  onUpdateTicketStatus
+  onUpdateTicketStatus,
+  onUpdateTickets
 })(TicketDetails);

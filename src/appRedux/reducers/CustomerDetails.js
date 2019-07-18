@@ -3,8 +3,12 @@ import {
   GET_FORM_OPTIONS,
   GET_RAISED_TICKETS,
   GET_TICKET_DETAIL,
-  GET_TICKET_MESSAGES, NULLIFY_TICKET,
-  RAISE_NEW_TICKET
+  GET_TICKET_MESSAGES,
+  NULLIFY_TICKET,
+  RAISE_NEW_TICKET,
+  UPDATE_TICKET,
+  UPDATE_TICKET_PRIORITY,
+  UPDATE_TICKET_STATUS
 } from "../../constants/CustomerDetails";
 
 const initialState = {
@@ -70,6 +74,40 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentTicket: null
+      };
+
+    case UPDATE_TICKET_STATUS:
+      const updatedStatusTickets = state.raisedTickets.map(ticket => {
+        if (ticket.id === action.payload.ticketId) {
+          ticket.status_id = action.payload.statusId;
+          return ticket;
+        }
+        return ticket;
+      });
+      return {
+        ...state,
+        raisedTickets: updatedStatusTickets
+      };
+
+    case UPDATE_TICKET_PRIORITY:
+      const updatedPriorityTickets = state.raisedTickets.map(ticket => {
+        if (ticket.id === action.payload.ticketId) {
+          ticket.priority_id = action.payload.priorityId;
+          return ticket;
+        }
+        return ticket;
+      });
+      return {
+        ...state,
+        raisedTickets: updatedPriorityTickets
+      };
+
+    case UPDATE_TICKET:
+      console.log("uodate", action.payload)
+      const updatedTickets = state.raisedTickets.map(ticket => ticket.id === action.payload.id ? action.payload : ticket);
+      return {
+        ...state,
+        raisedTickets: updatedTickets
       };
 
     default:
