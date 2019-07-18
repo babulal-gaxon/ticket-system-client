@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="72ebf97e-8970-4775-8ec5-0b0606640859" name="Default" comment="changed auth">
-      <change afterPath="$PROJECT_DIR$/src/routes/InitialSetup/FifthStep.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/InitialSetup/FourthStep.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/InitialSetup/SecondStep.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/InitialSetup/SixthStep.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/InitialSetup/StepFirst.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/InitialSetup/ThirdStep.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/InitialSetup/index.js" afterDir="false" />
+    <list default="true" id="72ebf97e-8970-4775-8ec5-0b0606640859" name="Default" comment="started Setup panel">
+      <change afterPath="$PROJECT_DIR$/src/routes/InitialSetup/SixthStep/AddNewStaff.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/InitialSetup/SixthStep/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/SetUp/Departments/AddNewDepartment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/SetUp/Departments/AddNewDepartment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/SetUp/Departments/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/SetUp/Departments/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Settings/Localization/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Settings/Localization/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Settings/TicketSettings/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Settings/TicketSettings/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/InitialSetup/FifthStep.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/InitialSetup/FifthStep.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/InitialSetup/SixthStep.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/InitialSetup/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/InitialSetup/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -31,34 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="48" column="72" selection-start-line="48" selection-start-column="72" selection-end-line="48" selection-end-column="72" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-                <element signature="e#1352#1526#0" />
-                <element signature="e#1638#1811#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SixthStep.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/StepFirst.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="52" column="75" selection-start-line="52" selection-start-column="59" selection-end-line="52" selection-end-column="75" />
+            <state relative-caret-position="325">
+              <caret line="49" column="93" selection-start-line="49" selection-start-column="77" selection-end-line="49" selection-end-column="93" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -67,10 +34,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SecondStep.js">
+        <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/FifthStep.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="41" column="46" lean-forward="true" selection-start-line="41" selection-start-column="6" selection-end-line="41" selection-end-column="46" />
+            <state relative-caret-position="-34">
+              <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SixthStep/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="427">
+              <caret line="35" column="3" lean-forward="true" selection-start-line="35" selection-start-column="3" selection-end-line="35" selection-end-column="3" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -79,10 +58,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/FourthStep.js">
+        <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SixthStep/AddNewStaff.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="648">
-              <caret line="69" column="16" lean-forward="true" selection-start-line="65" selection-start-column="9" selection-end-line="69" selection-end-column="16" />
+            <state relative-caret-position="223">
+              <caret line="30" column="68" lean-forward="true" selection-start-line="30" selection-start-column="68" selection-end-line="30" selection-end-column="68" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -93,8 +72,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/ThirdStep.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="529">
-              <caret line="60" column="83" lean-forward="true" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="83" />
+            <state relative-caret-position="1003">
+              <caret line="60" column="83" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="83" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -114,10 +93,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onSelectTicket</find>
-      <find>currentTicket</find>
-      <find>labels</find>
-      <find>labelList</find>
       <find>companiesList</find>
       <find>onGetCustomersData</find>
       <find>customerCompany</find>
@@ -144,6 +119,10 @@
       <find>fetchSuccess</find>
       <find>onGetUserInfo</find>
       <find>departmentId</find>
+      <find>FifthStep\index.js'</find>
+      <find>/src/routes/InitialSetup/FifthStep/index.js</find>
+      <find>FifthStep</find>
+      <find>FifthStep\index</find>
     </findStrings>
     <replaceStrings>
       <replace>price</replace>
@@ -167,6 +146,7 @@
     </replaceStrings>
     <dirStrings>
       <dir>E:\g-axon\project\ticket-system-client\src\routes\SetUp</dir>
+      <dir>E:\g-axon\project\ticket-system-client</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -180,10 +160,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/routes/SetUp/Products/AddNewProduct.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/Services/AddNewService.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/TicketPriorities/AddNewPriority.js" />
-        <option value="$PROJECT_DIR$/src/routes/Staff/AddNewStaff/ImageUpload.js" />
         <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/AddStaffNotes.js" />
         <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/index.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/CustomerPage.js" />
@@ -228,9 +204,13 @@
         <option value="$PROJECT_DIR$/src/routes/SetUp/Departments/AddNewDepartment.js" />
         <option value="$PROJECT_DIR$/src/routes/InitialSetup/FifthStep/index.js" />
         <option value="$PROJECT_DIR$/src/routes/InitialSetup/FifthStep/FifthStep.js" />
-        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SixthStep.js" />
-        <option value="$PROJECT_DIR$/src/routes/InitialSetup/index.js" />
         <option value="$PROJECT_DIR$/src/routes/InitialSetup/ThirdStep.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/FifthStep.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SixthStep.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SixthStep/SixthStep.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SixthStep/AddNewStaff.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SixthStep/index.js" />
       </list>
     </option>
   </component>
@@ -244,6 +224,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -255,26 +236,6 @@
               <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="appRedux" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="appRedux" type="462c0819:PsiDirectoryNode" />
-              <item name="actions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="appRedux" type="462c0819:PsiDirectoryNode" />
-              <item name="reducers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
@@ -304,11 +265,25 @@
               <item name="SetUp" type="462c0819:PsiDirectoryNode" />
               <item name="Departments" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="Staff" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="Staff" type="462c0819:PsiDirectoryNode" />
+              <item name="AddNewStaff" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -316,7 +291,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="E:/Atul/demo/project" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="D:\G-axon\ReactNative\ticket-system\node_modules\eslint" />
@@ -330,11 +305,11 @@
       <recent name="D:\gaxon-product\ticket-system-client\src\assets\vendors\gaxon" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\g-axon\project\ticket-system-client\src\routes\InitialSetup\SixthStep" />
       <recent name="E:\g-axon\project\ticket-system-client\src\routes\InitialSetup" />
       <recent name="E:\g-axon\project\ticket-system-client\src\routes\CustomerPage\AllTickets" />
       <recent name="E:\g-axon\project\ticket-system-client\src\routes\Staff\StaffList\StaffDetail" />
       <recent name="E:\g-axon\project\ticket-system-client\src\routes\SetUp" />
-      <recent name="E:\g-axon\project\ticket-system-client\src\routes\Settings" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -455,6 +430,7 @@
       <workItem from="1563424424905" duration="244000" />
       <workItem from="1563437513945" duration="155000" />
       <workItem from="1563437756024" duration="2052000" />
+      <workItem from="1563455645565" duration="1349000" />
     </task>
     <task id="LOCAL-00018" summary="Added Roles and Permission Panel">
       <created>1560403779083</created>
@@ -803,7 +779,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1284004000" />
+    <option name="totallyTimeSpent" value="1286681000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -816,9 +792,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.3927987" visible="true" weight="0.20238096" />
-      <window_info id="npm" order="1" sideWeight="0.60720134" side_tool="true" weight="0.20238096" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.39116204" visible="true" weight="0.20238096" />
+      <window_info id="npm" order="1" sideWeight="0.60883796" side_tool="true" weight="0.20238096" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="Structure" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Messages" order="0" weight="0.3289689" />
@@ -953,26 +930,22 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/routes/Settings/TicketSettings/index.js</url>
           <line>152</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/routes/InitialSetup/StepFirst.js</url>
           <line>35</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/routes/InitialSetup/ThirdStep.js</url>
           <line>62</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/StaffWithSelectedRole.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/Settings/GeneralSettings/index.js" />
     <entry file="file://$PROJECT_DIR$/src/constants/ActionTypes.js">
@@ -1009,23 +982,8 @@
     <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/index.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/EditTicketDetailsModal.js" />
-    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/CustomerDetails.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="40" column="36" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/CustomerDetails.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js" />
     <entry file="file://$PROJECT_DIR$/src/NextApp.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -1040,16 +998,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/RaiseTicketModal.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="22" column="3" lean-forward="true" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/RaiseTicketModal.js" />
     <entry file="file://$PROJECT_DIR$/src/appRedux/actions/Auth.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1105">
@@ -1208,16 +1157,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="277" column="62" lean-forward="true" selection-start-line="277" selection-start-column="36" selection-end-line="277" selection-end-column="62" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/Departments.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
@@ -1261,29 +1200,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/FifthStep/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="17" column="45" lean-forward="true" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/FifthStep/AddNewDepartment.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/Departments/AddNewDepartment.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1088">
-          <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="91" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/FifthStep/index.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/FifthStep/AddNewDepartment.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/StepFirst.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
@@ -1294,10 +1212,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SecondStep.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/ThirdStep.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="41" column="46" lean-forward="true" selection-start-line="41" selection-start-column="6" selection-end-line="41" selection-end-column="46" />
+        <state relative-caret-position="1003">
+          <caret line="60" column="83" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="83" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -1306,42 +1224,80 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/FourthStep.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="69" column="16" lean-forward="true" selection-start-line="65" selection-start-column="9" selection-end-line="69" selection-end-column="16" />
+        <state relative-caret-position="85">
+          <caret line="20" column="46" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="46" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/ThirdStep.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/Departments/AddNewDepartment.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="529">
-          <caret line="60" column="83" lean-forward="true" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="83" />
+        <state relative-caret-position="391">
+          <caret line="56" column="13" lean-forward="true" selection-start-line="40" selection-start-column="4" selection-end-line="56" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SecondStep.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="66" column="16" lean-forward="true" selection-start-line="65" selection-start-column="11" selection-end-line="66" selection-end-column="16" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="302" column="43" lean-forward="true" selection-start-line="302" selection-end-line="302" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/FifthStep.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SixthStep.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        <state relative-caret-position="-34">
+          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SixthStep/AddNewStaff.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="30" column="68" lean-forward="true" selection-start-line="30" selection-start-column="68" selection-end-line="30" selection-end-column="68" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="48" column="72" selection-start-line="48" selection-start-column="72" selection-end-line="48" selection-end-column="72" />
+        <state relative-caret-position="325">
+          <caret line="49" column="93" selection-start-line="49" selection-start-column="77" selection-end-line="49" selection-end-column="93" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
-            <element signature="e#1352#1526#0" />
-            <element signature="e#1638#1811#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SixthStep/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="427">
+          <caret line="35" column="3" lean-forward="true" selection-start-line="35" selection-start-column="3" selection-end-line="35" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
