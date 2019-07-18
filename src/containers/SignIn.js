@@ -21,7 +21,7 @@ class SignIn extends React.Component {
 
   componentDidUpdate() {
     if (this.props.token !== null) {
-      this.props.history.push('/');
+      this.props.history.push('/customer/all-tickets');
     }
   }
 

@@ -21,7 +21,6 @@ import ConversationCell from "./ConversationCell";
 import InfoView from "../../../components/InfoView";
 import EditTicketDetailsModal from "./EditTicketDetailsModal";
 import PropTypes from "prop-types";
-import RaiseTicketModal from "./RaiseTicketModal";
 
 const {Option} = Select;
 const {TextArea} = Input;
