@@ -25,6 +25,9 @@ class SignIn extends React.Component {
     }
   }
 
+  onSignUpClick = () =>{
+    this.props.history.push('/signup');
+  }
 
 
   render() {
@@ -83,6 +86,7 @@ class SignIn extends React.Component {
                   </Button>
                 </FormItem>
               </Form>
+              <Button type="primary" onClick={this.onSignUpClick}>Signup</Button>
             </div>
             <InfoView/>
           </div>
