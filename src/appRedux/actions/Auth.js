@@ -56,7 +56,7 @@ export const onUserSignIn = ({email, password}) => {
   console.log(email, password);
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post('/login', {
+    axios.post('/customer/panel/login', {
         email: email,
         password: password,
       }
@@ -94,13 +94,13 @@ export const onGetUserInfo = (history) => {
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
         dispatch({type: FETCH_USER_INFO_ERROR, payload: data.error});
-        history.push("/signin");
+        history.push("/customer/panel/login");
         localStorage.removeItem("token");
         localStorage.removeItem("user");
       }
     }).catch((error) => {
       if (error.response.status === 401) {
-        history.push("/signin");
+        history.push("/customer/panel/login");
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         dispatch({type: USER_TOKEN_SET, payload: ''});
