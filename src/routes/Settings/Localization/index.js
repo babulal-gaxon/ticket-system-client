@@ -17,15 +17,15 @@ class Localization extends Component {
         date_format: "",
         time_format: "",
         default_language: "",
-        disable_language_selection: "0"
+        allow_language_selection: "0"
       }
     } else {
-      const {date_format, time_format, default_language, disable_language_selection} = this.props.localizationDetails;
+      const {date_format, time_format, default_language, allow_language_selection} = this.props.localizationDetails;
       this.state = {
         date_format: date_format,
         time_format: time_format,
         default_language: default_language,
-        disable_language_selection: disable_language_selection
+        allow_language_selection: allow_language_selection
       }
     }
   }
@@ -35,13 +35,13 @@ class Localization extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    const {date_format, time_format, default_language, disable_language_selection} = nextProps.localizationDetails;
+    const {date_format, time_format, default_language, allow_language_selection} = nextProps.localizationDetails;
     if (JSON.stringify(nextProps.localizationDetails) !== JSON.stringify(this.props.localizationDetails)) {
       this.setState({
         date_format: date_format,
         time_format: time_format,
         default_language: default_language,
-        disable_language_selection: disable_language_selection
+        allow_language_selection: allow_language_selection
       })
     }
   };
@@ -56,7 +56,7 @@ class Localization extends Component {
     this.setState({default_language: value})
   };
   onChangePermission = event => {
-    this.setState({disable_language_selection: event.target.value})
+    this.setState({allow_language_selection: event.target.value})
   };
 
   onValidationCheck = () => {
@@ -69,7 +69,7 @@ class Localization extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {date_format, time_format, default_language, disable_language_selection} = this.state;
+    const {date_format, time_format, default_language, allow_language_selection} = this.state;
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -125,7 +125,7 @@ class Localization extends Component {
             </Form.Item>
             <Form.Item label="Language Selection for Customers" style={{width: "49%"}}>
               {getFieldDecorator('disable_language_selection', {
-                initialValue: disable_language_selection,
+                initialValue: allow_language_selection,
                 rules: [{required: true, message: 'Please Enter State Name!'}],
               })(<Radio.Group onChange={(event) => this.onChangePermission(event)}>
                 <Radio value="1">Allowed</Radio>

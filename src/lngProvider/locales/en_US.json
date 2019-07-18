@@ -344,5 +344,6 @@
   "sidebar.dashboard.about.system": "About System",
   "sidebar.dashboard.services": "Services",
   "sidebar.dashboard.products": "Products",
-  "sidebar.dashboard.customer.page": "Customer Page"
+  "sidebar.dashboard.customer.page": "Customer Page",
+  "sidebar.dashboard.initial.setup": "Initial Setup"
 }

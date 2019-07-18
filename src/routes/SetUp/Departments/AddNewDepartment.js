@@ -7,7 +7,7 @@ const {TextArea} = Input;
 class AddNewDepartment extends Component {
   constructor(props) {
     super(props);
-    if (this.props.departmentId === 0) {
+    if (this.props.departmentId === null) {
       this.state = {
         name: "",
         desc: "",
@@ -20,7 +20,7 @@ class AddNewDepartment extends Component {
   };
 
   onDepartmentAdd = () => {
-    if (this.props.departmentId === 0) {
+    if (this.props.departmentId === null) {
       this.props.onAddDepartment({...this.state});
       this.props.onToggleAddDepartment();
 
@@ -45,7 +45,7 @@ class AddNewDepartment extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddDepartment}
-          title={this.props.departmentId === 0 ? "Add New Department" : "Edit Department Detail"}
+          title={this.props.departmentId === null ? "Add New Department" : "Edit Department Detail"}
           onCancel={() => onToggleAddDepartment()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -98,7 +98,7 @@ export default AddNewDepartment;
 
 AddNewDepartment.defaultProps = {
   dept: [],
-  departmentId: '',
+  departmentId: null,
   showAddDepartment: true
 };
 

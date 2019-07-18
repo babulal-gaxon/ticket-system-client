@@ -27,7 +27,7 @@ class Departments extends Component {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      departmentId: 0,
+      departmentId: null,
       filterText: "",
       itemNumbers: 10,
       currentPage: 1,
@@ -79,7 +79,7 @@ class Departments extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({departmentId: 0, showAddDepartment: true});
+    this.setState({departmentId: null, showAddDepartment: true});
   };
 
   onEditDepartment = (id) => {

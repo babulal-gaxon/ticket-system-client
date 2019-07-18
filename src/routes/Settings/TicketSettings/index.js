@@ -7,6 +7,7 @@ import {onGetTicketStatus} from "../../../appRedux/actions/TicketStatuses";
 import {onGetTicketSettings, onSaveTicketSettings} from "../../../appRedux/actions/GeneralSettings";
 import InfoView from "../../../components/InfoView";
 import PropTypes from "prop-types";
+import {onGetFilterOptions} from "../../../appRedux/actions/TicketList";
 
 const {Option} = Select;
 
@@ -25,13 +26,14 @@ class TicketSettings extends Component {
         notify_reply: 0,
         notify_status_change: 0,
         notify_priority_change: 0,
-        notify_on_archive: 0
+        notify_on_archive: 0,
+        ticket_status_close: null
       }
     } else {
       const {
         enable_service_selection, staff_access_own_department,
         ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,
-        notify_reply, notify_status_change, notify_priority_change, notify_on_archive
+        notify_reply, notify_status_change, notify_priority_change, notify_on_archive,ticket_status_close
       } = this.props.ticketSettings;
       this.state = {
         enable_service_selection: parseInt(enable_service_selection),
@@ -44,13 +46,14 @@ class TicketSettings extends Component {
         notify_reply: parseInt(notify_reply),
         notify_status_change: parseInt(notify_status_change),
         notify_priority_change: parseInt(notify_priority_change),
-        notify_on_archive: parseInt(notify_on_archive)
+        notify_on_archive: parseInt(notify_on_archive),
+        ticket_status_close: parseInt(ticket_status_close)
       }
     }
   };
 
   componentDidMount() {
-    this.props.onGetTicketStatus();
+    this.props.onGetFilterOptions();
     this.props.onGetTicketSettings();
   };
 
@@ -60,7 +63,7 @@ class TicketSettings extends Component {
       const {
         enable_service_selection, staff_access_own_department,
         ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,
-        notify_reply, notify_status_change, notify_priority_change, notify_on_archive
+        notify_reply, notify_status_change, notify_priority_change, notify_on_archive, ticket_status_close
       } = nextProps.ticketSettings;
       if (JSON.stringify(nextProps.ticketSettings) !== JSON.stringify(this.props.ticketSettings)) {
         this.setState({
@@ -74,7 +77,8 @@ class TicketSettings extends Component {
           notify_reply: parseInt(notify_reply),
           notify_status_change: parseInt(notify_status_change),
           notify_priority_change: parseInt(notify_priority_change),
-          notify_on_archive: parseInt(notify_on_archive)
+          notify_on_archive: parseInt(notify_on_archive),
+          ticket_status_close: parseInt(ticket_status_close)
         })
       }
     }
@@ -86,10 +90,11 @@ class TicketSettings extends Component {
 
 
   render() {
+    console.log("filterData", this.props.filterData)
     const {
       enable_service_selection, staff_access_own_department,
       ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,
-      notify_reply, notify_status_change, notify_priority_change, notify_on_archive
+      notify_reply, notify_status_change, notify_priority_change, notify_on_archive, ticket_status_close
     } = this.state;
     return (
       <div className="gx-main-layout-content">
@@ -135,8 +140,20 @@ class TicketSettings extends Component {
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
                 <p>Default status when a ticket is replied</p>
-                <Select style={{width: 200}} value={default_status_reply}
+                <Select style={{width: 200}} defaultValue={default_status_reply}
                         onChange={(value) => this.setState({default_status_reply: value})}>
+                  {this.props.filterData.status.map(status => {
+                    return <Option key={status.id} value={status.id}>{status.name}</Option>
+                  })}
+                </Select>
+              </div>
+              <Divider/>
+            </Form.Item>
+            <Form.Item>
+              <div className="gx-d-flex gx-justify-content-between">
+                <p>Choose the status to consider a ticket closed</p>
+                <Select style={{width: 200}} defaultValue={ticket_status_close}
+                        onChange={(value) => this.setState({ticket_status_close: value})}>
                   {this.props.filterData.status.map(status => {
                     return <Option key={status.id} value={status.id}>{status.name}</Option>
                   })}
@@ -225,7 +242,7 @@ const mapStateToProps = ({generalSettings, ticketList}) => {
   return {ticketSettings, filterData};
 };
 
-export default connect(mapStateToProps, {onGetTicketStatus, onGetTicketSettings, onSaveTicketSettings})(TicketSettings);
+export default connect(mapStateToProps, {onGetTicketStatus, onGetTicketSettings, onSaveTicketSettings, onGetFilterOptions})(TicketSettings);
 
 TicketSettings.defaultProps = {
   ticketSettings: null,

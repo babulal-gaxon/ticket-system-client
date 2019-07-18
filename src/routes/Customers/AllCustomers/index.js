@@ -105,7 +105,7 @@ class AllCustomers extends Component {
 
   onCurrentDecrement = () => {
     const {filterText, itemNumbers, selectedCompanies, selectedLabels, status} = this.state;
-    if (this.state.current !== 1) {
+    if (this.state.current > 1) {
       this.setState({current: this.state.current - 1}, () => {
         this.onGetPaginatedData(this.state.current, itemNumbers, filterText, selectedCompanies, selectedLabels, status)
       });
@@ -470,7 +470,7 @@ class AllCustomers extends Component {
                  pagination={{
                    pageSize: itemNumbers,
                    current: current,
-                   total: totalItems,
+                   total: this.props.totalItems,
                    showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
                    onChange: this.onPageChange
                  }}
