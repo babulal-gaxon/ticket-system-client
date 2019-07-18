@@ -11,7 +11,7 @@ import {
   NULLIFY_TICKET,
   SELECT_CURRENT_TICKET,
   SEND_MESSAGE,
-  UPDATE_TICKET,
+  UPDATE_TICKET, UPDATE_TICKET_PRIORITY,
   UPDATE_TICKET_STATUS
 } from "../../constants/TicketList";
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
@@ -184,7 +184,7 @@ export const onUpdateTicketPriority = (ticketId, priorityId) => {
       console.log("on change ticket priority: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: UPDATE_TICKET_STATUS, payload: {priorityId: data.data, ticketId: ticketId}});
+        dispatch({type: UPDATE_TICKET_PRIORITY, payload: {priorityId: data.data, ticketId: ticketId}});
         dispatch({type: SHOW_MESSAGE, payload: "The Priority of Ticket has been changed successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
