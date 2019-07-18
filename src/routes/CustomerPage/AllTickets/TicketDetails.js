@@ -141,7 +141,7 @@ class TicketDetails extends Component {
               </div>
               <span className="gx-text-primary" onClick={this.onToggleEditModal}><i
                 className="icon icon-edit gx-mr-2"/>Edit</span>
-              <Select value={currentTicket.priority_id} onChange={(value) => {
+              <Select defaultValue={currentTicket.priority_id} onChange={(value) => {
                 this.setState({selectedPriority: value})
               }}>
                 {this.props.formOptions.priorities.map(priority => {
