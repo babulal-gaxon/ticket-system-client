@@ -9,10 +9,11 @@ import {
   USER_TOKEN_SET
 } from "../../constants/ActionTypes";
 
+console.log('token: ', localStorage.getItem('token'));
 const INIT_STATE = {
-  token: JSON.parse(localStorage.getItem('token')),
+  token: localStorage.getItem('token'),
   initURL: '',
-  authUser: JSON.parse(localStorage.getItem('user')),
+  authUser: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
   userPermissions: [],
   loadingUser: false,
 };
