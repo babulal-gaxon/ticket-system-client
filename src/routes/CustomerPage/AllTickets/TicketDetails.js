@@ -8,7 +8,9 @@ import {
   onGetTicketDetail,
   onGetTicketMessages,
   onNullifyTicket,
-  onSendNewMessage
+  onSendNewMessage,
+  onUpdateTicketPriority,
+  onUpdateTicketStatus
 } from "../../../appRedux/actions";
 import qs from "qs";
 import axios from 'util/Api'
@@ -50,6 +52,18 @@ class TicketDetails extends Component {
   componentWillUnmount() {
     this.props.onNullifyTicket();
   }
+
+  onPriorityChange = value => {
+    const currentTicket = this.props.currentTicket;
+    this.setState({selectedPriority: value},
+      () => this.props.onUpdateTicketPriority(currentTicket.id, this.state.selectedPriority))
+  };
+
+  onStatusChange = value => {
+    const currentTicket = this.props.currentTicket;
+    this.setState({selectedStatus: value},
+      () => this.props.onUpdateTicketPriority(currentTicket.id, this.state.selectedStatus))
+  };
 
   onSubmitMessage = () => {
     if (this.state.fileList.length > 0) {
@@ -141,9 +155,7 @@ class TicketDetails extends Component {
               </div>
               <span className="gx-text-primary" onClick={this.onToggleEditModal}><i
                 className="icon icon-edit gx-mr-2"/>Edit</span>
-              <Select defaultValue={currentTicket.priority_id} onChange={(value) => {
-                this.setState({selectedPriority: value})
-              }}>
+              <Select defaultValue={currentTicket.priority_id} oonChange={this.onPriorityChange} style={{width: 120}}>
                 {this.props.formOptions.priorities.map(priority => {
                   return <Option value={priority.id}>{priority.name}</Option>
                 })
@@ -242,5 +254,7 @@ export default connect(mapPropsToState, {
   onGetFormOptions, onNullifyTicket,
   fetchSuccess, fetchError, fetchStart,
   onGetTicketMessages, onSendNewMessage,
-  onGetTicketDetail
+  onGetTicketDetail,
+  onUpdateTicketPriority,
+  onUpdateTicketStatus
 })(TicketDetails);

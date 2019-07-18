@@ -7,7 +7,7 @@ import {
   GET_TICKET_DETAIL,
   GET_TICKET_MESSAGES,
   NULLIFY_TICKET,
-  RAISE_NEW_TICKET
+  RAISE_NEW_TICKET, UPDATE_TICKET_PRIORITY, UPDATE_TICKET_STATUS
 } from "../../constants/CustomerDetails";
 
 export const onGetRaisedTickets = (currentPage, totalItems, filterText) => {
@@ -132,3 +132,44 @@ export const onGetTicketDetail = (ticketId) => {
     });
   }
 };
+
+export const onUpdateTicketPriority = (ticketId, priorityId) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post(`/customer/panel/tickets/${ticketId}/update/priority`, {priority_id: priorityId}).then(({data}) => {
+      console.log("on change ticket priority: ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: UPDATE_TICKET_PRIORITY, payload: {priorityId: data.data, ticketId: ticketId}});
+        dispatch({type: SHOW_MESSAGE, payload: "The Priority of Ticket has been changed successfully"});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    })
+  }
+};
+
+export const onUpdateTicketStatus = (ticketId, statusId) => {
+  console.log("ticket id and status", ticketId, statusId);
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post(`/tickets/${ticketId}/update/status`, {status_id: statusId}).then(({data}) => {
+      console.log("on change ticket status: ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: UPDATE_TICKET_STATUS, payload: {statusId: data.data, ticketId: ticketId}});
+        dispatch({type: SHOW_MESSAGE, payload: "The Status of Ticket has been changed successfully"});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.error});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    })
+  }
+};
+
+

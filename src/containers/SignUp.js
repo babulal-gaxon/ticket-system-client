@@ -23,11 +23,11 @@ class SignUp extends React.Component {
   };
 
 
-  // componentDidUpdate() {
-  //   if (this.props.token !== null) {
-  //     this.props.history.push('/');
-  //   }
-  // }
+  componentDidUpdate() {
+    if (this.props.token !== null) {
+      this.props.history.push('/');
+    }
+  }
 
   render() {
     const {getFieldDecorator} = this.props.form;
