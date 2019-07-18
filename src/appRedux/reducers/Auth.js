@@ -12,7 +12,7 @@ import {
 const INIT_STATE = {
   token: JSON.parse(localStorage.getItem('token')),
   initURL: '',
-  authUser: {},
+  authUser: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
   userPermissions: [],
   loadingUser: false,
 };
