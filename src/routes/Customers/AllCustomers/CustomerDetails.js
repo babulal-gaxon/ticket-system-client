@@ -7,7 +7,8 @@ import {
   getCustomerId,
   onGetCustomerCompany,
   onGetCustomerDetail,
-  onGetCustomerTickets, onNullifyCurrentCustomer
+  onGetCustomerTickets,
+  onNullifyCurrentCustomer
 } from "../../../appRedux/actions/Customers";
 import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
@@ -25,7 +26,11 @@ class CustomerDetails extends Component {
   componentDidMount() {
     const queryParams = qs.parse(this.props.location.search, {ignoreQueryPrefix: true});
     this.props.onGetCustomerDetail(queryParams.id);
-        this.props.onGetCustomerTickets(queryParams.id);
+    this.props.onGetCustomerTickets(queryParams.id);
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+
   }
 
   onSelectChange = selectedRowKeys => {
@@ -244,7 +249,7 @@ class CustomerDetails extends Component {
               />
             </Widget>
           </div> : null}
-          <InfoView/>
+        <InfoView/>
       </div>
     );
   }
