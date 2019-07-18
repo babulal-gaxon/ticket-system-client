@@ -168,7 +168,7 @@
   "appModule.createAccount": "Create an account",
   "appModule.termAndCondition": "Term & Condition",
   "appModule.iAccept": "by signing up, I accept",
-  "appModule.rememberMeOnThisComputer": "Remember me on this Computer",
+  "appModule.staySignedIn": "Stay Signed In",
   "todo": "To-Do",
   "todo.addTask": "ADD TASK",
   "todo.all": "All",

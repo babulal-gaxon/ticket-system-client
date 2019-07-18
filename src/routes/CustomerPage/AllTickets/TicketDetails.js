@@ -20,6 +20,8 @@ import moment from "moment";
 import ConversationCell from "./ConversationCell";
 import InfoView from "../../../components/InfoView";
 import EditTicketDetailsModal from "./EditTicketDetailsModal";
+import PropTypes from "prop-types";
+import RaiseTicketModal from "./RaiseTicketModal";
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -122,7 +124,6 @@ class TicketDetails extends Component {
   };
 
   render() {
-    console.log("formOptions", this.props.formOptions)
     const {fileList, currentTicket, showEditModal, message} = this.state;
     const {ticketMessages} = this.props;
     const props = {
@@ -159,7 +160,7 @@ class TicketDetails extends Component {
                 className="icon icon-edit gx-mr-2"/>Edit</span>
               <Select defaultValue={currentTicket.priority_id} onChange={this.onPriorityChange} style={{width: 120}}>
                 {this.props.formOptions.priorities.map(priority => {
-                  return <Option value={priority.id}>{priority.name}</Option>
+                  return <Option value={priority.id} key={priority.id}>{priority.name}</Option>
                 })
                 }
               </Select>
@@ -268,3 +269,22 @@ export default connect(mapPropsToState, {
   onUpdateTicketStatus,
   onUpdateTickets
 })(TicketDetails);
+
+TicketDetails.defaultProps = {
+  formOptions: {
+    services: [],
+    departments: [],
+    products: [],
+    priorities: [],
+    status: []
+  },
+  currentTicket: null,
+  ticketMessages: []
+};
+
+TicketDetails.propTypes = {
+  formOptions: PropTypes.object,
+  currentTicket: PropTypes.object,
+  ticketMessages: PropTypes.array
+
+};

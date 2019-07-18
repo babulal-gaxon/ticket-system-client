@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 import {Button, Form, Input, Modal, Select, Upload} from "antd";
 import axios from 'util/Api'
+import PropTypes from "prop-types";
 
 const {TextArea} = Input;
 const {Option} = Select;
@@ -212,6 +213,18 @@ RaiseTicketModal = Form.create({})(RaiseTicketModal);
 export default RaiseTicketModal;
 
 
-RaiseTicketModal.defaultProps = {};
+RaiseTicketModal.defaultProps = {
+  formOptions: {
+    services: [],
+    departments: [],
+    products: [],
+    priorities: [],
+    status: []
+  },
+  showAddTicket: false
+};
 
-RaiseTicketModal.propTypes = {};
+RaiseTicketModal.propTypes = {
+  formOptions: PropTypes.object,
+  showAddTicket: PropTypes.bool
+};

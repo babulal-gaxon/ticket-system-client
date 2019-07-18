@@ -55,12 +55,10 @@ export default EditTicketDetailsModal;
 
 EditTicketDetailsModal.defaultProps = {
   currentTicket: null,
-  showEditModal: false,
-  ticketId: null
+  showEditModal: false
 };
 
 EditTicketDetailsModal.propTypes = {
   currentTicket: PropTypes.object,
-  showEditModal: PropTypes.bool,
-  ticketId: PropTypes.number,
+  showEditModal: PropTypes.bool
 };
