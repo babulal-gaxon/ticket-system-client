@@ -79,44 +79,6 @@ export const onUserSignIn = ({email, password}) => {
   }
 };
 
-export const onGetUserInfo = (history) => {
-  console.log("onGetUserInfo");
-  return (dispatch) => {
-    dispatch({type: FETCH_USER_INFO_START});
-    axios.get('/role/permissions',
-    ).then(({data}) => {
-      console.log("onGetUserInfo: ", data);
-      if (data.success) {
-        dispatch({type: FETCH_USER_INFO_SUCCESS});
-        dispatch({type: UPDATE_USER_PERMISSION_DATA, payload: data.data});
-        Permissions.setPermissions(data.data);
-        localStorage.setItem("permission", JSON.stringify(data.token));
-      } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
-        dispatch({type: FETCH_USER_INFO_ERROR, payload: data.error});
-        history.push("/customer/panel/login");
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-      }
-    }).catch((error) => {
-      if (error.response.status === 401) {
-        history.push("/customer/panel/login");
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        dispatch({type: USER_TOKEN_SET, payload: ''});
-        dispatch({type: USER_DATA, payload: null});
-        dispatch({type: FETCH_ERROR, payload: error.response.data.message});
-        dispatch({type: FETCH_USER_INFO_ERROR, payload: error.response.data.message});
-      } else {
-        console.log("error: ", JSON.stringify(error));
-        dispatch({type: FETCH_ERROR, payload: error.message});
-        dispatch({type: FETCH_USER_INFO_ERROR, payload: error.message});
-        console.log("Error****:", error.message);
-      }
-    });
-  }
-};
-
 
 export const onUserSignOut = () => {
   return (dispatch) => {

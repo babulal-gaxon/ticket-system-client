@@ -11,7 +11,6 @@ import SignUp from "../SignUp";
 import {setInitUrl} from "appRedux/actions/Auth";
 import {onLayoutTypeChange, onNavStyleChange, setThemeType} from "appRedux/actions/Setting";
 import axios from 'util/Api';
-import {onGetUserInfo} from "../../appRedux/actions/Auth";
 import CircularProgress from "../../components/CircularProgress/index";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
@@ -38,7 +37,6 @@ class App extends Component {
     console.log("this.props.token", this.props.token);
     if (this.props.token) {
       axios.defaults.headers.common['Authorization'] = "Bearer " + this.props.token;
-      this.props.onGetUserInfo(this.props.history)
     }
   }
 
@@ -46,7 +44,6 @@ class App extends Component {
     console.log("componentWillReceiveProps: ", nextProps.token);
     if (nextProps.token !== this.props.token) {
       axios.defaults.headers.common['Authorization'] = "Bearer " + nextProps.token;
-      this.props.onGetUserInfo(this.props.history)
     }
   }
 
@@ -55,11 +52,11 @@ class App extends Component {
 
     if (location.pathname === '/') {
       if (token === null) {
-        return ( <Redirect to={'/signin'}/> );
+        return (<Redirect to={'/signin'}/>);
       } else if (initURL === '' || initURL === '/' || initURL === '/signin') {
-        return ( <Redirect to={'/dashboard'}/> );
+        return (<Redirect to={'/dashboard'}/>);
       } else {
-        return ( <Redirect to={initURL}/> );
+        return (<Redirect to={initURL}/>);
       }
     }
 
@@ -97,5 +94,4 @@ export default connect(mapStateToProps, {
   setThemeType,
   onNavStyleChange,
   onLayoutTypeChange,
-  onGetUserInfo
 })(App);
