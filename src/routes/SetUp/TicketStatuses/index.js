@@ -28,15 +28,18 @@ class TicketStatuses extends Component {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      statusId: 0,
+      statusId: null,
       filterText: "",
       itemNumbers: 10,
       current: 1,
       showAddStatus: false,
       selectedStatus: []
     };
-    this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText);
   };
+
+  componentDidMount() {
+    this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText);
+  }
 
   onGetStatusData = (currentPage, itemsPerPage, filterText) => {
     if (Permissions.canStatusView()) {
@@ -80,7 +83,7 @@ class TicketStatuses extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({statusId: 0, showAddStatus: true});
+    this.setState({statusId: null, showAddStatus: true});
   };
 
   onEditStatus = (id) => {

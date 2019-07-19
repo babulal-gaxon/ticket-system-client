@@ -40,7 +40,7 @@ class Products extends Component {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      productId: 0,
+      productId: null,
       filterText: "",
       itemNumbers: 10,
       currentPage: 1,
@@ -92,7 +92,7 @@ class Products extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({productId: 0, showAddModal: true});
+    this.setState({productId: null, showAddModal: true});
   };
 
   onEditProduct = (id) => {

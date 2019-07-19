@@ -28,7 +28,7 @@ class TicketPriorities extends Component {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      priorityId: 0,
+      priorityId: null,
       filterText: "",
       itemNumbers: 10,
       current: 1,
@@ -80,7 +80,7 @@ class TicketPriorities extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({priorityId: 0, showAddPriority: true});
+    this.setState({priorityId: null, showAddPriority: true});
   };
 
   onEditPriority = (id) => {

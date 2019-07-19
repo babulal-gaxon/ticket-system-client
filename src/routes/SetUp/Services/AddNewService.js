@@ -7,7 +7,7 @@ const {TextArea} = Input;
 class AddNewService extends Component {
   constructor(props) {
     super(props);
-    if (this.props.serviceId === 0) {
+    if (this.props.serviceId === null) {
       this.state = {
         title: "",
         desc: "",
@@ -20,7 +20,7 @@ class AddNewService extends Component {
   };
 
   onServiceAdd = () => {
-    if (this.props.serviceId === 0) {
+    if (this.props.serviceId === null) {
       this.props.onAddService({...this.state});
       this.props.onToggleAddService();
 
@@ -46,7 +46,7 @@ class AddNewService extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddModal}
-          title={this.props.serviceId === 0 ? "Add New Service" : "Edit Service Details"}
+          title={this.props.serviceId === null ? "Add New Service" : "Edit Service Details"}
           onCancel={() => onToggleAddService()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -99,7 +99,7 @@ export default AddNewService;
 
 AddNewService.defaultProps = {
   servicesList: [],
-  serviceId: '',
+  serviceId: null,
   showAddModal: true
 };
 

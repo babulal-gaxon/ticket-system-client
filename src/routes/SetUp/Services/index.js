@@ -26,7 +26,7 @@ class Services extends Component {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      serviceId: 0,
+      serviceId: null,
       filterText: "",
       itemNumbers: 10,
       currentPage: 1,
@@ -78,7 +78,7 @@ class Services extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({serviceId: 0, showAddModal: true});
+    this.setState({serviceId: null, showAddModal: true});
   };
 
   onEditIconClick = (id) => {

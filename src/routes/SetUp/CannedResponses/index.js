@@ -27,7 +27,7 @@ class CannedResponses extends Component {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      responseId: 0,
+      responseId: null,
       filterText: "",
       itemNumbers: 10,
       current: 1,
@@ -82,7 +82,7 @@ class CannedResponses extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({responseId: 0, showAddCanned: true});
+    this.setState({responseId: null, showAddCanned: true});
   };
 
   onEditResponse = (id) => {

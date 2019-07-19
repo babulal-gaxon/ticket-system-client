@@ -8,7 +8,7 @@ const {TextArea} = Input;
 class AddNewProduct extends Component {
   constructor(props) {
     super(props);
-    if (this.props.productId === 0) {
+    if (this.props.productId === null) {
       this.state = {
         title: "",
         desc: "",
@@ -42,7 +42,7 @@ class AddNewProduct extends Component {
 
 
   onProductAdd = () => {
-      if (this.props.productId === 0) {
+      if (this.props.productId === null) {
         this.props.onAddProduct({...this.state});
       } else {
         this.props.onEditProduct({...this.state});
@@ -95,7 +95,7 @@ class AddNewProduct extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddModal}
-          title={this.props.productId === 0 ? "Add New Product" : "Edit Product Details"}
+          title={this.props.productId === null ? "Add New Product" : "Edit Product Details"}
           onCancel={() => onToggleAddProduct()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -156,7 +156,7 @@ export default AddNewProduct;
 
 AddNewProduct.defaultProps = {
   productsList: [],
-  productId: '',
+  productId: null,
   showAddModal: true
 };
 

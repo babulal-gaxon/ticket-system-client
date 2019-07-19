@@ -7,7 +7,7 @@ import reactCSS from 'reactcss'
 class AddNewStatus extends Component {
   constructor(props) {
     super(props);
-    if (this.props.statusId === 0) {
+    if (this.props.statusId === null) {
       this.state = {
         name: "",
         status: 1,
@@ -33,7 +33,7 @@ class AddNewStatus extends Component {
   };
 
   onStatusAdd = () => {
-    if (this.props.statusId === 0) {
+    if (this.props.statusId === null) {
       this.props.onAddTicketStatus({...this.state});
       this.props.onToggleAddStatus();
     } else {
@@ -94,7 +94,7 @@ class AddNewStatus extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddStatus}
-          title={this.props.statusId === 0 ? "Add New Ticket Status" : "Edit Ticket Status Details"}
+          title={this.props.statusId === null ? "Add New Ticket Status" : "Edit Ticket Status Details"}
           onCancel={onToggleAddStatus}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>

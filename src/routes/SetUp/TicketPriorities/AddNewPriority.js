@@ -9,7 +9,7 @@ const {TextArea} = Input;
 class AddNewPriority extends Component {
   constructor(props) {
     super(props);
-    if (this.props.priorityId === 0) {
+    if (this.props.priorityId === null) {
       this.state = {
         name: "",
         color_code: "#8D3C3C",
@@ -26,7 +26,7 @@ class AddNewPriority extends Component {
   };
 
   onPriorityAdd = () => {
-    if (this.props.priorityId === 0) {
+    if (this.props.priorityId === null) {
       this.props.onAddTicketPriority({...this.state});
       this.props.onToggleAddPriority();
     } else {
@@ -92,7 +92,7 @@ class AddNewPriority extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddPriority}
-          title={this.props.priorityId === 0 ? "Add New Priority" : "Edit Priority Details"}
+          title={this.props.priorityId === null ? "Add New Priority" : "Edit Priority Details"}
           onCancel={onToggleAddPriority}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -162,7 +162,7 @@ export default AddNewPriority;
 
 AddNewPriority.defaultProps = {
   priorities: [],
-  priorityId: 0,
+  priorityId: null,
   showAddPriority: true
 };
 

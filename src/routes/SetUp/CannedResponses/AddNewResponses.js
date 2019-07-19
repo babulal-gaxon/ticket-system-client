@@ -7,7 +7,7 @@ const {TextArea} = Input;
 class AddNewResponses extends Component {
   constructor(props) {
     super(props);
-    if (this.props.responseId === 0) {
+    if (this.props.responseId === null) {
       this.state = {
         short_title: "",
         short_code: "",
@@ -23,7 +23,7 @@ class AddNewResponses extends Component {
   };
 
   onResponseAdd = () => {
-    if (this.props.responseId === 0) {
+    if (this.props.responseId === null) {
       this.props.onAddCannedResponse({...this.state});
       this.props.onToggleAddCanned();
     } else {
@@ -48,7 +48,7 @@ class AddNewResponses extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddCanned}
-          title={this.props.responseId === 0 ? "Add New Response" : "Edit Response Details"}
+          title={this.props.responseId === null ? "Add New Response" : "Edit Response Details"}
           onCancel={() => onToggleAddCanned()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -114,7 +114,7 @@ export default AddNewResponses;
 
 AddNewResponses.defaultProps = {
   showAddCanned: true,
-  responseId: 0,
+  responseId: null,
   responses: []
 };
 
