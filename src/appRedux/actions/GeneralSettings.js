@@ -254,7 +254,7 @@ export const onGetTicketSettings = () => {
   }
 };
 
-export const onSaveTicketSettings = (details) => {
+export const onSaveTicketSettings = (details, history) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post("/setup/settings/ticket", details
@@ -264,6 +264,9 @@ export const onSaveTicketSettings = (details) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: ADD_TICKET_SETTINGS, payload: data.data});
         dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
+        if(history) {
+          history.push('/dashboard')
+        }
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }

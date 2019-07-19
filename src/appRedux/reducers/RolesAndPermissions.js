@@ -10,7 +10,6 @@ import {
 
 const initialState = {
   roles: [],
-  roleId: 0,
   totalItems: null,
   selectedRole: null
 };

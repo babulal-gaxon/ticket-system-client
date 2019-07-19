@@ -1,18 +1,70 @@
 import React, {Component} from 'react';
-import {Button, Form, Radio, Select} from "antd";
+import {Button, Form, Radio, Select} from "antd/lib/index";
+import {connect} from "react-redux";
+import {onGetLocalizationDetails, onSaveLocalizationDetails} from "../../../appRedux/actions/GeneralSettings";
 
 const {Option} = Select;
 
 class FourthStep extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      date_format: "",
-      time_format: "",
-      default_language: "",
-      allow_language_selection: "0"
+    if (this.props.localizationDetails === null) {
+      this.state = {
+        date_format: "",
+        time_format: "",
+        default_language: "",
+        allow_language_selection: "0"
+      }
+    } else {
+      const {date_format, time_format, default_language, allow_language_selection} = this.props.localizationDetails;
+      this.state = {
+        date_format: date_format,
+        time_format: time_format,
+        default_language: default_language,
+        allow_language_selection: allow_language_selection
+      }
     }
   }
+
+  componentDidMount() {
+    this.props.onGetLocalizationDetails();
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (this.props.localizationDetails === null && nextProps.localizationDetails) {
+      const {date_format, time_format, default_language, allow_language_selection} = nextProps.localizationDetails;
+      if (JSON.stringify(nextProps.localizationDetails) !== JSON.stringify(this.props.localizationDetails)) {
+        this.setState({
+          date_format: date_format,
+          time_format: time_format,
+          default_language: default_language,
+          allow_language_selection: allow_language_selection
+        })
+      }
+    }
+  };
+
+  onDateSelect = value => {
+    this.setState({date_format: value})
+  };
+  onTimeSelect = value => {
+    this.setState({time_format: value})
+  };
+  onLanguageSelect = value => {
+    this.setState({default_language: value})
+  };
+  onChangePermission = event => {
+    this.setState({allow_language_selection: event.target.value})
+  };
+
+  onValidationCheck = () => {
+    this.props.form.validateFields(err => {
+      if (!err) {
+        this.props.onSaveLocalizationDetails({...this.state});
+        this.props.onMoveToNextStep();
+      }
+    });
+  };
 
   render() {
     const {getFieldDecorator} = this.props.form;
@@ -54,7 +106,7 @@ class FourthStep extends Component {
               <Option value="it">Italian</Option>
             </Select>)}
           </Form.Item>
-          <Form.Item label="Language Selection for Customers" >
+          <Form.Item label="Language Selection for Customers">
             {getFieldDecorator('disable_language_selection', {
               initialValue: allow_language_selection,
               rules: [{required: true, message: 'Please Enter State Name!'}],
@@ -65,7 +117,7 @@ class FourthStep extends Component {
           </Form.Item>
           <div className="gx-d-flex">
             <Button type="default" onClick={() => this.props.onMoveToPrevStep()}>Previous</Button>
-            <Button type="primary" onClick={() => this.props.onMoveToNextStep()}>Next</Button>
+            <Button type="primary" onClick={this.onValidationCheck}>Next</Button>
             <Button type="link" onClick={() => this.props.onMoveToNextStep()}>Skip</Button>
           </div>
         </Form>
@@ -76,5 +128,13 @@ class FourthStep extends Component {
 
 FourthStep = Form.create({})(FourthStep);
 
+const mapStateToProps = ({generalSettings}) => {
+  const {localizationDetails} = generalSettings;
+  return {localizationDetails};
+};
 
-export default FourthStep;
+export default connect(mapStateToProps, {
+  onGetLocalizationDetails,
+  onSaveLocalizationDetails
+})(FourthStep);
+

@@ -30,9 +30,9 @@ class CustomerDetails extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-if(this.props.currentCustomer === null && nextProps.currentCustomer){
-  this.props.onGetCustomerCompany(nextProps.currentCustomer.company.id);
-}
+    if (this.props.currentCustomer === null && nextProps.currentCustomer) {
+      this.props.onGetCustomerCompany(nextProps.currentCustomer.company.id);
+    }
   }
 
   onSelectChange = selectedRowKeys => {

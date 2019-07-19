@@ -1,17 +1,9 @@
 import React, {Component} from 'react';
 import {Steps} from "antd";
-import StepFirst from "./StepFirst";
-import SecondStep from "./SecondStep";
-import ThirdStep from "./ThirdStep";
-import FourthStep from "./FourthStep";
-import FifthStep from "./FifthStep";
-import SixthStep from "./SixthStep";
-import SeventhStep from "./SeventhStep";
-import EighthStep from "./EighthStep";
-import NinthStep from "./NinthStep";
+import SetupStepFirst from "./SetupStepFirst";
+import SetupStepSecond from "./SetupStepSecond/index";
 
 const {Step} = Steps;
-
 
 class InitialSetup extends Component {
   constructor(props) {
@@ -21,12 +13,12 @@ class InitialSetup extends Component {
     };
   }
 
-  onMoveToNextStep = () => {
+  onMoveNextStep = () => {
     const current = this.state.current + 1;
     this.setState({current});
   };
 
-  onMoveToPrevStep = () => {
+  onMovePrevStep = () => {
     const current = this.state.current - 1;
     this.setState({current});
   };
@@ -35,33 +27,29 @@ class InitialSetup extends Component {
     const {current} = this.state;
     return (
       <div className="gx-main-layout-content">
-        <h1 className="gx-font-weight-semi-bold">Setup The System</h1>
-        <div className="gx-mr-5">Follow the under shown steps to quickly setup the system.</div>
-        <Steps direction="vertical" current={this.state.current} className="gx-mt-5">
-          <Step title="Database Setup"
-                description={current === 1 ? <StepFirst onMoveToNextStep={this.onMoveToNextStep}/> : null}/>
-          <Step title="Setup Super Admin Account"
-                description={current === 2 ? <SecondStep onMoveToNextStep={this.onMoveToNextStep}
-                                                         onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
-          <Step title="General Setup" description={current === 3 ? <ThirdStep onMoveToNextStep={this.onMoveToNextStep}
-                                                                              onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
-          <Step title="Localization Settings"
-                description={current === 4 ? <FourthStep onMoveToNextStep={this.onMoveToNextStep}
-                                                         onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
-          <Step title="Departments" description={current === 5 ? <FifthStep onMoveToNextStep={this.onMoveToNextStep}
-                                                                            onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
-          <Step title="Staff Management"
-                description={current === 6 ? <SixthStep onMoveToNextStep={this.onMoveToNextStep}
-                                                        onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
-          <Step title="Ticket Priority"
-                description={current === 7 ? <SeventhStep onMoveToNextStep={this.onMoveToNextStep}
-                                                          onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
-          <Step title="Ticket Status"
-                description={current === 8 ? <EighthStep onMoveToNextStep={this.onMoveToNextStep}
-                                                          onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
-          <Step title="Canned Responses"
-                description={current === 9 ? <NinthStep onMoveToNextStep={this.onMoveToNextStep}
-                                                          onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
+        <Steps direction="vertical" current={current} className="gx-mt-5">
+          <Step title={
+            <div className="gx-mr-5">
+              <div className="gx-d-flex gx-justify-content-between">
+                <div className="gx-d-flex">
+                  <h1 className="gx-font-weight-semi-bold gx-mr-2">Setup The System</h1>
+                  {current === 2 ? <span className="gx-text-green">Completed</span> : null}
+                </div>
+                {current === 2 ?
+                  <div>{<i className="icon icon-edit gx-mr-3" onClick={this.onMovePrevStep}/>}</div> : null}
+              </div>
+              <div className="gx-mr-5">Follow the under shown steps to quickly setup the system.</div>
+            </div>}
+                description={current === 1 ? <SetupStepFirst onMoveNextStep={this.onMoveNextStep}
+                                                             onMovePrevStep={this.onMovePrevStep}/> : null}/>
+          {current === 2 ?
+            <Step title={<div><h1 className="gx-font-weight-semi-bold">Ticket System Settings</h1>
+              <div className="gx-mr-5">Follow the under shown steps to quickly setup the system.</div>
+            </div>}
+                  description={<SetupStepSecond onMoveNextStep={this.onMoveNextStep}
+                                                onMoveToPrevStep={this.onMovePrevStep}
+                                                history={this.props.history}/>}/>
+            : null}
         </Steps>
       </div>
     );

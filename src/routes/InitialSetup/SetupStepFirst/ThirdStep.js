@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Divider, Form, Input, Select} from "antd";
+import {Button, Col, Divider, Form, Input, Select} from "antd/lib/index";
 
 class ThirdStep extends Component {
   constructor(props) {

@@ -90,7 +90,6 @@ class TicketSettings extends Component {
 
 
   render() {
-    console.log("filterData", this.props.filterData)
     const {
       enable_service_selection, staff_access_own_department,
       ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,

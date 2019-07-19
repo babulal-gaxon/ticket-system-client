@@ -6,18 +6,21 @@ import {Button, Form, Input, Modal, Upload} from "antd";
 class AddNewCompany extends Component {
   constructor(props) {
     super(props);
-    if (this.props.companyId === 0) {
+    if (this.props.companyId === null) {
       this.state = {
         company_name: "",
         website: "",
         uploadedLogo: null,
         company_logo: this.props.companyLogoId,
-        logoName: ""
       };
     } else {
       const selectedCompany = this.props.companiesList.find(company => company.id === this.props.companyId);
-      console.log("selectedCompanye", selectedCompany);
-      this.state = {...selectedCompany, logoName: selectedCompany.avatar.title, uploadedLogo: selectedCompany.avatar, company_logo: selectedCompany.avatar.id};
+      this.state = {
+        ...selectedCompany,
+        logoName: selectedCompany.avatar.title,
+        uploadedLogo: null,
+        company_logo: selectedCompany.avatar.id
+      };
     }
   };
 
@@ -34,20 +37,19 @@ class AddNewCompany extends Component {
   };
 
   onSubmitForm = () => {
-    if(this.state.uploadedLogo) {
+    if (this.state.uploadedLogo) {
       this.onLogoSelect();
-    }
-    else {
+    } else {
       this.onCompanyAdd();
     }
   };
 
   onCompanyAdd = () => {
-      if (this.props.companyId === 0) {
-        this.props.onAddNewCompany({...this.state});
-      } else {
-        this.props.onEditCompany({...this.state});
-      }
+    if (this.props.companyId === null) {
+      this.props.onAddNewCompany({...this.state});
+    } else {
+      this.props.onEditCompany({...this.state});
+    }
     this.props.onToggleAddCompany();
   };
 
@@ -69,8 +71,8 @@ class AddNewCompany extends Component {
       if (data.success) {
         this.props.fetchSuccess();
         this.setState({company_logo: data.data}, () => {
-            this.onCompanyAdd();
-            this.setState({uploadedLogo: null})
+          this.onCompanyAdd();
+          this.setState({uploadedLogo: null})
         })
       }
     }).catch(function (error) {
@@ -85,17 +87,18 @@ class AddNewCompany extends Component {
         this.setState({uploadedLogo: null})
       },
       beforeUpload: file => {
-          this.setState({uploadedLogo: file});
+        this.setState({uploadedLogo: file});
         return false;
       },
     };
     const {getFieldDecorator} = this.props.form;
-    const {showAddNewModal, onToggleAddCompany} = this.props;
+    const {showAddNewModal, onToggleAddCompany, companyId} = this.props;
+    console.log("logoname", this.state.logoName)
     return (
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddNewModal}
-          title={this.props.companyId === 0 ? "Add New Company" : "Edit Company Detail"}
+          title={this.props.companyId === null ? "Add New Company" : "Edit Company Detail"}
           onCancel={() => onToggleAddCompany()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -122,15 +125,21 @@ class AddNewCompany extends Component {
                 this.setState({website: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Upload Logo" extra={uploadedLogo ? "" : logoName}>
+            {companyId === null ?
+            <Form.Item label="Upload Logo" >
               {getFieldDecorator('uploadedLogo',
-              {
-                rules: [{required: true, message: 'Please Upload Company Logo!'}],
-              })(
-              <Upload {...props}>
-                <Input placeholder="Choose file..." addonAfter="Browse" />
-              </Upload>)}
-            </Form.Item>
+                {
+                  rules: [{required: true, message: 'Please Upload Company Logo!'}],
+                })(
+                <Upload {...props}>
+                  <Input placeholder="Choose file..." addonAfter="Browse"/>
+                </Upload>)}
+            </Form.Item> :
+              <Form.Item label="Upload Logo" extra={uploadedLogo === null ? logoName : ""}>
+                <Upload {...props}>
+                  <Input placeholder="Choose file..." addonAfter="Browse"/>
+                </Upload>
+              </Form.Item>}
           </Form>
         </Modal>
       </div>

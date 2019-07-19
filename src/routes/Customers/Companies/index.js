@@ -28,7 +28,7 @@ class Companies extends Component {
       itemNumbers: 10,
       current: 1,
       selectedCompanies: [],
-      companyId: 0,
+      companyId: null,
       showAddNewModal: false
     };
     this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
@@ -227,7 +227,7 @@ class Companies extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({companyId: 0, showAddNewModal: true})
+    this.setState({companyId: null, showAddNewModal: true})
   };
 
   onEditCompanyOption = (id) => {

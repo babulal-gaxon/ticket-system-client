@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, Select} from "antd";
+import {Button, Col, Form, Input} from "antd/lib/index";
 
 class StepFirst extends Component {
   constructor(props) {
@@ -8,15 +8,16 @@ class StepFirst extends Component {
       user_name: "",
       password: "",
       hostName: "",
-      databaseName:""
+      databaseName: ""
     }
   }
+
   render() {
     const {getFieldDecorator} = this.props.form;
     const {user_name, password, hostName, databaseName} = this.state;
     return (
       <div className="gx-flex-column gx-mt-3">
-        <Form layout="vertical" style={{width:"70%"}}>
+        <Form layout="vertical" style={{width: "70%"}}>
           <div className="gx-d-flex gx-flex-row">
             <Col sm={12} xs={24} className="gx-pl-0">
               <Form.Item label="User Name">
@@ -50,10 +51,10 @@ class StepFirst extends Component {
             </Col>
           </div>
           <div className="gx-d-flex">
-            <Button type="primary" onClick={()=>this.props.onMoveToNextStep()}>Next</Button>
-            <Button type="link" onClick={()=>this.props.onMoveToNextStep()}>Skip</Button>
+            <Button type="primary" onClick={() => this.props.onMoveToNextStep()}>Next</Button>
+            <Button type="link" onClick={() => this.props.onMoveToNextStep()}>Skip</Button>
           </div>
-  </Form>
+        </Form>
 
       </div>
     );

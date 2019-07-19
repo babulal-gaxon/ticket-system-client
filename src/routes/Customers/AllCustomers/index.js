@@ -415,7 +415,7 @@ class AllCustomers extends Component {
     const {customersList} = this.props;
     const {
       selectedRowKeys, resetPasswordModal, sideBarActive, filterText,
-      resetPasswordCustomerId, itemNumbers, current, totalItems
+      resetPasswordCustomerId, itemNumbers, current
     } = this.state;
     let ids;
     const rowSelection = {

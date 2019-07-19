@@ -59,7 +59,9 @@ export const onAddSupportStaff = (staffMember, history) => {
         dispatch({type: ADD_SUPPORT_STAFF, payload: data.data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Staff has been added successfully"});
-        history.goBack();
+        if(history) {
+          history.goBack();
+        }
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -98,7 +100,9 @@ export const onEditSupportStaff = (staffMember, history) => {
       if (data.success) {
         dispatch({type: EDIT_SUPPORT_STAFF, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        history.goBack();
+        if(history) {
+          history.goBack();
+        }
         dispatch({type: SHOW_MESSAGE, payload: "The Staff details has been edited successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
