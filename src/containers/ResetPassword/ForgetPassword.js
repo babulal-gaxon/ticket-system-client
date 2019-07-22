@@ -3,6 +3,7 @@ import {Button, Form, Input} from "antd";
 import {connect} from "react-redux";
 import IntlMessages from "util/IntlMessages";
 import InfoView from "../../components/InfoView";
+import {onResetPassword} from "../../appRedux/actions";
 
 const FormItem = Form.Item;
 
@@ -12,7 +13,7 @@ class ForgetPassword extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // this.props.onResetPassword(values);
+        this.props.onResetPassword(values);
       }
     });
   };
@@ -71,4 +72,4 @@ const mapStateToProps = ({auth}) => {
   return {token}
 };
 
-export default connect(mapStateToProps, {})(ForgetPassword);
+export default connect(mapStateToProps, {onResetPassword})(ForgetPassword);
