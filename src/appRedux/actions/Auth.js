@@ -5,7 +5,8 @@ import {
   FETCH_USER_INFO_ERROR,
   FETCH_USER_INFO_START,
   FETCH_USER_INFO_SUCCESS,
-  INIT_URL, SHOW_MESSAGE,
+  INIT_URL,
+  SHOW_MESSAGE,
   SIGNOUT_USER_SUCCESS,
   UPDATE_USER_PERMISSION_DATA,
   USER_DATA,
@@ -28,7 +29,7 @@ export const onUserSignUp = ({email, password, first_name, last_name}) => {
     axios.post('/signup', {
         email: email,
         password: password,
-      first_name: first_name, last_name: last_name
+        first_name: first_name, last_name: last_name
       }
     ).then(({data}) => {
       console.info("data:", data);
@@ -130,7 +131,7 @@ export const onUserSignOut = () => {
 };
 
 export const showErrorMessage = (error) => {
-  console.log("error",error)
+  console.log("error", error)
   if (error.response.status === 401) {
     return ({type: FETCH_ERROR, payload: error.response.data.message});
   } else if (error.response.status === 403) {
@@ -155,7 +156,7 @@ export const onResetPassword = ({email}) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_TOKEN_SET, payload: data.token.access_token});
         dispatch({type: USER_DATA, payload: data.user});
-        dispatch({type:SHOW_MESSAGE, payload: "Reset password link has been successfully sent to your email address"});
+        dispatch({type: SHOW_MESSAGE, payload: "Reset password link has been successfully sent to your email address"});
       } else if (data.message) {
         console.info("payload: data.error", data.message);
         dispatch({type: FETCH_ERROR, payload: data.message});

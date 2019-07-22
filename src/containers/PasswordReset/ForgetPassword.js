@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import IntlMessages from "util/IntlMessages";
 import InfoView from "../../components/InfoView";
 import {onResetPassword} from "../../appRedux/actions";
+import {Link} from "react-router-dom";
 
 const FormItem = Form.Item;
 
@@ -56,6 +57,8 @@ class ForgetPassword extends React.Component {
                   </Button>
                 </FormItem>
               </Form>
+              <Link to="/signin"><IntlMessages
+                id="app.userAuth.goback"/></Link>
             </div>
             <InfoView/>
           </div>
