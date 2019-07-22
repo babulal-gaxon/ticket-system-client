@@ -2,17 +2,12 @@ import {
   FETCH_ERROR,
   FETCH_START,
   FETCH_SUCCESS,
-  FETCH_USER_INFO_ERROR,
-  FETCH_USER_INFO_START,
-  FETCH_USER_INFO_SUCCESS,
   INIT_URL,
   SIGNOUT_USER_SUCCESS,
-  UPDATE_USER_PERMISSION_DATA,
   USER_DATA,
   USER_TOKEN_SET
 } from "../../constants/ActionTypes";
 import axios from 'util/Api'
-import Permissions from "../../util/Permissions";
 
 export const setInitUrl = (url) => {
   return {
@@ -28,7 +23,7 @@ export const onUserSignUp = ({email, password, first_name, last_name}) => {
     axios.post('/customer/panel/register', {
         email: email,
         password: password,
-      first_name: first_name, last_name: last_name
+        first_name: first_name, last_name: last_name
       }
     ).then(({data}) => {
       console.info("data:", data);
@@ -92,7 +87,7 @@ export const onUserSignOut = () => {
 };
 
 export const showErrorMessage = (error) => {
-  console.log("error",error)
+  console.log("error", error)
   if (error.response.status === 401) {
     return ({type: FETCH_ERROR, payload: error.response.data.message});
   } else if (error.response.status === 403) {
