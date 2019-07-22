@@ -29,6 +29,9 @@ class SignIn extends React.Component {
     this.props.history.push('/signup');
   };
 
+  onForgetPassword = () => {
+    this.props.history.push('/forget-password')
+  };
 
   render() {
     const {getFieldDecorator} = this.props.form;
@@ -81,7 +84,7 @@ class SignIn extends React.Component {
                 </FormItem>
               </Form>
               <div style={{justifyContent: "center", textAlign: "center"}}>
-                <h4 className="gx-text-grey">Forgot Password?</h4>
+                <h4 className="gx-text-grey" onClick={this.onForgetPassword}>Forgot Password?</h4>
                 <div className="gx-mb-1 gx-d-flex" style={{justifyContent: "center", textAlign: "center"}}>
                   <h4 className="gx-text-grey gx-mr-2">New To TicksUp?</h4>
                   <h4 className="gx-text-primary" onClick={this.onSignUpClick}> Sign Up</h4></div>

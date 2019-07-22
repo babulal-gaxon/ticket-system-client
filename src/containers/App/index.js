@@ -12,6 +12,8 @@ import {setInitUrl} from "appRedux/actions/Auth";
 import {onLayoutTypeChange, onNavStyleChange, setThemeType} from "appRedux/actions/Setting";
 import axios from 'util/Api';
 import CircularProgress from "../../components/CircularProgress/index";
+import ForgetPassword from "../ResetPassword/ForgetPassword";
+import VerifyPassword from "../ResetPassword/VerifyPassword";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
   <Route
@@ -75,6 +77,8 @@ class App extends Component {
           <Switch>
             <Route exact path='/signin' component={SignIn}/>
             <Route exact path='/signup' component={SignUp}/>
+            <Route exact path='/forget-password' component={ForgetPassword}/>
+            <Route exact path='/forget-password' component={VerifyPassword}/>
             <RestrictedRoute path={`${match.url}`} token={token} component={MainApp}/>
           </Switch>
         </IntlProvider>
