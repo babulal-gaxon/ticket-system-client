@@ -9,6 +9,7 @@ import {
   onGetCannedResponses
 } from "../../../appRedux/actions/CannedResponses";
 import Permissions from "../../../util/Permissions";
+import PropTypes from "prop-types";
 
 class NinthStep extends Component {
   constructor(props) {
@@ -145,3 +146,11 @@ export default connect(mapStateToProps, {
   onEditCannedResponse,
   onBulkDeleteResponses
 })(NinthStep);
+
+NinthStep.defaultProps = {
+  responses: []
+};
+
+NinthStep.propTypes = {
+  responses: PropTypes.array
+};

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, Col, Form, Input, Modal, Radio, Select, Upload} from "antd/lib/index";
 import InfoView from "../../../../components/InfoView";
 import axios from 'util/Api'
+import PropTypes from "prop-types";
 
 const {Option} = Select;
 
@@ -268,3 +269,17 @@ class AddNewStaff extends Component {
 AddNewStaff = Form.create({})(AddNewStaff);
 
 export default AddNewStaff;
+
+AddNewStaff.defaultProps = {
+  showAddModal: false,
+  dept: [],
+  staffList: [],
+  staffId: null
+};
+
+AddNewStaff.propTypes = {
+  showAddModal: PropTypes.bool,
+  dept: PropTypes.array,
+  staffList: PropTypes.array,
+  staffId: PropTypes.number
+};

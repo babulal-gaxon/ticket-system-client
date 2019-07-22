@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, Form, Radio, Select} from "antd/lib/index";
 import {connect} from "react-redux";
 import {onGetLocalizationDetails, onSaveLocalizationDetails} from "../../../appRedux/actions/GeneralSettings";
+import PropTypes from "prop-types";
 
 const {Option} = Select;
 
@@ -137,4 +138,12 @@ export default connect(mapStateToProps, {
   onGetLocalizationDetails,
   onSaveLocalizationDetails
 })(FourthStep);
+
+FourthStep.defaultProps = {
+  localizationDetails: []
+};
+
+FourthStep.propTypes = {
+  localizationDetails: PropTypes.array,
+};
 

@@ -151,6 +151,8 @@
   "app.userAuth.signUp": "Sign Up",
   "app.userAuth.getAccount": "Forgot your password? Recover Now",
   "app.userAuth.resetPassword": "Reset Password",
+  "app.userAuth.ResetPasswordText": "Please enter and confirm your new password to login",
+  "app.userAuth.forgetPasswordText": "By entering your registered email address, you will receive password link, kindly follow instruction",
   "app.userAuth.reset": "RESET",
   "app.userAuth.lockScreen": "Lock Screen",
   "app.userAuth.unLock": "UNLOCK",

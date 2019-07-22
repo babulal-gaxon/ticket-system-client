@@ -5,7 +5,7 @@ import {
   FETCH_USER_INFO_ERROR,
   FETCH_USER_INFO_START,
   FETCH_USER_INFO_SUCCESS,
-  INIT_URL,
+  INIT_URL, SHOW_MESSAGE,
   SIGNOUT_USER_SUCCESS,
   UPDATE_USER_PERMISSION_DATA,
   USER_DATA,
@@ -140,3 +140,61 @@ export const showErrorMessage = (error) => {
     return ({type: FETCH_ERROR, payload: error.message});
   }
 };
+
+export const onResetPassword = ({email}) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post('/forgot/password', {
+        email: email
+      }
+    ).then(({data}) => {
+      console.info("data:", data);
+      if (data.success) {
+        localStorage.setItem("token", JSON.stringify(data.token.access_token));
+        axios.defaults.headers.common['access-token'] = "Bearer " + data.token.access_token;
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: USER_TOKEN_SET, payload: data.token.access_token});
+        dispatch({type: USER_DATA, payload: data.user});
+        dispatch({type:SHOW_MESSAGE, payload: "Reset password link has been successfully sent to your email address"});
+      } else if (data.message) {
+        console.info("payload: data.error", data.message);
+        dispatch({type: FETCH_ERROR, payload: data.message});
+      } else {
+        console.info("payload: data.error", data.errors[0]);
+        dispatch({type: FETCH_ERROR, payload: data.errors.email});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+// export const onVerifyPassword = ({email}) => {
+//   return (dispatch) => {
+//     dispatch({type: FETCH_START});
+//     axios.post('/forgot/password', {
+//         email: email
+//       }
+//     ).then(({data}) => {
+//       console.info("data:", data);
+//       if (data.success) {
+//         localStorage.setItem("token", JSON.stringify(data.token.access_token));
+//         axios.defaults.headers.common['access-token'] = "Bearer " + data.token.access_token;
+//         dispatch({type: FETCH_SUCCESS});
+//         dispatch({type: USER_TOKEN_SET, payload: data.token.access_token});
+//         dispatch({type: USER_DATA, payload: data.user});
+//         dispatch({type:SHOW_MESSAGE, payload: "Reset password link has been successfully sent to your email address"});
+//       } else if (data.message) {
+//         console.info("payload: data.error", data.message);
+//         dispatch({type: FETCH_ERROR, payload: data.message});
+//       } else {
+//         console.info("payload: data.error", data.errors[0]);
+//         dispatch({type: FETCH_ERROR, payload: data.errors.email});
+//       }
+//     }).catch(function (error) {
+//       dispatch({type: FETCH_ERROR, payload: error.message});
+//       console.info("Error****:", error.message);
+//     });
+//   }
+// };

@@ -10,6 +10,7 @@ import {
 } from "../../../appRedux/actions/TicketStatuses";
 import Permissions from "../../../util/Permissions";
 import InfoView from "../../../components/InfoView";
+import PropTypes from "prop-types";
 
 class EighthStep extends Component {
   constructor(props) {
@@ -155,3 +156,12 @@ export default connect(mapStateToProps, {
   onEditTicketStatus,
   onBulkDeleteStatuses
 })(EighthStep);
+
+EighthStep.defaultProps = {
+  statuses: []
+};
+
+EighthStep.propTypes = {
+  statuses: PropTypes.array
+};
+

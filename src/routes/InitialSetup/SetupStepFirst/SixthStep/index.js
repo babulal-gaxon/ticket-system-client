@@ -12,6 +12,7 @@ import {
 import {onGetDepartments} from "../../../../appRedux/actions/Departments";
 import InfoView from "../../../../components/InfoView";
 import {fetchError, fetchStart, fetchSuccess} from "../../../../appRedux/actions";
+import PropTypes from "prop-types";
 
 class SixthStep extends Component {
   constructor(props) {
@@ -146,3 +147,13 @@ export default connect(mapStateToProps, {
   fetchStart,
   fetchError
 })(SixthStep);
+
+SixthStep.defaultProps = {
+  dept: [],
+  staffList: []
+};
+
+SixthStep.propTypes = {
+  dept: PropTypes.array,
+  staffList: PropTypes.array
+};

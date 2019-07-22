@@ -9,6 +9,7 @@ import {
   onGetDepartments
 } from "../../../appRedux/actions/Departments";
 import InfoView from "../../../components/InfoView";
+import PropTypes from "prop-types";
 
 class FifthStep extends Component {
   constructor(props) {
@@ -130,8 +131,8 @@ class FifthStep extends Component {
 
 
 const mapStateToProps = ({departments}) => {
-  const {dept, totalItems} = departments;
-  return {dept, totalItems};
+  const {dept} = departments;
+  return {dept};
 };
 
 export default connect(mapStateToProps, {
@@ -140,3 +141,11 @@ export default connect(mapStateToProps, {
   onEditDepartment,
   onBulkDeleteDepartments
 })(FifthStep);
+
+FifthStep.defaultProps = {
+  dept: []
+};
+
+FifthStep.propTypes = {
+  dept: PropTypes.array,
+};

@@ -25,6 +25,10 @@ class SignIn extends React.Component {
     }
   }
 
+  onForgetPassword = () => {
+    this.props.history.push('/reset-password');
+  };
+
   render() {
     const {getFieldDecorator} = this.props.form;
 
@@ -39,15 +43,14 @@ class SignIn extends React.Component {
               <div className="gx-app-logo-wid">
                 <h1><IntlMessages id="app.userAuth.signIn"/></h1>
                 <p><IntlMessages id="app.userAuth.bySigning"/></p>
-                <p><IntlMessages id="app.userAuth.getAccount"/></p>
-              </div>
+                <p onClick={this.onForgetPassword} style={{textDecoration:'underline'}}><IntlMessages id="app.userAuth.getAccount"/></p>
+            </div>
               <div className="gx-app-logo">
                 {/*<img alt="example" src={require("assets/images/logo.png")}/>*/}
               </div>
             </div>
             <div className="gx-app-login-content">
               <Form onSubmit={this.handleSubmit} className="gx-signin-form gx-form-row0">
-
                 <FormItem>
                   {getFieldDecorator('email', {
                     initialValue: "admin@g-axon.com",

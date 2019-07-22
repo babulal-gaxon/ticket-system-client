@@ -9,6 +9,7 @@ import {
   onEditTicketPriority,
   onGetTicketPriorities
 } from "../../../appRedux/actions/TicketPriorities";
+import PropTypes from "prop-types";
 
 class SeventhStep extends Component {
   constructor(props) {
@@ -151,3 +152,11 @@ export default connect(mapStateToProps, {
   onEditTicketPriority,
   onBulkDeletePriorities
 })(SeventhStep);
+
+SeventhStep.defaultProps = {
+  priorities: []
+};
+
+SeventhStep.propTypes = {
+  priorities: PropTypes.array
+};

@@ -13,6 +13,8 @@ import {onLayoutTypeChange, onNavStyleChange, setThemeType} from "appRedux/actio
 import axios from 'util/Api';
 import {onGetUserInfo} from "../../appRedux/actions/Auth";
 import CircularProgress from "../../components/CircularProgress/index";
+import ForgetPassword from "../PasswordReset/ForgetPassword";
+import VerifyPassword from "../PasswordReset/VerifyPassword";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
   <Route
@@ -78,6 +80,8 @@ class App extends Component {
           <Switch>
             <Route exact path='/signin' component={SignIn}/>
             <Route exact path='/signup' component={SignUp}/>
+            <Route exact path='/reset-password' component={ForgetPassword}/>
+            <Route exact path='/verify-password' component={VerifyPassword}/>
             <RestrictedRoute path={`${match.url}`} token={token} component={MainApp}/>
           </Switch>
         </IntlProvider>

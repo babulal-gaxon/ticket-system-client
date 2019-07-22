@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {onGetTicketStatus} from "../../../appRedux/actions/TicketStatuses";
 import {onGetTicketSettings, onSaveTicketSettings} from "../../../appRedux/actions/GeneralSettings";
 import {onGetFilterOptions} from "../../../appRedux/actions/TicketList";
+import PropTypes from "prop-types";
 
 const {Option} = Select;
 
@@ -232,6 +233,18 @@ export default connect(mapStateToProps, {
   onSaveTicketSettings,
   onGetFilterOptions
 })(SetupStepSecond);
+
+SetupStepSecond.defaultProps = {
+  ticketSettings: {},
+  filterData: {
+    status: []
+  }
+};
+
+SetupStepSecond.propTypes = {
+  responses: PropTypes.object,
+  filterData: PropTypes.object
+};
 
 
 
