@@ -1,29 +1,39 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input} from "antd/lib/index";
+import {connect} from "react-redux";
+import {onSendDatabaseInfo} from "../../../appRedux/actions/InitialSetup";
 
 class StepFirst extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_name: "",
+      username: "",
       password: "",
-      hostName: "",
-      databaseName: ""
+      host: "",
+      database: ""
     }
   }
 
+  onValidationCheck = () => {
+    this.props.form.validateFields(err => {
+      if (!err) {
+        this.props.onSendDatabaseInfo({...this.state},  this.props.onMoveToNextStep());
+      }
+    });
+  };
+
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {user_name, password, hostName, databaseName} = this.state;
+    const {username, password, host, database} = this.state;
     return (
       <div className="gx-flex-column gx-mt-3">
         <Form layout="vertical" style={{width: "70%"}}>
           <div className="gx-d-flex gx-flex-row">
             <Col sm={12} xs={24} className="gx-pl-0">
               <Form.Item label="User Name">
-                {getFieldDecorator('user_name', {
-                  initialValue: user_name,
-                })(<Input type="text" onChange={(e) => this.setState({user_name: e.target.value})}/>)}
+                {getFieldDecorator('username', {
+                  initialValue: username,
+                })(<Input type="text" onChange={(e) => this.setState({username: e.target.value})}/>)}
               </Form.Item>
             </Col>
             <Col sm={12} xs={24} className="gx-pr-0">
@@ -37,21 +47,21 @@ class StepFirst extends Component {
           <div className="gx-d-flex gx-flex-row">
             <Col sm={12} xs={24} className="gx-pl-0">
               <Form.Item label="Host Name">
-                {getFieldDecorator('hostName', {
-                  initialValue: hostName,
-                })(<Input type="text" onChange={(e) => this.setState({hostName: e.target.value})}/>)}
+                {getFieldDecorator('host', {
+                  initialValue: host,
+                })(<Input type="text" onChange={(e) => this.setState({host: e.target.value})}/>)}
               </Form.Item>
             </Col>
             <Col sm={12} xs={24} className="gx-pr-0">
               <Form.Item label="Database">
-                {getFieldDecorator('databaseName', {
-                  initialValue: databaseName,
-                })(<Input type="text" onChange={(e) => this.setState({databaseName: e.target.value})}/>)}
+                {getFieldDecorator('database', {
+                  initialValue: database,
+                })(<Input type="text" onChange={(e) => this.setState({database: e.target.value})}/>)}
               </Form.Item>
             </Col>
           </div>
           <div className="gx-d-flex">
-            <Button type="primary" onClick={() => this.props.onMoveToNextStep()}>Next</Button>
+            <Button type="primary" onClick={this.onValidationCheck}>Next</Button>
             <Button type="link" onClick={() => this.props.onMoveToNextStep()}>Skip</Button>
           </div>
         </Form>
@@ -63,5 +73,13 @@ class StepFirst extends Component {
 
 StepFirst = Form.create({})(StepFirst);
 
-export default StepFirst;
+// const mapStateToProps = ({ticketList, customers}) => {
+//   const {formData, filterData, attachments} = ticketList;
+//   const {customersList} = customers;
+//   return {customersList, formData, filterData, attachments};
+// };
+
+export default connect(null, {
+  onSendDatabaseInfo
+})(StepFirst);
 

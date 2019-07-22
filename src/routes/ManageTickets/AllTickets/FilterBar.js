@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import CustomScrollbars from "../../../util/CustomScrollbars";
-import {Button, Checkbox, DatePicker, Input, Select} from "antd";
+import {Avatar, Button, Checkbox, DatePicker, Input, Select} from "antd";
 import PropTypes from "prop-types";
 
 const {Option} = Select;
@@ -221,7 +221,12 @@ class FilterBar extends Component {
                 notFoundContent={null}
               >
                 {customers.map(customer => {
-                  return <Option value={customer.id}>{customer.first_name + " " + customer.last_name}</Option>
+                  return <Option value={customer.id}><span>{customer.avatar ?
+                    <Avatar className=" gx-size-30" src={customer.avatar.src}/> :
+                    <Avatar className=" gx-size-30"
+                            style={{backgroundColor: '#f56a00'}}>{customer.first_name[0].toUpperCase()}</Avatar>}</span>
+                    <span className="gx-mx-2">{customer.first_name + " " + customer.last_name}</span>
+                    <span>{customer.email}</span></Option>
                 })}
               </Select>
             </div>

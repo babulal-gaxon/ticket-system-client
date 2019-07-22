@@ -26,7 +26,7 @@ class InitialSetup extends Component {
   render() {
     const {current} = this.state;
     return (
-      <div className="gx-main-layout-content">
+      <div className="gx-main-layout-content" style={{height:"100%",overflow:"scroll"}}>
         <Steps direction="vertical" current={current} className="gx-mt-5">
           <Step title={
             <div className="gx-mr-5">

@@ -1,0 +1,3 @@
+export const ADD_DATABASE_INFO = "ADD_DATABASE_INFO";
+export const ADD_ADMIN_INFO = "ADD_ADMIN_INFO";
+export const ADD_GENERAL_INFO = "ADD_GENERAL_INFO";

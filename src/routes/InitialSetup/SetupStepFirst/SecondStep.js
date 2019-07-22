@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input} from "antd/lib/index";
+import {connect} from "react-redux";
+import {onSendSuperAdminInfo} from "../../../appRedux/actions/InitialSetup";
 
 class SecondStep extends Component {
   constructor(props) {
@@ -9,7 +11,7 @@ class SecondStep extends Component {
       last_name: "",
       email: "",
       password: "",
-      confirm_password: ""
+      password_confirmation: ""
     }
   }
 
@@ -35,6 +37,14 @@ class SecondStep extends Component {
     callback();
   };
 
+  onValidationCheck = () => {
+    this.props.form.validateFields(err => {
+      if (!err) {
+        this.props.onSendSuperAdminInfo({...this.state}, this.props.onMoveToNextStep());
+      }
+    });
+  };
+
   render() {
     const {getFieldDecorator} = this.props.form;
     const {first_name, last_name, email} = this.state;
@@ -47,9 +57,9 @@ class SecondStep extends Component {
                 {getFieldDecorator('first_name', {
                   initialValue: first_name,
                   rules: [{
-                      required: true,
-                      message: 'Please Enter First Name!'
-                    }],
+                    required: true,
+                    message: 'Please Enter First Name!'
+                  }],
                 })(<Input type="text" onChange={(e) => this.setState({first_name: e.target.value})}/>)}
               </Form.Item>
             </Col>
@@ -98,7 +108,7 @@ class SecondStep extends Component {
             </Col>
             <Col sm={12} xs={24} className="gx-pr-0">
               <Form.Item label="Confirm Password" hasFeedback>
-                {getFieldDecorator('confirm_password', {
+                {getFieldDecorator('password_confirmation', {
                   rules: [
                     {
                       required: true,
@@ -109,13 +119,13 @@ class SecondStep extends Component {
                     },
                   ],
                 })(<Input.Password onBlur={this.handleConfirmBlur}
-                                   onChange={(e) => this.setState({confirm_password: e.target.value})}/>)}
+                                   onChange={(e) => this.setState({password_confirmation: e.target.value})}/>)}
               </Form.Item>
             </Col>
           </div>
           <div className="gx-d-flex">
             <Button type="default" onClick={() => this.props.onMoveToPrevStep()}>Previous</Button>
-            <Button type="primary" onClick={() => this.props.onMoveToNextStep()}>Next</Button>
+            <Button type="primary" onClick={this.onValidationCheck}>Next</Button>
             <Button type="link" onClick={() => this.props.onMoveToNextStep()}>Skip</Button>
           </div>
         </Form>
@@ -127,4 +137,7 @@ class SecondStep extends Component {
 
 SecondStep = Form.create({})(SecondStep);
 
-export default SecondStep;
+
+export default connect(null, {
+  onSendSuperAdminInfo
+})(SecondStep);

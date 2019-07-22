@@ -1,9 +1,10 @@
 import {
+  ERROR_INITIAL_SETUP,
   FETCH_USER_INFO_ERROR,
   FETCH_USER_INFO_START,
   FETCH_USER_INFO_SUCCESS,
-  INIT_URL,
-  SIGNOUT_USER_SUCCESS,
+  INIT_URL, INITIAL_SETUP_STEPS,
+  SIGNOUT_USER_SUCCESS, START_LOADER,
   UPDATE_USER_PERMISSION_DATA,
   USER_DATA,
   USER_TOKEN_SET
@@ -15,7 +16,9 @@ const INIT_STATE = {
   initURL: '',
   authUser: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
   userPermissions: [],
-  loadingUser: false,
+  loadingUser: true,
+  initialSteps: { },
+  errorMessage: ''
 };
 
 export default (state = INIT_STATE, action) => {
@@ -47,6 +50,12 @@ export default (state = INIT_STATE, action) => {
       }
     }
 
+    case START_LOADER: {
+    return {
+      ...state,
+      loadingUser: true
+    }
+    }
     case USER_DATA: {
       return {
         ...state,
@@ -66,6 +75,23 @@ export default (state = INIT_STATE, action) => {
         ...state,
         token: action.payload,
       };
+    }
+
+    case INITIAL_SETUP_STEPS: {
+      return {
+        ...state,
+        initialSteps: action.payload,
+        loadingUser: false,
+        errorMessage:''
+      }
+    }
+
+    case ERROR_INITIAL_SETUP: {
+      return {
+        ...state,
+        errorMessage: action.payload,
+        loadingUser: false
+      }
     }
 
     default:

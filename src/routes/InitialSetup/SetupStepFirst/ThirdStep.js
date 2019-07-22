@@ -1,11 +1,17 @@
 import React, {Component} from 'react';
-import {Button, Col, Divider, Form, Input, Select} from "antd/lib/index";
+import {Button, Col, Divider, Form, Input, Select, Upload} from "antd/lib/index";
+import {connect} from "react-redux";
+import {onGetCountriesList} from "../../../appRedux/actions/GeneralSettings";
+import {onSetGeneralInfo} from "../../../appRedux/actions/InitialSetup";
+import axios from 'util/Api'
+
+const {Option} = Select;
 
 class ThirdStep extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      companyName: "",
+      name: "",
       url: "",
       logo: null,
       phone: null,
@@ -16,29 +22,92 @@ class ThirdStep extends Component {
       state: "",
       country_id: "",
       zip_code: "",
+      uploadedLogo: null
     }
+  }
+
+  componentDidMount() {
+    this.props.onGetCountriesList();
   }
 
   onCountrySelect = value => {
     this.setState({country_id: value})
   };
 
+  onValidationCheck = () => {
+    this.props.form.validateFields(err => {
+      if (!err) {
+        this.onSubmitForm();
+      }
+    });
+  };
+
+  onSubmitForm = () => {
+    if (this.state.uploadedLogo) {
+      this.onLogoSelect();
+    } else {
+      this.onInfoAdd();
+    }
+  };
+
+  onInfoAdd = () => {
+      this.props.onSetGeneralInfo({...this.state}, this.props.onMoveToNextStep());
+  };
+
+  onLogoSelect = () => {
+    let file = this.state.uploadedLogo;
+    const data = new FormData();
+    data.append('file', file);
+    data.append('title', file.name);
+    this.onAddLogo(data);
+  };
+
+  onAddLogo = (file) => {
+    this.props.fetchStart();
+    axios.post("/uploads/temporary/media", file, {
+      headers: {
+        'Content-Type': "multipart/form-data"
+      }
+    }).then(({data}) => {
+      if (data.success) {
+        this.props.fetchSuccess();
+        this.setState({company_logo: data.data}, () => {
+          this.onInfoAdd();
+          this.setState({uploadedLogo: null})
+        })
+      }
+    }).catch(function (error) {
+      this.props.fetchError(error.message)
+    });
+  };
+
+
   render() {
+    console.log("this.props.countriesList", this.props.countriesList);
+    const props = {
+      onRemove: () => {
+        this.setState({uploadedLogo: null})
+      },
+      beforeUpload: file => {
+        this.setState({uploadedLogo: file});
+        return false;
+      },
+    };
     const {getFieldDecorator} = this.props.form;
-    const {companyName, url, phone, email, address_line_1, address_line_2, city, state, country_id, zip_code} = this.state;
+    const {name, url, phone, email, address_line_1, address_line_2, city, state, country_id, zip_code} = this.state;
     return (
-      <div className="gx-flex-column gx-mt-3">
+      <div className="gx-flex-column gx-mt-3" style={{height:700,overflow:"scroll"}}>
         <Form layout="vertical" style={{width: "70%"}}>
           <div className="gx-d-flex gx-flex-row">
             <Col sm={12} xs={24} className="gx-pl-0">
               <Form.Item label="Company Name">
-                {getFieldDecorator('companyName', {
-                  initialValue: companyName,
+                {getFieldDecorator('name', {
+                  initialValue: name,
                   rules: [{
                     required: true,
                     message: 'Please Enter Company Name!'
                   }],
-                })(<Input type="text" onChange={(e) => this.setState({companyName: e.target.value})}/>)}
+                })(<Input type="text" onChange={(e) => this.setState({name: e.target.value})}/>)}
               </Form.Item>
             </Col>
             <Col sm={12} xs={24} className="gx-pr-0">
@@ -53,10 +122,14 @@ class ThirdStep extends Component {
               </Form.Item>
             </Col>
           </div>
-          <Form.Item label="Company Logo" extra="Size should be 250X100px, Maximum image size 50kb">
-            {getFieldDecorator('logo', {
-              rules: [{required: true, message: 'Please Select Logo!'}],
-            })(<Input type="file" placeholder="Choose file..." addonAfter="Browse"/>)}
+          <Form.Item label="Upload Logo" >
+            {getFieldDecorator('uploadedLogo',
+              {
+                rules: [{required: true, message: 'Please Upload Company Logo!'}],
+              })(
+              <Upload {...props}>
+                <Input placeholder="Choose file..." addonAfter="Browse"/>
+              </Upload>)}
           </Form.Item>
           <Divider orientation="left" className="gx-mb-4">Primary Contact</Divider>
           <div className="gx-d-flex gx-flex-row">
@@ -126,9 +199,9 @@ class ThirdStep extends Component {
                       message: 'Please Enter Country Name!'
                     }],
                 })(<Select style={{width: "100%"}} onChange={this.onCountrySelect}>
-                  {/*{Object.keys(this.props.countriesList).map(country => {*/}
-                  {/*  return <Option value={country}>{this.props.countriesList[country]}</Option>*/}
-                  {/*})}*/}
+                  {Object.keys(this.props.countriesList).map(country => {
+                    return <Option value={country}>{this.props.countriesList[country]}</Option>
+                  })}
                 </Select>)}
               </Form.Item>
             </Col>
@@ -172,7 +245,7 @@ class ThirdStep extends Component {
           </Form.Item>
           <div className="gx-d-flex">
             <Button type="default" onClick={() => this.props.onMoveToPrevStep()}>Previous</Button>
-            <Button type="primary" onClick={() => this.props.onMoveToNextStep()}>Next</Button>
+            <Button type="primary" onClick={this.onValidationCheck}>Next</Button>
             <Button type="link" onClick={() => this.props.onMoveToNextStep()}>Skip</Button>
           </div>
         </Form>
@@ -183,4 +256,11 @@ class ThirdStep extends Component {
 
 ThirdStep = Form.create({})(ThirdStep);
 
-export default ThirdStep;
+const mapStateToProps = ({generalSettings}) => {
+  const {countriesList} = generalSettings;
+  return {countriesList};
+};
+
+export default connect(mapStateToProps, {
+  onGetCountriesList, onSetGeneralInfo
+})(ThirdStep);

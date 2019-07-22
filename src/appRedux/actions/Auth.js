@@ -1,13 +1,14 @@
 import {
+  ERROR_INITIAL_SETUP,
   FETCH_ERROR,
   FETCH_START,
   FETCH_SUCCESS,
   FETCH_USER_INFO_ERROR,
   FETCH_USER_INFO_START,
   FETCH_USER_INFO_SUCCESS,
-  INIT_URL,
+  INIT_URL, INITIAL_SETUP_STEPS,
   SHOW_MESSAGE,
-  SIGNOUT_USER_SUCCESS,
+  SIGNOUT_USER_SUCCESS, START_LOADER,
   UPDATE_USER_PERMISSION_DATA,
   USER_DATA,
   USER_TOKEN_SET
@@ -171,31 +172,27 @@ export const onResetPassword = ({email}) => {
   }
 };
 
-// export const onVerifyPassword = ({email}) => {
-//   return (dispatch) => {
-//     dispatch({type: FETCH_START});
-//     axios.post('/forgot/password', {
-//         email: email
-//       }
-//     ).then(({data}) => {
-//       console.info("data:", data);
-//       if (data.success) {
-//         localStorage.setItem("token", JSON.stringify(data.token.access_token));
-//         axios.defaults.headers.common['access-token'] = "Bearer " + data.token.access_token;
-//         dispatch({type: FETCH_SUCCESS});
-//         dispatch({type: USER_TOKEN_SET, payload: data.token.access_token});
-//         dispatch({type: USER_DATA, payload: data.user});
-//         dispatch({type:SHOW_MESSAGE, payload: "Reset password link has been successfully sent to your email address"});
-//       } else if (data.message) {
-//         console.info("payload: data.error", data.message);
-//         dispatch({type: FETCH_ERROR, payload: data.message});
-//       } else {
-//         console.info("payload: data.error", data.errors[0]);
-//         dispatch({type: FETCH_ERROR, payload: data.errors.email});
-//       }
-//     }).catch(function (error) {
-//       dispatch({type: FETCH_ERROR, payload: error.message});
-//       console.info("Error****:", error.message);
-//     });
-//   }
-// };
+export const onCheckInitialSetup = () => {
+  return (dispatch) => {
+    dispatch({type: START_LOADER});
+    axios.get('/all-steps').then(({data}) => {
+      console.info("data:", data);
+      if (data.success) {
+        console.log("initial Setup", data);
+        dispatch({type: INITIAL_SETUP_STEPS, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+      } else if (data.message) {
+        console.info("payload: data.error", data.message);
+        dispatch({type: ERROR_INITIAL_SETUP, payload: data.message});
+      } else {
+        console.info("payload: data.error", data.errors[0]);
+        dispatch({type: ERROR_INITIAL_SETUP, payload: data.errors.email});
+      }
+    }).catch(function (error) {
+      dispatch({type: ERROR_INITIAL_SETUP, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+

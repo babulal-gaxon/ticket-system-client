@@ -9,6 +9,7 @@ import SixthStep from "./SixthStep";
 import SeventhStep from "./SeventhStep";
 import EighthStep from "./EighthStep";
 import NinthStep from "./NinthStep";
+import CustomScrollbars from "../../../util/CustomScrollbars";
 
 const {Step} = Steps;
 
@@ -34,7 +35,7 @@ class SetupStepFirst extends Component {
   render() {
     const {current} = this.state;
     return (
-      <div className="gx-main-layout-content">
+      <div className="gx-main-layout-content" >
         <Steps direction="vertical" current={current} className="gx-mt-5">
           <Step title="Database Setup"
                 description={current === 1 ? <StepFirst onMoveToNextStep={this.onMoveToNextStep}/> : null}/>
