@@ -79,7 +79,7 @@ class TicketAssigning extends Component {
           <Search value={filterStaffText} onChange={(e) => this.setState({filterStaffText: e.target.value})}/>
           {staffList.map(staff => {
             return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5"
-                        onClick={() => this.onSelectStaff(staff.id)}>
+                        onClick={() => this.onSelectStaff(staff.id)} key={staff.id}>
               {staff.avatar ?
                 <Avatar className="gx-mr-3 gx-size-50" src={staff.avatar.src}/> :
                 <Avatar className="gx-mr-3 gx-size-50"

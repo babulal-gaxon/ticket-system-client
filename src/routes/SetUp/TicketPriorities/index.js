@@ -323,7 +323,7 @@ class TicketPriorities extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
+          <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()}
                  dataSource={priorities} className="gx-mb-4"
                  pagination={{
                    pageSize: this.state.itemNumbers,

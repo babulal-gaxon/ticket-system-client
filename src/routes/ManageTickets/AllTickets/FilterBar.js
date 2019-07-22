@@ -221,7 +221,7 @@ class FilterBar extends Component {
                 notFoundContent={null}
               >
                 {customers.map(customer => {
-                  return <Option value={customer.id}><span>{customer.avatar ?
+                  return <Option value={customer.id} key={customer.id}><span>{customer.avatar ?
                     <Avatar className=" gx-size-30" src={customer.avatar.src}/> :
                     <Avatar className=" gx-size-30"
                             style={{backgroundColor: '#f56a00'}}>{customer.first_name[0].toUpperCase()}</Avatar>}</span>

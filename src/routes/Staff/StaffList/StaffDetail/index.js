@@ -233,7 +233,7 @@ class StaffDetail extends Component {
                         </Button>
                       </div>
                       {staffNotes && staffNotes.map(note => {
-                        return <div className="gx-mr-2">
+                        return <div className="gx-mr-2" key={note.id}>
                           <div className="gx-d-flex gx-justify-content-between">
                             <div>
                               <div className="gx-font-weight-bold">{note.title}</div>

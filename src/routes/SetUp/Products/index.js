@@ -316,7 +316,7 @@ class Products extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={productsList}
+          <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={productsList}
                  className="gx-mb-4" rowKey="products"
                  pagination={{
                    pageSize: this.state.itemNumbers,

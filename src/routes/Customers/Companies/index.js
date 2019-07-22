@@ -287,7 +287,7 @@ class Companies extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowSelection={rowSelection} columns={this.onCompaniesRowData()}
+          <Table rowKey="id" rowSelection={rowSelection} columns={this.onCompaniesRowData()}
                  dataSource={companiesList} className="gx-mb-4"
                  pagination={{
                    pageSize: this.state.itemNumbers,

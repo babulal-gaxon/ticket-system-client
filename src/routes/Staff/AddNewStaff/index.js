@@ -79,7 +79,7 @@ class AddNewStaff extends Component {
   onDepartmentSelectOption = () => {
     const deptOptions = [];
     this.props.dept.map(department => {
-      return deptOptions.push(<Option value={department.id}>{department.name}</Option>);
+      return deptOptions.push(<Option value={department.id} key={department.id}>{department.name}</Option>);
     });
     return deptOptions;
   };
@@ -206,7 +206,7 @@ class AddNewStaff extends Component {
                 }] ,
                 })( <Select value={role_id} onChange={this.onSelectRole} placeholder="Select a Role">
                     {this.props.roles.map(role => {
-                      return <Option value={role.id}>{role.name}</Option>
+                      return <Option value={role.id} key={role.id}>{role.name}</Option>
                     })}
                   </Select>)}
                 </Form.Item>

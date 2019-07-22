@@ -326,7 +326,7 @@ class StaffList extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowSelection={rowSelection} columns={this.staffRowData()}
+          <Table rowKey="id" rowSelection={rowSelection} columns={this.staffRowData()}
                  dataSource={staffList}
                  pagination={{
                    pageSize: this.state.itemNumbers,

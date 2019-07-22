@@ -57,7 +57,7 @@ class AddNewTicket extends Component {
   onServiceSelectOptions = () => {
     const serviceOptions = [];
     this.props.formData.services.map(service => {
-      return serviceOptions.push(<Option value={service.id}>{service.title}</Option>);
+      return serviceOptions.push(<Option value={service.id} key={service.id}>{service.title}</Option>);
     });
     return serviceOptions;
   };
@@ -128,7 +128,7 @@ class AddNewTicket extends Component {
                     notFoundContent={null}
                   >
                     {customersList.map(customer => {
-                      return <Option value={customer.id}>
+                      return <Option value={customer.id} key={customer.id}>
                         <span>{customer.avatar ?
                           <Avatar className="gx-mr-3 gx-size-30" src={customer.avatar.src}/> :
                           <Avatar className="gx-mr-3 gx-size-30"
@@ -152,7 +152,7 @@ class AddNewTicket extends Component {
                     this.setState({product_id: value})
                   }}>
                     {formData.products.map(product => {
-                      return <Option value={product.id}>{product.title}</Option>
+                      return <Option value={product.id} key={product.id}>{product.title}</Option>
                     })}
                   </Select>
                 </Form.Item>
@@ -161,7 +161,7 @@ class AddNewTicket extends Component {
                     this.setState({department_id: value})
                   }}>
                     {formData.departments.map(department => {
-                      return <Option value={department.id}>{department.name}</Option>
+                      return <Option value={department.id} key={department.id}>{department.name}</Option>
                     })}
                   </Select>
                 </Form.Item>

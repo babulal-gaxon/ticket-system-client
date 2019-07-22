@@ -290,7 +290,7 @@ class Services extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowKey="services" rowSelection={rowSelection} columns={this.onGetTableColumns()}
+          <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()}
                  dataSource={servicesList}
                  className="gx-mb-4"
                  pagination={{

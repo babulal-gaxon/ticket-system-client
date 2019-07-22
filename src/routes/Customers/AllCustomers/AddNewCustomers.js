@@ -254,10 +254,10 @@ class AddNewCustomers extends Component {
               {this.props.customerAddress.length > 0 ?
                 <div className="gx-main-layout-content" style={{width: "60%"}}>
                   {customerAddress.map(address => {
-                    return <Widget styleName="gx-card-filter">
+                    return <Widget styleName="gx-card-filter" key={address.id}>
 
                       {address.address_type.map(type => {
-                        return <Tag color="#108ee9">{type}</Tag>
+                        return <Tag color="#108ee9" key={type}>{type}</Tag>
                       })}
                       <p>{address.address_line_1}</p>
                       <p>{`${address.city}, ${address.state} - ${address.zip_code}`}</p>

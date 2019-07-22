@@ -91,7 +91,7 @@ class AddCustomerAddress extends Component {
                     ],
                   })(<Select style={{width: "100%"}} onChange={this.onCountrySelect}>
                     {Object.keys(this.props.countriesList).map(country => {
-                      return <Option value={country}>{this.props.countriesList[country]}</Option>
+                      return <Option value={country} key={country}>{this.props.countriesList[country]}</Option>
                     })}
                   </Select>)}
                 </Form.Item>

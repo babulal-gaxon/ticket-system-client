@@ -465,7 +465,7 @@ class AllCustomers extends Component {
                 </Button> : null}
             </div>
           </div>
-          <Table rowKey="customersData" rowSelection={rowSelection} columns={this.onCustomersRowData()}
+          <Table rowKey="id" rowSelection={rowSelection} columns={this.onCustomersRowData()}
                  dataSource={customersList}
                  pagination={{
                    pageSize: itemNumbers,

@@ -255,7 +255,7 @@ class RolesList extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowKey="rolesList" rowSelection={rowSelection} columns={this.rolesRowData()}
+          <Table rowKey="id" rowSelection={rowSelection} columns={this.rolesRowData()}
                  dataSource={roles}
                  pagination={{
                    pageSize: itemNumbers,

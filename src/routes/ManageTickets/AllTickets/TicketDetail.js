@@ -210,7 +210,7 @@ class TicketDetail extends Component {
                   <div className="gx-mb-3">Attachments</div>
                   <div className="gx-d-flex">
                     {currentTicket.attachments.map(attachment => {
-                      return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
+                      return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5" key={attachment.id}>
                         <Widget styleName="gx-card-filter gx-mr-2">
                           <div>{attachment.title}</div>
                           <div>{attachment.size / 1000} kb</div>
@@ -279,7 +279,7 @@ class TicketDetail extends Component {
                         onChange={this.onEditTags}/>
                 <div className="gx-my-3">Attachments</div>
                 {currentTicket.attachments.length > 0 ? currentTicket.attachments.map(attachment => {
-                  return <Avatar shape="square" icon="user" src={attachment.src} className="gx-mr-2 gx-size-100"/>
+                  return <Avatar shape="square" icon="user" key={attachment.id} src={attachment.src} className="gx-mr-2 gx-size-100"/>
                 }) : <div>No attachments added with this ticket.</div>}
               </div>
             </Col>

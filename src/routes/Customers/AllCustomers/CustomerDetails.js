@@ -176,7 +176,7 @@ class CustomerDetails extends Component {
                           <div className="gx-d-flex gx-justify-content-between">
                             <p>{currentCustomer.addresses[0].address_line_1}</p>
                             {currentCustomer.addresses[0].address_type.map(type => {
-                              return <Tag color="#108ee9">{type}</Tag>
+                              return <Tag color="#108ee9" key={type}>{type}</Tag>
                             })}
                           </div>
                           <p>{`${currentCustomer.addresses[0].city}, ${currentCustomer.addresses[0].state} - ${currentCustomer.addresses[0].zip_code}`}</p>
