@@ -87,7 +87,6 @@ export const onUserSignOut = () => {
 };
 
 export const showErrorMessage = (error) => {
-  console.log("error", error)
   if (error.response.status === 401) {
     return ({type: FETCH_ERROR, payload: error.response.data.message});
   } else if (error.response.status === 403) {
