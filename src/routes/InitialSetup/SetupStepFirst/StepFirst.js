@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Button, Col, Form, Input} from "antd/lib/index";
 import {connect} from "react-redux";
 import {onSendDatabaseInfo} from "../../../appRedux/actions/InitialSetup";
+import InfoView from "../../../components/InfoView";
+import {onCheckInitialSetup} from "../../../appRedux/actions";
 
 class StepFirst extends Component {
   constructor(props) {
@@ -17,7 +19,7 @@ class StepFirst extends Component {
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.props.onSendDatabaseInfo({...this.state},  this.props.onMoveToNextStep());
+        this.props.onSendDatabaseInfo({...this.state}, this.props.onMoveToNextStep);
       }
     });
   };
@@ -65,7 +67,7 @@ class StepFirst extends Component {
             <Button type="link" onClick={() => this.props.onMoveToNextStep()}>Skip</Button>
           </div>
         </Form>
-
+        <InfoView/>
       </div>
     );
   }
@@ -73,13 +75,7 @@ class StepFirst extends Component {
 
 StepFirst = Form.create({})(StepFirst);
 
-// const mapStateToProps = ({ticketList, customers}) => {
-//   const {formData, filterData, attachments} = ticketList;
-//   const {customersList} = customers;
-//   return {customersList, formData, filterData, attachments};
-// };
-
 export default connect(null, {
-  onSendDatabaseInfo
+  onSendDatabaseInfo, onCheckInitialSetup
 })(StepFirst);
 

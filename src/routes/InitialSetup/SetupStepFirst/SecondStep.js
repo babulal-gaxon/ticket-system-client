@@ -1,7 +1,13 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input} from "antd/lib/index";
 import {connect} from "react-redux";
-import {onSendSuperAdminInfo} from "../../../appRedux/actions/InitialSetup";
+import {
+  onClosePinModal,
+  onResendPin,
+  onSendSuperAdminInfo,
+  onVerifyByPin
+} from "../../../appRedux/actions/InitialSetup";
+import VerificationModal from "./VerificationModal";
 
 class SecondStep extends Component {
   constructor(props) {
@@ -11,7 +17,7 @@ class SecondStep extends Component {
       last_name: "",
       email: "",
       password: "",
-      password_confirmation: ""
+      password_confirmation: "",
     }
   }
 
@@ -40,9 +46,17 @@ class SecondStep extends Component {
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.props.onSendSuperAdminInfo({...this.state}, this.props.onMoveToNextStep());
+        this.props.onSendSuperAdminInfo({...this.state});
       }
     });
+  };
+
+  onVerifyEmail = (pin) => {
+    this.props.onVerifyByPin({pin_number: pin, email: this.state.email},this.props.onMoveToNextStep)
+  };
+
+  onRequestPinAgain = () => {
+    this.props.onResendPin({email: this.state.email})
   };
 
   render() {
@@ -102,7 +116,10 @@ class SecondStep extends Component {
                     {
                       validator: this.validateToNextPassword,
                     },
-                  ],
+                    {
+                      min: 8,
+                      message: 'Length should be at least 8 characters long',
+                    }],
                 })(<Input.Password onChange={(e) => this.setState({password: e.target.value})}/>)}
               </Form.Item>
             </Col>
@@ -129,6 +146,12 @@ class SecondStep extends Component {
             <Button type="link" onClick={() => this.props.onMoveToNextStep()}>Skip</Button>
           </div>
         </Form>
+        {this.props.showPinModal ? <VerificationModal showPinModal={this.props.showPinModal}
+                                                      onClosePinModal={this.props.onClosePinModal}
+                                                      onVerifyEmail={this.onVerifyEmail}
+                                                      onClosePinModal={this.props.onClosePinModal}
+                                                      onResendPin={this.onRequestPinAgain}
+        /> : null}
 
       </div>
     );
@@ -137,7 +160,12 @@ class SecondStep extends Component {
 
 SecondStep = Form.create({})(SecondStep);
 
+const mapStateToProps = ({initialSetup}) => {
+  const {showPinModal} = initialSetup;
+  return {showPinModal};
+};
 
-export default connect(null, {
-  onSendSuperAdminInfo
+
+export default connect(mapStateToProps, {
+  onSendSuperAdminInfo, onClosePinModal, onVerifyByPin, onResendPin
 })(SecondStep);

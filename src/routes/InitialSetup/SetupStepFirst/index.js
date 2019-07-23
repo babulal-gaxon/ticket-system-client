@@ -9,7 +9,8 @@ import SixthStep from "./SixthStep";
 import SeventhStep from "./SeventhStep";
 import EighthStep from "./EighthStep";
 import NinthStep from "./NinthStep";
-import CustomScrollbars from "../../../util/CustomScrollbars";
+import {connect} from "react-redux";
+import {onCheckInitialSetup} from "../../../appRedux/actions";
 
 const {Step} = Steps;
 
@@ -17,10 +18,28 @@ const {Step} = Steps;
 class SetupStepFirst extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      current: 1,
-    };
+    console.log("Object.keys(props.initialSteps)", Object.keys(props.initialSteps).length)
+    if(Object.keys(props.initialSteps).length > 0) {
+    Object.keys(props.initialSteps).map(step => {
+      console.log("step", step)
+      if (Object.keys(props.initialSteps).length > 2) {
+        this.state = {
+          current: 1,
+        };
+      } else {
+        this.state = {
+          current: 2
+        };
+      }
+    })
   }
+    else {
+        this.state = {
+          current: 3
+      }
+    }
+  }
+
 
   onMoveToNextStep = () => {
     const current = this.state.current + 1;
@@ -33,9 +52,10 @@ class SetupStepFirst extends Component {
   };
 
   render() {
+    console.log("in index file", this.state.current)
     const {current} = this.state;
     return (
-      <div className="gx-main-layout-content" >
+      <div className="gx-main-layout-content">
         <Steps direction="vertical" current={current} className="gx-mt-5">
           <Step title="Database Setup"
                 description={current === 1 ? <StepFirst onMoveToNextStep={this.onMoveToNextStep}/> : null}/>
@@ -67,4 +87,11 @@ class SetupStepFirst extends Component {
   }
 }
 
-export default SetupStepFirst;
+const mapStateToProps = ({auth}) => {
+  const {initialSteps} = auth;
+  return {initialSteps};
+};
+
+export default connect(mapStateToProps, {
+  onCheckInitialSetup
+})(SetupStepFirst);

@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {onGetCountriesList} from "../../../appRedux/actions/GeneralSettings";
 import {onSetGeneralInfo} from "../../../appRedux/actions/InitialSetup";
 import axios from 'util/Api'
+import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 
 const {Option} = Select;
 
@@ -22,7 +23,8 @@ class ThirdStep extends Component {
       state: "",
       country_id: "",
       zip_code: "",
-      uploadedLogo: null
+      uploadedLogo: null,
+      cpp_url: ""
     }
   }
 
@@ -51,7 +53,7 @@ class ThirdStep extends Component {
   };
 
   onInfoAdd = () => {
-      this.props.onSetGeneralInfo({...this.state}, this.props.onMoveToNextStep());
+    this.props.onSetGeneralInfo({...this.state}, this.props.onMoveToNextStep);
   };
 
   onLogoSelect = () => {
@@ -71,7 +73,7 @@ class ThirdStep extends Component {
     }).then(({data}) => {
       if (data.success) {
         this.props.fetchSuccess();
-        this.setState({company_logo: data.data}, () => {
+        this.setState({logo: data.data}, () => {
           this.onInfoAdd();
           this.setState({uploadedLogo: null})
         })
@@ -94,9 +96,9 @@ class ThirdStep extends Component {
       },
     };
     const {getFieldDecorator} = this.props.form;
-    const {name, url, phone, email, address_line_1, address_line_2, city, state, country_id, zip_code} = this.state;
+    const {name, url, phone, email, address_line_1, address_line_2, city, state, country_id, zip_code, cpp_url} = this.state;
     return (
-      <div className="gx-flex-column gx-mt-3" style={{height:700,overflow:"scroll"}}>
+      <div className="gx-flex-column gx-mt-3" style={{height: 700, overflow: "scroll"}}>
         <Form layout="vertical" style={{width: "70%"}}>
           <div className="gx-d-flex gx-flex-row">
             <Col sm={12} xs={24} className="gx-pl-0">
@@ -122,7 +124,7 @@ class ThirdStep extends Component {
               </Form.Item>
             </Col>
           </div>
-          <Form.Item label="Upload Logo" >
+          <Form.Item label="Upload Logo">
             {getFieldDecorator('uploadedLogo',
               {
                 rules: [{required: true, message: 'Please Upload Company Logo!'}],
@@ -130,6 +132,15 @@ class ThirdStep extends Component {
               <Upload {...props}>
                 <Input placeholder="Choose file..." addonAfter="Browse"/>
               </Upload>)}
+          </Form.Item>
+          <Form.Item label="Client URl">
+            {getFieldDecorator('cpp_url', {
+              initialValue: cpp_url,
+              rules: [{
+                required: true,
+                message: 'Please Enter Client URL!'
+              }],
+            })(<Input type="text" onChange={(e) => this.setState({cpp_url: e.target.value})}/>)}
           </Form.Item>
           <Divider orientation="left" className="gx-mb-4">Primary Contact</Divider>
           <div className="gx-d-flex gx-flex-row">
@@ -262,5 +273,7 @@ const mapStateToProps = ({generalSettings}) => {
 };
 
 export default connect(mapStateToProps, {
-  onGetCountriesList, onSetGeneralInfo
+  onGetCountriesList, onSetGeneralInfo, fetchSuccess,
+  fetchStart,
+  fetchError
 })(ThirdStep);

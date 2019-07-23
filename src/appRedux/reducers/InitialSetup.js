@@ -1,10 +1,11 @@
-import {ADD_ADMIN_INFO, ADD_DATABASE_INFO, ADD_GENERAL_INFO} from "../../constants/InitialSetup";
+import {ADD_ADMIN_INFO, ADD_DATABASE_INFO, ADD_GENERAL_INFO, OPEN_PIN_MODAL} from "../../constants/InitialSetup";
 
 
 const initialState = {
   databaseInfo: {},
   adminInfo: {},
-  generalInfo: {}
+  generalInfo: {},
+  showPinModal : false
 };
 
 export default (state = initialState, action) => {
@@ -25,6 +26,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         generalInfo: action.payload
+      };
+
+    case OPEN_PIN_MODAL:
+      return {
+        ...state,
+        showPinModal: action.payload
       };
 
     default:

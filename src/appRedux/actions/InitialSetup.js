@@ -1,5 +1,12 @@
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
-import {ADD_ADMIN_INFO, ADD_DATABASE_INFO, ADD_GENERAL_INFO} from "../../constants/InitialSetup"
+import {
+  FETCH_ERROR,
+  FETCH_START,
+  FETCH_SUCCESS,
+  SHOW_MESSAGE,
+  USER_DATA,
+  USER_TOKEN_SET
+} from "../../constants/ActionTypes";
+import {ADD_ADMIN_INFO, ADD_DATABASE_INFO, ADD_GENERAL_INFO, OPEN_PIN_MODAL} from "../../constants/InitialSetup"
 import axios from 'util/Api'
 
 export const onSendDatabaseInfo = (info, nextStep) => {
@@ -12,10 +19,10 @@ export const onSendDatabaseInfo = (info, nextStep) => {
         console.log(" sending data", data.data);
         dispatch({type: ADD_DATABASE_INFO, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        nextStep();
         dispatch({type: SHOW_MESSAGE, payload: "The Database information has been saved successfully"});
+        nextStep();
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR, payload: data.message});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -34,7 +41,7 @@ export const onSendSuperAdminInfo = (info, nextStep) => {
         console.log(" sending data", data.data);
         dispatch({type: ADD_ADMIN_INFO, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        nextStep();
+        dispatch({type: OPEN_PIN_MODAL, payload: true});
         dispatch({type: SHOW_MESSAGE, payload: "The Admin information has been saved successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
@@ -68,3 +75,55 @@ export const onSetGeneralInfo = (info, nextStep) => {
   }
 };
 
+export const onClosePinModal = () => {
+  return {
+    type: OPEN_PIN_MODAL,
+    payload: false
+  }
+};
+
+export const onVerifyByPin = (data, nextStep) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post('/install/step/2/verify/email', data
+    ).then(({data}) => {
+      console.info("data:", data);
+      if (data.success) {
+        localStorage.setItem("token", JSON.stringify(data.token));
+        localStorage.setItem("user", JSON.stringify(data.data));
+        axios.defaults.headers.common['access-token'] = "Bearer " + data.token;
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: USER_TOKEN_SET, payload: data.token});
+        dispatch({type: USER_DATA, payload: data.data});
+        nextStep();
+        dispatch({type: SHOW_MESSAGE, payload: data.message});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onResendPin = (email) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post('/install/step/2/resend/pin', email
+    ).then(({data}) => {
+      console.info("data:", data);
+      if (data.success) {
+        console.log(" sending data", data.data);
+        // dispatch({type: ADD_GENERAL_INFO, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "The Pin has been sent successfully"});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};

@@ -317,7 +317,7 @@ class Products extends Component {
             </div>
           </div>
           <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={productsList}
-                 className="gx-mb-4" rowKey="products"
+                 className="gx-mb-4"
                  pagination={{
                    pageSize: this.state.itemNumbers,
                    current: this.state.currentPage,
