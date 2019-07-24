@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import Dropzone from "react-dropzone";
-import {Avatar, Button} from "antd";
+import {Avatar, Button, Upload} from "antd";
 import PropTypes from "prop-types";
 
 
@@ -8,65 +7,50 @@ class ImageUpload extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: null,
-      profile_pic: null,
-      type: null,
-      title: ""
+      fileList: [],
     }
   }
 
-  onDrop = files => {
-    console.log("files", files)
-    files.map(file => Object.assign(file, {
-      preview: URL.createObjectURL(file)
-    }));
-    this.setState({
-      file: files[0],
-      profile_pic: files[0].preview,
-      type: files[0].type,
-      title: files[0].name
-    });
-  };
-  onUploadImage = () => {
-    const data = new FormData()
-    data.append('file', this.state.file);
-    data.append('title', this.state.title);
+  onLogoSelect = () => {
+    let file = this.state.fileList[0];
+    const data = new FormData();
+    data.append('file', file);
+    data.append('title', file.name);
     this.props.onAddProfileImage(data);
   };
 
   render() {
     const imageAvatar = this.props.imageAvatar;
-    const {file, profile_pic} = this.state;
+    const {fileList} = this.state;
+    const props = {
+      onRemove: file => {
+        this.setState(state => {
+          const index = state.fileList.indexOf(file);
+          const newFileList = state.fileList.slice(-1);
+          newFileList.splice(index, 1);
+          return {
+            fileList: newFileList,
+          };
+        });
+      },
+      beforeUpload: file => {
+        if (fileList.length > 0) {
+          props.onRemove(fileList[0])
+        }
+        this.setState(state => ({
+          fileList: [...state.fileList, file],
+        }));
+        return false;
+      },
+      fileList,
+    };
     return (
       <div className="gx-main-layout-content">
-        {!profile_pic ?
-          <div>
-            <Dropzone onDrop={this.onDrop}>
-              {({getRootProps, getInputProps}) => (
-                <section>
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    {imageAvatar ? <Avatar className="gx-mr-3 gx-size-200" src={imageAvatar.src}/> :
-                      <Avatar className="gx-mr-3 gx-size-200" icon="user"/>}
-                  </div>
-                </section>
-              )}
-            </Dropzone>
-          </div>
-          :
-          <div>
-            <div>
-              <Avatar className="gx-mr-3 gx-size-200" alt="" src={file ? file.preview : ""}/>
-              <span onClick={() => {
-                this.setState({
-                  profile_pic: '',
-                  type: ''
-                })
-              }}>Change</span>
-            </div>
-          </div>
-        }
-        <Button type="primary" className="gx-mt-5" onClick={this.onUploadImage}>Add Profile Image</Button>
+        <Upload {...props}>
+          <Avatar className="gx-size-200"
+                  src={this.state.fileList.length > 0 ? URL.createObjectURL(this.state.fileList[0]) : imageAvatar}/>
+        </Upload>
+        <Button type="primary" className="gx-mt-5 gx-ml-4" onClick={this.onLogoSelect}>Add Profile Image</Button>
       </div>
     )
   }

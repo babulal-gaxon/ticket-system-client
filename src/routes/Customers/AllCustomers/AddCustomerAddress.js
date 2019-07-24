@@ -158,10 +158,10 @@ export default AddCustomerAddress;
 
 AddCustomerAddress.defaultProps = {
   isModalVisible: false,
-  countriesList: []
+  countriesList: {}
 };
 
 AddCustomerAddress.propTypes = {
   isModalVisible: PropTypes.bool,
-  countriesList: PropTypes.array
+  countriesList: PropTypes.object
 };

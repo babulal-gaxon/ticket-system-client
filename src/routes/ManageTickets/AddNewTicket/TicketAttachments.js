@@ -4,8 +4,9 @@ import Dropzone from "react-dropzone";
 const thumbsContainer = {
   display: 'flex',
   flexDirection: 'row',
-  flexWrap: 'wrap',
-  marginTop: 16
+  //flexWrap: 'wrap',
+  marginTop: 16,
+  overflow: "hidden"
 };
 
 const thumb = {
@@ -71,22 +72,35 @@ class TicketAttachments extends Component {
 
   render() {
     return (
-      <Dropzone onDrop={this.onDrop} style={{height:200}}>
+      <Dropzone onDrop={this.onDrop} style={{height: 200}}>
         {({getRootProps, getInputProps}) => (
           <section className="container">
             <div {...getRootProps({className: 'dropzone'})}>
               <input {...getInputProps()} />
-              <aside  style={thumbsContainer}>
-                {this.onThumbShow()}
-              </aside>
-              <p>Drag 'n' drop some files here, or click to select files</p>
+              <div style={{
+                display:"flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 5,
+                border: "dotted",
+                borderWidth: 1,
+                borderColor: "#c4c4c4",
+                height:150,
+                backgroundColor:"#F5F5F5"
+              }}>
+                {this.state.imageFiles.length === 0 ?
+                <span>Drag 'n' drop files to upload</span> : null}
+                <aside style={thumbsContainer}>
+                  {this.onThumbShow()}
+                </aside>
+              </div>
             </div>
 
           </section>
         )}
       </Dropzone>
     );
-  }
+  }0
 }
 
 

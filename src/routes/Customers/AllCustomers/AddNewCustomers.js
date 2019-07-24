@@ -314,7 +314,7 @@ AddNewCustomers.defaultProps = {
   labels: [],
   company: [],
   profilePicId: null,
-  countriesList: [],
+  countriesList: {},
   customerAddress: []
 };
 
@@ -324,7 +324,7 @@ AddNewCustomers.propTypes = {
   labels: PropTypes.array,
   company: PropTypes.array,
   profilePicId: PropTypes.number,
-  countriesList: PropTypes.array,
+  countriesList: PropTypes.object,
   customerAddress: PropTypes.array
 
 };

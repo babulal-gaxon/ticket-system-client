@@ -192,4 +192,29 @@ export const onCheckInitialSetup = () => {
   }
 };
 
+export const onSetNewPassword = (token, data, history) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post(`reset/password/${token}`, data
+    ).then(({data}) => {
+      console.info("data:", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "The password has been updated successfully"});
+        history.push("/signin");
+      } else if (data.message) {
+        console.info("payload: data.error", data.message);
+        dispatch({type: FETCH_ERROR, payload: data.message});
+      } else {
+        console.info("payload: data.error", data.errors[0]);
+        dispatch({type: FETCH_ERROR, payload: data.errors.email});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+
 

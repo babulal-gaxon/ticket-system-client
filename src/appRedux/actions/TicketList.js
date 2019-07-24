@@ -65,7 +65,7 @@ export const onAddTickets = (ticket, history) => {
         dispatch({type: ADD_TICKETS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
-        dispatch({type: SHOW_MESSAGE, payload: "The Ticket has been added successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: `The Ticket with Id #${data.data.id} has been added successfully`});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

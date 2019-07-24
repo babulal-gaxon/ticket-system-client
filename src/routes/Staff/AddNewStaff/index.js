@@ -22,7 +22,7 @@ const {confirm} = Modal;
 class AddNewStaff extends Component {
   constructor(props) {
     super(props);
-    if (this.props.staffId === 0) {
+    if (props.staffId === null) {
       this.state = {
         first_name: "",
         last_name: "",
@@ -37,8 +37,8 @@ class AddNewStaff extends Component {
         designation: ""
       };
     } else {
-      const selectedStaff = this.props.staffList.find(staff => staff.id === this.props.staffId);
-      const {id, first_name, last_name, email, mobile, hourly_rate, status, role_id, avatar, designation} = selectedStaff;
+      const selectedStaff = props.staffList.find(staff => staff.id === props.staffId);
+      const {id, first_name, last_name, email, mobile, hourly_rate, status, role_id, imageAvatar, designation} = selectedStaff;
       const department_ids = selectedStaff.departments.map(department => {
         return department.id
       });
@@ -53,11 +53,14 @@ class AddNewStaff extends Component {
         departments_ids: department_ids,
         role_id: role_id,
         profile_pic: null,
-        imageAvatar: avatar,
+        imageAvatar: imageAvatar,
         password: "",
         designation: designation
       }
     }
+  }
+
+  componentDidMount() {
     this.props.onGetDepartments();
     this.props.onGetRoles();
   }
@@ -68,7 +71,7 @@ class AddNewStaff extends Component {
 
   onStaffAdd = () => {
     this.setState({profile_pic: this.props.profilePicId}, () => {
-      if (this.props.staffId === 0) {
+      if (this.props.staffId === null) {
         this.props.onAddSupportStaff({...this.state}, this.props.history)
       } else {
         this.props.onEditSupportStaff({...this.state}, this.props.history);
@@ -140,14 +143,14 @@ class AddNewStaff extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-font-weight-bold">{this.props.staffId === 0 ? "Add Staff Member" : "Edit Staff Details"}</h4>
+          <h4 className="gx-font-weight-bold">{this.props.staffId === null ? "Add Staff Member" : "Edit Staff Details"}</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/staff/all-members">Staffs</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
               <Link to="/staff/add-new-member"
-                    className="gx-text-primary">{this.props.staffId === 0 ? "Add Staff" : "Edit Staff"}</Link>
+                    className="gx-text-primary">{this.props.staffId === null ? "Add Staff" : "Edit Staff"}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <hr/>
@@ -194,7 +197,6 @@ class AddNewStaff extends Component {
                     }],
                   })(<Input type="text" onChange={(e) => {
                       this.setState({phone: e.target.value})
-
                     }}/>)}
                 </Form.Item>
                 <Form.Item label="Role">
@@ -204,7 +206,7 @@ class AddNewStaff extends Component {
                   required: true,
                   message: 'Please Select role!'
                 }] ,
-                })( <Select value={role_id} onChange={this.onSelectRole} placeholder="Select a Role">
+                })( <Select onChange={this.onSelectRole} placeholder="Select a Role">
                     {this.props.roles.map(role => {
                       return <Option value={role.id} key={role.id}>{role.name}</Option>
                     })}
@@ -227,8 +229,8 @@ class AddNewStaff extends Component {
                   }}/>
                 </Form.Item>
                 <Form.Item label="Password"
-                           extra={this.props.staffId === 0 ? "" : "Note: Leave it blank if you don't want to update password."}>
-                  {this.props.staffId === 0 ?
+                           extra={this.props.staffId === null ? "" : "Note: Leave it blank if you don't want to update password."}>
+                  {this.props.staffId === null ?
                     getFieldDecorator('password', {
                       initialValue: password,
                       rules: [{
@@ -278,7 +280,7 @@ class AddNewStaff extends Component {
                 <Button type="primary" onClick={this.onValidationCheck} style={{width: 150}}>
                   Save
                 </Button>
-              {this.props.staffId === 0 ?
+              {this.props.staffId === null ?
                 <Button type="primary" onClick={this.onReset} style={{width: 150}}>
                   Reset
                 </Button> : null}
@@ -286,7 +288,7 @@ class AddNewStaff extends Component {
                   Cancel
                 </Button>
             </span>
-            {this.props.staffId !== 0 ?
+            {this.props.staffId !== null ?
               <span>
               <Button type="danger" ghost style={{width: 150}} onClick={this.showDeleteConfirm}>Delete</Button>
             </span> : null}

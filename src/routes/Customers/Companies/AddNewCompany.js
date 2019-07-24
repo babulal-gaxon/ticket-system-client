@@ -11,22 +11,17 @@ class AddNewCompany extends Component {
         company_name: "",
         website: "",
         uploadedLogo: null,
-        company_logo: this.props.companyLogoId,
+        fileList: [],
       };
     } else {
       const selectedCompany = this.props.companiesList.find(company => company.id === this.props.companyId);
       this.state = {
         ...selectedCompany,
         logoName: selectedCompany.avatar.title,
-        uploadedLogo: null,
-        company_logo: selectedCompany.avatar.id
+        fileList: []
       };
     }
   };
-
-  componentWillReceiveProps(nextProps, nextContext) {
-    this.setState({company_logo: nextProps.companyLogoId})
-  }
 
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
@@ -37,7 +32,7 @@ class AddNewCompany extends Component {
   };
 
   onSubmitForm = () => {
-    if (this.state.uploadedLogo) {
+    if(this.state.fileList.length >0) {
       this.onLogoSelect();
     } else {
       this.onCompanyAdd();
@@ -54,7 +49,7 @@ class AddNewCompany extends Component {
   };
 
   onLogoSelect = () => {
-    let file = this.state.uploadedLogo;
+    let file = this.state.fileList[0];
     const data = new FormData();
     data.append('file', file);
     data.append('title', file.name);
@@ -72,7 +67,7 @@ class AddNewCompany extends Component {
         this.props.fetchSuccess();
         this.setState({company_logo: data.data}, () => {
           this.onCompanyAdd();
-          this.setState({uploadedLogo: null})
+          this.setState({fileList: []})
         })
       }
     }).catch(function (error) {
@@ -81,15 +76,28 @@ class AddNewCompany extends Component {
   };
 
   render() {
-    const {company_name, website, uploadedLogo, logoName} = this.state;
+    const {company_name, website, fileList, logoName} = this.state;
     const props = {
-      onRemove: () => {
-        this.setState({uploadedLogo: null})
+      onRemove: file => {
+        this.setState(state => {
+          const index = state.fileList.indexOf(file);
+          const newFileList = state.fileList.slice(-1);
+          newFileList.splice(index, 1);
+          return {
+            fileList: newFileList,
+          };
+        });
       },
       beforeUpload: file => {
-        this.setState({uploadedLogo: file});
+        if(fileList.length >0) {
+          props.onRemove(fileList[0])
+        }
+        this.setState(state => ({
+          fileList: [...state.fileList, file],
+        }));
         return false;
       },
+      fileList,
     };
     const {getFieldDecorator} = this.props.form;
     const {showAddNewModal, onToggleAddCompany, companyId} = this.props;
@@ -135,7 +143,7 @@ class AddNewCompany extends Component {
                   <Input placeholder="Choose file..." addonAfter="Browse"/>
                 </Upload>)}
             </Form.Item> :
-              <Form.Item label="Upload Logo" extra={uploadedLogo === null ? logoName : ""}>
+              <Form.Item label="Upload Logo" extra={fileList.length > 0 ? "" : logoName}>
                 <Upload {...props}>
                   <Input placeholder="Choose file..." addonAfter="Browse"/>
                 </Upload>

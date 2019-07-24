@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Button, Form, Input, Modal} from "antd";
 import PropTypes from "prop-types";
 
+const {TextArea} = Input;
+
 class EditTicketDetailsModal extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +42,7 @@ class EditTicketDetailsModal extends Component {
               }}/>
             </Form.Item>
             <Form.Item label="Description">
-              <Input type="text" value={content} onChange={(e) => {
+              <TextArea rows={4} className="gx-form-control-lg" value={content} onChange={(e) => {
                 this.setState({content: e.target.value})
               }}/>
             </Form.Item>

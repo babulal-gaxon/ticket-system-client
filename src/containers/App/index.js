@@ -55,21 +55,25 @@ class App extends PureComponent {
 
   render() {
     console.log("in render", this.props.match, this.props.history);
-    const {match, location, locale, token, initURL,initialSteps, loadingUser} = this.props;
+    const {match, location, locale, token, initURL, initialSteps, loadingUser} = this.props;
     if (loadingUser) {
       return <div className="gx-loader-view gx-h-100">
         <CircularProgress className=""/>
       </div>
     }
-      if (location.pathname === '/') {
-        if (token === null) {
+    if (location.pathname === '/') {
+      if (token === null) {
+        if (Object.keys(initialSteps).length > 0) {
           return (<Redirect to={'/initial-setup'}/>);
-        } else if (initURL === '' || initURL === '/' || initURL === '/initial-setup' || initURL === '/signin') {
-          return (<Redirect to={'/dashboard'}/>);
         } else {
-          return (<Redirect to={initURL}/>);
+          return (<Redirect to={'/signin'}/>);
         }
+      } else if (initURL === '' || initURL === '/' || initURL === '/initial-setup' || initURL === '/signin') {
+        return (<Redirect to={'/dashboard'}/>);
+      } else {
+        return (<Redirect to={initURL}/>);
       }
+    }
     const currentAppLocale = AppLocale[locale.locale];
 
     return (
@@ -82,8 +86,8 @@ class App extends PureComponent {
             <Route exact path='/signin' component={SignIn}/>
             <Route exact path='/initial-setup' component={InitialSetup}/>
             <Route exact path='/reset-password' component={ForgetPassword}/>
-            <Route exact path='/verify-password' component={VerifyPassword}/>
-            <RestrictedRoute path={`${match.url}`} token={token} initialSteps={initialSteps}  component={MainApp}/>
+            <Route path='/reset/password' component={VerifyPassword}/>
+            <RestrictedRoute path={`${match.url}`} token={token} initialSteps={initialSteps} component={MainApp}/>
           </Switch>
         </IntlProvider>
       </LocaleProvider>

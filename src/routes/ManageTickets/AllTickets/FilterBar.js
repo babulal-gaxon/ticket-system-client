@@ -140,8 +140,11 @@ class FilterBar extends Component {
   };
 
   onFilterStaff = () => {
-    const staffFilterText = this.state.staffFilterText;
-    return this.props.staffList.filter(staff => staff.first_name.indexOf(staffFilterText) !== -1);
+    return this.props.staffList.filter(staff => {
+      const name = staff.first_name + " " + staff.last_name;
+      return (name.indexOf(this.state.staffFilterText) !== -1) ?
+        staff : null
+    })
   };
 
   render() {

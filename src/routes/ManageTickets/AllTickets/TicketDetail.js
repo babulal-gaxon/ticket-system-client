@@ -9,7 +9,8 @@ import {
   onAssignStaffToTicket,
   onGetConversationList,
   onGetFilterOptions,
-  onGetTicketDetail, onNullifyCurrentTicket,
+  onGetTicketDetail,
+  onNullifyCurrentTicket,
   onSendMessage,
   onUpdateTicketPriority,
   onUpdateTickets,
@@ -57,8 +58,10 @@ class TicketDetail extends Component {
   componentWillReceiveProps(nextProps, nextContext) {
     console.log("nextProps", nextProps)
     if (nextProps.currentTicket !== null && nextProps.currentTicket !== this.props.currentTicket)
-      this.setState({currentTicket: nextProps.currentTicket,
-      ticketTags: nextProps.currentTicket.tags.map(tag => tag.title)});
+      this.setState({
+        currentTicket: nextProps.currentTicket,
+        ticketTags: nextProps.currentTicket.tags.map(tag => tag.title)
+      });
   }
 
   onPriorityChange = value => {
@@ -80,7 +83,7 @@ class TicketDetail extends Component {
   };
 
   onSubmitMessage = () => {
-    if(this.state.message !== '') {
+    if (this.state.message !== '') {
       if (this.state.fileList.length > 0) {
         this.handleUpload()
       } else {
@@ -166,11 +169,10 @@ class TicketDetail extends Component {
       },
       fileList,
     };
-    console.log("current ticket", this.props.currentTicket, this.state.currentTicket)
     const {filterData, conversation} = this.props;
     return (
       <div className="gx-main-layout-content">
-        {currentTicket ?<Widget styleName="gx-card-filter">
+        {currentTicket ? <Widget styleName="gx-card-filter">
           <h4 className="gx-font-weight-bold">Tickets</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
@@ -204,7 +206,7 @@ class TicketDetail extends Component {
               <h2 className="gx-my-2 gx-font-weight-bold">{currentTicket.title}</h2>
               <div className="gx-mb-3">
                 <span>created at: {moment(currentTicket.created_at.date).format("LL")}</span>
-                <span> updated at: {moment(currentTicket.updated_at.date).format("LL")}</span>
+                <span>  Last updated at: {moment(currentTicket.updated_at.date).fromNow()}</span>
               </div>
               <div className="gx-py-3">{currentTicket.content}</div>
               {currentTicket.attachments.length > 0 ?
@@ -212,7 +214,8 @@ class TicketDetail extends Component {
                   <div className="gx-mb-3">Attachments</div>
                   <div className="gx-d-flex">
                     {currentTicket.attachments.map(attachment => {
-                      return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5" key={attachment.id}>
+                      return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5"
+                                  key={attachment.id}>
                         <Widget styleName="gx-card-filter gx-mr-2">
                           <div>{attachment.title}</div>
                           <div>{attachment.size / 1000} kb</div>
@@ -235,7 +238,7 @@ class TicketDetail extends Component {
                                 onKeyUp={this.onHandleKeyPress}
                                 onChange={(e) => this.setState({message: e.target.value})}
                                 value={message}
-                                rows={2}
+                                rows={4}
                                 placeholder="Type and hit enter to send message"/>
                     </div>
                   </div>
@@ -276,12 +279,13 @@ class TicketDetail extends Component {
                                  onAssignStaff={this.props.onAssignStaffToTicket}
                                  ticketId={currentTicket.id}
                                  assignedTo={currentTicket.assigned_to}/>
-                <span className="gx-mb-2">Tags</span>
-                <Select mode="tags" style={{width: '100%'}} placeholder="Type to add tags" value={ticketTags}
+                <span>Tags</span>
+                <Select mode="tags" style={{width: '100%'}} className="gx-mt-3" placeholder="Type to add tags" value={ticketTags}
                         onChange={this.onEditTags}/>
                 <div className="gx-my-3">Attachments</div>
                 {currentTicket.attachments.length > 0 ? currentTicket.attachments.map(attachment => {
-                  return <Avatar shape="square" icon="user" key={attachment.id} src={attachment.src} className="gx-mr-2 gx-size-100"/>
+                  return <Avatar shape="square" icon="user" key={attachment.id} src={attachment.src}
+                                 className="gx-mr-2 gx-size-100"/>
                 }) : <div>No attachments added with this ticket.</div>}
               </div>
             </Col>

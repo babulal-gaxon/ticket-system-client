@@ -53,11 +53,11 @@ class Addresses extends Component {
 export default Addresses;
 
 Addresses.defaultProps = {
-  countriesList: [],
+  countriesList: {},
   generalAddress: [],
 };
 
 Addresses.propTypes = {
-  countriesList: PropTypes.array,
+  countriesList: PropTypes.object,
   generalAddress: PropTypes.array
 };

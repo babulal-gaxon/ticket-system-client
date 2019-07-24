@@ -15,6 +15,7 @@ import {
   onSaveGeneralDetails
 } from "../../../appRedux/actions/GeneralSettings";
 import PropTypes from "prop-types";
+import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 
 const {TabPane} = Tabs;
 
@@ -50,7 +51,8 @@ class GeneralSettings extends Component {
               <Link to="/settings/general-settings">General Settings</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item className="gx-text-primary">
-              <Link to="/settings/general-settings" className="gx-text-primary">{key === "1" ? "Setup" : "Addresses"}</Link>
+              <Link to="/settings/general-settings"
+                    className="gx-text-primary">{key === "1" ? "Setup" : "Addresses"}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <Tabs defaultActiveKey="1" size="large" onChange={this.onTabChange}>
@@ -60,7 +62,10 @@ class GeneralSettings extends Component {
                               companyLogo={this.props.companyLogo}
                               onAddCompanyLogo={this.props.onAddCompanyLogo}
                               onAddCompanyFavicon={this.props.onAddCompanyFavicon}
-                              favicon={this.props.favicon}/>
+                              favicon={this.props.favicon}
+                              fetchSuccess={this.props.fetchSuccess}
+                              fetchStart={this.props.fetchStart}
+                              fetchError={this.props.fetchError}/>
             </TabPane>
             <TabPane tab="Addresses" key="2">
               <Addresses countriesList={this.props.countriesList}
@@ -87,11 +92,14 @@ export default connect(mapStateToProps, {
   onSaveGeneralAddress,
   onGetGeneralAddress,
   onAddCompanyLogo,
-  onAddCompanyFavicon
+  onAddCompanyFavicon,
+  fetchSuccess,
+  fetchStart,
+  fetchError
 })(GeneralSettings);
 
 GeneralSettings.defaultProps = {
-  countriesList: [],
+  countriesList: {},
   generalSettingsData: null,
   generalAddress: [],
   companyLogo: null,
@@ -99,7 +107,7 @@ GeneralSettings.defaultProps = {
 };
 
 GeneralSettings.propTypes = {
-  countriesList: PropTypes.array,
+  countriesList: PropTypes.object,
   generalSettingsData: PropTypes.object,
   generalAddress: PropTypes.array,
   companyLogo: PropTypes.number,

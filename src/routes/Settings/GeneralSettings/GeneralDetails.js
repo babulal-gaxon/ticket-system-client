@@ -1,38 +1,28 @@
 import React, {Component} from 'react';
-import {Button, Divider, Form, Input} from "antd/lib/index";
+import {Button, Divider, Form, Input, Upload} from "antd/lib/index";
 import InfoView from "../../../components/InfoView";
 import PropTypes from "prop-types";
+import axios from 'util/Api'
 
 class GeneralDetails extends Component {
   constructor(props) {
     super(props);
-    if (this.props.generalSettingsData === null) {
-      this.state = {
-        name: "",
-        url: "",
-        logo: null,
-        favicon: null,
-        allowed_ext: "",
-        file_upload_max_size: null,
-        email: ""
-      }
-    } else {
-      const {name, website, file_upload_max_size, email, logo, favicon, allowed_ext} = this.props.generalSettingsData;
-      this.state = {
-        name: name,
-        url: website,
-        logo: logo,
-        favicon: favicon,
-        allowed_ext: allowed_ext,
-        file_upload_max_size: file_upload_max_size,
-        email: email
-      }
+    this.state = {
+      name: "",
+      url: "",
+      logo: null,
+      favicon: null,
+      allowed_ext: "",
+      file_upload_max_size: null,
+      email: "",
+      logoList: [],
+      faviconList: []
     }
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
     if (nextProps.generalSettingsData) {
-      const {name, allowed_ext, file_upload_max_size, email, logo, favicon, website} = nextProps.generalSettingsData;
+      const {name, allowed_ext, file_upload_max_size, email, logo, favicon, website, company_logo, company_favicon} = nextProps.generalSettingsData;
       if (JSON.stringify(nextProps.generalSettingsData) !== JSON.stringify(this.props.generalSettingsData)) {
         this.setState({
           name: name,
@@ -41,7 +31,9 @@ class GeneralDetails extends Component {
           favicon: favicon,
           allowed_ext: allowed_ext,
           file_upload_max_size: file_upload_max_size,
-          email: email
+          email: email,
+          logoName: company_logo.title,
+          faviconName: company_favicon.title
         })
       }
     }
@@ -50,32 +42,101 @@ class GeneralDetails extends Component {
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.setState({logo: this.props.companyLogo, favicon: this.props.favicon}, () => {
-          this.props.onSaveGeneralDetails({...this.state});
-        });
+        this.onLogoSelect();
       }
     });
   };
 
-  onLogoSelect = (e) => {
-    let file = e.target.files[0];
+  onLogoSelect = () => {
+    let file = this.state.logoList[0];
     const data = new FormData();
     data.append('file', file);
     data.append('title', file.name);
-    this.props.onAddCompanyLogo(data);
+    this.onAddLogo(data, "logo");
   };
 
-  onFaviconSelect = (e) => {
-    let file = e.target.files[0];
+  onFaviconSelect = () => {
+    let file = this.state.faviconList[0];
     const data = new FormData();
     data.append('file', file);
     data.append('title', file.name);
-    this.props.onAddCompanyFavicon(data);
+    this.onAddLogo(data, "favicon");
+  };
+
+  onAddLogo = (file, key) => {
+    this.props.fetchStart();
+    axios.post("/uploads/temporary/media", file, {
+      headers: {
+        'Content-Type': "multipart/form-data"
+      }
+    }).then(({data}) => {
+      if (data.success) {
+        this.props.fetchSuccess();
+        if (key === "logo") {
+          this.setState({logo: data.data}, () => {
+            this.onFaviconSelect();
+            this.setState({logoList: []})
+          })
+        } else {
+          this.setState({favicon: data.data}, () => {
+            this.props.onSaveGeneralDetails({...this.state});
+            this.setState({faviconList: []})
+          })
+        }
+      }
+    }).catch(function (error) {
+      this.props.fetchError(error.message)
+    });
   };
 
   render() {
-    const {name, url, email, allowed_ext, file_upload_max_size} = this.state;
+    const {name, url, email, allowed_ext, file_upload_max_size, logoList, faviconList, logoName, faviconName} = this.state;
     const {getFieldDecorator} = this.props.form;
+    const propsLogo = {
+      onRemove: file => {
+        this.setState(state => {
+          const index = state.logoList.indexOf(file);
+          const newFileList = state.logoList.slice(-1);
+          newFileList.splice(index,1);
+          return {
+            logoList: newFileList,
+          };
+        });
+      },
+      beforeUpload: file => {
+        if(logoList.length >0) {
+          propsLogo.onRemove(logoList[0])
+        }
+        this.setState(state => ({
+          logoList: [...state.logoList, file],
+        }));
+        return false;
+      },
+      logoList,
+    };
+    const propsFavicon = {
+      onRemove: file => {
+        this.setState(state => {
+          const index = state.faviconList.indexOf(file);
+          const newFileList = state.faviconList.slice(-1);
+          newFileList.splice(index, 1);
+          return {
+            faviconList: newFileList,
+          };
+        });
+      },
+      beforeUpload: file => {
+        if (faviconList.length > 0) {
+          propsFavicon.onRemove(faviconList[0])
+        }
+        this.setState(state => ({
+          faviconList: [...state.faviconList, file],
+        }));
+
+        return false;
+      },
+      faviconList,
+    };
     return (
       <div className="gx-main-layout-content">
         <Form layout="vertical" style={{width: "50%"}}>
@@ -95,16 +156,32 @@ class GeneralDetails extends Component {
               this.setState({url: e.target.value})
             }}/>)}
           </Form.Item>
-          <Form.Item label="Company Logo" extra="Size should be 250X100px, Maximum image size 50kb">
-            {getFieldDecorator('logo', {
-              rules: [{required: true, message: 'Please Select Logo!'}],
-            })(<Input type="file" placeholder="Choose file..." addonAfter="Browse" onChange={this.onLogoSelect}/>)}
-          </Form.Item>
-          <Form.Item label="Favicon" extra="Size should be 40X40px, Maximum image size 50kb">
-            {getFieldDecorator('favicon', {
-              rules: [{required: true, message: 'Please Select Favicon!'}],
-            })(<Input type="file" placeholder="Choose file..." addonAfter="Browse" onChange={this.onFaviconSelect}/>)}
-          </Form.Item>
+          {this.props.generalSettingsData === null ?
+            <Form.Item label="Company Logo" extra="Size should be 250X100px, Maximum image size 50kb">
+              {getFieldDecorator('logo', {
+                rules: [{required: true, message: 'Please Select Logo!'}],
+              })(<Upload {...propsLogo}>
+                <Input placeholder="Choose file..." addonAfter="Browse"/>
+              </Upload>)}
+            </Form.Item> :
+            <Form.Item label="Upload Logo" extra={logoList.length > 0 ? "" : logoName}>
+              <Upload {...propsLogo}>
+                <Input placeholder="Choose file..." addonAfter="Browse"/>
+              </Upload>
+            </Form.Item>}
+          {this.props.generalSettingsData === null ?
+            <Form.Item label="Favicon" extra="Size should be 40X40px, Maximum image size 50kb">
+              {getFieldDecorator('favicon', {
+                rules: [{required: true, message: 'Please Select Favicon!'}],
+              })(<Upload {...propsFavicon}>
+                <Input placeholder="Choose file..." addonAfter="Browse"/>
+              </Upload>)}
+            </Form.Item> :
+            <Form.Item label="Upload Logo" extra={faviconList.length > 0 ? "" : faviconName}>
+              <Upload {...propsFavicon}>
+                <Input placeholder="Choose file..." addonAfter="Browse"/>
+              </Upload>
+            </Form.Item>}
           <Form.Item label="Email">
             {getFieldDecorator('email', {
               initialValue: email,
@@ -134,7 +211,8 @@ class GeneralDetails extends Component {
               rules: [
                 {
                   required: true,
-                  message: 'Please Select File upload size!'},
+                  message: 'Please Select File upload size!'
+                },
                 {
                   pattern: /^[0-9\b]+$/,
                   message: 'Please enter only numerical values',

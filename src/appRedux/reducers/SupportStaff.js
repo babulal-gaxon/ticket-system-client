@@ -14,7 +14,7 @@ import {
 
 const initialState = {
   staffList: [],
-  staffId: 0,
+  staffId: null,
   totalItems: null,
   profilePicId: "",
   staffNotes: [],

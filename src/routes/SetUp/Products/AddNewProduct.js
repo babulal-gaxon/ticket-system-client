@@ -14,12 +14,11 @@ class AddNewProduct extends Component {
         desc: "",
         support_enable: 1,
         logo: null,
-        uploadedLogo: null,
-        logoName: ""
+        fileList: [],
       };
     } else {
       const selectedProduct = this.props.productsList.find(product => product.id === this.props.productId);
-      this.state = {...selectedProduct, logoName: selectedProduct.avatar.title};
+      this.state = {...selectedProduct, logoName: selectedProduct.avatar.title, fileList: [], logo: null};
     }
   };
 
@@ -32,7 +31,7 @@ class AddNewProduct extends Component {
   };
 
   onSubmitForm = () => {
-    if(this.state.uploadedLogo) {
+    if(this.state.fileList.length >0) {
       this.onLogoSelect();
     }
     else {
@@ -51,7 +50,7 @@ class AddNewProduct extends Component {
   };
 
   onLogoSelect = () => {
-    let file = this.state.uploadedLogo;
+    let file = this.state.fileList[0];
     const data = new FormData();
     data.append('file', file);
     data.append('title', file.name);
@@ -69,7 +68,7 @@ class AddNewProduct extends Component {
         this.props.fetchSuccess();
         this.setState({logo: data.data}, () => {
           this.onProductAdd();
-          this.setState({uploadedLogo: null})
+          this.setState({fileList: []})
         })
       }
     }).catch(function (error) {
@@ -78,18 +77,31 @@ class AddNewProduct extends Component {
   };
 
   render() {
+    const {title, support_enable, desc, fileList, logoName} = this.state;
+    const {getFieldDecorator} = this.props.form;
+    const {showAddModal, onToggleAddProduct, productId} = this.props;
     const props = {
-      onRemove: () => {
-        this.setState({uploadedLogo: null})
+      onRemove: file => {
+        this.setState(state => {
+          const index = state.fileList.indexOf(file);
+          const newFileList = state.fileList.slice(-1);
+          newFileList.splice(index, 1);
+          return {
+            fileList: newFileList,
+          };
+        });
       },
       beforeUpload: file => {
-        this.setState({uploadedLogo: file});
+        if(fileList.length >0) {
+          props.onRemove(fileList[0])
+        }
+        this.setState(state => ({
+          fileList: [...state.fileList, file],
+        }));
         return false;
       },
+      fileList,
     };
-    const {getFieldDecorator} = this.props.form;
-    const {title, support_enable, desc, uploadedLogo, logoName} = this.state;
-    const {showAddModal, onToggleAddProduct, productId} = this.props;
 
     return (
       <div className="gx-main-layout-content">
@@ -127,7 +139,7 @@ class AddNewProduct extends Component {
               }}/>)}
             </Form.Item>
             {productId === null ?
-              <Form.Item label="Upload Logo" >
+              <Form.Item label="Upload Logo">
                 {getFieldDecorator('uploadedLogo',
                   {
                     rules: [{required: true, message: 'Please Upload Company Logo!'}],
@@ -136,7 +148,7 @@ class AddNewProduct extends Component {
                     <Input placeholder="Choose file..." addonAfter="Browse"/>
                   </Upload>)}
               </Form.Item> :
-              <Form.Item label="Upload Logo" extra={uploadedLogo === null ? logoName : ""}>
+              <Form.Item label="Upload Logo" extra={fileList.length > 0 ? "" : logoName}>
                 <Upload {...props}>
                   <Input placeholder="Choose file..." addonAfter="Browse"/>
                 </Upload>
