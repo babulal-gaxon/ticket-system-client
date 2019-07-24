@@ -36,7 +36,6 @@ class App extends Component {
     if (this.props.initURL === '') {
       this.props.setInitUrl(this.props.history.location.pathname);
     }
-    console.log("this.props.token", this.props.token);
     if (this.props.token) {
       axios.defaults.headers.common['Authorization'] = "Bearer " + this.props.token;
     }
@@ -51,7 +50,6 @@ class App extends Component {
 
   render() {
     const {match, location, locale, token, initURL, loadingUser} = this.props;
-
     if (location.pathname === '/') {
       if (token === null) {
         return (<Redirect to={'/signin'}/>);
@@ -78,7 +76,7 @@ class App extends Component {
             <Route exact path='/signin' component={SignIn}/>
             <Route exact path='/signup' component={SignUp}/>
             <Route exact path='/forget-password' component={ForgetPassword}/>
-            <Route  path='customer/panel/reset/password/' component={VerifyPassword}/>
+            <Route  path='/customer/panel/reset/password/' component={VerifyPassword}/>
             <RestrictedRoute path={`${match.url}`} token={token} component={MainApp}/>
           </Switch>
         </IntlProvider>

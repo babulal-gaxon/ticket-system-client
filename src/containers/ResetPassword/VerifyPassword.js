@@ -2,9 +2,9 @@ import React from "react";
 import {Button, Form, Input} from "antd";
 import {connect} from "react-redux";
 import qs from "qs";
-import {onUserSignIn} from "../../appRedux/actions/Auth";
 import IntlMessages from "util/IntlMessages";
 import InfoView from "../../components/InfoView";
+import {onSetNewPassword} from "../../appRedux/actions";
 
 class VerifyPassword extends React.Component {
   constructor(props) {
@@ -72,7 +72,7 @@ class VerifyPassword extends React.Component {
                       required: true, type: 'email', message: 'The input is not valid E-mail!',
                     }],
                   })(
-                    <Input placeholder="Email" onChange={(e) => this.setState({email:e.target.value})}/>
+                    <Input placeholder="Email" onChange={(e) => this.setState({email: e.target.value})}/>
                   )}
                 </Form.Item>
                 <Form.Item label="Enter new Password" hasFeedback>
@@ -124,4 +124,4 @@ const mapStateToProps = ({auth}) => {
   return {token}
 };
 
-export default connect(mapStateToProps, {onUserSignIn})(VerifyPassword);
+export default connect(mapStateToProps, {onSetNewPassword})(VerifyPassword);
