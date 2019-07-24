@@ -27,6 +27,10 @@ class AddCustomerAddress extends Component {
     this.setState({country_id: value})
   };
 
+  handleSearch = value => {
+    return Object.keys(this.props.countriesList).filter(country => this.props.countriesList[country].indexOf(value) !== -1)
+  };
+
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
@@ -89,7 +93,17 @@ class AddCustomerAddress extends Component {
                         message: 'Please Enter Country Name!'
                       }
                     ],
-                  })(<Select style={{width: "100%"}} onChange={this.onCountrySelect}>
+                  })(<Select
+                    style={{width: "100%"}}
+                    showSearch
+                    placeholder="Type to search Country"
+                    defaultActiveFirstOption={false}
+                    showArrow={false}
+                    filterOption={false}
+                    onSearch={this.handleSearch}
+                    onChange={this.onCountrySelect}
+                    notFoundContent={null}
+                  >
                     {Object.keys(this.props.countriesList).map(country => {
                       return <Option value={country} key={country}>{this.props.countriesList[country]}</Option>
                     })}

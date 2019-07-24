@@ -80,10 +80,12 @@ class TicketDetail extends Component {
   };
 
   onSubmitMessage = () => {
-    if (this.state.fileList.length > 0) {
-      this.handleUpload()
-    } else {
-      this.onSendMessage();
+    if(this.state.message !== '') {
+      if (this.state.fileList.length > 0) {
+        this.handleUpload()
+      } else {
+        this.onSendMessage();
+      }
     }
   };
 

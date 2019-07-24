@@ -89,13 +89,13 @@ class AddNewProduct extends Component {
     };
     const {getFieldDecorator} = this.props.form;
     const {title, support_enable, desc, uploadedLogo, logoName} = this.state;
-    const {showAddModal, onToggleAddProduct} = this.props;
+    const {showAddModal, onToggleAddProduct, productId} = this.props;
 
     return (
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddModal}
-          title={this.props.productId === null ? "Add New Product" : "Edit Product Details"}
+          title={productId === null ? "Add New Product" : "Edit Product Details"}
           onCancel={() => onToggleAddProduct()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -126,14 +126,21 @@ class AddNewProduct extends Component {
                 this.setState({desc: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Upload Logo" extra={uploadedLogo ? "" : logoName}>
-              {getFieldDecorator('uploadedLogo', {
-                rules: [{required: true, message: 'Please Upload Company Logo!'}],
-              })(
+            {productId === null ?
+              <Form.Item label="Upload Logo" >
+                {getFieldDecorator('uploadedLogo',
+                  {
+                    rules: [{required: true, message: 'Please Upload Company Logo!'}],
+                  })(
+                  <Upload {...props}>
+                    <Input placeholder="Choose file..." addonAfter="Browse"/>
+                  </Upload>)}
+              </Form.Item> :
+              <Form.Item label="Upload Logo" extra={uploadedLogo === null ? logoName : ""}>
                 <Upload {...props}>
                   <Input placeholder="Choose file..." addonAfter="Browse"/>
-                </Upload>)}
-            </Form.Item>
+                </Upload>
+              </Form.Item>}
             <Form.Item label="Support Enable">
               <Radio.Group value={support_enable} onChange={(e) => {
                 this.setState({support_enable: e.target.value})

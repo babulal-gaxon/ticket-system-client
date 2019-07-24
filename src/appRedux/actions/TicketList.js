@@ -282,7 +282,7 @@ export const onAddAttachments = (imageFile) => {
       if (data.success) {
         dispatch({type: ADD_ATTACHMENTS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Profile Picture has been added successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: "The Attachment has been added successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
