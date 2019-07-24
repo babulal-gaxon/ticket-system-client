@@ -48,7 +48,7 @@ class AddNewStaff extends Component {
         last_name: last_name,
         email: email,
         mobile: mobile,
-        hourly_rate: hourly_rate,
+        hourly_rate: parseInt(hourly_rate),
         account_status: status,
         departments_ids: department_ids,
         role_id: role_id,

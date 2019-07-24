@@ -349,29 +349,29 @@ class Permissions {
 
   //Company Permissions
   static canCompanyAdd = () => {
-    if (this.permissions.companies) {
-      return this.permissions.companies.filter((key) => key.name === "companies.store").length > 0
+    if (this.permissions.customers) {
+      return this.permissions.customers.filter((key) => key.name === "customers.companies.store").length > 0
     }
     return false;
   };
 
   static canCompanyEdit = () => {
-    if (this.permissions.companies) {
-      return this.permissions.companies.filter((key) => key.name === "companies.update").length > 0
+    if (this.permissions.customers) {
+      return this.permissions.customers.filter((key) => key.name === "customers.companies.update").length > 0
     }
     return false;
   };
 
   static canCompanyView = () => {
-    if (this.permissions.companies) {
-      return this.permissions.companies.filter((key) => key.name === "companies.index").length > 0
+    if (this.permissions.customers) {
+      return this.permissions.customers.filter((key) => key.name === "customers.companies.index").length > 0
     }
     return false;
   };
 
   static canCompanyDelete = () => {
-    if (this.permissions.companies) {
-      return this.permissions.companies.filter((key) => key.name === "companies.destroy").length > 0
+    if (this.permissions.customers) {
+      return this.permissions.customers.filter((key) => key.name === "customers.companies.destroy").length > 0
     }
     return false;
   };
