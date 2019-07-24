@@ -24,7 +24,7 @@ class ThirdStep extends Component {
       country_id: "",
       zip_code: "",
       uploadedLogo: null,
-      cpp_url: ""
+      cpp_url: window.location.origin
     }
   }
 
@@ -98,7 +98,7 @@ class ThirdStep extends Component {
     const {getFieldDecorator} = this.props.form;
     const {name, url, phone, email, address_line_1, address_line_2, city, state, country_id, zip_code, cpp_url} = this.state;
     return (
-      <div className="gx-flex-column gx-mt-3" style={{height: 700, overflow: "scroll"}}>
+      <div className="gx-flex-column gx-mt-3" >
         <Form layout="vertical" style={{width: "70%"}}>
           <div className="gx-d-flex gx-flex-row">
             <Col sm={12} xs={24} className="gx-pl-0">
@@ -211,7 +211,7 @@ class ThirdStep extends Component {
                     }],
                 })(<Select style={{width: "100%"}} onChange={this.onCountrySelect}>
                   {Object.keys(this.props.countriesList).map(country => {
-                    return <Option value={country}>{this.props.countriesList[country]}</Option>
+                    return <Option value={country} key={country}>{this.props.countriesList[country]}</Option>
                   })}
                 </Select>)}
               </Form.Item>
@@ -255,7 +255,6 @@ class ThirdStep extends Component {
             }}/>)}
           </Form.Item>
           <div className="gx-d-flex">
-            <Button type="default" onClick={() => this.props.onMoveToPrevStep()}>Previous</Button>
             <Button type="primary" onClick={this.onValidationCheck}>Next</Button>
             <Button type="link" onClick={() => this.props.onMoveToNextStep()}>Skip</Button>
           </div>

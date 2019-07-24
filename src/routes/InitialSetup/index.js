@@ -24,6 +24,7 @@ class InitialSetup extends Component {
   };
 
   render() {
+
     const {current} = this.state;
     return (
       <div className="gx-main-layout-content" style={{height:"100%",overflow:"scroll"}}>

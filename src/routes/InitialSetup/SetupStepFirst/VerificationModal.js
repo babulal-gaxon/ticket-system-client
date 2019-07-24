@@ -13,7 +13,6 @@ class VerificationModal extends Component {
     this.props.form.validateFields(err => {
       if (!err) {
         this.props.onVerifyEmail(this.state.pin_number);
-        this.props.onClosePinModal();
       }
     });
   };
@@ -26,29 +25,38 @@ class VerificationModal extends Component {
         <Modal
           maskClosable={false}
           visible={showPinModal}
-          title="Reset Password"
           onCancel={() => onClosePinModal()}
           footer={[
+            null,
+            null,
+          ]}
+        >
+          <div style={{padding:45,textAlign:"center"}}>
+            {/*<I></I>*/}
+            <h2 style={{fontSize:28}}>Verify Your Email</h2>
+            <p style={{textAlign:"center",color: "#8C8C8C"}} className="gx-py-5">Enter the 6 digit verification code sent to your email address super@example.com to verify your account.</p>
+            <Form layout="vertical" style={{textAlign:"center"}}>
+              <label >Enter Verification Code <sup className="gx-text-red">*</sup></label>
+              <Form.Item hasFeedback className="gx-py-4">
+                {getFieldDecorator('pin_number', {
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Please input the Pin!',
+                    },
+                  ],
+                })(<Input onChange={(e) => this.setState({pin_number: e.target.value})}/>)}
+              </Form.Item>
+            </Form>
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
               Verify
             </Button>,
             <Button key="cancel" onClick={() => onClosePinModal()}>
-              Cancel
+              Back
             </Button>,
-          ]}>
-          <Form layout="vertical">
-            <Form.Item label="Pin" hasFeedback>
-              {getFieldDecorator('pin_number', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Please input the Pin!',
-                  },
-                ],
-              })(<Input onChange={(e) => this.setState({pin_number: e.target.value})}/>)}
-            </Form.Item>
-          </Form>
-          <span onClick={() => this.props.onResendPin()}>Resend Pin</span>
+            <p>Not received email? <Button type="link" className="gx-my-0" onClick={() => this.props.onResendPin()}>Resend</Button> </p>
+          </div>
+
         </Modal>
       </div>
     );

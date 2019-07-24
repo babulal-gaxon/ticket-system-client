@@ -217,7 +217,7 @@ class AddNewStaff extends Component {
                       pattern: /^[0-9\b]+$/,
                       message: 'Please enter only numerical values',
                     }]
-                  })(<Input type="text" addonAfter={<div>$</div>} value={hourly_rate} onChange={(e) => {
+                  })(<Input type="text" addonAfter={<div>$</div>} onChange={(e) => {
                     this.setState({hourly_rate: e.target.value})
                   }}/>)}
                 </Form.Item>
@@ -246,7 +246,6 @@ class AddNewStaff extends Component {
                       this.setState({password: e.target.value})
                     }}/>}
                 </Form.Item>
-
                 <Form.Item label="Department">
                   <Select
                     mode="multiple"
@@ -258,7 +257,6 @@ class AddNewStaff extends Component {
                     {deptOptions}
                   </Select>
                 </Form.Item>
-
                 <Form.Item label="Status">
                   <Radio.Group value={account_status} onChange={(e) => {
                     this.setState({account_status: e.target.value})

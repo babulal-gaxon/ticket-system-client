@@ -163,11 +163,6 @@ class SidebarContent extends Component {
                 </Menu.Item>
               </SubMenu>
 
-              <Menu.Item key="initialSetup">
-                <Link to="/initial-setup"><i className="icon icon-lock-screen"/>
-                  <IntlMessages id="sidebar.dashboard.initial.setup"/></Link>
-              </Menu.Item>
-
             </Menu>
 
           </div>

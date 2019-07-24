@@ -65,7 +65,7 @@ export const onUserSignIn = ({email, password}) => {
     ).then(({data}) => {
       console.info("userSignIn: ", data);
       if (data.success) {
-        localStorage.setItem("token", JSON.stringify(data.token));
+        localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.data));
         axios.defaults.headers.common['access-token'] = "Bearer " + data.token;
         dispatch({type: FETCH_SUCCESS});
@@ -152,11 +152,7 @@ export const onResetPassword = ({email}) => {
     ).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        localStorage.setItem("token", JSON.stringify(data.token.access_token));
-        axios.defaults.headers.common['access-token'] = "Bearer " + data.token.access_token;
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: USER_TOKEN_SET, payload: data.token.access_token});
-        dispatch({type: USER_DATA, payload: data.user});
         dispatch({type: SHOW_MESSAGE, payload: "Reset password link has been successfully sent to your email address"});
       } else if (data.message) {
         console.info("payload: data.error", data.message);
@@ -179,6 +175,7 @@ export const onCheckInitialSetup = () => {
       console.info("data:", data);
       if (data.success) {
         console.log("initial Setup", data);
+        dispatch({type: INITIAL_SETUP_STEPS, payload: data.data});
         dispatch({type: INITIAL_SETUP_STEPS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
       } else if (data.message) {

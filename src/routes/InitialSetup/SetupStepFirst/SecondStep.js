@@ -8,6 +8,7 @@ import {
   onVerifyByPin
 } from "../../../appRedux/actions/InitialSetup";
 import VerificationModal from "./VerificationModal";
+import InfoView from "../../../components/InfoView";
 
 class SecondStep extends Component {
   constructor(props) {
@@ -52,12 +53,17 @@ class SecondStep extends Component {
   };
 
   onVerifyEmail = (pin) => {
-    this.props.onVerifyByPin({pin_number: pin, email: this.state.email},this.props.onMoveToNextStep)
+    this.props.onVerifyByPin({pin_number: pin, email: this.state.email});
+    if(this.props.flag) {
+      this.props.onMoveToNextScreen(this.props.flag);
+    }
   };
 
   onRequestPinAgain = () => {
     this.props.onResendPin({email: this.state.email})
   };
+
+
 
   render() {
     const {getFieldDecorator} = this.props.form;
@@ -143,16 +149,14 @@ class SecondStep extends Component {
           <div className="gx-d-flex">
             <Button type="default" onClick={() => this.props.onMoveToPrevStep()}>Previous</Button>
             <Button type="primary" onClick={this.onValidationCheck}>Next</Button>
-            <Button type="link" onClick={() => this.props.onMoveToNextStep()}>Skip</Button>
           </div>
         </Form>
         {this.props.showPinModal ? <VerificationModal showPinModal={this.props.showPinModal}
                                                       onClosePinModal={this.props.onClosePinModal}
                                                       onVerifyEmail={this.onVerifyEmail}
-                                                      onClosePinModal={this.props.onClosePinModal}
                                                       onResendPin={this.onRequestPinAgain}
         /> : null}
-
+        <InfoView/>
       </div>
     );
   }
@@ -161,8 +165,8 @@ class SecondStep extends Component {
 SecondStep = Form.create({})(SecondStep);
 
 const mapStateToProps = ({initialSetup}) => {
-  const {showPinModal} = initialSetup;
-  return {showPinModal};
+  const {showPinModal, flag} = initialSetup;
+  return {showPinModal, flag};
 };
 
 

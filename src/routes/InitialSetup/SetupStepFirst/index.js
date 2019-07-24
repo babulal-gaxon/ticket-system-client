@@ -18,10 +18,7 @@ const {Step} = Steps;
 class SetupStepFirst extends Component {
   constructor(props) {
     super(props);
-    console.log("Object.keys(props.initialSteps)", Object.keys(props.initialSteps).length)
-    if(Object.keys(props.initialSteps).length > 0) {
-    Object.keys(props.initialSteps).map(step => {
-      console.log("step", step)
+    if (Object.keys(props.initialSteps).length > 0) {
       if (Object.keys(props.initialSteps).length > 2) {
         this.state = {
           current: 1,
@@ -31,11 +28,9 @@ class SetupStepFirst extends Component {
           current: 2
         };
       }
-    })
-  }
-    else {
-        this.state = {
-          current: 3
+    } else {
+      this.state = {
+        current: 3
       }
     }
   }
@@ -51,8 +46,12 @@ class SetupStepFirst extends Component {
     this.setState({current});
   };
 
+  onMoveToNextScreen = (flag) => {
+    this.setState({current: flag})
+  };
+
   render() {
-    console.log("in index file", this.state.current)
+console.log("in render of step", this.props.flag)
     const {current} = this.state;
     return (
       <div className="gx-main-layout-content">
@@ -60,7 +59,7 @@ class SetupStepFirst extends Component {
           <Step title="Database Setup"
                 description={current === 1 ? <StepFirst onMoveToNextStep={this.onMoveToNextStep}/> : null}/>
           <Step title="Setup Super Admin Account"
-                description={current === 2 ? <SecondStep onMoveToNextStep={this.onMoveToNextStep}
+                description={current === 2 ? <SecondStep onMoveToNextScreen={this.onMoveToNextScreen}
                                                          onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
           <Step title="General Setup" description={current === 3 ? <ThirdStep onMoveToNextStep={this.onMoveToNextStep}
                                                                               onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
@@ -87,9 +86,10 @@ class SetupStepFirst extends Component {
   }
 }
 
-const mapStateToProps = ({auth}) => {
+const mapStateToProps = ({auth, initialSetup}) => {
   const {initialSteps} = auth;
-  return {initialSteps};
+  const {flag} = initialSetup;
+  return {initialSteps, flag};
 };
 
 export default connect(mapStateToProps, {

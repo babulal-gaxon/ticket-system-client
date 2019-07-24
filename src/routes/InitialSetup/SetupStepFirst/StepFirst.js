@@ -42,7 +42,7 @@ class StepFirst extends Component {
               <Form.Item label="Password">
                 {getFieldDecorator('password', {
                   initialValue: password,
-                })(<Input type="text" onChange={(e) => this.setState({password: e.target.value})}/>)}
+                })(<Input.Password type="text" onChange={(e) => this.setState({password: e.target.value})}/>)}
               </Form.Item>
             </Col>
           </div>
@@ -64,7 +64,6 @@ class StepFirst extends Component {
           </div>
           <div className="gx-d-flex">
             <Button type="primary" onClick={this.onValidationCheck}>Next</Button>
-            <Button type="link" onClick={() => this.props.onMoveToNextStep()}>Skip</Button>
           </div>
         </Form>
         <InfoView/>

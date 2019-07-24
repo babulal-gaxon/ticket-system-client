@@ -6,7 +6,7 @@ import {
   USER_DATA,
   USER_TOKEN_SET
 } from "../../constants/ActionTypes";
-import {ADD_ADMIN_INFO, ADD_DATABASE_INFO, ADD_GENERAL_INFO, OPEN_PIN_MODAL} from "../../constants/InitialSetup"
+import {ADD_ADMIN_INFO, ADD_GENERAL_INFO, OPEN_PIN_MODAL, STEP_VALUE} from "../../constants/InitialSetup"
 import axios from 'util/Api'
 
 export const onSendDatabaseInfo = (info, nextStep) => {
@@ -16,8 +16,6 @@ export const onSendDatabaseInfo = (info, nextStep) => {
     ).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
-        dispatch({type: ADD_DATABASE_INFO, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Database information has been saved successfully"});
         nextStep();
@@ -31,7 +29,7 @@ export const onSendDatabaseInfo = (info, nextStep) => {
   }
 };
 
-export const onSendSuperAdminInfo = (info, nextStep) => {
+export const onSendSuperAdminInfo = (info) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/install/step/2', info
@@ -39,6 +37,8 @@ export const onSendSuperAdminInfo = (info, nextStep) => {
       console.info("data:", data);
       if (data.success) {
         console.log(" sending data", data.data);
+        localStorage.setItem("user", JSON.stringify(data.data));
+        dispatch({type: USER_DATA, payload: data.data});
         dispatch({type: ADD_ADMIN_INFO, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: OPEN_PIN_MODAL, payload: true});
@@ -90,15 +90,14 @@ export const onVerifyByPin = (data, nextStep) => {
       console.info("data:", data);
       if (data.success) {
         localStorage.setItem("token", JSON.stringify(data.token));
-        localStorage.setItem("user", JSON.stringify(data.data));
         axios.defaults.headers.common['access-token'] = "Bearer " + data.token;
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_TOKEN_SET, payload: data.token});
-        dispatch({type: USER_DATA, payload: data.data});
-        nextStep();
+        dispatch({type: OPEN_PIN_MODAL, payload: false});
         dispatch({type: SHOW_MESSAGE, payload: data.message});
+        dispatch({type: STEP_VALUE, payload: 3});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR, payload: data.message});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -115,7 +114,6 @@ export const onResendPin = (email) => {
       console.info("data:", data);
       if (data.success) {
         console.log(" sending data", data.data);
-        // dispatch({type: ADD_GENERAL_INFO, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Pin has been sent successfully"});
       } else {

@@ -27,10 +27,6 @@ class FilterBar extends Component {
     this.setState({showMoreStaff: !this.state.showMoreStaff});
   };
 
-  onToggleShowMoreCustomer = () => {
-    this.setState({showMoreCustomer: !this.state.showMoreCustomer});
-  };
-
   onStartDateChange = value => {
     const {endDate, selectedStaff, selectedCustomers, selectedPriorities, selectedStatuses, archive} = this.state;
     const {current, itemNumbers, filterText, sortParam} = this.props;
@@ -143,15 +139,19 @@ class FilterBar extends Component {
     });
   };
 
+  onFilterStaff = () => {
+    const staffFilterText = this.state.staffFilterText;
+    return this.props.staffList.filter(staff => staff.first_name.indexOf(staffFilterText) !== -1);
+  };
+
   render() {
     const {
       endDate, showMoreStaff, selectedStaff, selectedCustomers, selectedPriorities,
       selectedStatuses, startDate, staffFilterText,
       priorityFilterText, statusFilterText
     } = this.state;
-    const staffs = showMoreStaff ?
-      this.props.staffList.filter(staff => staff.first_name.indexOf(staffFilterText) !== -1)
-      : this.props.staffList.filter(staff => staff.first_name.indexOf(staffFilterText) !== -1).slice(0, 5);
+    const staffs = showMoreStaff ? this.onFilterStaff() :
+      this.onFilterStaff().length >0 ? this.onFilterStaff().slice(0, 5) : this.onFilterStaff();
     const customers = this.props.customersList;
     const priorities = this.props.priorities.filter(priority => priority.name.indexOf(priorityFilterText) !== -1);
     const statuses = this.props.statuses.filter(status => status.name.indexOf(statusFilterText) !== -1);
@@ -193,13 +193,20 @@ class FilterBar extends Component {
               <Checkbox.Group onChange={this.onSelectStaff} value={selectedStaff}>
                 {staffs.map(staff => {
                   return <div key={staff.id} className="gx-my-2"><Checkbox value={staff.id}>
-                    {staff.first_name + " " + staff.last_name}</Checkbox></div>
+                    <span>{staff.avatar ?
+                      <Avatar className=" gx-size-30" src={staff.avatar.src}/> :
+                      <Avatar className=" gx-size-30"
+                              style={{backgroundColor: '#f56a00'}}>{staff.first_name[0].toUpperCase()}</Avatar>}</span>
+                    <span className="gx-mx-2">{staff.first_name + " " + staff.last_name}</span>
+                    <span>{staff.email}</span>
+                  </Checkbox></div>
                 })}
               </Checkbox.Group>
               <div>
+                {this.onFilterStaff().length > 5 ?
                 <Button type="link" onClick={this.onToggleShowMoreStaff}>
-                  {showMoreStaff ? "View Less" : `${this.props.staffList.length - 5} More`}
-                </Button>
+                  {showMoreStaff ? "View Less" : `${this.onFilterStaff().length - 5} More`}
+                </Button>: null}
               </div>
             </div>
             <div className="gx-mb-4">

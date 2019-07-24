@@ -28,7 +28,6 @@ class AddNewRole extends Component {
         name: "",
         status: 1,
         customerPermissions: [],
-        contactPermissions: [],
         departmentsPermissions: [],
         labelPermissions: [],
         prioritiesPermissions: [],
@@ -38,7 +37,6 @@ class AddNewRole extends Component {
         staffsPermissions: [],
         statusPermissions: [],
         ticketsPermissions: [],
-        usersPermissions: [],
         permissions: [],
         currentMember: null
       }
@@ -48,10 +46,8 @@ class AddNewRole extends Component {
         id: selectedRole.id,
         name: selectedRole.name,
         status: selectedRole.status,
-        customerPermissions: selectedRole.role_permissions.companies ?
-          selectedRole.role_permissions.companies.map(company => company.id) : [],
-        contactPermissions: selectedRole.role_permissions.contacts ?
-          selectedRole.role_permissions.contacts.map(contact => contact.id) : [],
+        customerPermissions: selectedRole.role_permissions.customers ?
+          selectedRole.role_permissions.customers.map(customer => customer.id) : [],
         departmentsPermissions: selectedRole.role_permissions.departments ?
           selectedRole.role_permissions.departments.map(department => department.id) : [],
         labelPermissions: selectedRole.role_permissions.labels ?
@@ -70,8 +66,6 @@ class AddNewRole extends Component {
           selectedRole.role_permissions.status.map(stat => stat.id) : [],
         ticketsPermissions: selectedRole.role_permissions.tickets ?
           selectedRole.role_permissions.tickets.map(ticket => ticket.id) : [],
-        usersPermissions: selectedRole.role_permissions.users ?
-          selectedRole.role_permissions.users.map(user => user.id) : [],
         permissions: [],
         filterText: "",
         checkedList: [],
@@ -87,9 +81,6 @@ class AddNewRole extends Component {
     this.setState({customerPermissions: checkedList})
   };
 
-  onSelectContactPermissions = checkedList => {
-    this.setState({contactPermissions: checkedList})
-  };
 
   onSelectDepartmentPermissions = checkedList => {
     this.setState({departmentsPermissions: checkedList})
@@ -127,13 +118,8 @@ class AddNewRole extends Component {
     this.setState({ticketsPermissions: checkedList})
   };
 
-  onSelectUsersPermissions = checkedList => {
-    this.setState({usersPermissions: checkedList})
-  };
-
   onCollectAllPermissions = () => {
     return [...this.state.customerPermissions,
-      ...this.state.contactPermissions,
       ...this.state.departmentsPermissions,
       ...this.state.labelPermissions,
       ...this.state.prioritiesPermissions,
@@ -142,8 +128,7 @@ class AddNewRole extends Component {
       ...this.state.settingsPermissions,
       ...this.state.staffsPermissions,
       ...this.state.statusPermissions,
-      ...this.state.ticketsPermissions,
-      ...this.state.usersPermissions];
+      ...this.state.ticketsPermissions];
   };
 
   onAddButtonClick = () => {
@@ -166,18 +151,12 @@ class AddNewRole extends Component {
   };
 
   onCheckAllCustomers = e => {
-    const allSelected = this.props.userPermissions.companies.map(company => {
-      return company.id
+    const allSelected = this.props.userPermissions.customers.map(customer => {
+      return customer.id
     });
     this.setState({customerPermissions: e.target.checked ? allSelected : []});
   };
 
-  onCheckAllContacts = e => {
-    const allSelected = this.props.userPermissions.contacts.map(company => {
-      return company.id
-    });
-    this.setState({contactPermissions: e.target.checked ? allSelected : []});
-  };
 
   onCheckAllDepartments = e => {
     const allSelected = this.props.userPermissions.departments.map(department => {
@@ -242,13 +221,6 @@ class AddNewRole extends Component {
     this.setState({ticketsPermissions: e.target.checked ? allSelected : []})
   };
 
-  onCheckAllUsers = e => {
-    const allSelected = this.props.userPermissions.users.map(user => {
-      return user.id
-    });
-    this.setState({usersPermissions: e.target.checked ? allSelected : []})
-  };
-
   onSelectStaff = (staff) => {
     this.setState({currentMember: staff})
   };
@@ -268,9 +240,9 @@ class AddNewRole extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
     const {
-      status, currentMember, name, customerPermissions, contactPermissions, departmentsPermissions,
+      status, currentMember, name, customerPermissions, departmentsPermissions,
       labelPermissions, prioritiesPermissions, responsesPermissions, rolesPermissions, settingsPermissions,
-      staffsPermissions, statusPermissions, ticketsPermissions, usersPermissions
+      staffsPermissions, statusPermissions, ticketsPermissions
     } = this.state;
     const {selectedRole, onDisableSelectedRole, userPermissions, staffList, onGetStaffId, history} = this.props;
     return (
@@ -313,40 +285,18 @@ class AddNewRole extends Component {
                            style={customPanelStyle}>
                       <Checkbox className="gx-ml-auto"
                                 indeterminate={customerPermissions.length > 0
-                                && userPermissions.companies.length > customerPermissions.length}
+                                && userPermissions.customers.length > customerPermissions.length}
                                 onChange={this.onCheckAllCustomers}
-                                checked={userPermissions.companies.length === customerPermissions.length}>
+                                checked={userPermissions.customers.length === customerPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectCustomerPermissions}
                                       value={this.state.customerPermissions}>
                         <Row className="gx-d-flex gx-flex-row">
-                          {userPermissions.companies.map(company => {
+                          {userPermissions.customers.map(company => {
                             return <Col span={12} key={company.id} className="gx-mb-2">
                               <Checkbox value={company.id}>{company.title}</Checkbox>
-                            </Col>
-                          })
-                          }
-                        </Row>
-                      </Checkbox.Group>
-                    </Panel>
-                    <Panel header="Company Contracts" key="2" showArrow={false} style={customPanelStyle}
-                           extra={<i className="icon icon-add-circle"/>}>
-                      <Checkbox
-                        indeterminate={contactPermissions.length > 0
-                        && userPermissions.contacts.length > contactPermissions.length}
-                        onChange={this.onCheckAllContacts}
-                        checked={userPermissions.contacts.length === contactPermissions.length}>
-                        Check all
-                      </Checkbox>
-                      <Checkbox.Group style={{width: '100%'}}
-                                      onChange={this.onSelectContactPermissions}
-                                      value={contactPermissions}>
-                        <Row className="gx-d-flex gx-flex-row">
-                          {userPermissions.contacts.map(contact => {
-                            return <Col span={12} key={contact.id} className="gx-mb-2">
-                              <Checkbox value={contact.id}>{contact.title}</Checkbox>
                             </Col>
                           })
                           }
@@ -545,28 +495,6 @@ class AddNewRole extends Component {
                           {userPermissions.tickets.map(ticket => {
                             return <Col span={12} key={ticket.id} className="gx-mb-2">
                               <Checkbox value={ticket.id}>{ticket.title}</Checkbox>
-                            </Col>
-                          })
-                          }
-                        </Row>
-                      </Checkbox.Group>
-                    </Panel>
-                    <Panel header="Users" key="12" showArrow={false} style={customPanelStyle}
-                           extra={<i className="icon icon-add-circle"/>}>
-                      <Checkbox
-                        indeterminate={usersPermissions.length > 0
-                        && userPermissions.users.length > usersPermissions.length}
-                        onChange={this.onCheckAllUsers}
-                        checked={userPermissions.users.length === usersPermissions.length}>
-                        Check all
-                      </Checkbox>
-                      <Checkbox.Group style={{width: '100%'}}
-                                      onChange={this.onSelectUsersPermissions}
-                                      value={usersPermissions}>
-                        <Row className="gx-d-flex gx-flex-row">
-                          {userPermissions.users.map(user => {
-                            return <Col span={12} key={user.id} className="gx-mb-2">
-                              <Checkbox value={user.id}>{user.title}</Checkbox>
                             </Col>
                           })
                           }

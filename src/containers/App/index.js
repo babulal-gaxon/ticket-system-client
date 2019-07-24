@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {PureComponent} from "react";
 import {connect} from "react-redux";
 import {Redirect, Route, Switch} from "react-router-dom";
 import {LocaleProvider} from "antd";
@@ -31,7 +31,7 @@ const RestrictedRoute = ({component: Component, token, ...rest}) =>
   />;
 
 
-class App extends Component {
+class App extends PureComponent {
 
   componentWillMount() {
     this.props.onCheckInitialSetup();
@@ -46,18 +46,15 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     console.log("componentWillReceiveProps: ", nextProps.token);
-    if (nextProps.token !== this.props.token) {
+    if (this.props.token === null && nextProps.token !== this.props.token) {
       axios.defaults.headers.common['Authorization'] = "Bearer " + nextProps.token;
       this.props.onGetUserInfo(this.props.history)
     }
   }
 
-  componentDidMount() {
-      this.setState({loading: false})
-  }
 
   render() {
-    console.log("in render", this.props.initialSteps, this.props.loadingUser);
+    console.log("in render", this.props.match, this.props.history);
     const {match, location, locale, token, initURL,initialSteps, loadingUser} = this.props;
     if (loadingUser) {
       return <div className="gx-loader-view gx-h-100">
@@ -66,14 +63,8 @@ class App extends Component {
     }
       if (location.pathname === '/') {
         if (token === null) {
-          if (Object.keys(initialSteps).length > 0) {
-            console.log("/initial-setup");
-            return (<Redirect to={'/initial-setup'}/>);
-          } else {
-            console.log("/signin");
-            return (<Redirect to={'/signin'}/>);
-          }
-        } else if (initURL === '' || initURL === '/' || initURL === '/initial-setup') {
+          return (<Redirect to={'/initial-setup'}/>);
+        } else if (initURL === '' || initURL === '/' || initURL === '/initial-setup' || initURL === '/signin') {
           return (<Redirect to={'/dashboard'}/>);
         } else {
           return (<Redirect to={initURL}/>);
