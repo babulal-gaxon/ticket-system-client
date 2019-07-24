@@ -78,7 +78,7 @@ class App extends Component {
             <Route exact path='/signin' component={SignIn}/>
             <Route exact path='/signup' component={SignUp}/>
             <Route exact path='/forget-password' component={ForgetPassword}/>
-            <Route exact path='/forget-password' component={VerifyPassword}/>
+            <Route  path='customer/panel/reset/password/' component={VerifyPassword}/>
             <RestrictedRoute path={`${match.url}`} token={token} component={MainApp}/>
           </Switch>
         </IntlProvider>

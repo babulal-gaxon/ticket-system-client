@@ -1,35 +1,30 @@
 import React from "react";
 import {Button, Form, Input} from "antd";
 import {connect} from "react-redux";
-
+import qs from "qs";
 import {onUserSignIn} from "../../appRedux/actions/Auth";
 import IntlMessages from "util/IntlMessages";
 import InfoView from "../../components/InfoView";
-import RaiseTicketModal from "../../routes/CustomerPage/AllTickets/RaiseTicketModal";
 
 class VerifyPassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       password_confirmation: "",
-      password: ""
+      password: "",
+      email: ""
     }
   }
 
   handleSubmit = (e) => {
+    const queryParams = qs.parse(this.props.location.search, {ignoreQueryPrefix: true});
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // this.props.onUserSignIn(values);
+        this.props.onSetNewPassword(queryParams.token, {...this.state}, this.props.history);
       }
     });
   };
-
-  // componentDidUpdate() {
-  //   if (this.props.token !== null) {
-  //     this.props.history.push('/dashboard');
-  //   }
-  // }
 
   handleConfirmBlur = e => {
     const {value} = e.target;
@@ -54,6 +49,7 @@ class VerifyPassword extends React.Component {
   };
 
   render() {
+    const {email} = this.state;
     const {getFieldDecorator} = this.props.form;
     return (
       <div className="gx-app-login-wrap">
@@ -69,6 +65,16 @@ class VerifyPassword extends React.Component {
             </div>
             <div className="gx-app-login-content">
               <Form onSubmit={this.handleSubmit} className="gx-signin-form gx-form-row0">
+                <Form.Item label="Enter Email Address">
+                  {getFieldDecorator('email', {
+                    initialValue: email,
+                    rules: [{
+                      required: true, type: 'email', message: 'The input is not valid E-mail!',
+                    }],
+                  })(
+                    <Input placeholder="Email" onChange={(e) => this.setState({email:e.target.value})}/>
+                  )}
+                </Form.Item>
                 <Form.Item label="Enter new Password" hasFeedback>
                   {getFieldDecorator('password', {
                     rules: [
