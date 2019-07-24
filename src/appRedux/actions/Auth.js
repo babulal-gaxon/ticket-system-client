@@ -176,7 +176,6 @@ export const onCheckInitialSetup = () => {
       if (data.success) {
         console.log("initial Setup", data);
         dispatch({type: INITIAL_SETUP_STEPS, payload: data.data});
-        dispatch({type: INITIAL_SETUP_STEPS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
       } else if (data.message) {
         console.info("payload: data.error", data.message);

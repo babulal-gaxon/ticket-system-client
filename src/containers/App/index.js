@@ -32,7 +32,6 @@ const RestrictedRoute = ({component: Component, token, ...rest}) =>
 
 
 class App extends PureComponent {
-
   componentWillMount() {
     this.props.onCheckInitialSetup();
     if (this.props.initURL === '') {
