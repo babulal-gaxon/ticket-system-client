@@ -54,6 +54,7 @@ class SecondStep extends Component {
 
   onVerifyEmail = (pin) => {
     this.props.onVerifyByPin({pin_number: pin, email: this.state.email});
+    console.log(" i m here after verifying pin", this.props.flag)
     if(this.props.flag) {
       this.props.onMoveToNextScreen(this.props.flag);
     }

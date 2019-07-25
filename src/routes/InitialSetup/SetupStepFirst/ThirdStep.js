@@ -216,7 +216,7 @@ class ThirdStep extends Component {
                 </Select>)}
               </Form.Item>
             </Col>
-            <Col sm={8} xs={24} className="gx-pr-0">
+            <Col sm={8} xs={24} className="gx-pl-0">
               <Form.Item label="State">
                 {getFieldDecorator('state', {
                   initialValue: state,
@@ -226,7 +226,7 @@ class ThirdStep extends Component {
                 }}/>)}
               </Form.Item>
             </Col>
-            <Col sm={8} xs={24} className="gx-pl-0">
+            <Col sm={8} xs={24} className="gx-pl-0 gx-pr-0">
               <Form.Item label="City">
                 {getFieldDecorator('city', {
                   initialValue: city,

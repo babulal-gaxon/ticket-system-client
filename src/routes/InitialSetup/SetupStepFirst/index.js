@@ -35,8 +35,14 @@ class SetupStepFirst extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps, nextContext) {
+    if(nextProps.flag !== null){
+      this.setState({current:3})
+    }
+  }
 
   onMoveToNextStep = () => {
+    console.log("i m here after action of step 1", this.state.current);
     const current = this.state.current + 1;
     this.setState({current});
   };
@@ -47,6 +53,7 @@ class SetupStepFirst extends Component {
   };
 
   onMoveToNextScreen = (flag) => {
+    console.log("in onMoveToNextScreen", this.props.flag)
     this.setState({current: flag})
   };
 
