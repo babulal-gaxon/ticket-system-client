@@ -32,8 +32,8 @@ class GeneralDetails extends Component {
           allowed_ext: allowed_ext,
           file_upload_max_size: file_upload_max_size,
           email: email,
-          logoName: company_logo.title,
-          faviconName: company_favicon.title
+          // logoName: company_logo.title,
+          // faviconName: company_favicon.title
         })
       }
     }
@@ -90,7 +90,7 @@ class GeneralDetails extends Component {
   };
 
   render() {
-    const {name, url, email, allowed_ext, file_upload_max_size, logoList, faviconList, logoName, faviconName} = this.state;
+    const {name, url, email, allowed_ext, file_upload_max_size, logoList, faviconList} = this.state;
     const {getFieldDecorator} = this.props.form;
     const propsLogo = {
       onRemove: file => {
@@ -164,7 +164,7 @@ class GeneralDetails extends Component {
                 <Input placeholder="Choose file..." addonAfter="Browse"/>
               </Upload>)}
             </Form.Item> :
-            <Form.Item label="Upload Logo" extra={logoList.length > 0 ? "" : logoName}>
+            <Form.Item label="Upload Logo" >
               <Upload {...propsLogo}>
                 <Input placeholder="Choose file..." addonAfter="Browse"/>
               </Upload>
@@ -177,7 +177,7 @@ class GeneralDetails extends Component {
                 <Input placeholder="Choose file..." addonAfter="Browse"/>
               </Upload>)}
             </Form.Item> :
-            <Form.Item label="Upload Logo" extra={faviconList.length > 0 ? "" : faviconName}>
+            <Form.Item label="Upload Logo" >
               <Upload {...propsFavicon}>
                 <Input placeholder="Choose file..." addonAfter="Browse"/>
               </Upload>

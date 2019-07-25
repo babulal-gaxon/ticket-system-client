@@ -7,13 +7,18 @@ const {Option} = Select;
 class AddCustomerAddress extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      address_line_1: "",
-      city: "",
-      state: "",
-      country_id: "",
-      zip_code: "",
-      address_type: []
+    if(props.selectedAddress === null) {
+      this.state = {
+        address_line_1: "",
+        city: "",
+        state: "",
+        country_id: "",
+        zip_code: "",
+        address_type: []
+      }
+    }
+    else {
+      this.state = {...props.selectedAddress}
     }
   }
 
@@ -34,7 +39,12 @@ class AddCustomerAddress extends Component {
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.props.onSaveAddress({...this.state});
+        if(this.props.selectedAddress === null) {
+          this.props.onAddCustomerAddress({...this.state});
+        }
+        else {
+          this.props.onEditCustomerAddress({...this.state})
+        }
         this.props.onToggleAddressModal();
       }
     });

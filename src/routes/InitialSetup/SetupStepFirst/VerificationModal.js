@@ -56,7 +56,6 @@ class VerificationModal extends Component {
             </Button>,
             <p>Not received email? <Button type="link" className="gx-my-0" onClick={() => this.props.onResendPin()}>Resend</Button> </p>
           </div>
-
         </Modal>
       </div>
     );

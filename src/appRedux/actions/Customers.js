@@ -1,11 +1,11 @@
 import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import {
-  ADD_COMPANY_ADDRESS,
+  ADD_CUSTOMER_ADDRESS,
   ADD_NEW_CUSTOMER,
   ADD_PROFILE_PICTURE,
   DELETE_CUSTOMERS,
-  DISABLE_CUSTOMER,
+  DISABLE_CUSTOMER, EDIT_CUSTOMER_ADDRESS,
   EDIT_CUSTOMER_DETAILS,
   GET_CUSTOMER_COMPANY,
   GET_CUSTOMER_FILTER_OPTIONS,
@@ -155,7 +155,6 @@ export const onGetCustomerFilterOptions = () => {
   }
 };
 
-
 export const onAddImage = (imageFile) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -178,15 +177,34 @@ export const onAddImage = (imageFile) => {
   }
 };
 
-export const onAddCustomerAddress = (details) => {
-  console.log("onAddCustomerAddress", details);
+export const onAddCustomerAddress = (address) => {
+  console.log("onAddCustomerAddress", address);
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post('/setup/customers/address', details).then(({data}) => {
+    axios.post('/setup/customers/address', address).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
         console.log(" sending data", data.data);
-        dispatch({type: ADD_COMPANY_ADDRESS, payload: data.data});
+        dispatch({type: ADD_CUSTOMER_ADDRESS, payload: data.data});
+        dispatch({type: SHOW_MESSAGE, payload: "The Address has been saved successfully"});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onEditCustomerAddress = (address) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.put(`/addresses/${address.id}`, address).then(({data}) => {
+      console.info("data:", data);
+      if (data.success) {
+        console.log(" sending data", data.data);
+        dispatch({type: EDIT_CUSTOMER_ADDRESS, payload: address});
         dispatch({type: SHOW_MESSAGE, payload: "The Address has been saved successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});

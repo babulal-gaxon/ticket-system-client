@@ -35,14 +35,7 @@ class SetupStepFirst extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    if(nextProps.flag !== null){
-      this.setState({current:3})
-    }
-  }
-
   onMoveToNextStep = () => {
-    console.log("i m here after action of step 1", this.state.current);
     const current = this.state.current + 1;
     this.setState({current});
   };
@@ -52,13 +45,7 @@ class SetupStepFirst extends Component {
     this.setState({current});
   };
 
-  onMoveToNextScreen = (flag) => {
-    console.log("in onMoveToNextScreen", this.props.flag)
-    this.setState({current: flag})
-  };
-
   render() {
-console.log("in render of step", this.props.flag)
     const {current} = this.state;
     return (
       <div className="gx-main-layout-content">
@@ -66,7 +53,7 @@ console.log("in render of step", this.props.flag)
           <Step title="Database Setup"
                 description={current === 1 ? <StepFirst onMoveToNextStep={this.onMoveToNextStep}/> : null}/>
           <Step title="Setup Super Admin Account"
-                description={current === 2 ? <SecondStep onMoveToNextScreen={this.onMoveToNextScreen}
+                description={current === 2 ? <SecondStep onMoveToNextStep={this.onMoveToNextStep}
                                                          onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
           <Step title="General Setup" description={current === 3 ? <ThirdStep onMoveToNextStep={this.onMoveToNextStep}
                                                                               onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
@@ -93,10 +80,9 @@ console.log("in render of step", this.props.flag)
   }
 }
 
-const mapStateToProps = ({auth, initialSetup}) => {
+const mapStateToProps = ({auth}) => {
   const {initialSteps} = auth;
-  const {flag} = initialSetup;
-  return {initialSteps, flag};
+  return {initialSteps};
 };
 
 export default connect(mapStateToProps, {

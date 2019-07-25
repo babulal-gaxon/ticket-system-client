@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Breadcrumb, Button, Col, Form, Input, Radio, Row, Select, Tag} from "antd";
+import {Breadcrumb, Button, Col, Dropdown, Form, Input, Menu, Popconfirm, Radio, Row, Select, Tag} from "antd";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
@@ -7,13 +7,14 @@ import {
   onAddCustomerAddress,
   onAddImage,
   onAddNewCustomer,
-  onEditCustomer,
+  onEditCustomer, onEditCustomerAddress,
   onGetCustomerFilterOptions
 } from "../../../appRedux/actions/Customers";
 import AddCustomerAddress from "./AddCustomerAddress";
 import CustomerImageUpload from "./CustomerImageUpload";
 import {onGetCountriesList} from "../../../appRedux/actions/GeneralSettings";
 import PropTypes from "prop-types";
+import Permissions from "../../../util/Permissions";
 
 const {Option} = Select;
 
@@ -32,7 +33,8 @@ class AddNewCustomers extends Component {
         isModalVisible: false,
         status: 1,
         profile_pic: null,
-        addresses: []
+        addresses: [],
+        selectedAddress: null
       };
     } else {
       const selectedCustomer = this.props.customersList.find(customer => customer.id === this.props.customerId);
@@ -54,7 +56,8 @@ class AddNewCustomers extends Component {
         isModalVisible: false,
         profile_pic: imageId,
         imageAvatar: avatar,
-        addresses: []
+        addresses: [],
+        selectedAddress: null
       }
     }
   }
@@ -133,6 +136,39 @@ class AddNewCustomers extends Component {
 
   onCompanySelect = value => {
     this.setState({company_id: value})
+  };
+
+  onShowRowDropdown = (address) => {
+    const menu = (
+      <Menu>
+        {(Permissions.canAddressEdit()) ?
+          <Menu.Item key="2" onClick={() => this.onEditAddressDetail(address)}>
+            Edit
+          </Menu.Item> : null}
+        {/*{(Permissions.canAddressDelete()) ?*/}
+        {/*  <Menu.Item key="4">*/}
+        {/*    <Popconfirm*/}
+        {/*      title="Are you sure to delete this Company?"*/}
+        {/*      onConfirm={() => {*/}
+        {/*        this.props.onDeleteCompanies({ids: [companyId]});*/}
+        {/*        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);*/}
+        {/*      }}*/}
+        {/*      okText="Yes"*/}
+        {/*      cancelText="No">*/}
+        {/*      Delete*/}
+        {/*    </Popconfirm>*/}
+        {/*  </Menu.Item> : null}*/}
+      </Menu>
+    );
+    return (
+      <Dropdown overlay={menu} trigger={['click']}>
+        <i className="icon icon-ellipse-h"/>
+      </Dropdown>
+    )
+  };
+
+  onEditAddressDetail = (address) => {
+    this.setState({selectedAddress: address, isModalVisible: true})
   };
 
   render() {
@@ -246,24 +282,28 @@ class AddNewCustomers extends Component {
                   </Radio.Group>
                 </Form.Item>
                 <Form.Item>
+                  {(Permissions.canAddressAdd()) ?
                   <Button type="default" style={{width: "100%", color: "blue"}} onClick={this.onToggleAddressModal}>
-                    <i className="icon icon-add-circle gx-mr-1"/>Add New Address</Button>
+                    <i className="icon icon-add-circle gx-mr-1"/>Add New Address</Button> : null}
                 </Form.Item>
 
               </Form>
-              {this.props.customerAddress.length > 0 ?
+              {(Permissions.canAddressView()) ?
+              this.props.customerAddress.length > 0 ?
                 <div className="gx-main-layout-content" style={{width: "60%"}}>
                   {customerAddress.map(address => {
                     return <Widget styleName="gx-card-filter" key={address.id}>
-
+                      <div className="gx-d-flex gx-justify-content-between">
                       {address.address_type.map(type => {
                         return <Tag color="#108ee9" key={type}>{type}</Tag>
                       })}
+                        {this.onShowRowDropdown(address)}
+                      </div>
                       <p>{address.address_line_1}</p>
                       <p>{`${address.city}, ${address.state} - ${address.zip_code}`}</p>
                     </Widget>
                   })}
-                </div> : null}
+                </div> : null : null}
               <span>
                 <Button type="primary" onClick={this.onValidationCheck}>
                   Save
@@ -285,7 +325,9 @@ class AddNewCustomers extends Component {
         {this.state.isModalVisible ? <AddCustomerAddress isModalVisible={this.state.isModalVisible}
                                                          onToggleAddressModal={this.onToggleAddressModal}
                                                          countriesList={this.props.countriesList}
-                                                         onSaveAddress={this.props.onAddCustomerAddress}/> : null}
+                                                         onAddCustomerAddress={this.props.onAddCustomerAddress}
+                                                         selectedAddress={this.state.selectedAddress}
+                                                         onEditCustomerAddress={this.props.onEditCustomerAddress}/> : null}
       </div>
     )
   }
@@ -305,7 +347,8 @@ export default connect(mapStateToProps, {
   onAddImage,
   onGetCountriesList,
   onAddCustomerAddress,
-  onGetCustomerFilterOptions
+  onGetCustomerFilterOptions,
+  onEditCustomerAddress
 })(AddNewCustomers);
 
 AddNewCustomers.defaultProps = {

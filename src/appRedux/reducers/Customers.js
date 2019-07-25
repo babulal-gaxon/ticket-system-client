@@ -1,9 +1,9 @@
 import {
-  ADD_COMPANY_ADDRESS,
+  ADD_CUSTOMER_ADDRESS,
   ADD_NEW_CUSTOMER,
   ADD_PROFILE_PICTURE,
   DELETE_CUSTOMERS,
-  DISABLE_CUSTOMER,
+  DISABLE_CUSTOMER, EDIT_CUSTOMER_ADDRESS,
   EDIT_CUSTOMER_DETAILS,
   GET_CUSTOMER_COMPANY,
   GET_CUSTOMER_FILTER_OPTIONS,
@@ -80,10 +80,17 @@ export default (state = initialState, action) => {
         profilePicId: action.payload
       };
 
-    case ADD_COMPANY_ADDRESS:
+    case ADD_CUSTOMER_ADDRESS:
       return {
         ...state,
         customerAddress: state.customerAddress.concat(action.payload)
+      };
+
+    case EDIT_CUSTOMER_ADDRESS:
+      const updatedAddresses = state.customerAddress.map((address) => address.id === action.payload.id ? action.payload : address)
+      return {
+        ...state,
+        customerAddress: updatedAddresses
       };
 
     case GET_CUSTOMER_TICKETS:

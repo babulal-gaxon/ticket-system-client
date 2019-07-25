@@ -6,7 +6,7 @@ import {
   USER_DATA,
   USER_TOKEN_SET
 } from "../../constants/ActionTypes";
-import {ADD_ADMIN_INFO, ADD_GENERAL_INFO, OPEN_PIN_MODAL, STEP_VALUE} from "../../constants/InitialSetup"
+import {ADD_ADMIN_INFO, ADD_GENERAL_INFO, OPEN_PIN_MODAL} from "../../constants/InitialSetup"
 import axios from 'util/Api'
 
 export const onSendDatabaseInfo = (info, nextStep) => {
@@ -91,11 +91,11 @@ export const onVerifyByPin = (data, nextStep) => {
       if (data.success) {
         localStorage.setItem("token", JSON.stringify(data.token));
         axios.defaults.headers.common['access-token'] = "Bearer " + data.token;
-        dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_TOKEN_SET, payload: data.token});
         dispatch({type: OPEN_PIN_MODAL, payload: false});
+        dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: data.message});
-        dispatch({type: STEP_VALUE, payload: 3});
+        nextStep();
       } else {
         dispatch({type: FETCH_ERROR, payload: data.message});
       }

@@ -375,6 +375,35 @@ class Permissions {
     }
     return false;
   };
+
+  //Addresses Permissions
+  static canAddressAdd = () => {
+    if (this.permissions.addresses) {
+      return this.permissions.addresses.filter((key) => key.name === "addresses.store").length > 0
+    }
+    return false;
+  };
+
+  static canAddressEdit = () => {
+    if (this.permissions.addresses) {
+      return this.permissions.addresses.filter((key) => key.name === "addresses.update").length > 0
+    }
+    return false;
+  };
+
+  static canAddressView = () => {
+    if (this.permissions.addresses) {
+      return this.permissions.addresses.filter((key) => key.name === "addresses.index").length > 0
+    }
+    return false;
+  };
+
+  static canAddressDelete = () => {
+    if (this.permissions.addresses) {
+      return this.permissions.addresses.filter((key) => key.name === "addresses.destroy").length > 0
+    }
+    return false;
+  };
 }
 
 
