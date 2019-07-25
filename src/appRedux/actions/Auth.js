@@ -145,7 +145,7 @@ export const onSetNewPassword = (token, data, history) => {
 export const onVerifyAccountEmail = (token, history) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get(` /customer/panel/verify/email/${token}`).then(({data}) => {
+    axios.get(`/verify/email/${token}`).then(({data}) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Email has been verified successfully"});
