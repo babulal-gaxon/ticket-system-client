@@ -41,12 +41,9 @@ class SignIn extends React.Component {
         <div className="gx-app-login-container">
           <div className="gx-app-login-main-content">
             <div className="gx-app-logo-content">
-
-
               <div className="gx-app-logo">
                 {/*<img alt="example" src={require("assets/images/logo.png")}/>*/}
               </div>
-
             </div>
             <div className="gx-app-login-content">
               <h2 className="gx-font-weight-semi-bold">Login to Your account</h2>
