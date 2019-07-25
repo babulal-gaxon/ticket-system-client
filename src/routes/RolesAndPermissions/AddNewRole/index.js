@@ -267,7 +267,7 @@ class AddNewRole extends Component {
                   {getFieldDecorator('name', {
                     initialValue: name,
                     rules: [{required: true, message: 'Please Enter Role Name!'}],
-                  })(<Input type="text" onChange={(e) => this.setState({name: e.target.value})}/>)}
+                  })(<Input type="text" autoFocus onChange={(e) => this.setState({name: e.target.value})}/>)}
                 </Form.Item>
                 <Form.Item label="Status">
                   <Radio.Group value={status} onChange={(e) => {

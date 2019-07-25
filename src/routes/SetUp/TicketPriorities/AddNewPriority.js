@@ -107,7 +107,7 @@ class AddNewPriority extends Component {
               {getFieldDecorator('name', {
                 initialValue: name,
                 rules: [{required: true, message: 'Please Enter Priority Name!'}],
-              })(<Input type="text" onChange={(e) => {
+              })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({name: e.target.value})
               }}/>)}
             </Form.Item>
@@ -126,12 +126,20 @@ class AddNewPriority extends Component {
             <Form.Item label="Description">
               {getFieldDecorator('desc', {
                 initialValue: desc,
-                rules: [{
-                  min: 30,
-                  message: 'Message should be at least 30 characters long',
+                validate: [{
+                  trigger: 'onBlur',
+                  rules: [
+                    { required: true,
+                      message: 'Please Enter Description!' },
+                  ],
+                }, {
+                  trigger: 'onChange',
+                  rules: [
+                    {max: 250,
+                      message: 'Description length should not exceed 250 characters' },
+                  ],
                 }],
-              })(
-              <TextArea rows={4} className="gx-form-control-lg" type="textarea" onChange={(e) => {
+              })(<TextArea rows={4} className="gx-form-control-lg" type="textarea" onChange={(e) => {
                 this.setState({desc: e.target.value})
               }}/>)}
             </Form.Item>

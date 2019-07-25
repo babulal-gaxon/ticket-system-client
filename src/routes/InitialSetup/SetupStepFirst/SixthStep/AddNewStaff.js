@@ -149,7 +149,7 @@ class AddNewStaff extends Component {
                   {getFieldDecorator('first_name', {
                     initialValue: first_name,
                     rules: [{required: true, message: 'Please Enter First Name!'}],
-                  })(<Input type="text" onChange={(e) => {
+                  })(<Input type="text" autoFocus onChange={(e) => {
                     this.setState({first_name: e.target.value})
                   }}/>)}
                 </Form.Item>

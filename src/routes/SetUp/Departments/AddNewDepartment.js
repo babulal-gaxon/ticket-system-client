@@ -59,17 +59,19 @@ class AddNewDepartment extends Component {
             <Form.Item label="Name">
               {getFieldDecorator('name', {
                 initialValue: name,
+                validateTrigger: 'onChange',
                 rules: [{required: true, message: 'Please Enter Department Name!'}],
-              })(<Input type="text" onChange={(e) => {
-                this.setState({name: e.target.value})
+              })(<Input type="text" autoFocus
+                        onChange={(e) => {this.setState({name: e.target.value})
               }}/>)}
             </Form.Item>
             <Form.Item label="Description">
               {getFieldDecorator('desc', {
                 initialValue: desc,
+                validateTrigger: 'onChange',
                 rules: [{
-                  min: 30,
-                  message: 'Message should be at least 30 characters long',
+                  max: 250,
+                  message: 'Maximum length for description is 256 characters',
                 }],
               })(<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                 this.setState({desc: e.target.value})

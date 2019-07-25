@@ -86,7 +86,7 @@ class Localization extends Component {
             <div className="gx-d-flex gx-flex-row">
               <Col sm={12} xs={24} className="gx-pl-0">
                 <Form.Item label="Date Format">
-                  {getFieldDecorator('city', {
+                  {getFieldDecorator('date_format', {
                     initialValue: date_format,
                     rules: [{required: true, message: 'Please Enter Date format!'}],
                   })(<Select style={{width: "100%"}} onChange={this.onDateSelect}>

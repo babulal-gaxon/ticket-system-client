@@ -6,8 +6,8 @@ import Addresses from "./Addresses";
 import GeneralDetails from "./GeneralDetails";
 import {connect} from "react-redux";
 import {
-  onAddCompanyFavicon,
-  onAddCompanyLogo,
+  onDeleteAddress,
+  onEditAddress,
   onGetCountriesList,
   onGetGeneralAddress,
   onGetGeneralDetails,
@@ -60,8 +60,6 @@ class GeneralSettings extends Component {
               <GeneralDetails onSaveGeneralDetails={this.props.onSaveGeneralDetails}
                               generalSettingsData={this.props.generalSettingsData}
                               companyLogo={this.props.companyLogo}
-                              onAddCompanyLogo={this.props.onAddCompanyLogo}
-                              onAddCompanyFavicon={this.props.onAddCompanyFavicon}
                               favicon={this.props.favicon}
                               fetchSuccess={this.props.fetchSuccess}
                               fetchStart={this.props.fetchStart}
@@ -71,7 +69,9 @@ class GeneralSettings extends Component {
               <Addresses countriesList={this.props.countriesList}
                          onSaveGeneralAddress={this.props.onSaveGeneralAddress}
                          generalAddress={this.props.generalAddress}
-                         generalSettingsData={this.props.generalSettingsData}/>
+                         generalSettingsData={this.props.generalSettingsData}
+                         onEditAddress={this.props.onEditAddress}
+                         onDeleteAddress={this.props.onDeleteAddress}/>
             </TabPane>
           </Tabs>
         </Widget>
@@ -91,11 +91,11 @@ export default connect(mapStateToProps, {
   onGetCountriesList,
   onSaveGeneralAddress,
   onGetGeneralAddress,
-  onAddCompanyLogo,
-  onAddCompanyFavicon,
   fetchSuccess,
   fetchStart,
-  fetchError
+  fetchError,
+  onEditAddress,
+  onDeleteAddress
 })(GeneralSettings);
 
 GeneralSettings.defaultProps = {

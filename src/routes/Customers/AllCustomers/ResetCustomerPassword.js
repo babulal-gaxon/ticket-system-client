@@ -71,7 +71,7 @@ class ResetCustomerPassword extends Component {
                     validator: this.validateToNextPassword,
                   },
                 ],
-              })(<Input.Password onChange={(e) => this.setState({password: e.target.value})}/>)}
+              })(<Input.Password autoFocus onChange={(e) => this.setState({password: e.target.value})}/>)}
             </Form.Item>
             <Form.Item label="Confirm Password" hasFeedback>
               {getFieldDecorator('password_confirmation', {

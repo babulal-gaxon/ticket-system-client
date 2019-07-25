@@ -61,7 +61,7 @@ class AddNewService extends Component {
               {getFieldDecorator('title', {
                 initialValue: title,
                 rules: [{required: true, message: 'Please Enter Service title!'}],
-              })(<Input type="text" onChange={(e) => {
+              })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({title: e.target.value})
               }}/>)}
             </Form.Item>
@@ -69,8 +69,8 @@ class AddNewService extends Component {
               {getFieldDecorator('desc', {
                 initialValue: desc,
                 rules: [{
-                  min: 30,
-                  message: 'Message should be at least 30 characters long',
+                  max: 250,
+                  message: 'Message length should not exceed 250 characters',
                 }],
               })(
               <TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {

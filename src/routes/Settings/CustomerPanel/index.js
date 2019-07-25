@@ -91,7 +91,7 @@ class CustomerPanel extends Component {
               {getFieldDecorator('theme', {
                 initialValue: theme,
                 rules: [{required: true, message: 'Please Select Theme!'}],
-              })(<Input type="text" onChange={(e) => this.setState({theme: e.target.value})}/>)}
+              })(<Input type="text" autoFocus onChange={(e) => this.setState({theme: e.target.value})}/>)}
             </Form.Item>
             <Form.Item label="Default Country">
               {getFieldDecorator('country', {

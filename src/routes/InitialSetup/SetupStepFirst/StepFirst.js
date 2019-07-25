@@ -35,7 +35,7 @@ class StepFirst extends Component {
               <Form.Item label="User Name">
                 {getFieldDecorator('username', {
                   initialValue: username,
-                })(<Input type="text" onChange={(e) => this.setState({username: e.target.value})}/>)}
+                })(<Input type="text" autoFocus onChange={(e) => this.setState({username: e.target.value})}/>)}
               </Form.Item>
             </Col>
             <Col sm={12} xs={24} className="gx-pr-0">

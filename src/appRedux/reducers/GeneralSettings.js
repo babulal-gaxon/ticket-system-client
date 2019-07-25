@@ -6,6 +6,8 @@ import {
   ADD_GENERAL_DETAILS,
   ADD_LOCALIZATION_DETAILS,
   ADD_TICKET_SETTINGS,
+  DELETE_ADDRESS,
+  EDIT_ADDRESS,
   GET_COUNTRIES_LIST,
   GET_CUSTOMER_PANEL_DETAILS,
   GET_GENERAL_ADDRESS,
@@ -20,8 +22,6 @@ const initialState = {
   customerPanelDetails: null,
   generalAddress: [],
   countriesList: [],
-  companyLogo: null,
-  favicon: null,
   ticketSettings: null
 };
 
@@ -89,16 +89,18 @@ export default (state = initialState, action) => {
         generalAddress: action.payload
       };
 
-    case ADD_COMPANY_LOGO:
+    case EDIT_ADDRESS:
+      const updatedAddresses = state.generalAddress.map((address) => address.id === action.payload.id ? action.payload : address)
       return {
         ...state,
-        companyLogo: action.payload
+        generalAddress: updatedAddresses
       };
 
-    case ADD_COMPANY_FAVICON:
+    case DELETE_ADDRESS:
+      const updateAddresses = state.generalAddress.filter(address => address.id !== action.payload);
       return {
         ...state,
-        favicon: action.payload
+        generalAddress: updateAddresses
       };
 
     case GET_TICKET_SETTINGS:

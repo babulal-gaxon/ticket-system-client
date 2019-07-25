@@ -76,7 +76,7 @@ class StaffList extends Component {
   };
 
   onAddButtonClick = () => {
-    this.props.onGetStaffId(0);
+    this.props.onGetStaffId(null);
     this.props.history.push('/staff/add-new-member')
   };
 

@@ -19,6 +19,10 @@ const SubMenu = Menu.SubMenu;
 
 class SidebarContent extends Component {
 
+  state={
+    key:""
+  }
+
   getNoHeaderClass = (navStyle) => {
     if (navStyle === NAV_STYLE_NO_HEADER_MINI_SIDEBAR || navStyle === NAV_STYLE_NO_HEADER_EXPANDED_SIDEBAR) {
       return "gx-no-header-notifications";
@@ -31,6 +35,11 @@ class SidebarContent extends Component {
     }
     return "";
   };
+
+  menuClickHandle = (item) =>  {
+    console.log("key", item.key)
+    this.setState({key:item.key})
+  }
 
   render() {
     const {themeType, navStyle, pathname} = this.props;
@@ -46,9 +55,9 @@ class SidebarContent extends Component {
               <AppsNavigation/>
             </div>
 
-            <Menu
+            <Menu onClick={this.menuClickHandle}
               defaultOpenKeys={[defaultOpenKeys]}
-              selectedKeys={[selectedKeys]}
+              selectedKeys={this.state.key}
               theme={themeType === THEME_TYPE_LITE ? 'lite' : 'dark'}
               mode="inline">
 

@@ -144,7 +144,7 @@ class GeneralDetails extends Component {
             {getFieldDecorator('name', {
               initialValue: name,
               rules: [{required: true, message: 'Please Enter Company Name!'}],
-            })(<Input type="text" onChange={(e) => {
+            })(<Input type="text" autoFocus onChange={(e) => {
               this.setState({name: e.target.value})
             }}/>)}
           </Form.Item>
@@ -241,13 +241,9 @@ GeneralDetails = Form.create({})(GeneralDetails);
 export default GeneralDetails;
 
 GeneralDetails.defaultProps = {
-  generalSettingsData: null,
-  companyLogo: null,
-  favicon: null
+  generalSettingsData: null
 };
 
 GeneralDetails.propTypes = {
-  generalSettingsData: PropTypes.object,
-  companyLogo: PropTypes.number,
-  favicon: PropTypes.number
+  generalSettingsData: PropTypes.object
 };

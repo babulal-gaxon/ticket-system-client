@@ -57,7 +57,7 @@ class AddStaffNotes extends Component {
               {getFieldDecorator('title', {
                 initialValue: title,
                 rules: [{required: true, message: 'Please Enter Title!'}],
-              })(<Input type="text" onChange={(e) => {
+              })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({title: e.target.value})
               }}/>)}
             </Form.Item>

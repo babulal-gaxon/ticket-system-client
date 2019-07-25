@@ -3,7 +3,7 @@ import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../const
 import {
   ADD_CUSTOMER_ADDRESS,
   ADD_NEW_CUSTOMER,
-  ADD_PROFILE_PICTURE,
+  ADD_PROFILE_PICTURE, DELETE_CUSTOMER_ADDRESS,
   DELETE_CUSTOMERS,
   DISABLE_CUSTOMER, EDIT_CUSTOMER_ADDRESS,
   EDIT_CUSTOMER_DETAILS,
@@ -206,6 +206,25 @@ export const onEditCustomerAddress = (address) => {
         console.log(" sending data", data.data);
         dispatch({type: EDIT_CUSTOMER_ADDRESS, payload: address});
         dispatch({type: SHOW_MESSAGE, payload: "The Address has been saved successfully"});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onDeleteCustomerAddress = (addressId) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.delete(`/addresses/${addressId}`).then(({data}) => {
+      console.info("data:", data);
+      if (data.success) {
+        console.log(" sending data", data.data);
+        dispatch({type: DELETE_CUSTOMER_ADDRESS, payload: addressId});
+        dispatch({type: SHOW_MESSAGE, payload: "The Address has been deleted successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

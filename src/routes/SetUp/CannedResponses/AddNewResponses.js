@@ -63,7 +63,7 @@ class AddNewResponses extends Component {
               {getFieldDecorator('short_title', {
                 initialValue: short_title,
                 rules: [{required: true, message: 'Please Enter Short Title!'}],
-              })(<Input type="text" onChange={(e) => {
+              })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({short_title: e.target.value})
               }}/>)}
             </Form.Item>
@@ -78,15 +78,19 @@ class AddNewResponses extends Component {
             <Form.Item label="Message">
               {getFieldDecorator('message', {
                 initialValue: message,
-                rules: [{
-                  required: true,
-                  message: 'Please Enter Message!'
-                },
-                  {
-                    min: 30,
-                    message: 'Message should be at least 30 characters long',
-                  }
-                ],
+                validate: [{
+                  trigger: 'onBlur',
+                  rules: [
+                    { required: true,
+                      message: 'Please Enter Message!' },
+                  ],
+                }, {
+                  trigger: 'onChange',
+                  rules: [
+                    {max: 250,
+                      message: 'Message length should not exceed 250 characters' },
+                  ],
+                }],
               })(<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                 this.setState({message: e.target.value})
               }}/>)}

@@ -7,7 +7,7 @@ const {Option} = Select;
 class AddCustomerAddress extends Component {
   constructor(props) {
     super(props);
-    if(props.selectedAddress === null) {
+    if (props.selectedAddress === null) {
       this.state = {
         address_line_1: "",
         city: "",
@@ -16,8 +16,7 @@ class AddCustomerAddress extends Component {
         zip_code: "",
         address_type: []
       }
-    }
-    else {
+    } else {
       this.state = {...props.selectedAddress}
     }
   }
@@ -39,11 +38,10 @@ class AddCustomerAddress extends Component {
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        if(this.props.selectedAddress === null) {
-          this.props.onAddCustomerAddress({...this.state});
-        }
-        else {
-          this.props.onEditCustomerAddress({...this.state})
+        if (this.props.selectedAddress === null) {
+          this.props.onSaveAddress({...this.state});
+        } else {
+          this.props.onEditAddress({...this.state})
         }
         this.props.onToggleAddressModal();
       }
@@ -66,7 +64,7 @@ class AddCustomerAddress extends Component {
               {getFieldDecorator('address_line_1', {
                 initialValue: address_line_1,
                 rules: [{required: true, message: 'Please Enter Address!'}],
-              })(<Input type="text" onChange={(e) => {
+              })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({address_line_1: e.target.value})
               }}/>)}
             </Form.Item>
@@ -141,7 +139,14 @@ class AddCustomerAddress extends Component {
               </Col>
             </div>
             <Form.Item label="Select Department">
-              <Checkbox.Group onChange={this.onSelectAddressType} value={address_type}>
+              {getFieldDecorator('address_type', {
+                initialValue: address_type,
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please Select Address Type'
+                  }],
+              })(<Checkbox.Group onChange={this.onSelectAddressType}>
                 <Row className="gx-d-flex gx-flex-row" style={{whiteSpace: "nowrap"}}>
                   <Col span={8}>
                     <Checkbox value="Billing">Billing</Checkbox>
@@ -153,7 +158,7 @@ class AddCustomerAddress extends Component {
                     <Checkbox value="Other">Other</Checkbox>
                   </Col>
                 </Row>
-              </Checkbox.Group>
+              </Checkbox.Group>)}
             </Form.Item>
           </Form>
         </Modal>

@@ -1,5 +1,5 @@
 class Permissions {
-  permissions = [];
+  static permissions = [];
 
   static setPermissions(userPermission) {
     this.permissions = userPermission;

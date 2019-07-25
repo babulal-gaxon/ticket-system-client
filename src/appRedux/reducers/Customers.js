@@ -1,7 +1,7 @@
 import {
   ADD_CUSTOMER_ADDRESS,
   ADD_NEW_CUSTOMER,
-  ADD_PROFILE_PICTURE,
+  ADD_PROFILE_PICTURE, DELETE_CUSTOMER_ADDRESS,
   DELETE_CUSTOMERS,
   DISABLE_CUSTOMER, EDIT_CUSTOMER_ADDRESS,
   EDIT_CUSTOMER_DETAILS,
@@ -67,7 +67,6 @@ export default (state = initialState, action) => {
       const upCustomers = state.customersList.filter(customer => {
         return (action.payload.indexOf(customer.id) === -1) ?
           customer : null
-
       });
       return {
         ...state,
@@ -91,6 +90,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         customerAddress: updatedAddresses
+      };
+
+    case DELETE_CUSTOMER_ADDRESS:
+      const updateAddresses = state.customerAddress.filter(address => address.id !== action.payload);
+      return {
+        ...state,
+        customerAddress: updateAddresses
       };
 
     case GET_CUSTOMER_TICKETS:

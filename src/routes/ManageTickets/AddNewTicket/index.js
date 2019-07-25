@@ -126,6 +126,7 @@ class AddNewTicket extends Component {
                     onSearch={this.handleSearch}
                     onChange={this.handleChange}
                     notFoundContent={null}
+                    autoFocus
                   >
                     {customersList.map(customer => {
                       return <Option value={customer.id} key={customer.id}>

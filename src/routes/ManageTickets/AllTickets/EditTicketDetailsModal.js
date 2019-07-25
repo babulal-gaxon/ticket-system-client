@@ -37,7 +37,7 @@ class EditTicketDetailsModal extends Component {
           ]}>
           <Form layout="vertical">
             <Form.Item label="Subject">
-              <Input type="text" value={title} onChange={(e) => {
+              <Input type="text" autoFocus value={title} onChange={(e) => {
                 this.setState({title: e.target.value})
               }}/>
             </Form.Item>

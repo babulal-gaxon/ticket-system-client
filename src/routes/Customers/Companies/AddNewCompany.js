@@ -121,7 +121,7 @@ class AddNewCompany extends Component {
               {getFieldDecorator('company_name', {
                 initialValue: company_name,
                 rules: [{required: true, message: 'Please Enter Company Name!'}],
-              })(<Input type="text" onChange={(e) => {
+              })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({company_name: e.target.value})
               }}/>)}
             </Form.Item>

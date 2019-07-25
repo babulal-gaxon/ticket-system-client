@@ -58,7 +58,7 @@ class AddNewLabel extends Component {
               {getFieldDecorator('name', {
               initialValue: name,
               rules: [{required: true, message: 'Please input Name!'}],
-            })(<Input type="text" placeholder="Name" onChange={(e) => {
+            })(<Input type="text" autoFocus placeholder="Name" onChange={(e) => {
               this.setState({name: e.target.value})
             }}/>)}
             </Form.Item>
