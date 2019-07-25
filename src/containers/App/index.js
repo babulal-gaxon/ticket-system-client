@@ -53,7 +53,6 @@ class App extends PureComponent {
 
 
   render() {
-    console.log("in render", this.props.match, this.props.history);
     const {match, location, locale, token, initURL, initialSteps, loadingUser} = this.props;
     if (loadingUser) {
       return <div className="gx-loader-view gx-h-100">
@@ -85,7 +84,7 @@ class App extends PureComponent {
             <Route exact path='/signin' component={SignIn}/>
             <Route exact path='/initial-setup' component={InitialSetup}/>
             <Route exact path='/reset-password' component={ForgetPassword}/>
-            <Route path='/reset/password' component={VerifyPassword}/>
+            <Route exact path='/reset/password' component={VerifyPassword}/>
             <RestrictedRoute path={`${match.url}`} token={token} initialSteps={initialSteps} component={MainApp}/>
           </Switch>
         </IntlProvider>

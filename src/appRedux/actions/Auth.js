@@ -200,7 +200,7 @@ export const onSetNewPassword = (token, data, history) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The password has been updated successfully"});
-        history.push("/signin");
+        history.replace("/signin");
       } else if (data.message) {
         console.info("payload: data.error", data.message);
         dispatch({type: FETCH_ERROR, payload: data.message});
