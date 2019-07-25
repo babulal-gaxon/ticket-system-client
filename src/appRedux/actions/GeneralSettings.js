@@ -260,7 +260,7 @@ export const onSaveTicketSettings = (details, history) => {
         dispatch({type: ADD_TICKET_SETTINGS, payload: data.data});
         dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
         if (history) {
-          history.push('/dashboard')
+          history.replace('/dashboard')
         }
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});

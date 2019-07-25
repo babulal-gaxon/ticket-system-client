@@ -29,7 +29,7 @@ class AddNewCustomers extends Component {
         email: "",
         password: "",
         phone: "",
-        company_id: null,
+        company_id: 0,
         label_ids: [],
         isModalVisible: false,
         status: 1,

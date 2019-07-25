@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Dropzone from "react-dropzone";
 import {Avatar, Button, Upload} from "antd";
 import PropTypes from "prop-types";
 

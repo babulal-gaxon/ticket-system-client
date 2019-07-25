@@ -80,7 +80,6 @@ class StaffList extends Component {
     this.props.history.push('/staff/add-new-member')
   };
 
-
   onShowBulkDeleteConfirm = () => {
     if (this.state.selectedStaff.length !== 0) {
       confirm({

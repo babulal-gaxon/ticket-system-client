@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import Dropzone from "react-dropzone";
+import {Upload} from "antd";
+import PropTypes from "prop-types";
+
+const {Dragger} = Upload;
 
 const thumbsContainer = {
   display: 'flex',
@@ -33,31 +36,24 @@ const img = {
   height: '100%'
 };
 
-
-class TicketAttachments extends Component {
+class Testing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      imageFiles: []
+      fileList: [],
     }
   }
 
-  onDrop = (imageFiles) => {
-    this.setState({
-      imageFiles: imageFiles
-    }, () => {
-
-      this.state.imageFiles.map(image => {
-        const data = new FormData();
-        data.append('file', image);
-        data.append('title', image.name);
-        this.props.onAddAttachments(data);
-      });
-    });
+  onLogoSelect = () => {
+    let file = this.state.fileList[0];
+    const data = new FormData();
+    data.append('file', file);
+    data.append('title', file.name);
+    this.props.onAddImage(data);
   };
 
   onThumbShow = () => {
-    return this.state.imageFiles.map(file => (
+    return this.state.fileList.map(file => (
       <div style={thumb} key={file.name}>
         <div style={thumbInner}>
           <img
@@ -71,37 +67,47 @@ class TicketAttachments extends Component {
   };
 
   render() {
+    const {fileList} = this.state;
+    const props = {
+      multiple: true,
+      onRemove: file => {
+        this.setState(state => {
+          const index = state.fileList.indexOf(file);
+          const newFileList = state.fileList.slice();
+          newFileList.splice(index, 1);
+          return {
+            fileList: newFileList,
+          };
+        }, () => this.props.onSelectFiles(this.state.fileList));
+      },
+      beforeUpload: file => {
+        this.setState(state => ({
+          fileList: [...state.fileList, file],
+        }), () => this.props.onSelectFiles(this.state.fileList));
+        return false;
+      },
+      fileList,
+    };
     return (
-      <Dropzone onDrop={this.onDrop} style={{height: 200}}>
-        {({getRootProps, getInputProps}) => (
-          <section className="container">
-            <div {...getRootProps({className: 'dropzone'})}>
-              <input {...getInputProps()} />
-              <div style={{
-                display:"flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 5,
-                border: "dotted",
-                borderWidth: 1,
-                borderColor: "#c4c4c4",
-                height:150,
-                backgroundColor:"#F5F5F5"
-              }}>
-                {this.state.imageFiles.length === 0 ?
-                <span>Drag 'n' drop files to upload</span> : null}
-                <aside style={thumbsContainer}>
-                  {this.onThumbShow()}
-                </aside>
-              </div>
-            </div>
-
-          </section>
-        )}
-      </Dropzone>
-    );
-  }0
+      <div className="gx-main-layout-content">
+        <Dragger {...props}>
+          {this.state.fileList.length === 0 ?
+            <span>Drag 'n' drop files to upload</span> : null}
+          <aside style={thumbsContainer}>
+            {this.onThumbShow()}
+          </aside>
+        </Dragger>
+      </div>
+    )
+  }
 }
 
+export default Testing;
 
-export default TicketAttachments;
+Testing.defaultProps = {
+  imageAvatar: null
+};
+
+Testing.propTypes = {
+  imageAvatar: PropTypes.object
+};

@@ -1,6 +1,5 @@
 import axios from 'util/Api'
 import {
-  ADD_ATTACHMENTS,
   ADD_TICKETS,
   ASSIGN_STAFF_TO_TICKET,
   DELETE_TICKET,
@@ -11,7 +10,8 @@ import {
   NULLIFY_TICKET,
   SELECT_CURRENT_TICKET,
   SEND_MESSAGE,
-  UPDATE_TICKET, UPDATE_TICKET_PRIORITY,
+  UPDATE_TICKET,
+  UPDATE_TICKET_PRIORITY,
   UPDATE_TICKET_STATUS
 } from "../../constants/TicketList";
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
@@ -271,27 +271,6 @@ export const onAssignStaffToTicket = (ticketId, staffId) => {
   }
 };
 
-export const onAddAttachments = (imageFile) => {
-  return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.post("/uploads/temporary/media", imageFile, {
-      headers: {
-        'Content-Type': "multipart/form-data"
-      }
-    }).then(({data}) => {
-      if (data.success) {
-        dispatch({type: ADD_ATTACHMENTS, payload: data.data});
-        dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Attachment has been added successfully"});
-      } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
-      }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.info("Error****:", error.message);
-    });
-  }
-};
 
 export const onNullifyCurrentTicket = () => {
   return {

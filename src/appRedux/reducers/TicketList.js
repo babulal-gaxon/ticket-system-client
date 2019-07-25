@@ -1,12 +1,12 @@
 import {
-  ADD_ATTACHMENTS,
   ADD_TICKETS,
   ASSIGN_STAFF_TO_TICKET,
   DELETE_TICKET,
   GET_CONVERSATION_LIST,
   GET_FILTER_OPTIONS,
   GET_FORM_DETAILS,
-  GET_TICKETS, NULLIFY_TICKET,
+  GET_TICKETS,
+  NULLIFY_TICKET,
   SELECT_CURRENT_TICKET,
   SEND_MESSAGE,
   UPDATE_TICKET,
@@ -30,8 +30,7 @@ const initialState = {
     staffs: [],
     status: [],
     priority: []
-  },
-  attachments: []
+  }
 };
 
 export default (state = initialState, action) => {
@@ -59,7 +58,7 @@ export default (state = initialState, action) => {
         currentTicket: action.payload
       };
 
-      case SELECT_CURRENT_TICKET:
+    case SELECT_CURRENT_TICKET:
       return {
         ...state,
         currentTicket: action.payload
@@ -127,21 +126,15 @@ export default (state = initialState, action) => {
       };
 
     case ASSIGN_STAFF_TO_TICKET:
-        return {
-          ...state,
-          assignedStaff: action.payload
-        };
+      return {
+        ...state,
+        assignedStaff: action.payload
+      };
 
     case GET_FILTER_OPTIONS:
       return {
         ...state,
         filterData: action.payload
-      };
-
-    case ADD_ATTACHMENTS:
-      return {
-        ...state,
-        attachments: state.attachments.concat(action.payload)
       };
 
     default:

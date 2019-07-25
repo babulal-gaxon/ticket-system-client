@@ -14,6 +14,8 @@ import InfoView from "../../../components/InfoView";
 import {onGetCustomersData} from "../../../appRedux/actions/Customers";
 import TicketAssigning from "./TicketAssigning";
 import TicketAttachments from "./TicketAttachments";
+import axios from 'util/Api'
+import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -31,7 +33,8 @@ class AddNewTicket extends Component {
       product_id: null,
       assign_to: null,
       tags: [],
-      attachments: []
+      attachments: [],
+      selectedFiles: []
     };
   }
 
@@ -49,9 +52,7 @@ class AddNewTicket extends Component {
   };
 
   onAddTicket = () => {
-    this.setState({attachments: this.props.attachments}, () => {
-      this.props.onAddTickets({...this.state}, this.props.history);
-    })
+    this.props.onAddTickets({...this.state}, this.props.history);
   };
 
   onServiceSelectOptions = () => {
@@ -78,8 +79,47 @@ class AddNewTicket extends Component {
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.onAddTicket();
+        this.onSubmitForm();
       }
+    });
+  };
+
+  onSubmitForm = () => {
+    if (this.state.selectedFiles.length > 0) {
+      this.onAddAttachments();
+    } else {
+      this.onAddTicket();
+    }
+  };
+
+  onAddAttachments = () => {
+    this.state.selectedFiles.map(file => {
+      const data = new FormData();
+      data.append('file', file);
+      data.append('title', file.name);
+      this.onUploadAttachment(data, file);
+    })
+  };
+
+  onUploadAttachment = (data, file) => {
+    console.log("in attachment")
+    this.props.fetchStart();
+    axios.post("/uploads/temporary/media", data, {
+      headers: {
+        'Content-Type': "multipart/form-data"
+      }
+    }).then(({data}) => {
+      if (data.success) {
+        this.props.fetchSuccess();
+        const updatedFiles = this.state.selectedFiles.filter(attachment => attachment !== file);
+        this.setState({attachments: this.state.attachments.concat(data.data), selectedFiles: updatedFiles}, () => {
+          if (this.state.selectedFiles.length === 0) {
+            this.onAddTicket();
+          }
+        })
+      }
+    }).catch(function (error) {
+      this.props.fetchError(error.message)
     });
   };
 
@@ -91,7 +131,12 @@ class AddNewTicket extends Component {
     this.setState({user_id: value})
   };
 
+  onSelectFiles = (files) => {
+    this.setState({selectedFiles: files})
+  };
+
   render() {
+    console.log("selectedFiles in index", this.state.selectedFiles);
     const {getFieldDecorator} = this.props.form;
     const {title, content, product_id, priority_id, department_id, service_id, user_id} = this.state;
     const {filterData, formData, customersList} = this.props;
@@ -134,9 +179,9 @@ class AddNewTicket extends Component {
                           <Avatar className="gx-mr-3 gx-size-30" src={customer.avatar.src}/> :
                           <Avatar className="gx-mr-3 gx-size-30"
                                   style={{backgroundColor: '#f56a00'}}>{customer.first_name[0].toUpperCase()}</Avatar>}</span>
-                            <span className="gx-mx-5">{customer.first_name + " " + customer.last_name}</span>
-                            <span>{customer.email}</span>
-                        </Option>
+                        <span className="gx-mx-5">{customer.first_name + " " + customer.last_name}</span>
+                        <span>{customer.email}</span>
+                      </Option>
                     })}
                   </Select>)}
                 </Form.Item>
@@ -186,9 +231,9 @@ class AddNewTicket extends Component {
                         message: 'Please enter the details!'
                       },
                       {
-                      min: 30,
-                      message: 'Please enter atleast 30 characters',
-                    }],
+                        min: 30,
+                        message: 'Please enter atleast 30 characters',
+                      }],
                   })(<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                     this.setState({content: e.target.value})
                   }}/>)}
@@ -225,7 +270,7 @@ class AddNewTicket extends Component {
                         notFoundContent={null}/>
               </div>
               <div className="gx-my-5">Attachments</div>
-              <TicketAttachments onAddAttachments={this.props.onAddAttachments}/>
+              <TicketAttachments onSelectFiles={this.onSelectFiles}/>
             </Col>
           </Row>
         </Widget>
@@ -239,9 +284,9 @@ AddNewTicket = Form.create({})(AddNewTicket);
 
 
 const mapStateToProps = ({ticketList, customers}) => {
-  const {formData, filterData, attachments} = ticketList;
+  const {formData, filterData} = ticketList;
   const {customersList} = customers;
-  return {customersList, formData, filterData, attachments};
+  return {customersList, formData, filterData};
 };
 
 export default connect(mapStateToProps, {
@@ -249,7 +294,9 @@ export default connect(mapStateToProps, {
   onGetCustomersData,
   onGetFormDetails,
   onGetFilterOptions,
-  onAddAttachments
+  fetchStart,
+  fetchError,
+  fetchSuccess
 })(AddNewTicket);
 
 
