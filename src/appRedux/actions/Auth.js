@@ -23,36 +23,6 @@ export const setInitUrl = (url) => {
   };
 };
 
-export const onUserSignUp = ({email, password, first_name, last_name}) => {
-  console.info(email, password);
-  return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.post('/signup', {
-        email: email,
-        password: password,
-        first_name: first_name, last_name: last_name
-      }
-    ).then(({data}) => {
-      console.info("data:", data);
-      if (data.success) {
-        localStorage.setItem("token", JSON.stringify(data.token.access_token));
-        axios.defaults.headers.common['access-token'] = "Bearer " + data.token.access_token;
-        dispatch({type: FETCH_SUCCESS});
-        dispatch({type: USER_TOKEN_SET, payload: data.token.access_token});
-        dispatch({type: USER_DATA, payload: data.user});
-      } else if (data.message) {
-        console.info("payload: data.error", data.message);
-        dispatch({type: FETCH_ERROR, payload: data.message});
-      } else {
-        console.info("payload: data.error", data.errors[0]);
-        dispatch({type: FETCH_ERROR, payload: data.errors.email});
-      }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.info("Error****:", error.message);
-    });
-  }
-};
 
 export const onUserSignIn = ({email, password}) => {
   console.log(email, password);
@@ -215,26 +185,6 @@ export const onSetNewPassword = (token, data, history) => {
   }
 };
 
-export const onVerifyAccountEmail = (token, history) => {
-  return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.get(`/verify/email/${token}`).then(({data}) => {
-      if (data.success) {
-        dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Email has been verified successfully"});
-        history.replace("/signin");
-      } else if (data.message) {
-        console.info("payload: data.error", data.message);
-        dispatch({type: FETCH_ERROR, payload: data.message});
-      } else {
-        console.info("payload: data.error", data.errors[0]);
-        dispatch({type: FETCH_ERROR, payload: data.errors.email});
-      }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.info("Error****:", error.message);
-    });
-  }
-};
+
 
 

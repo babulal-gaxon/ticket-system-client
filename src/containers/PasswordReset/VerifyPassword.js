@@ -85,7 +85,10 @@ class VerifyPassword extends React.Component {
                       {
                         validator: this.validateToNextPassword,
                       },
-                    ],
+                      {
+                        min: 8,
+                        message: 'Length should be at least 8 characters long',
+                      }],
                   })(<Input.Password onChange={(e) => this.setState({password: e.target.value})}/>)}
                 </Form.Item>
                 <Form.Item label="Confirm Password" hasFeedback>

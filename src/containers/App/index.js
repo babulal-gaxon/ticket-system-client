@@ -15,7 +15,6 @@ import CircularProgress from "../../components/CircularProgress/index";
 import ForgetPassword from "../PasswordReset/ForgetPassword";
 import VerifyPassword from "../PasswordReset/VerifyPassword";
 import InitialSetup from "../../routes/InitialSetup";
-import VerifyEmail from "../VerifyEmail";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
   <Route
@@ -86,7 +85,6 @@ class App extends PureComponent {
             <Route exact path='/initial-setup' component={InitialSetup}/>
             <Route exact path='/reset-password' component={ForgetPassword}/>
             <Route exact path='/reset/password' component={VerifyPassword}/>
-            <Route exact path='/verify/email' component={VerifyEmail}/>
             <RestrictedRoute path={`${match.url}`} token={token} initialSteps={initialSteps} component={MainApp}/>
           </Switch>
         </IntlProvider>
