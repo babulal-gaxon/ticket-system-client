@@ -56,15 +56,31 @@ class AddStaffNotes extends Component {
             <Form.Item label="Title">
               {getFieldDecorator('title', {
                 initialValue: title,
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Enter Title!'}],
               })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({title: e.target.value})
               }}/>)}
             </Form.Item>
             <Form.Item label="Description">
-              <TextArea rows={4} className="gx-form-control-lg" value={content} onChange={(e) => {
+              {getFieldDecorator('content', {
+                initialValue: content,
+                validate: [{
+                  trigger: 'onBlur',
+                  rules: [
+                    { required: true,
+                      message: 'Please Enter Description!' },
+                  ],
+                }, {
+                  trigger: 'onChange',
+                  rules: [
+                    {max: 250,
+                      message: 'Description length should not exceed 250 characters' },
+                  ],
+                }],
+              })(<TextArea rows={4} onChange={(e) => {
                 this.setState({content: e.target.value})
-              }}/>
+              }}/>)}
             </Form.Item>
           </Form>
         </Modal>

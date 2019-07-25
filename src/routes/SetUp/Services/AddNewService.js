@@ -60,6 +60,7 @@ class AddNewService extends Component {
             <Form.Item label="Title">
               {getFieldDecorator('title', {
                 initialValue: title,
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Enter Service title!'}],
               })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({title: e.target.value})
@@ -68,6 +69,7 @@ class AddNewService extends Component {
             <Form.Item label="Description">
               {getFieldDecorator('desc', {
                 initialValue: desc,
+                validateTrigger: 'onBlur',
                 rules: [{
                   max: 250,
                   message: 'Message length should not exceed 250 characters',

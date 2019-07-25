@@ -92,9 +92,9 @@ class AddNewCompany extends Component {
         if(fileList.length >0) {
           props.onRemove(fileList[0])
         }
-        this.setState(state => ({
-          fileList: [...state.fileList, file],
-        }));
+          this.setState(state => ({
+            fileList: [...state.fileList, file],
+          }));
         return false;
       },
       fileList,
@@ -120,6 +120,7 @@ class AddNewCompany extends Component {
             <Form.Item label="Company Name">
               {getFieldDecorator('company_name', {
                 initialValue: company_name,
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Enter Company Name!'}],
               })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({company_name: e.target.value})
@@ -128,6 +129,7 @@ class AddNewCompany extends Component {
             <Form.Item label="Website" extra="Please enter website in 'http//www.example.com' format">
               {getFieldDecorator('website', {
                 initialValue: website,
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Enter Website URL!'}],
               })(<Input type="text" onChange={(e) => {
                 this.setState({website: e.target.value})

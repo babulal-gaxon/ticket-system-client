@@ -62,6 +62,7 @@ class ResetCustomerPassword extends Component {
           <Form layout="vertical">
             <Form.Item label="Password" hasFeedback>
               {getFieldDecorator('password', {
+                validateTrigger: 'onBlur',
                 rules: [
                   {
                     required: true,
@@ -75,6 +76,7 @@ class ResetCustomerPassword extends Component {
             </Form.Item>
             <Form.Item label="Confirm Password" hasFeedback>
               {getFieldDecorator('password_confirmation', {
+                validateTrigger: 'onBlur',
                 rules: [
                   {
                     required: true,

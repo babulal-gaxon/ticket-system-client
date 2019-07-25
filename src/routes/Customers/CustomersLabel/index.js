@@ -26,7 +26,7 @@ class CustomersLabel extends Component {
       selectedRowKeys: [],
       showAddLabel: false,
       filterText: "",
-      labelId: 0,
+      labelId: null,
       itemNumbers: 10,
       current: 1,
       selectedLabels: []
@@ -72,7 +72,7 @@ class CustomersLabel extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({labelId: 0, showAddLabel: true});
+    this.setState({labelId: null, showAddLabel: true});
   };
 
   onEditLabel = (id) => {

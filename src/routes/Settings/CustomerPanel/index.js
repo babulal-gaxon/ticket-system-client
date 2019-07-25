@@ -90,12 +90,14 @@ class CustomerPanel extends Component {
             <Form.Item label="Default Customer theme">
               {getFieldDecorator('theme', {
                 initialValue: theme,
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Select Theme!'}],
               })(<Input type="text" autoFocus onChange={(e) => this.setState({theme: e.target.value})}/>)}
             </Form.Item>
             <Form.Item label="Default Country">
               {getFieldDecorator('country', {
                 initialValue: country,
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Enter Country!'}],
               })(<Select style={{width: "100%"}} onChange={this.onCountrySelect}>
                 {Object.keys(this.props.countriesList).map(country => {

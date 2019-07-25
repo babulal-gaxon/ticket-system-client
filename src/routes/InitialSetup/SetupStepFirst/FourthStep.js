@@ -76,6 +76,7 @@ class FourthStep extends Component {
           <Form.Item label="Date Format">
             {getFieldDecorator('city', {
               initialValue: date_format,
+              validateTrigger: 'onBlur',
               rules: [{required: true, message: 'Please Enter Date format!'}],
             })(<Select style={{width: "100%"}} onChange={this.onDateSelect}>
               <Option value="mm/dd/yy">MM/DD/YY</Option>
@@ -89,6 +90,7 @@ class FourthStep extends Component {
           <Form.Item label="Time Format">
             {getFieldDecorator('time_format', {
               initialValue: time_format,
+              validateTrigger: 'onBlur',
               rules: [{required: true, message: 'Please Enter State Name!'}],
             })(<Select style={{width: "100%"}} onChange={this.onTimeSelect}>
               <Option value="24 Hours">24 Hours (20:30)</Option>
@@ -98,6 +100,7 @@ class FourthStep extends Component {
           <Form.Item label="Default Language">
             {getFieldDecorator('default_language', {
               initialValue: default_language,
+              validateTrigger: 'onBlur',
               rules: [{required: true, message: 'Please Enter State Name!'}],
             })(<Select style={{width: "100%"}} onChange={this.onLanguageSelect}>
               <Option value="en">English</Option>
@@ -110,6 +113,7 @@ class FourthStep extends Component {
           <Form.Item label="Language Selection for Customers">
             {getFieldDecorator('disable_language_selection', {
               initialValue: allow_language_selection,
+              validateTrigger: 'onBlur',
               rules: [{required: true, message: 'Please Enter State Name!'}],
             })(<Radio.Group onChange={(event) => this.onChangePermission(event)}>
               <Radio value="1">Allowed</Radio>

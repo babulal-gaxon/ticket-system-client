@@ -59,7 +59,7 @@ class AddNewDepartment extends Component {
             <Form.Item label="Name">
               {getFieldDecorator('name', {
                 initialValue: name,
-                validateTrigger: 'onChange',
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Enter Department Name!'}],
               })(<Input type="text" autoFocus
                         onChange={(e) => {this.setState({name: e.target.value})
@@ -68,7 +68,7 @@ class AddNewDepartment extends Component {
             <Form.Item label="Description">
               {getFieldDecorator('desc', {
                 initialValue: desc,
-                validateTrigger: 'onChange',
+                validateTrigger: 'onBlur',
                 rules: [{
                   max: 250,
                   message: 'Maximum length for description is 256 characters',

@@ -6,7 +6,7 @@ const {TextArea} = Input;
 class AddNewLabel extends Component {
   constructor(props) {
     super(props);
-    if (this.props.labelId === 0) {
+    if (this.props.labelId === null) {
       this.state = {
         name: "",
         desc: "",
@@ -19,7 +19,7 @@ class AddNewLabel extends Component {
   }
 
   onSaveData = () => {
-    if (this.props.labelId === 0) {
+    if (this.props.labelId === null) {
       this.props.onAddLabelsData({...this.state});
     } else {
       this.props.onEditLabelsData({...this.state});
@@ -43,7 +43,7 @@ class AddNewLabel extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddLabel}
-          title={this.props.labelId === 0 ? "Add New Label" : "Edit Label Details"}
+          title={this.props.labelId === null ? "Add New Label" : "Edit Label Details"}
           onCancel={() => onToggleModalState()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -57,22 +57,28 @@ class AddNewLabel extends Component {
             <Form.Item label="Name">
               {getFieldDecorator('name', {
               initialValue: name,
+                validateTrigger: 'onBlur',
               rules: [{required: true, message: 'Please input Name!'}],
             })(<Input type="text" autoFocus placeholder="Name" onChange={(e) => {
               this.setState({name: e.target.value})
             }}/>)}
             </Form.Item>
-            <Form.Item label="Description">{getFieldDecorator('description', {
+            <Form.Item label="Description">
+              {getFieldDecorator('description', {
               initialValue: desc,
-              rules: [
-                {required: true,
-                  message: 'Please input Description!'
-                },
-                {
-                  min: 30,
-                  message: 'Description should be atleast 30 characters long',
-                }
+              validate: [{
+                trigger: 'onBlur',
+                rules: [
+                  { required: true,
+                    message: 'Please Enter Description!' },
                 ],
+              }, {
+                trigger: 'onChange',
+                rules: [
+                  {max: 250,
+                    message: 'Description length should not exceed 250 characters' },
+                ],
+              }],
             })(<TextArea rows={4} onChange={(e) => {
               this.setState({desc: e.target.value})
             }}/>)}

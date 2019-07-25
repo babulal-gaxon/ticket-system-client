@@ -62,6 +62,7 @@ class AddNewResponses extends Component {
             <Form.Item label="Short Title">
               {getFieldDecorator('short_title', {
                 initialValue: short_title,
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Enter Short Title!'}],
               })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({short_title: e.target.value})
@@ -70,6 +71,7 @@ class AddNewResponses extends Component {
             <Form.Item label="Short Code">
               {getFieldDecorator('short_code', {
                 initialValue: short_code,
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Enter Short Code!'}],
               })(<Input type="text" onChange={(e) => {
                 this.setState({short_code: e.target.value})
