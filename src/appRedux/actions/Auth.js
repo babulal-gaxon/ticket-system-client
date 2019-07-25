@@ -215,5 +215,26 @@ export const onSetNewPassword = (token, data, history) => {
   }
 };
 
+export const onVerifyAccountEmail = (token, history) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.get(`/verify/email/${token}`).then(({data}) => {
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "The Email has been verified successfully"});
+        history.replace("/signin");
+      } else if (data.message) {
+        console.info("payload: data.error", data.message);
+        dispatch({type: FETCH_ERROR, payload: data.message});
+      } else {
+        console.info("payload: data.error", data.errors[0]);
+        dispatch({type: FETCH_ERROR, payload: data.errors.email});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
 
 
