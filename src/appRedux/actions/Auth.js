@@ -26,9 +26,9 @@ export const onUserSignUp = ({email, password, first_name, last_name}) => {
         first_name: first_name, last_name: last_name
       }
     ).then(({data}) => {
-      console.info("data:", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: "An Email has been sent to entered email address, please check your email"});
       } else if (data.message) {
         console.info("payload: data.error", data.message);
         dispatch({type: FETCH_ERROR, payload: data.message});
