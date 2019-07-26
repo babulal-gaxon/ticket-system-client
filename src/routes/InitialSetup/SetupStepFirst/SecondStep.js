@@ -73,6 +73,7 @@ class SecondStep extends Component {
               <Form.Item label="First Name">
                 {getFieldDecorator('first_name', {
                   initialValue: first_name,
+                  validateTrigger: 'onBlur',
                   rules: [{
                     required: true,
                     message: 'Please Enter First Name!'
@@ -84,6 +85,7 @@ class SecondStep extends Component {
               <Form.Item label="Last Name">
                 {getFieldDecorator('last_name', {
                   initialValue: last_name,
+                  validateTrigger: 'onBlur',
                   rules: [{
                     required: true,
                     message: 'Please Enter Last Name!'
@@ -95,14 +97,23 @@ class SecondStep extends Component {
           <Form.Item label="Email Address">
             {getFieldDecorator('email', {
               initialValue: email,
-              rules: [{
-                type: 'email',
-                message: 'The input is not valid E-mail!',
-              },
-                {
-                  required: true,
-                  message: 'Please Enter Email!'
-                }],
+              validate: [{
+                trigger: 'onBlur',
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please Enter Email!'
+                  },
+                ],
+              }, {
+                trigger: 'onChange',
+                rules: [
+                  {
+                    type: 'email',
+                    message: 'The input is not valid E-mail!',
+                  },
+                ],
+              }],
             })(<Input type="text" onChange={(e) => {
               this.setState({email: e.target.value})
             }}/>)}
@@ -110,7 +121,9 @@ class SecondStep extends Component {
           <div className="gx-d-flex gx-flex-row">
             <Col sm={12} xs={24} className="gx-pl-0">
               <Form.Item label="Password" hasFeedback>
-                {getFieldDecorator('password', {
+                {getFieldDecorator('password',
+                    {
+                      validateTrigger: 'onBlur',
                   rules: [
                     {
                       required: true,
@@ -129,6 +142,7 @@ class SecondStep extends Component {
             <Col sm={12} xs={24} className="gx-pr-0">
               <Form.Item label="Confirm Password" hasFeedback>
                 {getFieldDecorator('password_confirmation', {
+                  validateTrigger: 'onBlur',
                   rules: [
                     {
                       required: true,

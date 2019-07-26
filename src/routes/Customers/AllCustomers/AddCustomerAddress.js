@@ -22,6 +22,7 @@ class AddCustomerAddress extends Component {
   }
 
   onSelectAddressType = checkedList => {
+    console.log("chekdlist", checkedList)
     this.setState({
       address_type: checkedList
     })
@@ -62,6 +63,7 @@ class AddCustomerAddress extends Component {
           <Form layout="vertical">
             <Form.Item label="Address">
               {getFieldDecorator('address_line_1', {
+                validateTrigger: 'onBlur',
                 initialValue: address_line_1,
                 rules: [{required: true, message: 'Please Enter Address!'}],
               })(<Input type="text" autoFocus onChange={(e) => {
@@ -73,6 +75,7 @@ class AddCustomerAddress extends Component {
                 <Form.Item label="City">
                   {getFieldDecorator('city', {
                     initialValue: city,
+                    validateTrigger: 'onBlur',
                     rules: [{required: true, message: 'Please Enter City Name!'}],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({city: e.target.value})
@@ -83,6 +86,7 @@ class AddCustomerAddress extends Component {
                 <Form.Item label="State">
                   {getFieldDecorator('state', {
                     initialValue: state,
+                    validateTrigger: 'onBlur',
                     rules: [{required: true, message: 'Please Enter State Name!'}],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({state: e.target.value})
@@ -95,6 +99,7 @@ class AddCustomerAddress extends Component {
                 <Form.Item label="Country">
                   {getFieldDecorator('country_id', {
                     initialValue: country_id,
+                    validateTrigger: 'onBlur',
                     rules: [
                       {
                         required: true,
@@ -122,6 +127,7 @@ class AddCustomerAddress extends Component {
                 <Form.Item label="Zip Code">
                   {getFieldDecorator('zip_code', {
                     initialValue: zip_code,
+                    validateTrigger: 'onBlur',
                     rules: [
                       {
                         required: true,
@@ -141,6 +147,7 @@ class AddCustomerAddress extends Component {
             <Form.Item label="Select Department">
               {getFieldDecorator('address_type', {
                 initialValue: address_type,
+
                 rules: [
                   {
                     required: true,

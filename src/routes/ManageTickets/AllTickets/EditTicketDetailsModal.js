@@ -19,6 +19,7 @@ class EditTicketDetailsModal extends Component {
   };
 
   render() {
+    const {getFieldDecorator} = this.props.form;
     const {title, content} = this.state;
     const {showEditModal, onToggleEditModal} = this.props;
     return (
@@ -37,14 +38,33 @@ class EditTicketDetailsModal extends Component {
           ]}>
           <Form layout="vertical">
             <Form.Item label="Subject">
-              <Input type="text" autoFocus value={title} onChange={(e) => {
+              {getFieldDecorator('name', {
+                initialValue: title,
+                validateTrigger: 'onBlur',
+                rules: [{required: true, message: 'Please enter Title!'}],
+              })(<Input type="text" autoFocus placeholder="Title" onChange={(e) => {
                 this.setState({title: e.target.value})
-              }}/>
+              }}/>)}
             </Form.Item>
             <Form.Item label="Description">
-              <TextArea rows={4} className="gx-form-control-lg" value={content} onChange={(e) => {
+              {getFieldDecorator('content', {
+                initialValue: content,
+                validate: [{
+                  trigger: 'onBlur',
+                  rules: [
+                    { required: true,
+                      message: 'Please Enter Description!' },
+                  ],
+                }, {
+                  trigger: 'onChange',
+                  rules: [
+                    {max: 250,
+                      message: 'Description length should not exceed 250 characters' },
+                  ],
+                }],
+              })(<TextArea rows={4} onChange={(e) => {
                 this.setState({content: e.target.value})
-              }}/>
+              }}/>)}
             </Form.Item>
           </Form>
         </Modal>

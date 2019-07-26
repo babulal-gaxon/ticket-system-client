@@ -106,6 +106,7 @@ class AddNewPriority extends Component {
             <Form.Item label="Name">
               {getFieldDecorator('name', {
                 initialValue: name,
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Enter Priority Name!'}],
               })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({name: e.target.value})

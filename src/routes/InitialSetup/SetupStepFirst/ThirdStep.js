@@ -105,6 +105,7 @@ class ThirdStep extends Component {
               <Form.Item label="Company Name">
                 {getFieldDecorator('name', {
                   initialValue: name,
+                  validateTrigger: 'onBlur',
                   rules: [{
                     required: true,
                     message: 'Please Enter Company Name!'
@@ -116,6 +117,7 @@ class ThirdStep extends Component {
               <Form.Item label="Company Website" extra="Please enter website in 'http//www.example.com' format">
                 {getFieldDecorator('url', {
                   initialValue: url,
+                  validateTrigger: 'onBlur',
                   rules: [{
                     required: true,
                     message: 'Please Enter Company Website!'
@@ -127,6 +129,7 @@ class ThirdStep extends Component {
           <Form.Item label="Upload Logo">
             {getFieldDecorator('uploadedLogo',
               {
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Upload Company Logo!'}],
               })(
               <Upload {...props}>
@@ -136,6 +139,7 @@ class ThirdStep extends Component {
           <Form.Item label="Client URl">
             {getFieldDecorator('cpp_url', {
               initialValue: cpp_url,
+              validateTrigger: 'onBlur',
               rules: [{
                 required: true,
                 message: 'Please Enter Client URL!'
@@ -148,14 +152,23 @@ class ThirdStep extends Component {
               <Form.Item label="Email Address">
                 {getFieldDecorator('email', {
                   initialValue: email,
-                  rules: [{
-                    type: 'email',
-                    message: 'The input is not valid E-mail!',
-                  },
-                    {
-                      required: true,
-                      message: 'Please Enter Email!'
-                    }],
+                  validate: [{
+                    trigger: 'onBlur',
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Please Enter Email!'
+                      },
+                    ],
+                  }, {
+                    trigger: 'onChange',
+                    rules: [
+                      {
+                        type: 'email',
+                        message: 'The input is not valid E-mail!',
+                      },
+                    ],
+                  }],
                 })(<Input type="text" onChange={(e) => {
                   this.setState({email: e.target.value})
                 }}/>)}
@@ -165,6 +178,7 @@ class ThirdStep extends Component {
               <Form.Item label="Phone Number">
                 {getFieldDecorator('phone', {
                   initialValue: phone,
+                  validateTrigger: 'onBlur',
                   rules: [{
                     pattern: /^[0-9\b]+$/,
                     message: 'Please enter only numerical values',
@@ -182,6 +196,7 @@ class ThirdStep extends Component {
               <Form.Item label="Address Line 1">
                 {getFieldDecorator('address_line_1', {
                   initialValue: address_line_1,
+                  validateTrigger: 'onBlur',
                   rules: [{required: true, message: 'Please Enter Address Line 1!'}],
                 })(<Input type="text" onChange={(e) => {
                   this.setState({address_line_1: e.target.value})
@@ -192,6 +207,7 @@ class ThirdStep extends Component {
               <Form.Item label="Address Line 2">
                 {getFieldDecorator('address_line_2', {
                   initialValue: address_line_2,
+                  validateTrigger: 'onBlur',
                   rules: [{required: true, message: 'Please Enter Address Line 2!'}],
                 })(<Input type="text" onChange={(e) => {
                   this.setState({address_line_2: e.target.value})
@@ -204,6 +220,7 @@ class ThirdStep extends Component {
               <Form.Item label="Country">
                 {getFieldDecorator('country_id', {
                   initialValue: country_id,
+                  validateTrigger: 'onBlur',
                   rules: [
                     {
                       required: true,
@@ -220,6 +237,7 @@ class ThirdStep extends Component {
               <Form.Item label="State">
                 {getFieldDecorator('state', {
                   initialValue: state,
+                  validateTrigger: 'onBlur',
                   rules: [{required: true, message: 'Please Enter State Name!'}],
                 })(<Input type="text" onChange={(e) => {
                   this.setState({state: e.target.value})
@@ -230,6 +248,7 @@ class ThirdStep extends Component {
               <Form.Item label="City">
                 {getFieldDecorator('city', {
                   initialValue: city,
+                  validateTrigger: 'onBlur',
                   rules: [{required: true, message: 'Please Enter City Name!'}],
                 })(<Input type="text" onChange={(e) => {
                   this.setState({city: e.target.value})
@@ -240,6 +259,7 @@ class ThirdStep extends Component {
           <Form.Item label="Zip Code">
             {getFieldDecorator('zip_code', {
               initialValue: zip_code,
+              validateTrigger: 'onBlur',
               rules: [
                 {
                   required: true,

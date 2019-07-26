@@ -160,6 +160,7 @@ class AddNewStaff extends Component {
                 <Form.Item label="First Name">
                   {getFieldDecorator('first_name', {
                     initialValue: first_name,
+                    validateTrigger: 'onBlur',
                     rules: [{required: true, message: 'Please Enter First Name!'}],
                   })(<Input type="text" autoFocus onChange={(e) => {
                     this.setState({first_name: e.target.value})
@@ -168,6 +169,7 @@ class AddNewStaff extends Component {
                 <Form.Item label="Last Name">
                   {getFieldDecorator('last_name', {
                     initialValue: last_name,
+                    validateTrigger: 'onBlur',
                     rules: [{required: true, message: 'Please Enter Last Name!'}],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({last_name: e.target.value})
@@ -176,14 +178,23 @@ class AddNewStaff extends Component {
                 <Form.Item label="Email Address">
                   {getFieldDecorator('email', {
                     initialValue: email,
-                    rules: [{
-                      type: 'email',
-                      message: 'The input is not valid E-mail!',
-                    },
-                      {
-                        required: true,
-                        message: 'Please Enter Email!'
-                      }],
+                    validate: [{
+                      trigger: 'onBlur',
+                      rules: [
+                        {
+                          required: true,
+                          message: 'Please Enter Email!'
+                        },
+                      ],
+                    }, {
+                      trigger: 'onChange',
+                      rules: [
+                        {
+                          type: 'email',
+                          message: 'The input is not valid E-mail!',
+                        },
+                      ],
+                    }],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({email: e.target.value})
                   }}/>)}
@@ -191,6 +202,7 @@ class AddNewStaff extends Component {
                 <Form.Item label="Phone Number">
                   {getFieldDecorator('mobile', {
                     initialValue: mobile,
+                    validateTrigger: 'onBlur',
                     rules: [{
                       pattern: /^[0-9\b]+$/,
                       message: 'Please enter only numerical values',
@@ -202,6 +214,7 @@ class AddNewStaff extends Component {
                 <Form.Item label="Role">
                   {getFieldDecorator('role_id', {
                   initialValue: role_id,
+                    validateTrigger: 'onBlur',
                   rules: [{
                   required: true,
                   message: 'Please Select role!'
@@ -215,6 +228,7 @@ class AddNewStaff extends Component {
                 <Form.Item label="Hourly Rate">
                   {getFieldDecorator('hourly_rate', {
                     initialValue: hourly_rate,
+                    validateTrigger: 'onBlur',
                     rules: [{
                       pattern: /^[0-9\b]+$/,
                       message: 'Please enter only numerical values',
@@ -233,6 +247,7 @@ class AddNewStaff extends Component {
                   {this.props.staffId === null ?
                     getFieldDecorator('password', {
                       initialValue: password,
+                      validateTrigger: 'onBlur',
                       rules: [{
                         required: true,
                         message: 'Please Enter Password!'

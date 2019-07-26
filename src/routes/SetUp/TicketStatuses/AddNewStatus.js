@@ -108,6 +108,7 @@ class AddNewStatus extends Component {
             <Form.Item label="Name">
               {getFieldDecorator('name', {
                 initialValue: name,
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Enter Status Name!'}],
               })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({name: e.target.value})

@@ -35,6 +35,8 @@ class StepFirst extends Component {
               <Form.Item label="User Name">
                 {getFieldDecorator('username', {
                   initialValue: username,
+                  validateTrigger: 'onBlur',
+                  rules: [{required: true, message: 'Please enter Username!'}],
                 })(<Input type="text" autoFocus onChange={(e) => this.setState({username: e.target.value})}/>)}
               </Form.Item>
             </Col>
@@ -42,6 +44,8 @@ class StepFirst extends Component {
               <Form.Item label="Password">
                 {getFieldDecorator('password', {
                   initialValue: password,
+                  validateTrigger: 'onBlur',
+                  rules: [{required: true, message: 'Please enter Password!'}],
                 })(<Input.Password type="text" onChange={(e) => this.setState({password: e.target.value})}/>)}
               </Form.Item>
             </Col>
@@ -51,6 +55,8 @@ class StepFirst extends Component {
               <Form.Item label="Host Name">
                 {getFieldDecorator('host', {
                   initialValue: host,
+                  validateTrigger: 'onBlur',
+                  rules: [{required: true, message: 'Please enter Hosr!'}],
                 })(<Input type="text" onChange={(e) => this.setState({host: e.target.value})}/>)}
               </Form.Item>
             </Col>
@@ -58,6 +64,8 @@ class StepFirst extends Component {
               <Form.Item label="Database">
                 {getFieldDecorator('database', {
                   initialValue: database,
+                  validateTrigger: 'onBlur',
+                  rules: [{required: true, message: 'Please enter Database!'}],
                 })(<Input type="text" onChange={(e) => this.setState({database: e.target.value})}/>)}
               </Form.Item>
             </Col>

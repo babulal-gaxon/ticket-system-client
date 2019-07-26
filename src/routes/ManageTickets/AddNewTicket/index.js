@@ -161,6 +161,7 @@ class AddNewTicket extends Component {
                 <Form.Item label="Customer">
                   {getFieldDecorator('user_id', {
                     initialValue: user_id,
+                    validateTrigger: 'onBlur',
                     rules: [{required: true, message: 'Please Select Customer!'}],
                   })(<Select
                     showSearch
@@ -188,6 +189,7 @@ class AddNewTicket extends Component {
                 <Form.Item label="Subject">
                   {getFieldDecorator('title', {
                     initialValue: title,
+                    validateTrigger: 'onBlur',
                     rules: [{required: true, message: 'Please enter title!'}],
                   })(<Input onChange={(e) => {
                     this.setState({title: e.target.value})
@@ -225,14 +227,11 @@ class AddNewTicket extends Component {
                 <Form.Item label="Description">
                   {getFieldDecorator('content', {
                     initialValue: content,
+                    validateTrigger: 'onBlur',
                     rules: [
                       {
                         required: true,
                         message: 'Please enter the details!'
-                      },
-                      {
-                        min: 30,
-                        message: 'Please enter atleast 30 characters',
                       }],
                   })(<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                     this.setState({content: e.target.value})
@@ -241,6 +240,7 @@ class AddNewTicket extends Component {
                 <Form.Item label="Set Priority">
                   {getFieldDecorator('priority_id', {
                     initialValue: priority_id,
+                    validateTrigger: 'onBlur',
                     rules: [{required: true, message: 'Please Select Ticket Priority!'}],
                   })(<Select onChange={(value) => {
                     this.setState({priority_id: value})

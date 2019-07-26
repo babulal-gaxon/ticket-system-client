@@ -121,6 +121,7 @@ class AddNewProduct extends Component {
             <Form.Item label="Title">
               {getFieldDecorator('title', {
                 initialValue: title,
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Enter Product title!'}],
               })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({title: e.target.value})
@@ -129,6 +130,7 @@ class AddNewProduct extends Component {
             <Form.Item label="Description">
               {getFieldDecorator('desc', {
                 initialValue: desc,
+                validateTrigger: 'onBlur',
                  rules: [{
                    max: 250,
                    message: 'Message length should not exceed 250 characters',
@@ -141,6 +143,7 @@ class AddNewProduct extends Component {
               <Form.Item label="Upload Logo">
                 {getFieldDecorator('uploadedLogo',
                   {
+                    validateTrigger: 'onBlur',
                     rules: [{required: true, message: 'Please Upload Company Logo!'}],
                   })(
                   <Upload {...props}>

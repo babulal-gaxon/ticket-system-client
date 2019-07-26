@@ -266,6 +266,7 @@ class AddNewRole extends Component {
                 <Form.Item label="Role Name">
                   {getFieldDecorator('name', {
                     initialValue: name,
+                    validateTrigger: 'onBlur',
                     rules: [{required: true, message: 'Please Enter Role Name!'}],
                   })(<Input type="text" autoFocus onChange={(e) => this.setState({name: e.target.value})}/>)}
                 </Form.Item>

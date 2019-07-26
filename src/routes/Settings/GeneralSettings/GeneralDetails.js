@@ -143,6 +143,7 @@ class GeneralDetails extends Component {
           <Form.Item label="Company Name">
             {getFieldDecorator('name', {
               initialValue: name,
+              validateTrigger: 'onBlur',
               rules: [{required: true, message: 'Please Enter Company Name!'}],
             })(<Input type="text" autoFocus onChange={(e) => {
               this.setState({name: e.target.value})
@@ -151,6 +152,7 @@ class GeneralDetails extends Component {
           <Form.Item label="Company Website" extra="Please enter website in 'http//www.example.com' format">
             {getFieldDecorator('url', {
               initialValue: url,
+              validateTrigger: 'onBlur',
               rules: [{required: true, message: 'Please Enter Company Website!'}],
             })(<Input type="text" onChange={(e) => {
               this.setState({url: e.target.value})
@@ -159,6 +161,7 @@ class GeneralDetails extends Component {
           {this.props.generalSettingsData === null ?
             <Form.Item label="Company Logo" extra="Size should be 250X100px, Maximum image size 50kb">
               {getFieldDecorator('logo', {
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Select Logo!'}],
               })(<Upload {...propsLogo}>
                 <Input placeholder="Choose file..." addonAfter="Browse"/>
@@ -172,6 +175,7 @@ class GeneralDetails extends Component {
           {this.props.generalSettingsData === null ?
             <Form.Item label="Favicon" extra="Size should be 40X40px, Maximum image size 50kb">
               {getFieldDecorator('favicon', {
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Select Favicon!'}],
               })(<Upload {...propsFavicon}>
                 <Input placeholder="Choose file..." addonAfter="Browse"/>
@@ -185,14 +189,23 @@ class GeneralDetails extends Component {
           <Form.Item label="Email">
             {getFieldDecorator('email', {
               initialValue: email,
-              rules: [{
-                type: 'email',
-                message: 'The input is not valid E-mail!',
-              },
-                {
-                  required: true,
-                  message: 'Please Enter Email!'
-                }],
+              validate: [{
+                trigger: 'onBlur',
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please Enter Email!'
+                  },
+                ],
+              }, {
+                trigger: 'onChange',
+                rules: [
+                  {
+                    type: 'email',
+                    message: 'The input is not valid E-mail!',
+                  },
+                ],
+              }],
             })(<Input type="text" onChange={(e) => {
               this.setState({email: e.target.value})
             }}/>)}
@@ -200,6 +213,7 @@ class GeneralDetails extends Component {
           <Form.Item label="Allowed Extensions">
             {getFieldDecorator('allowed_ext', {
               initialValue: allowed_ext,
+              validateTrigger: 'onBlur',
               rules: [{required: true, message: 'Please Select Allowed Extensions!'}],
             })(<Input type="text" onChange={(e) => {
               this.setState({allowed_ext: e.target.value})
@@ -208,6 +222,7 @@ class GeneralDetails extends Component {
           <Form.Item label="File upload max size">
             {getFieldDecorator('file_upload_max_size', {
               initialValue: file_upload_max_size,
+              validateTrigger: 'onBlur',
               rules: [
                 {
                   required: true,
