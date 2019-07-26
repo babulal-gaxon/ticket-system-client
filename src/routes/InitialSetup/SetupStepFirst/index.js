@@ -17,6 +17,7 @@ const {Step} = Steps;
 
 class SetupStepFirst extends Component {
   constructor(props) {
+    console.log("in constructor",props.initialSteps)
     super(props);
     if (Object.keys(props.initialSteps).length > 0) {
       if (Object.keys(props.initialSteps).length > 2) {
@@ -36,8 +37,10 @@ class SetupStepFirst extends Component {
   }
 
   onMoveToNextStep = () => {
+
     const current = this.state.current + 1;
     this.setState({current});
+    console.log("current",current)
   };
 
   onMoveToPrevStep = () => {
@@ -46,7 +49,9 @@ class SetupStepFirst extends Component {
   };
 
   render() {
+
     const {current} = this.state;
+    console.log("current in render", current)
     return (
       <div className="gx-main-layout-content">
         <Steps direction="vertical" current={current} className="gx-mt-5">

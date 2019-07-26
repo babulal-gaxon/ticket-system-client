@@ -36,7 +36,7 @@ const img = {
   height: '100%'
 };
 
-class Testing extends Component {
+class TicketAttachments extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -102,12 +102,12 @@ class Testing extends Component {
   }
 }
 
-export default Testing;
+export default TicketAttachments;
 
-Testing.defaultProps = {
+TicketAttachments.defaultProps = {
   imageAvatar: null
 };
 
-Testing.propTypes = {
+TicketAttachments.propTypes = {
   imageAvatar: PropTypes.object
 };

@@ -32,8 +32,13 @@ const RestrictedRoute = ({component: Component, token, ...rest}) =>
 
 
 class App extends PureComponent {
+
+  constructor(props) {
+    super(props);
+    props.onCheckInitialSetup();
+  }
+
   componentWillMount() {
-    this.props.onCheckInitialSetup();
     if (this.props.initURL === '') {
       this.props.setInitUrl(this.props.history.location.pathname);
     }
@@ -44,7 +49,6 @@ class App extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("componentWillReceiveProps: ", nextProps.token);
     if (this.props.token === null && nextProps.token !== this.props.token) {
       axios.defaults.headers.common['Authorization'] = "Bearer " + nextProps.token;
       this.props.onGetUserInfo(this.props.history)
@@ -53,7 +57,8 @@ class App extends PureComponent {
 
 
   render() {
-    const {match, location, locale, token, initURL, initialSteps, loadingUser} = this.props;
+    const {match, location, locale, token, initURL, isSetupRequired, loadingUser} = this.props;
+    console.log("isSetupRequired", isSetupRequired)
     if (loadingUser) {
       return <div className="gx-loader-view gx-h-100">
         <CircularProgress className=""/>
@@ -61,7 +66,7 @@ class App extends PureComponent {
     }
     if (location.pathname === '/') {
       if (token === null) {
-        if (Object.keys(initialSteps).length > 0) {
+        if (isSetupRequired) {
           return (<Redirect to={'/initial-setup'}/>);
         } else {
           return (<Redirect to={'/signin'}/>);
@@ -85,7 +90,7 @@ class App extends PureComponent {
             <Route exact path='/initial-setup' component={InitialSetup}/>
             <Route exact path='/reset-password' component={ForgetPassword}/>
             <Route exact path='/reset/password' component={VerifyPassword}/>
-            <RestrictedRoute path={`${match.url}`} token={token} initialSteps={initialSteps} component={MainApp}/>
+            <RestrictedRoute path={`${match.url}`} token={token} component={MainApp}/>
           </Switch>
         </IntlProvider>
       </LocaleProvider>
@@ -95,8 +100,8 @@ class App extends PureComponent {
 
 const mapStateToProps = ({settings, auth}) => {
   const {locale} = settings;
-  const {token, initURL, loadingUser, initialSteps, loadingInitialSteps} = auth;
-  return {locale, token, initURL, loadingUser, initialSteps, loadingInitialSteps}
+  const {token, initURL, loadingUser, isSetupRequired} = auth;
+  return {locale, token, initURL, loadingUser, isSetupRequired}
 };
 
 export default connect(mapStateToProps, {

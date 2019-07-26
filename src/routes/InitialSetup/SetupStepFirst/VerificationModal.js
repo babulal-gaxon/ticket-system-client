@@ -31,19 +31,29 @@ class VerificationModal extends Component {
             null,
           ]}
         >
-          <div style={{padding:45,textAlign:"center"}}>
+          <div style={{padding: 45, textAlign: "center"}}>
             {/*<I></I>*/}
-            <h2 style={{fontSize:28}}>Verify Your Email</h2>
-            <p style={{textAlign:"center",color: "#8C8C8C"}} className="gx-py-5">Enter the 6 digit verification code sent to your email address super@example.com to verify your account.</p>
-            <Form layout="vertical" style={{textAlign:"center"}}>
-              <label >Enter Verification Code <sup className="gx-text-red">*</sup></label>
+            <h2 style={{fontSize: 28}}>Verify Your Email</h2>
+            <p style={{textAlign: "center", color: "#8C8C8C"}} className="gx-py-5">Enter the 6 digit verification code
+              sent to your email address super@example.com to verify your account.</p>
+            <Form layout="vertical" style={{textAlign: "center"}}>
+              <label>Enter Verification Code <sup className="gx-text-red">*</sup></label>
               <Form.Item hasFeedback className="gx-py-4">
                 {getFieldDecorator('pin_number', {
+                  validateTrigger: 'onBlur',
                   rules: [
                     {
                       required: true,
                       message: 'Please input the Pin!',
                     },
+                    {
+                      max: 6,
+                      message: 'Please enter only 6 digits'
+                    },
+                    {
+                      pattern: /^[0-9\b]+$/,
+                      message: 'Please enter only numerical values'
+                    }
                   ],
                 })(<Input onChange={(e) => this.setState({pin_number: e.target.value})}/>)}
               </Form.Item>
@@ -54,7 +64,8 @@ class VerificationModal extends Component {
             <Button key="cancel" onClick={() => onClosePinModal()}>
               Back
             </Button>,
-            <p>Not received email? <Button type="link" className="gx-my-0" onClick={() => this.props.onResendPin()}>Resend</Button> </p>
+            <p>Not received email? <Button type="link" className="gx-my-0"
+                                           onClick={() => this.props.onResendPin()}>Resend</Button></p>
           </div>
         </Modal>
       </div>

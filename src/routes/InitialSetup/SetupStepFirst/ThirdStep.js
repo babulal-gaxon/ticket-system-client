@@ -23,7 +23,7 @@ class ThirdStep extends Component {
       state: "",
       country_id: "",
       zip_code: "",
-      uploadedLogo: null,
+      fileList: [],
       cpp_url: window.location.origin
     }
   }
@@ -45,7 +45,7 @@ class ThirdStep extends Component {
   };
 
   onSubmitForm = () => {
-    if (this.state.uploadedLogo) {
+    if (this.state.fileList.length > 0) {
       this.onLogoSelect();
     } else {
       this.onInfoAdd();
@@ -57,7 +57,7 @@ class ThirdStep extends Component {
   };
 
   onLogoSelect = () => {
-    let file = this.state.uploadedLogo;
+    let file = this.state.fileList[0];
     const data = new FormData();
     data.append('file', file);
     data.append('title', file.name);
@@ -75,7 +75,7 @@ class ThirdStep extends Component {
         this.props.fetchSuccess();
         this.setState({logo: data.data}, () => {
           this.onInfoAdd();
-          this.setState({uploadedLogo: null})
+          this.setState({fileList: []})
         })
       }
     }).catch(function (error) {
@@ -85,20 +85,32 @@ class ThirdStep extends Component {
 
 
   render() {
-    console.log("this.props.countriesList", this.props.countriesList);
+    const {name, url, phone, email, address_line_1, address_line_2, city, state, country_id, zip_code, cpp_url, fileList} = this.state;
     const props = {
-      onRemove: () => {
-        this.setState({uploadedLogo: null})
+      onRemove: file => {
+        this.setState(state => {
+          const index = state.fileList.indexOf(file);
+          const newFileList = state.fileList.slice(-1);
+          newFileList.splice(index, 1);
+          return {
+            fileList: newFileList,
+          };
+        });
       },
       beforeUpload: file => {
-        this.setState({uploadedLogo: file});
+        if (fileList.length > 0) {
+          props.onRemove(fileList[0])
+        }
+        this.setState(state => ({
+          fileList: [...state.fileList, file],
+        }));
         return false;
       },
+      fileList,
     };
     const {getFieldDecorator} = this.props.form;
-    const {name, url, phone, email, address_line_1, address_line_2, city, state, country_id, zip_code, cpp_url} = this.state;
     return (
-      <div className="gx-flex-column gx-mt-3" >
+      <div className="gx-flex-column gx-mt-3">
         <Form layout="vertical" style={{width: "70%"}}>
           <div className="gx-d-flex gx-flex-row">
             <Col sm={12} xs={24} className="gx-pl-0">

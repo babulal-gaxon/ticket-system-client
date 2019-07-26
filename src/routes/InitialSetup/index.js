@@ -14,17 +14,20 @@ class InitialSetup extends Component {
   }
 
   onMoveNextStep = () => {
+    console.log("kaand ho rha hai")
     const current = this.state.current + 1;
     this.setState({current});
   };
 
   onMovePrevStep = () => {
+    console.log("kaand ho rha hai")
     const current = this.state.current - 1;
     this.setState({current});
   };
 
   render() {
     const {current} = this.state;
+    console.log("re render in index file")
     return (
       <div className="gx-main-layout-content" style={{height:"100%",overflow:"scroll"}}>
         <Steps direction="vertical" current={current} className="gx-mt-5">

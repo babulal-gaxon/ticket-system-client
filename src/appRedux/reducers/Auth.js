@@ -18,7 +18,8 @@ const INIT_STATE = {
   userPermissions: [],
   loadingUser: true,
   initialSteps: {},
-  errorMessage: ''
+  errorMessage: '',
+  isSetupRequired: false
 };
 
 export default (state = INIT_STATE, action) => {
@@ -74,15 +75,17 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         token: action.payload,
+        initialSteps: Object.keys(state.initialSteps).length > 0 ? {} : state.initialSteps
       };
     }
 
     case INITIAL_SETUP_STEPS: {
+      console.log("api called again ****************")
       return {
         ...state,
+        isSetupRequired: Object.keys(action.payload).length >0,
         initialSteps: action.payload,
-        loadingUser: false,
-        errorMessage:''
+        loadingUser: false
       }
     }
 
