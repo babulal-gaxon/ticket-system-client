@@ -93,8 +93,8 @@ class FourthStep extends Component {
               validateTrigger: 'onBlur',
               rules: [{required: true, message: 'Please Enter State Name!'}],
             })(<Select style={{width: "100%"}} onChange={this.onTimeSelect}>
-              <Option value="24 Hours">24 Hours (20:30)</Option>
-              <Option value="12 Hours">12 Hours (08:30)</Option>
+              <Option value="24">24 Hours (20:30)</Option>
+              <Option value="12">12 Hours (08:30)</Option>
             </Select>)}
           </Form.Item>
           <Form.Item label="Default Language">
@@ -144,10 +144,10 @@ export default connect(mapStateToProps, {
 })(FourthStep);
 
 FourthStep.defaultProps = {
-  localizationDetails: []
+  localizationDetails: {}
 };
 
 FourthStep.propTypes = {
-  localizationDetails: PropTypes.array,
+  localizationDetails: PropTypes.object,
 };
 

@@ -58,7 +58,6 @@ class App extends PureComponent {
 
   render() {
     const {match, location, locale, token, initURL, isSetupRequired, loadingUser} = this.props;
-    console.log("isSetupRequired", isSetupRequired)
     if (loadingUser) {
       return <div className="gx-loader-view gx-h-100">
         <CircularProgress className=""/>

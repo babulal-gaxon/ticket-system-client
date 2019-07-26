@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {Button, Col, Divider, Form, Input, Select, Upload} from "antd/lib/index";
+import axios from 'util/Api'
+import InfoView from "../../../components/InfoView";
 import {connect} from "react-redux";
 import {onGetCountriesList} from "../../../appRedux/actions/GeneralSettings";
 import {onSetGeneralInfo} from "../../../appRedux/actions/InitialSetup";
-import axios from 'util/Api'
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 
 const {Option} = Select;
@@ -11,20 +12,37 @@ const {Option} = Select;
 class ThirdStep extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: "",
-      url: "",
-      logo: null,
-      phone: null,
-      email: "",
-      address_line_1: "",
-      address_line_2: "",
-      city: "",
-      state: "",
-      country_id: "",
-      zip_code: "",
-      fileList: [],
-      cpp_url: window.location.origin
+    if (props.initialSteps.completed_steps && props.initialSteps.completed_steps.company_setup) {
+      const {name, url, phone, email, address_line_1, address_line_2, city, state, country_id, zip_code, cpp_url} = props.initialSteps.completed_steps.company_setup;
+      this.state = {
+        name: name,
+        url: url,
+        phone: phone,
+        email: email,
+        address_line_1: address_line_1,
+        address_line_2: address_line_2,
+        city: city,
+        state: state,
+        country_id: country_id,
+        zip_code: zip_code,
+        cpp_url: cpp_url
+      }
+    } else {
+      this.state = {
+        name: "",
+        url: "",
+        logo: null,
+        phone: null,
+        email: "",
+        address_line_1: "",
+        address_line_2: "",
+        city: "",
+        state: "",
+        country_id: "",
+        zip_code: "",
+        fileList: [],
+        cpp_url: window.location.origin
+      }
     }
   }
 
@@ -35,6 +53,10 @@ class ThirdStep extends Component {
   onCountrySelect = value => {
     this.setState({country_id: value})
   };
+
+  onSearch = (val) => {
+    console.log('search:', val);
+  }
 
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
@@ -53,7 +75,7 @@ class ThirdStep extends Component {
   };
 
   onInfoAdd = () => {
-    this.props.onSetGeneralInfo({...this.state}, this.props.onMoveToNextStep);
+    this.props.onSetGeneralInfo({...this.state}, this.props.token, this.props.onMoveToNextStep);
   };
 
   onLogoSelect = () => {
@@ -139,14 +161,9 @@ class ThirdStep extends Component {
             </Col>
           </div>
           <Form.Item label="Upload Logo">
-            {getFieldDecorator('uploadedLogo',
-              {
-                validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please Upload Company Logo!'}],
-              })(
-              <Upload {...props}>
-                <Input placeholder="Choose file..." addonAfter="Browse"/>
-              </Upload>)}
+            <Upload {...props}>
+              <Input placeholder="Choose file..." addonAfter="Browse"/>
+            </Upload>
           </Form.Item>
           <Form.Item label="Client URl">
             {getFieldDecorator('cpp_url', {
@@ -238,7 +255,19 @@ class ThirdStep extends Component {
                       required: true,
                       message: 'Please Enter Country Name!'
                     }],
-                })(<Select style={{width: "100%"}} onChange={this.onCountrySelect}>
+                })(<Select
+                  showSearch
+                  style={{width: 200}}
+                  placeholder="Select a person"
+                  optionFilterProp="children"
+                  onChange={this.onCountrySelect}
+                  // onFocus={onFocus}
+                  // onBlur={onBlur}
+                  onSearch={this.onSearch}
+                  filterOption={(input, option) =>
+                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                >
                   {Object.keys(this.props.countriesList).map(country => {
                     return <Option value={country} key={country}>{this.props.countriesList[country]}</Option>
                   })}
@@ -287,10 +316,13 @@ class ThirdStep extends Component {
             }}/>)}
           </Form.Item>
           <div className="gx-d-flex">
+            <Button type="default" onClick={() => {
+              this.props.onMoveToPrevStep()
+            }}>Previous</Button>
             <Button type="primary" onClick={this.onValidationCheck}>Next</Button>
-            <Button type="link" onClick={() => this.props.onMoveToNextStep()}>Skip</Button>
           </div>
         </Form>
+        <InfoView/>
       </div>
     );
   }
@@ -298,13 +330,13 @@ class ThirdStep extends Component {
 
 ThirdStep = Form.create({})(ThirdStep);
 
-const mapStateToProps = ({generalSettings}) => {
+const mapStateToProps = ({generalSettings, auth}) => {
   const {countriesList} = generalSettings;
-  return {countriesList};
+  const {token} = auth;
+  return {countriesList, token};
 };
 
 export default connect(mapStateToProps, {
   onGetCountriesList, onSetGeneralInfo, fetchSuccess,
-  fetchStart,
-  fetchError
+  fetchStart, fetchError
 })(ThirdStep);

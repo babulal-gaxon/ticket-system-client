@@ -14,13 +14,11 @@ class InitialSetup extends Component {
   }
 
   onMoveNextStep = () => {
-    console.log("kaand ho rha hai")
     const current = this.state.current + 1;
     this.setState({current});
   };
 
   onMovePrevStep = () => {
-    console.log("kaand ho rha hai")
     const current = this.state.current - 1;
     this.setState({current});
   };

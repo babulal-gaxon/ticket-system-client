@@ -143,7 +143,6 @@ class AddNewProduct extends Component {
               <Form.Item label="Upload Logo">
                 {getFieldDecorator('uploadedLogo',
                   {
-                    validateTrigger: 'onBlur',
                     rules: [{required: true, message: 'Please Upload Company Logo!'}],
                   })(
                   <Upload {...props}>

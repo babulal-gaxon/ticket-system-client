@@ -141,7 +141,7 @@ export const onResetPassword = ({email}) => {
 export const onCheckInitialSetup = () => {
   return (dispatch) => {
     dispatch({type: START_LOADER});
-    axios.get('/all-steps').then(({data}) => {
+    axios.get('/install/all-steps').then(({data}) => {
       console.info("data:", data);
       if (data.success) {
         console.log("initial Setup", data);

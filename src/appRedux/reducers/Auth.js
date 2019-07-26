@@ -3,7 +3,7 @@ import {
   FETCH_USER_INFO_ERROR,
   FETCH_USER_INFO_START,
   FETCH_USER_INFO_SUCCESS,
-  INIT_URL, INITIAL_SETUP_STEPS,
+  INIT_URL, INITIAL_SETUP_STEPS, SETUP_COMPLETE,
   SIGNOUT_USER_SUCCESS, START_LOADER,
   UPDATE_USER_PERMISSION_DATA,
   USER_DATA,
@@ -72,11 +72,20 @@ export default (state = INIT_STATE, action) => {
     }
 
     case USER_TOKEN_SET: {
+      const updatedSteps = state.initialSteps;
+      updatedSteps.pending_steps ={5: "company_setup"};
       return {
         ...state,
         token: action.payload,
-        initialSteps: Object.keys(state.initialSteps).length > 0 ? {} : state.initialSteps
+        initialSteps: updatedSteps
       };
+    }
+
+    case SETUP_COMPLETE: {
+      return {
+        ...state,
+        initialSteps: {}
+      }
     }
 
     case INITIAL_SETUP_STEPS: {

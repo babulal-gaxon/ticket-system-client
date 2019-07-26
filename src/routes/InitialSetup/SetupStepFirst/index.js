@@ -17,21 +17,26 @@ const {Step} = Steps;
 
 class SetupStepFirst extends Component {
   constructor(props) {
-    console.log("in constructor",props.initialSteps)
     super(props);
-    if (Object.keys(props.initialSteps).length > 0) {
-      if (Object.keys(props.initialSteps).length > 2) {
+    if (props.initialSteps.pending_steps && Object.keys(props.initialSteps.pending_steps).length > 0) {
+      if (Object.keys(props.initialSteps.pending_steps).length > 4) {
+        this.state = {
+          current: 0,
+          isFormVisible: false
+        };
+      } else if (Object.keys(props.initialSteps.pending_steps).length > 1 && Object.keys(props.initialSteps.pending_steps).length < 5) {
         this.state = {
           current: 1,
+          isFormVisible: false
         };
       } else {
         this.state = {
-          current: 2
-        };
+          current: 2, isFormVisible: false
+        }
       }
     } else {
       this.state = {
-        current: 3
+        current: 3, isFormVisible: false
       }
     }
   }
@@ -40,7 +45,7 @@ class SetupStepFirst extends Component {
 
     const current = this.state.current + 1;
     this.setState({current});
-    console.log("current",current)
+    console.log("current", current)
   };
 
   onMoveToPrevStep = () => {
@@ -48,36 +53,45 @@ class SetupStepFirst extends Component {
     this.setState({current});
   };
 
-  render() {
+  onFormOpen = () => {
+    this.setState({isFormVisible: !this.state.isFormVisible})
+  };
 
+  render() {
     const {current} = this.state;
-    console.log("current in render", current)
+
     return (
       <div className="gx-main-layout-content">
         <Steps direction="vertical" current={current} className="gx-mt-5">
           <Step title="Database Setup"
-                description={current === 1 ? <StepFirst onMoveToNextStep={this.onMoveToNextStep}/> : null}/>
+                description={current === 0 ?
+                  <StepFirst initialSteps={this.props.initialSteps} onMoveToNextStep={this.onMoveToNextStep}
+                             isFormVisible={this.state.isFormVisible}
+                             onFormOpen={this.onFormOpen}/> : null}/>
           <Step title="Setup Super Admin Account"
-                description={current === 2 ? <SecondStep onMoveToNextStep={this.onMoveToNextStep}
-                                                         onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
-          <Step title="General Setup" description={current === 3 ? <ThirdStep onMoveToNextStep={this.onMoveToNextStep}
+                description={current === 1 ?
+                  <SecondStep initialSteps={this.props.initialSteps} onMoveToNextStep={this.onMoveToNextStep}
+                              onMoveToPrevStep={this.onMoveToPrevStep}
+                              onFormOpen={this.onFormOpen}/> : null}/>
+          <Step title="General Setup" description={current === 2 ? <ThirdStep initialSteps={this.props.initialSteps}
+                                                                              onMoveToNextStep={this.onMoveToNextStep}
                                                                               onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
           <Step title="Localization Settings"
-                description={current === 4 ? <FourthStep onMoveToNextStep={this.onMoveToNextStep}
+                description={current === 3 ? <FourthStep onMoveToNextStep={this.onMoveToNextStep}
                                                          onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
-          <Step title="Departments" description={current === 5 ? <FifthStep onMoveToNextStep={this.onMoveToNextStep}
+          <Step title="Departments" description={current === 4 ? <FifthStep onMoveToNextStep={this.onMoveToNextStep}
                                                                             onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
           <Step title="Staff Management"
-                description={current === 6 ? <SixthStep onMoveToNextStep={this.onMoveToNextStep}
+                description={current === 5 ? <SixthStep onMoveToNextStep={this.onMoveToNextStep}
                                                         onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
           <Step title="Ticket Priority"
-                description={current === 7 ? <SeventhStep onMoveToNextStep={this.onMoveToNextStep}
+                description={current === 6 ? <SeventhStep onMoveToNextStep={this.onMoveToNextStep}
                                                           onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
           <Step title="Ticket Status"
-                description={current === 8 ? <EighthStep onMoveToNextStep={this.onMoveToNextStep}
+                description={current === 7 ? <EighthStep onMoveToNextStep={this.onMoveToNextStep}
                                                          onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
           <Step title="Canned Responses"
-                description={current === 9 ? <NinthStep onMoveToNextStep={this.props.onMoveNextStep}
+                description={current === 8 ? <NinthStep onMoveToNextStep={this.props.onMoveNextStep}
                                                         onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
         </Steps>
       </div>

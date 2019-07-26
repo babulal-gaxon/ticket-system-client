@@ -14,7 +14,6 @@ export const onSendDatabaseInfo = (info, nextStep) => {
     dispatch({type: FETCH_START});
     axios.post('/install/step/1', info
     ).then(({data}) => {
-      console.info("data:", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Database information has been saved successfully"});
@@ -53,8 +52,12 @@ export const onSendSuperAdminInfo = (info) => {
   }
 };
 
-export const onSetGeneralInfo = (info, nextStep) => {
+export const onSetGeneralInfo = (info, token, nextStep) => {
   return (dispatch) => {
+    if(token) {
+      localStorage.getItem("token");
+      axios.defaults.headers.common['access-token'] = "Bearer " + token;
+    }
     dispatch({type: FETCH_START});
     axios.post('/install/step/3', info
     ).then(({data}) => {
@@ -63,8 +66,8 @@ export const onSetGeneralInfo = (info, nextStep) => {
         console.log(" sending data", data.data);
         dispatch({type: ADD_GENERAL_INFO, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        nextStep();
         dispatch({type: SHOW_MESSAGE, payload: "The general information has been saved successfully"});
+        nextStep();
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
@@ -82,6 +85,13 @@ export const onClosePinModal = () => {
   }
 };
 
+export const onOpenPinModal = () => {
+  return {
+    type: OPEN_PIN_MODAL,
+    payload: true
+  }
+};
+
 export const onVerifyByPin = (data, nextStep) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -89,7 +99,7 @@ export const onVerifyByPin = (data, nextStep) => {
     ).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        localStorage.setItem("token", JSON.stringify(data.token));
+        localStorage.setItem("token", data.token);
         axios.defaults.headers.common['access-token'] = "Bearer " + data.token;
         dispatch({type: USER_TOKEN_SET, payload: data.token});
         dispatch({type: OPEN_PIN_MODAL, payload: false});

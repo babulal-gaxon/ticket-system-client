@@ -38,6 +38,7 @@ export const USER_TOKEN_SET = 'user_token_set';
 export const INITIAL_SETUP_STEPS = "INITIAL_SETUP_STEPS";
 export const START_LOADER= "START_LOADER";
 export const ERROR_INITIAL_SETUP = "ERROR_INITIAL_SETUP";
+export const SETUP_COMPLETE = "SETUP_COMPLETE";
 
 
 
