@@ -45,7 +45,7 @@ class SignIn extends React.Component {
                 <p onClick={this.onForgetPassword} style={{textDecoration:'underline'}}><IntlMessages id="app.userAuth.getAccount"/></p>
             </div>
               <div className="gx-app-logo">
-                {/*<img alt="example" src={require("assets/images/logo.png")}/>*/}
+                {/*<img alt="example" src={require("assets/images/logo.svg")}/>*/}
               </div>
             </div>
             <div className="gx-app-login-content">

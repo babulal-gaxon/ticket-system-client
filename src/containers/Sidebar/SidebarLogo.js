@@ -43,12 +43,7 @@ class SidebarLogo extends Component {
         </div> : null}
 
         <Link to="/" className="gx-site-logo">
-          {navStyle === NAV_STYLE_NO_HEADER_MINI_SIDEBAR && width >= TAB_SIZE ?
-            <img alt="" src={require("assets/images/w-logo.png")}/> :
-            themeType === THEME_TYPE_LITE ?
-              <img alt="" src={require("assets/images/logo-white.png")}/> :
-              <img alt="" src={require("assets/images/logo.png")}/>}
-
+          <img alt="" src={require("assets/images/logo.svg")}/>
         </Link>
 
       </div>
