@@ -43,7 +43,8 @@ class SetupStepFirst extends Component {
     console.log("currentStep: ", currentStep)
     return (
       <div className="gx-main-layout-content">
-        <Steps direction="vertical" current={currentStep} className="gx-mt-5">
+        <div className="gx-main-content-wrapper">
+        <Steps direction="vertical" current={currentStep}>
           <Step title="Database Setup"
                 description={currentStep === 0 ?
                   <StepFirst initialSteps={this.props.initialSteps} onMoveToNextStep={this.onMoveToNextStep}
@@ -75,6 +76,7 @@ class SetupStepFirst extends Component {
                 description={currentStep === 8 ? <NinthStep onMoveToNextStep={this.props.onMoveNextStep}
                                                             onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
         </Steps>
+      </div>
       </div>
     );
   }
