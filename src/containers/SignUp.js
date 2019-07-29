@@ -101,9 +101,9 @@ class SignUp extends React.Component {
                 </FormItem>
               </Form>
             </div>
-            <InfoView/>
           </div>
         </div>
+        <InfoView/>
       </div>
     );
   }

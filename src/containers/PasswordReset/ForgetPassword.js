@@ -60,9 +60,9 @@ class ForgetPassword extends React.Component {
               <Link to="/signin"><IntlMessages
                 id="app.userAuth.goback"/></Link>
             </div>
-            <InfoView/>
           </div>
         </div>
+        <InfoView/>
       </div>
     );
   }

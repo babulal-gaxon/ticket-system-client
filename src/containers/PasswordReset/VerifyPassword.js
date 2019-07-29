@@ -112,9 +112,9 @@ class VerifyPassword extends React.Component {
                 </Form.Item>
               </Form>
             </div>
-            <InfoView/>
           </div>
         </div>
+        <InfoView/>
       </div>
     );
   }
