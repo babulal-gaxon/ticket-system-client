@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input, Row} from "antd/lib/index";
 import {connect} from "react-redux";
-import {onSendDatabaseInfo} from "../../../appRedux/actions/InitialSetup";
+import {onCheckInitialSetup, onSendDatabaseInfo} from "../../../appRedux/actions/InitialSetup";
 import InfoView from "../../../components/InfoView";
-import {onCheckInitialSetup} from "../../../appRedux/actions";
 
 class StepFirst extends Component {
   constructor(props) {

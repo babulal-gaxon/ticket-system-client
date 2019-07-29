@@ -141,17 +141,12 @@ export const onDeleteTicket = (ticketIds, backToList) => {
 
 export const onGetFilterOptions = () => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
     axios.get('/tickets/filter/options').then(({data}) => {
       if (data.success) {
         console.log("onGetFilterOptions", data)
         dispatch({type: GET_FILTER_OPTIONS, payload: data.data});
-        dispatch({type: FETCH_SUCCESS});
-      } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
     }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
       console.info("Error****:", error.message);
     });
   }

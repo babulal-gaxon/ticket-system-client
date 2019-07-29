@@ -10,11 +10,12 @@ import SignIn from "../SignIn";
 import {setInitUrl} from "appRedux/actions/Auth";
 import {onLayoutTypeChange, onNavStyleChange, setThemeType} from "appRedux/actions/Setting";
 import axios from 'util/Api';
-import {onCheckInitialSetup, onGetUserInfo} from "../../appRedux/actions/Auth";
+import {onGetUserInfo} from "../../appRedux/actions/Auth";
 import CircularProgress from "../../components/CircularProgress/index";
 import ForgetPassword from "../PasswordReset/ForgetPassword";
 import VerifyPassword from "../PasswordReset/VerifyPassword";
 import InitialSetup from "../../routes/InitialSetup";
+import {onCheckInitialSetup} from "../../appRedux/actions/InitialSetup";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
   <Route
@@ -97,9 +98,10 @@ class App extends PureComponent {
   }
 }
 
-const mapStateToProps = ({settings, auth}) => {
+const mapStateToProps = ({settings, auth, initialSetup}) => {
   const {locale} = settings;
-  const {token, initURL, loadingUser, isSetupRequired} = auth;
+  const {token, initURL, loadingUser} = auth;
+  const {isSetupRequired} = initialSetup;
   return {locale, token, initURL, loadingUser, isSetupRequired}
 };
 

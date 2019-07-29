@@ -3,8 +3,10 @@ import {
   FETCH_USER_INFO_ERROR,
   FETCH_USER_INFO_START,
   FETCH_USER_INFO_SUCCESS,
-  INIT_URL, INITIAL_SETUP_STEPS, SETUP_COMPLETE,
-  SIGNOUT_USER_SUCCESS, START_LOADER,
+  INIT_URL,
+  ON_HIDE_LOADER,
+  SIGNOUT_USER_SUCCESS,
+  START_LOADER,
   UPDATE_USER_PERMISSION_DATA,
   USER_DATA,
   USER_TOKEN_SET
@@ -17,9 +19,7 @@ const INIT_STATE = {
   authUser: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
   userPermissions: [],
   loadingUser: true,
-  initialSteps: {},
   errorMessage: '',
-  isSetupRequired: false
 };
 
 export default (state = INIT_STATE, action) => {
@@ -52,10 +52,17 @@ export default (state = INIT_STATE, action) => {
     }
 
     case START_LOADER: {
-    return {
-      ...state,
-      loadingUser: true
+      return {
+        ...state,
+        loadingUser: true
+      }
     }
+
+    case ON_HIDE_LOADER: {
+      return {
+        ...state,
+        loadingUser: false
+      }
     }
     case USER_DATA: {
       return {
@@ -72,32 +79,11 @@ export default (state = INIT_STATE, action) => {
     }
 
     case USER_TOKEN_SET: {
-      const updatedSteps = state.initialSteps;
-      updatedSteps.pending_steps ={5: "company_setup"};
       return {
         ...state,
         token: action.payload,
-        initialSteps: updatedSteps
       };
     }
-
-    case SETUP_COMPLETE: {
-      return {
-        ...state,
-        initialSteps: {}
-      }
-    }
-
-    case INITIAL_SETUP_STEPS: {
-      console.log("api called again ****************")
-      return {
-        ...state,
-        isSetupRequired: Object.keys(action.payload).length >0,
-        initialSteps: action.payload,
-        loadingUser: false
-      }
-    }
-
     case ERROR_INITIAL_SETUP: {
       return {
         ...state,
