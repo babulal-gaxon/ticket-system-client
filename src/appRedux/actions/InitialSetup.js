@@ -133,6 +133,9 @@ export const onVerifyByPin = (data, nextStep) => {
     ).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
+        localStorage.setItem("token", data.token);
+        axios.defaults.headers.common['access-token'] = "Bearer " + data.token;
+        dispatch({type: USER_TOKEN_SET, payload: data.token});
         dispatch({type: OPEN_PIN_MODAL, payload: false});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: data.message});

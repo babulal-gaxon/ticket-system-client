@@ -27,7 +27,7 @@ class InitialSetup extends Component {
     const {current} = this.state;
     console.log("re render in index file")
     return (
-      <div className="gx-main-layout-content" style={{height:"100%",overflow:"scroll"}}>
+      <div className="gx-main-content-wrapper" style={{height:"100%",overflow:"scroll"}}>
         <Steps direction="vertical" current={current} className="gx-mt-5">
           <Step title={
             <div className="gx-mr-5">

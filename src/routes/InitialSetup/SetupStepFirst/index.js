@@ -30,7 +30,8 @@ class SetupStepFirst extends Component {
   };
 
   onMoveToPrevStep = () => {
-    const currentStep = this.state.currentStep - 1;
+    const currentStep = this.props.currentStep - 1;
+    console.log("currentStep", currentStep)
     this.props.updateSteps(currentStep);
   };
 
