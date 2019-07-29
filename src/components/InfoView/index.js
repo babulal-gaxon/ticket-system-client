@@ -26,7 +26,7 @@ class InfoView extends PureComponent {
 
     return (
       <Auxiliary>
-        {loading && <div className="gx-loader-view">
+        {loading && <div className="gx-loader-view gx-loader-pos">
           <CircularProgress className=""/>
         </div>}
 
