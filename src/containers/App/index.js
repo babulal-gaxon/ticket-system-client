@@ -65,7 +65,7 @@ class App extends PureComponent {
       </div>
     }
     if (location.pathname === '/') {
-      if (token === null) {
+      if (isSetupRequired || token === null) {
         if (isSetupRequired) {
           return (<Redirect to={'/initial-setup'}/>);
         } else {
@@ -90,7 +90,7 @@ class App extends PureComponent {
             <Route exact path='/initial-setup' component={InitialSetup}/>
             <Route exact path='/reset-password' component={ForgetPassword}/>
             <Route exact path='/reset/password' component={VerifyPassword}/>
-            <RestrictedRoute path={`${match.url}`} token={token} component={MainApp}/>
+            <RestrictedRoute path={`${match.url}`} token={isSetupRequired ? null : token} component={MainApp}/>
           </Switch>
         </IntlProvider>
       </LocaleProvider>

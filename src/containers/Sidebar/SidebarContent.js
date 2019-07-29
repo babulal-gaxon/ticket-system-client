@@ -37,9 +37,9 @@ class SidebarContent extends Component {
   };
 
   menuClickHandle = (item) =>  {
-    console.log("key", item.key)
+    console.log("key", item.key);
     this.setState({key:item.key})
-  }
+  };
 
   render() {
     const {themeType, navStyle, pathname} = this.props;
