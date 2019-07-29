@@ -15,7 +15,6 @@ import Widget from "../../../components/Widget";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
-import InfoView from "../../../components/InfoView";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -334,7 +333,6 @@ class CannedResponses extends Component {
                            onEditCannedResponse={this.props.onEditCannedResponse}
                            responses={responses}
           /> : null}
-        <InfoView/>
       </div>
     );
   }

@@ -9,7 +9,6 @@ import {
 } from "../../../appRedux/actions/Companies";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
-import InfoView from "../../../components/InfoView";
 import {connect} from "react-redux";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import Permissions from "../../../util/Permissions";
@@ -308,7 +307,6 @@ class Companies extends Component {
                          fetchStart={this.props.fetchStart}
                          fetchError={this.props.fetchError}
           /> : null}
-        <InfoView/>
       </div>
     )
   }

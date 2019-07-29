@@ -13,7 +13,6 @@ import {
 import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
 import qs from "qs";
-import InfoView from "../../../components/InfoView";
 
 class CustomerDetails extends Component {
   constructor(props) {
@@ -253,7 +252,6 @@ class CustomerDetails extends Component {
               />
             </Widget>
           </div> : null}
-        <InfoView/>
       </div>
     );
   }

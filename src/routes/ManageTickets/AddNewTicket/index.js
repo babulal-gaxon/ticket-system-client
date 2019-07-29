@@ -3,14 +3,8 @@ import {Avatar, Breadcrumb, Button, Col, Form, Input, Row, Select} from "antd";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
-import {
-  onAddAttachments,
-  onAddTickets,
-  onGetFilterOptions,
-  onGetFormDetails
-} from "../../../appRedux/actions/TicketList";
+import {onAddTickets, onGetFilterOptions, onGetFormDetails} from "../../../appRedux/actions/TicketList";
 import {Link} from "react-router-dom";
-import InfoView from "../../../components/InfoView";
 import {onGetCustomersData} from "../../../appRedux/actions/Customers";
 import TicketAssigning from "./TicketAssigning";
 import TicketAttachments from "./TicketAttachments";
@@ -274,7 +268,6 @@ class AddNewTicket extends Component {
             </Col>
           </Row>
         </Widget>
-        <InfoView/>
       </div>
     )
   }

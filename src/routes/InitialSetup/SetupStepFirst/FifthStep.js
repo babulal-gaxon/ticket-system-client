@@ -8,7 +8,6 @@ import {
   onEditDepartment,
   onGetDepartments
 } from "../../../appRedux/actions/Departments";
-import InfoView from "../../../components/InfoView";
 import PropTypes from "prop-types";
 
 class FifthStep extends Component {
@@ -122,8 +121,7 @@ class FifthStep extends Component {
                             departmentId={this.state.departmentId}
                             onEditDepartment={this.props.onEditDepartment}
                             dept={this.props.dept}
-          /> : null}
-        <InfoView/>
+        /> : null}
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
-  onAddLabelsData, onChangeToActiveStatus,
+  onAddLabelsData,
+  onChangeToActiveStatus,
   onChangeToDisableStatus,
   onDeleteLabel,
   onEditLabelsData,
@@ -11,7 +12,6 @@ import Widget from "../../../components/Widget";
 import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd/lib/index";
 import {Link} from "react-router-dom";
 import AddNewLabel from "./AddNewLabel";
-import InfoView from "../../../components/InfoView";
 import Permissions from "../../../util/Permissions";
 
 const {Option} = Select;
@@ -314,7 +314,6 @@ class CustomersLabel extends Component {
                        labelList={labelList}
                        onEditLabelsData={this.props.onEditLabelsData}
           /> : null}
-        <InfoView/>
       </div>
     )
   }

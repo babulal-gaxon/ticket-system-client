@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd/lib/index";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
-import InfoView from "../../../components/InfoView";
 import AddNewService from "./AddNewService";
 import {connect} from "react-redux";
 import {
@@ -303,7 +302,6 @@ class Services extends Component {
           <div className="gx-d-flex gx-flex-row">
           </div>
         </Widget>
-        <InfoView/>
         {this.state.showAddModal ?
           <AddNewService showAddModal={this.state.showAddModal}
                          onToggleAddService={this.onToggleAddService}

@@ -12,6 +12,7 @@ import {
 
 export const onGetTicketStatus = (currentPage, itemsPerPage,filterText) => {
   return (dispatch) => {
+    dispatch({type: FETCH_START});
     axios.get(`/setup/status`,{
       params: {
         page: currentPage,
@@ -22,8 +23,12 @@ export const onGetTicketStatus = (currentPage, itemsPerPage,filterText) => {
       console.info("onGetTicketStatuses: ", data);
       if (data.success) {
         dispatch({type: GET_TICKET_STATUSES, payload: data});
+        dispatch({type: FETCH_SUCCESS});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
     }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
       console.info("Error****:", error.message);
     });
   }

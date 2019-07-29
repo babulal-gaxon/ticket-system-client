@@ -15,7 +15,6 @@ import AddNewStatus from "./AddNewStatus";
 import Widget from "../../../components/Widget";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
-import InfoView from "../../../components/InfoView";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -345,7 +344,6 @@ class TicketStatuses extends Component {
                         statusId={this.state.statusId}
                         onEditTicketStatus={this.props.onEditTicketStatus}
                         statuses={statuses}/> : null}
-        <InfoView/>
       </div>
     );
   }

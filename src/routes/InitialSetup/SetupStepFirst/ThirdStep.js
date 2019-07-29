@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Col, Divider, Form, Input, Select, Upload} from "antd/lib/index";
 import axios from 'util/Api'
-import InfoView from "../../../components/InfoView";
 import {connect} from "react-redux";
 import {onGetCountriesList} from "../../../appRedux/actions/GeneralSettings";
 import {onSetGeneralInfo} from "../../../appRedux/actions/InitialSetup";
@@ -322,7 +321,6 @@ class ThirdStep extends Component {
             <Button type="primary" onClick={this.onValidationCheck}>Next</Button>
           </div>
         </Form>
-        <InfoView/>
       </div>
     );
   }

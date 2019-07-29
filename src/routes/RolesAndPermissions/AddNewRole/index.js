@@ -4,7 +4,6 @@ import Widget from "../../../components/Widget";
 import {onAddRole, onDisableSelectedRole, onEditRole} from "../../../appRedux/actions/RolesAndPermissions";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-import InfoView from "../../../components/InfoView";
 import {onBulkDeleteStaff, onGetStaff, onGetStaffId} from "../../../appRedux/actions/SupportStaff";
 import StaffDetail from "../../Staff/StaffList/StaffDetail/index";
 import StaffWithSelectedRole from "./StaffWithSelectedRole";
@@ -527,7 +526,6 @@ class AddNewRole extends Component {
                                 history={history} onSelectStaff={this.onSelectStaff}
                                 onBackToList={this.onBackToList}/>}
         </Widget>
-        <InfoView/>
       </div>
     )
   }

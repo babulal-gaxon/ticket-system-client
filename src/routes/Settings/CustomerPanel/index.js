@@ -8,7 +8,6 @@ import {
   onGetCustomerPanelDetails,
   onSaveCustomerPanelDetails
 } from "../../../appRedux/actions/GeneralSettings";
-import InfoView from "../../../components/InfoView";
 import PropTypes from "prop-types";
 
 const {Option} = Select;
@@ -144,7 +143,6 @@ class CustomerPanel extends Component {
             <Button type="primary" style={{width: "150px"}} onClick={this.onValidationCheck}>Save</Button>
           </div>
         </Widget>
-        <InfoView/>
       </div>
     );
   }

@@ -25,7 +25,6 @@ import {
 } from "../../../appRedux/actions/Customers";
 import moment from "moment";
 import {connect} from "react-redux";
-import InfoView from "../../../components/InfoView";
 import ResetCustomerPassword from "./ResetCustomerPassword";
 import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
@@ -490,7 +489,6 @@ class AllCustomers extends Component {
             onTogglePasswordModal={this.onTogglePasswordModal}
             onResetPassword={this.props.onResetPassword}
             customerId={resetPasswordCustomerId}/> : null}
-        <InfoView/>
       </div>
     )
   }

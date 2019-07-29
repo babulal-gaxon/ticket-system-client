@@ -3,7 +3,6 @@ import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Sele
 import {connect} from "react-redux";
 
 import Widget from "../../../components/Widget/index";
-import InfoView from '../../../components/InfoView'
 import {
   onBulkDeleteRoles,
   onDisableSelectedRole,
@@ -266,7 +265,6 @@ class RolesList extends Component {
                  }}
                  className="gx-table-responsive"/>
         </Widget>
-        <InfoView/>
       </div>
 
     );

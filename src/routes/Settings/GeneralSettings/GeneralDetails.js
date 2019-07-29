@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button, Divider, Form, Input, Upload} from "antd/lib/index";
-import InfoView from "../../../components/InfoView";
 import PropTypes from "prop-types";
 import axios from 'util/Api'
 
@@ -245,7 +244,6 @@ class GeneralDetails extends Component {
             </Button>
           </div>
         </Form.Item>
-        <InfoView/>
       </div>
     );
   }

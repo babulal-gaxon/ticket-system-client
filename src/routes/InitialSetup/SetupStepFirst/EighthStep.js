@@ -9,7 +9,6 @@ import {
   onGetTicketStatus
 } from "../../../appRedux/actions/TicketStatuses";
 import Permissions from "../../../util/Permissions";
-import InfoView from "../../../components/InfoView";
 import PropTypes from "prop-types";
 
 class EighthStep extends Component {
@@ -139,7 +138,6 @@ class EighthStep extends Component {
                         statusId={this.state.statusId}
                         onEditTicketStatus={this.props.onEditTicketStatus}
                         statuses={this.props.statuses}/> : null}
-        <InfoView/>
       </div>
     );
   }

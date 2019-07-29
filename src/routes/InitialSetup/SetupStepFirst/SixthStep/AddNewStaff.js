@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input, Modal, Radio, Select, Upload} from "antd/lib/index";
-import InfoView from "../../../../components/InfoView";
 import axios from 'util/Api'
 import PropTypes from "prop-types";
 
@@ -273,7 +272,6 @@ class AddNewStaff extends Component {
             </Form.Item>
           </Form>
         </Modal>
-        <InfoView/>
       </div>
     );
   }

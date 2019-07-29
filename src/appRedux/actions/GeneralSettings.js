@@ -216,7 +216,6 @@ export const onGetCountriesList = () => {
     axios.get('/countries').then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
         dispatch({type: GET_COUNTRIES_LIST, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
       } else {
