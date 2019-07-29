@@ -237,7 +237,7 @@ export const onGetTicketSettings = () => {
     ).then(({data}) => {
       console.info("onGetTicketSettings ", data);
       if (data.success) {
-        dispatch({type: FETCH_SUCCESS});
+        // dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_TICKET_SETTINGS, payload: data.data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});

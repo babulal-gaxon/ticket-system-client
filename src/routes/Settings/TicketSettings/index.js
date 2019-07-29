@@ -5,7 +5,6 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {onGetTicketStatus} from "../../../appRedux/actions/TicketStatuses";
 import {onGetTicketSettings, onSaveTicketSettings} from "../../../appRedux/actions/GeneralSettings";
-import InfoView from "../../../components/InfoView";
 import PropTypes from "prop-types";
 import {onGetFilterOptions} from "../../../appRedux/actions/TicketList";
 
@@ -228,7 +227,6 @@ class TicketSettings extends Component {
             </Button>
           </Form>
         </Widget>
-        <InfoView/>
       </div>
     );
   }
