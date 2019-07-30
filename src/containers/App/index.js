@@ -16,6 +16,7 @@ import ForgetPassword from "../PasswordReset/ForgetPassword";
 import VerifyPassword from "../PasswordReset/VerifyPassword";
 import InitialSetup from "../../routes/InitialSetup";
 import {onCheckInitialSetup} from "../../appRedux/actions/InitialSetup";
+import Permissions from "../../util/Permissions";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
   <Route
@@ -37,6 +38,9 @@ class App extends PureComponent {
   constructor(props) {
     super(props);
     props.onCheckInitialSetup();
+    if (localStorage.getItem('permission')) {
+      Permissions.setPermissions(JSON.parse(localStorage.getItem('permission')))
+    }
   }
 
   componentWillMount() {

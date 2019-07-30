@@ -1,32 +1,34 @@
 import axios from 'util/Api'
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE, UPDATING_CONTENT} from "../../constants/ActionTypes";
 import {
-  ADD_CUSTOMER_ADDRESS,
   ADD_NEW_CUSTOMER,
-  ADD_PROFILE_PICTURE, DELETE_CUSTOMER_ADDRESS,
   DELETE_CUSTOMERS,
-  DISABLE_CUSTOMER, EDIT_CUSTOMER_ADDRESS,
+  DISABLE_CUSTOMER,
   EDIT_CUSTOMER_DETAILS,
   GET_CUSTOMER_COMPANY,
   GET_CUSTOMER_FILTER_OPTIONS,
-  GET_CUSTOMER_ID,
   GET_CUSTOMER_TICKETS,
   GET_CUSTOMERS_DATA,
   NULLIFY_CUSTOMER,
-  SELECT_CURRENT_CUSTOMER
+  SELECT_CURRENT_CUSTOMER,
+  SELECT_CURRENT_CUSTOMER_PROFILE
 } from "../../constants/Customers";
 import {showErrorMessage} from "./Auth";
 
 
-export const onGetCustomersData = (currentPage, itemsPerPage, filterData, companies, labels, status) => {
+export const onGetCustomersData = (currentPage, itemsPerPage, filterData, companies, labels, status, updatingContent) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
+    if (updatingContent) {
+      dispatch({type: UPDATING_CONTENT});
+    } else {
+      dispatch({type: FETCH_START});
+    }
     axios.get(`/setup/customers`, {
         params: {
           page: currentPage,
           per_page: itemsPerPage,
           search: filterData,
-          company: companies,
+          company_ids: companies ? companies : undefined,
           labels: labels,
           status: status
         }
@@ -46,10 +48,10 @@ export const onGetCustomersData = (currentPage, itemsPerPage, filterData, compan
   }
 };
 
-export const getCustomerId = (id) => {
+export const setCurrentCustomer = (customer) => {
   return {
-    type: GET_CUSTOMER_ID,
-    payload: id
+    type: SELECT_CURRENT_CUSTOMER,
+    payload: customer
   }
 };
 
@@ -78,6 +80,7 @@ export const onAddNewCustomer = (customer, history) => {
 };
 
 export const onEditCustomer = (customer, history) => {
+  console.log("onEditCustomer", customer)
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/customers/${customer.id}`, customer).then(({data}) => {
@@ -142,23 +145,18 @@ export const onDeleteCustomers = (customerIds) => {
 
 export const onGetCustomerFilterOptions = () => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
     axios.get('/setup/customers/filter/options').then(({data}) => {
       if (data.success) {
         console.log("onGetCustomerFilterOptions", data)
         dispatch({type: GET_CUSTOMER_FILTER_OPTIONS, payload: data.data});
-        dispatch({type: FETCH_SUCCESS});
-      } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
     }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
       console.info("Error****:", error.message);
     });
   }
 };
 
-export const onAddImage = (imageFile) => {
+export const onAddImage = (imageFile, context) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post("/uploads/temporary/media", imageFile, {
@@ -167,7 +165,7 @@ export const onAddImage = (imageFile) => {
       }
     }).then(({data}) => {
       if (data.success) {
-        dispatch({type: ADD_PROFILE_PICTURE, payload: data.data});
+        context.updateProfilePic(data.data)
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Profile Picture has been added successfully"});
       } else {
@@ -180,15 +178,14 @@ export const onAddImage = (imageFile) => {
   }
 };
 
-export const onAddCustomerAddress = (address) => {
+export const onAddCustomerAddress = (address, context) => {
   console.log("onAddCustomerAddress", address);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/customers/address', address).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
-        dispatch({type: ADD_CUSTOMER_ADDRESS, payload: data.data});
+        context.addAddress(data.data);
         dispatch({type: SHOW_MESSAGE, payload: "The Address has been saved successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
@@ -200,14 +197,14 @@ export const onAddCustomerAddress = (address) => {
   }
 };
 
-export const onEditCustomerAddress = (address) => {
+export const onEditCustomerAddress = (address, context) => {
+  console.log("onEditCustomerAddress", address);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/addresses/${address.id}`, address).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
-        dispatch({type: EDIT_CUSTOMER_ADDRESS, payload: address});
+        context.updateAddress(data.data);
         dispatch({type: SHOW_MESSAGE, payload: "The Address has been saved successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
@@ -219,14 +216,13 @@ export const onEditCustomerAddress = (address) => {
   }
 };
 
-export const onDeleteCustomerAddress = (addressId) => {
+export const onDeleteCustomerAddress = (addressId, context) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.delete(`/addresses/${addressId}`).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
-        dispatch({type: DELETE_CUSTOMER_ADDRESS, payload: addressId});
+        context.deleteAddress(addressId);
         dispatch({type: SHOW_MESSAGE, payload: "The Address has been deleted successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
@@ -238,10 +234,10 @@ export const onDeleteCustomerAddress = (addressId) => {
   }
 };
 
-export const onGetCustomerTickets = (customerId) => {
+export const onGetCustomerTickets = (currentCustomer) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get(`/setup/customers/${customerId}/tickets`).then(({data}) => {
+    axios.get(`/setup/customers/${currentCustomer}/tickets`).then(({data}) => {
       console.info("onGetCustomerTickets: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
@@ -274,10 +270,10 @@ export const onGetCustomerCompany = (companyId) => {
   }
 };
 
-export const onResetPassword = (customerId, password) => {
+export const onResetPassword = (currentCustomer, password) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post(`/setup/customers/${customerId}/reset/password`, password).then(({data}) => {
+    axios.post(`/setup/customers/${currentCustomer}/reset/password`, password).then(({data}) => {
       console.info("onResetPassword: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
@@ -292,14 +288,14 @@ export const onResetPassword = (customerId, password) => {
   }
 };
 
-export const onGetCustomerDetail = (customerId) => {
+export const onGetCustomerDetail = (currentCustomer) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get(`/setup/customers/${customerId}`).then(({data}) => {
+    axios.get(`/setup/customers/${currentCustomer}`).then(({data}) => {
       console.info("onGetCustomerDetail: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SELECT_CURRENT_CUSTOMER, payload: data.data});
+        dispatch({type: SELECT_CURRENT_CUSTOMER_PROFILE, payload: data.data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
       }

@@ -28,7 +28,7 @@ class Companies extends Component {
       itemNumbers: 10,
       current: 1,
       selectedCompanies: [],
-      companyId: null,
+      currentCompany: null,
       showAddNewModal: false
     };
     this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
@@ -144,18 +144,18 @@ class Companies extends Component {
             e.stopPropagation();
             e.preventDefault();
           }}>
-            {this.onShowRowDropdown(record.id)}
+            {this.onShowRowDropdown(record)}
       </span>
         },
       },
     ];
   };
 
-  onShowRowDropdown = (companyId) => {
+  onShowRowDropdown = (currentCompany) => {
     const menu = (
       <Menu>
         {(Permissions.canCompanyEdit()) ?
-        <Menu.Item key="2" onClick={() => this.onEditCompanyOption(companyId)}>
+        <Menu.Item key="2" onClick={() => this.onEditCompanyOption(currentCompany)}>
           Edit
         </Menu.Item> : null}
         {(Permissions.canCompanyDelete()) ?
@@ -163,7 +163,7 @@ class Companies extends Component {
           <Popconfirm
             title="Are you sure to delete this Company?"
             onConfirm={() => {
-              this.props.onDeleteCompanies({ids: [companyId]});
+              this.props.onDeleteCompanies({ids: [currentCompany.id]});
               this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
             }}
             okText="Yes"
@@ -227,11 +227,11 @@ class Companies extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({companyId: null, showAddNewModal: true})
+    this.setState({currentCompany: null, showAddNewModal: true})
   };
 
-  onEditCompanyOption = (id) => {
-    this.setState({companyId: id, showAddNewModal: true})
+  onEditCompanyOption = (company) => {
+    this.setState({currentCompany: company, showAddNewModal: true})
   };
 
   render() {
@@ -301,7 +301,7 @@ class Companies extends Component {
           <AddNewCompany showAddNewModal={this.state.showAddNewModal}
                          onToggleAddCompany={this.onToggleAddCompany}
                          onAddNewCompany={this.props.onAddNewCompany}
-                         companyId={this.state.companyId}
+                         currentCompany={this.state.currentCompany}
                          onEditCompany={this.props.onEditCompany}
                          companiesList={companiesList}
                          fetchSuccess={this.props.fetchSuccess}

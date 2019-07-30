@@ -23,9 +23,8 @@ const INIT_STATE = {
 };
 
 export default (state = INIT_STATE, action) => {
+
   switch (action.type) {
-
-
     case INIT_URL: {
       return {...state, initURL: action.payload};
     }

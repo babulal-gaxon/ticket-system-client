@@ -4,15 +4,16 @@ import Widget from "../../../components/Widget";
 import moment from "moment";
 import {connect} from "react-redux";
 import {
-  getCustomerId,
   onGetCustomerCompany,
   onGetCustomerDetail,
   onGetCustomerTickets,
-  onNullifyCurrentCustomer
+  onNullifyCurrentCustomer,
+  setCurrentCustomer
 } from "../../../appRedux/actions/Customers";
 import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
 import qs from "qs";
+import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 class CustomerDetails extends Component {
   constructor(props) {
@@ -29,9 +30,9 @@ class CustomerDetails extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if (this.props.currentCustomer === null && nextProps.currentCustomer) {
-      if(nextProps.currentCustomer.company) {
-        this.props.onGetCustomerCompany(nextProps.currentCustomer.company.id);
+    if (this.props.currentCustomerProfile === null && nextProps.currentCustomerProfile) {
+      if (nextProps.currentCustomerProfile.company) {
+        this.props.onGetCustomerCompany(nextProps.currentCustomerProfile.company.id);
       }
     }
   }
@@ -100,7 +101,7 @@ class CustomerDetails extends Component {
   };
 
   onEditProfile = () => {
-    this.props.getCustomerId(this.props.currentCustomer.id);
+    this.props.setCurrentCustomer(this.props.currentCustomerProfile);
     this.props.history.push('/customers/add-customers')
   };
 
@@ -114,10 +115,10 @@ class CustomerDetails extends Component {
       selectedRowKeys,
       onChange: this.onSelectChange
     };
-    const {currentCustomer, customerCompanyMembers, customerTickets} = this.props;
+    const {currentCustomerProfile, customerCompanyMembers, customerTickets} = this.props;
     return (
       <div className="gx-main-layout-content">
-        {currentCustomer ?
+        {currentCustomerProfile ?
           <div className="gx-main-content">
             <Row>
               <Col xl={12} lg={12} md={12} sm={12} xs={24}>
@@ -127,21 +128,22 @@ class CustomerDetails extends Component {
                     <i className="icon icon-arrow-left" onClick={this.onBackToList}/>
                   </div>
                   <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
-                    {currentCustomer.avatar ?
-                      <Avatar className="gx-mr-3 gx-size-100" src={currentCustomer.avatar.src}/> :
+                    {currentCustomerProfile.avatar ?
                       <Avatar className="gx-mr-3 gx-size-100"
-                              style={{backgroundColor: '#f56a00'}}>{currentCustomer.first_name[0].toUpperCase()}</Avatar>}
+                              src={MEDIA_BASE_URL + currentCustomerProfile.avatar.src}/> :
+                      <Avatar className="gx-mr-3 gx-size-100"
+                              style={{backgroundColor: '#f56a00'}}>{currentCustomerProfile.first_name[0].toUpperCase()}</Avatar>}
                     <div className="gx-media-body">
                       <div className="gx-d-flex gx-justify-content-between">
                     <span className="gx-mb-0 gx-text-capitalize gx-font-weight-bold">
-                      {currentCustomer.first_name + " " + currentCustomer.last_name}</span>
+                      {currentCustomerProfile.first_name + " " + currentCustomerProfile.last_name}</span>
                         {(Permissions.canCustomerEdit()) ?
                           <span><Tag color="blue" onClick={this.onEditProfile}>
                 <i className="icon icon-edit gx-mr-3"/>Edit Profile</Tag></span> : null}
                       </div>
                       <div className="gx-mt-2">
-                        <Tag color={currentCustomer.status === 1 ? "green" : "red"}>
-                          {currentCustomer.status === 1 ? "Active" : "Disabled"}
+                        <Tag color={currentCustomerProfile.status === 1 ? "green" : "red"}>
+                          {currentCustomerProfile.status === 1 ? "Active" : "Disabled"}
                         </Tag>
                       </div>
                     </div>
@@ -150,21 +152,21 @@ class CustomerDetails extends Component {
                     <Col span={6}>
                       Email
                     </Col>
-                    <Col>{currentCustomer.email}</Col>
+                    <Col>{currentCustomerProfile.email}</Col>
                   </Row>
                   <Divider/>
                   <Row>
                     <Col span={6}>
                       Phone
                     </Col>
-                    <Col>{currentCustomer.phone ? <span>{currentCustomer.phone}</span> : "NA"}</Col>
+                    <Col>{currentCustomerProfile.phone ? <span>{currentCustomerProfile.phone}</span> : "NA"}</Col>
                   </Row>
                   <Divider/>
                   <Row>
                     <Col span={6}>
                       Status
                     </Col>
-                    <Col>{currentCustomer.status === 1 ? "Active" : "Disabled"}</Col>
+                    <Col>{currentCustomerProfile.status === 1 ? "Active" : "Disabled"}</Col>
                   </Row>
                   <Divider/>
                   <Row>
@@ -172,16 +174,16 @@ class CustomerDetails extends Component {
                       Address
                     </Col>
                     <Col>
-                      {currentCustomer.addresses.length > 0 ?
+                      {currentCustomerProfile.addresses.length > 0 ?
                         <div>
                           <div className="gx-d-flex gx-justify-content-between">
-                            <p>{currentCustomer.addresses[0].address_line_1}</p>
-                            {currentCustomer.addresses[0].address_type.map(type => {
+                            <p>{currentCustomerProfile.addresses[0].address_line_1}</p>
+                            {currentCustomerProfile.addresses[0].address_type.map(type => {
                               return <Tag color="#108ee9" key={type}>{type}</Tag>
                             })}
                           </div>
-                          <p>{`${currentCustomer.addresses[0].city}, ${currentCustomer.addresses[0].state} - ${currentCustomer.addresses[0].zip_code}`}</p>
-                          <div>{currentCustomer.addresses.length > 1 ? `+ ${currentCustomer.addresses.length - 1} more` : null}</div>
+                          <p>{`${currentCustomerProfile.addresses[0].city}, ${currentCustomerProfile.addresses[0].state} - ${currentCustomerProfile.addresses[0].zip_code}`}</p>
+                          <div>{currentCustomerProfile.addresses.length > 1 ? `+ ${currentCustomerProfile.addresses.length - 1} more` : null}</div>
                         </div>
                         : "NA"}
                     </Col>
@@ -193,19 +195,19 @@ class CustomerDetails extends Component {
                   <div className="gx-d-flex gx-justify-content-between gx-mb-5">
                     <span className="gx-font-weight-bold">Company Details</span>
                   </div>
-                  {currentCustomer.company ?
+                  {currentCustomerProfile.company ?
                     <div>
                       <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
-                        {currentCustomer.company.avatar ?
-                          <Avatar className="gx-mr-3 gx-size-80" src={currentCustomer.company.avatar.src}/> :
+                        {currentCustomerProfile.company.avatar ?
+                          <Avatar className="gx-mr-3 gx-size-80" src={currentCustomerProfile.company.avatar.src}/> :
                           <Avatar className="gx-mr-3 gx-size-80"
-                                  style={{backgroundColor: '#f56a00'}}>{currentCustomer.company.company_name[0].toUpperCase()}</Avatar>}
+                                  style={{backgroundColor: '#f56a00'}}>{currentCustomerProfile.company.company_name[0].toUpperCase()}</Avatar>}
                         <div className="gx-media-body">
                 <span>
                   <h3 className="gx-mb-2 gx-text-capitalize gx-font-weight-bold">
-                    {currentCustomer.company.company_name}
+                    {currentCustomerProfile.company.company_name}
                   </h3>
-                  <div>{currentCustomer.company.website}</div>
+                  <div>{currentCustomerProfile.company.website}</div>
                 </span>
                         </div>
                       </div>
@@ -214,7 +216,7 @@ class CustomerDetails extends Component {
                           <div className="gx-mb-5">Other Members</div>
                           <div className="gx-d-flex gx-pl-0 gx-flex-sm-wrap">
                             {customerCompanyMembers.map(member => {
-                              return (member.id !== currentCustomer.id) ?
+                              return (member.id !== currentCustomerProfile.id) ?
                                 <div key={member.id}
                                      className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5 gx-mx-5">
                                   {member.avatar ?
@@ -259,12 +261,12 @@ class CustomerDetails extends Component {
 
 const mapPropsToState = ({customers, ticketList}) => {
   const {currentTicket} = ticketList;
-  const {customerTickets, customerCompanyMembers, currentCustomer} = customers;
-  return {customerTickets, customerCompanyMembers, currentTicket, currentCustomer};
+  const {customerTickets, customerCompanyMembers, currentCustomerProfile} = customers;
+  return {customerTickets, customerCompanyMembers, currentTicket, currentCustomerProfile};
 };
 
 export default connect(mapPropsToState, {
-  getCustomerId,
+  setCurrentCustomer,
   onGetCustomerTickets,
   onGetCustomerCompany,
   onGetCustomerDetail,
@@ -275,13 +277,13 @@ CustomerDetails.defaultProps = {
   customerTickets: [],
   currentTicket: null,
   customerCompanyMembers: [],
-  currentCustomer: null
+  currentCustomerProfile: null
 };
 
 CustomerDetails.propTypes = {
   customerTickets: PropTypes.array,
   currentTicket: PropTypes.object,
   customerCompanyMembers: PropTypes.array,
-  currentCustomer: PropTypes.object,
+  currentCustomerProfile: PropTypes.object,
 };
 

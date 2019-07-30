@@ -1,4 +1,11 @@
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, HIDE_MESSAGE, SHOW_MESSAGE} from "../../constants/ActionTypes";
+import {
+  FETCH_ERROR,
+  FETCH_START,
+  FETCH_SUCCESS,
+  HIDE_MESSAGE,
+  SHOW_MESSAGE,
+  UPDATING_CONTENT
+} from "../../constants/ActionTypes";
 
 export const fetchStart = () => {
   return (dispatch) => dispatch({
@@ -9,6 +16,11 @@ export const fetchStart = () => {
 export const fetchSuccess = () => {
   return (dispatch) => dispatch({
     type: FETCH_SUCCESS
+  })
+};
+export const updatingContent = () => {
+  return (dispatch) => dispatch({
+    type: UPDATING_CONTENT
   })
 };
 

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Avatar, Button, message, Upload} from "antd";
 import PropTypes from "prop-types";
+import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 class CustomerImageUpload extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class CustomerImageUpload extends Component {
       const data = new FormData();
       data.append('file', file);
       data.append('title', file.name);
-      this.props.onAddImage(data);
+      this.props.onAddImage(data,this.props.context);
     } else {
       message.warning("Please select image first!")
     }
@@ -27,7 +28,7 @@ class CustomerImageUpload extends Component {
     if (this.state.fileList.length > 0) {
       return URL.createObjectURL(this.state.fileList[0]);
     } else if (imageAvatar) {
-      return imageAvatar;
+      return MEDIA_BASE_URL + imageAvatar.src;
     } else {
       return require("assets/images/placeholder.jpg")
     }
@@ -65,7 +66,7 @@ class CustomerImageUpload extends Component {
           <Avatar className="gx-size-200"
                   src={this.getImageURL()}/>
         </Upload>
-        <Button type="primary" className="gx-mt-5 gx-ml-4" onClick={this.onLogoSelect}>Add Profile Image</Button>
+        <Button type="primary" className="gx-mt-5 gx-ml-4" onClick={this.onLogoSelect}>Upload Profile Image</Button>
       </div>
     )
   }

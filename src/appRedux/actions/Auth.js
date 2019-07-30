@@ -61,8 +61,8 @@ export const onGetUserInfo = (history) => {
       if (data.success) {
         dispatch({type: FETCH_USER_INFO_SUCCESS});
         dispatch({type: UPDATE_USER_PERMISSION_DATA, payload: data.data});
+        localStorage.setItem("permission", JSON.stringify(data.data));
         Permissions.setPermissions(data.data);
-        localStorage.setItem("permission", JSON.stringify(data.token));
       } else {
         dispatch({type: FETCH_ERROR, payload: data.error});
         dispatch({type: FETCH_USER_INFO_ERROR, payload: data.error});

@@ -10,6 +10,7 @@ export const FETCH_USER_INFO_ERROR = 'fetch_user_info_error';
 
 //Contact Module const
 export const FETCH_START = 'fetch_start';
+export const UPDATING_CONTENT = 'updating_content';
 export const FETCH_SUCCESS = 'fetch_success';
 export const FETCH_ERROR = 'fetch_error';
 export const SHOW_MESSAGE = 'SHOW_MESSAGE';
