@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
 import qs from "qs";
 import CustomerDetails from "./CustomerDetails";
 import CompanyDetails from "./CompanyDetails";
-import AssignedTickets from "./AssignedTickets";
+import RelatedTickets from "./RelatedTickets";
 
 class Index extends Component {
 
@@ -65,7 +65,7 @@ class Index extends Component {
                                 customerCompanyMembers={customerCompanyMembers}/>
               </Col>
             </Row>
-            <AssignedTickets customerTickets={customerTickets} onGetTicketDetail={this.onGetTicketDetail}/>
+            <RelatedTickets customerTickets={customerTickets} onGetTicketDetail={this.onGetTicketDetail}/>
           </div> : null}
       </div>
     );

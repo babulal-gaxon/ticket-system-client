@@ -4,7 +4,7 @@ import moment from "moment";
 import Widget from "../../../../components/Widget";
 import Permissions from "../../../../util/Permissions";
 
-class AssignedTickets extends Component {
+class RelatedTickets extends Component {
 
   constructor(props) {
     super(props);
@@ -78,7 +78,7 @@ class AssignedTickets extends Component {
 
     return (
       <div>
-        <Widget title={<span>Assigned Tickets</span>}>
+        <Widget title={<span className="gx-widget-heading">Related Tickets</span>}>
           <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()}
                  className="gx-mb-4" dataSource={customerTickets}
                  onRow={(record) => ({
@@ -95,4 +95,4 @@ class AssignedTickets extends Component {
   }
 }
 
-export default AssignedTickets;
+export default RelatedTickets;

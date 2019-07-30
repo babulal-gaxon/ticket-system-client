@@ -22,7 +22,7 @@ class CustomerDetails extends Component {
       <div>
         <Widget>
           <div className="gx-d-flex gx-justify-content-between gx-mb-5">
-            <span className="gx-font-weight-bold">Customer Details</span>
+            <span className="gx-widget-heading">Customer Details</span>
             <i className="icon icon-arrow-left" onClick={onBackToList}/>
           </div>
           <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">

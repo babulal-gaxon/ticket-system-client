@@ -7,7 +7,7 @@ const CompanyDetails = ({currentCustomerProfile, customerCompanyMembers}) => {
     <div>
       <Widget>
         <div className="gx-d-flex gx-justify-content-between gx-mb-5">
-          <span className="gx-font-weight-bold">Company Details</span>
+          <span className="gx-widget-heading">Company Details</span>
         </div>
         {currentCustomerProfile.company ?
           <div>
