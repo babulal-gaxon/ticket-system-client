@@ -1,102 +1,104 @@
-import React, {Component} from "react"
-import {Col, Row} from "antd/lib/index";
-import {connect} from "react-redux";
-import {
-  onGetCustomerCompany,
-  onGetCustomerDetail,
-  onGetCustomerTickets,
-  onNullifyCurrentCustomer,
-  setCurrentCustomer
-} from "../../../../appRedux/actions/Customers";
-import PropTypes from "prop-types";
-import qs from "qs";
-import CustomerInfo from "./CustomerInfo";
-import CompanyMembers from "./CompanyMembers";
-import CustomerTickets from "./CustomerTickets";
+import React, {Component} from 'react';
+import Widget from "../../../../components/Widget";
+import {Avatar, Col, Divider, Row, Tag} from "antd";
+import {MEDIA_BASE_URL} from "../../../../constants/ActionTypes";
+import Permissions from "../../../../util/Permissions";
 
 class CustomerDetails extends Component {
 
-
-  componentDidMount() {
-    const queryParams = qs.parse(this.props.location.search, {ignoreQueryPrefix: true});
-    this.props.onGetCustomerDetail(queryParams.id);
-    this.props.onGetCustomerTickets(queryParams.id);
-  }
-
-  componentWillReceiveProps(nextProps, nextContext) {
-    if (this.props.currentCustomerProfile === null && nextProps.currentCustomerProfile) {
-      if (nextProps.currentCustomerProfile.company) {
-        this.props.onGetCustomerCompany(nextProps.currentCustomerProfile.company.id);
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    this.props.onNullifyCurrentCustomer();
-  }
-
-  onGetTicketDetail = record => {
-    this.props.history.push(`/manage-tickets/ticket-detail?id=${record.id}`);
+  state = {
+    showMoreAddress: false
   };
 
-  onEditProfile = () => {
-    this.props.setCurrentCustomer(this.props.currentCustomerProfile);
-    this.props.history.push('/customers/add-customers')
-  };
-
-  onBackToList = () => {
-    this.props.history.goBack();
+  onToggleMoreAddress = () => {
+    this.setState({showMoreAddress: !this.state.showMoreAddress})
   };
 
   render() {
-
-    const {currentCustomerProfile, customerCompanyMembers, customerTickets} = this.props;
+    const {showMoreAddress} = this.state;
+    const {currentCustomerProfile, onEditProfile, onBackToList} = this.props;
+    const addresses = showMoreAddress ? currentCustomerProfile.addresses : currentCustomerProfile.addresses.slice(0, 1);
     return (
-      <div className="gx-main-layout-content">
-        {currentCustomerProfile ?
-          <div className="gx-main-content">
-            <Row>
-              <Col xl={12} lg={12} md={12} sm={12} xs={24}>
-                <CustomerInfo currentCustomerProfile={currentCustomerProfile} onEditProfile={this.onEditProfile}
-                              onBackToList={this.onBackToList}/>
-              </Col>
-              <Col xl={12} lg={12} md={12} sm={12} xs={24}>
-                <CompanyMembers currentCustomerProfile={currentCustomerProfile}
-                                customerCompanyMembers={customerCompanyMembers}/>
-              </Col>
-            </Row>
-            <CustomerTickets customerTickets={customerTickets} onGetTicketDetail={this.onGetTicketDetail}/>
-          </div> : null}
+      <div>
+        <Widget>
+          <div className="gx-d-flex gx-justify-content-between gx-mb-5">
+            <span className="gx-font-weight-bold">Customer Details</span>
+            <i className="icon icon-arrow-left" onClick={onBackToList}/>
+          </div>
+          <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
+            {currentCustomerProfile.avatar ?
+              <Avatar className="gx-mr-3 gx-size-100"
+                      src={MEDIA_BASE_URL + currentCustomerProfile.avatar.src}/> :
+              <Avatar className="gx-mr-3 gx-size-100"
+                      style={{backgroundColor: '#f56a00'}}>{currentCustomerProfile.first_name[0].toUpperCase()}</Avatar>}
+            <div className="gx-media-body">
+              <div className="gx-d-flex gx-justify-content-between">
+                    <span className="gx-mb-0 gx-text-capitalize gx-font-weight-bold">
+                      {currentCustomerProfile.first_name + " " + currentCustomerProfile.last_name}</span>
+                {(Permissions.canCustomerEdit()) ?
+                  <span><Tag color="blue" onClick={onEditProfile}>
+                <i className="icon icon-edit gx-mr-3"/>Edit Profile</Tag></span> : null}
+              </div>
+              <div className="gx-mt-2">
+                <Tag color={currentCustomerProfile.status === 1 ? "green" : "red"}>
+                  {currentCustomerProfile.status === 1 ? "Active" : "Disabled"}
+                </Tag>
+              </div>
+            </div>
+          </div>
+          <Row>
+            <Col span={6}>
+              Email
+            </Col>
+            <Col>{currentCustomerProfile.email}</Col>
+          </Row>
+          <Divider/>
+          <Row>
+            <Col span={6}>
+              Phone
+            </Col>
+            <Col>{currentCustomerProfile.phone ? <span>{currentCustomerProfile.phone}</span> : "NA"}</Col>
+          </Row>
+          <Divider/>
+          <Row>
+            <Col span={6}>
+              Status
+            </Col>
+            <Col>{currentCustomerProfile.status === 1 ? "Active" : "Disabled"}</Col>
+          </Row>
+          <Divider/>
+          <Row>
+            <Col span={6}>
+              Address
+            </Col>
+            <Col>
+              {currentCustomerProfile.addresses.length > 0 ?
+                <div>
+                  {addresses.map(address => {
+                    return <div>
+                      <div className="gx-d-flex gx-justify-content-between">
+                        <p className="gx-mr-2">{address.address_line_1}</p>
+                        {address.address_type.map(type => {
+                          return <Tag color="#108ee9" key={type}>{type}</Tag>
+                        })}
+                      </div>
+                      <p>{`${address.city}, ${address.state} - ${address.zip_code}`}</p>
+                      <Divider/>
+                    </div>
+                  })}
+                  {!showMoreAddress ?
+                    <div
+                      onClick={this.onToggleMoreAddress}>{currentCustomerProfile.addresses.length > 1 ? `+ ${currentCustomerProfile.addresses.length - 1} more` : null}</div>
+                    : <div onClick={this.onToggleMoreAddress}>View Less</div>}
+                </div>
+                : "NA"}
+            </Col>
+          </Row>
+        </Widget>
       </div>
     );
-  }
+  };
 }
 
-const mapPropsToState = ({customers, ticketList}) => {
-  const {currentTicket} = ticketList;
-  const {customerTickets, customerCompanyMembers, currentCustomerProfile} = customers;
-  return {customerTickets, customerCompanyMembers, currentTicket, currentCustomerProfile};
-};
 
-export default connect(mapPropsToState, {
-  setCurrentCustomer,
-  onGetCustomerTickets,
-  onGetCustomerCompany,
-  onGetCustomerDetail,
-  onNullifyCurrentCustomer
-})(CustomerDetails);
-
-CustomerDetails.defaultProps = {
-  customerTickets: [],
-  currentTicket: null,
-  customerCompanyMembers: [],
-  currentCustomerProfile: null
-};
-
-CustomerDetails.propTypes = {
-  customerTickets: PropTypes.array,
-  currentTicket: PropTypes.object,
-  customerCompanyMembers: PropTypes.array,
-  currentCustomerProfile: PropTypes.object,
-};
-
+export default CustomerDetails;

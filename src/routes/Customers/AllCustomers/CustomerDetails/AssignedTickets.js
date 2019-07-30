@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Avatar, Table, Tag, Tooltip} from "antd";
-import moment from "./CustomerDetails";
+import moment from "moment";
 import Widget from "../../../../components/Widget";
 import Permissions from "../../../../util/Permissions";
 
-class CustomerTickets extends Component {
+class AssignedTickets extends Component {
 
   constructor(props) {
     super(props);
@@ -95,4 +95,4 @@ class CustomerTickets extends Component {
   }
 }
 
-export default CustomerTickets;
+export default AssignedTickets;

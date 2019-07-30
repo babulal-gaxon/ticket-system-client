@@ -2,7 +2,7 @@ import React from 'react';
 import {Avatar} from "antd";
 import Widget from "../../../../components/Widget";
 
-const CompanyMembers = ({currentCustomerProfile, customerCompanyMembers}) => {
+const CompanyDetails = ({currentCustomerProfile, customerCompanyMembers}) => {
   return (
     <div>
       <Widget>
@@ -57,4 +57,4 @@ const CompanyMembers = ({currentCustomerProfile, customerCompanyMembers}) => {
   );
 };
 
-export default CompanyMembers;
+export default CompanyDetails;
