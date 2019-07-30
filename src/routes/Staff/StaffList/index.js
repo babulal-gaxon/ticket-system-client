@@ -8,9 +8,10 @@ import {
   onGetStaff,
   onGetStaffId
 } from "../../../appRedux/actions/SupportStaff";
-import {Avatar, Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Select, Table} from "antd";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
+import StaffRow from "./StaffRow";
 
 
 const ButtonGroup = Button.Group;
@@ -116,79 +117,6 @@ class StaffList extends Component {
     </Dropdown>
   };
 
-  staffRowData = () => {
-    return [
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">
-             {record.avatar ?
-               <Avatar className="gx-mr-3 gx-size-50" src={record.avatar.src}/> :
-               <Avatar className="gx-mr-3 gx-size-50"
-                       style={{backgroundColor: '#f56a00'}}>{record.first_name[0].toUpperCase()}</Avatar>}
-            {record.first_name + " " + record.last_name} </span>
-        }
-      },
-      {
-        title: 'Hourly Rate',
-        dataIndex: 'hourlyRate',
-        key: 'hourlyRate',
-        render: (text, record) => {
-          return <span
-            className="gx-email gx-d-inline-block gx-mr-2"
-            style={{color: record.hourly_rate === null ? "red" : ""}}>
-            {record.hourly_rate === null ? "NA" : `$${record.hourly_rate}/Hour`}</span>
-        },
-      },
-      {
-        title: 'Department',
-        dataIndex: 'department',
-        key: 'department',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">
-            {record.departments.length !== 0 ? record.departments.map(department => {
-              return department.name
-            }).join() : "NA"}
-            </span>
-        },
-      },
-      {
-        title: 'Designation',
-        dataIndex: 'designation',
-        key: 'designation',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2"
-                       style={{color: record.designation === null ? "red" : ""}}>
-            {record.designation === null ? "NA" : record.designation}</span>
-        },
-      },
-      {
-        title: 'Status',
-        dataIndex: 'status',
-        key: 'status',
-        render: (text, record) => {
-          return <Tag color={record.status === 1 ? "green" : "red"}>
-            {record.status === 1 ? "Active" : "Disabled"}
-          </Tag>
-        },
-      },
-      {
-        title: '',
-        dataIndex: '',
-        key: 'empty',
-        render: (text, record) => {
-          return <span onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-          }}>
-            {this.onShowRowDropdown(record.id)}
-      </span>
-        },
-      },
-    ];
-  };
 
   onDisableStaff = (staffId) => {
     const selectedStaff = this.props.staffList.find(staff => staff.id === staffId);
@@ -196,53 +124,12 @@ class StaffList extends Component {
     this.props.onDisableSupportStaff(selectedStaff)
   };
 
-  onShowRowDropdown = (staffId) => {
-    const menu = (
-      <Menu>
-        {(Permissions.canStaffEdit()) ?
-          <Menu.Item key="2" onClick={() => {
-            this.props.onGetStaffId(staffId);
-            this.props.history.push('/staff/add-new-member')
-          }}>
-            Edit
-          </Menu.Item> : null
-        }
-        {(Permissions.canStaffEdit()) ?
-          <Menu.Item key="3">
-            <Popconfirm
-              title="Are you sure to Disable this Staff?"
-              onConfirm={() => {
-                this.onDisableStaff(staffId)
-              }}
-              okText="Yes"
-              cancelText="No">
-              Disable
-            </Popconfirm>
-          </Menu.Item> : null
-        }
-        <Menu.Divider/>
-        {(Permissions.canStaffDelete()) ?
-          <Menu.Item key="4">
-            <Popconfirm
-              title="Are you sure to delete this Staff?"
-              onConfirm={() => {
-                this.props.onBulkDeleteStaff({ids: [staffId]});
-                this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
-              }}
-              okText="Yes"
-              cancelText="No">
-              Delete
-            </Popconfirm>
-          </Menu.Item> : null
-        }
-      </Menu>
-    );
-    return (
-      <Dropdown overlay={menu} trigger={['click']}>
-        <i className="icon icon-ellipse-h"/>
-      </Dropdown>
-    )
+  onEnableStaff = (staffId) => {
+    const selectedStaff = this.props.staffList.find(staff => staff.id === staffId);
+    selectedStaff.account_status = 1;
+    this.props.onDisableSupportStaff(selectedStaff)
   };
+
 
   onSelectStaff = (currentMember) => {
     this.props.history.push(`/staff/member-detail?id=${currentMember.id}`)
@@ -324,7 +211,7 @@ class StaffList extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowKey="id" rowSelection={rowSelection} columns={this.staffRowData()}
+          <Table rowKey="id" rowSelection={rowSelection} columns={StaffRow(this)}
                  dataSource={staffList}
                  pagination={{
                    pageSize: this.state.itemNumbers,

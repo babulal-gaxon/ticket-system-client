@@ -123,7 +123,7 @@ export const onDisableSupportStaff = (staffMember) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({
           type: SHOW_MESSAGE,
-          payload: "The Status of Selected staff has been changed to disabled successfully"
+          payload: `The Status of Selected staff has been changed to ${staffMember.account_status === 0 ? "disabled" : "enabled"} successfully`
         });
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
