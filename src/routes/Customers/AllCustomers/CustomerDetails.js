@@ -225,8 +225,8 @@ class CustomerDetails extends Component {
                                             style={{backgroundColor: '#f56a00'}}>{member.first_name[0].toUpperCase()}</Avatar>}
                                   <div className="gx-media-body">
                                     <div className="gx-d-flex gx-justify-content-between">
-                    <span
-                      className="gx-mb-0 gx-text-capitalize gx-font-weight-bold">{member.first_name + " " + member.last_name}</span>
+                                      <span
+                                        className="gx-mb-0 gx-text-capitalize gx-font-weight-bold">{member.first_name + " " + member.last_name}</span>
                                     </div>
                                     <div className="gx-mt-2">
                                       <span>{member.email}</span>

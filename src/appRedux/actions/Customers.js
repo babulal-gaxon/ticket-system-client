@@ -28,7 +28,7 @@ export const onGetCustomersData = (currentPage, itemsPerPage, filterData, compan
           page: currentPage,
           per_page: itemsPerPage,
           search: filterData,
-          company_ids: companies ? companies : undefined,
+          company: companies ? companies : undefined,
           labels: labels,
           status: status
         }
