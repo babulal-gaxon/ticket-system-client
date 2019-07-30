@@ -148,7 +148,7 @@ class GeneralDetails extends Component {
               this.setState({name: e.target.value})
             }}/>)}
           </Form.Item>
-          <Form.Item label="Company Website" extra="Please enter website in 'http//www.example.com' format">
+          <Form.Item label="Company Website" extra="Please enter website in 'http://www.example.com' format">
             {getFieldDecorator('url', {
               initialValue: url,
               validateTrigger: 'onBlur',

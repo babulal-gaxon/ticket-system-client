@@ -40,7 +40,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         customersList: [action.payload, ...state.customersList],
-        totalItems: state.totalItems + 1
+        totalItems: state.totalItems + 1,
+        customerAddress:[]
       };
 
     case GET_CUSTOMER_ID:
@@ -54,6 +55,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         customersList: updateCustomers,
+        customerAddress:[]
       };
 
     case DISABLE_CUSTOMER:

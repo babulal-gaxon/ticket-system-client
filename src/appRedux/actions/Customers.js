@@ -61,6 +61,9 @@ export const onAddNewCustomer = (customer, history) => {
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: ADD_NEW_CUSTOMER, payload: data.data});
+        dispatch({type: ADD_NEW_CUSTOMER, payload: data.data});
+
+
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
         dispatch({type: SHOW_MESSAGE, payload: "The New Customer has been added successfully"});

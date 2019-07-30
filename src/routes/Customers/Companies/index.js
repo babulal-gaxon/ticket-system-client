@@ -12,6 +12,7 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import Permissions from "../../../util/Permissions";
+import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -96,8 +97,8 @@ class Companies extends Component {
         render: (text, record) => {
           return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
               {record.avatar ?
-                <Avatar className="gx-mr-3 gx-size-80" src={record.avatar.src}/> :
-                <Avatar className="gx-mr-3 gx-size-80"
+                <Avatar className="gx-mr-3 gx-size-60" src={MEDIA_BASE_URL + record.avatar.src}/> :
+                <Avatar className="gx-mr-3 gx-size-60 gx-fs-xxl"
                         style={{backgroundColor: '#f56a00'}}>{record.company_name[0].toUpperCase()}</Avatar>}
               <div className="gx-media-body">
                 <span className="gx-mb-0 gx-text-capitalize">{record.company_name}</span>
@@ -122,7 +123,7 @@ class Companies extends Component {
               record.members.map(member => {
                 return member.avatar ?
                   <Tooltip key={member.id} placement="top" title={member.first_name + " " + member.last_name}>
-                    <Avatar className="gx-size-50" src={member.avatar.src}/>
+                    <Avatar className="gx-size-50" src={MEDIA_BASE_URL + member.avatar.src}/>
                   </Tooltip>
                   :
                   <Tooltip key={member.id} placement="top" title={member.first_name + " " + member.last_name}>
@@ -130,7 +131,7 @@ class Companies extends Component {
                       {member.first_name[0].toUpperCase()}
                     </Avatar>
                   </Tooltip>
-              }) : <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>}
+              }) : <span>No Member</span>}
               </span>
         },
       },

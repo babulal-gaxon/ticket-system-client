@@ -272,7 +272,7 @@ class AddNewCustomers extends Component {
                                     }}/>)}
                                 </Form.Item>
                                 <Form.Item label="Select Company">
-                                    <Select value={company_id} onChange={this.onCompanySelect}>
+                                    <Select defaultValue="Select Company" onChange={this.onCompanySelect}>
                                         {this.props.company.map(company => {
                                             return <Option value={company.id}
                                                            key={company.id}>{company.company_name}</Option>
@@ -379,7 +379,7 @@ AddNewCustomers.defaultProps = {
     labels: [],
     company: [],
     profilePicId: null,
-    countriesList: {},
+    countriesList: [],
     customerAddress: []
 };
 
@@ -389,7 +389,7 @@ AddNewCustomers.propTypes = {
     labels: PropTypes.array,
     company: PropTypes.array,
     profilePicId: PropTypes.number,
-    countriesList: PropTypes.object,
+    countriesList: PropTypes.array,
     customerAddress: PropTypes.array
 
 };

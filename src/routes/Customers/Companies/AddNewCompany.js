@@ -126,7 +126,7 @@ class AddNewCompany extends Component {
                 this.setState({company_name: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Website" extra="Please enter website in 'http//www.example.com' format">
+            <Form.Item label="Website" extra="Please enter website in 'http://www.example.com' format">
               {getFieldDecorator('website', {
                 initialValue: website,
                 validateTrigger: 'onBlur',
@@ -139,7 +139,7 @@ class AddNewCompany extends Component {
             <Form.Item label="Upload Logo" >
               {getFieldDecorator('uploadedLogo',
                 {
-                  rules: [{required: true, message: 'Please Upload Company Logo!'}],
+                  rules: [{ message: 'Please Upload Company Logo!'}],
                 })(
                 <Upload {...props}>
                   <Input placeholder="Choose file..." addonAfter="Browse"/>

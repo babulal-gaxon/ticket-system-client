@@ -33,7 +33,7 @@ class AddCustomerAddress extends Component {
   };
 
   handleSearch = value => {
-    return Object.keys(this.props.countriesList).filter(country => this.props.countriesList[country].indexOf(value) !== -1)
+    return this.props.countriesList.filter(country => country.name.indexOf(value) !== -1)
   };
 
   onValidationCheck = () => {
@@ -108,17 +108,18 @@ class AddCustomerAddress extends Component {
                     ],
                   })(<Select
                     style={{width: "100%"}}
-                    showSearch
                     placeholder="Type to search Country"
                     defaultActiveFirstOption={false}
                     showArrow={false}
-                    filterOption={false}
-                    onSearch={this.handleSearch}
+                    showSearch
+                    filterOption={(input, option) =>
+                      option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                    }
                     onChange={this.onCountrySelect}
                     notFoundContent={null}
-                  >
-                    {Object.keys(this.props.countriesList).map(country => {
-                      return <Option value={country} key={country}>{this.props.countriesList[country]}</Option>
+                    >
+                    {this.props.countriesList.map(country => {
+                      return <Option value={country.id} key={country.id}>{country.name}</Option>
                     })}
                   </Select>)}
                 </Form.Item>
@@ -180,10 +181,10 @@ export default AddCustomerAddress;
 
 AddCustomerAddress.defaultProps = {
   isModalVisible: false,
-  countriesList: {}
+  countriesList: []
 };
 
 AddCustomerAddress.propTypes = {
   isModalVisible: PropTypes.bool,
-  countriesList: PropTypes.object
+  countriesList: PropTypes.array
 };
