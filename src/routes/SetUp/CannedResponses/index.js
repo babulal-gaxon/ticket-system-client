@@ -26,12 +26,12 @@ class CannedResponses extends Component {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      responseId: null,
       filterText: "",
       itemNumbers: 10,
       current: 1,
       showAddCanned: false,
-      selectedResponses: []
+      selectedResponses: [],
+      currentResponse: null
     };
   };
 
@@ -81,11 +81,11 @@ class CannedResponses extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({responseId: null, showAddCanned: true});
+    this.setState({currentResponse: null, showAddCanned: true});
   };
 
-  onEditResponse = (id) => {
-    this.setState({responseId: id, showAddCanned: true});
+  onEditResponse = (response) => {
+    this.setState({currentResponse: response, showAddCanned: true});
   };
 
   onShowBulkActiveConfirm = () => {
@@ -224,7 +224,7 @@ class CannedResponses extends Component {
         key: 'empty',
         render: (text, record) => {
           return <span> {Permissions.canResponseEdit() ? <i className="icon icon-edit gx-mr-3"
-                                                            onClick={() => this.onEditResponse(record.id)}/> : null}
+                                                            onClick={() => this.onEditResponse(record)}/> : null}
             {Permissions.canResponseDelete() ? this.onDeletePopUp(record.id) : null}
           </span>
         },
@@ -329,9 +329,8 @@ class CannedResponses extends Component {
           <AddNewResponses showAddCanned={this.state.showAddCanned}
                            onToggleAddCanned={this.onToggleAddCanned}
                            onAddCannedResponse={this.props.onAddCannedResponse}
-                           responseId={this.state.responseId}
+                           currentResponse={this.state.currentResponse}
                            onEditCannedResponse={this.props.onEditCannedResponse}
-                           responses={responses}
           /> : null}
       </div>
     );

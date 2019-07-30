@@ -7,7 +7,7 @@ const {TextArea} = Input;
 class AddNewResponses extends Component {
   constructor(props) {
     super(props);
-    if (this.props.responseId === null) {
+    if (this.props.currentResponse === null) {
       this.state = {
         short_title: "",
         short_code: "",
@@ -15,7 +15,7 @@ class AddNewResponses extends Component {
         status: 1
       };
     } else {
-      const selectedResponse = this.props.responses.find(response => response.id === this.props.responseId);
+      const selectedResponse = this.props.currentResponse;
       this.state = {
         ...selectedResponse
       };
@@ -23,7 +23,7 @@ class AddNewResponses extends Component {
   };
 
   onResponseAdd = () => {
-    if (this.props.responseId === null) {
+    if (this.props.currentResponse === null) {
       this.props.onAddCannedResponse({...this.state});
       this.props.onToggleAddCanned();
     } else {
@@ -48,7 +48,7 @@ class AddNewResponses extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddCanned}
-          title={this.props.responseId === null ? "Add New Response" : "Edit Response Details"}
+          title={this.props.currentResponse === null ? "Add New Response" : "Edit Response Details"}
           onCancel={() => onToggleAddCanned()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -120,13 +120,13 @@ export default AddNewResponses;
 
 AddNewResponses.defaultProps = {
   showAddCanned: true,
-  responseId: null,
+  currentResponse: null,
   responses: []
 };
 
 AddNewResponses.propTypes = {
   showAddCanned: PropTypes.bool,
-  responseId: PropTypes.number,
+  currentResponse: PropTypes.object,
   responses: PropTypes.array,
   onToggleAddCanned: PropTypes.func,
   onAddCannedResponse: PropTypes.func,
