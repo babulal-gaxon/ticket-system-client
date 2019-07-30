@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="72ebf97e-8970-4775-8ec5-0b0606640859" name="Default" comment="Taking pull">
-      <change beforePath="$PROJECT_DIR$/src/routes/SetUp/CannedResponses/AddNewResponses.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/SetUp/CannedResponses/AddNewResponses.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/SetUp/CannedResponses/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/SetUp/CannedResponses/index.js" afterDir="false" />
-    </list>
+    <list default="true" id="72ebf97e-8970-4775-8ec5-0b0606640859" name="Default" comment="Taking pull" />
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -17,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/SetUp/CannedResponses/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4301">
-              <caret line="267" column="12" lean-forward="true" selection-start-line="267" selection-start-column="12" selection-end-line="267" selection-end-column="12" />
+            <state relative-caret-position="330">
+              <caret line="331" column="70" selection-start-line="331" selection-start-column="55" selection-end-line="331" selection-end-column="70" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
                 <element signature="n#!!block;n#componentDidMount#0;n#CannedResponses#0" />
@@ -30,11 +27,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/routes/SetUp/CannedResponses/AddNewResponses.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="20" column="8" lean-forward="true" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="8" />
+            <state relative-caret-position="1870">
+              <caret line="110" column="5" lean-forward="true" selection-start-line="110" selection-start-column="5" selection-end-line="110" selection-end-column="5" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -54,7 +51,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onResetPassword</find>
       <find>onGetCustomerFilterOptions</find>
       <find>customerTickets</find>
       <find>currentCustomer</find>
@@ -84,6 +80,7 @@
       <find>selectedAddress</find>
       <find>customerCompanyMembers</find>
       <find>responseId</find>
+      <find>currentResponse</find>
     </findStrings>
     <replaceStrings>
       <replace>price</replace>
@@ -169,8 +166,8 @@
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/FilterBar.js" />
         <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" />
         <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerDetails/CustomerInfo.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/CannedResponses/AddNewResponses.js" />
         <option value="$PROJECT_DIR$/src/routes/SetUp/CannedResponses/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/SetUp/CannedResponses/AddNewResponses.js" />
       </list>
     </option>
   </component>
@@ -382,21 +379,7 @@
       <workItem from="1564469627361" duration="356000" />
       <workItem from="1564470566469" duration="3153000" />
       <workItem from="1564480962198" duration="891000" />
-      <workItem from="1564483704188" duration="6428000" />
-    </task>
-    <task id="LOCAL-00028" summary="Updated Roles and Permissions section">
-      <created>1560936948855</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1560936948855</updated>
-    </task>
-    <task id="LOCAL-00029" summary="Updated staff Section">
-      <created>1560950356455</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1560950356455</updated>
+      <workItem from="1564483704188" duration="6685000" />
     </task>
     <task id="LOCAL-00030" summary="applied changes in staff section and worked on customer section">
       <created>1561037335400</created>
@@ -727,11 +710,25 @@
       <option name="project" value="LOCAL" />
       <updated>1564490964975</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="Taking pull">
+      <created>1564491903522</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1564491903522</updated>
+    </task>
+    <task id="LOCAL-00078" summary="Taking pull">
+      <created>1564491934132</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1564491934132</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1378592000" />
+    <option name="totallyTimeSpent" value="1378849000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -744,7 +741,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.3846154" visible="true" weight="0.1904762" />
       <window_info id="npm" order="1" sideWeight="0.61538464" side_tool="true" weight="0.20238096" />
@@ -1324,23 +1320,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/CannedResponses/AddNewResponses.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/CannedResponses/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="20" column="8" lean-forward="true" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="8" />
+        <state relative-caret-position="330">
+          <caret line="331" column="70" selection-start-line="331" selection-start-column="55" selection-end-line="331" selection-end-column="70" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
+            <element signature="n#!!block;n#componentDidMount#0;n#CannedResponses#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/CannedResponses/index.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/CannedResponses/AddNewResponses.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4301">
-          <caret line="267" column="12" lean-forward="true" selection-start-line="267" selection-start-column="12" selection-end-line="267" selection-end-column="12" />
+        <state relative-caret-position="1870">
+          <caret line="110" column="5" lean-forward="true" selection-start-line="110" selection-start-column="5" selection-end-line="110" selection-end-column="5" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <element signature="n#!!block;n#componentDidMount#0;n#CannedResponses#0" />
           </folding>
         </state>
       </provider>
