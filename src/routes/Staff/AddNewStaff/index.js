@@ -142,7 +142,8 @@ class AddNewStaff extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-font-weight-bold">{this.props.staffId === null ? "Add Staff Member" : "Edit Staff Details"}</h4>
+          <h4
+            className="gx-font-weight-bold">{this.props.staffId === null ? "Add Staff Member" : "Edit Staff Details"}</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/staff/all-members">Staffs</Link>
@@ -207,18 +208,18 @@ class AddNewStaff extends Component {
                       message: 'Please enter only numerical values',
                     }],
                   })(<Input type="text" onChange={(e) => {
-                      this.setState({phone: e.target.value})
-                    }}/>)}
+                    this.setState({phone: e.target.value})
+                  }}/>)}
                 </Form.Item>
                 <Form.Item label="Role">
                   {getFieldDecorator('role_id', {
-                  initialValue: role_id,
+                    initialValue: role_id,
                     validateTrigger: 'onBlur',
-                  rules: [{
-                  required: true,
-                  message: 'Please Select role!'
-                }] ,
-                })( <Select onChange={this.onSelectRole} placeholder="Select a Role">
+                    rules: [{
+                      required: true,
+                      message: 'Please Select role!'
+                    }],
+                  })(<Select onChange={this.onSelectRole} placeholder="Select a Role">
                     {this.props.roles.map(role => {
                       return <Option value={role.id} key={role.id}>{role.name}</Option>
                     })}
@@ -254,7 +255,7 @@ class AddNewStaff extends Component {
                         {
                           min: 8,
                           message: 'Length should be at least 8 characters long',
-                        }] ,
+                        }],
                     })(<Input.Password type="text" onChange={(e) => {
                       this.setState({password: e.target.value})
                     }}/>) :

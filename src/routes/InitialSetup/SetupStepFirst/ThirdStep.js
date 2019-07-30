@@ -55,7 +55,7 @@ class ThirdStep extends Component {
 
   onSearch = (val) => {
     console.log('search:', val);
-  }
+  };
 
   onValidationCheck = () => {
     this.props.form.validateFields(err => {

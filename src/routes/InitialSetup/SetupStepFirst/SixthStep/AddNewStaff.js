@@ -8,7 +8,7 @@ const {Option} = Select;
 class AddNewStaff extends Component {
   constructor(props) {
     super(props);
-    console.log("staffList", this.props.staffList)
+    console.log("staffList", this.props.staffList);
     if (this.props.staffId === null) {
       this.state = {
         first_name: "",
@@ -67,7 +67,7 @@ class AddNewStaff extends Component {
     this.onAddImage(data);
   };
 
-  onAddImage = (file,context) => {
+  onAddImage = (file, context) => {
     this.props.fetchStart();
     axios.post("/uploads/temporary/media", file, {
       headers: {
@@ -75,7 +75,7 @@ class AddNewStaff extends Component {
       }
     }).then(({data}) => {
       if (data.success) {
-        console.log("data", data.data)
+        console.log("data", data.data);
         this.props.fetchSuccess();
         this.setState({profile_pic: data.data}, () => {
           this.onStaffAdd();
@@ -113,7 +113,7 @@ class AddNewStaff extends Component {
   };
 
   render() {
-    console.log("uploadedFile", this.state.uploadedFile)
+    console.log("uploadedFile", this.state.uploadedFile);
     const {getFieldDecorator} = this.props.form;
     const {first_name, last_name, email, password, mobile, hourly_rate, account_status, departments_ids} = this.state;
     const {showAddModal, onToggleAddModal} = this.props;
@@ -222,7 +222,7 @@ class AddNewStaff extends Component {
                         {
                           min: 8,
                           message: 'Length should be at least 8 characters long',
-                        }] ,
+                        }],
                     })(<Input.Password type="text" onChange={(e) => {
                       this.setState({password: e.target.value})
                     }}/>) :
@@ -258,9 +258,9 @@ class AddNewStaff extends Component {
               </Select>
             </Form.Item>
             <Form.Item label="Upload Profile Picture">
-                <Upload {...props}>
-                  <Input placeholder="Choose file..." addonAfter="Browse"/>
-                </Upload>
+              <Upload {...props}>
+                <Input placeholder="Choose file..." addonAfter="Browse"/>
+              </Upload>
             </Form.Item>
             <Form.Item label="Status">
               <Radio.Group value={account_status} onChange={(e) => {

@@ -40,7 +40,7 @@ const userImageList = [
     rating: '5.0',
     deals: '27 Deals'
   },
-]
+];
 
 
 const UserImages = () => {

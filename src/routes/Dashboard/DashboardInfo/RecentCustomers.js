@@ -10,6 +10,7 @@ class RecentCustomers extends Component {
   componentDidMount() {
     this.props.onGetCustomersData();
   }
+
   render() {
     console.log("inRecentCustomers", this.props.customersList);
     return (
@@ -19,7 +20,8 @@ class RecentCustomers extends Component {
           <div className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1">last update 2 hours ago</div>
         </div>}
               styleName="gx-card-ticketlist"
-              extra={<span><i className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/></span>}>
+              extra={<span><i
+                className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/></span>}>
         {this.props.customersList.map(customer => {
           return (
             <div className="gx-media gx-task-list-item gx-flex-nowrap">
@@ -52,11 +54,11 @@ const mapStateToProps = ({customers}) => {
   return {customersList}
 };
 
-export default connect(mapStateToProps,{onGetCustomersData})(RecentCustomers)
+export default connect(mapStateToProps, {onGetCustomersData})(RecentCustomers)
 
 
 RecentCustomers.defaultProps = {
-  customersList:[]
+  customersList: []
 };
 
 RecentCustomers.propTypes = {

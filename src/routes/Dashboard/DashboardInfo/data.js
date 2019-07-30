@@ -43,7 +43,7 @@ export const ticketListcolumns = [
     title: 'Assign to',
     dataIndex: '',
     render: (text, record) => {
-      console.log("record", record)
+      console.log("record", record);
       return (<div>
           {record.assigned_to ?
             <Tooltip placement="top" title={record.assigned_to.first_name + " " + record.assigned_to.last_name}

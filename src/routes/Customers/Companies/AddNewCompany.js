@@ -32,7 +32,7 @@ class AddNewCompany extends Component {
   };
 
   onSubmitForm = () => {
-    if(this.state.fileList.length >0) {
+    if (this.state.fileList.length > 0) {
       this.onLogoSelect();
     } else {
       this.onCompanyAdd();
@@ -89,24 +89,23 @@ class AddNewCompany extends Component {
         });
       },
       beforeUpload: file => {
-        if(fileList.length >0) {
+        if (fileList.length > 0) {
           props.onRemove(fileList[0])
         }
-          this.setState(state => ({
-            fileList: [...state.fileList, file],
-          }));
+        this.setState(state => ({
+          fileList: [...state.fileList, file],
+        }));
         return false;
       },
       fileList,
     };
     const {getFieldDecorator} = this.props.form;
     const {showAddNewModal, onToggleAddCompany, currentCompany} = this.props;
-    console.log("logoname", this.state.logoName)
     return (
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddNewModal}
-          title={this.props.currentCompany === null ? "Add New Company" : "Edit Company Detail"}
+          title={currentCompany === null ? "Add New Company" : "Edit Company Detail"}
           onCancel={() => onToggleAddCompany()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -137,9 +136,9 @@ class AddNewCompany extends Component {
             </Form.Item>
 
             <Form.Item label="Upload Logo" extra={fileList.length > 0 ? "" : logoName}>
-                <Upload {...props}>
-                  <Input placeholder="Choose file..." addonAfter="Browse"/>
-                </Upload>
+              <Upload {...props}>
+                <Input placeholder="Choose file..." addonAfter="Browse"/>
+              </Upload>
             </Form.Item>
           </Form>
         </Modal>

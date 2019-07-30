@@ -27,7 +27,7 @@ class InitialSetup extends Component {
 
   render() {
     const {current} = this.state;
-    console.log("re render in index file")
+    console.log("re render in index file");
     return (
       <Auxiliary>
         <div className="gx-main-layout-content full-page-scroll">

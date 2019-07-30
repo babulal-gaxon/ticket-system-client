@@ -175,7 +175,7 @@ class SecondStep extends Component {
             </div> : null}
           <div className="gx-d-flex">
             <Button type="default" onClick={() => {
-              this.props.onMoveToPrevStep()
+              this.props.onMoveToPrevStep();
               this.props.onFormOpen()
             }}>Previous</Button>
             <Button type="primary"
@@ -184,9 +184,9 @@ class SecondStep extends Component {
                       () => this.props.onMoveToNextStep() : this.onValidationCheck}
             >Next</Button>
             {!this.props.initialSteps.completed_steps || (this.props.initialSteps.completed_steps &&
-            this.props.initialSteps.completed_steps.account_verification_setup) ? null :
+              this.props.initialSteps.completed_steps.account_verification_setup) ? null :
               <Button type="default" disabled={(this.props.initialSteps.completed_steps &&
-              !this.props.initialSteps.completed_steps.admin_account_setup)}
+                !this.props.initialSteps.completed_steps.admin_account_setup)}
                       onClick={() => this.props.onOpenPinModal()}>Verify PIN</Button>}
           </div>
         </Form>

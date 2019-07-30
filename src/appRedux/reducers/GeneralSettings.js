@@ -88,7 +88,7 @@ export default (state = initialState, action) => {
       };
 
     case EDIT_ADDRESS:
-      const updatedAddresses = state.generalAddress.map((address) => address.id === action.payload.id ? action.payload : address)
+      const updatedAddresses = state.generalAddress.map((address) => address.id === action.payload.id ? action.payload : address);
       return {
         ...state,
         generalAddress: updatedAddresses

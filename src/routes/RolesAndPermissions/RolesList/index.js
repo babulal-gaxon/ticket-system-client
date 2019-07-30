@@ -182,9 +182,9 @@ class RolesList extends Component {
     const menu = (
       <Menu>
         {Permissions.canRoleDelete() ?
-        <Menu.Item key="1" onClick={this.showBulkDeleteConfirm}>
-          Archive
-        </Menu.Item> : null}
+          <Menu.Item key="1" onClick={this.showBulkDeleteConfirm}>
+            Archive
+          </Menu.Item> : null}
         {Permissions.canRoleDelete() ?
           <Menu.Item key="2" onClick={this.showBulkDeleteConfirm}>
             Delete

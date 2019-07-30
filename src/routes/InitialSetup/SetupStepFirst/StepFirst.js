@@ -114,7 +114,7 @@ class StepFirst extends Component {
         <div className="gx-d-flex gx-mt-3">
           <Button type="primary" onClick={this.onValidationCheck}>Next</Button>
           {initialSteps && initialSteps.completed_steps.database_setup ?
-          <Button type="link" onClick={() => this.props.onMoveToNextStep()}>Skip</Button> : null}
+            <Button type="link" onClick={() => this.props.onMoveToNextStep()}>Skip</Button> : null}
         </div>
       </div>
     );

@@ -25,7 +25,7 @@ export const onSendDatabaseInfo = (info, nextStep) => {
     dispatch({type: FETCH_START});
     axios.post('/install/step/1', info
     ).then(({data}) => {
-      console.log("onSendDatabaseInfo", data)
+      console.log("onSendDatabaseInfo", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Database information has been saved successfully"});
@@ -67,7 +67,7 @@ export const onSendSuperAdminInfo = (info) => {
     dispatch({type: FETCH_START});
     axios.post('/install/step/2', info
     ).then(({data}) => {
-      console.log("onSendSuperAdminInfo", data)
+      console.log("onSendSuperAdminInfo", data);
       if (data.success) {
         console.log(" sending data", data.data);
         localStorage.setItem("user", JSON.stringify(data.data));
@@ -88,7 +88,7 @@ export const onSendSuperAdminInfo = (info) => {
 
 export const onSetGeneralInfo = (info, token, nextStep) => {
   return (dispatch) => {
-    if(token) {
+    if (token) {
       localStorage.getItem("token");
       axios.defaults.headers.common['access-token'] = "Bearer " + token;
     }

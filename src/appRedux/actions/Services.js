@@ -2,7 +2,8 @@ import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
 import {
   ADD_SERVICE,
-  BULK_ACTIVE_SERVICES, BULK_DISABLE_SERVICES,
+  BULK_ACTIVE_SERVICES,
+  BULK_DISABLE_SERVICES,
   DELETE_SERVICE,
   EDIT_SERVICE,
   GET_SERVICES_LIST
@@ -96,7 +97,10 @@ export const onBulkActiveServices = (serviceIds) => {
       if (data.success) {
         dispatch({type: BULK_ACTIVE_SERVICES, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Support of selected Services(s) has been changed to Enabled successfully"});
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: "The Support of selected Services(s) has been changed to Enabled successfully"
+        });
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

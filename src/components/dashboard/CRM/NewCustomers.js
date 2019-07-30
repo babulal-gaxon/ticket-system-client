@@ -24,7 +24,7 @@ const userImageList = [
     rating: '5.0',
     deals: '27 Deals'
   },
-]
+];
 
 const NewCustomers = () => {
   return (
@@ -41,7 +41,7 @@ const NewCustomers = () => {
       </div>
     </Metrics>
   );
-}
+};
 
 
 export default NewCustomers;

@@ -29,7 +29,7 @@ export default (state = initialState, action) => {
       };
 
     case EDIT_CANNED_RESPONSE:
-      const updateResponses = state.responses.map((response) => response.id === action.payload.id ? action.payload : response)
+      const updateResponses = state.responses.map((response) => response.id === action.payload.id ? action.payload : response);
       return {
         ...state,
         responses: updateResponses

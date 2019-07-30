@@ -20,9 +20,9 @@ const SubMenu = Menu.SubMenu;
 
 class SidebarContent extends Component {
 
-  state={
-    key:""
-  }
+  state = {
+    key: ""
+  };
 
   getNoHeaderClass = (navStyle) => {
     if (navStyle === NAV_STYLE_NO_HEADER_MINI_SIDEBAR || navStyle === NAV_STYLE_NO_HEADER_EXPANDED_SIDEBAR) {
@@ -37,9 +37,9 @@ class SidebarContent extends Component {
     return "";
   };
 
-  menuClickHandle = (item) =>  {
+  menuClickHandle = (item) => {
     console.log("key", item.key);
-    this.setState({key:item.key})
+    this.setState({key: item.key})
   };
 
   render() {

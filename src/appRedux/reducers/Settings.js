@@ -31,7 +31,7 @@ const initialSettings = {
 const settings = (state = initialSettings, action) => {
   switch (action.type) {
     case '@@router/LOCATION_CHANGE':
-      console.log("action.payload.pathname", action.payload.pathname)
+      console.log("action.payload.pathname", action.payload.pathname);
       return {
         ...state,
         pathname: action.payload.pathname,

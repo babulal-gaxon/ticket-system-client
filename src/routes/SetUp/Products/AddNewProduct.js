@@ -31,21 +31,20 @@ class AddNewProduct extends Component {
   };
 
   onSubmitForm = () => {
-    if(this.state.fileList.length >0) {
+    if (this.state.fileList.length > 0) {
       this.onLogoSelect();
-    }
-    else {
+    } else {
       this.onProductAdd();
     }
   };
 
 
   onProductAdd = () => {
-      if (this.props.productId === null) {
-        this.props.onAddProduct({...this.state});
-      } else {
-        this.props.onEditProduct({...this.state});
-      }
+    if (this.props.productId === null) {
+      this.props.onAddProduct({...this.state});
+    } else {
+      this.props.onEditProduct({...this.state});
+    }
     this.props.onToggleAddProduct();
   };
 
@@ -92,7 +91,7 @@ class AddNewProduct extends Component {
         });
       },
       beforeUpload: file => {
-        if(fileList.length >0) {
+        if (fileList.length > 0) {
           props.onRemove(fileList[0])
         }
         this.setState(state => ({
@@ -131,9 +130,9 @@ class AddNewProduct extends Component {
               {getFieldDecorator('desc', {
                 initialValue: desc,
                 validateTrigger: 'onBlur',
-                 rules: [{
-                   max: 250,
-                   message: 'Message length should not exceed 250 characters',
+                rules: [{
+                  max: 250,
+                  message: 'Message length should not exceed 250 characters',
                 }],
               })(<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                 this.setState({desc: e.target.value})

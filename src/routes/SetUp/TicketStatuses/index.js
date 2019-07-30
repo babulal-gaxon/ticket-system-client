@@ -72,7 +72,7 @@ class TicketStatuses extends Component {
   };
 
   onFilterTextChange = (e) => {
-    this.setState({filterText: e.target.value} ,() => {
+    this.setState({filterText: e.target.value}, () => {
       this.onGetStatusData(1, this.state.itemNumbers, this.state.filterText)
     })
   };
@@ -297,8 +297,8 @@ class TicketStatuses extends Component {
           <h4 className="gx-font-weight-bold">Ticket Status</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>Ticket System</Breadcrumb.Item>
-          <Breadcrumb.Item >
-            <Link to="/setup/ticket-Statuses" className="gx-text-primary">Ticket Status</Link></Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/setup/ticket-Statuses" className="gx-text-primary">Ticket Status</Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">

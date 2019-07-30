@@ -129,13 +129,13 @@ class SeventhStep extends Component {
           </div>
           <div><Button onClick={this.onAddButtonClick}>+Add New</Button></div>
         </div>
-          {this.state.showAddPriority ?
-              <AddNewPriority showAddPriority={this.state.showAddPriority}
-                              onToggleAddPriority={this.onToggleAddPriority}
-                              onAddTicketPriority={this.props.onAddTicketPriority}
-                              priorityId={this.state.priorityId}
-                              onEditTicketPriority={this.props.onEditTicketPriority}
-                              priorities={this.props.priorities}/> : null}
+        {this.state.showAddPriority ?
+          <AddNewPriority showAddPriority={this.state.showAddPriority}
+                          onToggleAddPriority={this.onToggleAddPriority}
+                          onAddTicketPriority={this.props.onAddTicketPriority}
+                          priorityId={this.state.priorityId}
+                          onEditTicketPriority={this.props.onEditTicketPriority}
+                          priorities={this.props.priorities}/> : null}
       </div>
     );
   }

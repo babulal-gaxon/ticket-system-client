@@ -83,14 +83,18 @@ class AddNewResponses extends Component {
                 validate: [{
                   trigger: 'onBlur',
                   rules: [
-                    { required: true,
-                      message: 'Please Enter Message!' },
+                    {
+                      required: true,
+                      message: 'Please Enter Message!'
+                    },
                   ],
                 }, {
                   trigger: 'onChange',
                   rules: [
-                    {max: 250,
-                      message: 'Message length should not exceed 250 characters' },
+                    {
+                      max: 250,
+                      message: 'Message length should not exceed 250 characters'
+                    },
                   ],
                 }],
               })(<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {

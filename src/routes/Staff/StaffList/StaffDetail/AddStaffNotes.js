@@ -68,14 +68,18 @@ class AddStaffNotes extends Component {
                 validate: [{
                   trigger: 'onBlur',
                   rules: [
-                    { required: true,
-                      message: 'Please Enter Description!' },
+                    {
+                      required: true,
+                      message: 'Please Enter Description!'
+                    },
                   ],
                 }, {
                   trigger: 'onChange',
                   rules: [
-                    {max: 250,
-                      message: 'Description length should not exceed 250 characters' },
+                    {
+                      max: 250,
+                      message: 'Description length should not exceed 250 characters'
+                    },
                   ],
                 }],
               })(<TextArea rows={4} onChange={(e) => {

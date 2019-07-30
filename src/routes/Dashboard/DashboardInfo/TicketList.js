@@ -11,6 +11,7 @@ class TicketList extends Component {
   componentWillMount() {
     this.props.onGetTickets();
   };
+
   render() {
     console.log("in tableListing", this.props.tickets);
     return (
@@ -19,14 +20,15 @@ class TicketList extends Component {
           <h2 className="h4 gx-text-capitalize gx-mb-0">Ticket Listing</h2>
         }
         extra={
-        <p className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
-          <Button type="primary">New Tickets</Button>
-          <Button type="link">Snoozes</Button>
-          <Button type="link">View All</Button>
-        </p>
-      }>
+          <p className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
+            <Button type="primary">New Tickets</Button>
+            <Button type="link">Snoozes</Button>
+            <Button type="link">View All</Button>
+          </p>
+        }>
         <div>
-          <Table rowKey="ticketList" columns={ticketListcolumns} dataSource={this.props.tickets} pagination={{pageSize: 5}}/>
+          <Table rowKey="ticketList" columns={ticketListcolumns} dataSource={this.props.tickets}
+                 pagination={{pageSize: 5}}/>
         </div>
         <div>
           <Button type="default">View All</Button>

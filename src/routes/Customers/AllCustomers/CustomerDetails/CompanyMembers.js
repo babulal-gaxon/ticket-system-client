@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Avatar} from "antd";
 import Widget from "../../../../components/Widget";
 
 const CompanyMembers = ({currentCustomerProfile, customerCompanyMembers}) => {
-    return (
-      <div>
+  return (
+    <div>
       <Widget>
         <div className="gx-d-flex gx-justify-content-between gx-mb-5">
           <span className="gx-font-weight-bold">Company Details</span>
@@ -53,8 +53,8 @@ const CompanyMembers = ({currentCustomerProfile, customerCompanyMembers}) => {
               <div className="gx-text-center">Currently No Other Members of this company is associated.</div>}
           </div> : <div>Not associated with any Company</div>}
       </Widget>
-      </div>
-    );
-}
+    </div>
+  );
+};
 
 export default CompanyMembers;

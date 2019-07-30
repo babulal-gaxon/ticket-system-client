@@ -62,7 +62,7 @@ class AllCustomers extends Component {
   }
 
   onGetPaginatedData = (currentPage, itemsPerPage, filterText, companies, labels, status, updatingContent) => {
-    console.log("userPermissions", Permissions.canCustomerView())
+    console.log("userPermissions", Permissions.canCustomerView());
     if (Permissions.canCustomerView()) {
       this.props.onGetCustomersData(currentPage, itemsPerPage, filterText, companies, labels, status, updatingContent);
     }
@@ -341,7 +341,7 @@ class AllCustomers extends Component {
               {this.onFilterCompanyName().length > 5 ?
                 <Button type="link" onClick={() => this.setState({showMoreCompany: !this.state.showMoreCompany})}>
                   {showMoreCompany ? "View Less" : `${this.onFilterCompanyName().length - 5} More`}
-                </Button>: null}
+                </Button> : null}
             </div>
           </div>
           <div className="gx-mt-5">
@@ -403,7 +403,7 @@ class AllCustomers extends Component {
     const {filterText, itemNumbers, selectedLabels, status, current} = this.state;
     this.setState({selectedCompanies: checkedList}, () => {
 
-      console.log("this.state.selectedCompanies,", this.state.selectedCompanies)
+      console.log("this.state.selectedCompanies,", this.state.selectedCompanies);
       this.onGetPaginatedData(current, itemNumbers, filterText, this.state.selectedCompanies, selectedLabels, status, true)
     })
   };

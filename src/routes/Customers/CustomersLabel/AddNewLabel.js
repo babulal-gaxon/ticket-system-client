@@ -52,36 +52,40 @@ class AddNewLabel extends Component {
             <Button key="cancel" onClick={() => onToggleModalState()}>
               Cancel
             </Button>
-            ]}>
+          ]}>
           <Form layout="vertical">
             <Form.Item label="Name">
               {getFieldDecorator('name', {
-              initialValue: name,
+                initialValue: name,
                 validateTrigger: 'onBlur',
-              rules: [{required: true, message: 'Please input Name!'}],
-            })(<Input type="text" autoFocus placeholder="Name" onChange={(e) => {
-              this.setState({name: e.target.value})
-            }}/>)}
+                rules: [{required: true, message: 'Please input Name!'}],
+              })(<Input type="text" autoFocus placeholder="Name" onChange={(e) => {
+                this.setState({name: e.target.value})
+              }}/>)}
             </Form.Item>
             <Form.Item label="Description">
               {getFieldDecorator('description', {
-              initialValue: desc,
-              validate: [{
-                trigger: 'onBlur',
-                rules: [
-                  { required: true,
-                    message: 'Please Enter Description!' },
-                ],
-              }, {
-                trigger: 'onChange',
-                rules: [
-                  {max: 250,
-                    message: 'Description length should not exceed 250 characters' },
-                ],
-              }],
-            })(<TextArea rows={4} onChange={(e) => {
-              this.setState({desc: e.target.value})
-            }}/>)}
+                initialValue: desc,
+                validate: [{
+                  trigger: 'onBlur',
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Please Enter Description!'
+                    },
+                  ],
+                }, {
+                  trigger: 'onChange',
+                  rules: [
+                    {
+                      max: 250,
+                      message: 'Description length should not exceed 250 characters'
+                    },
+                  ],
+                }],
+              })(<TextArea rows={4} onChange={(e) => {
+                this.setState({desc: e.target.value})
+              }}/>)}
             </Form.Item>
             <Form.Item label={"Set Priority"}>
               <Radio.Group value={status} onChange={(e) => {

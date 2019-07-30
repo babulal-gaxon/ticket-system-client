@@ -72,7 +72,7 @@ class VerifyPassword extends React.Component {
                       required: true, type: 'email', message: 'The input is not valid E-mail!',
                     }],
                   })(
-                    <Input placeholder="Email" onChange={(e) => this.setState({email:e.target.value})}/>
+                    <Input placeholder="Email" onChange={(e) => this.setState({email: e.target.value})}/>
                   )}
                 </Form.Item>
                 <Form.Item label="Enter new Password" hasFeedback>

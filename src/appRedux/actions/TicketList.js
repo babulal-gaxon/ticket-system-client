@@ -143,7 +143,7 @@ export const onGetFilterOptions = () => {
   return (dispatch) => {
     axios.get('/tickets/filter/options').then(({data}) => {
       if (data.success) {
-        console.log("onGetFilterOptions", data)
+        console.log("onGetFilterOptions", data);
         dispatch({type: GET_FILTER_OPTIONS, payload: data.data});
       }
     }).catch(function (error) {

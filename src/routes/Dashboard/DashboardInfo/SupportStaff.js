@@ -10,6 +10,7 @@ class SupportStaff extends Component {
   componentDidMount() {
     this.props.onGetStaff()
   }
+
   render() {
     console.log("onGetStaff", this.props.staffList);
     return (
@@ -20,7 +21,8 @@ class SupportStaff extends Component {
           <div className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1">last update 2 hours ago</div>
         </div>}
               styleName="gx-card-ticketlist"
-              extra={<span><i className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
+              extra={<span><i
+                className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
             </span>}>
         {this.props.staffList.map(employee => {
           return (
@@ -29,9 +31,12 @@ class SupportStaff extends Component {
               <div className="gx-media-body gx-task-item-content">
                 <div className="gx-task-item-content-left">
                   <h5 className="gx-text-truncate gx-task-item-title">{employee.staff_name}</h5>
-                  <i className="icon icon-forward-o gx-mr-1  gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
-                  <span className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1">{employee.assigned_tickets_count + " assigned"}</span>
-                  <i className="icon icon-check-circle-o gx-mr-1 gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
+                  <i
+                    className="icon icon-forward-o gx-mr-1  gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
+                  <span
+                    className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1">{employee.assigned_tickets_count + " assigned"}</span>
+                  <i
+                    className="icon icon-check-circle-o gx-mr-1 gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
                   <span className="gx-text-grey gx-fs-sm gx-mb-0">{employee.resolved_tickets_count + " resolved"}</span>
                 </div>
                 <div className="gx-task-item-content-right">

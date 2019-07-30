@@ -47,14 +47,14 @@ export default (state = initialState, action) => {
       };
 
     case EDIT_CUSTOMER_DETAILS:
-      const updateCustomers = state.customersList.map((customer) => customer.id === action.payload.id ? action.payload : customer)
+      const updateCustomers = state.customersList.map((customer) => customer.id === action.payload.id ? action.payload : customer);
       return {
         ...state,
         customersList: updateCustomers
       };
 
     case DISABLE_CUSTOMER:
-      const acitveCustomers = state.customersList.map((customer) => customer.id === action.payload.id ? action.payload : customer)
+      const acitveCustomers = state.customersList.map((customer) => customer.id === action.payload.id ? action.payload : customer);
       return {
         ...state,
         customersList: acitveCustomers

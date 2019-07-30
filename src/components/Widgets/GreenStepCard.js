@@ -13,7 +13,7 @@ class GreenStepCard extends Component {
   state = {
     image: greenStepList[0].image,
     loading: false
-  }
+  };
 
   render() {
     const settings = {

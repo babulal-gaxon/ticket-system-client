@@ -22,10 +22,10 @@ class PostItem extends Component {
       isLike: false,
       commentList: []
     },
-  }
+  };
   _handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      console.log("user --->", this.state.user)
+      console.log("user --->", this.state.user);
       const commentData = {
         user: this.state.user,
         comment: this.state.message,
@@ -33,7 +33,7 @@ class PostItem extends Component {
         likeCount: 0,
         isLike: true,
         commentList: []
-      }
+      };
 
       let commentArray = this.state.post.commentList;
       commentArray.push(commentData);
@@ -44,7 +44,7 @@ class PostItem extends Component {
         }, message: ''
       }));
     }
-  }
+  };
 
   componentWillMount() {
     this.setState({post: this.props.postData, user: this.props.user})

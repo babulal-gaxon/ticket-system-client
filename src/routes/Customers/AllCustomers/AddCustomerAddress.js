@@ -22,7 +22,7 @@ class AddCustomerAddress extends Component {
   }
 
   onSelectAddressType = checkedList => {
-    console.log("chekdlist", checkedList)
+    console.log("chekdlist", checkedList);
     this.setState({
       address_type: checkedList
     })
@@ -40,9 +40,9 @@ class AddCustomerAddress extends Component {
     this.props.form.validateFields(err => {
       if (!err) {
         if (this.props.selectedAddress === null) {
-          this.props.onSaveAddress({...this.state},this.props.context);
+          this.props.onSaveAddress({...this.state}, this.props.context);
         } else {
-          this.props.onEditAddress({...this.state},this.props.context)
+          this.props.onEditAddress({...this.state}, this.props.context)
         }
         this.props.onToggleAddressModal();
       }
@@ -117,7 +117,7 @@ class AddCustomerAddress extends Component {
                     }
                     onChange={this.onCountrySelect}
                     notFoundContent={null}
-                    >
+                  >
                     {this.props.countriesList.map(country => {
                       return <Option value={country.id} key={country.id}>{country.name}</Option>
                     })}

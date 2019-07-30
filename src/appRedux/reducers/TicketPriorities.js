@@ -29,7 +29,7 @@ export default (state = initialState, action) => {
       };
 
     case EDIT_TICKET_PRIORITY:
-      const updatePriorities = state.priorities.map((priority) => priority.id === action.payload.id ? action.payload : priority)
+      const updatePriorities = state.priorities.map((priority) => priority.id === action.payload.id ? action.payload : priority);
       return {
         ...state,
         priorities: updatePriorities,
@@ -38,7 +38,7 @@ export default (state = initialState, action) => {
     case BULK_DELETE_PRIORITY:
       const upPriorities = state.priorities.filter(priority => {
         return (action.payload.indexOf(priority.id) === -1) ?
-           priority : null
+          priority : null
       });
       return {
         ...state,

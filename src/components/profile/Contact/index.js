@@ -18,6 +18,6 @@ const Contact = () => {
       )}
     </Widget>
   )
-}
+};
 
 export default Contact;

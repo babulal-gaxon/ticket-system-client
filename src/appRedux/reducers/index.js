@@ -19,7 +19,6 @@ import Products from "./Products";
 import InitialSetup from "./InitialSetup";
 
 
-
 const reducers = combineReducers({
   routing: routerReducer,
   settings: Settings,

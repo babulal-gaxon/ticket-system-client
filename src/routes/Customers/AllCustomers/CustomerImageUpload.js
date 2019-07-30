@@ -17,7 +17,7 @@ class CustomerImageUpload extends Component {
       const data = new FormData();
       data.append('file', file);
       data.append('title', file.name);
-      this.props.onAddImage(data,this.props.context);
+      this.props.onAddImage(data, this.props.context);
     } else {
       message.warning("Please select image first!")
     }

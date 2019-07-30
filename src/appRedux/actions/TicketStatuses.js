@@ -10,16 +10,16 @@ import {
 } from "../../constants/TicketStatuses";
 
 
-export const onGetTicketStatus = (currentPage, itemsPerPage,filterText) => {
+export const onGetTicketStatus = (currentPage, itemsPerPage, filterText) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.get(`/setup/status`,{
+    axios.get(`/setup/status`, {
       params: {
         page: currentPage,
         per_page: itemsPerPage,
         search: filterText
       }
-      }).then(({data}) => {
+    }).then(({data}) => {
       console.info("onGetTicketStatuses: ", data);
       if (data.success) {
         dispatch({type: GET_TICKET_STATUSES, payload: data});

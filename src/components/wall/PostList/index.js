@@ -8,7 +8,7 @@ class PostList extends Component {
   state = {
     postList: [],
     user: {}
-  }
+  };
 
   componentWillMount() {
     this.setState({postList: this.props.postList, user: this.props.user})
@@ -31,7 +31,7 @@ class PostList extends Component {
       commentCount: 0,
       commentList: [],
     };
-    console.log("Post Data :==()==>", post)
+    console.log("Post Data :==()==>", post);
 
     let postArray = this.state.postList;
     postArray.unshift(post);
