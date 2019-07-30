@@ -1,30 +1,27 @@
 import {
-  ADD_CUSTOMER_ADDRESS,
   ADD_NEW_CUSTOMER,
-  ADD_PROFILE_PICTURE, DELETE_CUSTOMER_ADDRESS,
   DELETE_CUSTOMERS,
-  DISABLE_CUSTOMER, EDIT_CUSTOMER_ADDRESS,
+  DISABLE_CUSTOMER,
   EDIT_CUSTOMER_DETAILS,
   GET_CUSTOMER_COMPANY,
   GET_CUSTOMER_FILTER_OPTIONS,
-  GET_CUSTOMER_ID,
   GET_CUSTOMER_TICKETS,
   GET_CUSTOMERS_DATA,
   NULLIFY_CUSTOMER,
-  SELECT_CURRENT_CUSTOMER
+  SELECT_CURRENT_CUSTOMER,
+  SELECT_CURRENT_CUSTOMER_PROFILE
 } from "../../constants/Customers";
 
 const initialState = {
   customersList: [],
   totalItems: null,
-  customerId: null,
-  profilePicId: null,
+  currentCustomer: null,
   customerAddress: [],
   customerTickets: null,
   customerCompanyMembers: [],
   company: [],
   labels: [],
-  currentCustomer: null
+  currentCustomerProfile: null
 };
 
 export default (state = initialState, action) => {
@@ -43,17 +40,17 @@ export default (state = initialState, action) => {
         totalItems: state.totalItems + 1
       };
 
-    case GET_CUSTOMER_ID:
+    case SELECT_CURRENT_CUSTOMER:
       return {
         ...state,
-        customerId: action.payload
+        currentCustomer: action.payload
       };
 
     case EDIT_CUSTOMER_DETAILS:
       const updateCustomers = state.customersList.map((customer) => customer.id === action.payload.id ? action.payload : customer)
       return {
         ...state,
-        customersList: updateCustomers,
+        customersList: updateCustomers
       };
 
     case DISABLE_CUSTOMER:
@@ -72,31 +69,6 @@ export default (state = initialState, action) => {
         ...state,
         customersList: upCustomers,
         totalItems: state.totalItems - action.payload.length
-      };
-    case ADD_PROFILE_PICTURE:
-      return {
-        ...state,
-        profilePicId: action.payload
-      };
-
-    case ADD_CUSTOMER_ADDRESS:
-      return {
-        ...state,
-        customerAddress: state.customerAddress.concat(action.payload)
-      };
-
-    case EDIT_CUSTOMER_ADDRESS:
-      const updatedAddresses = state.customerAddress.map((address) => address.id === action.payload.id ? action.payload : address)
-      return {
-        ...state,
-        customerAddress: updatedAddresses
-      };
-
-    case DELETE_CUSTOMER_ADDRESS:
-      const updateAddresses = state.customerAddress.filter(address => address.id !== action.payload);
-      return {
-        ...state,
-        customerAddress: updateAddresses
       };
 
     case GET_CUSTOMER_TICKETS:
@@ -118,16 +90,16 @@ export default (state = initialState, action) => {
         labels: action.payload.lables
       };
 
-    case SELECT_CURRENT_CUSTOMER:
+    case SELECT_CURRENT_CUSTOMER_PROFILE:
       return {
         ...state,
-        currentCustomer: action.payload
+        currentCustomerProfile: action.payload
       };
 
     case NULLIFY_CUSTOMER:
       return {
         ...state,
-        currentCustomer: null
+        currentCustomerProfile: null
       };
 
     default:

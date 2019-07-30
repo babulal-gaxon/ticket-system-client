@@ -15,7 +15,6 @@ import AddNewPriority from "./AddNewPriority";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
-import InfoView from "../../../components/InfoView";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -340,7 +339,6 @@ class TicketPriorities extends Component {
                           priorityId={this.state.priorityId}
                           onEditTicketPriority={this.props.onEditTicketPriority}
                           priorities={priorities}/> : null}
-        <InfoView/>
       </div>
     );
   }

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input, Modal, Radio, Select, Upload} from "antd/lib/index";
-import InfoView from "../../../../components/InfoView";
 import axios from 'util/Api'
 import PropTypes from "prop-types";
 
@@ -68,7 +67,7 @@ class AddNewStaff extends Component {
     this.onAddImage(data);
   };
 
-  onAddImage = (file) => {
+  onAddImage = (file,context) => {
     this.props.fetchStart();
     axios.post("/uploads/temporary/media", file, {
       headers: {
@@ -273,7 +272,6 @@ class AddNewStaff extends Component {
             </Form.Item>
           </Form>
         </Modal>
-        <InfoView/>
       </div>
     );
   }

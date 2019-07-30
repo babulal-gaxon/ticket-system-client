@@ -1,19 +1,31 @@
 import {
+  ERROR_INITIAL_SETUP,
   FETCH_ERROR,
   FETCH_START,
-  FETCH_SUCCESS, INITIAL_SETUP_STEPS,
+  FETCH_SUCCESS,
+  INITIAL_SETUP_STEPS,
+  ON_HIDE_LOADER,
   SHOW_MESSAGE,
+  START_LOADER,
+  UPDATE_STEPS,
   USER_DATA,
   USER_TOKEN_SET
 } from "../../constants/ActionTypes";
 import {ADD_ADMIN_INFO, ADD_GENERAL_INFO, OPEN_PIN_MODAL} from "../../constants/InitialSetup"
 import axios from 'util/Api'
 
+export const updateSteps = (step) => {
+  return (dispatch) => {
+    dispatch({type: UPDATE_STEPS, payload: step});
+  }
+};
+
 export const onSendDatabaseInfo = (info, nextStep) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/install/step/1', info
     ).then(({data}) => {
+      console.log("onSendDatabaseInfo", data)
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Database information has been saved successfully"});
@@ -28,12 +40,34 @@ export const onSendDatabaseInfo = (info, nextStep) => {
   }
 };
 
+export const onCheckInitialSetup = () => {
+  return (dispatch) => {
+    dispatch({type: START_LOADER});
+    axios.get('/install/all-steps').then(({data}) => {
+      console.log("initial Setup", data);
+      if (data.success) {
+        dispatch({type: INITIAL_SETUP_STEPS, payload: data.data});
+        dispatch({type: ON_HIDE_LOADER});
+      } else if (data.message) {
+        console.info("payload: data.error", data.message);
+        dispatch({type: ERROR_INITIAL_SETUP, payload: data.message});
+      } else {
+        console.info("payload: data.error", data.errors[0]);
+        dispatch({type: ERROR_INITIAL_SETUP, payload: data.errors.email});
+      }
+    }).catch(function (error) {
+      dispatch({type: ERROR_INITIAL_SETUP, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
 export const onSendSuperAdminInfo = (info) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/install/step/2', info
     ).then(({data}) => {
-      console.info("data:", data);
+      console.log("onSendSuperAdminInfo", data)
       if (data.success) {
         console.log(" sending data", data.data);
         localStorage.setItem("user", JSON.stringify(data.data));
@@ -61,7 +95,7 @@ export const onSetGeneralInfo = (info, token, nextStep) => {
     dispatch({type: FETCH_START});
     axios.post('/install/step/3', info
     ).then(({data}) => {
-      console.info("data:", data);
+      console.log("onSetGeneralInfo", data);
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: ADD_GENERAL_INFO, payload: data.data});

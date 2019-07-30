@@ -18,7 +18,6 @@ import Widget from "../../../components/Widget/index";
 import Permissions from "../../../util/Permissions";
 import moment from "moment";
 import {Link} from "react-router-dom";
-import InfoView from "../../../components/InfoView";
 import {onDeleteTicket, onGetFilterOptions, onGetTickets} from "../../../appRedux/actions/TicketList";
 import {onGetCustomersData} from "../../../appRedux/actions/Customers";
 import {connect} from "react-redux";
@@ -379,7 +378,6 @@ class AllTickets extends Component {
                    })}
             />
           </Widget>
-          <InfoView/>
         </div>
         {this.state.sideBarActive ?
           <FilterBar current={current}

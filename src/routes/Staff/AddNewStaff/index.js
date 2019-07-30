@@ -12,7 +12,6 @@ import {
 import {onGetDepartments} from "../../../appRedux/actions/Departments";
 import {Breadcrumb, Divider, Select} from "antd";
 import {Link} from "react-router-dom";
-import InfoView from "../../../components/InfoView";
 import {onGetRoles} from "../../../appRedux/actions/RolesAndPermissions";
 import ImageUpload from "./ImageUpload";
 
@@ -309,7 +308,6 @@ class AddNewStaff extends Component {
             </span> : null}
           </div>
         </Widget>
-        <InfoView/>
       </div>
     )
   }

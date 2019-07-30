@@ -15,7 +15,6 @@ import {
 } from "antd/lib/index";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
-import InfoView from "../../../components/InfoView";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import AddNewProduct from "./AddNewProduct";
@@ -328,7 +327,6 @@ class Products extends Component {
           <div className="gx-d-flex gx-flex-row">
           </div>
         </Widget>
-        <InfoView/>
         {this.state.showAddModal ?
           <AddNewProduct showAddModal={this.state.showAddModal}
                          onToggleAddProduct={this.onToggleAddProduct}

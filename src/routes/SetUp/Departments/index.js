@@ -15,7 +15,6 @@ import {
 import AddNewDepartment from "./AddNewDepartment";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
-import InfoView from "../../../components/InfoView";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -312,7 +311,6 @@ class Departments extends Component {
                    onChange: this.onPageChange
                  }}/>
         </Widget>
-        <InfoView/>
         {this.state.showAddDepartment ?
           <AddNewDepartment showAddDepartment={this.state.showAddDepartment}
                             onToggleAddDepartment={this.onToggleAddDepartment}

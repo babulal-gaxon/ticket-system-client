@@ -9,10 +9,10 @@ import {
 } from "../../../appRedux/actions/Companies";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
-import InfoView from "../../../components/InfoView";
 import {connect} from "react-redux";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import Permissions from "../../../util/Permissions";
+import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -28,7 +28,7 @@ class Companies extends Component {
       itemNumbers: 10,
       current: 1,
       selectedCompanies: [],
-      companyId: null,
+      currentCompany: null,
       showAddNewModal: false
     };
     this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
@@ -97,8 +97,8 @@ class Companies extends Component {
         render: (text, record) => {
           return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
               {record.avatar ?
-                <Avatar className="gx-mr-3 gx-size-80" src={record.avatar.src}/> :
-                <Avatar className="gx-mr-3 gx-size-80"
+                <Avatar className="gx-mr-3 gx-size-60" src={MEDIA_BASE_URL + record.avatar.src}/> :
+                <Avatar className="gx-mr-3 gx-size-60 gx-fs-xxl"
                         style={{backgroundColor: '#f56a00'}}>{record.company_name[0].toUpperCase()}</Avatar>}
               <div className="gx-media-body">
                 <span className="gx-mb-0 gx-text-capitalize">{record.company_name}</span>
@@ -123,7 +123,7 @@ class Companies extends Component {
               record.members.map(member => {
                 return member.avatar ?
                   <Tooltip key={member.id} placement="top" title={member.first_name + " " + member.last_name}>
-                    <Avatar className="gx-size-50" src={member.avatar.src}/>
+                    <Avatar className="gx-size-50" src={MEDIA_BASE_URL + member.avatar.src}/>
                   </Tooltip>
                   :
                   <Tooltip key={member.id} placement="top" title={member.first_name + " " + member.last_name}>
@@ -131,7 +131,7 @@ class Companies extends Component {
                       {member.first_name[0].toUpperCase()}
                     </Avatar>
                   </Tooltip>
-              }) : <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>}
+              }) : <span>No Member</span>}
               </span>
         },
       },
@@ -144,18 +144,18 @@ class Companies extends Component {
             e.stopPropagation();
             e.preventDefault();
           }}>
-            {this.onShowRowDropdown(record.id)}
+            {this.onShowRowDropdown(record)}
       </span>
         },
       },
     ];
   };
 
-  onShowRowDropdown = (companyId) => {
+  onShowRowDropdown = (currentCompany) => {
     const menu = (
       <Menu>
         {(Permissions.canCompanyEdit()) ?
-        <Menu.Item key="2" onClick={() => this.onEditCompanyOption(companyId)}>
+        <Menu.Item key="2" onClick={() => this.onEditCompanyOption(currentCompany)}>
           Edit
         </Menu.Item> : null}
         {(Permissions.canCompanyDelete()) ?
@@ -163,7 +163,7 @@ class Companies extends Component {
           <Popconfirm
             title="Are you sure to delete this Company?"
             onConfirm={() => {
-              this.props.onDeleteCompanies({ids: [companyId]});
+              this.props.onDeleteCompanies({ids: [currentCompany.id]});
               this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
             }}
             okText="Yes"
@@ -227,11 +227,11 @@ class Companies extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({companyId: null, showAddNewModal: true})
+    this.setState({currentCompany: null, showAddNewModal: true})
   };
 
-  onEditCompanyOption = (id) => {
-    this.setState({companyId: id, showAddNewModal: true})
+  onEditCompanyOption = (company) => {
+    this.setState({currentCompany: company, showAddNewModal: true})
   };
 
   render() {
@@ -301,14 +301,13 @@ class Companies extends Component {
           <AddNewCompany showAddNewModal={this.state.showAddNewModal}
                          onToggleAddCompany={this.onToggleAddCompany}
                          onAddNewCompany={this.props.onAddNewCompany}
-                         companyId={this.state.companyId}
+                         currentCompany={this.state.currentCompany}
                          onEditCompany={this.props.onEditCompany}
                          companiesList={companiesList}
                          fetchSuccess={this.props.fetchSuccess}
                          fetchStart={this.props.fetchStart}
                          fetchError={this.props.fetchError}
           /> : null}
-        <InfoView/>
       </div>
     )
   }

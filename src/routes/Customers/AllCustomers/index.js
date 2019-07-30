@@ -16,20 +16,20 @@ import {
   Tag
 } from "antd";
 import {
-  getCustomerId,
   onDeleteCustomers,
   onDisableCustomer,
   onGetCustomerFilterOptions,
   onGetCustomersData,
-  onResetPassword
+  onResetPassword,
+  setCurrentCustomer
 } from "../../../appRedux/actions/Customers";
 import moment from "moment";
 import {connect} from "react-redux";
-import InfoView from "../../../components/InfoView";
 import ResetCustomerPassword from "./ResetCustomerPassword";
 import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
+import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -61,9 +61,10 @@ class AllCustomers extends Component {
     this.props.onGetCustomerFilterOptions();
   }
 
-  onGetPaginatedData = (currentPage, itemsPerPage, filterText, companies, labels, status) => {
+  onGetPaginatedData = (currentPage, itemsPerPage, filterText, companies, labels, status, updatingContent) => {
+    console.log("userPermissions", Permissions.canCustomerView())
     if (Permissions.canCustomerView()) {
-      this.props.onGetCustomersData(currentPage, itemsPerPage, filterText, companies, labels, status);
+      this.props.onGetCustomersData(currentPage, itemsPerPage, filterText, companies, labels, status, updatingContent);
     }
   };
 
@@ -74,7 +75,7 @@ class AllCustomers extends Component {
   onFilterTextChange = (e) => {
     const {itemNumbers, selectedCompanies, selectedLabels, status} = this.state;
     this.setState({filterText: e.target.value}, () => {
-      this.onGetPaginatedData(1, itemNumbers, this.state.filterText, selectedCompanies, selectedLabels, status)
+      this.onGetPaginatedData(1, itemNumbers, this.state.filterText, selectedCompanies, selectedLabels, status, true)
     })
   };
 
@@ -89,7 +90,7 @@ class AllCustomers extends Component {
   onDropdownChange = (value) => {
     const {selectedCompanies, selectedLabels, status, filterText} = this.state;
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, filterText, selectedCompanies, selectedLabels, status)
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, filterText, selectedCompanies, selectedLabels, status, true)
     });
   };
 
@@ -98,7 +99,7 @@ class AllCustomers extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1}, () => {
-        this.onGetPaginatedData(this.state.current, itemNumbers, filterText, selectedCompanies, selectedLabels, status)
+        this.onGetPaginatedData(this.state.current, itemNumbers, filterText, selectedCompanies, selectedLabels, status, true)
       });
     }
   };
@@ -107,7 +108,7 @@ class AllCustomers extends Component {
     const {filterText, itemNumbers, selectedCompanies, selectedLabels, status} = this.state;
     if (this.state.current > 1) {
       this.setState({current: this.state.current - 1}, () => {
-        this.onGetPaginatedData(this.state.current, itemNumbers, filterText, selectedCompanies, selectedLabels, status)
+        this.onGetPaginatedData(this.state.current, itemNumbers, filterText, selectedCompanies, selectedLabels, status, true)
       });
     }
   };
@@ -121,7 +122,7 @@ class AllCustomers extends Component {
   };
 
   onAddButtonClick = () => {
-    this.props.getCustomerId(null);
+    this.props.setCurrentCustomer(null);
     this.props.history.push('/customers/add-customers');
   };
 
@@ -134,7 +135,7 @@ class AllCustomers extends Component {
         render: (text, record) => {
           return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
               {record.avatar ?
-                <Avatar className="gx-mr-3 gx-size-50" src={record.avatar.src}/> :
+                <Avatar className="gx-mr-3 gx-size-50" src={MEDIA_BASE_URL + record.avatar.src}/> :
                 <Avatar className="gx-mr-3 gx-size-50"
                         style={{backgroundColor: '#f56a00'}}>{record.first_name[0].toUpperCase()}</Avatar>}
               <div className="gx-media-body">
@@ -191,26 +192,26 @@ class AllCustomers extends Component {
             e.stopPropagation();
             e.preventDefault();
           }}>
-            {this.onShowRowDropdown(record.id)}
+            {this.onShowRowDropdown(record)}
       </span>
         },
       },
     ];
   };
 
-  onShowRowDropdown = (customerId) => {
+  onShowRowDropdown = (currentCustomer) => {
     const menu = (
       <Menu>
         {(Permissions.canCustomerEdit()) ?
-          <Menu.Item key="2" onClick={() => {
-            this.props.getCustomerId(customerId);
+          <Menu.Item key="1" onClick={() => {
+            this.props.setCurrentCustomer(currentCustomer);
             this.props.history.push('/customers/add-customers')
           }}>
             Edit
           </Menu.Item> : null}
         {(Permissions.canCustomerEdit()) ?
           <Menu.Item key="2" onClick={() => {
-            this.setState({resetPasswordCustomerId: customerId}, () => {
+            this.setState({resetPasswordCustomerId: currentCustomer.id}, () => {
               this.onTogglePasswordModal()
             })
           }}>
@@ -221,7 +222,7 @@ class AllCustomers extends Component {
             <Popconfirm
               title="Are you sure to disable this Customer?"
               onConfirm={() => {
-                this.onDisableCustomerCall(customerId)
+                this.onDisableCustomerCall(currentCustomer.id)
               }}
               okText="Yes"
               cancelText="No">
@@ -234,7 +235,7 @@ class AllCustomers extends Component {
             <Popconfirm
               title="Are you sure to delete this Customer?"
               onConfirm={() => {
-                this.props.onDeleteCustomers({ids: [customerId]});
+                this.props.onDeleteCustomers({ids: [currentCustomer.id]});
                 this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
               }}
               okText="Yes"
@@ -251,8 +252,8 @@ class AllCustomers extends Component {
     )
   };
 
-  onDisableCustomerCall = (customerId) => {
-    const selectedCustomer = this.props.customersList.find(customer => customer.id === customerId);
+  onDisableCustomerCall = (currentCustomer) => {
+    const selectedCustomer = this.props.customersList.find(customer => customer.id === currentCustomer);
     selectedCustomer.status = 0;
     this.props.onDisableCustomer(selectedCustomer);
   };
@@ -271,7 +272,7 @@ class AllCustomers extends Component {
             ids: selectedCustomers
           };
           this.props.onDeleteCustomers(obj);
-          this.onGetPaginatedData(current, itemNumbers, filterText, selectedCompanies, selectedLabels, status);
+          this.onGetPaginatedData(current, itemNumbers, filterText, selectedCompanies, selectedLabels, status, true);
           this.setState({selectedRowKeys: [], selectedCustomers: []});
         }
       })
@@ -303,7 +304,7 @@ class AllCustomers extends Component {
   onPageChange = page => {
     const {filterText, itemNumbers, selectedCompanies, selectedLabels, status} = this.state;
     this.setState({current: page}, () => {
-      this.onGetPaginatedData(this.state.current, itemNumbers, filterText, selectedCompanies, selectedLabels, status)
+      this.onGetPaginatedData(this.state.current, itemNumbers, filterText, selectedCompanies, selectedLabels, status, true)
     });
   };
 
@@ -325,7 +326,7 @@ class AllCustomers extends Component {
               <label>Filter By Company</label>
               {selectedCompanies.length > 0 ? <span onClick={this.onCompanyReset}>Reset</span> : null}
             </div>
-            <Search className="gx-mt-4" value={companyFilterText}
+            <Search className="gx-mt-4" value={companyFilterText} placeholder="Search Company here"
                     onChange={(e) => this.setState({companyFilterText: e.target.value})}/>
             <div className="gx-my-2">
               <Checkbox.Group onChange={this.onSelectCompanies} value={selectedCompanies}>
@@ -369,7 +370,7 @@ class AllCustomers extends Component {
   onCompanyReset = () => {
     const {filterText, itemNumbers, selectedLabels, status, current} = this.state;
     this.setState({selectedCompanies: []}, () => {
-      this.onGetPaginatedData(current, itemNumbers, filterText, this.state.selectedCompanies, selectedLabels, status)
+      this.onGetPaginatedData(current, itemNumbers, filterText, this.state.selectedCompanies, selectedLabels, status, true)
     })
   };
 
@@ -385,7 +386,7 @@ class AllCustomers extends Component {
     const {filterText, itemNumbers, selectedCompanies, status, current} = this.state;
     this.setState({selectedLabels: this.state.selectedLabels.concat(id)},
       () => {
-        this.onGetPaginatedData(current, itemNumbers, filterText, selectedCompanies, this.state.selectedLabels, status)
+        this.onGetPaginatedData(current, itemNumbers, filterText, selectedCompanies, this.state.selectedLabels, status, true)
       })
   };
 
@@ -393,26 +394,28 @@ class AllCustomers extends Component {
     const {filterText, itemNumbers, selectedCompanies, status, current} = this.state;
     const updatedLabels = this.state.selectedLabels.filter(label => label !== value);
     this.setState({selectedLabels: updatedLabels}, () => {
-      this.onGetPaginatedData(current, itemNumbers, filterText, selectedCompanies, this.state.selectedLabels, status)
+      this.onGetPaginatedData(current, itemNumbers, filterText, selectedCompanies, this.state.selectedLabels, status, true)
     })
   };
 
   onSelectCompanies = checkedList => {
     const {filterText, itemNumbers, selectedLabels, status, current} = this.state;
     this.setState({selectedCompanies: checkedList}, () => {
-      this.onGetPaginatedData(current, itemNumbers, filterText, this.state.selectedCompanies, selectedLabels, status)
+
+      console.log("this.state.selectedCompanies,", this.state.selectedCompanies)
+      this.onGetPaginatedData(current, itemNumbers, filterText, this.state.selectedCompanies, selectedLabels, status, true)
     })
   };
 
   onFilterStatusCustomers = checkedList => {
     const {filterText, itemNumbers, selectedLabels, selectedCompanies, current} = this.state;
     this.setState({status: checkedList}, () => {
-      this.onGetPaginatedData(current, itemNumbers, filterText, selectedCompanies, selectedLabels, this.state.status)
+      this.onGetPaginatedData(current, itemNumbers, filterText, selectedCompanies, selectedLabels, this.state.status, true)
     })
   };
 
   render() {
-    const {customersList} = this.props;
+    const {customersList, updatingContent} = this.props;
     const {
       selectedRowKeys, resetPasswordModal, sideBarActive, filterText,
       resetPasswordCustomerId, itemNumbers, current
@@ -446,7 +449,7 @@ class AllCustomers extends Component {
             </div>
             <div className="gx-d-flex">
               <Search
-                placeholder="Search Customers Here"
+                placeholder="Search Customers here"
                 value={filterText}
                 onChange={this.onFilterTextChange}
                 style={{width: 350}}/>
@@ -467,6 +470,7 @@ class AllCustomers extends Component {
           </div>
           <Table rowKey="id" rowSelection={rowSelection} columns={this.onCustomersRowData()}
                  dataSource={customersList}
+                 loading={updatingContent}
                  pagination={{
                    pageSize: itemNumbers,
                    current: current,
@@ -489,22 +493,22 @@ class AllCustomers extends Component {
             resetPasswordModal={resetPasswordModal}
             onTogglePasswordModal={this.onTogglePasswordModal}
             onResetPassword={this.props.onResetPassword}
-            customerId={resetPasswordCustomerId}/> : null}
-        <InfoView/>
+            currentCustomer={resetPasswordCustomerId}/> : null}
       </div>
     )
   }
 }
 
-const mapPropsToState = ({customers}) => {
+const mapPropsToState = ({customers, commonData}) => {
   const {customersList, totalItems, labels, company} = customers;
-  return {customersList, totalItems, labels, company};
+  const {updatingContent} = commonData;
+  return {customersList, totalItems, labels, company, updatingContent};
 };
 
 export default connect(mapPropsToState, {
   onGetCustomersData,
   onDeleteCustomers,
-  getCustomerId,
+  setCurrentCustomer,
   onDisableCustomer,
   onResetPassword,
   onGetCustomerFilterOptions,

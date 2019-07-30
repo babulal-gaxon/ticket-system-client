@@ -57,8 +57,9 @@ class Topbar extends Component {
                  }}
               />
             </div> : null}
+
           <Link to="/" className="gx-d-block gx-d-lg-none gx-pointer">
-            <img alt="" src={require("assets/images/w-logo.png")}/></Link>
+            <img alt="" src={require("assets/images/logo.svg")}/></Link>
 
           <SearchBox styleName="gx-d-none gx-d-lg-block gx-lt-icon-search-bar-lg"
                      placeholder="Search in app..."

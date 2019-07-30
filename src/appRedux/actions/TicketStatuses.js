@@ -22,10 +22,10 @@ export const onGetTicketStatus = (currentPage, itemsPerPage,filterText) => {
       }).then(({data}) => {
       console.info("onGetTicketStatuses: ", data);
       if (data.success) {
-        dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_TICKET_STATUSES, payload: data});
+        dispatch({type: FETCH_SUCCESS});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});

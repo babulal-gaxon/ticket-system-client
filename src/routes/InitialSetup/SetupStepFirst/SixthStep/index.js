@@ -10,7 +10,6 @@ import {
   onGetStaff
 } from "../../../../appRedux/actions/SupportStaff";
 import {onGetDepartments} from "../../../../appRedux/actions/Departments";
-import InfoView from "../../../../components/InfoView";
 import {fetchError, fetchStart, fetchSuccess} from "../../../../appRedux/actions";
 import PropTypes from "prop-types";
 
@@ -124,7 +123,6 @@ class SixthStep extends Component {
                        fetchSuccess={this.props.fetchSuccess}
                        fetchStart={this.props.fetchStart}
                        fetchError={this.props.fetchError}/> : null}
-        <InfoView/>
       </div>
     );
   }

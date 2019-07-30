@@ -9,7 +9,6 @@ import {
   onVerifyByPin
 } from "../../../appRedux/actions/InitialSetup";
 import VerificationModal from "./VerificationModal";
-import InfoView from "../../../components/InfoView";
 
 class SecondStep extends Component {
   constructor(props) {
@@ -196,7 +195,6 @@ class SecondStep extends Component {
                                                       onVerifyEmail={this.onVerifyEmail}
                                                       onResendPin={this.onRequestPinAgain}
         /> : null}
-        <InfoView/>
       </div>
     );
   }

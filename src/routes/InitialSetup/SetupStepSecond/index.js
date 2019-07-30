@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button, Divider, Form, Input, Radio, Select, Switch} from "antd/lib/index";
-import InfoView from "../../../components/InfoView";
 import {connect} from "react-redux";
 import {onGetTicketStatus} from "../../../appRedux/actions/TicketStatuses";
 import {onGetTicketSettings, onSaveTicketSettings} from "../../../appRedux/actions/GeneralSettings";
@@ -17,7 +16,7 @@ class SetupStepSecond extends Component {
         enable_service_selection: 0,
         staff_access_own_department: 0,
         ticket_reply_order: "",
-        default_status_reply: null,
+        default_status_reply: 0,
         allowed_file_ext: "",
         max_upload_size: null,
         notify_raise: 0,
@@ -25,7 +24,7 @@ class SetupStepSecond extends Component {
         notify_status_change: 0,
         notify_priority_change: 0,
         notify_on_archive: 0,
-        ticket_status_close: null
+        ticket_status_close: 0
       }
     } else {
       const {
@@ -68,7 +67,7 @@ class SetupStepSecond extends Component {
           enable_service_selection: parseInt(enable_service_selection),
           staff_access_own_department: parseInt(staff_access_own_department),
           ticket_reply_order: ticket_reply_order,
-          default_status_reply: default_status_reply,
+          default_status_reply: parseInt(default_status_reply),
           allowed_file_ext: allowed_file_ext,
           max_upload_size: max_upload_size,
           notify_raise: parseInt(notify_raise),
@@ -126,7 +125,7 @@ class SetupStepSecond extends Component {
           <Form.Item>
             <div className="gx-d-flex gx-justify-content-between">
               <p>Default status when a ticket is replied</p>
-              <Select style={{width: 200}} defaultValue={default_status_reply}
+              <Select style={{width: 200}} value={default_status_reply}
                       onChange={(value) => this.setState({default_status_reply: value})}>
                 {this.props.filterData.status.map(status => {
                   return <Option key={status.id} value={status.id}>{status.name}</Option>
@@ -138,7 +137,7 @@ class SetupStepSecond extends Component {
           <Form.Item>
             <div className="gx-d-flex gx-justify-content-between">
               <p>Choose the status to consider a ticket closed</p>
-              <Select style={{width: 200}} defaultValue={ticket_status_close}
+              <Select style={{width: 200}} value={ticket_status_close}
                       onChange={(value) => this.setState({ticket_status_close: value})}>
                 {this.props.filterData.status.map(status => {
                   return <Option key={status.id} value={status.id}>{status.name}</Option>
@@ -214,7 +213,6 @@ class SetupStepSecond extends Component {
             Save
           </Button>
         </Form>
-        <InfoView/>
       </div>
     );
   }

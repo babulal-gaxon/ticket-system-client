@@ -11,12 +11,12 @@ import {
   onGetStaffDetail,
   onGetStaffId,
   onGetStaffNotes,
-  onGetStaffTickets, onNullifyCurrentStaff
+  onGetStaffTickets,
+  onNullifyCurrentStaff
 } from "../../../../appRedux/actions/SupportStaff";
 import moment from "moment/moment";
 import Permissions from "../../../../util/Permissions";
 import qs from "qs";
-import InfoView from "../../../../components/InfoView";
 
 class StaffDetail extends Component {
   constructor(props) {
@@ -280,7 +280,6 @@ class StaffDetail extends Component {
                 staffNotes={staffNotes}
                 staffId={currentStaff.id}/> : null}
           </div> : null}
-          <InfoView/>
       </div>
     );
   }

@@ -19,6 +19,7 @@ import Products from "./Products";
 import InitialSetup from "./InitialSetup";
 
 
+
 const reducers = combineReducers({
   routing: routerReducer,
   settings: Settings,
@@ -37,8 +38,7 @@ const reducers = combineReducers({
   generalSettings: GeneralSettings,
   services: Services,
   products: Products,
-  initialSetup: InitialSetup,
-  
+  initialSetup: InitialSetup
 });
 
 export default reducers;

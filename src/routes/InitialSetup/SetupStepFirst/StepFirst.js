@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, Input, Row} from "antd/lib/index";
 import {connect} from "react-redux";
-import {onSendDatabaseInfo} from "../../../appRedux/actions/InitialSetup";
-import InfoView from "../../../components/InfoView";
-import {onCheckInitialSetup} from "../../../appRedux/actions";
+import {onCheckInitialSetup, onSendDatabaseInfo} from "../../../appRedux/actions/InitialSetup";
 
 class StepFirst extends Component {
   constructor(props) {
@@ -115,10 +113,9 @@ class StepFirst extends Component {
           </div>}
         <div className="gx-d-flex gx-mt-3">
           <Button type="primary" onClick={this.onValidationCheck}>Next</Button>
-          {initialSteps.completed_steps.database_setup ?
+          {initialSteps && initialSteps.completed_steps.database_setup ?
           <Button type="link" onClick={() => this.props.onMoveToNextStep()}>Skip</Button> : null}
         </div>
-        <InfoView/>
       </div>
     );
   }

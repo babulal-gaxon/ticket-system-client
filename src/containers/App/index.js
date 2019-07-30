@@ -10,11 +10,13 @@ import SignIn from "../SignIn";
 import {setInitUrl} from "appRedux/actions/Auth";
 import {onLayoutTypeChange, onNavStyleChange, setThemeType} from "appRedux/actions/Setting";
 import axios from 'util/Api';
-import {onCheckInitialSetup, onGetUserInfo} from "../../appRedux/actions/Auth";
+import {onGetUserInfo} from "../../appRedux/actions/Auth";
 import CircularProgress from "../../components/CircularProgress/index";
 import ForgetPassword from "../PasswordReset/ForgetPassword";
 import VerifyPassword from "../PasswordReset/VerifyPassword";
 import InitialSetup from "../../routes/InitialSetup";
+import {onCheckInitialSetup} from "../../appRedux/actions/InitialSetup";
+import Permissions from "../../util/Permissions";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
   <Route
@@ -36,6 +38,9 @@ class App extends PureComponent {
   constructor(props) {
     super(props);
     props.onCheckInitialSetup();
+    if (localStorage.getItem('permission')) {
+      Permissions.setPermissions(JSON.parse(localStorage.getItem('permission')))
+    }
   }
 
   componentWillMount() {
@@ -64,7 +69,7 @@ class App extends PureComponent {
       </div>
     }
     if (location.pathname === '/') {
-      if (token === null) {
+      if (isSetupRequired || token === null) {
         if (isSetupRequired) {
           return (<Redirect to={'/initial-setup'}/>);
         } else {
@@ -89,7 +94,7 @@ class App extends PureComponent {
             <Route exact path='/initial-setup' component={InitialSetup}/>
             <Route exact path='/reset-password' component={ForgetPassword}/>
             <Route exact path='/reset/password' component={VerifyPassword}/>
-            <RestrictedRoute path={`${match.url}`} token={token} component={MainApp}/>
+            <RestrictedRoute path={`${match.url}`} token={isSetupRequired ? null : token} component={MainApp}/>
           </Switch>
         </IntlProvider>
       </LocaleProvider>
@@ -97,9 +102,10 @@ class App extends PureComponent {
   }
 }
 
-const mapStateToProps = ({settings, auth}) => {
+const mapStateToProps = ({settings, auth, initialSetup}) => {
   const {locale} = settings;
-  const {token, initURL, loadingUser, isSetupRequired} = auth;
+  const {token, initURL, loadingUser} = auth;
+  const {isSetupRequired} = initialSetup;
   return {locale, token, initURL, loadingUser, isSetupRequired}
 };
 

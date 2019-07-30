@@ -9,7 +9,6 @@ import {
   onGetStaffId
 } from "../../../appRedux/actions/SupportStaff";
 import {Avatar, Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
-import InfoView from "../../../components/InfoView";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
 
@@ -345,7 +344,6 @@ class StaffList extends Component {
           <div className="gx-d-flex gx-flex-row">
           </div>
         </Widget>
-        <InfoView/>
       </div>
     );
   }

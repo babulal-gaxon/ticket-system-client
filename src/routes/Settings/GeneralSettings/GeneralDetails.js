@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button, Divider, Form, Input, Upload} from "antd/lib/index";
-import InfoView from "../../../components/InfoView";
 import PropTypes from "prop-types";
 import axios from 'util/Api'
 
@@ -149,7 +148,7 @@ class GeneralDetails extends Component {
               this.setState({name: e.target.value})
             }}/>)}
           </Form.Item>
-          <Form.Item label="Company Website" extra="Please enter website in 'http//www.example.com' format">
+          <Form.Item label="Company Website" extra="Please enter website in 'http://www.example.com' format">
             {getFieldDecorator('url', {
               initialValue: url,
               validateTrigger: 'onBlur',
@@ -245,7 +244,6 @@ class GeneralDetails extends Component {
             </Button>
           </div>
         </Form.Item>
-        <InfoView/>
       </div>
     );
   }

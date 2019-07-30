@@ -99,7 +99,7 @@ export default connect(mapStateToProps, {
 })(GeneralSettings);
 
 GeneralSettings.defaultProps = {
-  countriesList: {},
+  countriesList: [],
   generalSettingsData: null,
   generalAddress: [],
   companyLogo: null,
@@ -107,7 +107,7 @@ GeneralSettings.defaultProps = {
 };
 
 GeneralSettings.propTypes = {
-  countriesList: PropTypes.object,
+  countriesList: PropTypes.array,
   generalSettingsData: PropTypes.object,
   generalAddress: PropTypes.array,
   companyLogo: PropTypes.number,

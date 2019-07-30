@@ -43,7 +43,6 @@ export const onSaveGeneralDetails = (details) => {
     axios.post('/setup/settings/general', details).then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
         dispatch({type: ADD_GENERAL_DETAILS, payload: data.data});
         dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
       } else {
@@ -217,7 +216,6 @@ export const onGetCountriesList = () => {
     axios.get('/countries').then(({data}) => {
       console.info("data:", data);
       if (data.success) {
-        console.log(" sending data", data.data);
         dispatch({type: GET_COUNTRIES_LIST, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
       } else {

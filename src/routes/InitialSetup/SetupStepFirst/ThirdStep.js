@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Col, Divider, Form, Input, Select, Upload} from "antd/lib/index";
 import axios from 'util/Api'
-import InfoView from "../../../components/InfoView";
 import {connect} from "react-redux";
 import {onGetCountriesList} from "../../../appRedux/actions/GeneralSettings";
 import {onSetGeneralInfo} from "../../../appRedux/actions/InitialSetup";
@@ -148,7 +147,7 @@ class ThirdStep extends Component {
               </Form.Item>
             </Col>
             <Col sm={12} xs={24} className="gx-pr-0">
-              <Form.Item label="Company Website" extra="Please enter website in 'http//www.example.com' format">
+              <Form.Item label="Company Website" extra="Please enter website in 'http://www.example.com' format">
                 {getFieldDecorator('url', {
                   initialValue: url,
                   validateTrigger: 'onBlur',
@@ -266,10 +265,9 @@ class ThirdStep extends Component {
                   onSearch={this.onSearch}
                   filterOption={(input, option) =>
                     option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                  }
-                >
-                  {Object.keys(this.props.countriesList).map(country => {
-                    return <Option value={country} key={country}>{this.props.countriesList[country]}</Option>
+                  }>
+                  {this.props.countriesList.map(country => {
+                    return <Option value={country.id} key={country.id}>{country.name}</Option>
                   })}
                 </Select>)}
               </Form.Item>
@@ -322,7 +320,6 @@ class ThirdStep extends Component {
             <Button type="primary" onClick={this.onValidationCheck}>Next</Button>
           </div>
         </Form>
-        <InfoView/>
       </div>
     );
   }

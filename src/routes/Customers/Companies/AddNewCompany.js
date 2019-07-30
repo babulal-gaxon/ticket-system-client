@@ -6,7 +6,7 @@ import {Button, Form, Input, Modal, Upload} from "antd";
 class AddNewCompany extends Component {
   constructor(props) {
     super(props);
-    if (this.props.companyId === null) {
+    if (this.props.currentCompany === null) {
       this.state = {
         company_name: "",
         website: "",
@@ -14,10 +14,10 @@ class AddNewCompany extends Component {
         fileList: [],
       };
     } else {
-      const selectedCompany = this.props.companiesList.find(company => company.id === this.props.companyId);
+      const selectedCompany = this.props.currentCompany;
       this.state = {
-        ...selectedCompany,
-        logoName: selectedCompany.avatar.title,
+        ...selectedCompany.avatar,
+        logoName: selectedCompany.avatar ? selectedCompany.avatar.title : "",
         fileList: []
       };
     }
@@ -40,7 +40,7 @@ class AddNewCompany extends Component {
   };
 
   onCompanyAdd = () => {
-    if (this.props.companyId === null) {
+    if (this.props.currentCompany === null) {
       this.props.onAddNewCompany({...this.state});
     } else {
       this.props.onEditCompany({...this.state});
@@ -100,13 +100,13 @@ class AddNewCompany extends Component {
       fileList,
     };
     const {getFieldDecorator} = this.props.form;
-    const {showAddNewModal, onToggleAddCompany, companyId} = this.props;
+    const {showAddNewModal, onToggleAddCompany, currentCompany} = this.props;
     console.log("logoname", this.state.logoName)
     return (
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddNewModal}
-          title={this.props.companyId === null ? "Add New Company" : "Edit Company Detail"}
+          title={this.props.currentCompany === null ? "Add New Company" : "Edit Company Detail"}
           onCancel={() => onToggleAddCompany()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -126,7 +126,7 @@ class AddNewCompany extends Component {
                 this.setState({company_name: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Website" extra="Please enter website in 'http//www.example.com' format">
+            <Form.Item label="Website" extra="Please enter website in 'http://www.example.com' format">
               {getFieldDecorator('website', {
                 initialValue: website,
                 validateTrigger: 'onBlur',
@@ -135,21 +135,12 @@ class AddNewCompany extends Component {
                 this.setState({website: e.target.value})
               }}/>)}
             </Form.Item>
-            {companyId === null ?
-            <Form.Item label="Upload Logo" >
-              {getFieldDecorator('uploadedLogo',
-                {
-                  rules: [{required: true, message: 'Please Upload Company Logo!'}],
-                })(
-                <Upload {...props}>
-                  <Input placeholder="Choose file..." addonAfter="Browse"/>
-                </Upload>)}
-            </Form.Item> :
-              <Form.Item label="Upload Logo" extra={fileList.length > 0 ? "" : logoName}>
+
+            <Form.Item label="Upload Logo" extra={fileList.length > 0 ? "" : logoName}>
                 <Upload {...props}>
                   <Input placeholder="Choose file..." addonAfter="Browse"/>
                 </Upload>
-              </Form.Item>}
+            </Form.Item>
           </Form>
         </Modal>
       </div>

@@ -21,7 +21,6 @@ import EditTicketDetailsModal from "./EditTicketDetailsModal";
 import axios from 'util/Api'
 import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
-import InfoView from "../../../components/InfoView";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import qs from "qs";
 
@@ -299,7 +298,6 @@ class TicketDetail extends Component {
             onUpdateTickets={this.props.onUpdateTickets}
             ticketId={currentTicket.id}/>
           : null}
-        <InfoView/>
       </div>
     )
   }

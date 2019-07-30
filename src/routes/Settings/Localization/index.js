@@ -4,7 +4,6 @@ import {Breadcrumb, Button, Col, Form, Radio, Select} from "antd";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {onGetLocalizationDetails, onSaveLocalizationDetails} from "../../../appRedux/actions/GeneralSettings";
-import InfoView from "../../../components/InfoView";
 import PropTypes from "prop-types";
 
 const {Option} = Select;
@@ -142,7 +141,6 @@ class Localization extends Component {
             </div>
           </Form>
         </Widget>
-        <InfoView/>
       </div>
     );
   }

@@ -8,12 +8,11 @@ import {
   onGetCustomerPanelDetails,
   onSaveCustomerPanelDetails
 } from "../../../appRedux/actions/GeneralSettings";
-import InfoView from "../../../components/InfoView";
 import PropTypes from "prop-types";
 
 const {Option} = Select;
 
-class CustomerPanel extends Component {
+class CustomerPanelForm extends Component {
   constructor(props) {
     super(props);
     if (this.props.customerPanelDetails === null) {
@@ -74,6 +73,7 @@ class CustomerPanel extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
     const {theme, country, registration_enable, register_verification, allow_primary_contact_view, delete_own_files} = this.state;
+    console.log("countriesList", this.props.countriesList)
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -99,9 +99,13 @@ class CustomerPanel extends Component {
                 initialValue: country,
                 validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Enter Country!'}],
-              })(<Select style={{width: "100%"}} onChange={this.onCountrySelect}>
-                {Object.keys(this.props.countriesList).map(country => {
-                  return <Option value={country} key={country}>{this.props.countriesList[country]}</Option>
+              })(<Select showSearchstyle={{width: "100%"}} onChange={this.onCountrySelect}
+                         showSearch
+                         filterOption={(input, option) =>
+                           option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                         }>
+                {this.props.countriesList.map(country => {
+                  return <Option value={country.id} key={country.id}>{country.name}</Option>
                 })}
               </Select>)}
             </Form.Item>
@@ -144,13 +148,12 @@ class CustomerPanel extends Component {
             <Button type="primary" style={{width: "150px"}} onClick={this.onValidationCheck}>Save</Button>
           </div>
         </Widget>
-        <InfoView/>
       </div>
     );
   }
 }
 
-CustomerPanel = Form.create({})(CustomerPanel);
+const CustomerPanel = Form.create({})(CustomerPanelForm);
 
 const mapStateToProps = ({generalSettings}) => {
   const {customerPanelDetails, countriesList} = generalSettings;

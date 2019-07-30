@@ -2,6 +2,7 @@
 export const TOGGLE_COLLAPSED_NAV = 'TOGGLE_COLLAPSE_MENU';
 export const WINDOW_WIDTH = 'WINDOW-WIDTH';
 export const SWITCH_LANGUAGE = 'SWITCH-LANGUAGE';
+export const MEDIA_BASE_URL = 'http://gaxonlab.com/dev/ticket-system/public';
 
 export const FETCH_USER_INFO_START = 'fetch_user_info_start';
 export const FETCH_USER_INFO_SUCCESS = 'fetch_user_info_success';
@@ -9,6 +10,7 @@ export const FETCH_USER_INFO_ERROR = 'fetch_user_info_error';
 
 //Contact Module const
 export const FETCH_START = 'fetch_start';
+export const UPDATING_CONTENT = 'updating_content';
 export const FETCH_SUCCESS = 'fetch_success';
 export const FETCH_ERROR = 'fetch_error';
 export const SHOW_MESSAGE = 'SHOW_MESSAGE';
@@ -39,6 +41,7 @@ export const INITIAL_SETUP_STEPS = "INITIAL_SETUP_STEPS";
 export const START_LOADER= "START_LOADER";
 export const ERROR_INITIAL_SETUP = "ERROR_INITIAL_SETUP";
 export const SETUP_COMPLETE = "SETUP_COMPLETE";
+export const UPDATE_STEPS = "UPDATE_STEPS";
 
 
 
