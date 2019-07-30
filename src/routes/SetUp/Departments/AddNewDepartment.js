@@ -7,20 +7,20 @@ const {TextArea} = Input;
 class AddNewDepartment extends Component {
   constructor(props) {
     super(props);
-    if (this.props.departmentId === null) {
+    if (this.props.currentDepartment === null) {
       this.state = {
         name: "",
         desc: "",
         status: 1
       };
     } else {
-      const selectedDept = this.props.dept.find(department => department.id === this.props.departmentId);
+      const selectedDept = this.props.currentDepartment;
       this.state = {...selectedDept};
     }
   };
 
   onDepartmentAdd = () => {
-    if (this.props.departmentId === null) {
+    if (this.props.currentDepartment === null) {
       this.props.onAddDepartment({...this.state});
       this.props.onToggleAddDepartment();
 
@@ -45,7 +45,7 @@ class AddNewDepartment extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddDepartment}
-          title={this.props.departmentId === null ? "Add New Department" : "Edit Department Detail"}
+          title={this.props.currentDepartment === null ? "Add New Department" : "Edit Department Detail"}
           onCancel={() => onToggleAddDepartment()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -101,13 +101,13 @@ export default AddNewDepartment;
 
 AddNewDepartment.defaultProps = {
   dept: [],
-  departmentId: null,
+  currentDepartment: null,
   showAddDepartment: true
 };
 
 AddNewDepartment.propTypes = {
   dept: PropTypes.array,
-  departmentId: PropTypes.number,
+  currentDepartment: PropTypes.object,
   showAddDepartment: PropTypes.bool,
   onToggleAddDepartment: PropTypes.func,
   onAddDepartment: PropTypes.func,

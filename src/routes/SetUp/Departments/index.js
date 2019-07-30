@@ -26,7 +26,7 @@ class Departments extends Component {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      departmentId: null,
+      currentDepartment: null,
       filterText: "",
       itemNumbers: 10,
       currentPage: 1,
@@ -78,11 +78,11 @@ class Departments extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({departmentId: null, showAddDepartment: true});
+    this.setState({currentDepartment: null, showAddDepartment: true});
   };
 
-  onEditDepartment = (id) => {
-    this.setState({departmentId: id, showAddDepartment: true});
+  onEditDepartment = (department) => {
+    this.setState({currentDepartment: department, showAddDepartment: true});
   };
 
   onShowBulkActiveConfirm = () => {
@@ -209,7 +209,7 @@ class Departments extends Component {
         key: 'empty',
         render: (text, record) => {
           return <span> {Permissions.canDepartmentEdit() ? <i className="icon icon-edit gx-mr-3"
-                                                              onClick={() => this.onEditDepartment(record.id)}/> : null}
+                                                              onClick={() => this.onEditDepartment(record)}/> : null}
             {Permissions.canDepartmentDelete() ? this.onDeletePopUp(record.id) : null}
           </span>
         },
@@ -315,9 +315,9 @@ class Departments extends Component {
           <AddNewDepartment showAddDepartment={this.state.showAddDepartment}
                             onToggleAddDepartment={this.onToggleAddDepartment}
                             onAddDepartment={this.props.onAddDepartment}
-                            departmentId={this.state.departmentId}
+                            currentDepartment={this.state.currentDepartment}
                             onEditDepartment={this.props.onEditDepartment}
-                            dept={dept}/> : null}
+                            /> : null}
       </div>
     );
   }
