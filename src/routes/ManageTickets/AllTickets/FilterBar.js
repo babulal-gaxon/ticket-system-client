@@ -154,7 +154,7 @@ class FilterBar extends Component {
       priorityFilterText, statusFilterText
     } = this.state;
     const staffs = showMoreStaff ? this.onFilterStaff() :
-      this.onFilterStaff().length >0 ? this.onFilterStaff().slice(0, 5) : this.onFilterStaff();
+      this.onFilterStaff().length > 5 ? this.onFilterStaff().slice(0, 5) : this.onFilterStaff();
     const customers = this.props.customersList;
     const priorities = this.props.priorities.filter(priority => priority.name.indexOf(priorityFilterText) !== -1);
     const statuses = this.props.statuses.filter(status => status.name.indexOf(statusFilterText) !== -1);
