@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Avatar, Table, Tag, Tooltip} from "antd";
-import moment from "./CustomerDetails";
+import moment from "moment";
 import Widget from "../../../../components/Widget";
 import Permissions from "../../../../util/Permissions";
 
-class CustomerTickets extends Component {
+class RelatedTickets extends Component {
 
   constructor(props) {
     super(props);
@@ -78,7 +78,7 @@ class CustomerTickets extends Component {
 
     return (
       <div>
-        <Widget title={<span>Assigned Tickets</span>}>
+        <Widget title={<span className="gx-widget-heading">Related Tickets</span>}>
           <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()}
                  className="gx-mb-4" dataSource={customerTickets}
                  onRow={(record) => ({
@@ -95,4 +95,4 @@ class CustomerTickets extends Component {
   }
 }
 
-export default CustomerTickets;
+export default RelatedTickets;

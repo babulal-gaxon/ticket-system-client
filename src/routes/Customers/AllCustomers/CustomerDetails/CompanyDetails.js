@@ -2,12 +2,12 @@ import React from 'react';
 import {Avatar} from "antd";
 import Widget from "../../../../components/Widget";
 
-const CompanyMembers = ({currentCustomerProfile, customerCompanyMembers}) => {
+const CompanyDetails = ({currentCustomerProfile, customerCompanyMembers}) => {
   return (
     <div>
       <Widget>
         <div className="gx-d-flex gx-justify-content-between gx-mb-5">
-          <span className="gx-font-weight-bold">Company Details</span>
+          <span className="gx-widget-heading">Company Details</span>
         </div>
         {currentCustomerProfile.company ?
           <div>
@@ -57,4 +57,4 @@ const CompanyMembers = ({currentCustomerProfile, customerCompanyMembers}) => {
   );
 };
 
-export default CompanyMembers;
+export default CompanyDetails;
