@@ -30,7 +30,7 @@ class StaffDetail extends Component {
 
   componentDidMount() {
     const queryParams = qs.parse(this.props.location.search, {ignoreQueryPrefix: true});
-    this.props.onGetStaffDetail(queryParams.id)
+    this.props.onGetStaffDetail(queryParams.id);
     this.props.onGetStaffNotes(queryParams.id);
     this.props.onGetStaffTickets(queryParams.id);
   }

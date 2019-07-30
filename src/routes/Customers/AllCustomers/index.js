@@ -308,13 +308,14 @@ class AllCustomers extends Component {
     });
   };
 
+  onFilterCompanyName = () => {
+    return this.props.company.filter(comp => comp.company_name.indexOf(this.state.companyFilterText) !== -1);
+  };
 
   onGetSidebar = () => {
     const {companyFilterText, showMoreCompany, selectedCompanies, status, selectedLabels} = this.state;
-    const {company} = this.props;
-    const companiesList = showMoreCompany ?
-      company.filter(company => company.company_name.indexOf(companyFilterText) !== -1)
-      : company.filter(company => company.company_name.indexOf(companyFilterText) !== -1).slice(0, 5);
+    const companiesList = showMoreCompany ? this.onFilterCompanyName() :
+      this.onFilterCompanyName().length > 5 ? this.onFilterCompanyName().slice(0, 5) : this.onFilterCompanyName();
     return <div className="gx-main-layout-sidenav gx-d-none gx-d-lg-flex">
       <div className="gx-main-layout-side">
         <div className="gx-main-layout-side-header">
@@ -337,10 +338,10 @@ class AllCustomers extends Component {
               </Checkbox.Group>
             </div>
             <div>
-            <span className="gx-text-primary"
-                  onClick={() => this.setState({showMoreCompany: !this.state.showMoreCompany})}>
-              {showMoreCompany ? "View Less" : `${this.props.company.length - 5} More`}
-            </span>
+              {this.onFilterCompanyName().length > 5 ?
+                <Button type="link" onClick={() => this.setState({showMoreCompany: !this.state.showMoreCompany})}>
+                  {showMoreCompany ? "View Less" : `${this.onFilterCompanyName().length - 5} More`}
+                </Button>: null}
             </div>
           </div>
           <div className="gx-mt-5">
