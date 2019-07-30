@@ -177,7 +177,7 @@ class StaffList extends Component {
     return (
       <div className="gx-main-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-font-weight-bold">Staffs</h4>
+          <h4 className="gx-widget-heading">Staffs</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>
               <Link to="/staff/all-members" className="gx-text-primary">Staffs</Link>

@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="677204dc-ee95-4dba-80b1-7606a1da6834" name="Default" comment="fix some issue">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="677204dc-ee95-4dba-80b1-7606a1da6834" name="Default" comment="update git ignore">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Customers/Companies/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Customers/Companies/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Customers/CustomersLabel/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Customers/CustomersLabel/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/SetUp/CannedResponses/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/SetUp/CannedResponses/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/SetUp/Departments/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/SetUp/Departments/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/SetUp/Products/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/SetUp/Products/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/SetUp/Services/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/SetUp/Services/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/SetUp/TicketPriorities/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/SetUp/TicketPriorities/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/SetUp/TicketStatuses/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/SetUp/TicketStatuses/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Settings/CustomerPanel/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Settings/CustomerPanel/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Settings/GeneralSettings/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Settings/GeneralSettings/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Settings/Localization/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Settings/Localization/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Settings/TicketSettings/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Settings/TicketSettings/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Staff/StaffList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Staff/StaffList/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -74,11 +91,23 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="136">
+              <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="334">
+              <caret line="436" column="58" lean-forward="true" selection-start-line="436" selection-start-column="58" selection-end-line="436" selection-end-column="58" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -104,18 +133,6 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerDetails/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
-              <caret line="67" column="24" selection-start-line="67" selection-start-column="24" selection-end-line="67" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -128,7 +145,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onGetCustomersData</find>
       <find>profile_pic</find>
       <find>profilePicId</find>
       <find>imageAvatar</find>
@@ -158,6 +174,7 @@
       <find>font-weight-semi-bold</find>
       <find>card-widget .ant-card-head-title</find>
       <find>widg</find>
+      <find>&lt;h4 className=&quot;gx-font-weight-bold&quot;&gt;</find>
     </findStrings>
     <replaceStrings>
       <replace>onGetUser</replace>
@@ -181,12 +198,14 @@
       <replace>setCurrentCustomer</replace>
       <replace>setCustomerId</replace>
       <replace>currentCustomer</replace>
-      <replace>customerAddress</replace>
       <replace>currentCompany</replace>
       <replace>selectedAddress</replace>
       <replace>addresses</replace>
       <replace>context.</replace>
       <replace>AssignedTickets</replace>
+      <replace>customerAddress</replace>
+      <replace>&lt;h4 className=&quot;gx-font-weight-bold&quot;&gt;</replace>
+      <replace>&lt;h4 className=&quot;gx-widget-heading&quot;&gt;</replace>
     </replaceStrings>
     <dirStrings>
       <dir>E:\g-axon\project\ticket-system-client\src\components</dir>
@@ -233,7 +252,6 @@
         <option value="$PROJECT_DIR$/src/constants/ActionTypes.js" />
         <option value="$PROJECT_DIR$/src/appRedux/reducers/Common.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/Common.js" />
-        <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" />
         <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerImageUpload.js" />
         <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SixthStep/AddNewStaff.js" />
         <option value="$PROJECT_DIR$/src/constants/Customers.js" />
@@ -257,6 +275,7 @@
         <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerDetails/AssignedTickets.js" />
         <option value="$PROJECT_DIR$/src/styles/ui/card.less" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" />
       </list>
     </option>
   </component>
@@ -607,11 +626,18 @@
       <option name="project" value="LOCAL" />
       <updated>1564493572500</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="update git ignore">
+      <created>1564493622512</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1564493622512</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="300875000" />
+    <option name="totallyTimeSpent" value="301764000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -632,7 +658,7 @@
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.4723727" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32894737" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="11" visible="true" weight="0.4312026" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.4312026" />
       <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -699,7 +725,8 @@
     <MESSAGE value="fixed some issues" />
     <MESSAGE value="remove extra imports" />
     <MESSAGE value="fix some issue" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix some issue" />
+    <MESSAGE value="update git ignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="update git ignore" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1054,16 +1081,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8653">
-          <caret line="509" column="9" selection-start-line="509" selection-start-column="9" selection-end-line="509" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/Customers/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -1146,8 +1163,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        <state relative-caret-position="136">
+          <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="436" column="58" lean-forward="true" selection-start-line="436" selection-start-column="58" selection-end-line="436" selection-end-column="58" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

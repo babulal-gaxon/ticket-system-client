@@ -281,7 +281,7 @@ class CannedResponses extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-font-weight-bold">Canned Responses</h4>
+          <h4 className="gx-widget-heading">Canned Responses</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>Ticket System</Breadcrumb.Item>
             <Breadcrumb.Item className="gx-text-primary">

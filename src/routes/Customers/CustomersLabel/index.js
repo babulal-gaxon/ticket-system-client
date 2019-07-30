@@ -260,7 +260,7 @@ class CustomersLabel extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-font-weight-bold">Customers Label</h4>
+          <h4 className="gx-widget-heading">Customers Label</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>
               <Link to="/customers">Customers</Link>

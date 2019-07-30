@@ -289,7 +289,7 @@ class TicketPriorities extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-font-weight-bold">Ticket Priorities</h4>
+          <h4 className="gx-widget-heading">Ticket Priorities</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>Ticket System</Breadcrumb.Item>
             <Breadcrumb.Item className="gx-text-primary">

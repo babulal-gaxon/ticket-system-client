@@ -138,7 +138,7 @@ class AddNewTicket extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-font-weight-bold">Create Ticket</h4>
+          <h4 className="gx-widget-heading">Create Ticket</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/manage-tickets/all-tickets">Manage Tickets</Link>

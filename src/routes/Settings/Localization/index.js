@@ -72,7 +72,7 @@ class Localization extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-font-weight-bold">Localization Settings</h4>
+          <h4 className="gx-widget-heading">Localization Settings</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/settings/general-settings">Settings</Link>

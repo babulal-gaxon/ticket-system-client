@@ -434,7 +434,7 @@ class AllCustomers extends Component {
     return (
       <div className={`gx-main-content ${sideBarActive ? "gx-main-layout-has-sider" : ""}`}>
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-font-weight-bold">Customers</h4>
+          <h4 className="gx-widget-heading">Customers</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/customers" className="gx-text-primary">Customers</Link>

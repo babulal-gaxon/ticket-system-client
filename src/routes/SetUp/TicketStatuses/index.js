@@ -294,7 +294,7 @@ class TicketStatuses extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-font-weight-bold">Ticket Status</h4>
+          <h4 className="gx-widget-heading">Ticket Status</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>Ticket System</Breadcrumb.Item>
             <Breadcrumb.Item>

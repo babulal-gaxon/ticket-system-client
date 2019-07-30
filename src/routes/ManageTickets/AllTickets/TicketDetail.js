@@ -172,7 +172,7 @@ class TicketDetail extends Component {
     return (
       <div className="gx-main-layout-content">
         {currentTicket ? <Widget styleName="gx-card-filter">
-          <h4 className="gx-font-weight-bold">Tickets</h4>
+          <h4 className="gx-widget-heading">Tickets</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/manage-tickets/all-tickets">Manage Tickets</Link>

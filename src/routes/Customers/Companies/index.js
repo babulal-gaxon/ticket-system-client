@@ -251,7 +251,7 @@ class Companies extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-font-weight-bold">Companies</h4>
+          <h4 className="gx-widget-heading">Companies</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/customers">Customers</Link>

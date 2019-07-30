@@ -222,7 +222,7 @@ class RolesList extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-font-weight-bold">Roles & Permission</h4>
+          <h4 className="gx-widget-heading">Roles & Permission</h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item className="gx-text-primary"> <Link to="/roles-permissions/all" className="gx-text-primary">
               Roles & Permission</Link></Breadcrumb.Item>
