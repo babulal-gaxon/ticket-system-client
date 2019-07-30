@@ -36,9 +36,9 @@ class StaffList extends Component {
     this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
   }
 
-  onGetStaffDataPaginated = (currentPage, itemsPerPage, filterText) => {
+  onGetStaffDataPaginated = (currentPage, itemsPerPage, filterText, updatingContent) => {
     if (Permissions.canStaffView()) {
-      this.props.onGetStaff(currentPage, itemsPerPage, filterText);
+      this.props.onGetStaff(currentPage, itemsPerPage, filterText, updatingContent);
     }
   };
 
@@ -47,7 +47,7 @@ class StaffList extends Component {
     if (this.state.currentPage < pages) {
       this.setState({currentPage: this.state.currentPage + 1},
         () => {
-          this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+          this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
         });
     } else {
       return null;
@@ -58,7 +58,7 @@ class StaffList extends Component {
     if (this.state.currentPage > 1) {
       this.setState({currentPage: this.state.currentPage - 1},
         () => {
-          this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+          this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
         });
     } else {
       return null;
@@ -71,7 +71,7 @@ class StaffList extends Component {
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetStaffDataPaginated(1, this.state.itemNumbers, this.state.filterText)
+      this.onGetStaffDataPaginated(1, this.state.itemNumbers, this.state.filterText, true)
     })
   };
 
@@ -139,7 +139,7 @@ class StaffList extends Component {
     this.setState({
       currentPage: page,
     }, () => {
-      this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+      this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -153,7 +153,7 @@ class StaffList extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+      this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
     })
   };
 
@@ -213,6 +213,7 @@ class StaffList extends Component {
           </div>
           <Table rowKey="id" rowSelection={rowSelection} columns={StaffRow(this)}
                  dataSource={staffList}
+                 loading={this.props.updatingContent}
                  pagination={{
                    pageSize: this.state.itemNumbers,
                    current: this.state.currentPage,
@@ -237,9 +238,10 @@ class StaffList extends Component {
 }
 
 
-const mapStateToProps = ({supportStaff}) => {
+const mapStateToProps = ({supportStaff, commonData}) => {
   const {staffList, totalItems} = supportStaff;
-  return {staffList, totalItems};
+  const {updatingContent} = commonData;
+  return {staffList, totalItems, updatingContent};
 };
 
 
