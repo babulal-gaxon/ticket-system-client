@@ -15,20 +15,6 @@ export default class ColorPicker extends Component {
     onChangeComplete: noop,
     position: 'bottom',
   };
-  handleClick = () => {
-    this.setState({displayColorPicker: !this.state.displayColorPicker});
-  };
-  handleClose = () => {
-    this.setState({displayColorPicker: false});
-  };
-  handleChange = (color) => {
-    this.setState({color: color.hex});
-    this.props.onChange(color.hex, color);
-  };
-  handleChangeComplete = (color) => {
-    this.setState({color: color.hex});
-    this.props.onChangeComplete(color.hex);
-  };
 
   constructor(props) {
     super();
@@ -37,6 +23,24 @@ export default class ColorPicker extends Component {
       color: props.color,
     };
   }
+
+  handleClick = () => {
+    this.setState({displayColorPicker: !this.state.displayColorPicker});
+  };
+
+  handleClose = () => {
+    this.setState({displayColorPicker: false});
+  };
+
+  handleChange = (color) => {
+    this.setState({color: color.hex});
+    this.props.onChange(color.hex, color);
+  };
+
+  handleChangeComplete = (color) => {
+    this.setState({color: color.hex});
+    this.props.onChangeComplete(color.hex);
+  };
 
   componentWillReceiveProps(nextProps) {
     this.setState({color: nextProps.color});

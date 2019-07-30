@@ -96,7 +96,7 @@ class AddNewTicket extends Component {
   };
 
   onUploadAttachment = (data, file) => {
-    console.log("in attachment")
+    console.log("in attachment");
     this.props.fetchStart();
     axios.post("/uploads/temporary/media", data, {
       headers: {

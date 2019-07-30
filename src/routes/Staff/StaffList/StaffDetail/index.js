@@ -210,8 +210,8 @@ class StaffDetail extends Component {
                   </Row>
                   <Divider/>
                   {(Permissions.canStaffEdit()) ?
-                  <Tag color="blue" onClick={this.onEditProfile}>
-                    <i className="icon icon-edit gx-mr-3"/>Edit Profile</Tag> : null}
+                    <Tag color="blue" onClick={this.onEditProfile}>
+                      <i className="icon icon-edit gx-mr-3"/>Edit Profile</Tag> : null}
                 </Widget>
               </Col>
               <Col xl={12} lg={12} md={12} sm={12} xs={24}>

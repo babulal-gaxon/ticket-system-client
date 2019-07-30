@@ -59,7 +59,7 @@ export const onAddSupportStaff = (staffMember, history) => {
         dispatch({type: ADD_SUPPORT_STAFF, payload: data.data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Staff has been added successfully"});
-        if(history) {
+        if (history) {
           history.goBack();
         }
       } else {
@@ -100,7 +100,7 @@ export const onEditSupportStaff = (staffMember, history) => {
       if (data.success) {
         dispatch({type: EDIT_SUPPORT_STAFF, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        if(history) {
+        if (history) {
           history.goBack();
         }
         dispatch({type: SHOW_MESSAGE, payload: "The Staff details has been edited successfully"});

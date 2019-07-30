@@ -16,5 +16,5 @@ const Photos = ({photoList, title}) => {
       </ul>
     </div>
   )
-}
+};
 export default Photos

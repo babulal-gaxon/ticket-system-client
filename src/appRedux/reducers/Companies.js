@@ -1,9 +1,4 @@
-import {
-  ADD_NEW_COMPANY,
-  DELETE_COMPANIES,
-  EDIT_COMPANY_DETAILS,
-  GET_COMPANY_DATA
-} from "../../constants/Companies";
+import {ADD_NEW_COMPANY, DELETE_COMPANIES, EDIT_COMPANY_DETAILS, GET_COMPANY_DATA} from "../../constants/Companies";
 
 const initialState = {
   companiesList: [],

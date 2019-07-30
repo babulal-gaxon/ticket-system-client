@@ -121,7 +121,7 @@ class FifthStep extends Component {
                             departmentId={this.state.departmentId}
                             onEditDepartment={this.props.onEditDepartment}
                             dept={this.props.dept}
-        /> : null}
+          /> : null}
       </div>
     );
   }

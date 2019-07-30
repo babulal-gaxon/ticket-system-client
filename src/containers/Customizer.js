@@ -66,15 +66,47 @@ import {
 
 
 class Customizer extends Component {
+  constructor(props) {
+    super(props);
+    let initialValue = {
+      '@primary-color': '#038fde',
+      '@secondary-color': '#fa8c16',
+      '@text-color': '#545454',
+      '@heading-color': '#535353',
+      '@nav-dark-bg': '#003366',
+      '@nav-dark-text-color': '#038fdd',
+      '@header-text-color': '#262626',
+      '@layout-header-background': '#fefefe',
+      '@layout-footer-background': '#fffffd',
+      '@body-background': '#f5f5f5',
+      '@hor-nav-text-color': '#fffffd'
+    };
+    let vars = {};
+
+    try {
+      vars = Object.assign({}, initialValue, JSON.parse(localStorage.getItem('app-theme')));
+    } finally {
+      this.state = {vars, initialValue, isCustomizerOpened: false};
+      window.less
+        .modifyVars(vars)
+        .then(() => {
+        })
+        .catch(error => {
+          message.error(`Failed to update theme`);
+        });
+    }
+  }
+
   onChangeComplete = (varName, color) => {
     const {vars} = this.state;
     vars[varName] = color;
     this.setState({vars});
   };
+
   handleColorChange = (varname, color) => {
     const {vars} = this.state;
     if (varname) vars[varname] = color;
-    console.log("vars: ", vars)
+    console.log("vars: ", vars);
     window.less
       .modifyVars(vars)
       .then(() => {
@@ -86,6 +118,7 @@ class Customizer extends Component {
         message.error(`Failed to update theme`);
       });
   };
+
   getColorPicker = (varName) => (
     <div key={varName} className="gx-media gx-mb-1">
       <div className="gx-ml-1 gx-mr-4">
@@ -118,6 +151,7 @@ class Customizer extends Component {
 
     </div>
   );
+
   resetTheme = () => {
     localStorage.setItem('app-theme', '{}');
     this.setState({vars: this.state.initialValue});
@@ -127,6 +161,7 @@ class Customizer extends Component {
         message.error(`Failed to reset theme`);
       });
   };
+
   toggleCustomizer = () => {
     this.setState(previousState => (
       {
@@ -137,6 +172,7 @@ class Customizer extends Component {
   onThemeTypeChange = (e) => {
     this.props.setThemeType(e.target.value);
   };
+
   onColorSelectionTypeChange = (e) => {
     this.props.setThemeColorSelection(e.target.value);
   };
@@ -192,6 +228,7 @@ class Customizer extends Component {
       {this.getLayoutsTypes(layoutType)}
     </CustomScrollbars>
   };
+
   handleThemeColor = (primaryColor, secondaryColor, navDarkTextColor, navDarkBg) => {
     let modifiedVars = this.state.vars;
     modifiedVars['@primary-color'] = primaryColor;
@@ -205,6 +242,7 @@ class Customizer extends Component {
   handleLayoutTypes = (layoutType) => {
     this.props.onLayoutTypeChange(layoutType);
   };
+
   getPresetColors = () => {
     const themeColor = Object.entries(this.state.vars)[0][1];
     return <ul className="gx-color-option gx-list-inline">
@@ -299,6 +337,7 @@ class Customizer extends Component {
       </li>
     </ul>
   };
+
   getNavStyles = (navStyle) => {
     return <ul className="gx-nav-option gx-list-inline">
       <li>
@@ -364,38 +403,6 @@ class Customizer extends Component {
       </li>
     </ul>
   };
-
-
-  constructor(props) {
-    super(props);
-    let initialValue = {
-      '@primary-color': '#038fde',
-      '@secondary-color': '#fa8c16',
-      '@text-color': '#545454',
-      '@heading-color': '#535353',
-      '@nav-dark-bg': '#003366',
-      '@nav-dark-text-color': '#038fdd',
-      '@header-text-color': '#262626',
-      '@layout-header-background': '#fefefe',
-      '@layout-footer-background': '#fffffd',
-      '@body-background': '#f5f5f5',
-      '@hor-nav-text-color': '#fffffd'
-    };
-    let vars = {};
-
-    try {
-      vars = Object.assign({}, initialValue, JSON.parse(localStorage.getItem('app-theme')));
-    } finally {
-      this.state = {vars, initialValue, isCustomizerOpened: false};
-      window.less
-        .modifyVars(vars)
-        .then(() => {
-        })
-        .catch(error => {
-          message.error(`Failed to update theme`);
-        });
-    }
-  }
 
   render() {
 

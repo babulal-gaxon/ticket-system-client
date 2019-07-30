@@ -10,73 +10,6 @@ import ConversationCell from "./ConversationCell";
 const {TextArea} = Input;
 
 class ToDoDetail extends React.Component {
-  handleLabelClick = event => {
-    this.setState({labelMenu: true, anchorEl: event.currentTarget});
-  };
-  handleUserClick = event => {
-    this.setState({userMenu: true, anchorEl: event.currentTarget});
-  };
-  handleRequestClose = () => {
-    this.setState({userMenu: false, labelMenu: false});
-  };
-  _handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      this.submitComment();
-    }
-  };
-  handleEditTitle = () => {
-    if (this.state.editTitle) {
-      const todo = this.state.todo;
-      todo.title = this.state.title;
-      this.props.onToDoUpdate(todo)
-    }
-    this.setState({
-      editTitle: !this.state.editTitle
-    });
-  };
-  handleEditNote = () => {
-    if (this.state.note) {
-      const todo = this.state.todo;
-      todo.note = this.state.note;
-      this.props.onToDoUpdate(todo)
-    }
-    this.setState({
-      editNote: !this.state.editNote
-    });
-  };
-  handleDueDateChange = (date) => {
-    this.setState({
-      todo: {...this.state.todo, dueDate: date}
-    });
-  };
-  handleChange = event => {
-    this.setState({[event.target.name]: event.target.value});
-  };
-  optionMenu = () => {
-    return (<Menu
-      id="label-menu" onClick={this.handleRequestClose}
-      onClose={this.handleRequestClose}>
-      {users.map((user, index) =>
-        <Menu.Item key={index} value={user.id}>
-          <div className="gx-d-flex gx-user-name gx-align-items-center">
-            <Avatar src={user.thumb} alt={user.name}/><h4>{user.name}</h4>
-          </div>
-        </Menu.Item>
-      )}
-
-    </Menu>)
-  };
-  labelMenu = () => {
-    return (<Menu id="label-menu" onClick={this.handleRequestClose()}>
-      {labels.map(label =>
-        <Menu.Item key={label.id}>
-          {label.title}
-        </Menu.Item>,
-      )}
-    </Menu>)
-
-  };
-
   constructor(props) {
     super(props);
     const {title, notes} = props.todo;
@@ -95,6 +28,82 @@ class ToDoDetail extends React.Component {
     };
     this.handleRequestClose = this.handleRequestClose.bind(this)
   }
+
+  handleLabelClick = event => {
+    this.setState({labelMenu: true, anchorEl: event.currentTarget});
+  };
+
+  handleUserClick = event => {
+    this.setState({userMenu: true, anchorEl: event.currentTarget});
+  };
+
+  handleRequestClose = () => {
+    this.setState({userMenu: false, labelMenu: false});
+  };
+
+  _handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.submitComment();
+    }
+  };
+
+  handleEditTitle = () => {
+    if (this.state.editTitle) {
+      const todo = this.state.todo;
+      todo.title = this.state.title;
+      this.props.onToDoUpdate(todo)
+    }
+    this.setState({
+      editTitle: !this.state.editTitle
+    });
+  };
+
+  handleEditNote = () => {
+    if (this.state.note) {
+      const todo = this.state.todo;
+      todo.note = this.state.note;
+      this.props.onToDoUpdate(todo)
+    }
+    this.setState({
+      editNote: !this.state.editNote
+    });
+  };
+
+  handleDueDateChange = (date) => {
+    this.setState({
+      todo: {...this.state.todo, dueDate: date}
+    });
+  };
+
+  handleChange = event => {
+    this.setState({[event.target.name]: event.target.value});
+  };
+
+  optionMenu = () => {
+    return (<Menu
+      id="label-menu" onClick={this.handleRequestClose}
+      onClose={this.handleRequestClose}>
+      {users.map((user, index) =>
+        <Menu.Item key={index} value={user.id}>
+          <div className="gx-d-flex gx-user-name gx-align-items-center">
+            <Avatar src={user.thumb} alt={user.name}/><h4>{user.name}</h4>
+          </div>
+        </Menu.Item>
+      )}
+
+    </Menu>)
+  };
+
+  labelMenu = () => {
+    return (<Menu id="label-menu" onClick={this.handleRequestClose()}>
+      {labels.map(label =>
+        <Menu.Item key={label.id}>
+          {label.title}
+        </Menu.Item>,
+      )}
+    </Menu>)
+
+  };
 
   submitComment() {
     if (this.state.message !== '') {

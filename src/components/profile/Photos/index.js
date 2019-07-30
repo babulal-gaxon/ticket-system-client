@@ -18,5 +18,5 @@ const Photos = ({photoList}) => {
       </div>
     </Widget>
   )
-}
+};
 export default Photos

@@ -15,7 +15,7 @@ class ChartCard extends React.Component {
       desc: '',
       percent: '',
     }
-  }
+  };
 
 
   componentDidMount() {
@@ -58,6 +58,6 @@ class ChartCard extends React.Component {
       </Widget>
     );
   }
-};
+}
 
 export default ChartCard;

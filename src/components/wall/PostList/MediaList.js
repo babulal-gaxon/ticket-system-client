@@ -11,7 +11,7 @@ class MediaList extends Component {
 
   state = {
     previewVisible: false,
-  }
+  };
 
   handleToggle() {
     this.setState((previousState) => ({

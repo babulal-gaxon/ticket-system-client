@@ -220,7 +220,7 @@ class Services extends Component {
         <i className="icon icon-trash"/>
       </Popconfirm>
     )
-  }
+  };
   onShowItemOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>
       <Option value={10}>10</Option>

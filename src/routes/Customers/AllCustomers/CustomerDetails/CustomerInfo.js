@@ -17,7 +17,7 @@ class CustomerInfo extends Component {
   render() {
     const {showMoreAddress} = this.state;
     const {currentCustomerProfile, onEditProfile, onBackToList} = this.props;
-    const addresses = showMoreAddress ?  currentCustomerProfile.addresses :  currentCustomerProfile.addresses.slice(0, 1)
+    const addresses = showMoreAddress ? currentCustomerProfile.addresses : currentCustomerProfile.addresses.slice(0, 1);
     return (
       <div>
         <Widget>

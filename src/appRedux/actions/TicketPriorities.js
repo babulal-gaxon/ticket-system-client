@@ -11,16 +11,16 @@ import {
 
 
 export const onGetTicketPriorities = (currentPage, itemsPerPage, filterText) => {
-  console.log("filterText", filterText)
+  console.log("filterText", filterText);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get('/setup/priorities', {
-     params: {
-       page: currentPage,
-       per_page: itemsPerPage,
-       search: filterText
-     }
-    }
+        params: {
+          page: currentPage,
+          per_page: itemsPerPage,
+          search: filterText
+        }
+      }
     ).then(({data}) => {
       console.info("onGetTicketPriorities: ", data);
       if (data.success) {

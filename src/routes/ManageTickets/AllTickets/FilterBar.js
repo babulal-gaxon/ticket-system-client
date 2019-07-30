@@ -207,9 +207,9 @@ class FilterBar extends Component {
               </Checkbox.Group>
               <div>
                 {this.onFilterStaff().length > 5 ?
-                <Button type="link" onClick={this.onToggleShowMoreStaff}>
-                  {showMoreStaff ? "View Less" : `${this.onFilterStaff().length - 5} More`}
-                </Button>: null}
+                  <Button type="link" onClick={this.onToggleShowMoreStaff}>
+                    {showMoreStaff ? "View Less" : `${this.onFilterStaff().length - 5} More`}
+                  </Button> : null}
               </div>
             </div>
             <div className="gx-mb-4">

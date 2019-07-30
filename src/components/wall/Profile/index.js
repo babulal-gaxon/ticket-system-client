@@ -7,13 +7,13 @@ class Profile extends Component {
 
   state = {
     isFollow: false
-  }
+  };
 
   handleToggle = () => {
     this.setState((previousState) => ({
       isFollow: !previousState.isFollow
     }));
-  }
+  };
 
   render() {
     const {user, userInfo} = this.props;

@@ -96,14 +96,14 @@ class GeneralDetails extends Component {
         this.setState(state => {
           const index = state.logoList.indexOf(file);
           const newFileList = state.logoList.slice(-1);
-          newFileList.splice(index,1);
+          newFileList.splice(index, 1);
           return {
             logoList: newFileList,
           };
         });
       },
       beforeUpload: file => {
-        if(logoList.length >0) {
+        if (logoList.length > 0) {
           propsLogo.onRemove(logoList[0])
         }
         this.setState(state => ({
@@ -166,7 +166,7 @@ class GeneralDetails extends Component {
                 <Input placeholder="Choose file..." addonAfter="Browse"/>
               </Upload>)}
             </Form.Item> :
-            <Form.Item label="Upload Logo" >
+            <Form.Item label="Upload Logo">
               <Upload {...propsLogo}>
                 <Input placeholder="Choose file..." addonAfter="Browse"/>
               </Upload>
@@ -180,7 +180,7 @@ class GeneralDetails extends Component {
                 <Input placeholder="Choose file..." addonAfter="Browse"/>
               </Upload>)}
             </Form.Item> :
-            <Form.Item label="Upload Logo" >
+            <Form.Item label="Upload Logo">
               <Upload {...propsFavicon}>
                 <Input placeholder="Choose file..." addonAfter="Browse"/>
               </Upload>

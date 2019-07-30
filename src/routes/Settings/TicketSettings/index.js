@@ -32,7 +32,7 @@ class TicketSettings extends Component {
       const {
         enable_service_selection, staff_access_own_department,
         ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,
-        notify_reply, notify_status_change, notify_priority_change, notify_on_archive,ticket_status_close
+        notify_reply, notify_status_change, notify_priority_change, notify_on_archive, ticket_status_close
       } = this.props.ticketSettings;
       this.state = {
         enable_service_selection: parseInt(enable_service_selection),
@@ -239,7 +239,12 @@ const mapStateToProps = ({generalSettings, ticketList}) => {
   return {ticketSettings, filterData};
 };
 
-export default connect(mapStateToProps, {onGetTicketStatus, onGetTicketSettings, onSaveTicketSettings, onGetFilterOptions})(TicketSettings);
+export default connect(mapStateToProps, {
+  onGetTicketStatus,
+  onGetTicketSettings,
+  onSaveTicketSettings,
+  onGetFilterOptions
+})(TicketSettings);
 
 TicketSettings.defaultProps = {
   ticketSettings: null,

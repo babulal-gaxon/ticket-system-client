@@ -34,8 +34,8 @@ class StaffWithSelectedRole extends Component {
   onFilterStaffList = () => {
     if (this.state.staffWithSelectedRole.length !== 0) {
       return this.state.staffWithSelectedRole.filter(staff => {
-        const name = staff.first_name + " " + staff.last_name;
-        return (name.indexOf(this.state.filterText) !== -1) ? staff : null
+          const name = staff.first_name + " " + staff.last_name;
+          return (name.indexOf(this.state.filterText) !== -1) ? staff : null
         }
       )
     } else {
@@ -70,12 +70,12 @@ class StaffWithSelectedRole extends Component {
                   <span>
                     {(Permissions.canStaffEdit()) ?
                       <i className="icon icon-edit gx-mr-3" onClick={() => {
-                    this.props.onGetStaffId(staff.id);
-                    this.props.history.push('/staff/add-new-member')
-                  }}/> : null}
+                        this.props.onGetStaffId(staff.id);
+                        this.props.history.push('/staff/add-new-member')
+                      }}/> : null}
                     {(Permissions.canViewStaffDetail()) ?
                       <i className="icon icon-custom-view" onClick={() => this.props.onSelectStaff(staff)}/>
-                    : null}
+                      : null}
                 </span>
                 </div>
               </Widget>

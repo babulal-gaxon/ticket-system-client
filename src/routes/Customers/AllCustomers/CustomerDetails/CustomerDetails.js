@@ -1,7 +1,5 @@
 import React, {Component} from "react"
-import {Avatar, Col, Row, Table, Tag, Tooltip} from "antd/lib/index";
-import Widget from "../../../../components/Widget";
-import moment from "moment/moment";
+import {Col, Row} from "antd/lib/index";
 import {connect} from "react-redux";
 import {
   onGetCustomerCompany,
@@ -10,7 +8,6 @@ import {
   onNullifyCurrentCustomer,
   setCurrentCustomer
 } from "../../../../appRedux/actions/Customers";
-import Permissions from "../../../../util/Permissions";
 import PropTypes from "prop-types";
 import qs from "qs";
 import CustomerInfo from "./CustomerInfo";
@@ -64,10 +61,11 @@ class CustomerDetails extends Component {
                               onBackToList={this.onBackToList}/>
               </Col>
               <Col xl={12} lg={12} md={12} sm={12} xs={24}>
-                <CompanyMembers currentCustomerProfile={currentCustomerProfile} customerCompanyMembers={customerCompanyMembers}/>
+                <CompanyMembers currentCustomerProfile={currentCustomerProfile}
+                                customerCompanyMembers={customerCompanyMembers}/>
               </Col>
             </Row>
-           <CustomerTickets customerTickets={customerTickets} onGetTicketDetail={this.onGetTicketDetail}/>
+            <CustomerTickets customerTickets={customerTickets} onGetTicketDetail={this.onGetTicketDetail}/>
           </div> : null}
       </div>
     );

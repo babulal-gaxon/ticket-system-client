@@ -155,22 +155,22 @@ class Companies extends Component {
     const menu = (
       <Menu>
         {(Permissions.canCompanyEdit()) ?
-        <Menu.Item key="2" onClick={() => this.onEditCompanyOption(currentCompany)}>
-          Edit
-        </Menu.Item> : null}
+          <Menu.Item key="2" onClick={() => this.onEditCompanyOption(currentCompany)}>
+            Edit
+          </Menu.Item> : null}
         {(Permissions.canCompanyDelete()) ?
-        <Menu.Item key="4">
-          <Popconfirm
-            title="Are you sure to delete this Company?"
-            onConfirm={() => {
-              this.props.onDeleteCompanies({ids: [currentCompany.id]});
-              this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
-            }}
-            okText="Yes"
-            cancelText="No">
-            Delete
-          </Popconfirm>
-        </Menu.Item> : null}
+          <Menu.Item key="4">
+            <Popconfirm
+              title="Are you sure to delete this Company?"
+              onConfirm={() => {
+                this.props.onDeleteCompanies({ids: [currentCompany.id]});
+                this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
+              }}
+              okText="Yes"
+              cancelText="No">
+              Delete
+            </Popconfirm>
+          </Menu.Item> : null}
       </Menu>
     );
     return (
@@ -204,13 +204,13 @@ class Companies extends Component {
     const menu = (
       <Menu>
         {(Permissions.canCompanyDelete()) ?
-        <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
-          Archive
-        </Menu.Item> : null}
+          <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
+            Archive
+          </Menu.Item> : null}
         {(Permissions.canCompanyDelete()) ?
-        <Menu.Item key="2" onClick={this.onShowBulkDeleteConfirm}>
-          Delete
-        </Menu.Item> : null}
+          <Menu.Item key="2" onClick={this.onShowBulkDeleteConfirm}>
+            Delete
+          </Menu.Item> : null}
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
@@ -263,9 +263,9 @@ class Companies extends Component {
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
               {(Permissions.canCompanyAdd()) ?
-              <Button type="primary" onClick={this.onAddButtonClick} style={{width: 200}}>
-                Add New
-              </Button> : null}
+                <Button type="primary" onClick={this.onAddButtonClick} style={{width: 200}}>
+                  Add New
+                </Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">

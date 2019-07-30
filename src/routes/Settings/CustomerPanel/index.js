@@ -73,7 +73,7 @@ class CustomerPanelForm extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
     const {theme, country, registration_enable, register_verification, allow_primary_contact_view, delete_own_files} = this.state;
-    console.log("countriesList", this.props.countriesList)
+    console.log("countriesList", this.props.countriesList);
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">

@@ -14,7 +14,7 @@ class AddNewService extends Component {
         support_enable: 1
       };
     } else {
-      const selectedService = this.props.servicesList.find(service => service.id === this.props.serviceId)
+      const selectedService = this.props.servicesList.find(service => service.id === this.props.serviceId);
       this.state = {...selectedService};
     }
   };
@@ -75,9 +75,9 @@ class AddNewService extends Component {
                   message: 'Message length should not exceed 250 characters',
                 }],
               })(
-              <TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
-                this.setState({desc: e.target.value})
-              }}/>)}
+                <TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
+                  this.setState({desc: e.target.value})
+                }}/>)}
             </Form.Item>
             <Form.Item label="Support Enable">
               <Radio.Group value={support_enable} onChange={(e) => {

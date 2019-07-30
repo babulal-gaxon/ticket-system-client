@@ -62,8 +62,9 @@ class AddNewDepartment extends Component {
                 validateTrigger: 'onBlur',
                 rules: [{required: true, message: 'Please Enter Department Name!'}],
               })(<Input type="text" autoFocus
-                        onChange={(e) => {this.setState({name: e.target.value})
-              }}/>)}
+                        onChange={(e) => {
+                          this.setState({name: e.target.value})
+                        }}/>)}
             </Form.Item>
             <Form.Item label="Description">
               {getFieldDecorator('desc', {

@@ -10,16 +10,26 @@ const options = [
 
 class ContactCell extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {
+      addContactState: false,
+    }
+  }
+
   onContactClose = () => {
     this.setState({addContactState: false});
   };
+
   onDeleteContact = (contact) => {
     this.setState({addContactState: false});
     this.props.onDeleteContact(contact);
   };
+
   onEditContact = () => {
     this.setState({addContactState: true});
   };
+
   menus = () => (<Menu onClick={(e) => {
     if (e.key === 'Edit') {
       this.onEditContact()
@@ -34,13 +44,6 @@ class ContactCell extends React.Component {
       </Menu.Item>,
     )}
   </Menu>);
-
-  constructor() {
-    super();
-    this.state = {
-      addContactState: false,
-    }
-  }
 
   render() {
     const {contact, addFavourite, onContactSelect, onSaveContact} = this.props;

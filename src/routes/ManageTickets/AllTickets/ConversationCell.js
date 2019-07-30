@@ -21,10 +21,10 @@ const ConversationCell = ({conversation}) => {
         <div className="gx-d-flex">
           {conversation.attachments.map(attachment => {
             return <div className="gx-media gx-flex-nowrap gx-align-items-center" key={attachment.id}>
-            <Widget styleName="gx-card-filter gx-mr-2">
-              <div>{attachment.title}</div>
-              <div>{attachment.size/1000} kb</div>
-            </Widget>
+              <Widget styleName="gx-card-filter gx-mr-2">
+                <div>{attachment.title}</div>
+                <div>{attachment.size / 1000} kb</div>
+              </Widget>
             </div>
           })}
         </div>

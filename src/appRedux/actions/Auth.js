@@ -1,14 +1,13 @@
 import {
-  ERROR_INITIAL_SETUP,
   FETCH_ERROR,
   FETCH_START,
   FETCH_SUCCESS,
   FETCH_USER_INFO_ERROR,
   FETCH_USER_INFO_START,
   FETCH_USER_INFO_SUCCESS,
-  INIT_URL, INITIAL_SETUP_STEPS,
+  INIT_URL,
   SHOW_MESSAGE,
-  SIGNOUT_USER_SUCCESS, START_LOADER,
+  SIGNOUT_USER_SUCCESS,
   UPDATE_USER_PERMISSION_DATA,
   USER_DATA,
   USER_TOKEN_SET
@@ -102,7 +101,7 @@ export const onUserSignOut = () => {
 };
 
 export const showErrorMessage = (error) => {
-  console.log("error", error)
+  console.log("error", error);
   if (error.response.status === 401) {
     return ({type: FETCH_ERROR, payload: error.response.data.message});
   } else if (error.response.status === 403) {

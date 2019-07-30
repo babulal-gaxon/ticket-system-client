@@ -44,7 +44,7 @@ class TicketDetail extends Component {
 
   componentDidMount() {
     const queryParams = qs.parse(this.props.location.search, {ignoreQueryPrefix: true});
-    console.log("queryParams", queryParams)
+    console.log("queryParams", queryParams);
     this.props.onGetTicketDetail(queryParams.id);
     this.props.onGetConversationList(queryParams.id);
     this.props.onGetFilterOptions();
@@ -55,7 +55,7 @@ class TicketDetail extends Component {
   };
 
   componentWillReceiveProps(nextProps, nextContext) {
-    console.log("nextProps", nextProps)
+    console.log("nextProps", nextProps);
     if (nextProps.currentTicket !== null && nextProps.currentTicket !== this.props.currentTicket)
       this.setState({
         currentTicket: nextProps.currentTicket,
@@ -101,7 +101,7 @@ class TicketDetail extends Component {
       })
     }
     this.setState({message: '', attachments: []})
-  }
+  };
 
   onToggleEditModal = () => {
     this.setState({showEditModal: !this.state.showEditModal})
@@ -279,7 +279,8 @@ class TicketDetail extends Component {
                                  ticketId={currentTicket.id}
                                  assignedTo={currentTicket.assigned_to}/>
                 <span>Tags</span>
-                <Select mode="tags" style={{width: '100%'}} className="gx-mt-3" placeholder="Type to add tags" value={ticketTags}
+                <Select mode="tags" style={{width: '100%'}} className="gx-mt-3" placeholder="Type to add tags"
+                        value={ticketTags}
                         onChange={this.onEditTags}/>
                 <div className="gx-my-3">Attachments</div>
                 {currentTicket.attachments.length > 0 ? currentTicket.attachments.map(attachment => {

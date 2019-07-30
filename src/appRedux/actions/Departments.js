@@ -95,7 +95,8 @@ export const onBulkInActiveDepartments = (departmentIds) => {
       if (data.success) {
         dispatch({type: BULK_INACTIVE_DEPARTMENTS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status of Department(s) has been changed to Disabled successfully"
+        dispatch({
+          type: SHOW_MESSAGE, payload: "The Status of Department(s) has been changed to Disabled successfully"
         });
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});

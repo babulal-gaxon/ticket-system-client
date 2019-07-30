@@ -80,7 +80,7 @@ export const onAddNewCustomer = (customer, history) => {
 };
 
 export const onEditCustomer = (customer, history) => {
-  console.log("onEditCustomer", customer)
+  console.log("onEditCustomer", customer);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/customers/${customer.id}`, customer).then(({data}) => {
@@ -147,7 +147,7 @@ export const onGetCustomerFilterOptions = () => {
   return (dispatch) => {
     axios.get('/setup/customers/filter/options').then(({data}) => {
       if (data.success) {
-        console.log("onGetCustomerFilterOptions", data)
+        console.log("onGetCustomerFilterOptions", data);
         dispatch({type: GET_CUSTOMER_FILTER_OPTIONS, payload: data.data});
       }
     }).catch(function (error) {
@@ -165,7 +165,7 @@ export const onAddImage = (imageFile, context) => {
       }
     }).then(({data}) => {
       if (data.success) {
-        context.updateProfilePic(data.data)
+        context.updateProfilePic(data.data);
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Profile Picture has been added successfully"});
       } else {
@@ -310,4 +310,4 @@ export const onNullifyCurrentCustomer = () => {
   return {
     type: NULLIFY_CUSTOMER
   }
-}
+};
