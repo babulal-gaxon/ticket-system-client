@@ -1,28 +1,14 @@
 import React, {Component} from "react";
-import {
-  Avatar,
-  Breadcrumb,
-  Button,
-  Dropdown,
-  Icon,
-  Input,
-  Menu,
-  Modal,
-  Popconfirm,
-  Select,
-  Table,
-  Tag,
-  Tooltip
-} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Select, Table} from "antd";
 import Widget from "../../../components/Widget/index";
 import Permissions from "../../../util/Permissions";
-import moment from "moment";
 import {Link} from "react-router-dom";
 import {onDeleteTicket, onGetFilterOptions, onGetTickets} from "../../../appRedux/actions/TicketList";
-import {onGetCustomersData} from "../../../appRedux/actions/Customers";
+import {onSearchCustomers} from "../../../appRedux/actions/Customers";
 import {connect} from "react-redux";
 import FilterBar from "./FilterBar";
 import PropTypes from "prop-types";
+import TicketRow from "./TicketRow";
 
 const Option = Select.Option;
 const Search = Input.Search;
@@ -32,6 +18,14 @@ class AllTickets extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      startDate: null,
+      endDate: null,
+      selectedStaff: [],
+      selectedCustomers: [],
+      selectedPriorities: [],
+      selectedStatuses: [],
+      showMoreStaff: false,
+      archive: false,
       selectedRowKeys: [],
       itemNumbers: 10,
       current: 1,
@@ -43,19 +37,30 @@ class AllTickets extends Component {
   };
 
   componentDidMount() {
-    this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, this.state.sortParam);
-    this.props.onGetCustomersData();
+    this.onGetPaginatedData(false, this.state.current, this.state.itemNumbers, this.state.filterText, this.state.sortParam);
+    this.props.onSearchCustomers();
     this.props.onGetFilterOptions();
   }
 
-  onGetPaginatedData = (currentPage, itemsPerPage, filterData, sortingOrder, startDate, endDate, selectedStaff,
-                        selectedCustomers, selectedPriorities, selectedStatuses, archive) => {
+  onGetPaginatedData = (updatingContent, currentPage, itemsPerPage, filterData, sortingOrder, startDate, endDate, selectedStaff,
+                        selectedCustomers, selectedPriorities, selectedStatuses, archive, onGetTickets) => {
     if (Permissions.canTicketView()) {
-      this.props.onGetTickets(currentPage, itemsPerPage, filterData, sortingOrder, startDate, endDate, selectedStaff,
-        selectedCustomers, selectedPriorities, selectedStatuses, archive);
+      this.props.onGetTickets(updatingContent, currentPage, itemsPerPage, filterData, sortingOrder, startDate, endDate, selectedStaff,
+        selectedCustomers, selectedPriorities, selectedStatuses, archive, onGetTickets);
     }
   };
 
+  updateState = (stateData) => {
+    this.setState({...stateData}, () => {
+      const {current, itemNumbers, filterText, sortParam, startDate, endDate, selectedStaff, selectedCustomers, selectedPriorities, selectedStatuses, archive} = this.state;
+      this.onGetPaginatedData(true, current, itemNumbers, filterText, sortParam, startDate, endDate, selectedStaff,
+        selectedCustomers, selectedPriorities, selectedStatuses, archive)
+    });
+  };
+
+  onToggleShowMoreStaff = () => {
+    this.setState({showMoreStaff: !this.state.showMoreStaff});
+  };
   onSideBarActive = () => {
     this.setState({sideBarActive: !this.state.sideBarActive});
   };
@@ -63,7 +68,7 @@ class AllTickets extends Component {
   onFilterTextChange = (e) => {
     const {itemNumbers, sortParam} = this.state;
     this.setState({filterText: e.target.value}, () => {
-      this.onGetPaginatedData(1, itemNumbers, this.state.filterText, sortParam)
+      this.onGetPaginatedData(true, 1, itemNumbers, this.state.filterText, sortParam)
     })
   };
 
@@ -76,7 +81,7 @@ class AllTickets extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1}, () => {
-        this.onGetPaginatedData(this.state.current, itemNumbers, filterText, sortParam)
+        this.onGetPaginatedData(true, this.state.current, itemNumbers, filterText, sortParam)
       })
     }
   };
@@ -85,7 +90,7 @@ class AllTickets extends Component {
     const {itemNumbers, filterText, sortParam} = this.state;
     if (this.state.current > 1) {
       this.setState({current: this.state.current - 1}, () => {
-        this.onGetPaginatedData(this.state.current, itemNumbers, filterText, sortParam)
+        this.onGetPaginatedData(true, this.state.current, itemNumbers, filterText, sortParam)
       })
     }
   };
@@ -101,120 +106,12 @@ class AllTickets extends Component {
   onDropdownChange = (value) => {
     const {filterText, sortParam} = this.state;
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, filterText, sortParam)
+      this.onGetPaginatedData(true, this.state.current, this.state.itemNumbers, filterText, sortParam)
     });
   };
 
   onAddButtonClick = () => {
     this.props.history.push('/manage-tickets/add-new-ticket')
-  };
-
-  onTicketRowData = () => {
-    return [
-      {
-        title: 'ID',
-        dataIndex: 'id',
-        key: 'id',
-        render: (text, record) => {
-          return <span className="gx-text-grey">{record.id}</span>
-        },
-      },
-      {
-        title: 'Ticket Detail',
-        dataIndex: 'title',
-        key: 'title',
-        render: (text, record) => {
-          return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
-              {record.assigned_by ?
-                <Tooltip placement="top" title={record.assigned_by.first_name + " " + record.assigned_by.last_name}>
-                  {record.assigned_by.avatar ?
-                    <Avatar className="gx-mr-3 gx-size-50" src={record.assigned_by.avatar.src}/> :
-                    <Avatar className="gx-mr-3 gx-size-50"
-                            style={{backgroundColor: '#f56a00'}}>{record.assigned_by.first_name[0].toUpperCase()}</Avatar>}
-                </Tooltip> : <Avatar className="gx-size-50 gx-mr-3" src="https://via.placeholder.com/150x150"/>}
-              <div className="gx-media-body">
-                <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
-                <Tag className="gx-ml-2" color="blue">{record.product_name}</Tag>
-                <div>Created on {moment(record.created_at.date).format('LL')}</div>
-              </div>
-            </div>
-          )
-        },
-      },
-      {
-        title: 'Assign to',
-        dataIndex: 'assignTo',
-        key: 'assign_to',
-        render: (text, record) => {
-          return (<div>
-              {record.assigned_to ?
-                <Tooltip placement="top" title={record.assigned_to.first_name + " " + record.assigned_to.last_name}
-                         key={record.assigned_to.user_id}>
-                  {record.assigned_to.avatar ?
-                    <Avatar className="gx-mr-3 gx-size-36" src={record.assigned_to.avatar.src}/> :
-                    <Avatar className="gx-mr-3 gx-size-36"
-                            style={{backgroundColor: '#f56a00'}}>{record.assigned_to.first_name[0].toUpperCase()}</Avatar>}
-                </Tooltip>
-                :
-                <Tooltip placement="top" title="Not assigned">
-                  <Avatar className="gx-size-36"/>
-                </Tooltip>}
-            </div>
-          )
-        },
-      },
-      {
-        title: 'Status',
-        dataIndex: 'status_id',
-        key: 'status_id',
-        render: (text, record) => {
-          return <Tag color="green">{record.status_name}</Tag>
-        },
-      },
-      {
-        title: 'Priority',
-        dataIndex: 'priority_name',
-        key: 'priority_name',
-        render: (text, record) => {
-          return <Tag color={record.priority_color_code}> {record.priority_name}</Tag>
-        },
-      },
-      {
-        title: '',
-        dataIndex: '',
-        key: 'empty',
-        render: (text, record) => {
-          return <span onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-          }}>
-            {this.onShowRowDropdown(record.id)}
-      </span>
-        },
-      },
-    ];
-  };
-
-  onShowRowDropdown = (ticketId) => {
-    const menu = (
-      <Menu>
-        {(Permissions.canTicketDelete()) ?
-          <Menu.Item key="4">
-            <Popconfirm
-              title="Are you sure to Archive this Ticket?"
-              onConfirm={() => this.props.onDeleteTicket({ids: ticketId})}
-              okText="Yes"
-              cancelText="No">
-              Archive
-            </Popconfirm>
-          </Menu.Item> : null}
-      </Menu>
-    );
-    return (
-      <Dropdown overlay={menu} trigger={['click']}>
-        <i className="icon icon-ellipse-h"/>
-      </Dropdown>
-    )
   };
 
   onGetTicketDetail = record => {
@@ -260,7 +157,7 @@ class AllTickets extends Component {
   onPageChange = page => {
     const {itemNumbers, filterText, sortParam} = this.state;
     this.setState({current: page}, () => {
-      this.onGetPaginatedData(this.state.current, itemNumbers, filterText, sortParam)
+      this.onGetPaginatedData(true, this.state.current, itemNumbers, filterText, sortParam)
     });
   };
 
@@ -290,12 +187,12 @@ class AllTickets extends Component {
   onSetSortParam = key => {
     const {current, itemNumbers, filterText} = this.state;
     this.setState({sortParam: key}, () => {
-      this.onGetPaginatedData(current, itemNumbers, filterText, this.state.sortParam)
+      this.onGetPaginatedData(true, current, itemNumbers, filterText, this.state.sortParam)
     });
   };
 
   render() {
-    const {current, filterText, itemNumbers, sortParam} = this.state;
+    const {current, filterText, itemNumbers, sortParam, endDate, selectedStaff, selectedCustomers, selectedPriorities, selectedStatuses, archive} = this.state;
     const {selectedRowKeys} = this.state;
     const {tickets, filterData, customersList} = this.props;
     let ids;
@@ -359,8 +256,9 @@ class AllTickets extends Component {
                   </Button> : null}
               </div>
             </div>
-            <Table rowKey="id" rowSelection={rowSelection} columns={this.onTicketRowData()}
+            <Table rowKey="id" rowSelection={rowSelection} columns={TicketRow(this)}
                    dataSource={tickets}
+                   loading={this.props.updatingContent}
                    pagination={{
                      pageSize: itemNumbers,
                      current: current,
@@ -386,10 +284,18 @@ class AllTickets extends Component {
                      sortParam={sortParam}
                      onGetPaginatedData={this.onGetPaginatedData}
                      staffList={filterData.staffs}
+                     endDate={endDate}
+                     selectedStaff={selectedStaff}
+                     selectedCustomers={selectedCustomers}
+                     selectedPriorities={selectedPriorities}
+                     selectedStatuses={selectedStatuses}
+                     archive={archive}
+                     updateState={this.updateState}
                      customersList={customersList}
                      priorities={filterData.priority}
                      statuses={filterData.status}
-                     onGetCustomersData={this.props.onGetCustomersData}
+                     onToggleShowMoreStaff={this.onToggleShowMoreStaff}
+                     onSearchCustomers={this.props.onSearchCustomers}
           />
 
           : null}
@@ -398,15 +304,16 @@ class AllTickets extends Component {
   }
 }
 
-const mapStateToProps = ({ticketList, customers}) => {
+const mapStateToProps = ({ticketList, customers, commonData}) => {
   const {tickets, totalItems, filterData} = ticketList;
   const {customersList} = customers;
-  return {tickets, customersList, totalItems, filterData};
+  const {updatingContent} = commonData;
+  return {tickets, customersList, totalItems, filterData, updatingContent};
 };
 
 export default connect(mapStateToProps, {
   onGetTickets,
-  onGetCustomersData,
+  onSearchCustomers,
   onDeleteTicket,
   onGetFilterOptions
 })(AllTickets)

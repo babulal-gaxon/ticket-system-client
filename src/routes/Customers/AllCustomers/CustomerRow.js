@@ -1,6 +1,5 @@
 import {Avatar, Dropdown, Menu, Popconfirm, Tag} from "antd";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
-import moment from "moment";
 import React from "react";
 import Permissions from "../../../util/Permissions";
 

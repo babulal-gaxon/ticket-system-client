@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Avatar, Input, Modal, Tag} from "antd";
 import PropTypes from "prop-types";
+import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 const Search = Input.Search;
 
@@ -47,7 +48,7 @@ class TicketAssigning extends Component {
           <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5"
                onClick={this.onToggleStaffModal}>
             {assignedStaff.avatar ?
-              <Avatar className="gx-mr-3 gx-size-50" src={assignedStaff.avatar.src}/> :
+              <Avatar className="gx-mr-3 gx-size-50" src={MEDIA_BASE_URL + assignedStaff.avatar.src}/> :
               <Avatar className="gx-mr-3 gx-size-50"
                       style={{backgroundColor: '#f56a00'}}>{assignedStaff.first_name[0].toUpperCase()}</Avatar>}
             <div className="gx-media-body gx-mt-2">
@@ -81,7 +82,7 @@ class TicketAssigning extends Component {
             return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5"
                         onClick={() => this.onSelectStaff(staff.id)} key={staff.id}>
               {staff.avatar ?
-                <Avatar className="gx-mr-3 gx-size-50" src={staff.avatar.src}/> :
+                <Avatar className="gx-mr-3 gx-size-50" src={MEDIA_BASE_URL + staff.avatar.src}/> :
                 <Avatar className="gx-mr-3 gx-size-50"
                         style={{backgroundColor: '#f56a00'}}>{staff.first_name[0].toUpperCase()}</Avatar>}
               <div className="gx-media-body gx-mt-2">

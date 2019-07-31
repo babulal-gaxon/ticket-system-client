@@ -23,6 +23,7 @@ import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import qs from "qs";
+import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 const Option = Select.Option;
 const {TextArea} = Input;
@@ -260,7 +261,8 @@ class TicketDetail extends Component {
                 {currentTicket.assigned_by ?
                   <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
                     {currentTicket.assigned_by.avatar ?
-                      <Avatar className="gx-mr-3 gx-size-50" src={currentTicket.assigned_by.avatar.src}/> :
+                      <Avatar className="gx-mr-3 gx-size-50"
+                              src={MEDIA_BASE_URL + currentTicket.assigned_by.avatar.src}/> :
                       <Avatar className="gx-mr-3 gx-size-50"
                               style={{backgroundColor: '#f56a00'}}>{currentTicket.assigned_by.first_name[0].toUpperCase()}</Avatar>}
                     <div className="gx-media-body gx-mt-2">

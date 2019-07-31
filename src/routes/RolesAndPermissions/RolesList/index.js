@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Select, Table} from "antd";
 import {connect} from "react-redux";
 
 import Widget from "../../../components/Widget/index";
@@ -9,10 +9,10 @@ import {
   onGetRoleDetail,
   onGetRoles
 } from "../../../appRedux/actions/RolesAndPermissions";
-import moment from "moment";
 import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
+import RoleRow from "./RoleRow";
 
 const ButtonGroup = Button.Group;
 const Option = Select.Option;
@@ -35,15 +35,15 @@ class RolesList extends Component {
     this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText);
   }
 
-  onGetRolesData = (currentPage, itemsPerPage, filterText) => {
+  onGetRolesData = (currentPage, itemsPerPage, filterText, updatingContent) => {
     if (Permissions.canRoleView()) {
-      this.props.onGetRoles(currentPage, itemsPerPage, filterText);
+      this.props.onGetRoles(currentPage, itemsPerPage, filterText, updatingContent);
     }
   };
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetRolesData(1, this.state.itemNumbers, this.state.filterText);
+      this.onGetRolesData(1, this.state.itemNumbers, this.state.filterText, true);
     })
   };
 
@@ -53,7 +53,7 @@ class RolesList extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -62,7 +62,7 @@ class RolesList extends Component {
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1},
         () => {
-          this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText)
+          this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
         });
     } else {
       return null;
@@ -72,7 +72,7 @@ class RolesList extends Component {
   onCurrentDecrement = () => {
     if (this.state.current > 1) {
       this.setState({current: this.state.current - 1}, () => {
-        this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText)
+        this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
       });
     } else {
       return null;
@@ -92,71 +92,6 @@ class RolesList extends Component {
     this.props.history.push("/roles-permissions/add-new")
   };
 
-  rolesRowData = () => {
-    return [
-      {
-        title: 'Role Name',
-        dataIndex: 'id',
-        key: 'id',
-        render: (text, record) => {
-          return <span className="gx-text-grey">{record.name}</span>
-        },
-      },
-      {
-        title: 'Last Update',
-        dataIndex: 'lastUpdate',
-        key: 'lastUpdate',
-        render: (text, record) => {
-          return <span className="gx-text-grey">{moment(record.updated_at.date).format('LL')}</span>
-        },
-      },
-      {
-        title: 'Users',
-        dataIndex: 'users',
-        key: 'users',
-        render: (text, record) => {
-          return <span className="gx-text-grey">{record.users_count}</span>
-        },
-      },
-      {
-        title: 'Status',
-        dataIndex: 'status',
-        key: 'status',
-        render: (text, record) => {
-          return <Tag color={record.status === 1 ? "green" : "red"}>
-            {record.status === 1 ? "Active" : "Disabled"}
-          </Tag>
-        },
-      },
-      {
-        title: '',
-        dataIndex: '',
-        key: 'empty',
-        render: (text, record) => {
-          return <div> {!record.is_locked ?
-            <span>{Permissions.canRoleEdit() ? <i className="icon icon-edit gx-mr-3" onClick={() => {
-              this.props.onGetRoleDetail(record.id, this.props.history);
-            }}/> : null}
-              {Permissions.canRoleDelete() ? this.onDeletePopUp(record.id) : null}
-          </span> : null}
-          </div>
-        },
-      },
-    ];
-  };
-
-  onDeletePopUp = (recordId) => {
-    return <Popconfirm
-      title="Are you sure to delete this Role?"
-      onConfirm={() => {
-        this.props.onBulkDeleteRoles({ids: [recordId]});
-        this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText)
-      }}
-      okText="Yes"
-      cancelText="No">
-      <i className="icon icon-trash"/>
-    </Popconfirm>
-  };
 
   showBulkDeleteConfirm = () => {
     if (this.state.selectedRoles.length !== 0) {
@@ -200,7 +135,7 @@ class RolesList extends Component {
 
   onPageChange = page => {
     this.setState({current: page}, () => {
-      this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -254,8 +189,9 @@ class RolesList extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowKey="id" rowSelection={rowSelection} columns={this.rolesRowData()}
+          <Table rowKey="id" rowSelection={rowSelection} columns={RoleRow(this)}
                  dataSource={roles}
+                 loading={this.props.updatingContent}
                  pagination={{
                    pageSize: itemNumbers,
                    current: current,
@@ -271,9 +207,10 @@ class RolesList extends Component {
   }
 }
 
-const mapStateToProps = ({rolesAndPermissions}) => {
+const mapStateToProps = ({rolesAndPermissions, commonData}) => {
   const {roles, totalItems} = rolesAndPermissions;
-  return {roles, totalItems}
+  const {updatingContent} = commonData;
+  return {roles, updatingContent, totalItems}
 };
 
 export default connect(mapStateToProps, {

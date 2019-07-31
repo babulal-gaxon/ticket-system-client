@@ -134,16 +134,7 @@
 
 .@{class-prefix}-layout-sider-scrollbar {
 
-
-  height: calc(100vh~"-"@layout-header-height + 145px) !important;
-
-  .framed-layout & {
-    height: calc(100vh~"-"@layout-header-height + 2 * @framed-layout-base + 145px) !important;
-
-    @media screen and (max-width: @screen-md-max) {
-      height: calc(100vh ~"-" @layout-header-height) !important;
-    }
-  }
+  height: calc(100vh ~"-" 170px) !important;
 
   .ant-layout-sider-collapsed & {
     height: calc(100vh~"-"@layout-header-height + 91px) !important;
@@ -199,8 +190,8 @@
 }
 
 .@{class-prefix}-sidebar-notifications {
-  padding: 18px 10px 10px;
-  margin: 0 0 10px (@sidebar-padding-lr - 10px);
+  padding: 18px 10px 0 20px;
+  margin: 0 0 10px 0;
   border-bottom: @border-style-base @border-width-base @border-color;
 
   .ant-layout-sider-dark &,

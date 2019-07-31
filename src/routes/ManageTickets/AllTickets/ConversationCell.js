@@ -3,14 +3,21 @@ import moment from "moment";
 import Widget from "../../../components/Widget";
 import {Avatar} from "antd";
 import PropTypes from "prop-types";
+import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 
 const ConversationCell = ({conversation}) => {
+  console.log("conversation.author.", conversation.author)
   return (
     <div className="gx-flex-row gx-module-detail-item gx-flex-nowrap gx-pl-0">
       <div className="gx-chat-todo-avatar">
-        <Avatar className="gx-rounded-circle gx-size-40" src=""
-                alt="..."/>
+        {
+          conversation.author.avatar ?
+            <Avatar className="gx-rounded-circle gx-size-40" src={MEDIA_BASE_URL + conversation.author.avatar.src}
+                    alt={conversation.author.display_name}/> :
+            <Avatar className="gx-mr-3 gx-size-50"
+                    style={{backgroundColor: '#f56a00'}}>{conversation.author.display_name[0].toUpperCase()}</Avatar>
+        }
       </div>
       <div className="gx-chat-toto-info">
         <div className="gx-flex-column">

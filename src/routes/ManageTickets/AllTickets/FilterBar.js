@@ -2,141 +2,67 @@ import React, {Component} from 'react';
 import CustomScrollbars from "../../../util/CustomScrollbars";
 import {Avatar, Button, Checkbox, DatePicker, Input, Select} from "antd";
 import PropTypes from "prop-types";
+import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 const {Option} = Select;
 
 class FilterBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      startDate: null,
-      endDate: null,
-      selectedStaff: [],
-      selectedCustomers: [],
-      selectedPriorities: [],
-      selectedStatuses: [],
-      staffFilterText: "",
-      priorityFilterText: "",
-      statusFilterText: "",
-      showMoreStaff: false,
-      archive: false
-    }
-  }
-
-  onToggleShowMoreStaff = () => {
-    this.setState({showMoreStaff: !this.state.showMoreStaff});
+  state = {
+    staffFilterText: "",
+    priorityFilterText: "",
+    statusFilterText: ""
   };
 
   onStartDateChange = value => {
-    const {endDate, selectedStaff, selectedCustomers, selectedPriorities, selectedStatuses, archive} = this.state;
-    const {current, itemNumbers, filterText, sortParam} = this.props;
-    this.setState({startDate: value}, () => {
-      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, this.state.startDate, endDate, selectedStaff,
-        selectedCustomers, selectedPriorities, selectedStatuses, archive)
-    });
+    this.props.updateState({startDate: value})
   };
 
   onEndDateChange = value => {
-    const {startDate, selectedStaff, selectedCustomers, selectedPriorities, selectedStatuses, archive} = this.state;
-    const {current, itemNumbers, filterText, sortParam} = this.props;
-    this.setState({endDate: value}, () => {
-      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, this.state.endDate, selectedStaff,
-        selectedCustomers, selectedPriorities, selectedStatuses, archive)
-    });
+    this.props.updateState({endDate: value})
   };
 
   onSelectStaff = checkedList => {
-    const {endDate, startDate, selectedCustomers, selectedPriorities, selectedStatuses, archive} = this.state;
-    const {current, itemNumbers, filterText, sortParam} = this.props;
-    this.setState({selectedStaff: checkedList}, () => {
-      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate, this.state.selectedStaff,
-        selectedCustomers, selectedPriorities, selectedStatuses, archive)
-    });
+    this.props.updateState({selectedStaff: checkedList})
   };
 
   onSelectCustomer = checkedList => {
-    const {endDate, selectedStaff, startDate, selectedPriorities, selectedStatuses, archive} = this.state;
-    const {current, itemNumbers, filterText, sortParam} = this.props;
-    this.setState({selectedCustomers: checkedList}, () => {
-      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate, selectedStaff,
-        this.state.selectedCustomers, selectedPriorities, selectedStatuses, archive)
-    });
+    this.props.updateState({selectedCustomers: checkedList})
   };
 
   onSelectPriorities = checkedList => {
-    const {endDate, selectedStaff, selectedCustomers, startDate, selectedStatuses, archive} = this.state;
-    const {current, itemNumbers, filterText, sortParam} = this.props;
-    this.setState({selectedPriorities: checkedList}, () => {
-      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate, selectedStaff,
-        selectedCustomers, this.state.selectedPriorities, selectedStatuses, archive)
-    });
+    this.props.updateState({selectedPriorities: checkedList})
   };
 
   onSelectStatuses = checkedList => {
-    const {endDate, selectedStaff, selectedCustomers, selectedPriorities, startDate, archive} = this.state;
-    const {current, itemNumbers, filterText, sortParam} = this.props;
-    this.setState({selectedStatuses: checkedList}, () => {
-      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate, selectedStaff,
-        selectedCustomers, selectedPriorities, this.state.selectedStatuses, archive)
-    });
+    this.props.updateState({selectedStatuses: checkedList})
   };
 
   onSetArchive = (e) => {
-    const {endDate, selectedStaff, selectedCustomers, selectedPriorities, selectedStatuses, startDate} = this.state;
-    const {current, itemNumbers, filterText, sortParam} = this.props;
-    this.setState({archive: e.target.checked}, () => {
-      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate, selectedStaff,
-        selectedCustomers, selectedPriorities, selectedStatuses, this.state.archive)
-    });
+    this.props.updateState({archive: e.target.checked})
   };
 
   onStaffReset = () => {
-    const {endDate, selectedCustomers, selectedPriorities, selectedStatuses, startDate, archive} = this.state;
-    const {current, itemNumbers, filterText, sortParam} = this.props;
-    this.setState({selectedStaff: []}, () => {
-      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
-        this.state.selectedStaff, selectedCustomers, selectedPriorities, selectedStatuses, archive)
-    })
+    this.props.updateState({selectedStaff: []})
   };
 
   onCustomerReset = () => {
-    const {endDate, selectedPriorities, selectedStaff, selectedStatuses, startDate, archive} = this.state;
-    const {current, itemNumbers, filterText, sortParam} = this.props;
-    this.setState({selectedCustomers: []}, () => {
-      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
-        selectedStaff, this.state.selectedCustomers, selectedPriorities, selectedStatuses, archive)
-    })
+    this.props.updateState({selectedCustomers: []})
   };
 
   onPrioritiesReset = () => {
-    const {endDate, selectedCustomers, selectedStaff, selectedStatuses, startDate, archive} = this.state;
-    const {current, itemNumbers, filterText, sortParam} = this.props;
-    this.setState({selectedPriorities: []}, () => {
-      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
-        selectedStaff, selectedCustomers, this.state.selectedPriorities, selectedStatuses, archive)
-    })
+    this.props.updateState({selectedPriorities: []})
   };
 
   onStatusReset = () => {
-    const {endDate, selectedCustomers, selectedStaff, selectedPriorities, startDate, archive} = this.state;
-    const {current, itemNumbers, filterText, sortParam} = this.props;
-    this.setState({selectedStatuses: []}, () => {
-      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
-        selectedStaff, selectedCustomers, selectedPriorities, this.state.selectedStatuses, archive)
-    })
+    this.props.updateState({selectedStatuses: []})
   };
 
   handleSearch = (value) => {
-    this.props.onGetCustomersData(null, null, value)
+    this.props.onSearchCustomers(value)
   };
 
   handleChange = (value) => {
-    const {endDate, selectedStatuses, selectedStaff, selectedPriorities, startDate, archive} = this.state;
-    const {current, itemNumbers, filterText, sortParam} = this.props;
-    this.setState({selectedCustomers: value}, () => {
-      this.props.onGetPaginatedData(current, itemNumbers, filterText, sortParam, startDate, endDate,
-        selectedStaff, this.state.selectedCustomers, selectedPriorities, selectedStatuses, archive)
-    });
+    this.props.updateState({selectedCustomers: value})
   };
 
   onFilterStaff = () => {
@@ -150,14 +76,17 @@ class FilterBar extends Component {
   render() {
     const {
       endDate, showMoreStaff, selectedStaff, selectedCustomers, selectedPriorities,
-      selectedStatuses, startDate, staffFilterText,
-      priorityFilterText, statusFilterText
-    } = this.state;
+      selectedStatuses, startDate, onToggleShowMoreStaff
+    } = this.props;
+
+    const {staffFilterText, priorityFilterText, statusFilterText} = this.state
     const staffs = showMoreStaff ? this.onFilterStaff() :
       this.onFilterStaff().length > 5 ? this.onFilterStaff().slice(0, 5) : this.onFilterStaff();
     const customers = this.props.customersList;
-    const priorities = this.props.priorities.filter(priority => priority.name.indexOf(priorityFilterText) !== -1);
-    const statuses = this.props.statuses.filter(status => status.name.indexOf(statusFilterText) !== -1);
+    console.log("this.props.priorities", this.props.priorities)
+    console.log("this.props.statuses", this.props.priorities)
+    const priorities = this.props.priorities.filter(priority => priority.name.toLowerCase().includes(priorityFilterText.toLowerCase()));
+    const statuses = this.props.statuses.filter(status => status.name.toLowerCase().includes(statusFilterText.toLowerCase()));
     return (
       <div className="gx-main-layout-sidenav gx-d-none gx-d-lg-flex">
         <CustomScrollbars className="gx-layout-sider-scrollbar">
@@ -188,10 +117,10 @@ class FilterBar extends Component {
             <div className="gx-mb-4">
               <div className="gx-d-flex gx-justify-content-between">
                 <h4>Filter By Staff</h4>
-                {selectedStaff.length > 0 ? <Button type="link" onClick={this.onStaffReset}>
-                  Reset</Button> : null}
+                {selectedStaff.length > 0 ? <div className="gx-link" onClick={this.onStaffReset}>
+                  Reset</div> : null}
               </div>
-              <Input type="text" value={staffFilterText}
+              <Input type="text" placeholder="TYpe to search Staff here" value={staffFilterText}
                      onChange={(e) => this.setState({staffFilterText: e.target.value})}/>
               <Checkbox.Group onChange={this.onSelectStaff} value={selectedStaff}>
                 {staffs.map(staff => {
@@ -207,7 +136,7 @@ class FilterBar extends Component {
               </Checkbox.Group>
               <div>
                 {this.onFilterStaff().length > 5 ?
-                  <Button type="link" onClick={this.onToggleShowMoreStaff}>
+                  <Button type="link" onClick={onToggleShowMoreStaff}>
                     {showMoreStaff ? "View Less" : `${this.onFilterStaff().length - 5} More`}
                   </Button> : null}
               </div>
@@ -215,8 +144,8 @@ class FilterBar extends Component {
             <div className="gx-mb-4">
               <div className="gx-d-flex gx-justify-content-between">
                 <h4>Select Customer</h4>
-                {selectedCustomers.length > 0 ? <Button type="link" onClick={this.onCustomerReset}>
-                  Reset</Button> : null}
+                {selectedCustomers.length > 0 ? <div className="gx-link" onClick={this.onCustomerReset}>
+                  Reset</div> : null}
               </div>
               <Select
                 style={{width: "100%"}}
@@ -231,12 +160,15 @@ class FilterBar extends Component {
                 notFoundContent={null}
               >
                 {customers.map(customer => {
-                  return <Option value={customer.id} key={customer.id}><span>{customer.avatar ?
-                    <Avatar className=" gx-size-30" src={customer.avatar.src}/> :
+                  return <Option value={customer.id} style={{minHeight: 33}} key={customer.id}><span>{customer.avatar ?
+                    <Avatar className=" gx-size-30" src={MEDIA_BASE_URL + customer.avatar.src}/> :
                     <Avatar className=" gx-size-30"
                             style={{backgroundColor: '#f56a00'}}>{customer.first_name[0].toUpperCase()}</Avatar>}</span>
-                    <span className="gx-mx-2">{customer.first_name + " " + customer.last_name}</span>
-                    <span>{customer.email}</span></Option>
+                    <>
+                      <span className="gx-mx-2 gx-inline-block">{customer.first_name + " " + customer.last_name}</span>
+                      <span>{customer.email}</span>
+                    </>
+                  </Option>
                 })}
               </Select>
             </div>
@@ -244,9 +176,9 @@ class FilterBar extends Component {
               <div className="gx-d-flex gx-justify-content-between">
                 <h4>Priority</h4>
                 {selectedPriorities.length > 0 ?
-                  <Button type="link" onClick={this.onPrioritiesReset}> Reset</Button> : null}
+                  <Button type="link" style={{height: 20}} onClick={this.onPrioritiesReset}> Reset</Button> : null}
               </div>
-              <Input type="text" value={priorityFilterText}
+              <Input type="text" placeholder="Search Priority" value={priorityFilterText}
                      onChange={(e) => this.setState({priorityFilterText: e.target.value})}/>
               <Checkbox.Group onChange={this.onSelectPriorities} value={selectedPriorities}>
                 {priorities.map(priority => {
@@ -261,7 +193,7 @@ class FilterBar extends Component {
                 <h4>Status</h4>
                 {selectedStatuses.length > 0 ? <Button type="link" onClick={this.onStatusReset}> Reset</Button> : null}
               </div>
-              <Input type="text" value={statusFilterText}
+              <Input type="text" placeholder="Search Status" value={statusFilterText}
                      onChange={(e) => this.setState({statusFilterText: e.target.value})}/>
               <Checkbox.Group onChange={this.onSelectStatuses} value={selectedStatuses}>
                 {statuses.map(status => {

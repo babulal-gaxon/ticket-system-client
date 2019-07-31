@@ -14,18 +14,22 @@ import {
   UPDATE_TICKET_PRIORITY,
   UPDATE_TICKET_STATUS
 } from "../../constants/TicketList";
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE, UPDATING_CONTENT} from "../../constants/ActionTypes";
 import {showErrorMessage} from "./Auth";
 import moment from "moment";
 
 
-export const onGetTickets = (currentPage, itemsPerPage, filterText, sortingParam, startDate, endDate, selectedStaff,
+export const onGetTickets = (updatingContent, currentPage, itemsPerPage, filterText, sortingParam, startDate, endDate, selectedStaff,
                              selectedCustomers, selectedPriorities, selectedStatuses, archive) => {
   const start = startDate ? moment(startDate).format("YYYY/MM/DD") : '';
   const end = endDate ? moment(endDate).format("YYYY/MM/DD") : '';
   console.log("selectedCustomers", selectedCustomers);
   return (dispatch) => {
-    dispatch({type: FETCH_START});
+    if (updatingContent) {
+      dispatch({type: UPDATING_CONTENT});
+    } else {
+      dispatch({type: FETCH_START});
+    }
     axios.get('/tickets', {
         params: {
           page: currentPage,
@@ -67,7 +71,7 @@ export const onAddTickets = (ticket, history) => {
         history.goBack();
         dispatch({type: SHOW_MESSAGE, payload: `The Ticket with Id #${data.data.id} has been added successfully`});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});

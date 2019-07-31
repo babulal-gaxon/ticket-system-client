@@ -1,5 +1,5 @@
 import axios from 'util/Api'
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE, UPDATING_CONTENT} from "../../constants/ActionTypes";
 import {
   ADD_NEW_ROLE,
   BULK_DELETE_ROLES,
@@ -10,9 +10,13 @@ import {
 } from "../../constants/RolesAndPermissions";
 
 
-export const onGetRoles = (currentPage, itemsPerPage, filterText) => {
+export const onGetRoles = (currentPage, itemsPerPage, filterText, updatingContent) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
+    if (updatingContent) {
+      dispatch({type: UPDATING_CONTENT});
+    } else {
+      dispatch({type: FETCH_START});
+    }
     axios.get('/roles', {
       params: {
         page: currentPage,

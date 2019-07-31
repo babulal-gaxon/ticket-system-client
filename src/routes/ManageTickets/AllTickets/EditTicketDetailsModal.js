@@ -77,6 +77,7 @@ class EditTicketDetailsModal extends Component {
   }
 }
 
+EditTicketDetailsModal = Form.create({})(EditTicketDetailsModal);
 export default EditTicketDetailsModal;
 
 EditTicketDetailsModal.defaultProps = {
