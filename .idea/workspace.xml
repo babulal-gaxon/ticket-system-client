@@ -4,159 +4,10 @@
     <bookmark url="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/FilterBar.js" line="70" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="677204dc-ee95-4dba-80b1-7606a1da6834" name="Default" comment="fix some extra codes">
+    <list default="true" id="677204dc-ee95-4dba-80b1-7606a1da6834" name="Default" comment="fix some issue">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AppNotification/NotificationItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AppNotification/data.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AppNotification/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CardBox/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CardBox/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ContainerHeader/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ContainerHeader/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MailNotification/NotificationItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MailNotification/data.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MailNotification/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Metric/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Metrics/ChartCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Metrics/EcommerceStatus.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Metrics/GrowthCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Metrics/IconWithTextCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Metrics/QueriesCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Metrics/TotalEncomeCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Metrics/TrafficRaiseCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Metrics/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SearchBox/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SearchBox/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/WidgetHeader/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/AayurvedaCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/BuildingCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/CampaignCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/DryFruit.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/FlyingBird.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/FriendshipCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/GreenStepCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/GreenStepItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/IconCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/IncreamentCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/NewPhotos.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/Newsletter.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/PhotosCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/Productivity.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/ProjectWidget.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/RoadMap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/RoadMapItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/SmartHomeCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/SocialMedia.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/ToolTheDay.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/UnreadMessagesCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/UserCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/WorkStatusCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Widgets/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/callouts/Callouts.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/ChatUserList/UserCell/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/ChatUserList/UserCell/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/ChatUserList/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/ChatUserList/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/ContactList/UserCell/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/ContactList/UserCell/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/ContactList/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/ContactList/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/Conversation/ReceivedMessageCell/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/Conversation/ReceivedMessageCell/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/Conversation/SentMessageCell/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/Conversation/SentMessageCell/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/Conversation/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/chat/Conversation/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/contact/AddContact/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/contact/ContactCard/UserCell/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/contact/ContactCard/UserCell/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/contact/ContactCard/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/contact/ContactCard/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/contact/ContactList/ContactCell/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/contact/ContactList/ContactCell/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/contact/ContactList/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/contact/ContactList/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/ActivityItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/BubbleMap/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/BubbleMap/static/world-50m.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/BubbleMap/static/world-most-populous-cities.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/GrowthCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/IconWithTextCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/LineIndicator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/NewCustomers.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/Overview.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/RecentActivity.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/SiteAudience.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/SiteVisit.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/TaskByStatus.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/TaskItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/TaskList.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/TicketByDepartment.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/TicketItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/TicketList.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/TotalRevenueCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/WelComeCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/BalanceHistory.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/ChartCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/CryptoNews.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/CryptoNewsItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/CurrencyCalculator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/DownloadMobileApps.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/LineIndicator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/OrderHistory.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/Portfolio.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/RewardCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/SendMoney.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Listing/ChartCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Listing/CurrentPlan.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Listing/DealsClosedCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Listing/PropertiesCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Listing/PropertiesItemCard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Listing/RecentItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Listing/UserImages.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/eCommerce/ProductItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/mail/Compose/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/mail/MailDetail/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/mail/MailDetail/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/mail/MailList/MailListItem/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/mail/MailList/MailListItem/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/mail/MailList/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/mail/MailList/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/About/AboutItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/About/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/Biography/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/Contact/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/Events/EventItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/Events/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/Friends/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/Photos/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/ProfileHeader/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/timeline/DefaultTimeLineItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/timeline/WithIconTimeLineItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/todo/ToDoDetail/ConversationCell.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/todo/ToDoDetail/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/todo/ToDoDetail/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/todo/ToDoList/ToDoItem/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/todo/ToDoList/ToDoItem/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/todo/ToDoList/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/todo/ToDoList/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/Communities/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/DisplayDate/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/Events/EventItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/Events/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/Friends/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/Interests/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/NewsList/NewsItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/NewsList/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/Photos/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/PostList/CommentBox.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/PostList/GridImage.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/PostList/MediaList.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/PostList/PostItem.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/PostList/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/Profile/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/wall/WriteBox/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/Topbar/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Topbar/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -172,78 +23,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="80" column="20" selection-start-line="80" selection-start-column="20" selection-end-line="80" selection-end-column="20" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="283" column="33" selection-start-line="283" selection-start-column="33" selection-end-line="283" selection-end-column="33" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="446">
-              <caret line="104" column="7" selection-start-line="104" selection-start-column="7" selection-end-line="104" selection-end-column="7" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="48" column="46" selection-start-line="48" selection-start-column="46" selection-end-line="48" selection-end-column="46" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/Dashboard/DashboardInfo/TicketList.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
-              <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/AppModuleHeader/index.js">
           <provider selected="true" editor-type-id="text-editor" />
@@ -261,20 +40,71 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/containers/Topbar/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="107" column="61" selection-start-line="107" selection-start-column="61" selection-end-line="107" selection-end-column="61" />
+            <state relative-caret-position="392">
+              <caret line="104" column="62" lean-forward="true" selection-start-line="104" selection-start-column="62" selection-end-line="104" selection-end-column="62" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/AssignedTickets/index.js">
+        <entry file="file://$PROJECT_DIR$/src/routes/Dashboard/DashboardInfo/TicketList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="34" column="35" selection-start-line="34" selection-start-column="35" selection-end-line="34" selection-end-column="35" />
+            <state relative-caret-position="493">
+              <caret line="29" column="52" lean-forward="true" selection-start-line="29" selection-start-column="52" selection-end-line="29" selection-end-column="52" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/Dashboard/DashboardInfo/data.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="612">
+              <caret line="78" column="99" lean-forward="true" selection-start-line="78" selection-start-column="99" selection-end-line="78" selection-end-column="99" />
+              <folding>
+                <element signature="e#0#42#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="587">
+              <caret line="289" column="100" selection-start-line="289" selection-start-column="100" selection-end-line="289" selection-end-column="100" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="667">
+              <caret line="175" column="86" selection-start-line="175" selection-start-column="86" selection-end-line="175" selection-end-column="86" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketRow.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="281">
+              <caret line="66" selection-start-line="66" selection-end-line="66" />
+              <folding>
+                <element signature="e#0#70#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -291,8 +121,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onToggleShowMoreStaff</find>
-      <find>handleSearch</find>
       <find>status</find>
       <find>priorities</find>
       <find>onFilterStaff</find>
@@ -321,6 +149,8 @@
       <find>company_logo</find>
       <find>SearchBox</find>
       <find>onSelectOption</find>
+      <find>record.assigned_to</find>
+      <find>attachment</find>
     </findStrings>
     <replaceStrings>
       <replace>onUserSignUp</replace>
@@ -372,7 +202,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffRow.js" />
         <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerDetails/CustomerTickets.js" />
         <option value="$PROJECT_DIR$/src/routes/Customers/index.js" />
         <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerDetails/index.js" />
@@ -403,7 +232,6 @@
         <option value="$PROJECT_DIR$/src/appRedux/actions/Customers.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/FilterBar.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketRow.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/TicketAssigning.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/EditTicketDetailsModal.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/ConversationCell.js" />
@@ -417,12 +245,14 @@
         <option value="$PROJECT_DIR$/src/appRedux/reducers/Auth.js" />
         <option value="$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/StaffWithSelectedRole.js" />
         <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js" />
-        <option value="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js" />
         <option value="$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js" />
         <option value="$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js" />
         <option value="$PROJECT_DIR$/src/components/UserInfo/index.js" />
         <option value="$PROJECT_DIR$/src/containers/Topbar/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/Dashboard/DashboardInfo/data.js" />
+        <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketRow.js" />
+        <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js" />
+        <option value="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js" />
       </list>
     </option>
   </component>
@@ -457,28 +287,7 @@
               <item name="ticket-system" type="b2602c69:ProjectViewProjectNode" />
               <item name="ticket-system" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="AppModuleHeader" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="CircularProgress" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="UserInfo" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -819,11 +628,25 @@
       <option name="project" value="LOCAL" />
       <updated>1564579771843</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="remove some extra files">
+      <created>1564580653784</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1564580653784</updated>
+    </task>
+    <task id="LOCAL-00035" summary="fix some issue">
+      <created>1564580876329</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1564580876329</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="327687000" />
+    <option name="totallyTimeSpent" value="328762000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -895,7 +718,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="working on ticket system" />
     <MESSAGE value="fixed build issue" />
     <MESSAGE value="init customer panel" />
     <MESSAGE value="fixed layout style" />
@@ -917,176 +739,13 @@
     <MESSAGE value="worked on roles and permissions and tickets" />
     <MESSAGE value="fix staff ticket issue" />
     <MESSAGE value="add user in header" />
-    <MESSAGE value="fix some issue" />
     <MESSAGE value="optimize import" />
     <MESSAGE value="fix some extra codes" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix some extra codes" />
+    <MESSAGE value="remove some extra files" />
+    <MESSAGE value="fix some issue" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix some issue" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/routes/Customers/CustomersLabel/CustomerLabelRow.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="634">
-          <caret line="65" column="66" lean-forward="true" selection-start-line="65" selection-start-column="66" selection-end-line="65" selection-end-column="66" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/CannedResponses.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="25" column="62" selection-start-line="25" selection-start-column="62" selection-end-line="25" selection-end-column="62" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/StaffRow.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="115" column="6" selection-start-line="106" selection-start-column="3" selection-end-line="115" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#61#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/SupportStaff.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="89" column="7" selection-start-line="89" selection-start-column="7" selection-end-line="89" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerRow.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="515">
-          <caret line="124" column="20" lean-forward="true" selection-start-line="124" selection-start-column="20" selection-end-line="124" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#61#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-947">
-          <caret line="137" column="97" selection-start-line="137" selection-start-column="97" selection-end-line="137" selection-end-column="97" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/RoleRow.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/styles/global/variables.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="84" column="1" selection-start-line="84" selection-start-column="1" selection-end-line="84" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/style/themes/default.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="246" column="1" selection-start-line="246" selection-start-column="1" selection-end-line="246" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="237" column="47" lean-forward="true" selection-start-line="237" selection-start-column="47" selection-end-line="238" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/RolesAndPermissions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="18" column="5" lean-forward="true" selection-start-line="12" selection-start-column="64" selection-end-line="18" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/tickups loader.svg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/TicketList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="21" column="45" selection-start-line="21" selection-start-column="45" selection-end-line="21" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/Customers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="50" column="30" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/FilterBar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="65" column="4" lean-forward="true" selection-start-line="65" selection-start-column="4" selection-end-line="65" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1021">
-          <caret line="259" column="39" lean-forward="true" selection-start-line="259" selection-start-column="39" selection-end-line="259" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketRow.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="63" column="28" lean-forward="true" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#70#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/EditTicketDetailsModal.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-430">
@@ -1256,26 +915,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="283" column="33" selection-start-line="283" selection-start-column="33" selection-end-line="283" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="104" column="7" selection-start-line="104" selection-start-column="7" selection-end-line="104" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -1318,16 +957,6 @@
     <entry file="file://$PROJECT_DIR$/src/components/AppNotification/data.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Dashboard/DashboardInfo/TicketList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Metric/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1350,10 +979,108 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/layouts/below header.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/layouts/boxed.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/layouts/dark horizontal.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/layouts/inside header horizontal.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/layouts/vertical no header.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/layouts/top to header.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/layouts/simple horizontal inside menu.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/widget/birds.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/widget/bread.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/widget/building.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/widget/disc.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/widget/glass.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/widget/noodles.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/pentagon.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/pentagon_1.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/images/marker.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/Topbar/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="107" column="61" selection-start-line="107" selection-start-column="61" selection-end-line="107" selection-end-column="61" />
+        <state relative-caret-position="392">
+          <caret line="104" column="62" lean-forward="true" selection-start-line="104" selection-start-column="62" selection-end-line="104" selection-end-column="62" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Dashboard/DashboardInfo/TicketList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="52" lean-forward="true" selection-start-line="29" selection-start-column="52" selection-end-line="29" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketRow.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="66" selection-start-line="66" selection-end-line="66" />
+          <folding>
+            <element signature="e#0#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Dashboard/DashboardInfo/data.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="78" column="99" lean-forward="true" selection-start-line="78" selection-start-column="99" selection-end-line="78" selection-end-column="99" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="587">
+          <caret line="289" column="100" selection-start-line="289" selection-start-column="100" selection-end-line="289" selection-end-column="100" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="667">
+          <caret line="175" column="86" selection-start-line="175" selection-start-column="86" selection-end-line="175" selection-end-column="86" />
         </state>
       </provider>
     </entry>

@@ -287,7 +287,7 @@ class TicketDetail extends Component {
                         onChange={this.onEditTags}/>
                 <div className="gx-my-3">Attachments</div>
                 {currentTicket.attachments.length > 0 ? currentTicket.attachments.map(attachment => {
-                  return <Avatar shape="square" icon="user" key={attachment.id} src={attachment.src}
+                  return <Avatar shape="square" icon="user" key={attachment.id} src={MEDIA_BASE_URL+attachment.src}
                                  className="gx-mr-2 gx-size-100"/>
                 }) : <div>No attachments added with this ticket.</div>}
               </div>

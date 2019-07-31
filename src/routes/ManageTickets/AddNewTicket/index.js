@@ -10,6 +10,7 @@ import TicketAssigning from "./TicketAssigning";
 import TicketAttachments from "./TicketAttachments";
 import axios from 'util/Api'
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
+import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -172,7 +173,7 @@ class AddNewTicket extends Component {
                     {customersList.map(customer => {
                       return <Option value={customer.id} key={customer.id}>
                         <span>{customer.avatar ?
-                          <Avatar className="gx-mr-3 gx-size-30" src={customer.avatar.src}/> :
+                          <Avatar className="gx-mr-3 gx-size-30" src={MEDIA_BASE_URL + customer.avatar.src}/> :
                           <Avatar className="gx-mr-3 gx-size-30"
                                   style={{backgroundColor: '#f56a00'}}>{customer.first_name[0].toUpperCase()}</Avatar>}</span>
                         <span className="gx-mx-5">{customer.first_name + " " + customer.last_name}</span>
