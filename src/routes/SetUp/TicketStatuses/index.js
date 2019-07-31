@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd/lib/index";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table} from "antd/lib/index";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -176,7 +176,6 @@ class TicketStatuses extends Component {
   };
 
 
-
   onDeletePopUp = (recordId) => {
     return <Popconfirm
       title="Are you sure to delete this Status?"
@@ -277,7 +276,7 @@ class TicketStatuses extends Component {
                         onAddTicketStatus={this.props.onAddTicketStatus}
                         currentStatus={this.state.currentStatus}
                         onEditTicketStatus={this.props.onEditTicketStatus}
-                        /> : null}
+          /> : null}
       </div>
     );
   }

@@ -77,7 +77,6 @@ class CustomersLabel extends Component {
   };
 
 
-
   onShowBulkActiveConfirm = () => {
     if (this.state.selectedLabels.length !== 0) {
       confirm({
@@ -158,7 +157,6 @@ class CustomersLabel extends Component {
       </Button>
     </Dropdown>
   };
-
 
 
   onShowItemOptions = () => {

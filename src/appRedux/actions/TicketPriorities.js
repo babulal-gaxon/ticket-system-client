@@ -51,7 +51,7 @@ export const onAddTicketPriority = (priority) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Priority has been added successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -72,7 +72,7 @@ export const onEditTicketPriority = (priority) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Priority details has been updated successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -90,7 +90,7 @@ export const onBulkActivePriorities = (priorityIds) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Status of Priority(s) has been changed to Active successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -108,7 +108,7 @@ export const onBulkInActivePriorities = (priorityIds) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Status of Priority(s) has been changed to Disabled successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -126,7 +126,7 @@ export const onBulkDeletePriorities = (priorityIds) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Priority(s) has been deleted successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});

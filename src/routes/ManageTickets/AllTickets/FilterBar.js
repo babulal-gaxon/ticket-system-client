@@ -79,12 +79,12 @@ class FilterBar extends Component {
       selectedStatuses, startDate, onToggleShowMoreStaff
     } = this.props;
 
-    const {staffFilterText, priorityFilterText, statusFilterText} = this.state
+    const {staffFilterText, priorityFilterText, statusFilterText} = this.state;
     const staffs = showMoreStaff ? this.onFilterStaff() :
       this.onFilterStaff().length > 5 ? this.onFilterStaff().slice(0, 5) : this.onFilterStaff();
     const customers = this.props.customersList;
-    console.log("this.props.priorities", this.props.priorities)
-    console.log("this.props.statuses", this.props.priorities)
+    console.log("this.props.priorities", this.props.priorities);
+    console.log("this.props.statuses", this.props.priorities);
     const priorities = this.props.priorities.filter(priority => priority.name.toLowerCase().includes(priorityFilterText.toLowerCase()));
     const statuses = this.props.statuses.filter(status => status.name.toLowerCase().includes(statusFilterText.toLowerCase()));
     return (

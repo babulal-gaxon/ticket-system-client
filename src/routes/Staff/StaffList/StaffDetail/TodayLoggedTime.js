@@ -37,7 +37,7 @@ const TodayLoggedTime = () => {
           </div>
           <div className=" gx-align-self-end">
             <LineChart width={135} height={35} data={data}>
-              <Line type="monotone" dataKey="pv" stroke="#8884d8" strokeWidth={2} />
+              <Line type="monotone" dataKey="pv" stroke="#8884d8" strokeWidth={2}/>
             </LineChart>
           </div>
         </div>

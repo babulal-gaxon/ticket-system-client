@@ -51,7 +51,7 @@ export const onAddLabelsData = (label) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The New Label has been added successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -70,7 +70,7 @@ export const onDeleteLabel = (labelId) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Selected Label has been deleted successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -88,7 +88,7 @@ export const onChangeToActiveStatus = (labelId) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Status of Label(s) has been changed to Active successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -106,7 +106,7 @@ export const onChangeToDisableStatus = (labelId) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Status of Label(s) has been changed to Disabled successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -127,7 +127,7 @@ export const onEditLabelsData = (label) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Label details has been edited successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});

@@ -77,7 +77,7 @@ export const onSendSuperAdminInfo = (info) => {
         dispatch({type: OPEN_PIN_MODAL, payload: true});
         dispatch({type: SHOW_MESSAGE, payload: "The Admin information has been saved successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -103,7 +103,7 @@ export const onSetGeneralInfo = (info, token, nextStep) => {
         dispatch({type: SHOW_MESSAGE, payload: "The general information has been saved successfully"});
         nextStep();
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -161,7 +161,7 @@ export const onResendPin = (email) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Pin has been sent successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});

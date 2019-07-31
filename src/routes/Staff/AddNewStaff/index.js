@@ -14,7 +14,6 @@ import {Breadcrumb, Divider, Select} from "antd";
 import {Link} from "react-router-dom";
 import {onGetRoles} from "../../../appRedux/actions/RolesAndPermissions";
 import ImageUpload from "./ImageUpload";
-import CustomerImageUpload from "../../Customers/AllCustomers/CustomerImageUpload";
 
 const {Option} = Select;
 const {confirm} = Modal;
@@ -72,11 +71,11 @@ class AddNewStaff extends Component {
 
   onStaffAdd = () => {
     let {profile_pic} = this.state;
-      if (this.props.currentStaff === null) {
-        this.props.onAddSupportStaff({...this.state, profile_pic}, this.props.history)
-      } else {
-        this.props.onEditSupportStaff({...this.state}, this.props.history);
-      }
+    if (this.props.currentStaff === null) {
+      this.props.onAddSupportStaff({...this.state, profile_pic}, this.props.history)
+    } else {
+      this.props.onEditSupportStaff({...this.state}, this.props.history);
+    }
   };
 
   updateProfilePic = (profile_pic) => {
@@ -141,7 +140,7 @@ class AddNewStaff extends Component {
   };
 
   render() {
-    console.log("")
+    console.log("");
     const {getFieldDecorator} = this.props.form;
     const {mobile, hourly_rate, account_status, departments_ids, role_id, first_name, last_name, email, password, designation} = this.state;
     const deptOptions = this.onDepartmentSelectOption();

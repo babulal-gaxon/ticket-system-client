@@ -3,7 +3,7 @@ import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import React from "react";
 import Permissions from "../../../util/Permissions";
 
-const onShowRowDropdown = (currentCompany,context) => {
+const onShowRowDropdown = (currentCompany, context) => {
   const menu = (
     <Menu>
       {(Permissions.canCompanyEdit()) ?
@@ -88,7 +88,7 @@ const CompaniesRow = (context) => {
           e.stopPropagation();
           e.preventDefault();
         }}>
-            {onShowRowDropdown(record,context)}
+            {onShowRowDropdown(record, context)}
       </span>
       },
     },
