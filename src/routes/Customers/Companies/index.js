@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Avatar, Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tooltip} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Select, Table} from "antd";
 import AddNewCompany from "./AddNewCompany";
 import {
   onAddNewCompany,
@@ -12,7 +12,7 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import Permissions from "../../../util/Permissions";
-import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
+import CompaniesRow from "./CompanyRow";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -38,15 +38,15 @@ class Companies extends Component {
     this.setState({showAddNewModal: !this.state.showAddNewModal})
   };
 
-  onGetPaginatedData = (currentPage, itemsPerPage, filterText) => {
+  onGetPaginatedData = (currentPage, itemsPerPage, filterText, updatingContent) => {
     if (Permissions.canCompanyView()) {
-      this.props.onGetCompaniesData(currentPage, itemsPerPage, filterText);
+      this.props.onGetCompaniesData(currentPage, itemsPerPage, filterText, updatingContent);
     }
   };
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetPaginatedData(1, this.state.itemNumbers, this.state.filterText);
+      this.onGetPaginatedData(1, this.state.itemNumbers, this.state.filterText, true);
     })
   };
 
@@ -56,7 +56,7 @@ class Companies extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -64,7 +64,7 @@ class Companies extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1}, () => {
-        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText)
+        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
       });
     } else {
       return null;
@@ -74,7 +74,7 @@ class Companies extends Component {
   onCurrentDecrement = () => {
     if (this.state.current !== 1) {
       this.setState({current: this.state.current - 1}, () => {
-        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText)
+        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
       });
     } else {
       return null;
@@ -89,97 +89,6 @@ class Companies extends Component {
     </Select>
   };
 
-  onCompaniesRowData = () => {
-    return [
-      {
-        title: 'Company Name',
-        dataIndex: 'companyName',
-        render: (text, record) => {
-          return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
-              {record.avatar ?
-                <Avatar className="gx-mr-3 gx-size-60" src={MEDIA_BASE_URL + record.avatar.src}/> :
-                <Avatar className="gx-mr-3 gx-size-60 gx-fs-xxl"
-                        style={{backgroundColor: '#f56a00'}}>{record.company_name[0].toUpperCase()}</Avatar>}
-              <div className="gx-media-body">
-                <span className="gx-mb-0 gx-text-capitalize">{record.company_name}</span>
-              </div>
-            </div>
-          )
-        }
-      },
-      {
-        title: 'Website',
-        dataIndex: 'website',
-        render: (text, record) => {
-          return <span className="gx-text-grey">{record.website ? record.website : "NA"}</span>
-        },
-      },
-      {
-        title: 'Company Members',
-        dataIndex: 'companyMembers',
-        render: (text, record) => {
-          return <span className="gx-text-grey">
-            {record.members && record.members.length > 0 ?
-              record.members.map(member => {
-                return member.avatar ?
-                  <Tooltip key={member.id} placement="top" title={member.first_name + " " + member.last_name}>
-                    <Avatar className="gx-size-50" src={MEDIA_BASE_URL + member.avatar.src}/>
-                  </Tooltip>
-                  :
-                  <Tooltip key={member.id} placement="top" title={member.first_name + " " + member.last_name}>
-                    <Avatar className=" gx-size-50" style={{backgroundColor: '#f56a00'}}>
-                      {member.first_name[0].toUpperCase()}
-                    </Avatar>
-                  </Tooltip>
-              }) : <span>No Member</span>}
-              </span>
-        },
-      },
-      {
-        title: '',
-        dataIndex: '',
-        key: 'empty',
-        render: (text, record) => {
-          return <span onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-          }}>
-            {this.onShowRowDropdown(record)}
-      </span>
-        },
-      },
-    ];
-  };
-
-  onShowRowDropdown = (currentCompany) => {
-    const menu = (
-      <Menu>
-        {(Permissions.canCompanyEdit()) ?
-          <Menu.Item key="2" onClick={() => this.onEditCompanyOption(currentCompany)}>
-            Edit
-          </Menu.Item> : null}
-        {(Permissions.canCompanyDelete()) ?
-          <Menu.Item key="4">
-            <Popconfirm
-              title="Are you sure to delete this Company?"
-              onConfirm={() => {
-                this.props.onDeleteCompanies({ids: [currentCompany.id]});
-                this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
-              }}
-              okText="Yes"
-              cancelText="No">
-              Delete
-            </Popconfirm>
-          </Menu.Item> : null}
-      </Menu>
-    );
-    return (
-      <Dropdown overlay={menu} trigger={['click']}>
-        <i className="icon icon-ellipse-h"/>
-      </Dropdown>
-    )
-  };
-
   onShowBulkDeleteConfirm = () => {
     if (this.state.selectedCompanies.length !== 0) {
       confirm({
@@ -189,7 +98,7 @@ class Companies extends Component {
             ids: this.state.selectedCompanies
           };
           this.props.onDeleteCompanies(obj);
-          this.onGetPaginatedData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
+          this.onGetPaginatedData(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true);
           this.setState({selectedRowKeys: [], selectedCustomers: []});
         }
       })
@@ -222,7 +131,7 @@ class Companies extends Component {
 
   onPageChange = page => {
     this.setState({current: page}, () => {
-      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -237,11 +146,10 @@ class Companies extends Component {
   render() {
     const companiesList = this.props.companiesList;
     const selectedRowKeys = this.state.selectedRowKeys;
-    let ids;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
-        ids = selectedRows.map(selectedRow => {
+        const ids = selectedRows.map(selectedRow => {
           return selectedRow.id
         });
         this.setState({selectedCompanies: ids, selectedRowKeys: selectedRowKeys})
@@ -287,8 +195,10 @@ class Companies extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowKey="id" rowSelection={rowSelection} columns={this.onCompaniesRowData()}
-                 dataSource={companiesList} className="gx-mb-4"
+          <Table rowKey="id" className="gx-mb-4" rowSelection={rowSelection}
+                 columns={CompaniesRow(this)}
+                 dataSource={companiesList}
+                 loading={this.props.updatingContent}
                  pagination={{
                    pageSize: this.state.itemNumbers,
                    current: this.state.current,
@@ -313,9 +223,10 @@ class Companies extends Component {
   }
 }
 
-const mapStateToProps = ({companies}) => {
+const mapStateToProps = ({companies, commonData}) => {
   const {companiesList, totalItems} = companies;
-  return {companiesList, totalItems};
+  const {updatingContent} = commonData;
+  return {companiesList, totalItems, updatingContent};
 };
 
 export default connect(mapStateToProps, {

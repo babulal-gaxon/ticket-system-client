@@ -1,5 +1,5 @@
 import axios from 'util/Api'
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE, UPDATING_CONTENT} from "../../constants/ActionTypes";
 import {
   ADD_LABELS_DATA,
   DELETE_LABEL,
@@ -10,9 +10,13 @@ import {
 } from "../../constants/Labels";
 
 
-export const onGetLabelData = (currentPage, itemsPerPage, searchData) => {
+export const onGetLabelData = (currentPage, itemsPerPage, searchData, updatingContent) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
+    if (updatingContent) {
+      dispatch({type: UPDATING_CONTENT});
+    } else {
+      dispatch({type: FETCH_START});
+    }
     axios.get('/setup/labels', {
       params: {
         page: currentPage,

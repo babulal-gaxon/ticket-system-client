@@ -88,7 +88,7 @@ class SidebarContent extends Component {
                     <IntlMessages id="sidebar.dashboard.companies"/></Link>
                 </Menu.Item>
 
-                <Menu.Item key="customers/customersLabel">
+                <Menu.Item key="customers/labels">
                   <Link to="/customers/labels"><i className="icon icon-tag"/>
                     <IntlMessages id="sidebar.dashboard.customers.label"/></Link>
                 </Menu.Item>

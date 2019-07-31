@@ -1,10 +1,14 @@
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE, UPDATING_CONTENT} from "../../constants/ActionTypes";
 import axios from 'util/Api'
 import {ADD_NEW_COMPANY, DELETE_COMPANIES, EDIT_COMPANY_DETAILS, GET_COMPANY_DATA} from "../../constants/Companies";
 
-export const onGetCompaniesData = (currentPage, itemsPerPage, filterData) => {
+export const onGetCompaniesData = (currentPage, itemsPerPage, filterData, updatingContent) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
+    if (updatingContent) {
+      dispatch({type: UPDATING_CONTENT});
+    } else {
+      dispatch({type: FETCH_START});
+    }
     axios.get(`/setup/customer/companies`, {
         params: {
           page: currentPage,

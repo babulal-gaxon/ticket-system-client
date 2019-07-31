@@ -16,7 +16,7 @@ class AddNewCompany extends Component {
     } else {
       const selectedCompany = this.props.currentCompany;
       this.state = {
-        ...selectedCompany.avatar,
+        ...selectedCompany,
         logoName: selectedCompany.avatar ? selectedCompany.avatar.title : "",
         fileList: []
       };
