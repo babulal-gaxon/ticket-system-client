@@ -2,6 +2,7 @@ import axios from 'util/Api'
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE, UPDATING_CONTENT} from "../../constants/ActionTypes";
 import {
   ADD_NEW_CUSTOMER,
+  CUSTOMER_STATUS_CHANGE,
   DELETE_CUSTOMERS,
   DISABLE_CUSTOMER,
   EDIT_CUSTOMER_DETAILS,
@@ -101,19 +102,19 @@ export const onEditCustomer = (customer, history) => {
   }
 };
 
-export const onDisableCustomer = (customer) => {
+export const onChangeCustomerStatus = (customerId, status, updatingContent) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.put(`/setup/customers/${customer.id}`, customer).then(({data}) => {
-      console.info("data:", data);
+    if (updatingContent) {
+      dispatch({type: UPDATING_CONTENT});
+    } else {
+      dispatch({type: FETCH_START});
+    }
+    axios.post(`/setup/customers/status/${status}`, customerId).then(({data}) => {
       if (data.success) {
-        console.log(" sending data", data.data);
-        dispatch({type: DISABLE_CUSTOMER, payload: data.data});
+        dispatch({type: CUSTOMER_STATUS_CHANGE, payload: {id:data.data, status: status}});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({
-          type: SHOW_MESSAGE,
-          payload: "The Status of selected Customer has been changed to disabled successfully"
-        });
+        dispatch({type: SHOW_MESSAGE,
+          payload: `The Status of Customer has been changed to ${status === 0 ? "disabled" : "enabled"} successfully`});
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
       }

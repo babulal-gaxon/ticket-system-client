@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import Widget from "../../../components/Widget";
 import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Select, Table} from "antd";
 import {
+  onChangeCustomerStatus,
   onDeleteCustomers,
-  onDisableCustomer,
   onGetCustomerFilterOptions,
   onGetCustomersData,
   onResetPassword,
@@ -128,11 +128,12 @@ class AllCustomers extends Component {
   };
 
 
+  onDisableCustomerStatus = (customerId) => {
+    this.props.onChangeCustomerStatus({ids: [customerId]}, 0, true);
+  };
 
-  onDisableCustomerCall = (currentCustomer) => {
-    const selectedCustomer = this.props.customersList.find(customer => customer.id === currentCustomer);
-    selectedCustomer.status = 0;
-    this.props.onDisableCustomer(selectedCustomer);
+  onEnableCustomerStatus = (customerId) => {
+    this.props.onChangeCustomerStatus({ids: [customerId]}, 1, true);
   };
 
   onSelectCustomer = record => {
@@ -282,7 +283,7 @@ export default connect(mapPropsToState, {
   onGetCustomersData,
   onDeleteCustomers,
   setCurrentCustomer,
-  onDisableCustomer,
+  onChangeCustomerStatus,
   onResetPassword,
   onGetCustomerFilterOptions,
 })(AllCustomers);

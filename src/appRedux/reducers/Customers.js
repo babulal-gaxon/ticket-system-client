@@ -1,7 +1,7 @@
 import {
   ADD_NEW_CUSTOMER,
+  CUSTOMER_STATUS_CHANGE,
   DELETE_CUSTOMERS,
-  DISABLE_CUSTOMER,
   EDIT_CUSTOMER_DETAILS,
   GET_CUSTOMER_COMPANY,
   GET_CUSTOMER_FILTER_OPTIONS,
@@ -53,12 +53,19 @@ export default (state = initialState, action) => {
         customersList: updateCustomers
       };
 
-    case DISABLE_CUSTOMER:
-      const acitveCustomers = state.customersList.map((customer) => customer.id === action.payload.id ? action.payload : customer);
+    case CUSTOMER_STATUS_CHANGE:
+      const updatedCustomer = state.customersList.map(customer => {
+        if (action.payload.id.indexOf(customer.id) !== -1) {
+          customer.status = action.payload.status;
+          return customer;
+        }
+        return customer;
+      });
       return {
         ...state,
-        customersList: acitveCustomers
+        customersList: updatedCustomer
       };
+
 
     case DELETE_CUSTOMERS:
       const upCustomers = state.customersList.filter(customer => {
