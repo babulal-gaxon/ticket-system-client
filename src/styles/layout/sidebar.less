@@ -134,10 +134,10 @@
 
 .@{class-prefix}-layout-sider-scrollbar {
 
-  height: calc(100vh ~"-" 170px) !important;
+  height: calc(100vh ~"-" 80px) !important;
 
   .ant-layout-sider-collapsed & {
-    height: calc(100vh~"-"@layout-header-height + 91px) !important;
+    height: calc(100vh~"-"@layout-header-height) !important;
 
     .framed-layout & {
       height: calc(100vh~"-"@layout-header-height + 2 * @framed-layout-base + 91px) !important;
@@ -190,9 +190,8 @@
 }
 
 .@{class-prefix}-sidebar-notifications {
-  padding: 18px 10px 0 20px;
+  padding: 10px 10px 0 20px;
   margin: 0 0 10px 0;
-  border-bottom: @border-style-base @border-width-base @border-color;
 
   .ant-layout-sider-dark &,
   .gx-drawer-sidebar-dark & {

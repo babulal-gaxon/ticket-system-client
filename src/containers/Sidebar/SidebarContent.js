@@ -49,9 +49,6 @@ class SidebarContent extends Component {
     return (
       <div className="gx-main-layout-content">
         <SidebarLogo/>
-        <div className={`gx-sidebar-notifications ${this.getNoHeaderClass(navStyle)}`}>
-          <UserProfile/>
-        </div>
         <CustomScrollbars className="gx-layout-sider-scrollbar">
 
           <div className="gx-sidebar-content">
