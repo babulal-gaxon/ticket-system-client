@@ -1,6 +1,7 @@
 import {Avatar, Tag, Tooltip} from "antd";
 import React from "react";
 import moment from "moment";
+import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 
 export const ticketListcolumns = [
@@ -19,7 +20,7 @@ export const ticketListcolumns = [
           {record.assigned_by ?
             <Tooltip placement="top" title={record.assigned_by.first_name + " " + record.assigned_by.last_name}>
               {record.assigned_by.avatar ?
-                <Avatar className="gx-mr-3 gx-size-50" src={record.assigned_by.avatar.src}/> :
+                <Avatar className="gx-mr-3 gx-size-50" src={MEDIA_BASE_URL + record.assigned_by.avatar.src}/> :
                 <Avatar className="gx-mr-3 gx-size-50"
                         style={{backgroundColor: '#f56a00'}}>{record.assigned_by.first_name[0].toUpperCase()}</Avatar>}
             </Tooltip> : <Avatar className="gx-size-50 gx-mr-3" src="https://via.placeholder.com/150x150"/>}
@@ -49,13 +50,13 @@ export const ticketListcolumns = [
             <Tooltip placement="top" title={record.assigned_to.first_name + " " + record.assigned_to.last_name}
                      key={record.assigned_to.user_id}>
               {record.assigned_to.avatar ?
-                <Avatar className="gx-mr-3 gx-size-36" src={record.assigned_to.avatar.src}/> :
+                <Avatar className="gx-mr-3 gx-size-36" src={MEDIA_BASE_URL + record.assigned_to.avatar.src}/> :
                 <Avatar className="gx-mr-3 gx-size-36"
                         style={{backgroundColor: '#f56a00'}}>{record.assigned_to.first_name[0].toUpperCase()}</Avatar>}
             </Tooltip>
             :
             <Tooltip placement="top" title="Not assigned">
-              <Avatar className="gx-size-36"/>
+              Not assigned
             </Tooltip>}
         </div>
       )

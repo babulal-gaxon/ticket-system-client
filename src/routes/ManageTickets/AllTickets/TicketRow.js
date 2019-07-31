@@ -65,7 +65,6 @@ const TicketRow = (context) => {
       key: 'assign_to',
       render: (text, record) => {
 
-        console.log("record.assigned_to", record.assigned_to);
         return (<div>
             {record.assigned_to ?
               <Tooltip placement="top" title={record.assigned_to.first_name + " " + record.assigned_to.last_name}
