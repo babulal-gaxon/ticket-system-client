@@ -35,7 +35,7 @@ const TotalLoggedTime = () => {
           <div className="gx-mb-3">Total Logged Time</div>
             <div className="gx-font-weight-bold">8:45:00</div>
           </div>
-          <div className="gx-mb-3">
+          <div className=" gx-align-self-end">
         <LineChart width={155} height={29} data={data}>
           <Line type="monotone" dataKey="pv" stroke="#8884d8" strokeWidth={2} />
         </LineChart>
