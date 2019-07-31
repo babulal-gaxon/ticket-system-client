@@ -5,7 +5,6 @@ import {Link, withRouter} from "react-router-dom";
 import CustomScrollbars from "util/CustomScrollbars";
 import languageData from "./languageData";
 import {switchLanguage, toggleCollapsedSideNav} from "../../appRedux/actions/Setting";
-import SearchBox from "../../components/SearchBox";
 import UserInfo from "components/UserInfo";
 import Auxiliary from "util/Auxiliary";
 
@@ -107,16 +106,6 @@ class Topbar extends Component {
             <span className="gx-ml-2">How it works</span>
           </Link>
           <ul className="gx-header-notifications gx-ml-auto">
-            <li className="gx-notify gx-notify-search gx-d-inline-block gx-d-lg-none">
-              <Popover overlayClassName="gx-popover-horizantal" placement="bottomRight" content={
-                <SearchBox styleName="gx-popover-search-bar"
-                           placeholder="Search in app..."
-                           onChange={this.updateSearchChatUser.bind(this)}
-                           value={this.state.searchText}/>
-              } trigger="click">
-                <span className="gx-pointer gx-d-block"><i className="icon icon-search-new"/></span>
-              </Popover>
-            </li>
 
             <li className="gx-sidebar-notifications">
               <UserProfile/>
