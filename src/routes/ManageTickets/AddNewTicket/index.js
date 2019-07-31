@@ -92,6 +92,7 @@ class AddNewTicket extends Component {
       data.append('file', file);
       data.append('title', file.name);
       this.onUploadAttachment(data, file);
+      return file;
     })
   };
 
