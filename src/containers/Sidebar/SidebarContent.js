@@ -41,7 +41,7 @@ class SidebarContent extends Component {
   };
 
   render() {
-    const {themeType, navStyle, history} = this.props;
+    const {themeType, history} = this.props;
     const {pathname} = history.location;
     const selectedKeys = pathname.substr(1);
     const defaultOpenKeys = selectedKeys.split('/')[0];
