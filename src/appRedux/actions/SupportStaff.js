@@ -37,7 +37,7 @@ export const onGetStaff = (currentPage, itemsPerPage, filterText, updatingConten
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_SUPPORT_STAFF, payload: data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -57,17 +57,17 @@ export const onGetStaffId = (id) => {
 export const onAddSupportStaff = (staffMember, history) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post('/setup/staffs', staffMember).then((data) => {
-      if (data.data.success) {
-        console.log(" sending data of staff", data.data);
-        dispatch({type: ADD_SUPPORT_STAFF, payload: data.data.data});
+    axios.post('/setup/staffs', staffMember).then(({data}) => {
+      console.log("onAddSupportStaff", data);
+      if (data.success) {
+        dispatch({type: ADD_SUPPORT_STAFF, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Staff has been added successfully"});
         if (history) {
           history.goBack();
         }
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -88,7 +88,7 @@ export const onBulkDeleteStaff = (staffIds, history) => {
         }
         dispatch({type: SHOW_MESSAGE, payload: "The Staff(s) has been deleted successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -109,7 +109,7 @@ export const onEditSupportStaff = (staffMember, history) => {
         }
         dispatch({type: SHOW_MESSAGE, payload: "The Staff details has been edited successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -130,7 +130,7 @@ export const onDisableSupportStaff = (staffMember) => {
           payload: `The Status of Selected staff has been changed to ${staffMember.account_status === 0 ? "disabled" : "enabled"} successfully`
         });
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -152,7 +152,7 @@ export const onAddProfileImage = (imageFile) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Profile Pic has been uploaded successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -170,7 +170,7 @@ export const onGetStaffNotes = (staffId) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_STAFF_NOTES, payload: data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -182,14 +182,14 @@ export const onGetStaffNotes = (staffId) => {
 export const onAddStaffNote = (staffId, Note) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.post(`/setup/staffs/${staffId}/notes`, Note).then((data) => {
-      if (data.data.success) {
-        console.log(" sending data of staff", data.data);
-        dispatch({type: ADD_STAFF_NOTE, payload: data.data.data});
+    axios.post(`/setup/staffs/${staffId}/notes`, Note).then(({data}) => {
+      console.log(" sending data of staff", data.data);
+      if (data.success) {
+        dispatch({type: ADD_STAFF_NOTE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Notes has been added successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -207,7 +207,7 @@ export const onEditStaffNotes = (note) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Note has been edited successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -225,7 +225,7 @@ export const onDeleteStaffNotes = (noteId) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Note has been Deleted successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -243,7 +243,7 @@ export const onGetStaffTickets = (staffId) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_STAFF_TICKETS, payload: data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -261,7 +261,7 @@ export const onGetStaffDetail = (staffId) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SELECT_CURRENT_STAFF, payload: data.data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch(showErrorMessage(error));

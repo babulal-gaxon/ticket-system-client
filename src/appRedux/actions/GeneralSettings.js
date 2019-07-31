@@ -27,7 +27,7 @@ export const onGetGeneralDetails = () => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_GENERAL_DETAILS, payload: data.data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -46,7 +46,7 @@ export const onSaveGeneralDetails = (details) => {
         dispatch({type: ADD_GENERAL_DETAILS, payload: data.data});
         dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -65,7 +65,7 @@ export const onGetLocalizationDetails = () => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_LOCALIZATION_DETAILS, payload: data.data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -85,7 +85,7 @@ export const onSaveLocalizationDetails = (details) => {
         dispatch({type: ADD_LOCALIZATION_DETAILS, payload: data.data});
         dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -104,7 +104,7 @@ export const onGetCustomerPanelDetails = () => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_CUSTOMER_PANEL_DETAILS, payload: data.data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -124,7 +124,7 @@ export const onSaveCustomerPanelDetails = (details) => {
         dispatch({type: ADD_CUSTOMER_PANEL_DETAILS, payload: data.data});
         dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -143,7 +143,7 @@ export const onGetGeneralAddress = () => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_GENERAL_ADDRESS, payload: data.data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -163,7 +163,7 @@ export const onSaveGeneralAddress = (details) => {
         dispatch({type: ADD_GENERAL_ADDRESS, payload: data.data});
         dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -182,7 +182,7 @@ export const onEditAddress = (address) => {
         dispatch({type: EDIT_ADDRESS, payload: address});
         dispatch({type: SHOW_MESSAGE, payload: "The Address has been saved successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -201,7 +201,7 @@ export const onDeleteAddress = (addressId) => {
         dispatch({type: DELETE_ADDRESS, payload: addressId});
         dispatch({type: SHOW_MESSAGE, payload: "The Address has been deleted successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -219,7 +219,7 @@ export const onGetCountriesList = () => {
         dispatch({type: GET_COUNTRIES_LIST, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -238,7 +238,7 @@ export const onGetTicketSettings = () => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_TICKET_SETTINGS, payload: data.data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -261,7 +261,7 @@ export const onSaveTicketSettings = (details, history) => {
           history.replace('/dashboard')
         }
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
