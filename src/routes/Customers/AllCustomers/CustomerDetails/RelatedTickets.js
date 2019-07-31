@@ -3,6 +3,7 @@ import {Avatar, Table, Tag, Tooltip} from "antd";
 import moment from "moment";
 import Widget from "../../../../components/Widget";
 import Permissions from "../../../../util/Permissions";
+import {MEDIA_BASE_URL} from "../../../../constants/ActionTypes";
 
 class RelatedTickets extends Component {
 
@@ -24,7 +25,7 @@ class RelatedTickets extends Component {
               {record.assigned_by ?
                 <Tooltip placement="top" title={record.assigned_by.first_name + " " + record.assigned_by.last_name}>
                   {record.assigned_by.avatar ?
-                    <Avatar className="gx-mr-3 gx-size-50" src={record.assigned_by.avatar.src}/> :
+                    <Avatar className="gx-mr-3 gx-size-50" src={MEDIA_BASE_URL + record.assigned_by.avatar.src}/> :
                     <Avatar className="gx-mr-3 gx-size-50"
                             style={{backgroundColor: '#f56a00'}}>{record.assigned_by.first_name[0].toUpperCase()}</Avatar>}
                 </Tooltip> : <Avatar className="gx-size-50 gx-mr-3" src="https://via.placeholder.com/150x150"/>}

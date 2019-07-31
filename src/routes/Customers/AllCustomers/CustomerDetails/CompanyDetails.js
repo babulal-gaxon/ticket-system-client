@@ -1,6 +1,7 @@
 import React from 'react';
 import {Avatar} from "antd";
 import Widget from "../../../../components/Widget";
+import {MEDIA_BASE_URL} from "../../../../constants/ActionTypes";
 
 const CompanyDetails = ({currentCustomerProfile, customerCompanyMembers}) => {
   return (
@@ -13,7 +14,8 @@ const CompanyDetails = ({currentCustomerProfile, customerCompanyMembers}) => {
           <div>
             <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
               {currentCustomerProfile.company.avatar ?
-                <Avatar className="gx-mr-3 gx-size-80" src={currentCustomerProfile.company.avatar.src}/> :
+                <Avatar className="gx-mr-3 gx-size-80"
+                        src={MEDIA_BASE_URL + currentCustomerProfile.company.avatar.src}/> :
                 <Avatar className="gx-mr-3 gx-size-80"
                         style={{backgroundColor: '#f56a00'}}>{currentCustomerProfile.company.company_name[0].toUpperCase()}</Avatar>}
               <div className="gx-media-body">
@@ -34,7 +36,7 @@ const CompanyDetails = ({currentCustomerProfile, customerCompanyMembers}) => {
                       <div key={member.id}
                            className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5 gx-mx-5">
                         {member.avatar ?
-                          <Avatar className="gx-mr-3 gx-size-50" src={member.avatar.src}/> :
+                          <Avatar className="gx-mr-3 gx-size-50" src={MEDIA_BASE_URL + member.avatar.src}/> :
                           <Avatar className="gx-mr-3 gx-size-50"
                                   style={{backgroundColor: '#f56a00'}}>{member.first_name[0].toUpperCase()}</Avatar>}
                         <div className="gx-media-body">

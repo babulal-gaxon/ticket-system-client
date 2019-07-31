@@ -3,6 +3,7 @@ import Widget from "../../../components/Widget";
 import {Avatar, Input} from "antd";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
+import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 const Search = Input.Search;
 
@@ -16,17 +17,21 @@ class StaffWithSelectedRole extends Component {
   }
 
   componentWillMount() {
-    this.onFilterData();
+    this.onFilterData(this.props.staffList);
   }
 
   onFilterTextChange = event => {
     this.setState({filterText: event.target.value})
   };
 
-  onFilterData = () => {
+  componentWillReceiveProps(nextProps, nextContext) {
+    this.onFilterData(nextProps.staffList)
+  }
+
+  onFilterData = (staffList) => {
     let staffWithRole = [];
     if (this.props.selectedRole !== null) {
-      staffWithRole = this.props.staffList.filter(staff => staff.role_id === this.props.selectedRole.id);
+      staffWithRole = staffList.filter(staff => staff.role_id === this.props.selectedRole.id);
     }
     this.setState({staffWithSelectedRole: staffWithRole});
   };
@@ -34,8 +39,8 @@ class StaffWithSelectedRole extends Component {
   onFilterStaffList = () => {
     if (this.state.staffWithSelectedRole.length !== 0) {
       return this.state.staffWithSelectedRole.filter(staff => {
-          const name = staff.first_name + " " + staff.last_name;
-          return (name.indexOf(this.state.filterText) !== -1) ? staff : null
+        const name = staff.first_name.toLowerCase() + " " + staff.last_name.toLowerCase();
+        return (name.includes(this.state.filterText.toLowerCase())) ? staff : null
         }
       )
     } else {
@@ -63,18 +68,19 @@ class StaffWithSelectedRole extends Component {
                 <div className="gx-d-flex gx-justify-content-between">
               <span className="gx-email gx-d-inline-block gx-mr-2">
                 {staff.avatar ?
-                  <Avatar className="gx-mr-3 gx-size-50" src={staff.avatar.src}/> :
+                  <Avatar className="gx-mr-3 gx-size-50" src={MEDIA_BASE_URL + staff.avatar.src}/> :
                   <Avatar className="gx-mr-3 gx-size-50"
                           style={{backgroundColor: '#f56a00'}}>{staff.first_name[0].toUpperCase()}</Avatar>}
                 {staff.first_name + " " + staff.last_name} </span>
                   <span>
                     {(Permissions.canStaffEdit()) ?
-                      <i className="icon icon-edit gx-mr-3" onClick={() => {
+                      <i className="icon icon-edit gx-mr-3 gx-p-2 gx-pointer " onClick={() => {
                         this.props.onSetCurrentStaff(staff);
                         this.props.history.push('/staff/add-new-member')
                       }}/> : null}
                     {(Permissions.canViewStaffDetail()) ?
-                      <i className="icon icon-custom-view" onClick={() => this.props.onSelectStaff(staff)}/>
+                      <i className="icon icon-custom-view gx-p-2 gx-pointer"
+                         onClick={() => this.props.onSelectStaff(staff)}/>
                       : null}
                 </span>
                 </div>

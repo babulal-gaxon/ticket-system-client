@@ -244,6 +244,12 @@ class AddNewRole extends Component {
       staffsPermissions, statusPermissions, ticketsPermissions
     } = this.state;
     const {selectedRole, onDisableSelectedRole, userPermissions, staffList, onSetCurrentStaff, history} = this.props;
+
+
+    if(userPermissions){
+
+    }
+
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -287,7 +293,7 @@ class AddNewRole extends Component {
                                 indeterminate={customerPermissions.length > 0
                                 && userPermissions.customers.length > customerPermissions.length}
                                 onChange={this.onCheckAllCustomers}
-                                checked={userPermissions.customers.length === customerPermissions.length}>
+                                checked={userPermissions.customers && userPermissions.customers.length === customerPermissions.length}>
                         Check all
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
