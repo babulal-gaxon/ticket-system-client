@@ -3,8 +3,8 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {
-  onBulkDeleteStaff, onChangeStaffStatus,
-  onDisableSupportStaff,
+  onBulkDeleteStaff,
+  onChangeStaffStatus,
   onGetStaff,
   onSetCurrentStaff
 } from "../../../appRedux/actions/SupportStaff";

@@ -149,7 +149,7 @@ class AddNewStaff extends Component {
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
           <h4
-            className="gx-font-weight-bold">{this.props.currentStaff === null ? "Add Staff Member" : "Edit Staff Details"}</h4>
+            className="ggx-widget-heading">{this.props.currentStaff === null ? "Add Staff Member" : "Edit Staff Details"}</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/staff/all-members">Staffs</Link>

@@ -187,7 +187,7 @@ class AddNewCustomers extends Component {
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
           <h4
-            className="gx-font-weight-bold">{this.props.currentCustomer === null ? "Add New Customer" : "Edit Customer Details"}</h4>
+            className="gx-widget-heading">{this.props.currentCustomer === null ? "Add New Customer" : "Edit Customer Details"}</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/customers">Customers</Link>

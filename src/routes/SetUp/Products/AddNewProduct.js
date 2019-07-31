@@ -8,7 +8,7 @@ const {TextArea} = Input;
 class AddNewProduct extends Component {
   constructor(props) {
     super(props);
-    if (this.props.productId === null) {
+    if (props.currentProduct === null) {
       this.state = {
         title: "",
         desc: "",
@@ -17,8 +17,13 @@ class AddNewProduct extends Component {
         fileList: [],
       };
     } else {
-      const selectedProduct = this.props.productsList.find(product => product.id === this.props.productId);
-      this.state = {...selectedProduct, logoName: selectedProduct.avatar.title, fileList: [], logo: null};
+      const selectedProduct = props.currentProduct;
+      this.state = {
+        ...selectedProduct,
+        logoName: selectedProduct.avatar.title,
+        fileList: [],
+        logo: selectedProduct.avatar ? selectedProduct.avatar.id : null
+      };
     }
   };
 
@@ -40,7 +45,7 @@ class AddNewProduct extends Component {
 
 
   onProductAdd = () => {
-    if (this.props.productId === null) {
+    if (this.props.currentProduct === null) {
       this.props.onAddProduct({...this.state});
     } else {
       this.props.onEditProduct({...this.state});
@@ -78,7 +83,7 @@ class AddNewProduct extends Component {
   render() {
     const {title, support_enable, desc, fileList, logoName} = this.state;
     const {getFieldDecorator} = this.props.form;
-    const {showAddModal, onToggleAddProduct, productId} = this.props;
+    const {showAddModal, onToggleAddProduct, currentProduct} = this.props;
     const props = {
       onRemove: file => {
         this.setState(state => {
@@ -106,7 +111,7 @@ class AddNewProduct extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddModal}
-          title={productId === null ? "Add New Product" : "Edit Product Details"}
+          title={currentProduct === null ? "Add New Product" : "Edit Product Details"}
           onCancel={() => onToggleAddProduct()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -138,21 +143,11 @@ class AddNewProduct extends Component {
                 this.setState({desc: e.target.value})
               }}/>)}
             </Form.Item>
-            {productId === null ?
-              <Form.Item label="Upload Logo">
-                {getFieldDecorator('uploadedLogo',
-                  {
-                    rules: [{required: true, message: 'Please Upload Company Logo!'}],
-                  })(
-                  <Upload {...props}>
-                    <Input placeholder="Choose file..." addonAfter="Browse"/>
-                  </Upload>)}
-              </Form.Item> :
-              <Form.Item label="Upload Logo" extra={fileList.length > 0 ? "" : logoName}>
-                <Upload {...props}>
-                  <Input placeholder="Choose file..." addonAfter="Browse"/>
-                </Upload>
-              </Form.Item>}
+            <Form.Item label="Upload Logo" extra={fileList.length > 0 ? "" : logoName}>
+              <Upload {...props}>
+                <Input placeholder="Choose file..." addonAfter="Browse"/>
+              </Upload>
+            </Form.Item>
             <Form.Item label="Support Enable">
               <Radio.Group value={support_enable} onChange={(e) => {
                 this.setState({support_enable: e.target.value})
@@ -175,13 +170,13 @@ export default AddNewProduct;
 
 AddNewProduct.defaultProps = {
   productsList: [],
-  productId: null,
+  currentProduct: null,
   showAddModal: true
 };
 
 AddNewProduct.propTypes = {
   productsList: PropTypes.array,
-  productId: PropTypes.number,
+  currentProduct: PropTypes.number,
   showAddModal: PropTypes.bool,
   onToggleAddProduct: PropTypes.func,
   onAddProduct: PropTypes.func,

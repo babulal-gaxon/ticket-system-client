@@ -1,5 +1,5 @@
 import axios from 'util/Api'
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE, UPDATING_CONTENT} from "../../constants/ActionTypes";
 import {
   ADD_TICKET_PRIORITY,
   BULK_ACTIVE_PRIORITY,
@@ -10,10 +10,13 @@ import {
 } from "../../constants/TicketPriorities";
 
 
-export const onGetTicketPriorities = (currentPage, itemsPerPage, filterText) => {
-  console.log("filterText", filterText);
+export const onGetTicketPriorities = (currentPage, itemsPerPage, filterText, updatingContent) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
+    if (updatingContent) {
+      dispatch({type: UPDATING_CONTENT});
+    } else {
+      dispatch({type: FETCH_START});
+    }
     axios.get('/setup/priorities', {
         params: {
           page: currentPage,

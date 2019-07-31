@@ -7,7 +7,7 @@ const {TextArea} = Input;
 class AddNewResponses extends Component {
   constructor(props) {
     super(props);
-    if (this.props.currentResponse === null) {
+    if (props.currentResponse === null) {
       this.state = {
         short_title: "",
         short_code: "",
@@ -15,7 +15,7 @@ class AddNewResponses extends Component {
         status: 1
       };
     } else {
-      const selectedResponse = this.props.currentResponse;
+      const selectedResponse = props.currentResponse;
       this.state = {
         ...selectedResponse
       };

@@ -1,5 +1,5 @@
 import axios from 'util/Api'
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE, UPDATING_CONTENT} from "../../constants/ActionTypes";
 import {
   ADD_DEPARTMENT,
   BULK_ACTIVE_DEPARTMENTS,
@@ -9,28 +9,32 @@ import {
   GET_DEPARTMENTS
 } from "../../constants/Departments";
 
-export const onGetDepartments = (currentPage, itemsPerPage, filterData) => {
+export const onGetDepartments = (currentPage, itemsPerPage, filterData, updatingContent) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.get('/setup/departments', {
-      params: {
-        page: currentPage,
-        per_page: itemsPerPage,
-        search: filterData
-      }
-    }).then(({data}) => {
-      console.info("onGetDepartments: ", data);
-      if (data.success) {
-        dispatch({type: FETCH_SUCCESS});
-        dispatch({type: GET_DEPARTMENTS, payload: data});
-      } else {
-        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
-      }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.info("Error****:", error.message);
-    });
-  }
+    if (updatingContent) {
+      dispatch({type: UPDATING_CONTENT});
+    } else {
+      dispatch({type: FETCH_START});
+    }
+      axios.get('/setup/departments', {
+        params: {
+          page: currentPage,
+          per_page: itemsPerPage,
+          search: filterData
+        }
+      }).then(({data}) => {
+        console.info("onGetDepartments: ", data);
+        if (data.success) {
+          dispatch({type: FETCH_SUCCESS});
+          dispatch({type: GET_DEPARTMENTS, payload: data});
+        } else {
+          dispatch({type: FETCH_ERROR, payload: data.errors[0]});
+        }
+      }).catch(function (error) {
+        dispatch({type: FETCH_ERROR, payload: error.message});
+        console.info("Error****:", error.message);
+      });
+    }
 };
 
 export const onAddDepartment = (department) => {

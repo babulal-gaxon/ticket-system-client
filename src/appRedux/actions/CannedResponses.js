@@ -1,5 +1,5 @@
 import axios from 'util/Api'
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE, UPDATING_CONTENT} from "../../constants/ActionTypes";
 import {
   ADD_CANNED_RESPONSE,
   BULK_ACTIVE_RESPONSE,
@@ -10,9 +10,13 @@ import {
 } from "../../constants/CannedResponses";
 
 
-export const onGetCannedResponses = (currentPage, itemsPerPage, filterData) => {
+export const onGetCannedResponses = (currentPage, itemsPerPage, filterData, updatingContent) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
+    if (updatingContent) {
+      dispatch({type: UPDATING_CONTENT});
+    } else {
+      dispatch({type: FETCH_START});
+    }
     axios.get('/setup/canned/responses', {
       params: {
         page: currentPage,

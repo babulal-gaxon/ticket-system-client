@@ -7,14 +7,14 @@ const {TextArea} = Input;
 class AddNewDepartment extends Component {
   constructor(props) {
     super(props);
-    if (this.props.currentDepartment === null) {
+    if (props.currentDepartment === null) {
       this.state = {
         name: "",
         desc: "",
         status: 1
       };
     } else {
-      const selectedDept = this.props.currentDepartment;
+      const selectedDept = props.currentDepartment;
       this.state = {...selectedDept};
     }
   };

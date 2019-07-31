@@ -15,6 +15,7 @@ import AddNewPriority from "./AddNewPriority";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
+import PrioritiesRow from "./PrioritiesRow";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -27,7 +28,7 @@ class TicketPriorities extends Component {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      priorityId: null,
+      currentPriority: null,
       filterText: "",
       itemNumbers: 10,
       current: 1,
@@ -37,9 +38,9 @@ class TicketPriorities extends Component {
     this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText);
   };
 
-  onGetPriorityData = (currentPage, itemsPerPage, filterText) => {
+  onGetPriorityData = (currentPage, itemsPerPage, filterText, updatingContent) => {
     if (Permissions.canPriorityView()) {
-      this.props.onGetTicketPriorities(currentPage, itemsPerPage, filterText);
+      this.props.onGetTicketPriorities(currentPage, itemsPerPage, filterText, updatingContent);
     }
   };
 
@@ -51,7 +52,7 @@ class TicketPriorities extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1}, () => {
-        this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText)
+        this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
       });
     } else {
       return null;
@@ -61,7 +62,7 @@ class TicketPriorities extends Component {
   onCurrentDecrement = () => {
     if (this.state.current > 1) {
       this.setState({current: this.state.current - 1}, () => {
-        this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText)
+        this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
       });
     } else {
       return null;
@@ -70,7 +71,7 @@ class TicketPriorities extends Component {
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetPriorityData(1, this.state.itemNumbers, this.state.filterText)
+      this.onGetPriorityData(1, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -79,11 +80,11 @@ class TicketPriorities extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({priorityId: null, showAddPriority: true});
+    this.setState({currentPriority: null, showAddPriority: true});
   };
 
-  onEditPriority = (id) => {
-    this.setState({priorityId: id, showAddPriority: true});
+  onEditPriority = (priority) => {
+    this.setState({currentPriority: priority, showAddPriority: true});
   };
 
   onShowBulkActiveConfirm = () => {
@@ -171,73 +172,6 @@ class TicketPriorities extends Component {
     </Dropdown>
   };
 
-  onGetTableColumns = () => {
-    return [
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.name}</span>
-        },
-      },
-      {
-        title: 'Description',
-        dataIndex: 'description',
-        key: 'description',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc ? record.desc : "NA"}</span>
-        },
-      },
-      {
-        title: 'Color Code',
-        dataIndex: 'colorCode',
-        key: 'colorCode',
-        render: (text, record) => {
-          return <Tag color={record.color_code}><span
-            style={{color: record.color_code}}>{record.color_code}</span></Tag>
-        },
-      },
-      {
-        title: 'Priority Weight',
-        dataIndex: 'priorityValue',
-        key: 'priorityValue',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">0{record.value}</span>
-        },
-      },
-      {
-        title: 'Created By',
-        dataIndex: 'createdBy',
-        key: 'createdBy',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.created_by}</span>
-        },
-      },
-      {
-        title: 'Status',
-        dataIndex: 'status_id',
-        key: 'Status',
-        render: (text, record) => {
-          return <Tag color={record.status ? "green" : "red"}>
-            {record.status ? "Active" : "Disabled"}
-          </Tag>
-        },
-      },
-      {
-        title: '',
-        dataIndex: '',
-        key: 'empty',
-        render: (text, record) => {
-          return <span>{Permissions.canPriorityEdit() ? <i className="icon icon-edit gx-mr-3"
-                                                           onClick={() => this.onEditPriority(record.id)}/> : null}
-            {Permissions.canPriorityDelete() ? this.onDeletePopUp(record.id) : null}
-          </span>
-        },
-      },
-    ];
-  };
-
   onDeletePopUp = (recordId) => {
     return <Popconfirm
       title="Are you sure to delete this Priority?"
@@ -255,7 +189,7 @@ class TicketPriorities extends Component {
     this.setState({
       current: page,
     }, () => {
-      this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -269,7 +203,7 @@ class TicketPriorities extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -322,8 +256,8 @@ class TicketPriorities extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()}
-                 dataSource={priorities} className="gx-mb-4"
+          <Table rowKey="id" rowSelection={rowSelection} columns={PrioritiesRow(this)}
+                 dataSource={priorities} className="gx-mb-4" loading={this.props.updatingContent}
                  pagination={{
                    pageSize: this.state.itemNumbers,
                    current: this.state.current,
@@ -336,18 +270,19 @@ class TicketPriorities extends Component {
           <AddNewPriority showAddPriority={this.state.showAddPriority}
                           onToggleAddPriority={this.onToggleAddPriority}
                           onAddTicketPriority={this.props.onAddTicketPriority}
-                          priorityId={this.state.priorityId}
+                          currentPriority={this.state.currentPriority}
                           onEditTicketPriority={this.props.onEditTicketPriority}
-                          priorities={priorities}/> : null}
+                          /> : null}
       </div>
     );
   }
 }
 
 
-const mapStateToProps = ({ticketPriorities}) => {
+const mapStateToProps = ({ticketPriorities, commonData}) => {
   const {priorities, totalItems} = ticketPriorities;
-  return {priorities, totalItems};
+  const {updatingContent} = commonData;
+  return {priorities, totalItems, updatingContent};
 };
 
 export default connect(mapStateToProps, {

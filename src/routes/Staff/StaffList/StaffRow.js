@@ -119,7 +119,7 @@ const StaffRow = (context) => {
       dataIndex: '',
       key: 'empty',
       render: (text, record) => {
-        return <span onClick={(e) => {
+        return <span className="gx-p-2 gx-cursor-pointer" onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();
         }}>

@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import {Layout, Popover} from "antd";
-import {Link} from "react-router-dom";
+import {Button, Dropdown, Icon, Layout, Menu, Popover} from "antd";
+import {Link, withRouter} from "react-router-dom";
 
 import CustomScrollbars from "util/CustomScrollbars";
 import languageData from "./languageData";
@@ -13,6 +13,7 @@ import Auxiliary from "util/Auxiliary";
 import {NAV_STYLE_DRAWER, NAV_STYLE_FIXED, NAV_STYLE_MINI_SIDEBAR, TAB_SIZE} from "../../constants/ThemeSetting";
 import {connect} from "react-redux";
 import UserProfile from "../Sidebar/UserProfile";
+import Permissions from "../../util/Permissions";
 
 const {Header} = Layout;
 
@@ -42,6 +43,46 @@ class Topbar extends Component {
     });
   };
 
+  onAddNewTicket = () => {
+    this.props.history.push('/manage-tickets/add-new-ticket')
+  };
+
+  onAddNewCustomer = () => {
+    this.props.history.push('/customers/add-customers')
+  };
+
+  onAddNewStaff = () => {
+    this.props.history.push('/staff/add-new-member')
+  };
+
+  onSelectOption = () => {
+    const menu = (
+      <Menu>
+        {Permissions.canResponseEdit() ?
+          <Menu.Item key="1" onClick={this.onAddNewTicket}>
+            <i className="icon icon-add"/> Add New Ticket
+          </Menu.Item> : null
+        }
+        {Permissions.canResponseEdit() ?
+          <Menu.Item key="2" onClick={this.onAddNewCustomer}>
+            <i className="icon icon-add"/> Add New Customer
+          </Menu.Item> : null
+        }
+        {Permissions.canResponseDelete() ?
+          <Menu.Item key="3" onClick={this.onAddNewStaff}>
+            <i className="icon icon-add"/> Add New Staff
+          </Menu.Item> : null
+        }
+      </Menu>
+    );
+    return <Dropdown overlay={menu} trigger={['click']}>
+      <Button>
+        <span className="gx-mr-2"><i className="icon icon-add-circle"/></span>
+        <span>New</span>
+      </Button>
+    </Dropdown>
+  };
+
 
   render() {
     const {locale, width, navCollapsed, navStyle} = this.props;
@@ -60,10 +101,11 @@ class Topbar extends Component {
           <Link to="/" className="gx-d-block gx-d-lg-none gx-pointer">
             <img alt="" src={require("assets/images/logo.svg")}/></Link>
 
-          <SearchBox styleName="gx-d-none gx-d-lg-block gx-lt-icon-search-bar-lg"
-                     placeholder="Search in app..."
-                     onChange={this.updateSearchChatUser.bind(this)}
-                     value={this.state.searchText}/>
+          <div className="gx-mr-4">{this.onSelectOption()}</div>
+          <Link to="/">
+            <span><i className="icon icon-menu-right"/></span>
+            <span className="gx-ml-2">How it works</span>
+          </Link>
           <ul className="gx-header-notifications gx-ml-auto">
             <li className="gx-notify gx-notify-search gx-d-inline-block gx-d-lg-none">
               <Popover overlayClassName="gx-popover-horizantal" placement="bottomRight" content={
@@ -106,4 +148,4 @@ const mapStateToProps = ({settings}) => {
   return {locale, navStyle, navCollapsed, width}
 };
 
-export default connect(mapStateToProps, {toggleCollapsedSideNav, switchLanguage})(Topbar);
+export default withRouter(connect(mapStateToProps, {toggleCollapsedSideNav, switchLanguage})(Topbar));

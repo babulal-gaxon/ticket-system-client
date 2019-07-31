@@ -1,5 +1,5 @@
 import axios from 'util/Api'
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE, UPDATING_CONTENT} from "../../constants/ActionTypes";
 import {
   ADD_SERVICE,
   BULK_ACTIVE_SERVICES,
@@ -10,9 +10,13 @@ import {
 } from "../../constants/Services";
 
 
-export const onGetServicesList = (currentPage, itemsPerPage, filterData) => {
+export const onGetServicesList = (currentPage, itemsPerPage, filterData, updatingContent) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
+    if (updatingContent) {
+      dispatch({type: UPDATING_CONTENT});
+    } else {
+      dispatch({type: FETCH_START});
+    }
     axios.get('/setup/services', {
       params: {
         page: currentPage,

@@ -15,6 +15,7 @@ import {
 import AddNewDepartment from "./AddNewDepartment";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
+import DepartmentsRow from "./DepartmentsRow";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -36,9 +37,9 @@ class Departments extends Component {
     this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
   };
 
-  onGetDepartmentData = (currentPage, itemsPerPage, filterData) => {
+  onGetDepartmentData = (currentPage, itemsPerPage, filterData, updatingContent) => {
     if (Permissions.canDepartmentView()) {
-      this.props.onGetDepartments(currentPage, itemsPerPage, filterData)
+      this.props.onGetDepartments(currentPage, itemsPerPage, filterData, updatingContent)
     }
   };
 
@@ -50,7 +51,7 @@ class Departments extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.currentPage < pages) {
       this.setState({currentPage: this.state.currentPage + 1}, () => {
-        this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+        this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
       });
     } else {
       return null;
@@ -60,7 +61,7 @@ class Departments extends Component {
   onCurrentDecrement = () => {
     if (this.state.currentPage > 1) {
       this.setState({currentPage: this.state.currentPage - 1}, () => {
-        this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+        this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
       });
     } else {
       return null;
@@ -69,7 +70,7 @@ class Departments extends Component {
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetDepartmentData(1, this.state.itemNumbers, this.state.filterText)
+      this.onGetDepartmentData(1, this.state.itemNumbers, this.state.filterText, true)
     })
   };
 
@@ -167,55 +168,7 @@ class Departments extends Component {
     </Dropdown>
   };
 
-  onGetTableColumns = () => {
-    return [
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.name}</span>
-        },
-      },
-      {
-        title: 'Description',
-        dataIndex: 'description',
-        key: 'description',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc === null ? "NA" : record.desc}</span>
-        },
-      },
-      {
-        title: 'Created By',
-        dataIndex: 'createdBy',
-        key: 'createdBy',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.created_by}</span>
-        },
-      },
-      {
-        title: 'Status',
-        dataIndex: 'status_id',
-        key: 'Status',
-        render: (text, record) => {
-          return <Tag color={record.status === 1 ? "green" : "red"}>
-            {record.status === 1 ? "Active" : "Disabled"}
-          </Tag>
-        },
-      },
-      {
-        title: '',
-        dataIndex: '',
-        key: 'empty',
-        render: (text, record) => {
-          return <span> {Permissions.canDepartmentEdit() ? <i className="icon icon-edit gx-mr-3"
-                                                              onClick={() => this.onEditDepartment(record)}/> : null}
-            {Permissions.canDepartmentDelete() ? this.onDeletePopUp(record.id) : null}
-          </span>
-        },
-      },
-    ];
-  };
+
 
   onDeletePopUp = (recordId) => {
     return (
@@ -242,13 +195,13 @@ class Departments extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, currentPage: 1}, () => {
-      this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+      this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
     })
   };
 
   onPageChange = page => {
     this.setState({currentPage: page}, () => {
-      this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+      this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -301,8 +254,8 @@ class Departments extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={dept}
-                 className="gx-mb-4"
+          <Table rowKey="id" rowSelection={rowSelection} columns={DepartmentsRow(this)} dataSource={dept}
+                 className="gx-mb-4" loading={this.props.updatingContent}
                  pagination={{
                    pageSize: this.state.itemNumbers,
                    current: this.state.currentPage,
@@ -323,9 +276,10 @@ class Departments extends Component {
   }
 }
 
-const mapStateToProps = ({departments}) => {
+const mapStateToProps = ({departments, commonData}) => {
   const {dept, totalItems} = departments;
-  return {dept, totalItems};
+  const {updatingContent} = commonData;
+  return {dept, totalItems, updatingContent};
 };
 
 export default connect(mapStateToProps, {

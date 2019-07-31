@@ -7,7 +7,7 @@ import reactCSS from 'reactcss'
 class AddNewStatus extends Component {
   constructor(props) {
     super(props);
-    if (this.props.statusId === null) {
+    if (this.props.currentStatus === null) {
       this.state = {
         name: "",
         status: 1,
@@ -15,7 +15,7 @@ class AddNewStatus extends Component {
         color_code: "#8D3C3C"
       };
     } else {
-      const selectedStatus = this.props.statuses.find(status => status.id === this.props.statusId);
+      const selectedStatus = this.props.currentStatus;
       this.state = {...selectedStatus};
     }
   };
@@ -33,13 +33,12 @@ class AddNewStatus extends Component {
   };
 
   onStatusAdd = () => {
-    if (this.props.statusId === null) {
+    if (this.props.currentStatus === null) {
       this.props.onAddTicketStatus({...this.state});
-      this.props.onToggleAddStatus();
     } else {
       this.props.onEditTicketStatus({...this.state});
-      this.props.onToggleAddStatus();
     }
+    this.props.onToggleAddStatus();
   };
 
   onValidationCheck = () => {
@@ -94,7 +93,7 @@ class AddNewStatus extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddStatus}
-          title={this.props.statusId === null ? "Add New Ticket Status" : "Edit Ticket Status Details"}
+          title={this.props.currentStatus === null ? "Add New Ticket Status" : "Edit Ticket Status Details"}
           onCancel={onToggleAddStatus}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -154,13 +153,13 @@ export default AddNewStatus;
 
 AddNewStatus.defaultProps = {
   statuses: [],
-  statusId: null,
+  currentStatus: null,
   showAddStatus: true,
 };
 
 AddNewStatus.propTypes = {
   statuses: PropTypes.array,
-  statusId: PropTypes.number,
+  currentStatus: PropTypes.number,
   showAddStatus: PropTypes.bool,
   onToggleAddStatus: PropTypes.func,
   onAddTicketStatus: PropTypes.func,

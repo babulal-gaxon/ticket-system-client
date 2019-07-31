@@ -14,6 +14,7 @@ import {
 } from "../../../appRedux/actions/Services";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
+import ServicesRow from "./ServicesRow";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -25,7 +26,7 @@ class Services extends Component {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      serviceId: null,
+      currentService: null,
       filterText: "",
       itemNumbers: 10,
       currentPage: 1,
@@ -35,9 +36,9 @@ class Services extends Component {
     this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
   };
 
-  onGetServicesData = (currentPage, itemNumbers, searchText) => {
+  onGetServicesData = (currentPage, itemNumbers, searchText, updatingContent) => {
     if (Permissions.canServiceView()) {
-      this.props.onGetServicesList(currentPage, itemNumbers, searchText);
+      this.props.onGetServicesList(currentPage, itemNumbers, searchText, updatingContent);
     }
   };
 
@@ -49,7 +50,7 @@ class Services extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.currentPage < pages) {
       this.setState({currentPage: this.state.currentPage + 1}, () => {
-        this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+        this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
       });
     } else {
       return null;
@@ -59,7 +60,7 @@ class Services extends Component {
   onCurrentDecrement = () => {
     if (this.state.currentPage > 1) {
       this.setState({currentPage: this.state.currentPage - 1}, () => {
-        this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+        this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
       });
     } else {
       return null;
@@ -68,7 +69,7 @@ class Services extends Component {
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetServicesData(1, this.state.itemNumbers, this.state.filterText)
+      this.onGetServicesData(1, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -77,11 +78,11 @@ class Services extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({serviceId: null, showAddModal: true});
+    this.setState({currentService: null, showAddModal: true});
   };
 
-  onEditIconClick = (id) => {
-    this.setState({serviceId: id, showAddModal: true});
+  onEditIconClick = (service) => {
+    this.setState({currentService: service, showAddModal: true});
   };
 
   onShowBulkActiveConfirm = () => {
@@ -166,47 +167,6 @@ class Services extends Component {
     </Dropdown>
   };
 
-  onGetTableColumns = () => {
-    return [
-      {
-        title: 'Title',
-        dataIndex: 'title',
-        key: 'title',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.title}</span>
-        },
-      },
-      {
-        title: 'Description',
-        dataIndex: 'description',
-        key: 'description',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc === null ? "NA" : record.desc}</span>
-        },
-      },
-      {
-        title: 'Support',
-        dataIndex: 'support_enable',
-        key: 'Support',
-        render: (text, record) => {
-          return <Tag color={record.support_enable === 1 ? "green" : "red"}>
-            {record.support_enable === 1 ? "Enabled" : "Disabled"}
-          </Tag>
-        },
-      },
-      {
-        title: '',
-        dataIndex: '',
-        key: 'empty',
-        render: (text, record) => {
-          return <span>  {(Permissions.canServiceEdit()) ?
-            <i className="icon icon-edit gx-mr-3" onClick={() => this.onEditIconClick(record.id)}/> : null}
-            {(Permissions.canServiceDelete()) ? this.onDeletePopUp(record.id) : null}
-          </span>
-        },
-      },
-    ];
-  };
 
   onDeletePopUp = (recordId) => {
     return (
@@ -231,13 +191,13 @@ class Services extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, currentPage: 1}, () => {
-      this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+      this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
     })
   };
 
   onPageChange = page => {
     this.setState({currentPage: page}, () => {
-      this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+      this.onGetServicesData(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -289,8 +249,8 @@ class Services extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()}
-                 dataSource={servicesList}
+          <Table rowKey="id" rowSelection={rowSelection} columns={ServicesRow(this)}
+                 dataSource={servicesList} loading={this.props.updatingContent}
                  className="gx-mb-4"
                  pagination={{
                    pageSize: this.state.itemNumbers,
@@ -306,17 +266,18 @@ class Services extends Component {
           <AddNewService showAddModal={this.state.showAddModal}
                          onToggleAddService={this.onToggleAddService}
                          onAddService={this.props.onAddService}
-                         serviceId={this.state.serviceId}
+                         currentService={this.state.currentService}
                          onEditService={this.props.onEditService}
-                         servicesList={servicesList}/> : null}
+                         /> : null}
       </div>
     );
   }
 }
 
-const mapStateToProps = ({services}) => {
+const mapStateToProps = ({services, commonData}) => {
   const {servicesList, totalItems} = services;
-  return {servicesList, totalItems};
+  const {updatingContent} = commonData;
+  return {servicesList, totalItems, updatingContent};
 };
 
 export default connect(mapStateToProps, {

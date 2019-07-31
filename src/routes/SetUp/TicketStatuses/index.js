@@ -15,6 +15,7 @@ import AddNewStatus from "./AddNewStatus";
 import Widget from "../../../components/Widget";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
+import StatusesRow from "./StatusesRow";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -27,7 +28,7 @@ class TicketStatuses extends Component {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      statusId: null,
+      currentStatus: null,
       filterText: "",
       itemNumbers: 10,
       current: 1,
@@ -40,9 +41,9 @@ class TicketStatuses extends Component {
     this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText);
   }
 
-  onGetStatusData = (currentPage, itemsPerPage, filterText) => {
+  onGetStatusData = (currentPage, itemsPerPage, filterText, updatingContent) => {
     if (Permissions.canStatusView()) {
-      this.props.onGetTicketStatus(currentPage, itemsPerPage, filterText);
+      this.props.onGetTicketStatus(currentPage, itemsPerPage, filterText, updatingContent);
     }
   };
 
@@ -54,7 +55,7 @@ class TicketStatuses extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1}, () => {
-        this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText)
+        this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
       });
     } else {
       return null;
@@ -64,7 +65,7 @@ class TicketStatuses extends Component {
   onCurrentDecrement = () => {
     if (this.state.current > 1) {
       this.setState({current: this.state.current - 1}, () => {
-        this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText)
+        this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
       });
     } else {
       return null;
@@ -73,7 +74,7 @@ class TicketStatuses extends Component {
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetStatusData(1, this.state.itemNumbers, this.state.filterText)
+      this.onGetStatusData(1, this.state.itemNumbers, this.state.filterText, true)
     })
   };
 
@@ -82,11 +83,11 @@ class TicketStatuses extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({statusId: null, showAddStatus: true});
+    this.setState({currentStatus: null, showAddStatus: true});
   };
 
   onEditStatus = (id) => {
-    this.setState({statusId: id, showAddStatus: true});
+    this.setState({currentStatus: id, showAddStatus: true});
   };
 
   onShowBulkActiveConfirm = () => {
@@ -174,74 +175,7 @@ class TicketStatuses extends Component {
     </Dropdown>
   };
 
-  onGetTableColumns = () => {
-    return [
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.name}</span>
-        },
-      },
-      {
-        title: 'Number of Orders',
-        dataIndex: 'numberOfOrders',
-        key: 'numberOfOrders',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.tickets_count}</span>
-        },
-      },
-      {
-        title: 'Color Code',
-        dataIndex: 'colorCode',
-        key: 'colorCode',
-        render: (text, record) => {
-          return <Tag color={record.color_code}>
-            <span style={{color: record.color_code}}>{record.color_code}</span></Tag>
-        },
-      },
-      {
-        title: 'Default',
-        dataIndex: 'default',
-        key: 'default',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2"
-                       style={{color: record.is_default === 1 ? "blue" : ""}}>{
-            record.is_default === 1 ? "Default" : "Set Default"}</span>
-        },
-      },
-      {
-        title: 'Created By',
-        dataIndex: 'createdBy',
-        key: 'createdBy',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.created_by}</span>
-        },
-      },
-      {
-        title: 'Status',
-        dataIndex: 'status',
-        key: 'status',
-        render: (text, record) => {
-          return <Tag color={record.status === 1 ? "green" : "red"}>
-            {record.status === 1 ? "Active" : "Disabled"}
-          </Tag>
-        },
-      },
-      {
-        title: '',
-        dataIndex: '',
-        key: 'empty',
-        render: (text, record) => {
-          return <span> {Permissions.canStatusEdit() ? <i className="icon icon-edit gx-mr-3"
-                                                          onClick={() => this.onEditStatus(record.id)}/> : null}
-            {Permissions.canStatusDelete() ? this.onDeletePopUp(record.id) : null}
-          </span>
-        },
-      },
-    ];
-  };
+
 
   onDeletePopUp = (recordId) => {
     return <Popconfirm
@@ -260,7 +194,7 @@ class TicketStatuses extends Component {
     this.setState({
       current: page
     }, () => {
-      this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
     })
   };
 
@@ -274,7 +208,7 @@ class TicketStatuses extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -327,8 +261,8 @@ class TicketStatuses extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()}
-                 dataSource={statuses} className="gx-mb-4"
+          <Table rowKey="id" rowSelection={rowSelection} columns={StatusesRow(this)}
+                 dataSource={statuses} className="gx-mb-4" loading={this.props.updatingContent}
                  pagination={{
                    pageSize: this.state.itemNumbers,
                    current: this.state.current,
@@ -341,17 +275,18 @@ class TicketStatuses extends Component {
           <AddNewStatus showAddStatus={this.state.showAddStatus}
                         onToggleAddStatus={this.onToggleAddStatus}
                         onAddTicketStatus={this.props.onAddTicketStatus}
-                        statusId={this.state.statusId}
+                        currentStatus={this.state.currentStatus}
                         onEditTicketStatus={this.props.onEditTicketStatus}
-                        statuses={statuses}/> : null}
+                        /> : null}
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ticketStatuses}) => {
+const mapStateToProps = ({ticketStatuses, commonData}) => {
   const {statuses, totalItems} = ticketStatuses;
-  return {statuses, totalItems};
+  const {updatingContent} = commonData;
+  return {statuses, totalItems, updatingContent};
 };
 
 export default connect(mapStateToProps, {

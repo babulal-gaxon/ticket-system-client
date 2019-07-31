@@ -15,6 +15,7 @@ import Widget from "../../../components/Widget";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
+import ResponseRow from "./ResponseRow";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -39,9 +40,9 @@ class CannedResponses extends Component {
     this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
   }
 
-  onGetResponseData = (currentPage, itemsPerPage, filterData) => {
+  onGetResponseData = (currentPage, itemsPerPage, filterData, updatingContent) => {
     if (Permissions.canResponseView()) {
-      this.props.onGetCannedResponses(currentPage, itemsPerPage, filterData);
+      this.props.onGetCannedResponses(currentPage, itemsPerPage, filterData, updatingContent);
     }
   };
 
@@ -53,7 +54,7 @@ class CannedResponses extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1}, () => {
-        this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
+        this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
       });
     } else {
       return null;
@@ -63,7 +64,7 @@ class CannedResponses extends Component {
   onCurrentDecrement = () => {
     if (this.state.current > 1) {
       this.setState({current: this.state.current - 1}, () => {
-        this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
+        this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
       });
     } else {
       return null;
@@ -76,7 +77,7 @@ class CannedResponses extends Component {
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetResponseData(1, this.state.itemNumbers, this.state.filterText)
+      this.onGetResponseData(1, this.state.itemNumbers, this.state.filterText, true)
     })
   };
 
@@ -173,64 +174,7 @@ class CannedResponses extends Component {
     </Dropdown>
   };
 
-  onGetTableColumns = () => {
-    return [
-      {
-        title: 'Short Title',
-        dataIndex: 'shortTitle',
-        key: 'shortTitle',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.short_title}</span>
-        }
-      },
-      {
-        title: 'Short Code',
-        dataIndex: 'shortCode',
-        key: 'shortCode',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.short_code}</span>
-        },
-      },
-      {
-        title: 'Message',
-        dataIndex: 'message',
-        key: 'message',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.message}</span>
-        },
-      },
-      {
-        title: 'Created By',
-        dataIndex: 'createdBy',
-        key: 'createdBy',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.created_by}</span>
-        },
-      },
-      {
-        title: 'Status',
-        dataIndex: 'status_id',
-        key: 'Status',
-        render: (text, record) => {
 
-          return <Tag color={record.status === 1 ? "green" : "red"}>
-            {record.status === 1 ? "Active" : "Disabled"}
-          </Tag>
-        },
-      },
-      {
-        title: '',
-        dataIndex: '',
-        key: 'empty',
-        render: (text, record) => {
-          return <span> {Permissions.canResponseEdit() ? <i className="icon icon-edit gx-mr-3"
-                                                            onClick={() => this.onEditResponse(record)}/> : null}
-            {Permissions.canResponseDelete() ? this.onDeletePopUp(record.id) : null}
-          </span>
-        },
-      },
-    ];
-  };
 
   onDeletePopUp = (recordId) => {
     return <Popconfirm
@@ -247,7 +191,7 @@ class CannedResponses extends Component {
 
   onPageChange = page => {
     this.setState({current: page}, () => {
-      this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -261,7 +205,7 @@ class CannedResponses extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
     })
   };
 
@@ -313,8 +257,9 @@ class CannedResponses extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()}
+          <Table rowKey="id" rowSelection={rowSelection} columns={ResponseRow(this)}
                  dataSource={responses} className="gx-mb-4"
+                 loading={this.props.updatingContent}
                  pagination={{
                    pageSize: this.state.itemNumbers,
                    current: this.state.current,
@@ -338,9 +283,10 @@ class CannedResponses extends Component {
 }
 
 
-const mapStateToProps = ({cannedResponses}) => {
+const mapStateToProps = ({cannedResponses, commonData}) => {
   const {responses, totalItems} = cannedResponses;
-  return {responses, totalItems};
+  const {updatingContent} = commonData;
+  return {responses, totalItems, updatingContent};
 };
 
 

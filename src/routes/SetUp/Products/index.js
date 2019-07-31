@@ -1,18 +1,5 @@
 import React, {Component} from 'react';
-import {
-  Avatar,
-  Breadcrumb,
-  Button,
-  Dropdown,
-  Icon,
-  Input,
-  Menu,
-  Modal,
-  Popconfirm,
-  Select,
-  Table,
-  Tag
-} from "antd/lib/index";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table} from "antd/lib/index";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
@@ -28,6 +15,7 @@ import {
 } from "../../../appRedux/actions/Products";
 import Permissions from "../../../util/Permissions";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
+import ProductsRow from "./ProductsRow";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -39,7 +27,7 @@ class Products extends Component {
     super(props);
     this.state = {
       selectedRowKeys: [],
-      productId: null,
+      currentProduct: null,
       filterText: "",
       itemNumbers: 10,
       currentPage: 1,
@@ -49,9 +37,9 @@ class Products extends Component {
     this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
   };
 
-  onGetProductsData = (currentPage, itemNumbers, searchText) => {
+  onGetProductsData = (currentPage, itemNumbers, searchText, updatingContent) => {
     if (Permissions.canProductView()) {
-      this.props.onGetProductsList(currentPage, itemNumbers, searchText);
+      this.props.onGetProductsList(currentPage, itemNumbers, searchText, updatingContent);
     }
   };
 
@@ -63,7 +51,7 @@ class Products extends Component {
     const pages = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.currentPage < pages) {
       this.setState({currentPage: this.state.currentPage + 1}, () => {
-        this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+        this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
       });
     } else {
       return null;
@@ -73,7 +61,7 @@ class Products extends Component {
   onCurrentDecrement = () => {
     if (this.state.currentPage > 0) {
       this.setState({currentPage: this.state.currentPage - 1}, () => {
-        this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+        this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
       });
     } else {
       return null;
@@ -82,7 +70,7 @@ class Products extends Component {
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetProductsData(1, this.state.itemNumbers, this.state.filterText)
+      this.onGetProductsData(1, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -91,11 +79,11 @@ class Products extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({productId: null, showAddModal: true});
+    this.setState({currentProduct: null, showAddModal: true});
   };
 
-  onEditProduct = (id) => {
-    this.setState({productId: id, showAddModal: true});
+  onEditProduct = (product) => {
+    this.setState({currentProduct: product, showAddModal: true});
   };
 
   onShowBulkActiveConfirm = () => {
@@ -181,56 +169,6 @@ class Products extends Component {
     </Dropdown>
   };
 
-  onGetTableColumns = () => {
-    return [
-      {
-        title: 'Product Name',
-        dataIndex: 'productName',
-        render: (text, record) => {
-          return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
-              {record.avatar ?
-                <Avatar className="gx-mr-3 gx-size-80" src={record.avatar.src}/> :
-                <Avatar className="gx-mr-3 gx-size-80"
-                        style={{backgroundColor: '#f56a00'}}>{record.title[0].toUpperCase()}</Avatar>}
-              <div className="gx-media-body">
-                <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
-              </div>
-            </div>
-          )
-        }
-      },
-      {
-        title: 'Description',
-        dataIndex: 'description',
-        key: 'description',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc === null ? "NA" : record.desc}</span>
-        },
-      },
-      {
-        title: 'Support',
-        dataIndex: 'support_enable',
-        key: 'support',
-        render: (text, record) => {
-          return <Tag color={record.support_enable === 1 ? "green" : "red"}>
-            {record.support_enable === 1 ? "Enabled" : "Disabled"}
-          </Tag>
-        },
-      },
-      {
-        title: '',
-        dataIndex: '',
-        key: 'empty',
-        render: (text, record) => {
-          return <span> {(Permissions.canProductEdit()) ?
-            <i className="icon icon-edit gx-mr-3" onClick={() => this.onEditProduct(record.id)}/> : null}
-            {(Permissions.canProductDelete()) ? this.onDeletePopUp(record.id) : null}
-          </span>
-        },
-      },
-    ];
-  };
-
   onDeletePopUp = (recordId) => {
     return (
       <Popconfirm
@@ -255,7 +193,7 @@ class Products extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, currentPage: 1}, () => {
-      this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+      this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
     })
   };
 
@@ -263,7 +201,7 @@ class Products extends Component {
     this.setState({
       currentPage: page
     }, () => {
-      this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+      this.onGetProductsData(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -315,8 +253,8 @@ class Products extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()} dataSource={productsList}
-                 className="gx-mb-4"
+          <Table rowKey="id" rowSelection={rowSelection} columns={ProductsRow(this)} dataSource={productsList}
+                 className="gx-mb-4" loading={this.props.updatingContent}
                  pagination={{
                    pageSize: this.state.itemNumbers,
                    current: this.state.currentPage,
@@ -331,9 +269,8 @@ class Products extends Component {
           <AddNewProduct showAddModal={this.state.showAddModal}
                          onToggleAddProduct={this.onToggleAddProduct}
                          onAddProduct={this.props.onAddProduct}
-                         productId={this.state.productId}
+                         currentProduct={this.state.currentProduct}
                          onEditProduct={this.props.onEditProduct}
-                         productsList={productsList}
                          fetchSuccess={this.props.fetchSuccess}
                          fetchStart={this.props.fetchStart}
                          fetchError={this.props.fetchError}/> : null}
@@ -342,9 +279,10 @@ class Products extends Component {
   }
 }
 
-const mapStateToProps = ({products}) => {
+const mapStateToProps = ({products, commonData}) => {
   const {productsList, totalItems} = products;
-  return {productsList, totalItems};
+  const {updatingContent} = commonData;
+  return {productsList, totalItems, updatingContent};
 };
 
 export default connect(mapStateToProps, {
