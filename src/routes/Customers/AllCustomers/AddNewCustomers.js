@@ -179,6 +179,7 @@ class AddNewCustomers extends Component {
   };
 
   render() {
+    console.log("currentCustomer",this.props.currentCustomer)
     const {getFieldDecorator} = this.props.form;
     const {phone, status, label_ids, addresses, first_name, last_name, email} = this.state;
     const labelOptions = this.onLabelSelectOption();

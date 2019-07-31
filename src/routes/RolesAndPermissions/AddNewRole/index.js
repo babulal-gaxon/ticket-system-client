@@ -4,7 +4,7 @@ import Widget from "../../../components/Widget";
 import {onAddRole, onDisableSelectedRole, onEditRole} from "../../../appRedux/actions/RolesAndPermissions";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-import {onBulkDeleteStaff, onGetStaff, onGetStaffId} from "../../../appRedux/actions/SupportStaff";
+import {onBulkDeleteStaff, onGetStaff, onSetCurrentStaff} from "../../../appRedux/actions/SupportStaff";
 import StaffDetail from "../../Staff/StaffList/StaffDetail/index";
 import StaffWithSelectedRole from "./StaffWithSelectedRole";
 import PropTypes from "prop-types";
@@ -243,7 +243,7 @@ class AddNewRole extends Component {
       labelPermissions, prioritiesPermissions, responsesPermissions, rolesPermissions, settingsPermissions,
       staffsPermissions, statusPermissions, ticketsPermissions
     } = this.state;
-    const {selectedRole, onDisableSelectedRole, userPermissions, staffList, onGetStaffId, history} = this.props;
+    const {selectedRole, onDisableSelectedRole, userPermissions, staffList, onSetCurrentStaff, history} = this.props;
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -518,11 +518,11 @@ class AddNewRole extends Component {
               <Col xl={9} lg={12} md={12} sm={12} xs={24}>
                 <StaffWithSelectedRole staffList={staffList}
                                        selectedRole={selectedRole}
-                                       onGetStaffId={onGetStaffId}
+                                       onSetCurrentStaff={onSetCurrentStaff}
                                        onSelectStaff={this.onSelectStaff}
                                        history={history}/>
               </Col> : null}
-          </Row> : <StaffDetail staff={currentMember} onGetStaffId={onGetStaffId}
+          </Row> : <StaffDetail staff={currentMember} onSetCurrentStaff={onSetCurrentStaff}
                                 history={history} onSelectStaff={this.onSelectStaff}
                                 onBackToList={this.onBackToList}/>}
         </Widget>
@@ -545,7 +545,7 @@ export default connect(mapStateToProps, {
   onEditRole,
   onDisableSelectedRole,
   onGetStaff,
-  onGetStaffId,
+  onSetCurrentStaff,
   onBulkDeleteStaff
 })(AddNewRole);
 
@@ -563,6 +563,6 @@ AddNewRole.propTypes = {
   onEditRole: PropTypes.func,
   onDisableSelectedRole: PropTypes.func,
   onGetStaff: PropTypes.func,
-  onGetStaffId: PropTypes.func,
+  onSetCurrentStaff: PropTypes.func,
   onBulkDeleteStaff: PropTypes.func
 };

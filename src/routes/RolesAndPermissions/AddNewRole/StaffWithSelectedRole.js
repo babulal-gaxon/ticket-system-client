@@ -70,7 +70,7 @@ class StaffWithSelectedRole extends Component {
                   <span>
                     {(Permissions.canStaffEdit()) ?
                       <i className="icon icon-edit gx-mr-3" onClick={() => {
-                        this.props.onGetStaffId(staff.id);
+                        this.props.onSetCurrentStaff(staff);
                         this.props.history.push('/staff/add-new-member')
                       }}/> : null}
                     {(Permissions.canViewStaffDetail()) ?
@@ -99,6 +99,6 @@ StaffWithSelectedRole.defaultProps = {
 StaffWithSelectedRole.propTypes = {
   selectedRole: PropTypes.object,
   userPermissions: PropTypes.object,
-  onGetStaffId: PropTypes.func,
+  onSetCurrentStaff: PropTypes.func,
   onSelectStaff: PropTypes.func
 };

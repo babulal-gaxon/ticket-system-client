@@ -59,7 +59,6 @@ class CustomerImageUpload extends Component {
       fileList,
     };
 
-
     return (
       <div className="gx-main-layout-content">
         <Upload {...props}>

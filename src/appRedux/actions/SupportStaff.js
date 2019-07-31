@@ -5,16 +5,14 @@ import {
   ADD_SUPPORT_STAFF,
   BULK_DELETE_SUPPORT_STAFF,
   DELETE_STAFF_NOTE,
-  DISABLE_STAFF_STATUS,
   EDIT_STAFF_NOTE,
   EDIT_SUPPORT_STAFF,
-  GET_STAFF_ID,
   GET_STAFF_NOTES,
   GET_STAFF_TICKETS,
   GET_SUPPORT_STAFF,
   NULLIFY_STAFF,
   SELECT_CURRENT_STAFF,
-  UPLOAD_PROFILE_IMAGE
+  STAFF_STATUS_CHANGE
 } from "../../constants/SupportStaff";
 import {showErrorMessage} from "./Auth";
 
@@ -46,10 +44,10 @@ export const onGetStaff = (currentPage, itemsPerPage, filterText, updatingConten
   }
 };
 
-export const onGetStaffId = (id) => {
+export const onSetCurrentStaff = (staff) => {
   return {
-    type: GET_STAFF_ID,
-    payload: id
+    type: SELECT_CURRENT_STAFF,
+    payload: staff
   }
 };
 
@@ -118,16 +116,20 @@ export const onEditSupportStaff = (staffMember, history) => {
   }
 };
 
-export const onDisableSupportStaff = (staffMember) => {
+export const onChangeStaffStatus = (staffId, status, updatingContent) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.put(`/setup/staffs/${staffMember.id}`, staffMember).then(({data}) => {
+    if (updatingContent) {
+      dispatch({type: UPDATING_CONTENT});
+    } else {
+      dispatch({type: FETCH_START});
+    }
+    axios.post(`/setup/staffs/status/${status}`, staffId).then(({data}) => {
       if (data.success) {
-        dispatch({type: DISABLE_STAFF_STATUS, payload: data.data});
+        dispatch({type: STAFF_STATUS_CHANGE, payload: {id: data.data, status: status}});
         dispatch({type: FETCH_SUCCESS});
         dispatch({
           type: SHOW_MESSAGE,
-          payload: `The Status of Selected staff has been changed to ${staffMember.account_status === 0 ? "disabled" : "enabled"} successfully`
+          payload: `The Status of Staff has been changed to ${status === 0 ? "disabled" : "enabled"} successfully`
         });
       } else {
         dispatch({type: FETCH_ERROR, payload: "Network Error"});
@@ -139,7 +141,7 @@ export const onDisableSupportStaff = (staffMember) => {
   }
 };
 
-export const onAddProfileImage = (imageFile) => {
+export const onAddProfileImage = (imageFile, context) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post("/uploads/temporary/media", imageFile, {
@@ -148,7 +150,7 @@ export const onAddProfileImage = (imageFile) => {
       }
     }).then(({data}) => {
       if (data.success) {
-        dispatch({type: UPLOAD_PROFILE_IMAGE, payload: data.data});
+        context.updateProfilePic(data.data);
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Profile Pic has been uploaded successfully"});
       } else {

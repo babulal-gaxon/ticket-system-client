@@ -14,6 +14,7 @@ import {Breadcrumb, Divider, Select} from "antd";
 import {Link} from "react-router-dom";
 import {onGetRoles} from "../../../appRedux/actions/RolesAndPermissions";
 import ImageUpload from "./ImageUpload";
+import CustomerImageUpload from "../../Customers/AllCustomers/CustomerImageUpload";
 
 const {Option} = Select;
 const {confirm} = Modal;
@@ -21,7 +22,7 @@ const {confirm} = Modal;
 class AddNewStaff extends Component {
   constructor(props) {
     super(props);
-    if (props.staffId === null) {
+    if (props.currentStaff === null) {
       this.state = {
         first_name: "",
         last_name: "",
@@ -36,8 +37,9 @@ class AddNewStaff extends Component {
         designation: ""
       };
     } else {
-      const selectedStaff = props.staffList.find(staff => staff.id === props.staffId);
-      const {id, first_name, last_name, email, mobile, hourly_rate, status, role_id, imageAvatar, designation} = selectedStaff;
+      const selectedStaff = props.currentStaff;
+      console.log("selectedStaff", selectedStaff);
+      const {id, first_name, last_name, email, mobile, hourly_rate, status, role_id, avatar, designation} = selectedStaff;
       const department_ids = selectedStaff.departments.map(department => {
         return department.id
       });
@@ -51,8 +53,8 @@ class AddNewStaff extends Component {
         account_status: status,
         departments_ids: department_ids,
         role_id: role_id,
-        profile_pic: null,
-        imageAvatar: imageAvatar,
+        profile_pic: avatar ? avatar.id : null,
+        imageAvatar: avatar,
         password: "",
         designation: designation
       }
@@ -69,13 +71,16 @@ class AddNewStaff extends Component {
   };
 
   onStaffAdd = () => {
-    this.setState({profile_pic: this.props.profilePicId}, () => {
-      if (this.props.staffId === null) {
-        this.props.onAddSupportStaff({...this.state}, this.props.history)
+    let {profile_pic} = this.state;
+      if (this.props.currentStaff === null) {
+        this.props.onAddSupportStaff({...this.state, profile_pic}, this.props.history)
       } else {
         this.props.onEditSupportStaff({...this.state}, this.props.history);
       }
-    })
+  };
+
+  updateProfilePic = (profile_pic) => {
+    this.setState({profile_pic})
   };
 
   onDepartmentSelectOption = () => {
@@ -127,7 +132,7 @@ class AddNewStaff extends Component {
       okText: "Yes, Delete Profile",
       cancelText: "Cancel",
       onOk: () => {
-        this.props.onBulkDeleteStaff({ids: this.props.staffId}, this.props.history)
+        this.props.onBulkDeleteStaff({ids: this.props.currentStaff.id}, this.props.history)
       },
       onCancel() {
         console.log('Cancel');
@@ -136,6 +141,7 @@ class AddNewStaff extends Component {
   };
 
   render() {
+    console.log("")
     const {getFieldDecorator} = this.props.form;
     const {mobile, hourly_rate, account_status, departments_ids, role_id, first_name, last_name, email, password, designation} = this.state;
     const deptOptions = this.onDepartmentSelectOption();
@@ -143,14 +149,14 @@ class AddNewStaff extends Component {
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
           <h4
-            className="gx-font-weight-bold">{this.props.staffId === null ? "Add Staff Member" : "Edit Staff Details"}</h4>
+            className="gx-font-weight-bold">{this.props.currentStaff === null ? "Add Staff Member" : "Edit Staff Details"}</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/staff/all-members">Staffs</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
               <Link to="/staff/add-new-member"
-                    className="gx-text-primary">{this.props.staffId === null ? "Add Staff" : "Edit Staff"}</Link>
+                    className="gx-text-primary">{this.props.currentStaff === null ? "Add Staff" : "Edit Staff"}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <hr/>
@@ -243,8 +249,8 @@ class AddNewStaff extends Component {
                   }}/>
                 </Form.Item>
                 <Form.Item label="Password"
-                           extra={this.props.staffId === null ? "" : "Note: Leave it blank if you don't want to update password."}>
-                  {this.props.staffId === null ?
+                           extra={this.props.currentStaff === null ? "" : "Note: Leave it blank if you don't want to update password."}>
+                  {this.props.currentStaff === null ?
                     getFieldDecorator('password', {
                       initialValue: password,
                       validateTrigger: 'onBlur',
@@ -286,6 +292,7 @@ class AddNewStaff extends Component {
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
               <ImageUpload onAddProfileImage={this.props.onAddProfileImage}
+                           context={this}
                            imageAvatar={this.state.imageAvatar}/>
             </Col>
           </Row>
@@ -295,7 +302,7 @@ class AddNewStaff extends Component {
                 <Button type="primary" onClick={this.onValidationCheck} style={{width: 150}}>
                   Save
                 </Button>
-              {this.props.staffId === null ?
+              {this.props.currentStaff === null ?
                 <Button type="primary" onClick={this.onReset} style={{width: 150}}>
                   Reset
                 </Button> : null}
@@ -303,7 +310,7 @@ class AddNewStaff extends Component {
                   Cancel
                 </Button>
             </span>
-            {this.props.staffId !== null ?
+            {this.props.currentStaff !== null ?
               <span>
               <Button type="danger" ghost style={{width: 150}} onClick={this.showDeleteConfirm}>Delete</Button>
             </span> : null}
@@ -317,10 +324,10 @@ class AddNewStaff extends Component {
 AddNewStaff = Form.create({})(AddNewStaff);
 
 const mapStateToProps = ({departments, supportStaff, rolesAndPermissions}) => {
-  const {staffId, staffList, profilePicId} = supportStaff;
+  const {currentStaff} = supportStaff;
   const {dept} = departments;
   const {roles} = rolesAndPermissions;
-  return {dept, staffId, staffList, profilePicId, roles};
+  return {dept, currentStaff, roles};
 };
 
 export default connect(mapStateToProps, {
@@ -333,13 +340,15 @@ export default connect(mapStateToProps, {
 })(AddNewStaff);
 
 AddNewStaff.defaultProps = {
-  staffList: [],
-  staffId: null
+  dept: [],
+  currentStaff: null,
+  roles: []
 };
 
 AddNewStaff.propTypes = {
-  staffList: PropTypes.array,
-  staffId: PropTypes.number,
+  dept: PropTypes.array,
+  currentStaff: PropTypes.number,
+  roles: PropTypes.array,
   onAddSupportStaff: PropTypes.func,
   onEditSupportStaff: PropTypes.func
 };

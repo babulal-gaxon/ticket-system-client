@@ -6,19 +6,19 @@ const {TextArea} = Input;
 class AddStaffNotes extends Component {
   constructor(props) {
     super(props);
-    if (this.props.noteId === null) {
+    if (this.props.currentNote === null) {
       this.state = {
         title: "",
         content: ""
       };
     } else {
-      const selectedNote = this.props.staffNotes.find(note => note.id === this.props.noteId);
+      const selectedNote = this.props.currentNote;
       this.state = {...selectedNote};
     }
   };
 
   onNotesAdd = () => {
-    if (this.props.noteId === null) {
+    if (this.props.currentNote === null) {
       this.props.onAddStaffNote(this.props.staffId, {...this.state});
     } else {
       this.props.onEditStaffNotes({...this.state});
@@ -37,12 +37,12 @@ class AddStaffNotes extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
     const {title, content} = this.state;
-    const {addNotesModal, onToggleAddNoteModal, noteId} = this.props;
+    const {addNotesModal, currentNote, onToggleAddNoteModal} = this.props;
     return (
       <div className="gx-main-layout-content">
         <Modal
           visible={addNotesModal}
-          title={noteId === null ? "Add New Note" : "Edit Note Details"}
+          title={currentNote === null ? "Add New Note" : "Edit Note Details"}
           onCancel={() => onToggleAddNoteModal()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>

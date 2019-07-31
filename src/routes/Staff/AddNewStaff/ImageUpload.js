@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Avatar, Button, Upload} from "antd";
+import {Avatar, Button, message, Upload} from "antd";
 import PropTypes from "prop-types";
+import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 
 class ImageUpload extends Component {
@@ -13,14 +14,28 @@ class ImageUpload extends Component {
 
   onLogoSelect = () => {
     let file = this.state.fileList[0];
-    const data = new FormData();
-    data.append('file', file);
-    data.append('title', file.name);
-    this.props.onAddProfileImage(data);
+    if (file) {
+      const data = new FormData();
+      data.append('file', file);
+      data.append('title', file.name);
+      this.props.onAddProfileImage(data, this.props.context);
+    } else {
+      message.warning("Please select image first!")
+    }
+  };
+
+  getImageURL = () => {
+    const {imageAvatar} = this.props;
+    if (this.state.fileList.length > 0) {
+      return URL.createObjectURL(this.state.fileList[0]);
+    } else if (imageAvatar) {
+      return MEDIA_BASE_URL + imageAvatar.src;
+    } else {
+      return require("assets/images/placeholder.jpg")
+    }
   };
 
   render() {
-    const imageAvatar = this.props.imageAvatar;
     const {fileList} = this.state;
     const props = {
       onRemove: file => {
@@ -44,11 +59,12 @@ class ImageUpload extends Component {
       },
       fileList,
     };
+
     return (
       <div className="gx-main-layout-content">
         <Upload {...props}>
           <Avatar className="gx-size-200"
-                  src={this.state.fileList.length > 0 ? URL.createObjectURL(this.state.fileList[0]) : imageAvatar}/>
+                  src={this.getImageURL()}/>
         </Upload>
         <Button type="primary" className="gx-mt-5 gx-ml-4" onClick={this.onLogoSelect}>Add Profile Image</Button>
       </div>

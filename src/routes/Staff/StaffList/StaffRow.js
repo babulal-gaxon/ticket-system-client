@@ -8,7 +8,7 @@ const onShowRowDropdown = (staff, context) => {
     <Menu>
       {(Permissions.canStaffEdit()) ?
         <Menu.Item key="2" onClick={() => {
-          context.props.onGetStaffId(staff.id);
+          context.props.onSetCurrentStaff(staff);
           context.props.history.push('/staff/add-new-member')
         }}>
           Edit
@@ -20,9 +20,9 @@ const onShowRowDropdown = (staff, context) => {
             title={`Are you sure to ${staff.status === 1 ? "Disable" : "Enable"} this Staff?`}
             onConfirm={() => {
               if (staff.status === 1) {
-                context.onDisableStaff(staff.id)
+                context.onDisableStaffStatus(staff.id)
               } else {
-                context.onEnableStaff(staff.id)
+                context.onEnableStaffStatus(staff.id)
               }
 
             }}

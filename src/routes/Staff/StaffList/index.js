@@ -3,10 +3,10 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {
-  onBulkDeleteStaff,
+  onBulkDeleteStaff, onChangeStaffStatus,
   onDisableSupportStaff,
   onGetStaff,
-  onGetStaffId
+  onSetCurrentStaff
 } from "../../../appRedux/actions/SupportStaff";
 import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Select, Table} from "antd";
 import Permissions from "../../../util/Permissions";
@@ -76,7 +76,7 @@ class StaffList extends Component {
   };
 
   onAddButtonClick = () => {
-    this.props.onGetStaffId(null);
+    this.props.onSetCurrentStaff(null);
     this.props.history.push('/staff/add-new-member')
   };
 
@@ -118,16 +118,12 @@ class StaffList extends Component {
   };
 
 
-  onDisableStaff = (staffId) => {
-    const selectedStaff = this.props.staffList.find(staff => staff.id === staffId);
-    selectedStaff.account_status = 0;
-    this.props.onDisableSupportStaff(selectedStaff)
+  onDisableStaffStatus = (staffId) => {
+    this.props.onChangeStaffStatus({ids: [staffId]}, 0, true);
   };
 
-  onEnableStaff = (staffId) => {
-    const selectedStaff = this.props.staffList.find(staff => staff.id === staffId);
-    selectedStaff.account_status = 1;
-    this.props.onDisableSupportStaff(selectedStaff)
+  onEnableStaffStatus = (staffId) => {
+    this.props.onChangeStaffStatus({ids: [staffId]}, 1, true);
   };
 
 
@@ -247,9 +243,9 @@ const mapStateToProps = ({supportStaff, commonData}) => {
 
 export default connect(mapStateToProps, {
   onGetStaff,
-  onGetStaffId,
+  onSetCurrentStaff,
   onBulkDeleteStaff,
-  onDisableSupportStaff
+  onChangeStaffStatus
 })(StaffList);
 
 StaffList.defaultProps = {
@@ -261,7 +257,7 @@ StaffList.propTypes = {
   staffList: PropTypes.array,
   totalItems: PropTypes.number,
   onGetStaff: PropTypes.func,
-  onGetStaffId: PropTypes.func,
+  onSetCurrentStaff: PropTypes.func,
   onBulkDeleteStaff: PropTypes.func,
   onDisableSupportStaff: PropTypes.func
 };
