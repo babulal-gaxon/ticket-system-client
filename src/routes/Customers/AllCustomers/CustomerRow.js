@@ -112,11 +112,13 @@ const CustomersRow = (context) => {
       },
     },
     {
-      title: 'Date Created',
-      dataIndex: 'dateCreated',
-      key: 'dateCreated',
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
       render: (text, record) => {
-        return <span className="gx-text-grey">{moment(record.created_at).format('LL')}</span>
+        return <Tag color={record.status === 1 ? "green" : "red"}>
+          {record.status === 1 ? "Active" : "Disabled"}
+        </Tag>
       },
     },
     {

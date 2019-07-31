@@ -6,15 +6,14 @@ const {TextArea} = Input;
 class AddNewLabel extends Component {
   constructor(props) {
     super(props);
-    if (this.props.labelId === null) {
+    if (this.props.label === null) {
       this.state = {
         name: "",
         desc: "",
         status: 1,
       };
     } else {
-      const selectedLabel = this.props.labelList.find(label => label.id === this.props.labelId);
-      this.state = {...selectedLabel};
+      this.state = {...this.props.label};
     }
   }
 

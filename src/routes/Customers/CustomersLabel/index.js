@@ -9,10 +9,11 @@ import {
 } from "../../../appRedux/actions/Labels";
 import {connect} from "react-redux";
 import Widget from "../../../components/Widget";
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd/lib/index";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Select, Table} from "antd/lib/index";
 import {Link} from "react-router-dom";
 import AddNewLabel from "./AddNewLabel";
 import Permissions from "../../../util/Permissions";
+import CustomerLabelRow from "./CustomerLabelRow";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -26,7 +27,7 @@ class CustomersLabel extends Component {
       selectedRowKeys: [],
       showAddLabel: false,
       filterText: "",
-      labelId: null,
+      label: null,
       itemNumbers: 10,
       current: 1,
       selectedLabels: []
@@ -34,9 +35,9 @@ class CustomersLabel extends Component {
     this.onGetLabelsList(this.state.current, this.state.itemNumbers, this.state.filterText);
   };
 
-  onGetLabelsList = (currentPage, itemNumbers, filterData) => {
+  onGetLabelsList = (currentPage, itemNumbers, filterData, updatingContent) => {
     if (Permissions.canLabelView()) {
-      this.props.onGetLabelData(currentPage, itemNumbers, filterData);
+      this.props.onGetLabelData(currentPage, itemNumbers, filterData, updatingContent);
     }
   };
 
@@ -48,7 +49,7 @@ class CustomersLabel extends Component {
     const totalPage = Math.ceil(this.props.totalItems / this.state.itemNumbers);
     if (this.state.current < totalPage) {
       this.setState({current: this.state.current + 1}, () => {
-        this.onGetLabelsList(this.state.current, this.state.itemNumbers, this.state.filterText);
+        this.onGetLabelsList(this.state.current, this.state.itemNumbers, this.state.filterText, true);
       })
     }
   };
@@ -56,14 +57,14 @@ class CustomersLabel extends Component {
   onCurrentDecrement = () => {
     if (this.state.current > 1) {
       this.setState({current: this.state.current - 1}, () => {
-        this.onGetLabelsList(this.state.current, this.state.itemNumbers, this.state.filterText);
+        this.onGetLabelsList(this.state.current, this.state.itemNumbers, this.state.filterText, true);
       })
     }
   };
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetLabelsList(1, this.state.itemNumbers, this.state.filterText)
+      this.onGetLabelsList(1, this.state.itemNumbers, this.state.filterText, true)
     })
   };
 
@@ -72,12 +73,10 @@ class CustomersLabel extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({labelId: null, showAddLabel: true});
+    this.setState({label: null, showAddLabel: true});
   };
 
-  onEditLabel = (id) => {
-    this.setState({labelId: id, showAddLabel: true});
-  };
+
 
   onShowBulkActiveConfirm = () => {
     if (this.state.selectedLabels.length !== 0) {
@@ -160,70 +159,7 @@ class CustomersLabel extends Component {
     </Dropdown>
   };
 
-  onGetTableColumns = () => {
-    return [
-      {
-        title: 'Id',
-        dataIndex: 'id',
-        key: 'id',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.id}</span>
-        },
-      },
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.name}</span>
-        },
-      },
-      {
-        title: 'Description',
-        dataIndex: 'desc',
-        key: 'desc',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc}</span>
-        },
-      },
-      {
-        title: 'Status',
-        dataIndex: 'status_id',
-        key: 'Status',
-        render: (text, record) => {
-          return <Tag color={record.status === 1 ? "green" : "red"}>
-            {record.status === 1 ? "Active" : "Disabled"}
-          </Tag>
-        },
-      },
-      {
-        title: '',
-        dataIndex: '',
-        key: 'empty',
-        render: (text, record) => {
-          return <span> {Permissions.canLabelEdit() ? <i className="icon icon-edit gx-mr-3"
-                                                         onClick={() => this.onEditLabel(record.id)}/> : null}
-            {Permissions.canLabelDelete() ? this.onDeletePopUp(record.id) : null}
-          </span>
-        },
-      },
-    ];
-  };
 
-  onDeletePopUp = (recordId) => {
-    return (
-      <Popconfirm
-        title="Are you sure to delete this Label?"
-        onConfirm={() => {
-          this.props.onDeleteLabel({ids: [recordId]});
-          this.onGetLabelsList(this.state.current, this.state.itemNumbers, this.state.filterText);
-        }}
-        okText="Yes"
-        cancelText="No">
-        <i className="icon icon-trash"/>
-      </Popconfirm>
-    )
-  };
 
   onShowItemOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>
@@ -235,13 +171,13 @@ class CustomersLabel extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetLabelsList(this.state.current, this.state.itemNumbers, this.state.filterText);
+      this.onGetLabelsList(this.state.current, this.state.itemNumbers, this.state.filterText, true);
     })
   };
 
   onPageChange = page => {
     this.setState({current: page}, () => {
-      this.onGetLabelsList(this.state.current, this.state.itemNumbers, this.state.filterText);
+      this.onGetLabelsList(this.state.current, this.state.itemNumbers, this.state.filterText, true);
     });
   };
 
@@ -297,7 +233,8 @@ class CustomersLabel extends Component {
               </ButtonGroup>
             </div>
           </div>
-          <Table rowKey="id" rowSelection={rowSelection} dataSource={labelList} columns={this.onGetTableColumns()}
+          <Table rowKey="id" rowSelection={rowSelection} dataSource={labelList} columns={CustomerLabelRow(this)}
+                 loading={this.props.updatingContent}
                  pagination={{
                    pageSize: this.state.itemNumbers,
                    current: this.state.current,
@@ -308,7 +245,7 @@ class CustomersLabel extends Component {
         </Widget>
         {this.state.showAddLabel ?
           <AddNewLabel showAddLabel={this.state.showAddLabel}
-                       labelId={this.state.labelId}
+                       label={this.state.label}
                        onAddLabelsData={this.props.onAddLabelsData}
                        onToggleModalState={this.onToggleModalState}
                        labelList={labelList}
@@ -319,9 +256,10 @@ class CustomersLabel extends Component {
   }
 }
 
-const mapPropsToState = ({labelsList}) => {
+const mapPropsToState = ({labelsList, commonData}) => {
   const {labelList, totalItems} = labelsList;
-  return {labelList, totalItems};
+  const {updatingContent} = commonData;
+  return {labelList, totalItems, updatingContent};
 };
 export default connect(mapPropsToState, {
   onGetLabelData,

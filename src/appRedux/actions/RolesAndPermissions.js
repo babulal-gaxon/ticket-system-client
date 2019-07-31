@@ -25,7 +25,7 @@ export const onGetRoles = (currentPage, itemsPerPage, filterText) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_ROLES, payload: data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -52,7 +52,7 @@ export const onAddRole = (newRole, history) => {
         history.goBack();
         dispatch({type: SHOW_MESSAGE, payload: "The Role has been added successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -71,7 +71,7 @@ export const onBulkDeleteRoles = (roleIds) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Role(s) has been deleted successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -91,7 +91,7 @@ export const onEditRole = (role, history) => {
         history.goBack();
         dispatch({type: SHOW_MESSAGE, payload: "The Role details has been updated successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -112,7 +112,7 @@ export const onGetRoleDetail = (roleId, history) => {
         dispatch({type: GET_ROLE_DETAIL, payload: data.data});
         history.push("/roles-permissions/add-new")
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});

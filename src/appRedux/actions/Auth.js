@@ -63,8 +63,8 @@ export const onGetUserInfo = (history) => {
         localStorage.setItem("permission", JSON.stringify(data.data));
         Permissions.setPermissions(data.data);
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
-        dispatch({type: FETCH_USER_INFO_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
+        dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});
         history.push("/signin");
         localStorage.removeItem("token");
         localStorage.removeItem("user");
@@ -124,10 +124,10 @@ export const onResetPassword = ({email}) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "Reset password link has been successfully sent to your email address"});
       } else if (data.message) {
-        console.info("payload: data.error", data.message);
+        console.info("payload: data.errors[0]", data.message);
         dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
-        console.info("payload: data.error", data.errors[0]);
+        console.info("payload: data.errors[0]", data.errors[0]);
         dispatch({type: FETCH_ERROR, payload: data.errors.email});
       }
     }).catch(function (error) {
@@ -148,10 +148,10 @@ export const onSetNewPassword = (token, data, history) => {
         dispatch({type: SHOW_MESSAGE, payload: "The password has been updated successfully"});
         history.replace("/signin");
       } else if (data.message) {
-        console.info("payload: data.error", data.message);
+        console.info("payload: data.errors[0]", data.message);
         dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
-        console.info("payload: data.error", data.errors[0]);
+        console.info("payload: data.errors[0]", data.errors[0]);
         dispatch({type: FETCH_ERROR, payload: data.errors.email});
       }
     }).catch(function (error) {

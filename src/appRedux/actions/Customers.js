@@ -39,7 +39,7 @@ export const onGetCustomersData = (currentPage, itemsPerPage, filterData, compan
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_CUSTOMERS_DATA, payload: data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -70,7 +70,7 @@ export const onAddNewCustomer = (customer, history) => {
         history.goBack();
         dispatch({type: SHOW_MESSAGE, payload: "The New Customer has been added successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -92,7 +92,7 @@ export const onEditCustomer = (customer, history) => {
         history.goBack();
         dispatch({type: SHOW_MESSAGE, payload: "The Customer details has been edited successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -115,7 +115,7 @@ export const onChangeCustomerStatus = (customerId, status, updatingContent) => {
         dispatch({type: SHOW_MESSAGE,
           payload: `The Status of Customer has been changed to ${status === 0 ? "disabled" : "enabled"} successfully`});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -134,7 +134,7 @@ export const onDeleteCustomers = (customerIds) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Customer has been deleted successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -169,7 +169,7 @@ export const onAddImage = (imageFile, context) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Profile Picture has been added successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -188,7 +188,7 @@ export const onAddCustomerAddress = (address, context) => {
         context.addAddress(data.data);
         dispatch({type: SHOW_MESSAGE, payload: "The Address has been saved successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -207,7 +207,7 @@ export const onEditCustomerAddress = (address, context) => {
         context.updateAddress(data.data);
         dispatch({type: SHOW_MESSAGE, payload: "The Address has been saved successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -225,7 +225,7 @@ export const onDeleteCustomerAddress = (addressId, context) => {
         context.deleteAddress(addressId);
         dispatch({type: SHOW_MESSAGE, payload: "The Address has been deleted successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -243,7 +243,7 @@ export const onGetCustomerTickets = (currentCustomer) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_CUSTOMER_TICKETS, payload: data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -261,7 +261,7 @@ export const onGetCustomerCompany = (companyId) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_CUSTOMER_COMPANY, payload: data.data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -279,7 +279,7 @@ export const onResetPassword = (currentCustomer, password) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Password has been changed successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -297,7 +297,7 @@ export const onGetCustomerDetail = (currentCustomer) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SELECT_CURRENT_CUSTOMER_PROFILE, payload: data.data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch(showErrorMessage(error));

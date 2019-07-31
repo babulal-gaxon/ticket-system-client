@@ -1,5 +1,5 @@
 import axios from 'util/Api'
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE, UPDATING_CONTENT} from "../../constants/ActionTypes";
 import {
   ADD_LABELS_DATA,
   DELETE_LABEL,
@@ -10,9 +10,13 @@ import {
 } from "../../constants/Labels";
 
 
-export const onGetLabelData = (currentPage, itemsPerPage, searchData) => {
+export const onGetLabelData = (currentPage, itemsPerPage, searchData, updatingContent) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
+    if (updatingContent) {
+      dispatch({type: UPDATING_CONTENT});
+    } else {
+      dispatch({type: FETCH_START});
+    }
     axios.get('/setup/labels', {
       params: {
         page: currentPage,
@@ -25,7 +29,7 @@ export const onGetLabelData = (currentPage, itemsPerPage, searchData) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_LABELS_DATA, payload: data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       //dispatch(showErrorMessage(error));
@@ -47,7 +51,7 @@ export const onAddLabelsData = (label) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The New Label has been added successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -66,7 +70,7 @@ export const onDeleteLabel = (labelId) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Selected Label has been deleted successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -84,7 +88,7 @@ export const onChangeToActiveStatus = (labelId) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Status of Label(s) has been changed to Active successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -102,7 +106,7 @@ export const onChangeToDisableStatus = (labelId) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Status of Label(s) has been changed to Disabled successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -123,7 +127,7 @@ export const onEditLabelsData = (label) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Label details has been edited successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: "Network Error"});
+        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
