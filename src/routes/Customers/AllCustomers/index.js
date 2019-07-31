@@ -261,7 +261,8 @@ class AllCustomers extends Component {
                      showMoreCompany={showMoreCompany} selectedCompanies={selectedCompanies} status={status}
                      selectedLabels={selectedLabels} updateState={this.updateState}
                      onChangeCompanyFilterText={this.onChangeCompanyFilterText}
-                     onShowMoreCompanyToggle={this.onShowMoreCompanyToggle}/> : null}
+                     onShowMoreCompanyToggle={this.onShowMoreCompanyToggle}
+          /> : null}
         {resetPasswordModal ?
           <ResetCustomerPassword
             resetPasswordModal={resetPasswordModal}

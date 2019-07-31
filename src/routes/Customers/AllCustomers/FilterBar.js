@@ -67,7 +67,7 @@ class FilterBar extends Component {
               </div>
               <div>
                 {this.onFilterCompanyName().length > 5 ?
-                  <Button type="link" onClick={() => onShowMoreCompanyToggle}>
+                  <Button type="link" onClick={() => onShowMoreCompanyToggle()}>
                     {showMoreCompany ? "View Less" : `${this.onFilterCompanyName().length - 5} More`}
                   </Button> : null}
               </div>
