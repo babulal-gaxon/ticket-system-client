@@ -1,19 +1,6 @@
 import React, {Component} from 'react';
 import Widget from "../../../components/Widget";
-import {
-  Avatar,
-  Breadcrumb,
-  Button,
-  Dropdown,
-  Icon,
-  Input,
-  Menu,
-  Modal,
-  Popconfirm,
-  Select,
-  Table,
-  Tag
-} from "antd";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Select, Table} from "antd";
 import {
   onDeleteCustomers,
   onDisableCustomer,
@@ -22,14 +9,13 @@ import {
   onResetPassword,
   setCurrentCustomer
 } from "../../../appRedux/actions/Customers";
-import moment from "moment";
 import {connect} from "react-redux";
 import ResetCustomerPassword from "./ResetCustomerPassword";
 import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import FilterBar from "./FilterBar";
+import CustomersRow from "./CustomerRow";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -40,6 +26,11 @@ class AllCustomers extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      companyFilterText: "",
+      showMoreCompany: false,
+      selectedCompanies: [],
+      status: [],
+      selectedLabels: [],
       filterText: "",
       selectedRowKeys: [],
       itemNumbers: 10,
@@ -68,9 +59,9 @@ class AllCustomers extends Component {
   };
 
   onFilterTextChange = (e) => {
-    const {itemNumbers} = this.state;
+    const {itemNumbers, selectedCompanies, selectedLabels, status} = this.state;
     this.setState({filterText: e.target.value}, () => {
-      this.onGetPaginatedData(1, itemNumbers, this.state.filterText, [], [], [], true)
+      this.onGetPaginatedData(1, itemNumbers, this.state.filterText, selectedCompanies, selectedLabels, status, true)
     })
   };
 
@@ -116,136 +107,27 @@ class AllCustomers extends Component {
     </Select>
   };
 
+  onChangeCompanyFilterText = (e) => {
+    this.setState({companyFilterText: e.target.value})
+  };
+
+  onShowMoreCompanyToggle = (e) => {
+    this.setState({showMoreCompany: !this.state.showMoreCompany})
+  };
+
+  updateState = (state) => {
+    this.setState({...state}, () => {
+      const {selectedLabels, status, current, itemNumbers, filterText, selectedCompanies} = this.state;
+      this.onGetPaginatedData(current, itemNumbers, filterText, selectedCompanies, selectedLabels, status, true)
+    })
+  };
+
   onAddButtonClick = () => {
     this.props.setCurrentCustomer(null);
     this.props.history.push('/customers/add-customers');
   };
 
-  onCustomersRowData = () => {
-    return [
-      {
-        title: 'Customer',
-        dataIndex: 'title',
-        key: 'customer',
-        render: (text, record) => {
-          return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
-              {record.avatar ?
-                <Avatar className="gx-mr-3 gx-size-50" src={MEDIA_BASE_URL + record.avatar.src}/> :
-                <Avatar className="gx-mr-3 gx-size-50"
-                        style={{backgroundColor: '#f56a00'}}>{record.first_name[0].toUpperCase()}</Avatar>}
-              <div className="gx-media-body">
-                <span className="gx-mb-0 gx-text-capitalize">{record.first_name + " " + record.last_name}</span>
-                <div className="gx-mt-1">
-                  <Tag color="#fc895f">{record.company ? record.company.company_name : null}</Tag>
-                </div>
-              </div>
-            </div>
-          )
-        }
-      },
-      {
-        title: 'Email',
-        dataIndex: 'email',
-        key: 'email',
-        render: (text, record) => {
-          return <span className="gx-text-grey">{record.email ? record.email : "NA"}</span>
-        },
-      },
-      {
-        title: 'Phone no.',
-        dataIndex: 'phone',
-        key: 'phone',
-        render: (text, record) => {
-          return <span className="gx-text-grey">{record.phone ? record.phone : "NA"}</span>
-        },
-      },
-      {
-        title: 'Labels',
-        dataIndex: 'labels',
-        key: 'labels',
-        render: (text, record) => {
-          return (record.labels && record.labels.length > 0) ?
-            record.labels.map(label => {
-              return <Tag key={label.name}>{label.name}</Tag>
-            }) : "NA"
-        },
-      },
-      {
-        title: 'Date Created',
-        dataIndex: 'dateCreated',
-        key: 'dateCreated',
-        render: (text, record) => {
-          return <span className="gx-text-grey">{moment(record.created_at).format('LL')}</span>
-        },
-      },
-      {
-        title: '',
-        dataIndex: '',
-        key: 'empty',
-        render: (text, record) => {
-          return <span className="gx-p-2 gx-cursor-pointer" onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-          }}>
-            {this.onShowRowDropdown(record)}
-      </span>
-        },
-      },
-    ];
-  };
 
-  onShowRowDropdown = (currentCustomer) => {
-    const menu = (
-      <Menu>
-        {(Permissions.canCustomerEdit()) ?
-          <Menu.Item key="1" onClick={() => {
-            this.props.setCurrentCustomer(currentCustomer);
-            this.props.history.push('/customers/add-customers')
-          }}>
-            Edit
-          </Menu.Item> : null}
-        {(Permissions.canCustomerEdit()) ?
-          <Menu.Item key="2" onClick={() => {
-            this.setState({resetPasswordCustomerId: currentCustomer.id}, () => {
-              this.onTogglePasswordModal()
-            })
-          }}>
-            Reset Password
-          </Menu.Item> : null}
-        {(Permissions.canCustomerEdit()) ?
-          <Menu.Item key="3">
-            <Popconfirm
-              title="Are you sure to disable this Customer?"
-              onConfirm={() => {
-                this.onDisableCustomerCall(currentCustomer.id)
-              }}
-              okText="Yes"
-              cancelText="No">
-              Disable
-            </Popconfirm>
-          </Menu.Item> : null}
-        <Menu.Divider/>
-        {(Permissions.canCustomerDelete()) ?
-          <Menu.Item key="4">
-            <Popconfirm
-              title="Are you sure to delete this Customer?"
-              onConfirm={() => {
-                this.props.onDeleteCustomers({ids: [currentCustomer.id]});
-                this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
-              }}
-              okText="Yes"
-              cancelText="No">
-              Delete
-            </Popconfirm>
-          </Menu.Item> : null}
-      </Menu>
-    );
-    return (
-      <Dropdown overlay={menu} trigger={['click']}>
-        <i className="icon icon-ellipse-h"/>
-      </Dropdown>
-    )
-  };
 
   onDisableCustomerCall = (currentCustomer) => {
     const selectedCustomer = this.props.customersList.find(customer => customer.id === currentCustomer);
@@ -305,15 +187,12 @@ class AllCustomers extends Component {
 
   render() {
     const {customersList, updatingContent, company, labels} = this.props;
-    const {
-      selectedRowKeys, resetPasswordModal, sideBarActive, filterText,
-      resetPasswordCustomerId, itemNumbers, current
-    } = this.state;
-    let ids;
+    const {selectedRowKeys, resetPasswordModal, sideBarActive, filterText, resetPasswordCustomerId, itemNumbers, current, companyFilterText, showMoreCompany, selectedCompanies, status, selectedLabels} = this.state;
+
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
-        ids = selectedRows.map(selectedRow => {
+        const ids = selectedRows.map(selectedRow => {
           return selectedRow.id
         });
         this.setState({selectedCustomers: ids, selectedRowKeys: selectedRowKeys})
@@ -357,7 +236,7 @@ class AllCustomers extends Component {
                 </Button> : null}
             </div>
           </div>
-          <Table rowKey="id" rowSelection={rowSelection} columns={this.onCustomersRowData()}
+          <Table rowKey="id" rowSelection={rowSelection} columns={CustomersRow(this)}
                  dataSource={customersList}
                  loading={updatingContent}
                  pagination={{
@@ -376,8 +255,12 @@ class AllCustomers extends Component {
                    }
                  })}/>
         </Widget>
-        {sideBarActive ? <FilterBar context={this}
-        /> : null}
+        {sideBarActive ?
+          <FilterBar companyFilterText={companyFilterText} company={company} labels={labels}
+                     showMoreCompany={showMoreCompany} selectedCompanies={selectedCompanies} status={status}
+                     selectedLabels={selectedLabels} updateState={this.updateState}
+                     onChangeCompanyFilterText={this.onChangeCompanyFilterText}
+                     onShowMoreCompanyToggle={this.onShowMoreCompanyToggle}/> : null}
         {resetPasswordModal ?
           <ResetCustomerPassword
             resetPasswordModal={resetPasswordModal}
