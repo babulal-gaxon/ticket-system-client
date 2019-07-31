@@ -17,7 +17,7 @@ const INIT_STATE = {
   token: localStorage.getItem('token'),
   initURL: '',
   authUser: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
-  userPermissions: [],
+  userPermissions: localStorage.getItem('permission') ? JSON.parse(localStorage.getItem('permission')) : [],
   loadingUser: true,
   errorMessage: '',
 };

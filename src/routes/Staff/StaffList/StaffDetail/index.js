@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Col, Popconfirm, Row} from "antd/lib/index";
-import Widget from "../../../../components/Widget";
+import {Col, Row} from "antd/lib/index";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {
@@ -19,6 +18,7 @@ import AssignedTickets from "./AssignedTickets";
 import StaffNotesList from "./StaffNotesList";
 import TotalLoggedTime from "./TotalLoggedTime";
 import TodayLoggedTime from "./TodayLoggedTime";
+import {withRouter} from "react-router";
 
 class StaffDetail extends Component {
   constructor(props) {
@@ -98,7 +98,7 @@ const mapStateToProps = ({supportStaff, ticketList}) => {
 };
 
 
-export default connect(mapStateToProps, {
+export default withRouter(connect(mapStateToProps, {
   onGetStaffNotes,
   onAddStaffNote,
   onEditStaffNotes,
@@ -107,7 +107,7 @@ export default connect(mapStateToProps, {
   onSetCurrentStaff,
   onGetStaffDetail,
   onNullifyCurrentStaff
-})(StaffDetail);
+})(StaffDetail));
 
 StaffDetail.defaultProps = {
   totalItems: null
