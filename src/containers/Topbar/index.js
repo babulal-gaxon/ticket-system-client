@@ -58,17 +58,17 @@ class Topbar extends Component {
   onSelectOption = () => {
     const menu = (
       <Menu>
-        {Permissions.canResponseEdit() ?
+        {Permissions.canTicketAdd() ?
           <Menu.Item key="1" onClick={this.onAddNewTicket}>
             <i className="icon icon-add"/> Add New Ticket
           </Menu.Item> : null
         }
-        {Permissions.canResponseEdit() ?
+        {Permissions.canCustomerAdd() ?
           <Menu.Item key="2" onClick={this.onAddNewCustomer}>
             <i className="icon icon-add"/> Add New Customer
           </Menu.Item> : null
         }
-        {Permissions.canResponseDelete() ?
+        {Permissions.canStaffAdd() ?
           <Menu.Item key="3" onClick={this.onAddNewStaff}>
             <i className="icon icon-add"/> Add New Staff
           </Menu.Item> : null

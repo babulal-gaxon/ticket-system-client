@@ -21,7 +21,7 @@ class GeneralDetails extends Component {
 
   componentWillReceiveProps(nextProps, nextContext) {
     if (nextProps.generalSettingsData) {
-      const {name, allowed_ext, file_upload_max_size, email, logo, favicon, website, company_logo, company_favicon} = nextProps.generalSettingsData;
+      const {name, allowed_ext, file_upload_max_size, email, logo, favicon, website} = nextProps.generalSettingsData;
       if (JSON.stringify(nextProps.generalSettingsData) !== JSON.stringify(this.props.generalSettingsData)) {
         this.setState({
           name: name,
@@ -31,8 +31,6 @@ class GeneralDetails extends Component {
           allowed_ext: allowed_ext,
           file_upload_max_size: file_upload_max_size,
           email: email,
-          // logoName: company_logo.title,
-          // faviconName: company_favicon.title
         })
       }
     }

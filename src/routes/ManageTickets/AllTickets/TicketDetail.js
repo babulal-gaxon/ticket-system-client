@@ -122,6 +122,7 @@ class TicketDetail extends Component {
       formData.append('file', file);
       formData.append('title', file.name);
       this.imageUpload(formData);
+      return file;
     });
   };
 
