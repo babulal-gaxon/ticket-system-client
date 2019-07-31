@@ -44,10 +44,6 @@ class StaffDetail extends Component {
     this.props.history.push('/staff/add-new-member')
   };
 
-  onGetTicketDetail = record => {
-    this.props.history.push(`/manage-tickets/ticket-detail?id=${record.id}`);
-  };
-
   onBackToList = () => {
     this.props.history.goBack();
   };

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Widget from "../../../../../components/Widget";
-import {Button, Divider, Popconfirm} from "antd";
+import {Button, Divider, Empty, Popconfirm} from "antd";
 import AddStaffNotes from "./AddStaffNotes";
 import moment from "moment";
 
@@ -51,7 +51,7 @@ class StaffNotesList extends Component {
               Add New
             </Button>
           </div>
-          {staffNotes && staffNotes.map(note => {
+          {staffNotes.length > 0 ? staffNotes.map(note => {
             return <div className="gx-mr-2" key={note.id}>
               <div className="gx-d-flex gx-justify-content-between">
                 <div>
@@ -71,7 +71,7 @@ class StaffNotesList extends Component {
               </div>
               <Divider/>
             </div>
-          })}
+          }): <Empty/>}
         </Widget>
         {addNotesModal ?
           <AddStaffNotes

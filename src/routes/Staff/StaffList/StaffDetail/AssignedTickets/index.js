@@ -3,6 +3,7 @@ import Widget from "../../../../../components/Widget";
 import {Table} from "antd/lib/index";
 import Permissions from "../../../../../util/Permissions";
 import TicketsRow from "./TicketsRow";
+import {withRouter} from "react-router";
 
 class AssignedTickets extends Component {
 
@@ -12,6 +13,10 @@ class AssignedTickets extends Component {
 
   onSelectChange = selectedRowKeys => {
     this.setState({selectedRowKeys});
+  };
+
+  onGetTicketDetail = record => {
+    this.props.history.push(`/manage-tickets/ticket-detail?id=${record.id}`);
   };
 
   render() {
@@ -40,4 +45,4 @@ class AssignedTickets extends Component {
   }
 }
 
-export default AssignedTickets;
+export default withRouter(AssignedTickets);

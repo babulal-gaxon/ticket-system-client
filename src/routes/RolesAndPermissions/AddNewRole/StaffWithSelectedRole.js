@@ -80,7 +80,8 @@ class StaffWithSelectedRole extends Component {
                       }}/> : null}
                     {(Permissions.canViewStaffDetail()) ?
                       <i className="icon icon-custom-view gx-p-2 gx-pointer"
-                         onClick={() => this.props.onSelectStaff(staff)}/>
+                         onClick={() =>
+                         this.props.history.push(`/staff/member-detail?id=${staff.id}`)}/>
                       : null}
                 </span>
                 </div>
