@@ -29,7 +29,7 @@ export const onGetTicketStatus = (currentPage, itemsPerPage, filterText, updatin
         dispatch({type: GET_TICKET_STATUSES, payload: data});
         dispatch({type: FETCH_SUCCESS});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -48,7 +48,7 @@ export const onAddTicketStatus = (status) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Status has been added successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -67,7 +67,7 @@ export const onEditTicketStatus = (status) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Status details has been updated successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -85,7 +85,7 @@ export const onBulkActiveStatuses = (statusIds) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Status of Status(s) has been changed to Active successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -103,7 +103,7 @@ export const onBulkInActiveStatuses = (statusIds) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Status of Status(s) has been changed to Disabled successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -121,7 +121,7 @@ export const onBulkDeleteStatuses = (statusIds) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Status(s) has been deleted successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});

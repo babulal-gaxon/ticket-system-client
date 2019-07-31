@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd/lib/index";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table} from "antd/lib/index";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -169,7 +169,6 @@ class Departments extends Component {
   };
 
 
-
   onDeletePopUp = (recordId) => {
     return (
       <Popconfirm
@@ -270,7 +269,7 @@ class Departments extends Component {
                             onAddDepartment={this.props.onAddDepartment}
                             currentDepartment={this.state.currentDepartment}
                             onEditDepartment={this.props.onEditDepartment}
-                            /> : null}
+          /> : null}
       </div>
     );
   }

@@ -39,8 +39,8 @@ class StaffWithSelectedRole extends Component {
   onFilterStaffList = () => {
     if (this.state.staffWithSelectedRole.length !== 0) {
       return this.state.staffWithSelectedRole.filter(staff => {
-        const name = staff.first_name.toLowerCase() + " " + staff.last_name.toLowerCase();
-        return (name.includes(this.state.filterText.toLowerCase())) ? staff : null
+          const name = staff.first_name.toLowerCase() + " " + staff.last_name.toLowerCase();
+          return (name.includes(this.state.filterText.toLowerCase())) ? staff : null
         }
       )
     } else {
@@ -81,7 +81,7 @@ class StaffWithSelectedRole extends Component {
                     {(Permissions.canViewStaffDetail()) ?
                       <i className="icon icon-custom-view gx-p-2 gx-pointer"
                          onClick={() =>
-                         this.props.history.push(`/staff/member-detail?id=${staff.id}`)}/>
+                           this.props.history.push(`/staff/member-detail?id=${staff.id}`)}/>
                       : null}
                 </span>
                 </div>

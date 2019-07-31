@@ -48,7 +48,7 @@ export const onAddCannedResponse = (cannedResponse) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Response has been added successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -67,7 +67,7 @@ export const onEditCannedResponse = (cannedResponse) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Response details has been updated successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -85,7 +85,7 @@ export const onBulkActiveResponses = (responseIds) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Status of Response(s) has been changed to Active successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -103,7 +103,7 @@ export const onBulkInActiveResponses = (responseIds) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Status of Response(s) has been changed to Disabled successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -121,7 +121,7 @@ export const onBulkDeleteResponses = (responseIds) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: "The Response(s) has been deleted successfully"});
       } else {
-        dispatch({type: FETCH_ERROR,payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});

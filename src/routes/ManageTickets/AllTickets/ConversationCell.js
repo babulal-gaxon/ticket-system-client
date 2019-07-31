@@ -7,7 +7,7 @@ import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 
 const ConversationCell = ({conversation}) => {
-  console.log("conversation.author.", conversation.author)
+  console.log("conversation.author.", conversation.author);
   return (
     <div className="gx-flex-row gx-module-detail-item gx-flex-nowrap gx-pl-0">
       <div className="gx-chat-todo-avatar">

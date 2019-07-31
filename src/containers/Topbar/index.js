@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Dropdown, Icon, Layout, Menu, Popover} from "antd";
+import {Button, Dropdown, Layout, Menu, Popover} from "antd";
 import {Link, withRouter} from "react-router-dom";
 
 import CustomScrollbars from "util/CustomScrollbars";

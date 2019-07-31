@@ -71,7 +71,7 @@ class StaffNotesList extends Component {
               </div>
               <Divider/>
             </div>
-          }): <Empty/>}
+          }) : <Empty/>}
         </Widget>
         {addNotesModal ?
           <AddStaffNotes

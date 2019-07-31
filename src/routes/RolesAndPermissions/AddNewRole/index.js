@@ -246,7 +246,7 @@ class AddNewRole extends Component {
     const {selectedRole, onDisableSelectedRole, userPermissions, staffList, onSetCurrentStaff, history} = this.props;
 
 
-    if(userPermissions){
+    if (userPermissions) {
 
     }
 

@@ -4,13 +4,13 @@ import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {
-    onAddCustomerAddress,
-    onAddImage,
-    onAddNewCustomer,
-    onDeleteCustomerAddress,
-    onEditCustomer,
-    onEditCustomerAddress,
-    onGetCustomerFilterOptions
+  onAddCustomerAddress,
+  onAddImage,
+  onAddNewCustomer,
+  onDeleteCustomerAddress,
+  onEditCustomer,
+  onEditCustomerAddress,
+  onGetCustomerFilterOptions
 } from "../../../appRedux/actions/Customers";
 import AddCustomerAddress from "./AddCustomerAddress";
 import CustomerImageUpload from "./CustomerImageUpload";
@@ -179,7 +179,7 @@ class AddNewCustomers extends Component {
   };
 
   render() {
-    console.log("currentCustomer",this.props.currentCustomer)
+    console.log("currentCustomer", this.props.currentCustomer);
     const {getFieldDecorator} = this.props.form;
     const {phone, status, label_ids, addresses, first_name, last_name, email} = this.state;
     const labelOptions = this.onLabelSelectOption();

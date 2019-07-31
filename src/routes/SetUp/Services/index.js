@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd/lib/index";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table} from "antd/lib/index";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import AddNewService from "./AddNewService";
@@ -268,7 +268,7 @@ class Services extends Component {
                          onAddService={this.props.onAddService}
                          currentService={this.state.currentService}
                          onEditService={this.props.onEditService}
-                         /> : null}
+          /> : null}
       </div>
     );
   }

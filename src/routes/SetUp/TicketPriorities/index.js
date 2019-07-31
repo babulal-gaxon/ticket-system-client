@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table, Tag} from "antd/lib/index";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table} from "antd/lib/index";
 import {connect} from "react-redux";
 import {
   onAddTicketPriority,
@@ -272,7 +272,7 @@ class TicketPriorities extends Component {
                           onAddTicketPriority={this.props.onAddTicketPriority}
                           currentPriority={this.state.currentPriority}
                           onEditTicketPriority={this.props.onEditTicketPriority}
-                          /> : null}
+          /> : null}
       </div>
     );
   }
