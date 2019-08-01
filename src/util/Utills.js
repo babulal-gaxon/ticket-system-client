@@ -54,6 +54,11 @@ export const canAdd = () => {
 export const canDelete = () => {
   return false;
 };
+
+export const updateDateFormat = (dateFormat) => {
+  userSetting.locale.date_format = dateFormat;
+};
+
 export const setUserSetting = (setting) => {
   userSetting = setting;
   console.log("userSetting", userSetting)

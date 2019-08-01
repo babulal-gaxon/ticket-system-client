@@ -4,11 +4,9 @@
     <bookmark url="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/FilterBar.js" line="69" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="677204dc-ee95-4dba-80b1-7606a1da6834" name="Default" comment="fix file size issue">
+    <list default="true" id="677204dc-ee95-4dba-80b1-7606a1da6834" name="Default" comment="fix date format">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/Auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/App/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/App/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketRow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketRow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/GeneralSettings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/GeneralSettings.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/util/Utills.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/Utills.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -70,11 +68,41 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/util/Utills.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="30" lean-forward="true" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+            <state relative-caret-position="646">
+              <caret line="50" column="29" lean-forward="true" selection-start-line="50" selection-start-column="29" selection-end-line="50" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/Settings/Localization/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="600">
+              <caret line="157" column="17" lean-forward="true" selection-start-line="157" selection-start-column="17" selection-end-line="157" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/FourthStep.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="566">
+              <caret line="141" column="20" selection-start-line="141" selection-start-column="20" selection-end-line="141" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/appRedux/actions/GeneralSettings.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="443">
+              <caret line="86" column="48" selection-start-line="86" selection-start-column="48" selection-end-line="86" selection-end-column="48" />
+              <folding>
+                <element signature="e#0#98#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -91,7 +119,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>custome</find>
       <find>getFieldDecorator</find>
       <find>-sidebar-notifications</find>
       <find>170</find>
@@ -121,6 +148,7 @@
       <find>file_size</find>
       <find>:</find>
       <find>\/</find>
+      <find>MM/DD/YY</find>
     </findStrings>
     <replaceStrings>
       <replace>canAdd</replace>
@@ -172,9 +200,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/FilterBar.js" />
         <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" />
         <option value="$PROJECT_DIR$/src/routes/Customers/Companies/CompanyRow.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/Companies.js" />
@@ -222,7 +247,10 @@
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketRow.js" />
         <option value="$PROJECT_DIR$/src/containers/App/index.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/Auth.js" />
+        <option value="$PROJECT_DIR$/src/routes/Settings/Localization/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/FourthStep.js" />
         <option value="$PROJECT_DIR$/src/util/Utills.js" />
+        <option value="$PROJECT_DIR$/src/appRedux/actions/GeneralSettings.js" />
       </list>
     </option>
   </component>
@@ -717,11 +745,25 @@
       <option name="project" value="LOCAL" />
       <updated>1564658087868</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="update util file">
+      <created>1564658936434</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1564658936434</updated>
+    </task>
+    <task id="LOCAL-00046" summary="fix date format">
+      <created>1564659373165</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1564659373166</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="343871000" />
+    <option name="totallyTimeSpent" value="345103000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -793,8 +835,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="rename company params" />
-    <MESSAGE value="fixed some issues" />
     <MESSAGE value="remove extra imports" />
     <MESSAGE value="update git ignore" />
     <MESSAGE value="update title" />
@@ -818,26 +858,11 @@
     <MESSAGE value="working on permissions" />
     <MESSAGE value="fix date format issue" />
     <MESSAGE value="fix file size issue" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix file size issue" />
+    <MESSAGE value="update util file" />
+    <MESSAGE value="fix date format" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix date format" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/loader.svg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="688">
-          <caret line="524" column="30" selection-start-line="524" selection-start-column="30" selection-end-line="524" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/StaffWithSelectedRole.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/AssignedTickets/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="578">
@@ -1137,16 +1162,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/App/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="33" column="11" lean-forward="true" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/appRedux/actions/Auth.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="606">
@@ -1157,10 +1172,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/FourthStep.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="566">
+          <caret line="141" column="20" selection-start-line="141" selection-start-column="20" selection-end-line="141" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/App/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="33" column="11" lean-forward="true" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/util/Utills.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="30" lean-forward="true" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+        <state relative-caret-position="646">
+          <caret line="50" column="29" lean-forward="true" selection-start-line="50" selection-start-column="29" selection-end-line="50" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Settings/Localization/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="157" column="17" lean-forward="true" selection-start-line="157" selection-start-column="17" selection-end-line="157" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/GeneralSettings.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="86" column="48" selection-start-line="86" selection-start-column="48" selection-end-line="86" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#98#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
