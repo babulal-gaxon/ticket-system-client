@@ -1,5 +1,50 @@
 import moment from "moment";
 
+let userSetting = {
+  "ticket": {
+    "enable_service_selection": "1",
+    "staff_access_own_department": "1",
+    "ticket_reply_order": "asc",
+    "allowed_file_ext": ".png,.jpg,.jpeg,.gif,.docx,.doc, .text",
+    "max_upload_size": "20",
+    "notify_raise": "1",
+    "notify_reply": "1",
+    "notify_status_change": "1",
+    "notify_priority_change": "1",
+    "notify_on_archive": "1",
+    "ticket_status_close": "5",
+    "default_status_reply": "1"
+  },
+  "locale": {
+    "date_format": "DD/MM/YY",
+    "time_format": "24 Hours",
+    "default_language": "en",
+    "allow_language_selection": "0"
+  },
+  "general": {
+    "name": "G-axon",
+    "email": "demo@example.com",
+    "cpp_url": "http://localhost:3001",
+    "website": "http://www.g-axon.com",
+    "phone": "9460670620",
+    "allowed_ext": ".jpg",
+    "file_upload_max_size": "10",
+    "favicon": "22",
+    "logo": "24",
+    "url": "http://www.g-axon.com"
+  },
+  "general_address": {
+    "company_address": "1"
+  },
+  "customer": {
+    "theme": "Dark",
+    "country": "103",
+    "registration_enable": "1",
+    "register_verification": "1",
+    "allow_primary_contact_view": "1",
+    "delete_own_files": "1"
+  }
+};
 export const canEdit = () => {
   return true;
 };
@@ -9,26 +54,10 @@ export const canAdd = () => {
 export const canDelete = () => {
   return false;
 };
-
-let userSetting = {
-  ticket: {
-    max_upload_size: 10,
-    allowed_file_ext: ".jpg,.png,.txt"
-  },
-  general: {
-    file_upload_max_size: 10,
-    allowed_ext: ".jpg,.png,.txt",
-    logo: "",
-    favicon: ""
-  },
-  locale: {
-    date_format: "DD/MM/YY",
-    time_format: "24 Hours",
-    default_language: "en",
-  },
-
+export const setUserSetting = (setting) => {
+  userSetting = setting;
+  console.log("userSetting", userSetting)
 };
-
 export const getFormattedDate = (date) => {
   return moment(date).format(userSetting.locale.date_format);
 };

@@ -14,6 +14,7 @@ import {
 } from "../../constants/ActionTypes";
 import axios from 'util/Api'
 import Permissions from "../../util/Permissions";
+import {setUserSetting} from "../../util/Utills";
 
 export const setInitUrl = (url) => {
   return {
@@ -62,6 +63,7 @@ export const onGetUserPermission = (history) => {
         dispatch({type: UPDATE_USER_PERMISSION_DATA, payload: data.data});
         localStorage.setItem("settings", JSON.stringify(data.data));
         Permissions.setPermissions(data.data.permissions);
+        setUserSetting(data.data.settings);
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
         dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});

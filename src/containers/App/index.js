@@ -18,6 +18,7 @@ import InitialSetup from "../../routes/InitialSetup";
 import {onCheckInitialSetup} from "../../appRedux/actions/InitialSetup";
 import Permissions from "../../util/Permissions";
 import {setUserDefaultSetting} from "../../appRedux/actions";
+import {setUserSetting} from "../../util/Utills";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
   <Route
@@ -42,7 +43,7 @@ class App extends PureComponent {
     if (localStorage.getItem('settings')) {
       props.setUserDefaultSetting(JSON.parse(localStorage.getItem('settings')));
       Permissions.setPermissions(JSON.parse(localStorage.getItem('settings')).permissions)
-      // Permissions.setPermissions(JSON.parse(localStorage.getItem('settings')).permission)
+      setUserSetting(JSON.parse(localStorage.getItem('settings')).settings);
     }
   }
 
