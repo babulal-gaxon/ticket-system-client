@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Button, Form, Input, Modal, Radio, Upload} from "antd/lib/index";
+import {Button, Form, Input, message, Modal, Radio, Upload} from "antd/lib/index";
 import PropTypes from "prop-types";
 import axios from 'util/Api'
-import {getFileExtension} from "../../../util/Utills";
+import {getFileExtension, getFileSize} from "../../../util/Utills";
 
 const {TextArea} = Input;
 
@@ -101,9 +101,15 @@ class AddNewProduct extends Component {
         if (fileList.length > 0) {
           props.onRemove(fileList[0])
         }
-        this.setState(state => ({
-          fileList: [...state.fileList, file],
-        }));
+        const isFileSize = file.size < getFileSize();
+        if (!isFileSize) {
+          message.error('The image size is greater than allowed size!');
+        }
+        else {
+          this.setState(state => ({
+            fileList: [...state.fileList, file],
+          }));
+        }
         return false;
       },
       fileList,

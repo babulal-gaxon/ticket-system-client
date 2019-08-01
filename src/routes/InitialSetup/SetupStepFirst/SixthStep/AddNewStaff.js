@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Input, Modal, Radio, Select, Upload} from "antd/lib/index";
+import {Button, Col, Form, Input, message, Modal, Radio, Select, Upload} from "antd/lib/index";
 import axios from 'util/Api'
 import PropTypes from "prop-types";
+import {getFileExtension, getFileSize} from "../../../../util/Utills";
 
 const {Option} = Select;
 
@@ -19,7 +20,7 @@ class AddNewStaff extends Component {
         hourly_rate: "",
         account_status: 1,
         departments_ids: [],
-        uploadedFile: null,
+        fileList: [],
         profile_pic: null
       }
     } else {
@@ -37,13 +38,14 @@ class AddNewStaff extends Component {
         hourly_rate: parseInt(hourly_rate),
         account_status: status,
         departments_ids: department_ids,
-        profile_pic: null
+        profile_pic: null,
+        fileList: []
       }
     }
   }
 
   onSubmitForm = () => {
-    if (this.state.uploadedFile) {
+    if (this.state.fileList.length>0) {
       this.onImageSelect();
     } else {
       this.onStaffAdd();
@@ -60,11 +62,13 @@ class AddNewStaff extends Component {
   };
 
   onImageSelect = () => {
-    let file = this.state.uploadedFile;
-    const data = new FormData();
-    data.append('file', file);
-    data.append('title', file.name);
-    this.onAddImage(data);
+    let file = this.state.fileList[0];
+    if(file) {
+      const data = new FormData();
+      data.append('file', file);
+      data.append('title', file.name);
+      this.onAddImage(data);
+    }
   };
 
   onAddImage = (file, context) => {
@@ -75,7 +79,6 @@ class AddNewStaff extends Component {
       }
     }).then(({data}) => {
       if (data.success) {
-        console.log("data", data.data);
         this.props.fetchSuccess();
         this.setState({profile_pic: data.data}, () => {
           this.onStaffAdd();
@@ -113,19 +116,38 @@ class AddNewStaff extends Component {
   };
 
   render() {
-    console.log("uploadedFile", this.state.uploadedFile);
     const {getFieldDecorator} = this.props.form;
-    const {first_name, last_name, email, password, mobile, hourly_rate, account_status, departments_ids} = this.state;
+    const {first_name, last_name, email, password, mobile, hourly_rate, account_status, departments_ids, fileList} = this.state;
     const {showAddModal, onToggleAddModal} = this.props;
     const deptOptions = this.onDepartmentSelectOption();
     const props = {
-      onRemove: () => {
-        this.setState({uploadedFile: null})
+      accept: getFileExtension(),
+      onRemove: file => {
+        this.setState(state => {
+          const index = state.fileList.indexOf(file);
+          const newFileList = state.fileList.slice(-1);
+          newFileList.splice(index, 1);
+          return {
+            fileList: newFileList,
+          };
+        });
       },
       beforeUpload: file => {
-        this.setState({uploadedFile: file});
+        if (fileList.length > 0) {
+          props.onRemove(fileList[0])
+        }
+        const isFileSize = file.size < getFileSize();
+        if (!isFileSize) {
+          message.error('The image size is greater than allowed size!');
+        }
+        else {
+          this.setState(state => ({
+            fileList: [...state.fileList, file],
+          }));
+        }
         return false;
       },
+      fileList,
     };
     return (
       <div className="gx-main-layout-content">

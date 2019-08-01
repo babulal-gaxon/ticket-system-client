@@ -94,11 +94,11 @@ class AddNewCompany extends Component {
         if (fileList.length > 0) {
           props.onRemove(fileList[0])
         }
-        const isFileSize = file.size / 1024 / 1024 < getFileSize();
+        const isFileSize = file.size < getFileSize();
         if (!isFileSize) {
           message.error('The image size is greater than allowed size!');
         }
-        if(isFileSize) {
+        else {
           this.setState(state => ({
             fileList: [...state.fileList, file],
           }))

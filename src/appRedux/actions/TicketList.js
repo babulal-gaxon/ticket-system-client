@@ -133,7 +133,7 @@ export const onDeleteTicket = (ticketIds, backToList) => {
           if (backToList) {
             backToList();
           }
-          dispatch({type: SHOW_MESSAGE, payload: "The Ticket has been deleted successfully"});
+          dispatch({type: SHOW_MESSAGE, payload: "The Ticket has been Archived successfully"});
         } else {
           dispatch({type: FETCH_ERROR, payload: data.errors[0]});
         }

@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Avatar, Breadcrumb, Col, Input, Row, Select, Tag, Upload} from "antd";
+import {Avatar, Breadcrumb, Col, Input, message, Row, Select, Tag, Upload} from "antd";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import moment from "moment";
@@ -24,7 +24,7 @@ import PropTypes from "prop-types";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import qs from "qs";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
-import {getFormattedDate, getTicketFileExtension} from "../../../util/Utills";
+import {getFormattedDate, getTicketFileExtension, getTicketFileSize} from "../../../util/Utills";
 
 const Option = Select.Option;
 const {TextArea} = Input;
@@ -169,9 +169,15 @@ class TicketDetail extends Component {
         });
       },
       beforeUpload: file => {
-        this.setState(state => ({
-          fileList: [...state.fileList, file],
-        }));
+        const isFileSize = file.size < getTicketFileSize();
+        if (!isFileSize) {
+          message.error('The image size is greater than allowed size!');
+        }
+        else {
+          this.setState(state => ({
+            fileList: [...state.fileList, file],
+          }));
+        }
         return false;
       },
       fileList,

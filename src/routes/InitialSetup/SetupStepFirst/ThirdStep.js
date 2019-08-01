@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {Button, Col, Divider, Form, Input, Select, Upload} from "antd/lib/index";
+import {Button, Col, Divider, Form, Input, message, Select, Upload} from "antd/lib/index";
 import axios from 'util/Api'
 import {connect} from "react-redux";
 import {onGetCountriesList} from "../../../appRedux/actions/GeneralSettings";
 import {onSetGeneralInfo} from "../../../appRedux/actions/InitialSetup";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
+import {getFileExtension, getFileSize} from "../../../util/Utills";
 
 const {Option} = Select;
 
@@ -108,6 +109,7 @@ class ThirdStep extends Component {
   render() {
     const {name, url, phone, email, address_line_1, address_line_2, city, state, country_id, zip_code, cpp_url, fileList} = this.state;
     const props = {
+      accept: getFileExtension(),
       onRemove: file => {
         this.setState(state => {
           const index = state.fileList.indexOf(file);
@@ -122,9 +124,15 @@ class ThirdStep extends Component {
         if (fileList.length > 0) {
           props.onRemove(fileList[0])
         }
-        this.setState(state => ({
-          fileList: [...state.fileList, file],
-        }));
+        const isFileSize = file.size < getFileSize();
+        if (!isFileSize) {
+          message.error('The image size is greater than allowed size!');
+        }
+        if(isFileSize) {
+          this.setState(state => ({
+            fileList: [...state.fileList, file],
+          }));
+        }
         return false;
       },
       fileList,

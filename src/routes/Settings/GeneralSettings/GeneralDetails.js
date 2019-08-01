@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Button, Divider, Form, Input, Upload} from "antd/lib/index";
+import {Button, Divider, Form, Input, message, Upload} from "antd/lib/index";
 import PropTypes from "prop-types";
 import axios from 'util/Api'
-import {getFileExtension} from "../../../util/Utills";
+import {getFileExtension, getFileSize} from "../../../util/Utills";
 
 class GeneralDetails extends Component {
   constructor(props) {
@@ -138,36 +138,48 @@ class GeneralDetails extends Component {
         if (logoList.length > 0) {
           propsLogo.onRemove(logoList[0])
         }
-        this.setState(state => ({
-          logoList: [...state.logoList, file],
-        }));
+        const isFileSize = file.size < getFileSize();
+        if (!isFileSize) {
+          message.error('The image size is greater than allowed size!');
+        }
+        else {
+          this.setState(state => ({
+            logoList: [...state.logoList, file],
+          }));
+        }
         return false;
       },
       logoList,
     };
-    const propsFavicon = {
-      accept: getFileExtension(),
-      onRemove: file => {
-        this.setState(state => {
-          const index = state.faviconList.indexOf(file);
-          const newFileList = state.faviconList.slice(-1);
-          newFileList.splice(index, 1);
-          return {
-            faviconList: newFileList,
-          };
-        });
-      },
-      beforeUpload: file => {
-        if (faviconList.length > 0) {
-          propsFavicon.onRemove(faviconList[0])
-        }
-        this.setState(state => ({
-          faviconList: [...state.faviconList, file],
-        }));
-        return false;
-      },
-      faviconList,
-    };
+    // const propsFavicon = {
+    //   accept: getFileExtension(),
+    //   onRemove: file => {
+    //     this.setState(state => {
+    //       const index = state.faviconList.indexOf(file);
+    //       const newFileList = state.faviconList.slice(-1);
+    //       newFileList.splice(index, 1);
+    //       return {
+    //         faviconList: newFileList,
+    //       };
+    //     });
+    //   },
+    //   beforeUpload: file => {
+    //     if (faviconList.length > 0) {
+    //       propsFavicon.onRemove(faviconList[0])
+    //     }
+    //     const isFileSize = file.size < getFileSize();
+    //     if (!isFileSize) {
+    //       message.error('The image size is greater than allowed size!');
+    //     }
+    //     else {
+    //       this.setState(state => ({
+    //         faviconList: [...state.faviconList, file],
+    //       }));
+    //     }
+    //     return false;
+    //   },
+    //   faviconList,
+    // };
     return (
       <div className="gx-main-layout-content">
         <Form layout="vertical" style={{width: "50%"}}>
@@ -204,11 +216,11 @@ class GeneralDetails extends Component {
                 <Input placeholder="Choose file..." addonAfter="Browse" style={{width:"270%"}}/>
               </Upload>
             </Form.Item>
-            <Form.Item label="Favicon" extra={faviconName && this.state.logoList.length ===0 ? faviconName :"Size should be 40X40px, Maximum image size 50kb"}>
-              <Upload {...propsFavicon}>
-                <Input placeholder="Choose file..." addonAfter="Browse" style={{width:"270%"}}/>
-              </Upload>
-            </Form.Item>
+            {/*<Form.Item label="Favicon" extra={faviconName && this.state.logoList.length ===0 ? faviconName :"Size should be 40X40px, Maximum image size 50kb"}>*/}
+            {/*  <Upload {...propsFavicon}>*/}
+            {/*    <Input placeholder="Choose file..." addonAfter="Browse" style={{width:"270%"}}/>*/}
+            {/*  </Upload>*/}
+            {/*</Form.Item>*/}
           <Form.Item label="Email">
             {getFieldDecorator('email', {
               initialValue: email,
