@@ -4,13 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/FilterBar.js" line="70" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="677204dc-ee95-4dba-80b1-7606a1da6834" name="Default" comment="fix some issue on ticket">
-      <change afterPath="$PROJECT_DIR$/src/routes/Profile/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserInfo/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserInfo/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/Sidebar/UserProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Sidebar/UserProfile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/index.js" afterDir="false" />
-    </list>
+    <list default="true" id="677204dc-ee95-4dba-80b1-7606a1da6834" name="Default" comment="working on user profile" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -88,8 +82,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/routes/Profile/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="133" column="8" lean-forward="true" selection-start-line="133" selection-start-column="8" selection-end-line="133" selection-end-column="8" />
+            <state relative-caret-position="85">
+              <caret line="127" column="13" lean-forward="true" selection-start-line="127" selection-start-column="13" selection-end-line="127" selection-end-column="13" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -705,15 +699,21 @@
       <option name="project" value="LOCAL" />
       <updated>1564636157966</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="working on user profile">
+      <created>1564648287569</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1564648287569</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="334120000" />
+    <option name="totallyTimeSpent" value="334459000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.42351276" visible="true" weight="0.17334037" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -781,7 +781,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed layout style" />
     <MESSAGE value="working on initial setup" />
     <MESSAGE value="update logo" />
     <MESSAGE value="working on init setup" />
@@ -806,7 +805,8 @@
     <MESSAGE value="fix some issue" />
     <MESSAGE value="fix some media path" />
     <MESSAGE value="fix some issue on ticket" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix some issue on ticket" />
+    <MESSAGE value="working on user profile" />
+    <option name="LAST_COMMIT_MESSAGE" value="working on user profile" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/containers/App/MainApp.js">
@@ -1142,8 +1142,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/Profile/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="133" column="8" lean-forward="true" selection-start-line="133" selection-start-column="8" selection-end-line="133" selection-end-column="8" />
+        <state relative-caret-position="85">
+          <caret line="127" column="13" lean-forward="true" selection-start-line="127" selection-start-column="13" selection-end-line="127" selection-end-column="13" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
