@@ -134,7 +134,8 @@ class AllTickets extends Component {
     } else {
       Modal.info({
         title: "Please Select Ticket(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };

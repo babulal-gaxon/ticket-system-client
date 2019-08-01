@@ -1,4 +1,3 @@
-import moment from "moment";
 import {Popconfirm, Tag} from "antd";
 import Permissions from "../../../util/Permissions";
 import React from "react";

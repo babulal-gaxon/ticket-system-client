@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Avatar, Table, Tag, Tooltip} from "antd";
-import moment from "moment";
 import Widget from "../../../../components/Widget";
 import Permissions from "../../../../util/Permissions";
 import {MEDIA_BASE_URL} from "../../../../constants/ActionTypes";

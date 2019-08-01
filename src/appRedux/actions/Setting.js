@@ -29,8 +29,8 @@ export function onLayoutTypeChange(layoutType) {
 export function switchLanguage(locale) {
   return (dispatch) => {
     dispatch({
-    type: SWITCH_LANGUAGE,
-    payload: locale
+      type: SWITCH_LANGUAGE,
+      payload: locale
     })
   }
 }

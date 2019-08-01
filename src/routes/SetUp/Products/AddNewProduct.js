@@ -104,8 +104,7 @@ class AddNewProduct extends Component {
         const isFileSize = file.size < getFileSize();
         if (!isFileSize) {
           message.error('The image size is greater than allowed size!');
-        }
-        else {
+        } else {
           this.setState(state => ({
             fileList: [...state.fileList, file],
           }));

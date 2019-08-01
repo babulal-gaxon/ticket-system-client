@@ -1,24 +1,17 @@
 {
-
   "app.userAuth.signIn": "Sign In",
   "app.userAuth.bySigning": "By Signing in, you can avail full features of the Ticksup.",
   "app.userAuth.getAccount": "Forgot your password? Recover Now",
   "appModule.rememberMeOnThisComputer": "Remember me on this Computer",
-
-
   "app.userAuth.resetPassword": "Reset Password",
   "app.userAuth.forgetPasswordText": "By entering your registered email address, you will receive password link, kindly follow instruction",
   "app.userAuth.enterEmailAddress": "Enter Registered Email Address",
   "app.userAuth.send": "SEND",
   "app.userAuth.goback": "Have your login detail? Login",
-
-
   "app.userAuth.ResetPasswordText": "Please enter and confirm your new password to login",
   "app.userAuth.enterEmail": "Enter Email Address",
   "app.userAuth.enterNewPassword": "Enter New Password",
   "app.userAuth.confirmPassword": "Confirm Password",
-
-
   "sidebar.dashboard": "Dashboard",
   "sidebar.dashboard.manage.tickets": "Manage Tickets",
   "sidebar.dashboard.customers": "Customers",
@@ -41,8 +34,6 @@
   "sidebar.dashboard.email.templates": "Email Templates",
   "sidebar.dashboard.services": "Services",
   "sidebar.dashboard.products": "Products",
-
-
   "topBar.dashboard.new": "New",
   "topBar.dashboard.addNewTicket": "Add New Ticket",
   "topBar.dashboard.addNewCustomer": "Add New Customer",
@@ -50,8 +41,6 @@
   "topBar.dashboard.howItWorks": "How it works",
   "topBar.dashboard.myProfile": "My Profile",
   "topBar.dashboard.logout": "Logout",
-
-
   "manageTickets.tickets": "Tickets",
   "manageTickets.sortBy": "Sort By",
   "manageTickets.sortByEarliest": "By Earliest",
@@ -60,12 +49,6 @@
   "manageTickets.searchTickets": "Search Tickets Here",
   "manageTickets.ticketDetail": "Ticket Detail",
   "manageTickets.assignTo": "Assign To",
-
-
-
-
-
-
   "common.addNew": "Add New",
   "common.bulkActions": "Bulk Actions",
   "common.archive": "Archive",
@@ -79,9 +62,4 @@
   "common.showing": "Showing",
   "common.of": "Of",
   "common.items": "Items"
-
-
-
-
-
 }

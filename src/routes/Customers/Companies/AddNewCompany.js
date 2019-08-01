@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'util/Api'
 import {Button, Form, Input, message, Modal, Upload} from "antd";
-import {getFileExtension, getFileSize} from "../../../util/Utills";
+import {getFileSize} from "../../../util/Utills";
 
 
 class AddNewCompany extends Component {
@@ -97,8 +97,7 @@ class AddNewCompany extends Component {
         const isFileSize = file.size < getFileSize();
         if (!isFileSize) {
           message.error('The image size is greater than allowed size!');
-        }
-        else {
+        } else {
           this.setState(state => ({
             fileList: [...state.fileList, file],
           }))

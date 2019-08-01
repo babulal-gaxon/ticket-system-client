@@ -100,7 +100,8 @@ class Services extends Component {
     } else {
       Modal.info({
         title: "Please Select Service(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };
@@ -120,7 +121,8 @@ class Services extends Component {
     } else {
       Modal.info({
         title: "Please Select Service(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };
@@ -141,7 +143,8 @@ class Services extends Component {
     } else {
       Modal.info({
         title: "Please Select Service(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };

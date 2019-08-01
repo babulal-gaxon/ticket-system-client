@@ -9,7 +9,7 @@ class UserInfo extends Component {
   render() {
     const userMenuOptions = (
       <ul className="gx-user-popover">
-        <li onClick={()=>this.props.history.push("/profile")}>My Profile</li>
+        <li onClick={() => this.props.history.push("/profile")}>My Profile</li>
         <li onClick={() => this.props.onUserSignOut()}>Logout
         </li>
       </ul>

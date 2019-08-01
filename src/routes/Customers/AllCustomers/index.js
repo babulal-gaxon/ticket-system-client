@@ -157,7 +157,8 @@ class AllCustomers extends Component {
     } else {
       Modal.info({
         title: "Please Select Customer(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };

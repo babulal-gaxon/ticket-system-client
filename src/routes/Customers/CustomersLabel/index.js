@@ -92,7 +92,8 @@ class CustomersLabel extends Component {
     } else {
       Modal.info({
         title: "Please Select Label(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };
@@ -109,7 +110,8 @@ class CustomersLabel extends Component {
     } else {
       Modal.info({
         title: "Please Select Label(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };
@@ -129,7 +131,8 @@ class CustomersLabel extends Component {
     } else {
       Modal.info({
         title: "Please Select Label(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };

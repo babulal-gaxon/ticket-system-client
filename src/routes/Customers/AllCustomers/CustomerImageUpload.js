@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Avatar, Button, message, Upload} from "antd";
 import PropTypes from "prop-types";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
-import {getFileExtension, getFileSize, getTicketFileExtension, getTicketFileSize} from "../../../util/Utills";
+import {getFileExtension, getFileSize} from "../../../util/Utills";
 
 class CustomerImageUpload extends Component {
   constructor(props) {
@@ -56,8 +56,7 @@ class CustomerImageUpload extends Component {
         const isFileSize = file.size < getFileSize();
         if (!isFileSize) {
           message.error('The image size is greater than allowed size!');
-        }
-        else {
+        } else {
           this.setState(state => ({
             fileList: [...state.fileList, file],
           }));

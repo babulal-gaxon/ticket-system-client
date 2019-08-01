@@ -101,7 +101,8 @@ class Departments extends Component {
     } else {
       Modal.info({
         title: "Please Select Department(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };
@@ -118,7 +119,8 @@ class Departments extends Component {
     } else {
       Modal.info({
         title: "Please Select Department(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };
@@ -139,7 +141,8 @@ class Departments extends Component {
     } else {
       Modal.info({
         title: "Please Select Department(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };

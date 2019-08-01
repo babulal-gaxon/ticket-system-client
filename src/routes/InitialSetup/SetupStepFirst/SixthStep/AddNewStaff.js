@@ -45,7 +45,7 @@ class AddNewStaff extends Component {
   }
 
   onSubmitForm = () => {
-    if (this.state.fileList.length>0) {
+    if (this.state.fileList.length > 0) {
       this.onImageSelect();
     } else {
       this.onStaffAdd();
@@ -63,7 +63,7 @@ class AddNewStaff extends Component {
 
   onImageSelect = () => {
     let file = this.state.fileList[0];
-    if(file) {
+    if (file) {
       const data = new FormData();
       data.append('file', file);
       data.append('title', file.name);
@@ -139,8 +139,7 @@ class AddNewStaff extends Component {
         const isFileSize = file.size < getFileSize();
         if (!isFileSize) {
           message.error('The image size is greater than allowed size!');
-        }
-        else {
+        } else {
           this.setState(state => ({
             fileList: [...state.fileList, file],
           }));

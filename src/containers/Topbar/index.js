@@ -60,17 +60,17 @@ class Topbar extends Component {
       <Menu>
         {Permissions.canTicketAdd() ?
           <Menu.Item key="1" onClick={this.onAddNewTicket}>
-            <i className="icon icon-add"/> <IntlMessages id="topBar.dashboard.addNewTicket"/>
+            <i className="icon icon-add gx-mr-1"/> <IntlMessages id="topBar.dashboard.addNewTicket"/>
           </Menu.Item> : null
         }
         {Permissions.canCustomerAdd() ?
           <Menu.Item key="2" onClick={this.onAddNewCustomer}>
-            <i className="icon icon-add"/> <IntlMessages id="topBar.dashboard.addNewCustomer"/>
+            <i className="icon icon-add gx-mr-1"/> <IntlMessages id="topBar.dashboard.addNewCustomer"/>
           </Menu.Item> : null
         }
         {Permissions.canStaffAdd() ?
           <Menu.Item key="3" onClick={this.onAddNewStaff}>
-            <i className="icon icon-add"/> <IntlMessages id="topBar.dashboard.addNewStaff"/>
+            <i className="icon icon-add gx-mr-1"/> <IntlMessages id="topBar.dashboard.addNewStaff"/>
           </Menu.Item> : null
         }
       </Menu>

@@ -42,7 +42,7 @@ class App extends PureComponent {
     props.onCheckInitialSetup();
     if (localStorage.getItem('settings')) {
       props.setUserDefaultSetting(JSON.parse(localStorage.getItem('settings')));
-      Permissions.setPermissions(JSON.parse(localStorage.getItem('settings')).permissions)
+      Permissions.setPermissions(JSON.parse(localStorage.getItem('settings')).permissions);
       const setting = JSON.parse(localStorage.getItem('settings')).settings;
       setUserSetting(setting);
       switchLanguage(setting.locale.default_language);

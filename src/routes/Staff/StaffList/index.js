@@ -93,7 +93,8 @@ class StaffList extends Component {
     } else {
       Modal.info({
         title: "Please Select Staff(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };

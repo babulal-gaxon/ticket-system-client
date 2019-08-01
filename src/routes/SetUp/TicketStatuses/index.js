@@ -105,7 +105,8 @@ class TicketStatuses extends Component {
     } else {
       Modal.info({
         title: "Please Select Status(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };
@@ -125,7 +126,8 @@ class TicketStatuses extends Component {
     } else {
       Modal.info({
         title: "Please Select Status(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
 
     }
@@ -147,7 +149,8 @@ class TicketStatuses extends Component {
     } else {
       Modal.info({
         title: "Please Select Status(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
 
     }

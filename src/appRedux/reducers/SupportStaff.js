@@ -98,14 +98,14 @@ export default (state = initialState, action) => {
       };
 
     case SELECT_CURRENT_STAFF:
-      console.log("currentstaff", action.payload)
+      console.log("currentstaff", action.payload);
       return {
         ...state,
         currentStaff: action.payload
       };
 
     case NULLIFY_STAFF:
-      console.log("nullify")
+      console.log("nullify");
       return {
         ...state,
         currentStaff: null

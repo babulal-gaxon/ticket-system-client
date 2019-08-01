@@ -109,7 +109,8 @@ class RolesList extends Component {
     } else {
       Modal.info({
         title: "Please Select Role(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };

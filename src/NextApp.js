@@ -20,5 +20,4 @@ const NextApp = () =>
     </BrowserRouter>
   </Provider>;
 
-
 export default NextApp;

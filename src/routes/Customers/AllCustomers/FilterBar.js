@@ -57,7 +57,8 @@ class FilterBar extends Component {
             <div>
               <div className="gx-d-flex gx-justify-content-between">
                 <h4>Filter By Company</h4>
-                {selectedCompanies.length > 0 ? <div className="gx-link" onClick={this.onCompanyReset}>Reset</div> : null}
+                {selectedCompanies.length > 0 ?
+                  <div className="gx-link" onClick={this.onCompanyReset}>Reset</div> : null}
               </div>
               <Search className="gx-mt-4" value={companyFilterText} placeholder="Search Company here"
                       onChange={(e) => onChangeCompanyFilterText(e)}/>

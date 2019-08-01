@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button, Divider, Form, Input, message, Upload} from "antd/lib/index";
 import PropTypes from "prop-types";
 import axios from 'util/Api'
-import {getFileExtension, getFileSize} from "../../../util/Utills";
+import {getFileSize} from "../../../util/Utills";
 
 class GeneralDetails extends Component {
   constructor(props) {
@@ -141,8 +141,7 @@ class GeneralDetails extends Component {
         const isFileSize = file.size < getFileSize();
         if (!isFileSize) {
           message.error('The image size is greater than allowed size!');
-        }
-        else {
+        } else {
           this.setState(state => ({
             logoList: [...state.logoList, file],
           }));
@@ -170,8 +169,7 @@ class GeneralDetails extends Component {
         const isFileSize = file.size < getFileSize();
         if (!isFileSize) {
           message.error('The image size is greater than allowed size!');
-        }
-        else {
+        } else {
           this.setState(state => ({
             faviconList: [...state.faviconList, file],
           }));
@@ -211,16 +209,18 @@ class GeneralDetails extends Component {
               }],
             })(<Input type="text" onChange={(e) => this.setState({cpp_url: e.target.value})}/>)}
           </Form.Item>
-            <Form.Item label="Company Logo" extra= {logoName && this.state.logoList.length ===0 ? logoName : "Size should be 250X100px, Maximum image size 50kb"}>
-              <Upload {...propsLogo}>
-                <Input placeholder="Choose file..." addonAfter="Browse" style={{width:"270%"}}/>
-              </Upload>
-            </Form.Item>
-            <Form.Item label="Favicon" extra={faviconName && this.state.logoList.length ===0 ? faviconName :"Size should be 40X40px, Maximum image size 50kb"}>
-              <Upload {...propsFavicon}>
-                <Input placeholder="Choose file..." addonAfter="Browse" style={{width:"270%"}}/>
-              </Upload>
-            </Form.Item>
+          <Form.Item label="Company Logo"
+                     extra={logoName && this.state.logoList.length === 0 ? logoName : "Size should be 250X100px, Maximum image size 50kb"}>
+            <Upload {...propsLogo}>
+              <Input placeholder="Choose file..." addonAfter="Browse" style={{width: "270%"}}/>
+            </Upload>
+          </Form.Item>
+          <Form.Item label="Favicon"
+                     extra={faviconName && this.state.logoList.length === 0 ? faviconName : "Size should be 40X40px, Maximum image size 50kb"}>
+            <Upload {...propsFavicon}>
+              <Input placeholder="Choose file..." addonAfter="Browse" style={{width: "270%"}}/>
+            </Upload>
+          </Form.Item>
           <Form.Item label="Email">
             {getFieldDecorator('email', {
               initialValue: email,

@@ -88,7 +88,7 @@ class CustomerDetails extends Component {
                   })}
                   {!showMoreAddress ?
                     <div className="gx-link"
-                      onClick={this.onToggleMoreAddress}>{currentCustomerProfile.addresses.length > 1 ? `+ ${currentCustomerProfile.addresses.length - 1} more` : null}</div>
+                         onClick={this.onToggleMoreAddress}>{currentCustomerProfile.addresses.length > 1 ? `+ ${currentCustomerProfile.addresses.length - 1} more` : null}</div>
                     : <div className="gx-link" onClick={this.onToggleMoreAddress}>View Less</div>}
                 </div>
                 : "NA"}

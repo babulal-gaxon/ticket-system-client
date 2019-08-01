@@ -101,7 +101,8 @@ class Products extends Component {
     } else {
       Modal.info({
         title: "Please Select Product(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };
@@ -121,7 +122,8 @@ class Products extends Component {
     } else {
       Modal.info({
         title: "Please Select Product(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };
@@ -142,7 +144,8 @@ class Products extends Component {
     } else {
       Modal.info({
         title: "Please Select Product(s) first",
-        onOk() {},
+        onOk() {
+        },
       });
     }
   };

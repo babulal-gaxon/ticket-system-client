@@ -128,7 +128,7 @@ class ThirdStep extends Component {
         if (!isFileSize) {
           message.error('The image size is greater than allowed size!');
         }
-        if(isFileSize) {
+        if (isFileSize) {
           this.setState(state => ({
             fileList: [...state.fileList, file],
           }));

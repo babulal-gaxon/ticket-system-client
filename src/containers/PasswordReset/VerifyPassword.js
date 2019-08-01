@@ -65,7 +65,7 @@ class VerifyPassword extends React.Component {
             </div>
             <div className="gx-app-login-content">
               <Form onSubmit={this.handleSubmit} className="gx-signin-form gx-form-row0">
-                <Form.Item label={<IntlMessages id= "app.userAuth.enterEmail"/>}>
+                <Form.Item label={<IntlMessages id="app.userAuth.enterEmail"/>}>
                   {getFieldDecorator('email', {
                     initialValue: email,
                     rules: [{

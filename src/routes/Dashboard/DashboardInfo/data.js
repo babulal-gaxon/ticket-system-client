@@ -1,6 +1,5 @@
 import {Avatar, Tag, Tooltip} from "antd";
 import React from "react";
-import moment from "moment";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import {getFormattedDate} from "../../../util/Utills";
 

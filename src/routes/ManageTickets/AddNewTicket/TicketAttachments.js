@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Upload, message} from "antd";
+import {message, Upload} from "antd";
 import PropTypes from "prop-types";
 import {getTicketFileExtension, getTicketFileSize} from "../../../util/Utills";
 
@@ -86,11 +86,11 @@ class TicketAttachments extends Component {
         const isFileSize = file.size < getTicketFileSize();
         if (!isFileSize) {
           message.error('The image size is greater than allowed size!');
+        } else {
+          this.setState(state => ({
+            fileList: [...state.fileList, file],
+          }), () => this.props.onSelectFiles(this.state.fileList))
         }
-        else{
-        this.setState(state => ({
-          fileList: [...state.fileList, file],
-        }), () => this.props.onSelectFiles(this.state.fileList))};
         return false;
       },
       fileList,

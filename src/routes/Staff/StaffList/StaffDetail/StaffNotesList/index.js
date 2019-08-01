@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Widget from "../../../../../components/Widget";
 import {Button, Divider, Empty, Popconfirm} from "antd";
 import AddStaffNotes from "./AddStaffNotes";
-import moment from "moment";
 import {getFormattedDate} from "../../../../../util/Utills";
 
 class StaffNotesList extends Component {

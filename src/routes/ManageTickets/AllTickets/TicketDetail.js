@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Avatar, Breadcrumb, Col, Input, message, Row, Select, Tag, Upload} from "antd";
+import {Avatar, Breadcrumb, Col, Input, Row, Select, Tag, Upload} from "antd";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import moment from "moment";
@@ -8,7 +8,8 @@ import {connect} from "react-redux";
 import {
   onAssignStaffToTicket,
   onGetConversationList,
-  onGetFilterOptions, onGetTagsList,
+  onGetFilterOptions,
+  onGetTagsList,
   onGetTicketDetail,
   onNullifyCurrentTicket,
   onSendMessage,
@@ -172,8 +173,7 @@ class TicketDetail extends Component {
         const isFileSize = file.size < getTicketFileSize();
         if (!isFileSize) {
           message.error('The image size is greater than allowed size!');
-        }
-        else {
+        } else {
           this.setState(state => ({
             fileList: [...state.fileList, file],
           }));
@@ -305,7 +305,7 @@ class TicketDetail extends Component {
                 </Select>
                 <div className="gx-my-3">Attachments</div>
                 {currentTicket.attachments.length > 0 ? currentTicket.attachments.map(attachment => {
-                  return <Avatar shape="square" icon="user" key={attachment.id} src={MEDIA_BASE_URL+attachment.src}
+                  return <Avatar shape="square" icon="user" key={attachment.id} src={MEDIA_BASE_URL + attachment.src}
                                  className="gx-mr-2 gx-size-100"/>
                 }) : <div>No attachments added with this ticket.</div>}
               </div>
