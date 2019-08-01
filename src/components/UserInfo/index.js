@@ -2,14 +2,14 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Avatar, Popover} from "antd";
 import {onUserSignOut} from "appRedux/actions/Auth";
+import {withRouter} from "react-router";
 
 class UserInfo extends Component {
 
   render() {
     const userMenuOptions = (
       <ul className="gx-user-popover">
-        <li>My Account</li>
-        <li>Connections</li>
+        <li onClick={()=>this.props.history.push("/profile")}>My Profile</li>
         <li onClick={() => this.props.onUserSignOut()}>Logout
         </li>
       </ul>
@@ -26,4 +26,4 @@ class UserInfo extends Component {
   }
 }
 
-export default connect(null, {onUserSignOut})(UserInfo);
+export default withRouter(connect(null, {onUserSignOut})(UserInfo));
