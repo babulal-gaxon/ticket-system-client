@@ -22,7 +22,7 @@ let userSetting = {
     favicon: ""
   },
   locale: {
-    date_format: "dd/mm/yy",
+    date_format: "DD/MM/YY",
     time_format: "24 Hours",
     default_language: "en",
   },
@@ -30,7 +30,7 @@ let userSetting = {
 };
 
 export const getFormattedDate = (date) => {
-  return moment(date).format(userSetting.dateFormat);
+  return moment(date).format(userSetting.locale.date_format);
 };
 export const getFormattedTime = (time) => {
   return time;

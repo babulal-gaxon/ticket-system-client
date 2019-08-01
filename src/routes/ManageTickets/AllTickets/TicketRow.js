@@ -1,8 +1,8 @@
 import {Avatar, Dropdown, Menu, Popconfirm, Tag, Tooltip} from "antd";
-import moment from "moment";
 import React from "react";
 import Permissions from "../../../util/Permissions";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
+import {getFormattedDate} from "../../../util/Utills";
 
 const onShowRowDropdown = (ticketId, context) => {
   const menu = (
@@ -52,7 +52,7 @@ const TicketRow = (context) => {
             <div className="gx-media-body">
               <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
               {record.product_name ? <Tag className="gx-ml-2" color="blue">{record.product_name}</Tag> : null}
-              <div>Created on {moment(record.created_at.date).format('LL')}</div>
+              <div>Created on {getFormattedDate(record.created_at.date)}</div>
             </div>
           </div>
         )
