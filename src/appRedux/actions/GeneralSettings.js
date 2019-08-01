@@ -15,6 +15,7 @@ import {
   GET_LOCALIZATION_DETAILS,
   GET_TICKET_SETTINGS
 } from "../../constants/GeneralSettings";
+import {updateDateFormat} from "../../util/Utills";
 
 
 export const onGetGeneralDetails = () => {
@@ -83,6 +84,7 @@ export const onSaveLocalizationDetails = (details) => {
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: ADD_LOCALIZATION_DETAILS, payload: data.data});
+        updateDateFormat(data.data.date_format);
         dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});

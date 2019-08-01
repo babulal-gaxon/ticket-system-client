@@ -90,12 +90,12 @@ class Localization extends Component {
                     validateTrigger: 'onBlur',
                     rules: [{required: true, message: 'Please Enter Date format!'}],
                   })(<Select style={{width: "100%"}} onChange={this.onDateSelect}>
-                    <Option value="mm/dd/yy">MM/DD/YY</Option>
-                    <Option value="mm/yy/dd">MM/YY/DD</Option>
-                    <Option value="dd/mm/yy">DD/MM/YY</Option>
-                    <Option value="dd/yy/mm">DD/YY/MM</Option>
-                    <Option value="yy/dd/mm">YY/DD/MM</Option>
-                    <Option value="yy/mm/dd">YY/MM/DD</Option>
+                    <Option value="MM/DD/YY">MM/DD/YY</Option>
+                    <Option value="MM/YY/DD">MM/YY/DD</Option>
+                    <Option value="DD/MM/YY">DD/MM/YY</Option>
+                    <Option value="DD/YY/MM">DD/YY/MM</Option>
+                    <Option value="YY/DD/MM">YY/DD/MM</Option>
+                    <Option value="YY/MM/DD">YY/MM/DD</Option>
                   </Select>)}
                 </Form.Item>
               </Col>
