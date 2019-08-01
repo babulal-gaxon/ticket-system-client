@@ -24,7 +24,7 @@ export default (state = initialState, action) => {
     case ADD_LABELS_DATA :
       return {
         ...state,
-        labelList: state.labelList.concat(action.payload),
+        labelList: [action.payload,...state.labelList],
         totalItems: state.totalItems + 1
       };
 
