@@ -10,13 +10,14 @@ import SignIn from "../SignIn";
 import {setInitUrl} from "appRedux/actions/Auth";
 import {onLayoutTypeChange, onNavStyleChange, setThemeType} from "appRedux/actions/Setting";
 import axios from 'util/Api';
-import {onGetUserInfo} from "../../appRedux/actions/Auth";
+import {onGetUserPermission} from "../../appRedux/actions/Auth";
 import CircularProgress from "../../components/CircularProgress/index";
 import ForgetPassword from "../PasswordReset/ForgetPassword";
 import VerifyPassword from "../PasswordReset/VerifyPassword";
 import InitialSetup from "../../routes/InitialSetup";
 import {onCheckInitialSetup} from "../../appRedux/actions/InitialSetup";
 import Permissions from "../../util/Permissions";
+import {setUserDefaultSetting} from "../../appRedux/actions";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
   <Route
@@ -38,8 +39,10 @@ class App extends PureComponent {
   constructor(props) {
     super(props);
     props.onCheckInitialSetup();
-    if (localStorage.getItem('permission')) {
-      Permissions.setPermissions(JSON.parse(localStorage.getItem('permission')))
+    if (localStorage.getItem('settings')) {
+      props.setUserDefaultSetting(JSON.parse(localStorage.getItem('settings')));
+      Permissions.setPermissions(JSON.parse(localStorage.getItem('settings')).permissions)
+      // Permissions.setPermissions(JSON.parse(localStorage.getItem('settings')).permission)
     }
   }
 
@@ -49,14 +52,14 @@ class App extends PureComponent {
     }
     if (this.props.token) {
       axios.defaults.headers.common['Authorization'] = "Bearer " + this.props.token;
-      this.props.onGetUserInfo(this.props.history)
+      this.props.onGetUserPermission(this.props.history)
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.token === null && nextProps.token !== this.props.token) {
       axios.defaults.headers.common['Authorization'] = "Bearer " + nextProps.token;
-      this.props.onGetUserInfo(this.props.history)
+      this.props.onGetUserPermission(this.props.history)
     }
   }
 
@@ -114,6 +117,7 @@ export default connect(mapStateToProps, {
   setThemeType,
   onNavStyleChange,
   onLayoutTypeChange,
-  onGetUserInfo,
+  onGetUserPermission,
+  setUserDefaultSetting,
   onCheckInitialSetup
 })(App);

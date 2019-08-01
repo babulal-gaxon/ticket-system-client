@@ -17,7 +17,8 @@ const INIT_STATE = {
   token: localStorage.getItem('token'),
   initURL: '',
   authUser: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
-  userPermissions: localStorage.getItem('permission') ? JSON.parse(localStorage.getItem('permission')) : [],
+  userPermissions: [],
+  userSettings: {},
   loadingUser: true,
   errorMessage: '',
 };
@@ -73,7 +74,8 @@ export default (state = INIT_STATE, action) => {
     case UPDATE_USER_PERMISSION_DATA: {
       return {
         ...state,
-        userPermissions: action.payload,
+        userPermissions: action.payload.permissions,
+        userSettings: action.payload.settings,
       };
     }
 

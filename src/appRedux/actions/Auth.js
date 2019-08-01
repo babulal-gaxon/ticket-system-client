@@ -50,18 +50,18 @@ export const onUserSignIn = ({email, password}) => {
   }
 };
 
-export const onGetUserInfo = (history) => {
-  console.log("onGetUserInfo");
+export const onGetUserPermission = (history) => {
+  console.log("onGetUserPermission");
   return (dispatch) => {
     dispatch({type: FETCH_USER_INFO_START});
-    axios.get('/role/permissions',
+    axios.get('/settings',
     ).then(({data}) => {
-      console.log("onGetUserInfo: ", data);
+      console.log("onGetUserPermission: ", data);
       if (data.success) {
         dispatch({type: FETCH_USER_INFO_SUCCESS});
         dispatch({type: UPDATE_USER_PERMISSION_DATA, payload: data.data});
-        localStorage.setItem("permission", JSON.stringify(data.data));
-        Permissions.setPermissions(data.data);
+        localStorage.setItem("settings", JSON.stringify(data.data));
+        Permissions.setPermissions(data.data.permissions);
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
         dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});
@@ -70,7 +70,7 @@ export const onGetUserInfo = (history) => {
         localStorage.removeItem("user");
       }
     }).catch((error) => {
-      if (error.response.status === 401) {
+      if (error.response && error.response.status === 401) {
         history.push("/signin");
         localStorage.removeItem("token");
         localStorage.removeItem("user");
@@ -85,6 +85,11 @@ export const onGetUserInfo = (history) => {
         console.log("Error****:", error.message);
       }
     });
+  }
+};
+export const setUserDefaultSetting = (data) => {
+  return (dispatch) => {
+    dispatch({type: UPDATE_USER_PERMISSION_DATA, payload: data});
   }
 };
 
