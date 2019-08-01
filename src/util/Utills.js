@@ -41,15 +41,15 @@ export const getFileExtension = () => {
 };
 
 export const getFileSize = () => {
-  return userSetting.general.file_upload_max_size;
+  return parseInt(userSetting.general.file_upload_max_size) * 1024 * 1024;
 };
 
 export const getTicketFileSize = () => {
-  return userSetting.ticket.max_upload_size;
+  return parseInt(userSetting.ticket.max_upload_size) * 1024 * 1024;
 };
 
 export const getTicketFileExtension = () => {
-  return userSetting.ticket.max_upload_size;
+  return userSetting.ticket.allowed_file_ext;
 };
 
 export const getCompanyLogo = () => {
