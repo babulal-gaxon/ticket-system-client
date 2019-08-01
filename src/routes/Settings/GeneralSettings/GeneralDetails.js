@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Button, Divider, Form, Input, Upload} from "antd/lib/index";
+import {Button, Divider, Form, Input, message, Upload} from "antd/lib/index";
 import PropTypes from "prop-types";
 import axios from 'util/Api'
-import {getFileExtension} from "../../../util/Utills";
+import {getFileExtension, getFileSize} from "../../../util/Utills";
 
 class GeneralDetails extends Component {
   constructor(props) {
@@ -123,7 +123,7 @@ class GeneralDetails extends Component {
     const {name, url, email, allowed_ext, file_upload_max_size, logoList, faviconList, cpp_url, logoName, faviconName} = this.state;
     const {getFieldDecorator} = this.props.form;
     const propsLogo = {
-      accept: getFileExtension(),
+      accept: ".png",
       onRemove: file => {
         this.setState(state => {
           const index = state.logoList.indexOf(file);
@@ -138,15 +138,21 @@ class GeneralDetails extends Component {
         if (logoList.length > 0) {
           propsLogo.onRemove(logoList[0])
         }
-        this.setState(state => ({
-          logoList: [...state.logoList, file],
-        }));
+        const isFileSize = file.size < getFileSize();
+        if (!isFileSize) {
+          message.error('The image size is greater than allowed size!');
+        }
+        else {
+          this.setState(state => ({
+            logoList: [...state.logoList, file],
+          }));
+        }
         return false;
       },
-      logoList,
+      fileList: logoList,
     };
     const propsFavicon = {
-      accept: getFileExtension(),
+      accept: ".ico",
       onRemove: file => {
         this.setState(state => {
           const index = state.faviconList.indexOf(file);
@@ -161,12 +167,18 @@ class GeneralDetails extends Component {
         if (faviconList.length > 0) {
           propsFavicon.onRemove(faviconList[0])
         }
-        this.setState(state => ({
-          faviconList: [...state.faviconList, file],
-        }));
+        const isFileSize = file.size < getFileSize();
+        if (!isFileSize) {
+          message.error('The image size is greater than allowed size!');
+        }
+        else {
+          this.setState(state => ({
+            faviconList: [...state.faviconList, file],
+          }));
+        }
         return false;
       },
-      faviconList,
+      fileList: faviconList,
     };
     return (
       <div className="gx-main-layout-content">

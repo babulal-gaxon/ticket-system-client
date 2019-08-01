@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Avatar, Button, message, Upload} from "antd";
 import PropTypes from "prop-types";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
-import {getFileExtension} from "../../../util/Utills";
+import {getFileExtension, getFileSize} from "../../../util/Utills";
 
 
 class ImageUpload extends Component {
@@ -54,9 +54,15 @@ class ImageUpload extends Component {
         if (fileList.length > 0) {
           props.onRemove(fileList[0])
         }
-        this.setState(state => ({
-          fileList: [...state.fileList, file],
-        }));
+        const isFileSize = file.size < getFileSize();
+        if (!isFileSize) {
+          message.error('The image size is greater than allowed size!');
+        }
+        else {
+          this.setState(state => ({
+            fileList: [...state.fileList, file],
+          }));
+        }
         return false;
       },
       fileList,

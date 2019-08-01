@@ -79,7 +79,7 @@ class AddNewCompany extends Component {
   render() {
     const {company_name, website, fileList, logoName} = this.state;
     const props = {
-      accept: getFileExtension(),
+      accept: ".png",
       onRemove: file => {
         this.setState(state => {
           const index = state.fileList.indexOf(file);
@@ -94,11 +94,11 @@ class AddNewCompany extends Component {
         if (fileList.length > 0) {
           props.onRemove(fileList[0])
         }
-        const isFileSize = file.size / 1024 / 1024 < getFileSize();
+        const isFileSize = file.size < getFileSize();
         if (!isFileSize) {
           message.error('The image size is greater than allowed size!');
         }
-        if(isFileSize) {
+        else {
           this.setState(state => ({
             fileList: [...state.fileList, file],
           }))
