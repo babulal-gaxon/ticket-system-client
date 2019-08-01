@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Avatar, Popover} from "antd";
 import {onUserSignOut} from "appRedux/actions/Auth";
+import {withRouter} from "react-router";
 
 class UserProfile extends Component {
 
@@ -9,15 +10,12 @@ class UserProfile extends Component {
     const {authUser} = this.props;
     const userMenuOptions = (
       <ul className="gx-user-popover">
-        <li>My Account</li>
-        <li>Connections</li>
-        <li onClick={() => this.props.onUserSignOut()}>Logout
-        </li>
+        <li onClick={() => this.props.history.push("/profile")}>My Profile</li>
+        <li onClick={() => this.props.onUserSignOut()}>Logout</li>
       </ul>
     );
 
     return (
-
       <div className="gx-flex-row gx-align-items-center">
         <Popover placement="bottomRight" content={userMenuOptions} trigger="click">
           <Avatar src='https://via.placeholder.com/150x150'
@@ -26,9 +24,7 @@ class UserProfile extends Component {
             <i className="icon icon-chevron-down gx-fs-l gx-ml-2 gx-mt-2"/></span>
         </Popover>
       </div>
-
     )
-
   }
 }
 
@@ -37,4 +33,4 @@ const mapStateToProps = ({auth}) => {
   return {authUser}
 };
 
-export default connect(mapStateToProps, {onUserSignOut})(UserProfile);
+export default withRouter(connect(mapStateToProps, {onUserSignOut})(UserProfile));
