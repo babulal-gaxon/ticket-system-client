@@ -59,7 +59,7 @@ export const setUserSetting = (setting) => {
   console.log("userSetting", userSetting)
 };
 export const getFormattedDate = (date) => {
-  return moment(date).format(userSetting.locale.date_format);
+  return moment(date).format(userSetting.locale.date_format.toUpperCase());
 };
 export const getFormattedTime = (time) => {
   return time;
