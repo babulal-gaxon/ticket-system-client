@@ -15,6 +15,7 @@ import {
 import axios from 'util/Api'
 import Permissions from "../../util/Permissions";
 import {setUserSetting} from "../../util/Utills";
+import {switchLanguage} from "./Setting";
 
 export const setInitUrl = (url) => {
   return {
@@ -64,6 +65,7 @@ export const onGetUserPermission = (history) => {
         localStorage.setItem("settings", JSON.stringify(data.data));
         Permissions.setPermissions(data.data.permissions);
         setUserSetting(data.data.settings);
+        switchLanguage(data.data.settings.locale.default_language);
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
         dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});

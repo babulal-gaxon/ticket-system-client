@@ -17,7 +17,7 @@ import VerifyPassword from "../PasswordReset/VerifyPassword";
 import InitialSetup from "../../routes/InitialSetup";
 import {onCheckInitialSetup} from "../../appRedux/actions/InitialSetup";
 import Permissions from "../../util/Permissions";
-import {setUserDefaultSetting} from "../../appRedux/actions";
+import {setUserDefaultSetting, switchLanguage} from "../../appRedux/actions";
 import {setUserSetting} from "../../util/Utills";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
@@ -43,7 +43,9 @@ class App extends PureComponent {
     if (localStorage.getItem('settings')) {
       props.setUserDefaultSetting(JSON.parse(localStorage.getItem('settings')));
       Permissions.setPermissions(JSON.parse(localStorage.getItem('settings')).permissions)
-      setUserSetting(JSON.parse(localStorage.getItem('settings')).settings);
+      const setting = JSON.parse(localStorage.getItem('settings')).settings;
+      setUserSetting(setting);
+      switchLanguage(setting.locale.default_language);
     }
   }
 
@@ -85,7 +87,7 @@ class App extends PureComponent {
         return (<Redirect to={initURL}/>);
       }
     }
-    const currentAppLocale = AppLocale[locale.locale];
+    const currentAppLocale = AppLocale[locale];
 
     return (
       <LocaleProvider locale={currentAppLocale.antd}>

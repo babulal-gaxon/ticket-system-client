@@ -20,12 +20,7 @@ const initialSettings = {
   pathname: '',
   width: window.innerWidth,
   isDirectionRTL: false,
-  locale: {
-    languageId: 'english',
-    locale: 'en',
-    name: 'English',
-    icon: 'us'
-  }
+  locale: 'en',
 };
 
 const settings = (state = initialSettings, action) => {
