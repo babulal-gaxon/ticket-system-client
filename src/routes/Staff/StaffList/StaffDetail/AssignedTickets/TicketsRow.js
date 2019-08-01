@@ -2,6 +2,7 @@ import {Avatar, Tag, Tooltip} from "antd";
 import moment from "moment";
 import React from "react";
 import {MEDIA_BASE_URL} from "../../../../../constants/ActionTypes";
+import {getFormattedDate} from "../../../../../util/Utills";
 
 const TicketsRow = () => {
   return [
@@ -32,7 +33,7 @@ const TicketsRow = () => {
       dataIndex: 'assignDate',
       key: 'assignDate',
       render: (text, record) => {
-        return <span className="gx-text-grey">{moment(record.created_at.date).format('LL')}</span>
+        return <span className="gx-text-grey">{getFormattedDate(record.created_at.date)}</span>
       },
     },
     {

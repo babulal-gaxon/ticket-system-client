@@ -28,7 +28,7 @@ class CustomerPanelForm extends Component {
       const {theme, country, registration_enable, register_verification, allow_primary_contact_view, delete_own_files} = this.props.customerPanelDetails;
       this.state = {
         theme: theme,
-        country: country,
+        country: parseInt(country),
         registration_enable: parseInt(registration_enable),
         register_verification: parseInt(register_verification),
         allow_primary_contact_view: parseInt(allow_primary_contact_view),
@@ -48,7 +48,7 @@ class CustomerPanelForm extends Component {
       if (JSON.stringify(nextProps.customerPanelDetails) !== JSON.stringify(this.props.customerPanelDetails)) {
         this.setState({
           theme: theme,
-          country: country,
+          country: parseInt(country),
           registration_enable: parseInt(registration_enable),
           register_verification: parseInt(register_verification),
           allow_primary_contact_view: parseInt(allow_primary_contact_view),

@@ -34,7 +34,7 @@ const PrioritiesRow = (context) => {
       dataIndex: 'priorityValue',
       key: 'priorityValue',
       render: (text, record) => {
-        return <span className="gx-email gx-d-inline-block gx-mr-2">0{record.value}</span>
+        return <span className="gx-email gx-d-inline-block gx-mr-2">{record.value}</span>
       },
     },
     {

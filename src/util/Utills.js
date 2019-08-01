@@ -12,7 +12,7 @@ export const canDelete = () => {
 
 let userSetting = {
   ticket: {
-    max_upload_size: 10,
+    max_upload_size: 1,
     allowed_file_ext: ".jpg,.png,.txt"
   },
   general: {

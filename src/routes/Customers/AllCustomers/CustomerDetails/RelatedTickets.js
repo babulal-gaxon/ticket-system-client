@@ -4,6 +4,7 @@ import moment from "moment";
 import Widget from "../../../../components/Widget";
 import Permissions from "../../../../util/Permissions";
 import {MEDIA_BASE_URL} from "../../../../constants/ActionTypes";
+import {getFormattedDate} from "../../../../util/Utills";
 
 class RelatedTickets extends Component {
 
@@ -36,7 +37,7 @@ class RelatedTickets extends Component {
         dataIndex: 'assignDate',
         key: 'assignDate',
         render: (text, record) => {
-          return <span className="gx-text-grey">{moment(record.created_at.date).format('LL')}</span>
+          return <span className="gx-text-grey">{getFormattedDate(record.created_at.date)}</span>
         },
       },
       {

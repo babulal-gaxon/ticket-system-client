@@ -2,6 +2,7 @@ import moment from "moment";
 import {Popconfirm, Tag} from "antd";
 import Permissions from "../../../util/Permissions";
 import React from "react";
+import {getFormattedDate} from "../../../util/Utills";
 
 
 const onDeletePopUp = (recordId, context) => {
@@ -31,7 +32,7 @@ const RoleRow = (context) => {
       dataIndex: 'lastUpdate',
       key: 'lastUpdate',
       render: (text, record) => {
-        return <span className="gx-text-grey">{moment(record.updated_at.date).format('LL')}</span>
+        return <span className="gx-text-grey">{getFormattedDate(record.updated_at.date)}</span>
       },
     },
     {

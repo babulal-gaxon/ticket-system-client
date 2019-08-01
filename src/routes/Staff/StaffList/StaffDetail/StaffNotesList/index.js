@@ -3,6 +3,7 @@ import Widget from "../../../../../components/Widget";
 import {Button, Divider, Empty, Popconfirm} from "antd";
 import AddStaffNotes from "./AddStaffNotes";
 import moment from "moment";
+import {getFormattedDate} from "../../../../../util/Utills";
 
 class StaffNotesList extends Component {
   constructor(props) {
@@ -60,7 +61,7 @@ class StaffNotesList extends Component {
                   <div>
                     <span>created by: </span>
                     <span className="gx-text-primary">{note.display_name}</span>
-                    <span> - {moment(note.created_at.date).format("LL")}</span>
+                    <span> - {getFormattedDate(note.created_at.date)}</span>
                   </div>
                 </div>
                 <div className="gx-d-flex gx-justify-content-end">

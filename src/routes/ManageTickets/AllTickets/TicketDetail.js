@@ -24,6 +24,7 @@ import PropTypes from "prop-types";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import qs from "qs";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
+import {getFormattedDate} from "../../../util/Utills";
 
 const Option = Select.Option;
 const {TextArea} = Input;
@@ -212,7 +213,7 @@ class TicketDetail extends Component {
               </div>
               <h2 className="gx-my-2 gx-font-weight-bold">{currentTicket.title}</h2>
               <div className="gx-mb-3">
-                <span>created at: {moment(currentTicket.created_at.date).format("LL")}</span>
+                <span>created at: {getFormattedDate(currentTicket.created_at.date)}</span>
                 <span>  Last updated at: {moment(currentTicket.updated_at.date).fromNow()}</span>
               </div>
               <div className="gx-py-3">{currentTicket.content}</div>
