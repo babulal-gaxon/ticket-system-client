@@ -52,7 +52,7 @@ const TicketRow = (context) => {
               </Tooltip> : <Avatar className="gx-size-50 gx-mr-3" src="https://via.placeholder.com/150x150"/>}
             <div className="gx-media-body">
               <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
-              <Tag className="gx-ml-2" color="blue">{record.product_name}</Tag>
+              {record.product_name ? <Tag className="gx-ml-2" color="blue">{record.product_name}</Tag> : null}
               <div>Created on {moment(record.created_at.date).format('LL')}</div>
             </div>
           </div>

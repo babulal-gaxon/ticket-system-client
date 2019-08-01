@@ -176,7 +176,7 @@ class FilterBar extends Component {
               <div className="gx-d-flex gx-justify-content-between">
                 <h4>Priority</h4>
                 {selectedPriorities.length > 0 ?
-                  <Button type="link" style={{height: 20}} onClick={this.onPrioritiesReset}> Reset</Button> : null}
+                  <div className="gx-link" onClick={this.onPrioritiesReset}> Reset</div> : null}
               </div>
               <Input type="text" placeholder="Search Priority" value={priorityFilterText}
                      onChange={(e) => this.setState({priorityFilterText: e.target.value})}/>
@@ -191,7 +191,8 @@ class FilterBar extends Component {
             <div className="gx-mb-4">
               <div className="gx-d-flex gx-justify-content-between">
                 <h4>Status</h4>
-                {selectedStatuses.length > 0 ? <Button type="link" onClick={this.onStatusReset}> Reset</Button> : null}
+                {selectedStatuses.length > 0 ?
+                  <div className="gx-link" onClick={this.onStatusReset}> Reset</div> : null}
               </div>
               <Input type="text" placeholder="Search Status" value={statusFilterText}
                      onChange={(e) => this.setState({statusFilterText: e.target.value})}/>

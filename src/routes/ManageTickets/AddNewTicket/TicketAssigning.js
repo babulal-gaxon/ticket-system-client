@@ -33,8 +33,8 @@ class TicketAssigning extends Component {
 
   onFilterData = () => {
     return this.props.staffList.filter(staff => {
-      const name = staff.first_name + " " + staff.last_name;
-      return (name.indexOf(this.state.filterStaffText) !== -1) ?
+      const name = staff.first_name.toLowerCase() + " " + staff.last_name.toLowerCase();
+      return (name.includes(this.state.filterStaffText.toLowerCase())) ?
         staff : null
     })
   };
@@ -77,7 +77,8 @@ class TicketAssigning extends Component {
           visible={showStaffModal}
           onOk={this.onAddStaff}
           onCancel={this.onToggleStaffModal}>
-          <Search value={filterStaffText} onChange={(e) => this.setState({filterStaffText: e.target.value})}/>
+          <Search value={filterStaffText} placeholder="Type here to search staff"
+                  onChange={(e) => this.setState({filterStaffText: e.target.value})}/>
           {staffList.map(staff => {
             return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5"
                         onClick={() => this.onSelectStaff(staff.id)} key={staff.id}>
