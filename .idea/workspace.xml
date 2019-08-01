@@ -3,15 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="22660aa2-fcdc-4713-8a0a-0d397dd58555" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerImageUpload.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerImageUpload.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Customers/Companies/AddNewCompany.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Customers/Companies/AddNewCompany.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SixthStep/AddNewStaff.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SixthStep/AddNewStaff.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/ThirdStep.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/ThirdStep.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/TicketAttachments.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/TicketAttachments.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/SetUp/Products/AddNewProduct.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/SetUp/Products/AddNewProduct.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Staff/AddNewStaff/ImageUpload.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Staff/AddNewStaff/ImageUpload.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +14,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="153" column="4" selection-start-line="153" selection-start-column="4" selection-end-line="153" selection-end-column="4" />
+            <state relative-caret-position="410">
+              <caret line="149" column="21" lean-forward="true" selection-start-line="149" selection-start-column="21" selection-end-line="149" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/SetUp/Products/AddNewProduct.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="115" column="6" lean-forward="true" selection-start-line="87" selection-start-column="4" selection-end-line="115" selection-end-column="6" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -48,9 +51,15 @@
         <option value="$PROJECT_DIR$/src/routes/SetUp/Products/AddNewProduct.js" />
         <option value="$PROJECT_DIR$/src/routes/Staff/AddNewStaff/ImageUpload.js" />
         <option value="$PROJECT_DIR$/src/routes/Customers/Companies/AddNewCompany.js" />
+        <option value="$PROJECT_DIR$/src/appRedux/actions/TicketList.js" />
         <option value="$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js" />
       </list>
     </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="width" value="1346" />
+    <option name="height" value="688" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -73,6 +82,12 @@
               <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="appRedux" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -89,6 +104,21 @@
               <item name="routes" type="462c0819:PsiDirectoryNode" />
               <item name="Settings" type="462c0819:PsiDirectoryNode" />
               <item name="GeneralSettings" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="SetUp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="SetUp" type="462c0819:PsiDirectoryNode" />
+              <item name="Products" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -116,10 +146,18 @@
     <configuration />
   </component>
   <component name="TaskManager">
+    <task id="LOCAL-00001" summary="worked on image validations">
+      <created>1564664292980</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1564664292980</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1557000" />
+    <option name="totallyTimeSpent" value="2058000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -162,6 +200,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="worked on image validations" />
+    <option name="LAST_COMMIT_MESSAGE" value="worked on image validations" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/ThirdStep.js">
@@ -249,16 +291,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/Products/AddNewProduct.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="107" column="12" selection-start-line="107" selection-start-column="12" selection-end-line="107" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/Staff/AddNewStaff/ImageUpload.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="376">
@@ -289,10 +321,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/TicketList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="146" column="41" lean-forward="true" selection-start-line="146" selection-start-column="41" selection-end-line="146" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/Products/AddNewProduct.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="115" column="6" lean-forward="true" selection-start-line="87" selection-start-column="4" selection-end-line="115" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="153" column="4" selection-start-line="153" selection-start-column="4" selection-end-line="153" selection-end-column="4" />
+        <state relative-caret-position="410">
+          <caret line="149" column="21" lean-forward="true" selection-start-line="149" selection-start-column="21" selection-end-line="149" selection-end-column="21" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>

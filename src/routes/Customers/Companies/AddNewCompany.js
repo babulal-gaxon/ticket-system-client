@@ -79,7 +79,7 @@ class AddNewCompany extends Component {
   render() {
     const {company_name, website, fileList, logoName} = this.state;
     const props = {
-      accept: getFileExtension(),
+      accept: ".png",
       onRemove: file => {
         this.setState(state => {
           const index = state.fileList.indexOf(file);
