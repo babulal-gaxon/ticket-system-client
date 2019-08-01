@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'util/Api'
 import {Button, Form, Input, message, Modal, Upload} from "antd";
-import {getFileExtension, getFileSize, getTicketFileSize} from "../../../util/Utills";
+import {getFileExtension, getFileSize} from "../../../util/Utills";
 
 
 class AddNewCompany extends Component {
