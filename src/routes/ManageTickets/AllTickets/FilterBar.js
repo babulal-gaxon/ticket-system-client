@@ -95,20 +95,21 @@ class FilterBar extends Component {
               <h4 className="gx-font-weight-medium">Filter Tickets</h4>
             </div>
             <div className="gx-main-layout-nav">
-              <label>Filter By Date</label>
+              <h4>Filter By Date</h4>
               <div>
                 <DatePicker
                   value={startDate}
-                  placeholder="Select"
+                  placeholder="From:"
                   onChange={this.onStartDateChange}
                   className="gx-my-3"
                   style={{width: "100%"}}
                   format='YYYY/MM/DD'/>
                 <DatePicker
                   value={endDate}
-                  placeholder="Updated"
+                  placeholder="To:"
                   onChange={this.onEndDateChange}
-                  style={{width: "100%"}}/>
+                  style={{width: "100%"}}
+                  format='YYYY/MM/DD'/>
               </div>
             </div>
             <Checkbox className="gx-my-4" onChange={this.onSetArchive}>
@@ -120,13 +121,13 @@ class FilterBar extends Component {
                 {selectedStaff.length > 0 ? <div className="gx-link" onClick={this.onStaffReset}>
                   Reset</div> : null}
               </div>
-              <Input type="text" placeholder="TYpe to search Staff here" value={staffFilterText}
+              <Input type="text" placeholder="Type to search Staff" value={staffFilterText}
                      onChange={(e) => this.setState({staffFilterText: e.target.value})}/>
               <Checkbox.Group onChange={this.onSelectStaff} value={selectedStaff}>
                 {staffs.map(staff => {
                   return <div key={staff.id} className="gx-my-2"><Checkbox value={staff.id}>
                     <span>{staff.avatar ?
-                      <Avatar className=" gx-size-30" src={staff.avatar.src}/> :
+                      <Avatar className=" gx-size-30" src={MEDIA_BASE_URL + staff.avatar.src}/> :
                       <Avatar className=" gx-size-30"
                               style={{backgroundColor: '#f56a00'}}>{staff.first_name[0].toUpperCase()}</Avatar>}</span>
                     <span className="gx-mx-2">{staff.first_name + " " + staff.last_name}</span>
@@ -136,9 +137,9 @@ class FilterBar extends Component {
               </Checkbox.Group>
               <div>
                 {this.onFilterStaff().length > 5 ?
-                  <Button type="link" onClick={onToggleShowMoreStaff}>
+                  <div className="gx-link" onClick={onToggleShowMoreStaff}>
                     {showMoreStaff ? "View Less" : `${this.onFilterStaff().length - 5} More`}
-                  </Button> : null}
+                  </div> : null}
               </div>
             </div>
             <div className="gx-mb-4">
@@ -148,6 +149,7 @@ class FilterBar extends Component {
                   Reset</div> : null}
               </div>
               <Select
+                value={selectedCustomers}
                 style={{width: "100%"}}
                 mode="multiple"
                 showSearch
@@ -178,7 +180,7 @@ class FilterBar extends Component {
                 {selectedPriorities.length > 0 ?
                   <div className="gx-link" onClick={this.onPrioritiesReset}> Reset</div> : null}
               </div>
-              <Input type="text" placeholder="Search Priority" value={priorityFilterText}
+              <Input type="text" placeholder="Type to search Priority" value={priorityFilterText}
                      onChange={(e) => this.setState({priorityFilterText: e.target.value})}/>
               <Checkbox.Group onChange={this.onSelectPriorities} value={selectedPriorities}>
                 {priorities.map(priority => {
@@ -194,7 +196,7 @@ class FilterBar extends Component {
                 {selectedStatuses.length > 0 ?
                   <div className="gx-link" onClick={this.onStatusReset}> Reset</div> : null}
               </div>
-              <Input type="text" placeholder="Search Status" value={statusFilterText}
+              <Input type="text" placeholder="Type to search Status" value={statusFilterText}
                      onChange={(e) => this.setState({statusFilterText: e.target.value})}/>
               <Checkbox.Group onChange={this.onSelectStatuses} value={selectedStatuses}>
                 {statuses.map(status => {

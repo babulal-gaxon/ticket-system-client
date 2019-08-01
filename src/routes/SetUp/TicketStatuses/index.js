@@ -103,9 +103,10 @@ class TicketStatuses extends Component {
         }
       })
     } else {
-      confirm({
-        title: "Please Select Statuses first",
-      })
+      Modal.info({
+        title: "Please Select Status(s) first",
+        onOk() {},
+      });
     }
   };
 
@@ -122,9 +123,11 @@ class TicketStatuses extends Component {
         }
       })
     } else {
-      confirm({
-        title: "Please Select Statuses first",
-      })
+      Modal.info({
+        title: "Please Select Status(s) first",
+        onOk() {},
+      });
+
     }
   };
 
@@ -142,9 +145,11 @@ class TicketStatuses extends Component {
         }
       })
     } else {
-      confirm({
-        title: "Please Select Statuses first",
-      })
+      Modal.info({
+        title: "Please Select Status(s) first",
+        onOk() {},
+      });
+
     }
   };
 

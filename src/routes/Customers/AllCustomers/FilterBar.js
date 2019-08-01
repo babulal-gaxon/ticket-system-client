@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Checkbox, Input, Select} from "antd";
+import {Checkbox, Input, Select} from "antd";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -12,6 +12,10 @@ class FilterBar extends Component {
 
   onCompanyReset = () => {
     this.props.updateState({selectedCompanies: []})
+  };
+
+  onLabelReset = () => {
+    this.props.updateState({selectedLabels: []})
   };
 
   onLabelSelectOption = () => {
@@ -52,8 +56,8 @@ class FilterBar extends Component {
           <div className="gx-main-layout-nav">
             <div>
               <div className="gx-d-flex gx-justify-content-between">
-                <label>Filter By Company</label>
-                {selectedCompanies.length > 0 ? <span onClick={this.onCompanyReset}>Reset</span> : null}
+                <h4>Filter By Company</h4>
+                {selectedCompanies.length > 0 ? <div className="gx-link" onClick={this.onCompanyReset}>Reset</div> : null}
               </div>
               <Search className="gx-mt-4" value={companyFilterText} placeholder="Search Company here"
                       onChange={(e) => onChangeCompanyFilterText(e)}/>
@@ -67,13 +71,16 @@ class FilterBar extends Component {
               </div>
               <div>
                 {this.onFilterCompanyName().length > 5 ?
-                  <Button type="link" onClick={() => onShowMoreCompanyToggle()}>
+                  <div className="gx-link" onClick={() => onShowMoreCompanyToggle()}>
                     {showMoreCompany ? "View Less" : `${this.onFilterCompanyName().length - 5} More`}
-                  </Button> : null}
+                  </div> : null}
               </div>
             </div>
             <div className="gx-mt-5">
-              <div className="gx-mb-3">Filter by labels</div>
+              <div className="gx-d-flex gx-justify-content-between">
+                <h4>Filter By Labels</h4>
+                {selectedLabels.length > 0 ? <div className="gx-link" onClick={this.onLabelReset}>Reset</div> : null}
+              </div>
               <Select
                 mode="multiple"
                 style={{width: '100%'}}

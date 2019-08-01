@@ -103,9 +103,10 @@ class Companies extends Component {
         }
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Company(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 

@@ -35,9 +35,6 @@ class StaffDetail extends Component {
     this.props.onGetStaffTickets(queryParams.id);
   }
 
-  componentWillUnmount() {
-    this.props.onNullifyCurrentStaff();
-  }
 
   onEditProfile = () => {
     this.props.onSetCurrentStaff(this.props.currentStaff);
@@ -46,6 +43,7 @@ class StaffDetail extends Component {
 
   onBackToList = () => {
     this.props.history.goBack();
+    this.props.onNullifyCurrentStaff();
   };
 
   render() {

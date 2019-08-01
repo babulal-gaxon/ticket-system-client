@@ -27,9 +27,9 @@ class CustomerDetails extends Component {
           </div>
           <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
             {currentCustomerProfile.avatar ?
-              <Avatar className="gx-mr-3 gx-size-100"
+              <Avatar className="gx-mr-3 gx-size-100 gx-fs-xxl"
                       src={MEDIA_BASE_URL + currentCustomerProfile.avatar.src}/> :
-              <Avatar className="gx-mr-3 gx-size-100"
+              <Avatar className="gx-mr-3 gx-size-100 gx-fs-xxl"
                       style={{backgroundColor: '#f56a00'}}>{currentCustomerProfile.first_name[0].toUpperCase()}</Avatar>}
             <div className="gx-media-body">
               <div className="gx-d-flex gx-justify-content-between">
@@ -87,9 +87,9 @@ class CustomerDetails extends Component {
                     </div>
                   })}
                   {!showMoreAddress ?
-                    <div
+                    <div className="gx-link"
                       onClick={this.onToggleMoreAddress}>{currentCustomerProfile.addresses.length > 1 ? `+ ${currentCustomerProfile.addresses.length - 1} more` : null}</div>
-                    : <div onClick={this.onToggleMoreAddress}>View Less</div>}
+                    : <div className="gx-link" onClick={this.onToggleMoreAddress}>View Less</div>}
                 </div>
                 : "NA"}
             </Col>

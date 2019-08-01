@@ -59,8 +59,6 @@ class GeneralSettings extends Component {
             <TabPane tab="General Setup" key="1">
               <GeneralDetails onSaveGeneralDetails={this.props.onSaveGeneralDetails}
                               generalSettingsData={this.props.generalSettingsData}
-                              companyLogo={this.props.companyLogo}
-                              favicon={this.props.favicon}
                               fetchSuccess={this.props.fetchSuccess}
                               fetchStart={this.props.fetchStart}
                               fetchError={this.props.fetchError}/>
@@ -81,8 +79,8 @@ class GeneralSettings extends Component {
 }
 
 const mapStateToProps = ({generalSettings}) => {
-  const {generalSettingsData, countriesList, generalAddress, companyLogo, favicon} = generalSettings;
-  return {generalSettingsData, countriesList, generalAddress, companyLogo, favicon};
+  const {generalSettingsData, countriesList, generalAddress} = generalSettings;
+  return {generalSettingsData, countriesList, generalAddress};
 };
 
 export default connect(mapStateToProps, {

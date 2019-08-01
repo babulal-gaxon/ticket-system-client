@@ -90,9 +90,10 @@ class CustomersLabel extends Component {
         }
       })
     } else {
-      confirm({
-        title: "Please Select Labels first",
-      })
+      Modal.info({
+        title: "Please Select Label(s) first",
+        onOk() {},
+      });
     }
   };
 
@@ -106,9 +107,10 @@ class CustomersLabel extends Component {
         }
       })
     } else {
-      confirm({
-        title: "Please Select Department(s) first",
-      })
+      Modal.info({
+        title: "Please Select Label(s) first",
+        onOk() {},
+      });
     }
   };
 
@@ -125,9 +127,10 @@ class CustomersLabel extends Component {
         }
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Label(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 

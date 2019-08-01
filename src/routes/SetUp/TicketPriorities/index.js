@@ -100,9 +100,10 @@ class TicketPriorities extends Component {
         }
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Priority(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 
@@ -119,9 +120,10 @@ class TicketPriorities extends Component {
         }
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Priority(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 
@@ -139,9 +141,10 @@ class TicketPriorities extends Component {
         }
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Priority(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 

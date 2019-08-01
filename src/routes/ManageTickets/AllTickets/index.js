@@ -132,9 +132,10 @@ class AllTickets extends Component {
         }
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Ticket(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 
@@ -192,7 +193,7 @@ class AllTickets extends Component {
   };
 
   render() {
-    const {current, filterText, itemNumbers, sortParam, endDate, selectedStaff, selectedCustomers, selectedPriorities, selectedStatuses, archive} = this.state;
+    const {current, filterText, itemNumbers, sortParam, endDate, selectedStaff, selectedCustomers, selectedPriorities, selectedStatuses, archive, startDate} = this.state;
     const {selectedRowKeys} = this.state;
     const {tickets, filterData, customersList} = this.props;
     let ids;
@@ -284,6 +285,7 @@ class AllTickets extends Component {
                      sortParam={sortParam}
                      onGetPaginatedData={this.onGetPaginatedData}
                      staffList={filterData.staffs}
+                     startDate={startDate}
                      endDate={endDate}
                      selectedStaff={selectedStaff}
                      selectedCustomers={selectedCustomers}

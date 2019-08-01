@@ -21,6 +21,7 @@ const {confirm} = Modal;
 class AddNewStaff extends Component {
   constructor(props) {
     super(props);
+    console.log("constructoe", props.currentStaff)
     if (props.currentStaff === null) {
       this.state = {
         first_name: "",
@@ -324,6 +325,7 @@ AddNewStaff = Form.create({})(AddNewStaff);
 
 const mapStateToProps = ({departments, supportStaff, rolesAndPermissions}) => {
   const {currentStaff} = supportStaff;
+  console.log("maptoa", currentStaff)
   const {dept} = departments;
   const {roles} = rolesAndPermissions;
   return {dept, currentStaff, roles};

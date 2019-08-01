@@ -6,22 +6,39 @@ import axios from 'util/Api'
 class GeneralDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: "",
-      url: "",
-      logo: null,
-      favicon: null,
-      allowed_ext: "",
-      file_upload_max_size: null,
-      email: "",
-      logoList: [],
-      faviconList: []
+    if (props.generalSettingsData === null) {
+      this.state = {
+        name: "",
+        url: "",
+        logo: null,
+        favicon: null,
+        allowed_ext: "",
+        file_upload_max_size: null,
+        email: "",
+        logoList: [],
+        faviconList: [],
+        cpp_url: ""
+      }
+    } else {
+      const {name, url, allowed_ext, file_upload_max_size, email, cpp_url} = props.generalSettingsData;
+      this.state = {
+        name: name,
+        url: url,
+        logo: null,
+        favicon: null,
+        allowed_ext: allowed_ext,
+        file_upload_max_size: file_upload_max_size,
+        email: email,
+        logoList: [],
+        faviconList: [],
+        cpp_url:cpp_url
+      }
     }
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
     if (nextProps.generalSettingsData) {
-      const {name, allowed_ext, file_upload_max_size, email, logo, favicon, website} = nextProps.generalSettingsData;
+      const {name, allowed_ext, file_upload_max_size, email, logo, favicon, website, cpp_url} = nextProps.generalSettingsData;
       if (JSON.stringify(nextProps.generalSettingsData) !== JSON.stringify(this.props.generalSettingsData)) {
         this.setState({
           name: name,
@@ -31,6 +48,7 @@ class GeneralDetails extends Component {
           allowed_ext: allowed_ext,
           file_upload_max_size: file_upload_max_size,
           email: email,
+          cpp_url:cpp_url
         })
       }
     }
@@ -39,7 +57,13 @@ class GeneralDetails extends Component {
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.onLogoSelect();
+        if (this.state.logoList.length > 0) {
+          this.onLogoSelect();
+        } else if (this.state.faviconList.length > 0) {
+          this.onFaviconSelect();
+        } else {
+          this.props.onSaveGeneralDetails({...this.state})
+        }
       }
     });
   };
@@ -87,7 +111,7 @@ class GeneralDetails extends Component {
   };
 
   render() {
-    const {name, url, email, allowed_ext, file_upload_max_size, logoList, faviconList} = this.state;
+    const {name, url, email, allowed_ext, file_upload_max_size, logoList, faviconList, cpp_url} = this.state;
     const {getFieldDecorator} = this.props.form;
     const propsLogo = {
       onRemove: file => {
@@ -154,6 +178,16 @@ class GeneralDetails extends Component {
             })(<Input type="text" onChange={(e) => {
               this.setState({url: e.target.value})
             }}/>)}
+          </Form.Item>
+          <Form.Item label="Client URl">
+            {getFieldDecorator('cpp_url', {
+              initialValue: cpp_url,
+              validateTrigger: 'onBlur',
+              rules: [{
+                required: true,
+                message: 'Please Enter Client URL!'
+              }],
+            })(<Input type="text" onChange={(e) => this.setState({cpp_url: e.target.value})}/>)}
           </Form.Item>
           {this.props.generalSettingsData === null ?
             <Form.Item label="Company Logo" extra="Size should be 250X100px, Maximum image size 50kb">

@@ -155,9 +155,10 @@ class AllCustomers extends Component {
         }
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Customer(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 
