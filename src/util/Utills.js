@@ -63,15 +63,14 @@ export const updateLocaleSetting = (locale) => {
   userSetting.locale = locale;
 };
 export const updateGeneralSetting = (general) => {
-  userSetting.locale = general;
+  userSetting.general = general;
 };
 export const updateTicketSetting = (locale) => {
-  userSetting.locale = locale;
+  userSetting.ticket = locale;
 };
 
 export const setUserSetting = (setting) => {
   userSetting = setting;
-  console.log("userSetting", userSetting)
 };
 export const getFormattedDate = (date) => {
   return moment(date).format(userSetting.locale.date_format.toUpperCase());
