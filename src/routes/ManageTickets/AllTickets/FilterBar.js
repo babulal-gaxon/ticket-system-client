@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import CustomScrollbars from "../../../util/CustomScrollbars";
-import {Avatar, Button, Checkbox, DatePicker, Input, Select} from "antd";
+import {Avatar, Checkbox, DatePicker, Input, Select} from "antd";
 import PropTypes from "prop-types";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
