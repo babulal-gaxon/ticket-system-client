@@ -139,7 +139,6 @@ class Profile extends Component {
   };
 
   render() {
-    console.log("");
     const {getFieldDecorator} = this.props.form;
     const {mobile, hourly_rate, account_status, departments_ids, role_id, first_name, last_name, email, password, designation} = this.state;
     const deptOptions = this.onDepartmentSelectOption();

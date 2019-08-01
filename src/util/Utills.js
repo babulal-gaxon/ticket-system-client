@@ -7,3 +7,9 @@ export const canAdd = () => {
 export const canDelete = () => {
   return false;
 };
+export const getFormattedDate = (date) => {
+  return date;
+};
+export const getFormattedTime = (time) => {
+  return time;
+};
