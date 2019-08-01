@@ -119,6 +119,25 @@ export const showErrorMessage = (error) => {
   }
 };
 
+
+export const getUserProfile = () => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.get('/user/profile',).then(({data}) => {
+      console.info("getUserProfile: ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: USER_DATA, payload: data.data});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.message});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
 export const onResetPassword = ({email}) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});

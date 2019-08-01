@@ -96,13 +96,13 @@ export const getTicketFileExtension = () => {
 };
 
 export const isServiceSelectionEnable = () => {
-  return userSetting.ticket.enable_service_selection === 1;
+  return parseInt(userSetting.ticket.enable_service_selection) === 1;
 };
 export const isDepartmentSelectionEnable = () => {
-  return userSetting.ticket.enable_department_selection === 1;
+  return parseInt(userSetting.ticket.enable_department_selection) === 1;
 };
 export const isProductSelectionEnable = () => {
-  return userSetting.ticket.enable_service_selection === 1;
+  return parseInt(userSetting.ticket.enable_service_selection) === 1;
 };
 
 export const getCompanyLogo = () => {

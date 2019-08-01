@@ -62,7 +62,7 @@ class TicketSettings extends Component {
   componentWillReceiveProps(nextProps, nextContext) {
     if (nextProps.ticketSettings) {
       const {
-        enable_service_selection, enable_department_selection,
+        enable_service_selection, enable_department_selection, enable_product_selection,
         ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,
         notify_reply, notify_status_change, notify_priority_change, notify_on_archive, ticket_status_close
       } = nextProps.ticketSettings;
@@ -70,6 +70,7 @@ class TicketSettings extends Component {
         this.setState({
           enable_service_selection: parseInt(enable_service_selection),
           enable_department_selection: parseInt(enable_department_selection),
+          enable_product_selection: parseInt(enable_product_selection),
           ticket_reply_order: ticket_reply_order,
           default_status_reply: parseInt(default_status_reply),
           allowed_file_ext: allowed_file_ext,
