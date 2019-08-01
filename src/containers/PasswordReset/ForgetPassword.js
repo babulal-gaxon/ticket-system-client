@@ -19,12 +19,6 @@ class ForgetPassword extends React.Component {
     });
   };
 
-  // componentDidUpdate() {
-  //   if (this.props.token !== null) {
-  //     this.props.history.push('/dashboard');
-  //   }
-  // }
-
   render() {
     const {getFieldDecorator} = this.props.form;
     return (
@@ -41,7 +35,7 @@ class ForgetPassword extends React.Component {
             </div>
             <div className="gx-app-login-content">
               <Form onSubmit={this.handleSubmit} className="gx-signin-form gx-form-row0">
-                <FormItem label="Enter Registered Email Address">
+                <FormItem label={<IntlMessages id="app.userAuth.enterEmailAddress"/>}>
                   {getFieldDecorator('email', {
                     initialValue: "admin@g-axon.com",
                     rules: [{

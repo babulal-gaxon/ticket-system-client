@@ -1,11 +1,12 @@
 import axios from 'util/Api'
 import {
+  ADD_NEW_TAGS,
   ADD_TICKETS,
   ASSIGN_STAFF_TO_TICKET,
   DELETE_TICKET,
   GET_CONVERSATION_LIST,
   GET_FILTER_OPTIONS,
-  GET_FORM_DETAILS,
+  GET_FORM_DETAILS, GET_TAGS_LIST,
   GET_TICKETS,
   NULLIFY_TICKET,
   SELECT_CURRENT_TICKET,
@@ -276,5 +277,28 @@ export const onNullifyCurrentTicket = () => {
     type: NULLIFY_TICKET
   }
 };
+
+export const onGetTagsList = (tagsFilterText) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.get('/tags', {
+      params: {
+        search: tagsFilterText
+      }
+    }).then(({data}) => {
+      console.log("on add tags: ", data);
+      if (data.success) {
+        dispatch({type: GET_TAGS_LIST, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    })
+  }
+};
+
 
 

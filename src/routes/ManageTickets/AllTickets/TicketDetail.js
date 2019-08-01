@@ -8,7 +8,7 @@ import {connect} from "react-redux";
 import {
   onAssignStaffToTicket,
   onGetConversationList,
-  onGetFilterOptions,
+  onGetFilterOptions, onGetTagsList,
   onGetTicketDetail,
   onNullifyCurrentTicket,
   onSendMessage,
@@ -147,6 +147,10 @@ class TicketDetail extends Component {
     });
   };
 
+  onSearchTags = (value) => {
+    this.props.onGetTagsList(value);
+  };
+
   render() {
 
     const {fileList, message, showEditModal, ticketTags, currentTicket} = this.state;
@@ -170,7 +174,9 @@ class TicketDetail extends Component {
       },
       fileList,
     };
-    const {filterData, conversation} = this.props;
+    const {filterData, conversation, tagsList} = this.props;
+
+
     return (
       <div className="gx-main-layout-content">
         {currentTicket ? <Widget styleName="gx-card-filter">
@@ -283,8 +289,12 @@ class TicketDetail extends Component {
                                  assignedTo={currentTicket.assigned_to}/>
                 <span>Tags</span>
                 <Select mode="tags" style={{width: '100%'}} className="gx-mt-3" placeholder="Type to add tags"
-                        value={ticketTags}
-                        onChange={this.onEditTags}/>
+                        value={ticketTags} onSearch={this.onSearchTags}
+                        onChange={this.onEditTags}>
+                  {tagsList.map(tag => {
+                    return <Option key={tag.id} value={tag.title}>{tag.title}</Option>
+                  })}
+                </Select>
                 <div className="gx-my-3">Attachments</div>
                 {currentTicket.attachments.length > 0 ? currentTicket.attachments.map(attachment => {
                   return <Avatar shape="square" icon="user" key={attachment.id} src={MEDIA_BASE_URL+attachment.src}
@@ -308,8 +318,8 @@ class TicketDetail extends Component {
 }
 
 const mapStateToProps = ({ticketList}) => {
-  const {conversation, currentTicket, filterData} = ticketList;
-  return {conversation, currentTicket, filterData};
+  const {conversation, currentTicket, filterData, tagsList} = ticketList;
+  return {conversation, currentTicket, filterData, tagsList};
 };
 
 export default connect(mapStateToProps, {
@@ -324,7 +334,8 @@ export default connect(mapStateToProps, {
   fetchError,
   fetchStart,
   fetchSuccess,
-  onNullifyCurrentTicket
+  onNullifyCurrentTicket,
+  onGetTagsList
 })(TicketDetail);
 
 

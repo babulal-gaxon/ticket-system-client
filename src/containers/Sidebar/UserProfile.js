@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {Avatar, Popover} from "antd";
 import {onUserSignOut} from "appRedux/actions/Auth";
 import {withRouter} from "react-router";
+import IntlMessages from "../../util/IntlMessages";
 
 class UserProfile extends Component {
 
@@ -10,8 +11,8 @@ class UserProfile extends Component {
     const {authUser} = this.props;
     const userMenuOptions = (
       <ul className="gx-user-popover">
-        <li onClick={() => this.props.history.push("/profile")}>My Profile</li>
-        <li onClick={() => this.props.onUserSignOut()}>Logout</li>
+        <li onClick={() => this.props.history.push("/profile")}><IntlMessages id="topBar.dashboard.myProfile"/></li>
+        <li onClick={() => this.props.onUserSignOut()}><IntlMessages id="topBar.dashboard.logout"/></li>
       </ul>
     );
 

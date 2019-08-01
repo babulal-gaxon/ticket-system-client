@@ -20,35 +20,39 @@ class GeneralDetails extends Component {
         cpp_url: ""
       }
     } else {
-      const {name, url, allowed_ext, file_upload_max_size, email, cpp_url} = props.generalSettingsData;
+      const {name, url, allowed_ext, file_upload_max_size, email, cpp_url, company_favicon, company_logo} = props.generalSettingsData;
       this.state = {
         name: name,
         url: url,
-        logo: null,
-        favicon: null,
+        logo: company_logo ? company_logo.id : null,
+        favicon: company_favicon ? company_favicon.id : null,
         allowed_ext: allowed_ext,
         file_upload_max_size: file_upload_max_size,
         email: email,
         logoList: [],
         faviconList: [],
-        cpp_url:cpp_url
+        cpp_url: cpp_url,
+        logoName: company_logo ? company_logo.title : "",
+        faviconName: company_favicon ? company_favicon.title : ""
       }
     }
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
     if (nextProps.generalSettingsData) {
-      const {name, allowed_ext, file_upload_max_size, email, logo, favicon, website, cpp_url} = nextProps.generalSettingsData;
+      const {name, allowed_ext, file_upload_max_size, email, website, cpp_url, company_logo, company_favicon} = nextProps.generalSettingsData;
       if (JSON.stringify(nextProps.generalSettingsData) !== JSON.stringify(this.props.generalSettingsData)) {
         this.setState({
           name: name,
           url: website,
-          logo: logo,
-          favicon: favicon,
+          logo: company_logo ? company_logo.id : null,
+          favicon: company_favicon ? company_favicon.id : null,
           allowed_ext: allowed_ext,
           file_upload_max_size: file_upload_max_size,
           email: email,
-          cpp_url:cpp_url
+          cpp_url: cpp_url,
+          logoName: company_logo ? company_logo.title : "",
+          faviconName: company_favicon ? company_favicon.title : ""
         })
       }
     }
@@ -95,7 +99,11 @@ class GeneralDetails extends Component {
         this.props.fetchSuccess();
         if (key === "logo") {
           this.setState({logo: data.data}, () => {
-            this.onFaviconSelect();
+            if (this.state.faviconList.length > 0) {
+              this.onFaviconSelect();
+            } else {
+              this.props.onSaveGeneralDetails({...this.state});
+            }
             this.setState({logoList: []})
           })
         } else {
@@ -111,7 +119,7 @@ class GeneralDetails extends Component {
   };
 
   render() {
-    const {name, url, email, allowed_ext, file_upload_max_size, logoList, faviconList, cpp_url} = this.state;
+    const {name, url, email, allowed_ext, file_upload_max_size, logoList, faviconList, cpp_url, logoName, faviconName} = this.state;
     const {getFieldDecorator} = this.props.form;
     const propsLogo = {
       onRemove: file => {
@@ -153,7 +161,6 @@ class GeneralDetails extends Component {
         this.setState(state => ({
           faviconList: [...state.faviconList, file],
         }));
-
         return false;
       },
       faviconList,
@@ -189,34 +196,16 @@ class GeneralDetails extends Component {
               }],
             })(<Input type="text" onChange={(e) => this.setState({cpp_url: e.target.value})}/>)}
           </Form.Item>
-          {this.props.generalSettingsData === null ?
-            <Form.Item label="Company Logo" extra="Size should be 250X100px, Maximum image size 50kb">
-              {getFieldDecorator('logo', {
-                validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please Select Logo!'}],
-              })(<Upload {...propsLogo}>
-                <Input placeholder="Choose file..." addonAfter="Browse"/>
-              </Upload>)}
-            </Form.Item> :
-            <Form.Item label="Upload Logo">
+            <Form.Item label="Company Logo" extra= {logoName && this.state.logoList.length ===0 ? logoName : "Size should be 250X100px, Maximum image size 50kb"}>
               <Upload {...propsLogo}>
-                <Input placeholder="Choose file..." addonAfter="Browse"/>
+                <Input placeholder="Choose file..." addonAfter="Browse" style={{width:"270%"}}/>
               </Upload>
-            </Form.Item>}
-          {this.props.generalSettingsData === null ?
-            <Form.Item label="Favicon" extra="Size should be 40X40px, Maximum image size 50kb">
-              {getFieldDecorator('favicon', {
-                validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please Select Favicon!'}],
-              })(<Upload {...propsFavicon}>
-                <Input placeholder="Choose file..." addonAfter="Browse"/>
-              </Upload>)}
-            </Form.Item> :
-            <Form.Item label="Upload Logo">
+            </Form.Item>
+            <Form.Item label="Favicon" extra={faviconName && this.state.logoList.length ===0 ? faviconName :"Size should be 40X40px, Maximum image size 50kb"}>
               <Upload {...propsFavicon}>
-                <Input placeholder="Choose file..." addonAfter="Browse"/>
+                <Input placeholder="Choose file..." addonAfter="Browse" style={{width:"270%"}}/>
               </Upload>
-            </Form.Item>}
+            </Form.Item>
           <Form.Item label="Email">
             {getFieldDecorator('email', {
               initialValue: email,

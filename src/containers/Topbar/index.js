@@ -13,6 +13,7 @@ import {NAV_STYLE_DRAWER, NAV_STYLE_FIXED, NAV_STYLE_MINI_SIDEBAR, TAB_SIZE} fro
 import {connect} from "react-redux";
 import UserProfile from "../Sidebar/UserProfile";
 import Permissions from "../../util/Permissions";
+import IntlMessages from "../../util/IntlMessages";
 
 const {Header} = Layout;
 
@@ -59,17 +60,17 @@ class Topbar extends Component {
       <Menu>
         {Permissions.canTicketAdd() ?
           <Menu.Item key="1" onClick={this.onAddNewTicket}>
-            <i className="icon icon-add"/> Add New Ticket
+            <i className="icon icon-add"/> <IntlMessages id="topBar.dashboard.addNewTicket"/>
           </Menu.Item> : null
         }
         {Permissions.canCustomerAdd() ?
           <Menu.Item key="2" onClick={this.onAddNewCustomer}>
-            <i className="icon icon-add"/> Add New Customer
+            <i className="icon icon-add"/> <IntlMessages id="topBar.dashboard.addNewCustomer"/>
           </Menu.Item> : null
         }
         {Permissions.canStaffAdd() ?
           <Menu.Item key="3" onClick={this.onAddNewStaff}>
-            <i className="icon icon-add"/> Add New Staff
+            <i className="icon icon-add"/> <IntlMessages id="topBar.dashboard.addNewStaff"/>
           </Menu.Item> : null
         }
       </Menu>
@@ -77,7 +78,7 @@ class Topbar extends Component {
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
         <span className="gx-mr-2"><i className="icon icon-add-circle"/></span>
-        <span>New</span>
+        <span><IntlMessages id="topBar.dashboard.new"/></span>
       </Button>
     </Dropdown>
   };
@@ -103,7 +104,7 @@ class Topbar extends Component {
           <div className="gx-mr-4">{this.onSelectOption()}</div>
           <Link to="/">
             <span><i className="icon icon-menu-right"/></span>
-            <span className="gx-ml-2">How it works</span>
+            <span className="gx-ml-2"><IntlMessages id="topBar.dashboard.howItWorks"/></span>
           </Link>
           <ul className="gx-header-notifications gx-ml-auto">
 
@@ -111,7 +112,7 @@ class Topbar extends Component {
               <UserProfile/>
             </li>
             <li className="gx-language" style={{display: 'none'}}>
-              <Popover overlayClassName="gx-popover-horizantal" placement="bottomRight" content={this.languageMenu()}
+              <Popover overlayClassName="gx-popover-horizontal" placement="bottomRight" content={this.languageMenu()}
                        trigger="click">
                 <span className="gx-pointer gx-flex-row gx-align-items-center">
                   <i className={`flag flag-24 flag-${locale.icon}`}/>

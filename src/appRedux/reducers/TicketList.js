@@ -4,7 +4,7 @@ import {
   DELETE_TICKET,
   GET_CONVERSATION_LIST,
   GET_FILTER_OPTIONS,
-  GET_FORM_DETAILS,
+  GET_FORM_DETAILS, GET_TAGS_LIST,
   GET_TICKETS,
   NULLIFY_TICKET,
   SELECT_CURRENT_TICKET,
@@ -30,7 +30,8 @@ const initialState = {
     staffs: [],
     status: [],
     priority: []
-  }
+  },
+  tagsList: []
 };
 
 export default (state = initialState, action) => {
@@ -135,6 +136,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         filterData: action.payload
+      };
+
+    case GET_TAGS_LIST:
+      return {
+        ...state,
+        tagsList: action.payload
       };
 
     default:

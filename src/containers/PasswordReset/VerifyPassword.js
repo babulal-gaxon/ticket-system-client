@@ -65,7 +65,7 @@ class VerifyPassword extends React.Component {
             </div>
             <div className="gx-app-login-content">
               <Form onSubmit={this.handleSubmit} className="gx-signin-form gx-form-row0">
-                <Form.Item label="Enter Email Address">
+                <Form.Item label={<IntlMessages id= "app.userAuth.enterEmail"/>}>
                   {getFieldDecorator('email', {
                     initialValue: email,
                     rules: [{
@@ -75,7 +75,7 @@ class VerifyPassword extends React.Component {
                     <Input placeholder="Email" onChange={(e) => this.setState({email: e.target.value})}/>
                   )}
                 </Form.Item>
-                <Form.Item label="Enter new Password" hasFeedback>
+                <Form.Item label={<IntlMessages id="app.userAuth.enterNewPassword"/>} hasFeedback>
                   {getFieldDecorator('password', {
                     rules: [
                       {
@@ -91,7 +91,7 @@ class VerifyPassword extends React.Component {
                       }],
                   })(<Input.Password onChange={(e) => this.setState({password: e.target.value})}/>)}
                 </Form.Item>
-                <Form.Item label="Confirm Password" hasFeedback>
+                <Form.Item label={<IntlMessages id="app.userAuth.confirmPassword"/>} hasFeedback>
                   {getFieldDecorator('password_confirmation', {
                     rules: [
                       {

@@ -3,7 +3,7 @@ import {Avatar, Breadcrumb, Button, Col, Form, Input, Row, Select} from "antd";
 import PropTypes from "prop-types";
 import Widget from "../../../components/Widget";
 import {connect} from "react-redux";
-import {onAddTickets, onGetFilterOptions, onGetFormDetails} from "../../../appRedux/actions/TicketList";
+import {onAddTickets, onGetFilterOptions, onGetFormDetails, onGetTagsList} from "../../../appRedux/actions/TicketList";
 import {Link} from "react-router-dom";
 import {onGetCustomersData} from "../../../appRedux/actions/Customers";
 import TicketAssigning from "./TicketAssigning";
@@ -98,7 +98,6 @@ class AddNewTicket extends Component {
   };
 
   onUploadAttachment = (data, file) => {
-    console.log("in attachment");
     this.props.fetchStart();
     axios.post("/uploads/temporary/media", data, {
       headers: {
@@ -123,6 +122,10 @@ class AddNewTicket extends Component {
     this.props.onGetCustomersData(null, null, value)
   };
 
+  onSearchTags = (value) => {
+    this.props.onGetTagsList(value);
+  };
+
   handleChange = (value) => {
     this.setState({user_id: value})
   };
@@ -132,11 +135,11 @@ class AddNewTicket extends Component {
   };
 
   render() {
-    console.log("selectedFiles in index", this.state.selectedFiles);
     const {getFieldDecorator} = this.props.form;
     const {title, content, product_id, priority_id, department_id, service_id, user_id} = this.state;
-    const {filterData, formData, customersList} = this.props;
+    const {filterData, formData, customersList, tagsList} = this.props;
     const ServiceOptions = this.onServiceSelectOptions();
+
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -261,9 +264,13 @@ class AddNewTicket extends Component {
                 />
                 <div className="gx-mb-3">Tags</div>
                 <Select mode="tags" style={{width: '100%'}} placeholder="Type to add tags" onChange={this.onAddTags}
-                        showSearch
+                        showSearch onSearch={this.onSearchTags}
                         showArrow={false}
-                        notFoundContent={null}/>
+                        notFoundContent={null}>
+                  {tagsList.map(tag => {
+                  return <Option key={tag.id} value={tag.title}>{tag.title}</Option>
+                  })}
+                </Select>
               </div>
               <div className="gx-my-5">Attachments</div>
               <TicketAttachments onSelectFiles={this.onSelectFiles}/>
@@ -279,9 +286,9 @@ AddNewTicket = Form.create({})(AddNewTicket);
 
 
 const mapStateToProps = ({ticketList, customers}) => {
-  const {formData, filterData} = ticketList;
+  const {formData, filterData, tagsList} = ticketList;
   const {customersList} = customers;
-  return {customersList, formData, filterData};
+  return {customersList, formData, filterData, tagsList};
 };
 
 export default connect(mapStateToProps, {
@@ -291,7 +298,8 @@ export default connect(mapStateToProps, {
   onGetFilterOptions,
   fetchStart,
   fetchError,
-  fetchSuccess
+  fetchSuccess,
+  onGetTagsList
 })(AddNewTicket);
 
 
