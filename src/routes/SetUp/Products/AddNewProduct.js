@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, Form, Input, Modal, Radio, Upload} from "antd/lib/index";
 import PropTypes from "prop-types";
 import axios from 'util/Api'
+import {getFileExtension} from "../../../util/Utills";
 
 const {TextArea} = Input;
 
@@ -85,6 +86,7 @@ class AddNewProduct extends Component {
     const {getFieldDecorator} = this.props.form;
     const {showAddModal, onToggleAddProduct, currentProduct} = this.props;
     const props = {
+      accept: getFileExtension(),
       onRemove: file => {
         this.setState(state => {
           const index = state.fileList.indexOf(file);

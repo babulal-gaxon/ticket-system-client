@@ -6,7 +6,7 @@ let userSetting = {
     "staff_access_own_department": "1",
     "ticket_reply_order": "asc",
     "allowed_file_ext": ".png,.jpg,.jpeg,.gif,.docx,.doc, .text",
-    "max_upload_size": "20",
+    "max_upload_size": "3",
     "notify_raise": "1",
     "notify_reply": "1",
     "notify_status_change": "1",
@@ -79,7 +79,7 @@ export const getFileSize = () => {
 };
 
 export const getTicketFileSize = () => {
-  return parseInt(userSetting.ticket.max_upload_size) * 1024 * 1024;
+  return parseInt(userSetting.ticket.max_upload_size);
 };
 
 export const getTicketFileExtension = () => {

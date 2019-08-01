@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Avatar, Button, message, Upload} from "antd";
 import PropTypes from "prop-types";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
+import {getFileExtension, getTicketFileExtension} from "../../../util/Utills";
 
 class CustomerImageUpload extends Component {
   constructor(props) {
@@ -37,6 +38,7 @@ class CustomerImageUpload extends Component {
   render() {
     const {fileList} = this.state;
     const props = {
+      accept: getFileExtension(),
       onRemove: file => {
         this.setState(state => {
           const index = state.fileList.indexOf(file);

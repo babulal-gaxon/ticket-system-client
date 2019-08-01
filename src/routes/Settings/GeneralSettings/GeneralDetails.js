@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, Divider, Form, Input, Upload} from "antd/lib/index";
 import PropTypes from "prop-types";
 import axios from 'util/Api'
+import {getFileExtension} from "../../../util/Utills";
 
 class GeneralDetails extends Component {
   constructor(props) {
@@ -122,6 +123,7 @@ class GeneralDetails extends Component {
     const {name, url, email, allowed_ext, file_upload_max_size, logoList, faviconList, cpp_url, logoName, faviconName} = this.state;
     const {getFieldDecorator} = this.props.form;
     const propsLogo = {
+      accept: getFileExtension(),
       onRemove: file => {
         this.setState(state => {
           const index = state.logoList.indexOf(file);
@@ -144,6 +146,7 @@ class GeneralDetails extends Component {
       logoList,
     };
     const propsFavicon = {
+      accept: getFileExtension(),
       onRemove: file => {
         this.setState(state => {
           const index = state.faviconList.indexOf(file);

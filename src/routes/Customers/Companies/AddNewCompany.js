@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'util/Api'
-import {Button, Form, Input, Modal, Upload} from "antd";
+import {Button, Form, Input, message, Modal, Upload} from "antd";
+import {getFileExtension, getFileSize, getTicketFileSize} from "../../../util/Utills";
 
 
 class AddNewCompany extends Component {
@@ -78,6 +79,7 @@ class AddNewCompany extends Component {
   render() {
     const {company_name, website, fileList, logoName} = this.state;
     const props = {
+      accept: getFileExtension(),
       onRemove: file => {
         this.setState(state => {
           const index = state.fileList.indexOf(file);
@@ -92,9 +94,15 @@ class AddNewCompany extends Component {
         if (fileList.length > 0) {
           props.onRemove(fileList[0])
         }
-        this.setState(state => ({
-          fileList: [...state.fileList, file],
-        }));
+        const isFileSize = file.size / 1024 / 1024 < getFileSize();
+        if (!isFileSize) {
+          message.error('The image size is greater than allowed size!');
+        }
+        if(isFileSize) {
+          this.setState(state => ({
+            fileList: [...state.fileList, file],
+          }))
+        }
         return false;
       },
       fileList,

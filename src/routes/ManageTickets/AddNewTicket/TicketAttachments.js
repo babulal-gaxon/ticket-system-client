@@ -68,10 +68,10 @@ class TicketAttachments extends Component {
   };
 
   render() {
+    console.log("getTicketFileExtension", getTicketFileSize())
     const {fileList} = this.state;
-
     const props = {
-      accept: getTicketFileSize(),
+      accept: getTicketFileExtension(),
       multiple: true,
       onRemove: file => {
         this.setState(state => {
@@ -84,8 +84,6 @@ class TicketAttachments extends Component {
         }, () => this.props.onSelectFiles(this.state.fileList));
       },
       beforeUpload: file => {
-        console.log("file", file)
-
         const isFileSize = file.size / 1024 / 1024 < getTicketFileSize();
         if (!isFileSize) {
           message.error('The image size is greater than allowed size!');

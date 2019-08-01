@@ -24,7 +24,7 @@ import PropTypes from "prop-types";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import qs from "qs";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
-import {getFormattedDate} from "../../../util/Utills";
+import {getFormattedDate, getTicketFileExtension} from "../../../util/Utills";
 
 const Option = Select.Option;
 const {TextArea} = Input;
@@ -156,6 +156,7 @@ class TicketDetail extends Component {
 
     const {fileList, message, showEditModal, ticketTags, currentTicket} = this.state;
     const props = {
+      accept: getTicketFileExtension(),
       multiple: true,
       onRemove: file => {
         this.setState(state => {
