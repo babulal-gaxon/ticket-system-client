@@ -59,6 +59,16 @@ export const updateDateFormat = (dateFormat) => {
   userSetting.locale.date_format = dateFormat;
 };
 
+export const updateLocaleSetting = (locale) => {
+  userSetting.locale = locale;
+};
+export const updateGeneralSetting = (general) => {
+  userSetting.locale = general;
+};
+export const updateTicketSetting = (locale) => {
+  userSetting.locale = locale;
+};
+
 export const setUserSetting = (setting) => {
   userSetting = setting;
   console.log("userSetting", userSetting)

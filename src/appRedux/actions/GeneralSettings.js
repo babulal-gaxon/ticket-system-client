@@ -15,7 +15,7 @@ import {
   GET_LOCALIZATION_DETAILS,
   GET_TICKET_SETTINGS
 } from "../../constants/GeneralSettings";
-import {updateDateFormat} from "../../util/Utills";
+import {updateGeneralSetting, updateLocaleSetting, updateTicketSetting} from "../../util/Utills";
 
 
 export const onGetGeneralDetails = () => {
@@ -45,6 +45,7 @@ export const onSaveGeneralDetails = (details) => {
       console.info("data:", data);
       if (data.success) {
         dispatch({type: ADD_GENERAL_DETAILS, payload: data.data});
+        updateGeneralSetting(data.data)
         dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
@@ -84,7 +85,7 @@ export const onSaveLocalizationDetails = (details) => {
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: ADD_LOCALIZATION_DETAILS, payload: data.data});
-        updateDateFormat(data.data.date_format);
+        updateLocaleSetting(data.data);
         dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
@@ -258,6 +259,7 @@ export const onSaveTicketSettings = (details, history) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: ADD_TICKET_SETTINGS, payload: data.data});
+        updateTicketSetting(data.data)
         dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
         if (history) {
           history.replace('/dashboard')
