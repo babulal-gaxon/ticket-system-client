@@ -3,7 +3,7 @@ import moment from "moment";
 let userSetting = {
   "ticket": {
     "enable_service_selection": "1",
-    "staff_access_own_department": "1",
+    "enable_department_selection": "1",
     "ticket_reply_order": "asc",
     "allowed_file_ext": ".png,.jpg,.jpeg,.gif,.docx,.doc, .text",
     "max_upload_size": "20",
@@ -84,15 +84,25 @@ export const getFileExtension = () => {
 };
 
 export const getFileSize = () => {
-  return parseInt(userSetting.general.file_upload_max_size)*1024*1024;
+  return parseInt(userSetting.general.file_upload_max_size) * 1024 * 1024;
 };
 
 export const getTicketFileSize = () => {
-  return parseInt(userSetting.ticket.max_upload_size)*1024*1024;
+  return parseInt(userSetting.ticket.max_upload_size) * 1024 * 1024;
 };
 
 export const getTicketFileExtension = () => {
   return userSetting.ticket.allowed_file_ext;
+};
+
+export const isServiceSelectionEnable = () => {
+  return userSetting.ticket.enable_service_selection === 1;
+};
+export const isDepartmentSelectionEnable = () => {
+  return userSetting.ticket.enable_department_selection === 1;
+};
+export const isProductSelectionEnable = () => {
+  return userSetting.ticket.enable_service_selection === 1;
 };
 
 export const getCompanyLogo = () => {

@@ -16,7 +16,8 @@ class TicketSettings extends Component {
     if (this.props.ticketSettings === null) {
       this.state = {
         enable_service_selection: 0,
-        staff_access_own_department: 0,
+        enable_product_selection: 0,
+        enable_department_selection: 0,
         ticket_reply_order: "",
         default_status_reply: 0,
         allowed_file_ext: "",
@@ -30,13 +31,14 @@ class TicketSettings extends Component {
       }
     } else {
       const {
-        enable_service_selection, staff_access_own_department,
+        enable_service_selection, enable_department_selection, enable_product_selection,
         ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,
         notify_reply, notify_status_change, notify_priority_change, notify_on_archive, ticket_status_close
       } = this.props.ticketSettings;
       this.state = {
         enable_service_selection: parseInt(enable_service_selection),
-        staff_access_own_department: parseInt(staff_access_own_department),
+        enable_department_selection: parseInt(enable_department_selection),
+        enable_product_selection: parseInt(enable_product_selection),
         ticket_reply_order: ticket_reply_order,
         default_status_reply: parseInt(default_status_reply),
         allowed_file_ext: allowed_file_ext,
@@ -60,14 +62,14 @@ class TicketSettings extends Component {
   componentWillReceiveProps(nextProps, nextContext) {
     if (nextProps.ticketSettings) {
       const {
-        enable_service_selection, staff_access_own_department,
+        enable_service_selection, enable_department_selection,
         ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,
         notify_reply, notify_status_change, notify_priority_change, notify_on_archive, ticket_status_close
       } = nextProps.ticketSettings;
       if (JSON.stringify(nextProps.ticketSettings) !== JSON.stringify(this.props.ticketSettings)) {
         this.setState({
           enable_service_selection: parseInt(enable_service_selection),
-          staff_access_own_department: parseInt(staff_access_own_department),
+          enable_department_selection: parseInt(enable_department_selection),
           ticket_reply_order: ticket_reply_order,
           default_status_reply: parseInt(default_status_reply),
           allowed_file_ext: allowed_file_ext,
@@ -90,7 +92,7 @@ class TicketSettings extends Component {
 
   render() {
     const {
-      enable_service_selection, staff_access_own_department,
+      enable_service_selection, enable_department_selection, enable_product_selection,
       ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,
       notify_reply, notify_status_change, notify_priority_change, notify_on_archive, ticket_status_close
     } = this.state;
@@ -119,8 +121,16 @@ class TicketSettings extends Component {
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
                 <p>Enable department selection while creating a ticket</p>
-                <Switch checked={!!staff_access_own_department}
-                        onChange={(checked) => this.setState({staff_access_own_department: Number(checked)})}/>
+                <Switch checked={!!enable_department_selection}
+                        onChange={(checked) => this.setState({enable_department_selection: Number(checked)})}/>
+              </div>
+              <Divider/>
+            </Form.Item>
+            <Form.Item>
+              <div className="gx-d-flex gx-justify-content-between">
+                <p>Enable product selection while creating a ticket</p>
+                <Switch checked={!!enable_product_selection}
+                        onChange={(checked) => this.setState({enable_product_selection: Number(checked)})}/>
               </div>
               <Divider/>
             </Form.Item>

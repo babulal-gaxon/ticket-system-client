@@ -11,6 +11,7 @@ import TicketAttachments from "./TicketAttachments";
 import axios from 'util/Api'
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
+import {isDepartmentSelectionEnable, isProductSelectionEnable, isServiceSelectionEnable} from "../../../util/Utills";
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -194,7 +195,7 @@ class AddNewTicket extends Component {
                     this.setState({title: e.target.value})
                   }}/>)}
                 </Form.Item>
-                <Form.Item label="Select Product">
+                {isProductSelectionEnable() ? <Form.Item label="Select Product">
                   <Select value={product_id} onChange={(value) => {
                     this.setState({product_id: value})
                   }}>
@@ -202,8 +203,8 @@ class AddNewTicket extends Component {
                       return <Option value={product.id} key={product.id}>{product.title}</Option>
                     })}
                   </Select>
-                </Form.Item>
-                <Form.Item label="Select Department">
+                </Form.Item> : null}
+                {isDepartmentSelectionEnable() ? <Form.Item label="Select Department">
                   <Select value={department_id} onChange={(value) => {
                     this.setState({department_id: value})
                   }}>
@@ -211,8 +212,8 @@ class AddNewTicket extends Component {
                       return <Option value={department.id} key={department.id}>{department.name}</Option>
                     })}
                   </Select>
-                </Form.Item>
-                <Form.Item label="Services">
+                </Form.Item> : null}
+                {isServiceSelectionEnable() ? <Form.Item label="Services">
                   <Select
                     mode="multiple"
                     style={{width: '100%'}}
@@ -222,7 +223,7 @@ class AddNewTicket extends Component {
                     onDeselect={this.onServiceRemove}>
                     {ServiceOptions}
                   </Select>
-                </Form.Item>
+                </Form.Item> : null}
                 <Form.Item label="Description">
                   {getFieldDecorator('content', {
                     initialValue: content,
@@ -268,7 +269,7 @@ class AddNewTicket extends Component {
                         showArrow={false}
                         notFoundContent={null}>
                   {tagsList.map(tag => {
-                  return <Option key={tag.id} value={tag.title}>{tag.title}</Option>
+                    return <Option key={tag.id} value={tag.title}>{tag.title}</Option>
                   })}
                 </Select>
               </div>
