@@ -91,9 +91,10 @@ class StaffList extends Component {
         }
       })
     } else {
-      confirm({
-        title: "Please Select Staffs first",
-      })
+      Modal.info({
+        title: "Please Select Staff(s) first",
+        onOk() {},
+      });
     }
   };
 

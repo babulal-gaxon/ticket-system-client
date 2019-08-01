@@ -14,9 +14,9 @@ const CompanyDetails = ({currentCustomerProfile, customerCompanyMembers}) => {
           <div>
             <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
               {currentCustomerProfile.company.avatar ?
-                <Avatar className="gx-mr-3 gx-size-80"
+                <Avatar className="gx-mr-3 gx-size-80 gx-fs-xxl"
                         src={MEDIA_BASE_URL + currentCustomerProfile.company.avatar.src}/> :
-                <Avatar className="gx-mr-3 gx-size-80"
+                <Avatar className="gx-mr-3 gx-size-80 gx-fs-xxl"
                         style={{backgroundColor: '#f56a00'}}>{currentCustomerProfile.company.company_name[0].toUpperCase()}</Avatar>}
               <div className="gx-media-body">
                 <span>

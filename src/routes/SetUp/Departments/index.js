@@ -99,9 +99,10 @@ class Departments extends Component {
         }
       })
     } else {
-      confirm({
-        title: "Please Select Labels first",
-      })
+      Modal.info({
+        title: "Please Select Department(s) first",
+        onOk() {},
+      });
     }
   };
 
@@ -115,9 +116,10 @@ class Departments extends Component {
         }
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Department(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 
@@ -135,9 +137,10 @@ class Departments extends Component {
         }
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Department(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 

@@ -99,9 +99,10 @@ class Products extends Component {
         }
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Product(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 
@@ -118,9 +119,10 @@ class Products extends Component {
         },
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Product(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 
@@ -138,9 +140,10 @@ class Products extends Component {
         }
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Product(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 

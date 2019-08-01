@@ -7,13 +7,6 @@ import {MEDIA_BASE_URL} from "../../../../constants/ActionTypes";
 
 class RelatedTickets extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedRowKeys: [],
-    }
-  }
-
   onGetTableColumns = () => {
     return [
       {
@@ -65,22 +58,13 @@ class RelatedTickets extends Component {
     ];
   };
 
-  onSelectChange = selectedRowKeys => {
-    this.setState({selectedRowKeys});
-  };
-
   render() {
-    const {selectedRowKeys} = this.state;
     const {customerTickets} = this.props;
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange
-    };
 
     return (
       <div>
         <Widget title={<span className="gx-widget-heading">Related Tickets</span>}>
-          <Table rowKey="id" rowSelection={rowSelection} columns={this.onGetTableColumns()}
+          <Table rowKey="id" columns={this.onGetTableColumns()}
                  className="gx-mb-4" dataSource={customerTickets}
                  onRow={(record) => ({
                    onClick: () => {

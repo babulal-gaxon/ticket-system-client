@@ -6,19 +6,19 @@ const {TextArea} = Input;
 class AddNewLabel extends Component {
   constructor(props) {
     super(props);
-    if (this.props.label === null) {
+    if (props.label === null) {
       this.state = {
         name: "",
         desc: "",
         status: 1,
       };
     } else {
-      this.state = {...this.props.label};
+      this.state = {...props.label};
     }
   }
 
   onSaveData = () => {
-    if (this.props.labelId === null) {
+    if (this.props.label === null) {
       this.props.onAddLabelsData({...this.state});
     } else {
       this.props.onEditLabelsData({...this.state});

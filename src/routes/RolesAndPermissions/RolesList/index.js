@@ -107,9 +107,10 @@ class RolesList extends Component {
         }
       })
     } else {
-      confirm({
-        title: "Please Select Roles first",
-      })
+      Modal.info({
+        title: "Please Select Role(s) first",
+        onOk() {},
+      });
     }
   };
 

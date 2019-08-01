@@ -98,9 +98,10 @@ class Services extends Component {
         },
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Service(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 
@@ -117,9 +118,10 @@ class Services extends Component {
         },
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Service(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 
@@ -137,9 +139,10 @@ class Services extends Component {
         }
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Service(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 

@@ -61,7 +61,7 @@ const RoleRow = (context) => {
           <span>{Permissions.canRoleEdit() ? <i className="icon icon-edit gx-mr-3" onClick={() => {
             context.props.onGetRoleDetail(record.id, context.props.history);
           }}/> : null}
-            {Permissions.canRoleDelete() ? onDeletePopUp(record.id) : null}
+            {Permissions.canRoleDelete() ? onDeletePopUp(record.id, context) : null}
           </span> : null}
         </div>
       },

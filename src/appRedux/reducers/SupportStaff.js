@@ -59,13 +59,9 @@ export default (state = initialState, action) => {
       };
 
     case BULK_DELETE_SUPPORT_STAFF:
-      const updateStaff = state.staffList.filter(member => {
-        return (action.payload.indexOf(member.id) === -1) ?
-          member : null
-      });
       return {
         ...state,
-        staffList: updateStaff,
+        staffList: state.staffList.filter(member => (action.payload.indexOf(member.id) === -1)),
         totalItems: state.totalItems - action.payload.length
       };
 
@@ -102,12 +98,14 @@ export default (state = initialState, action) => {
       };
 
     case SELECT_CURRENT_STAFF:
+      console.log("currentstaff", action.payload)
       return {
         ...state,
         currentStaff: action.payload
       };
 
     case NULLIFY_STAFF:
+      console.log("nullify")
       return {
         ...state,
         currentStaff: null

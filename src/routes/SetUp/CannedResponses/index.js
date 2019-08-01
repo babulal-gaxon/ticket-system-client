@@ -102,9 +102,10 @@ class CannedResponses extends Component {
         }
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Response(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 
@@ -121,9 +122,10 @@ class CannedResponses extends Component {
         }
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Response(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 
@@ -141,9 +143,10 @@ class CannedResponses extends Component {
         }
       })
     } else {
-      confirm({
+      Modal.info({
         title: "Please Select Response(s) first",
-      })
+        onOk() {},
+      });
     }
   };
 
