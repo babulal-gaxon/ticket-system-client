@@ -44,7 +44,7 @@ class SidebarLogo extends Component {
         </div> : null}
 
         <Link to="/" className="gx-site-logo">
-          {getCompanyLogo() ? <img alt="" src={getCompanyLogo()}/> :
+          {getCompanyLogo() ? <img alt="" style={{height: 26, width: 100}} src={getCompanyLogo()}/> :
             <img alt="" src={require("assets/images/logo.svg")}/>}
         </Link>
 
