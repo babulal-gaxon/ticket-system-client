@@ -28,7 +28,6 @@ export function onLayoutTypeChange(layoutType) {
 
 export function switchLanguage(locale) {
   console.log("switchLanguage", locale)
-
   return (dispatch) =>
     dispatch({type: FETCH_USER_INFO_START, payload: locale})
 

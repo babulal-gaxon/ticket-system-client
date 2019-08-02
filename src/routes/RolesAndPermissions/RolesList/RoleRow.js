@@ -32,7 +32,7 @@ const RoleRow = (context) => {
       dataIndex: 'lastUpdate',
       key: 'lastUpdate',
       render: (text, record) => {
-        return <span className="gx-text-grey">{getFormattedDate(record.updated_at.date)}</span>
+        return <span className="gx-text-grey">{getFormattedDate(record.updated_at)}</span>
       },
     },
     {

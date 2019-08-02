@@ -2,8 +2,7 @@ import {MEDIA_BASE_URL} from "../constants/ActionTypes";
 
 const moment = require('moment-timezone');
 const timeZone = moment.tz.guess();
-moment.tz.setDefault("Africa/Bissau");
-console.log("timeZone", timeZone, moment.tz.guess());
+
 let userSetting = {
   "ticket": {
     "enable_service_selection": "1",
@@ -79,7 +78,7 @@ export const setUserSetting = (setting) => {
 
 const convertToGMT = (date) => {
   console.log("date=>>", date);
-  return date.replace(" ", "T").replace(".000000", "Z")
+  return date.replace(" ", "T").concat("Z")
 };
 export const getFormattedDate = (date) => {
   return moment.tz(convertToGMT(date), timeZone).format(userSetting.locale.date_format.toUpperCase());
