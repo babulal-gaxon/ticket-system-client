@@ -21,7 +21,7 @@ const ConversationCell = ({conversation}) => {
       <div className="gx-chat-toto-info">
         <div className="gx-flex-column">
           <div className="gx-name gx-mr-2">{conversation.author.display_name}</div>
-          <div className="gx-time gx-text-muted">{getFormattedDateTime(conversation.created_at.date)}</div>
+          <div className="gx-time gx-text-muted">{getFormattedDateTime(conversation.created_at)}</div>
         </div>
         <div className="gx-message gx-my-2">{conversation.message}</div>
         <div className="gx-d-flex">

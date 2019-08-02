@@ -39,14 +39,7 @@ class App extends PureComponent {
 
   constructor(props) {
     super(props);
-    props.onCheckInitialSetup();
-    if (localStorage.getItem('settings')) {
-      props.setUserDefaultSetting(JSON.parse(localStorage.getItem('settings')));
-      Permissions.setPermissions(JSON.parse(localStorage.getItem('settings')).permissions);
-      const setting = JSON.parse(localStorage.getItem('settings')).settings;
-      setUserSetting(setting);
-      setCompanyFavIcon()
-    }
+
   }
 
   componentWillMount() {
@@ -56,6 +49,14 @@ class App extends PureComponent {
     if (this.props.token) {
       axios.defaults.headers.common['Authorization'] = "Bearer " + this.props.token;
       this.props.onGetUserPermission(this.props.history)
+    }
+    this.props.onCheckInitialSetup();
+    if (localStorage.getItem('settings')) {
+      this.props.setUserDefaultSetting(JSON.parse(localStorage.getItem('settings')));
+      Permissions.setPermissions(JSON.parse(localStorage.getItem('settings')).permissions);
+      const setting = JSON.parse(localStorage.getItem('settings')).settings;
+      setUserSetting(setting);
+      setCompanyFavIcon()
     }
   }
 

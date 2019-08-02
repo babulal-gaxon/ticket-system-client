@@ -27,7 +27,7 @@ export const ticketListcolumns = [
           <div className="gx-media-body">
             <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
             <Tag className="gx-ml-2" color="blue">{record.product_name}</Tag>
-            <div>Created on {getFormattedDate(record.created_at.date)}</div>
+            <div>Created on {getFormattedDate(record.created_at)}</div>
           </div>
         </div>
       )

@@ -36,7 +36,7 @@ class RelatedTickets extends Component {
         dataIndex: 'assignDate',
         key: 'assignDate',
         render: (text, record) => {
-          return <span className="gx-text-grey">{getFormattedDate(record.created_at.date)}</span>
+          return <span className="gx-text-grey">{getFormattedDate(record.created_at)}</span>
         },
       },
       {

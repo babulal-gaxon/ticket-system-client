@@ -24,7 +24,6 @@ const initialSettings = {
 };
 
 const settings = (state = initialSettings, action) => {
-  console.log("switchLanguage: action.payload", action.payload, action)
   switch (action.type) {
     case '@@router/LOCATION_CHANGE':
       console.log("action.payload.pathname", action.payload.pathname);
@@ -66,7 +65,7 @@ const settings = (state = initialSettings, action) => {
       };
 
     case "SWITCH_LANGUAGE":
-      console.log("switchLanguage: action.payload", action.payload)
+      console.log("switchLanguage: action.payload", action.payload);
       return {
         ...state,
         locale: action.payload,

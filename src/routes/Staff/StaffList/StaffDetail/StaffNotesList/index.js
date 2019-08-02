@@ -60,7 +60,7 @@ class StaffNotesList extends Component {
                   <div>
                     <span>created by: </span>
                     <span className="gx-text-primary">{note.display_name}</span>
-                    <span> - {getFormattedDate(note.created_at.date)}</span>
+                    <span> - {getFormattedDate(note.created_at)}</span>
                   </div>
                 </div>
                 <div className="gx-d-flex gx-justify-content-end">
