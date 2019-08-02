@@ -17,6 +17,8 @@ import CustomerImageUpload from "./CustomerImageUpload";
 import {onGetCountriesList} from "../../../appRedux/actions/GeneralSettings";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {Option} = Select;
 
@@ -30,7 +32,7 @@ class AddNewCustomers extends Component {
         email: "",
         password: "",
         phone: "",
-        company_id: 0,
+        company_id: null,
         label_ids: [],
         isModalVisible: false,
         status: 1,
@@ -151,7 +153,7 @@ class AddNewCustomers extends Component {
       <Menu>
         {(Permissions.canAddressEdit()) ?
           <Menu.Item key="2" onClick={() => this.onEditAddressDetail(address)}>
-            Edit
+            <IntlMessages id="common.edit"/>
           </Menu.Item> : null}
         {(Permissions.canAddressDelete()) ?
           <Menu.Item key="4">
@@ -160,8 +162,8 @@ class AddNewCustomers extends Component {
               onConfirm={() => {
                 this.props.onDeleteCustomerAddress(address.id, this);
               }}
-              okText="Yes"
-              cancelText="No">
+              okText={<IntlMessages id="common.yes"/>}
+              cancelText={<IntlMessages id="common.no"/>}>
               Delete
             </Popconfirm>
           </Menu.Item> : null}
@@ -179,23 +181,24 @@ class AddNewCustomers extends Component {
   };
 
   render() {
-    console.log("currentCustomer", this.props.currentCustomer);
     const {getFieldDecorator} = this.props.form;
-    const {phone, status, label_ids, addresses, first_name, last_name, email} = this.state;
+    const {messages} = this.props.intl;
+    const {phone, status, label_ids, addresses, first_name, last_name, email, company_id} = this.state;
     const labelOptions = this.onLabelSelectOption();
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
           <h4
-            className="gx-widget-heading">{this.props.currentCustomer === null ? "Add New Customer" : "Edit Customer Details"}</h4>
+            className="gx-widget-heading">{this.props.currentCustomer === null ?
+            <IntlMessages id="customer.add.addNew"/> : <IntlMessages id="customer.add.editDetail"/>}</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
-              <Link to="/customers">Customers</Link>
+              <Link to="/customers"><IntlMessages id="customers.customers"/></Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
               <Link to="/customers/add-customers"
                     className="gx-text-primary">{this.props.currentCustomer === null ?
-                "Add New Customer" : "Edit Customer Details"}</Link>
+                <IntlMessages id="customer.add.addNew"/> : <IntlMessages id="customer.add.editDetail"/>}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <hr/>
@@ -204,29 +207,29 @@ class AddNewCustomers extends Component {
               <Form layout="vertical" style={{width: "60%"}}>
                 <div className="gx-d-flex gx-flex-row">
                   <Col sm={12} xs={24} className="gx-pl-0">
-                    <Form.Item label="First Name">
+                    <Form.Item label={<IntlMessages id="common.firstName"/>}>
                       {getFieldDecorator('first_name', {
                         validateTrigger: 'onBlur',
                         initialValue: first_name,
-                        rules: [{required: true, message: 'Please Enter First Name!'}],
+                        rules: [{required: true, message: messages["validation.message.firstName"]}],
                       })(<Input type="text" autoFocus onChange={(e) => {
                         this.setState({first_name: e.target.value})
                       }}/>)}
                     </Form.Item>
                   </Col>
                   <Col sm={12} xs={24} className="gx-pr-0">
-                    <Form.Item label="Last Name">
+                    <Form.Item label={<IntlMessages id="common.lastName"/>}>
                       {getFieldDecorator('last_name', {
                         validateTrigger: 'onBlur',
                         initialValue: last_name,
-                        rules: [{required: true, message: 'Please Enter Last Name!'}],
+                        rules: [{required: true, message:  messages["validation.message.lastName"]}],
                       })(<Input type="text" onChange={(e) => {
                         this.setState({last_name: e.target.value})
                       }}/>)}
                     </Form.Item>
                   </Col>
                 </div>
-                <Form.Item label="Email Address">
+                <Form.Item label={<IntlMessages id="common.emailAddress"/>}>
                   {getFieldDecorator('email', {
                     initialValue: email,
                     validate: [{
@@ -234,7 +237,7 @@ class AddNewCustomers extends Component {
                       rules: [
                         {
                           required: true,
-                          message: 'Please Enter Email!'
+                          message: messages["validation.message.email"]
                         },
                       ],
                     }, {
@@ -242,7 +245,7 @@ class AddNewCustomers extends Component {
                       rules: [
                         {
                           type: 'email',
-                          message: 'The input is not valid E-mail!',
+                          message: messages["validation.message.emailFormat"],
                         },
                       ],
                     }],
@@ -251,64 +254,64 @@ class AddNewCustomers extends Component {
                   }}/>)}
                 </Form.Item>
 
-                <Form.Item label="Password"
-                           extra={this.props.currentCustomer === null ? "" : "Note: Leave it blank if you don't want to update password."}>
+                <Form.Item label={<IntlMessages id="common.password"/>}
+                           extra={this.props.currentCustomer === null ? "" : <IntlMessages id="validation.message.passwordUpdateNote"/>}>
                   {getFieldDecorator('password', {
                     initialValue: "",
                     validateTrigger: 'onBlur',
                     rules: [{
                       min: 8,
-                      message: 'Length should be at least 8 characters long',
+                      message: messages["validation.message.passwordLength"],
                     }],
                   })(<Input.Password type="text" onChange={(e) => {
                     this.setState({password: e.target.value})
                   }}/>)}
                 </Form.Item>
-                <Form.Item label="Phone Number">
+                <Form.Item label={<IntlMessages id="common.phoneNo."/>}>
                   {getFieldDecorator('phone', {
                     initialValue: phone,
                     validateTrigger: 'onBlur',
                     rules: [{
                       pattern: /^[0-9\b]+$/,
-                      message: 'Please enter only numerical values',
+                      message: messages["validation.message.numericalValues"],
                     }],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({phone: e.target.value})
 
                   }}/>)}
                 </Form.Item>
-                <Form.Item label="Select Company">
-                  <Select defaultValue="Select Company" onChange={this.onCompanySelect}>
+                <Form.Item label={<IntlMessages id="common.selectCompany"/>}>
+                  <Select value={company_id} onChange={this.onCompanySelect}>
                     {this.props.company.map(company => {
                       return <Option value={company.id}
                                      key={company.id}>{company.company_name}</Option>
                     })}
                   </Select>
                 </Form.Item>
-                <Form.Item label=" Add Labels">
+                <Form.Item label={<IntlMessages id="customer.add.addLabels"/>}>
                   <Select
                     mode="multiple"
                     style={{width: '100%'}}
-                    placeholder="Please select Labels"
+                    placeholder={<IntlMessages id="customers.filter.selectLabels"/>}
                     value={label_ids}
                     onSelect={this.onLabelSelect}
                     onDeselect={this.onLabelRemove}>
                     {labelOptions}
                   </Select>
                 </Form.Item>
-                <Form.Item label="Status">
+                <Form.Item label={<IntlMessages id="common.status"/>}>
                   <Radio.Group value={status} onChange={(e) => {
                     this.setState({status: e.target.value})
                   }}>
-                    <Radio value={1}>Active</Radio>
-                    <Radio value={0}>Disabled</Radio>
+                    <Radio value={1}><IntlMessages id="common.active"/></Radio>
+                    <Radio value={0}><IntlMessages id="common.disabled"/></Radio>
                   </Radio.Group>
                 </Form.Item>
                 <Form.Item>
                   {(Permissions.canAddressAdd()) ?
                     <Button type="default" style={{width: "100%", color: "blue"}}
                             onClick={this.onToggleAddressModal}>
-                      <i className="icon icon-add-circle gx-mr-1"/>Add New Address</Button> : null}
+                      <i className="icon icon-add-circle gx-mr-1"/><IntlMessages id="common.addNewAddress"/></Button> : null}
                 </Form.Item>
 
               </Form>
@@ -332,13 +335,13 @@ class AddNewCustomers extends Component {
                   </div> : null : null}
               <span>
                 <Button type="primary" onClick={this.onValidationCheck}>
-                  Save
+                  <IntlMessages id="common.save"/>
                 </Button>
                      <Button onClick={this.onReset}>
-                  Reset
+                  <IntlMessages id="common.reset"/>
                 </Button>
                      <Button onClick={this.onReturnCustomersScreen}>
-                  Cancel
+                  <IntlMessages id="common.cancel"/>
                 </Button>
                 </span>
             </Col>
@@ -378,7 +381,7 @@ export default connect(mapStateToProps, {
   onGetCustomerFilterOptions,
   onEditCustomerAddress,
   onDeleteCustomerAddress
-})(AddNewCustomers);
+})(injectIntl(AddNewCustomers));
 
 AddNewCustomers.defaultProps = {
   customersList: [],

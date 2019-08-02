@@ -14,6 +14,8 @@ import {Link} from "react-router-dom";
 import AddNewLabel from "./AddNewLabel";
 import Permissions from "../../../util/Permissions";
 import CustomerLabelRow from "./CustomerLabelRow";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -78,9 +80,10 @@ class CustomersLabel extends Component {
 
 
   onShowBulkActiveConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedLabels.length !== 0) {
       confirm({
-        title: "Are you sure to change the status of selected Label(s) to ACTIVE?",
+        title: messages["validation.labels.active"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedLabels
@@ -91,7 +94,7 @@ class CustomersLabel extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Label(s) first",
+        title: messages["validation.labels.selectFirst"],
         onOk() {
         },
       });
@@ -99,9 +102,10 @@ class CustomersLabel extends Component {
   };
 
   onShowBulkDisableConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedLabels.length !== 0) {
       confirm({
-        title: "Are you sure to change the status of selected Label(s) to DISABLED?",
+        title: messages["validation.labels.disable"],
         onOk: () => {
           this.props.onChangeToDisableStatus({ids: this.state.selectedLabels});
           this.setState({selectedRowKeys: [], selectedLabels: []})
@@ -109,7 +113,7 @@ class CustomersLabel extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Label(s) first",
+        title: messages["validation.labels.selectFirst"],
         onOk() {
         },
       });
@@ -117,9 +121,10 @@ class CustomersLabel extends Component {
   };
 
   onShowBulkDeleteConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedLabels.length !== 0) {
       confirm({
-        title: "Are you sure to delete the selected Labels?",
+        title: messages["validation.labels.delete"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedLabels
@@ -130,7 +135,7 @@ class CustomersLabel extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Label(s) first",
+        title: messages["validation.labels.selectFirst"],
         onOk() {
         },
       });
@@ -142,24 +147,24 @@ class CustomersLabel extends Component {
       <Menu>
         {Permissions.canLabelEdit() ?
           <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
-            Active
+            <IntlMessages id="common.active"/>
           </Menu.Item> : null
         }
         {Permissions.canLabelEdit() ?
           <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
-            Disable
+            <IntlMessages id="common.disable"/>
           </Menu.Item> : null
         }
         {Permissions.canLabelDelete() ?
           <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
-            Delete
+            <IntlMessages id="common.delete"/>
           </Menu.Item> : null
         }
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        Bulk Actions <Icon type="down"/>
+        <IntlMessages id="common.bulkActions"/> <Icon type="down"/>
       </Button>
     </Dropdown>
   };
@@ -186,6 +191,7 @@ class CustomersLabel extends Component {
   };
 
   render() {
+    const {messages} = this.props.intl;
     const selectedRowKeys = this.state.selectedRowKeys;
     const labelList = this.props.labelList;
     const rowSelection = {
@@ -200,26 +206,26 @@ class CustomersLabel extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading">Customers Label</h4>
+          <h4 className="gx-widget-heading"><IntlMessages id="labels.title"/></h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>
-              <Link to="/customers">Customers</Link>
+              <Link to="/customers"><IntlMessages id="sidebar.dashboard.customers"/></Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/customers/labels" className="gx-text-primary">Customers Label</Link>
+              <Link to="/customers/labels" className="gx-text-primary"><IntlMessages id="labels.title"/></Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
               {(Permissions.canLabelAdd()) ?
                 <Button type="primary" onClick={this.onAddButtonClick} style={{width: 200}}>
-                  Add New Label
+                  <IntlMessages id="labels.addNew"/>
                 </Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
-                placeholder="Enter keywords to search Label"
+                placeholder={messages["labels.searchLabels"]}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}
                 style={{width: 350}}
@@ -243,7 +249,9 @@ class CustomersLabel extends Component {
                    pageSize: this.state.itemNumbers,
                    current: this.state.current,
                    total: this.props.totalItems,
-                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
+                     <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
+                     <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
                    onChange: this.onPageChange
                  }}/>
         </Widget>
@@ -272,4 +280,4 @@ export default connect(mapPropsToState, {
   onEditLabelsData,
   onChangeToDisableStatus,
   onChangeToActiveStatus
-})(CustomersLabel)
+})(injectIntl(CustomersLabel))

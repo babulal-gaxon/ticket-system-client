@@ -3,6 +3,8 @@ import {Avatar, Button, message, Upload} from "antd";
 import PropTypes from "prop-types";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import {getFileExtension, getFileSize} from "../../../util/Utills";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 class CustomerImageUpload extends Component {
   constructor(props) {
@@ -13,6 +15,7 @@ class CustomerImageUpload extends Component {
   }
 
   onLogoSelect = () => {
+    const {messages} = this.props.intl;
     let file = this.state.fileList[0];
     if (file) {
       const data = new FormData();
@@ -20,7 +23,7 @@ class CustomerImageUpload extends Component {
       data.append('title', file.name);
       this.props.onAddImage(data, this.props.context);
     } else {
-      message.warning("Please select image first!")
+      message.warning(messages["validation.message.selectImage"])
     }
   };
 
@@ -37,6 +40,7 @@ class CustomerImageUpload extends Component {
 
   render() {
     const {fileList} = this.state;
+    const {messages} = this.props.intl;
     const props = {
       accept: getFileExtension(),
       onRemove: file => {
@@ -55,7 +59,7 @@ class CustomerImageUpload extends Component {
         }
         const isFileSize = file.size < getFileSize();
         if (!isFileSize) {
-          message.error('The image size is greater than allowed size!');
+          message.error(messages["validation.message.imageSize"]);
         } else {
           this.setState(state => ({
             fileList: [...state.fileList, file],
@@ -72,13 +76,13 @@ class CustomerImageUpload extends Component {
           <Avatar className="gx-size-200"
                   src={this.getImageURL()}/>
         </Upload>
-        <Button type="primary" className="gx-mt-5 gx-ml-4" onClick={this.onLogoSelect}>Upload Profile Image</Button>
+        <Button type="primary" className="gx-mt-5 gx-ml-4" onClick={this.onLogoSelect}><IntlMessages id="common.uploadProfileImage"/></Button>
       </div>
     )
   }
 }
 
-export default CustomerImageUpload;
+export default injectIntl(CustomerImageUpload);
 
 CustomerImageUpload.defaultProps = {
   imageAvatar: null

@@ -126,7 +126,7 @@ class AllTickets extends Component {
     const {messages} = this.props.intl;
     if (this.state.selectedTickets.length !== 0) {
       confirm({
-        title: messages["manageTickets.message.delete"],
+        title:messages["manageTickets.message.delete"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedTickets

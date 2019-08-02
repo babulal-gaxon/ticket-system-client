@@ -138,7 +138,7 @@ class FilterBar extends Component {
               <div>
                 {this.onFilterStaff().length > 5 ?
                   <div className="gx-link" onClick={onToggleShowMoreStaff}>
-                    {showMoreStaff ? <IntlMessages id="common.viewLess"/> : `${this.onFilterStaff().length - 5}  ${<IntlMessages id="common.viewLess"/>}`}
+                    {showMoreStaff ? <IntlMessages id="common.viewLess"/> : `${this.onFilterStaff().length - 5}  ${messages["common.more"]}`}
                   </div> : null}
               </div>
             </div>

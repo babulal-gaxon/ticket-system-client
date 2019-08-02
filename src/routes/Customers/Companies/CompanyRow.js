@@ -2,13 +2,14 @@ import {Avatar, Dropdown, Menu, Popconfirm, Tooltip} from "antd";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import React from "react";
 import Permissions from "../../../util/Permissions";
+import IntlMessages from "../../../util/IntlMessages";
 
 const onShowRowDropdown = (currentCompany, context) => {
   const menu = (
     <Menu>
       {(Permissions.canCompanyEdit()) ?
         <Menu.Item key="2" onClick={() => context.onEditCompanyOption(currentCompany)}>
-          Edit
+          <IntlMessages id="common.edit"/>
         </Menu.Item> : null}
       {(Permissions.canCompanyDelete()) ?
         <Menu.Item key="4">
@@ -20,7 +21,7 @@ const onShowRowDropdown = (currentCompany, context) => {
             }}
             okText="Yes"
             cancelText="No">
-            Delete
+            <IntlMessages id="common.delete"/>
           </Popconfirm>
         </Menu.Item> : null}
     </Menu>
@@ -36,7 +37,7 @@ const onShowRowDropdown = (currentCompany, context) => {
 const CompaniesRow = (context) => {
   return [
     {
-      title: 'Company Name',
+      title: <IntlMessages id="companies.companyName"/>,
       dataIndex: 'companyName',
       render: (text, record) => {
         return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
@@ -52,14 +53,14 @@ const CompaniesRow = (context) => {
       }
     },
     {
-      title: 'Website',
+      title: <IntlMessages id="common.website"/>,
       dataIndex: 'website',
       render: (text, record) => {
         return <span className="gx-text-grey">{record.website ? record.website : "NA"}</span>
       },
     },
     {
-      title: 'Company Members',
+      title: <IntlMessages id="companies.members"/>,
       dataIndex: 'companyMembers',
       render: (text, record) => {
         return <span className="gx-text-grey">
@@ -75,7 +76,7 @@ const CompaniesRow = (context) => {
                       {member.first_name[0].toUpperCase()}
                     </Avatar>
                   </Tooltip>
-              }) : <span>No Member</span>}
+              }) : <span><IntlMessages id="common.noMember"/></span>}
               </span>
       },
     },

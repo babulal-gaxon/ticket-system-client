@@ -3,6 +3,7 @@ import Widget from "../../../../components/Widget";
 import {Avatar, Col, Divider, Row, Tag} from "antd";
 import {MEDIA_BASE_URL} from "../../../../constants/ActionTypes";
 import Permissions from "../../../../util/Permissions";
+import IntlMessages from "../../../../util/IntlMessages";
 
 class CustomerDetails extends Component {
 
@@ -22,7 +23,7 @@ class CustomerDetails extends Component {
       <div>
         <Widget>
           <div className="gx-d-flex gx-justify-content-between gx-mb-5">
-            <span className="gx-widget-heading">  Customer Details</span>
+            <span className="gx-widget-heading">  <IntlMessages id="customer.details"/></span>
             <i className="icon icon-arrow-left" onClick={onBackToList}/>
           </div>
           <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
@@ -37,39 +38,42 @@ class CustomerDetails extends Component {
                       {currentCustomerProfile.first_name + " " + currentCustomerProfile.last_name}</span>
                 {(Permissions.canCustomerEdit()) ?
                   <span><Tag color="blue" onClick={onEditProfile}>
-                <i className="icon icon-edit gx-mr-3"/>Edit Profile</Tag></span> : null}
+                <i className="icon icon-edit gx-mr-3"/><IntlMessages id="common.editProfile"/></Tag></span> : null}
               </div>
               <div className="gx-mt-2">
                 <Tag color={currentCustomerProfile.status === 1 ? "green" : "red"}>
-                  {currentCustomerProfile.status === 1 ? "Active" : "Disabled"}
+                  {currentCustomerProfile.status === 1 ? <IntlMessages id="common.active"/> :
+                    <IntlMessages id="common.disabled"/>}
                 </Tag>
               </div>
             </div>
           </div>
           <Row>
             <Col span={6}>
-              Email
+              <IntlMessages id="common.email"/>
             </Col>
             <Col>{currentCustomerProfile.email}</Col>
           </Row>
           <Divider/>
           <Row>
             <Col span={6}>
-              Phone
+              <IntlMessages id="common.phoneNo."/>
             </Col>
-            <Col>{currentCustomerProfile.phone ? <span>{currentCustomerProfile.phone}</span> : "NA"}</Col>
+            <Col>{currentCustomerProfile.phone ? <span>{currentCustomerProfile.phone}</span> :
+              <IntlMessages id="common.na"/>}</Col>
           </Row>
           <Divider/>
           <Row>
             <Col span={6}>
-              Status
+              <IntlMessages id="common.status"/>
             </Col>
-            <Col>{currentCustomerProfile.status === 1 ? "Active" : "Disabled"}</Col>
+            <Col>{currentCustomerProfile.status === 1 ? <IntlMessages id="common.active"/> :
+              <IntlMessages id="common.disabled"/>}</Col>
           </Row>
           <Divider/>
           <Row>
             <Col span={6}>
-              Address
+              <IntlMessages id="common.address"/>
             </Col>
             <Col>
               {currentCustomerProfile.addresses.length > 0 ?
@@ -88,10 +92,12 @@ class CustomerDetails extends Component {
                   })}
                   {!showMoreAddress ?
                     <div className="gx-link"
-                         onClick={this.onToggleMoreAddress}>{currentCustomerProfile.addresses.length > 1 ? `+ ${currentCustomerProfile.addresses.length - 1} more` : null}</div>
-                    : <div className="gx-link" onClick={this.onToggleMoreAddress}>View Less</div>}
+                         onClick={this.onToggleMoreAddress}>{currentCustomerProfile.addresses.length > 1 ? `+ ${currentCustomerProfile.addresses.length - 1} 
+                         ${<IntlMessages id="common.more"/>}` : null}</div>
+                    : <div className="gx-link" onClick={this.onToggleMoreAddress}><IntlMessages id="common.viewLess"/>
+                    </div>}
                 </div>
-                : "NA"}
+                : <IntlMessages id="common.na"/>}
             </Col>
           </Row>
         </Widget>

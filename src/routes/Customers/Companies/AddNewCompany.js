@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import axios from 'util/Api'
 import {Button, Form, Input, message, Modal, Upload} from "antd";
 import {getFileSize} from "../../../util/Utills";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 
 class AddNewCompany extends Component {
@@ -77,6 +79,7 @@ class AddNewCompany extends Component {
   };
 
   render() {
+    const {messages} = this.props.intl;
     const {company_name, website, fileList, logoName} = this.state;
     const props = {
       accept: ".png",
@@ -96,7 +99,7 @@ class AddNewCompany extends Component {
         }
         const isFileSize = file.size < getFileSize();
         if (!isFileSize) {
-          message.error('The image size is greater than allowed size!');
+          message.error(messages["validation.message.imageSize"]);
         } else {
           this.setState(state => ({
             fileList: [...state.fileList, file],
@@ -112,39 +115,39 @@ class AddNewCompany extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddNewModal}
-          title={currentCompany === null ? "Add New Company" : "Edit Company Detail"}
+          title={currentCompany === null ? <IntlMessages id="companies.addNew"/> : <IntlMessages id="companies.editDetail"/>}
           onCancel={() => onToggleAddCompany()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
-              Save
+              <IntlMessages id="common.save"/>
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddCompany()}>
-              Cancel
+              <IntlMessages id="common.cancel"/>
             </Button>,
           ]}>
           <Form layout="vertical">
-            <Form.Item label="Company Name">
+            <Form.Item label={<IntlMessages id="companies.companyName"/>}>
               {getFieldDecorator('company_name', {
                 initialValue: company_name,
                 validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please Enter Company Name!'}],
+                rules: [{required: true, message: messages["validation.message.companyName"]}],
               })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({company_name: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Website" extra="Please enter website in 'http://www.example.com' format">
+            <Form.Item label={<IntlMessages id="common.website"/>} extra={<IntlMessages id="common.websiteFormatMessage"/>}>
               {getFieldDecorator('website', {
                 initialValue: website,
                 validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please Enter Website URL!'}],
+                rules: [{required: true, message: messages["validation.message.website"]}],
               })(<Input type="text" onChange={(e) => {
                 this.setState({website: e.target.value})
               }}/>)}
             </Form.Item>
 
-            <Form.Item label="Upload Logo" extra={fileList.length > 0 ? "" : logoName}>
+            <Form.Item label={<IntlMessages id="common.uploadLogo"/>} extra={fileList.length > 0 ? "" : logoName}>
               <Upload {...props}>
-                <Input placeholder="Choose file..." addonAfter="Browse"/>
+                <Input placeholder={messages["common.chooseFile"]} addonAfter={<IntlMessages id="common.browse"/>}/>
               </Upload>
             </Form.Item>
           </Form>
@@ -156,4 +159,4 @@ class AddNewCompany extends Component {
 
 AddNewCompany = Form.create({})(AddNewCompany);
 
-export default AddNewCompany;
+export default injectIntl(AddNewCompany);

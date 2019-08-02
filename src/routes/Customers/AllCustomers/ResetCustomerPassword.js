@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Button, Form, Input, Modal} from "antd";
 import PropTypes from "prop-types";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 class ResetCustomerPassword extends Component {
   constructor(props) {
@@ -26,9 +28,10 @@ class ResetCustomerPassword extends Component {
   };
 
   compareToFirstPassword = (rule, value, callback) => {
+    const {messages} = this.props.intl;
     const {form} = this.props;
     if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
+      callback(messages["validation.message.inconsistentPassword"]);
     } else {
       callback();
     }
@@ -45,28 +48,29 @@ class ResetCustomerPassword extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
     const {resetPasswordModal, onTogglePasswordModal} = this.props;
+    const {messages} = this.props.intl;
     return (
       <div className="gx-main-layout-content">
         <Modal
           visible={resetPasswordModal}
-          title="Reset Password"
+          title={<IntlMessages id="app.userAuth.resetPassword"/>}
           onCancel={() => onTogglePasswordModal()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
-              Save
+              <IntlMessages id="common.save"/>
             </Button>,
             <Button key="cancel" onClick={() => onTogglePasswordModal()}>
-              Cancel
+              <IntlMessages id="common.cancel"/>
             </Button>,
           ]}>
           <Form layout="vertical">
-            <Form.Item label="Password" hasFeedback>
+            <Form.Item label={<IntlMessages id="common.password"/>} hasFeedback>
               {getFieldDecorator('password', {
                 validateTrigger: 'onBlur',
                 rules: [
                   {
                     required: true,
-                    message: 'Please input your password!',
+                    message: messages["validation.message.inputPassword"],
                   },
                   {
                     validator: this.validateToNextPassword,
@@ -74,13 +78,13 @@ class ResetCustomerPassword extends Component {
                 ],
               })(<Input.Password autoFocus onChange={(e) => this.setState({password: e.target.value})}/>)}
             </Form.Item>
-            <Form.Item label="Confirm Password" hasFeedback>
+            <Form.Item label={<IntlMessages id="app.userAuth.confirmPassword"/>} hasFeedback>
               {getFieldDecorator('password_confirmation', {
                 validateTrigger: 'onBlur',
                 rules: [
                   {
                     required: true,
-                    message: 'Please confirm your password!',
+                    message: messages["validation.message.confirmPassword"],
                   },
                   {
                     validator: this.compareToFirstPassword,
@@ -98,7 +102,7 @@ class ResetCustomerPassword extends Component {
 
 ResetCustomerPassword = Form.create({})(ResetCustomerPassword);
 
-export default ResetCustomerPassword;
+export default injectIntl(ResetCustomerPassword);
 
 ResetCustomerPassword.defaultProps = {
   resetPasswordModal: false,
