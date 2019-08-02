@@ -84,6 +84,8 @@ class AddNewStaff extends Component {
           this.onStaffAdd();
           this.setState({uploadedFile: null})
         })
+      } else {
+        this.props.fetchError(data.errors[0])
       }
     }).catch(function (error) {
       this.props.fetchError(error.message)

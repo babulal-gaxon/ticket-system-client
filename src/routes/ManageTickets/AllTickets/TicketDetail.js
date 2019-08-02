@@ -124,6 +124,7 @@ class TicketDetail extends Component {
       formData = new FormData();
       formData.append('file', file);
       formData.append('title', file.name);
+      formData.append('type', 'ticket');
       this.imageUpload(formData);
       return file;
     });
@@ -144,6 +145,8 @@ class TicketDetail extends Component {
             this.setState({fileList: []})
           }
         })
+      } else {
+        this.props.fetchError(data.errors[0])
       }
     }).catch(function (error) {
       this.props.fetchError(error.message)
@@ -295,7 +298,8 @@ class TicketDetail extends Component {
                                  ticketId={currentTicket.id}
                                  assignedTo={currentTicket.assigned_to}/>
                 <span><IntlMessages id="common.tags"/></span>
-                <Select mode="tags" style={{width: '100%'}} className="gx-mt-3" placeholder={messages["manageTickets.addTags"]}
+                <Select mode="tags" style={{width: '100%'}} className="gx-mt-3"
+                        placeholder={messages["manageTickets.addTags"]}
                         value={ticketTags} onSearch={this.onSearchTags}
                         onChange={this.onEditTags}>
                   {tagsList.map(tag => {

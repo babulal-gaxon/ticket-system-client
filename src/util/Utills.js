@@ -32,7 +32,7 @@ let userSetting = {
     "phone": "9460670620",
     "allowed_ext": ".jpg",
     "file_upload_max_size": "10",
-    "favicon": "22",
+    "company_favicon": "22",
     "logo": "24",
     "url": "http://www.g-axon.com"
   },
@@ -67,6 +67,7 @@ export const updateLocaleSetting = (locale) => {
 };
 export const updateGeneralSetting = (general) => {
   userSetting.general = general;
+  setCompanyFavIcon();
 };
 export const updateTicketSetting = (locale) => {
   userSetting.ticket = locale;
@@ -74,10 +75,10 @@ export const updateTicketSetting = (locale) => {
 
 export const setUserSetting = (setting) => {
   userSetting = setting;
+  setCompanyFavIcon();
 };
 
 const convertToGMT = (date) => {
-  console.log("date=>>", date);
   return date.replace(" ", "T").concat("Z")
 };
 export const getFormattedDate = (date) => {

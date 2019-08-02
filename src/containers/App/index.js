@@ -39,7 +39,15 @@ class App extends PureComponent {
 
   constructor(props) {
     super(props);
-
+    props.onCheckInitialSetup();
+    if (localStorage.getItem('settings')) {
+      const userSetting = JSON.parse(localStorage.getItem('settings'));
+      props.setUserDefaultSetting(userSetting);
+      props.switchLanguage(userSetting.settings.locale.default_language);
+      Permissions.setPermissions(userSetting.permissions);
+      setUserSetting(userSetting.settings);
+      setCompanyFavIcon();
+    }
   }
 
   componentWillMount() {
@@ -50,18 +58,6 @@ class App extends PureComponent {
       axios.defaults.headers.common['Authorization'] = "Bearer " + this.props.token;
       this.props.onGetUserPermission(this.props.history)
     }
-    this.props.onCheckInitialSetup();
-    if (localStorage.getItem('settings')) {
-      this.props.setUserDefaultSetting(JSON.parse(localStorage.getItem('settings')));
-      Permissions.setPermissions(JSON.parse(localStorage.getItem('settings')).permissions);
-      const setting = JSON.parse(localStorage.getItem('settings')).settings;
-      setUserSetting(setting);
-      setCompanyFavIcon()
-    }
-  }
-
-  componentDidMount() {
-    switchLanguage("it");
   }
 
   componentWillReceiveProps(nextProps) {
@@ -92,18 +88,14 @@ class App extends PureComponent {
         return (<Redirect to={initURL}/>);
       }
     }
-    console.log("locale", locale);
+    console.log("locale", locale)
     const currentAppLocale = AppLocale[locale];
-    console.log("currentAppLocale", currentAppLocale)
-    console.log("currentAppLocale.locale", currentAppLocale.locale)
-
 
     return (
       <LocaleProvider locale={currentAppLocale.antd}>
         <IntlProvider
           locale={currentAppLocale.locale}
           messages={currentAppLocale.messages}>
-
           <Switch>
             <Route exact path='/signin' component={SignIn}/>
             <Route exact path='/initial-setup' component={InitialSetup}/>
@@ -127,6 +119,7 @@ const mapStateToProps = ({settings, auth, initialSetup}) => {
 export default connect(mapStateToProps, {
   setInitUrl,
   setThemeType,
+  switchLanguage,
   onNavStyleChange,
   onLayoutTypeChange,
   onGetUserPermission,

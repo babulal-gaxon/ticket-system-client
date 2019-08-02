@@ -53,9 +53,10 @@ class SidebarLogo extends Component {
   }
 }
 
-const mapStateToProps = ({settings}) => {
-  const {navStyle, themeType, width, navCollapsed} = settings;
-  return {navStyle, themeType, width, navCollapsed}
+const mapStateToProps = ({settings, auth}) => {
+  const {navStyle, themeType, width, navCollapsed} = auth;
+  const {userSettings} = settings;
+  return {navStyle, themeType, width, navCollapsed, userSettings}
 };
 
 export default connect(mapStateToProps, {

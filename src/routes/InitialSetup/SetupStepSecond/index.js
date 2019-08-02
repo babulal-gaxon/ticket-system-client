@@ -153,7 +153,7 @@ class SetupStepSecond extends Component {
                 this.setState({allowed_file_ext: e.target.value})
               }}/>
             </div>
-            <div>"Enter the formats separated by comma, example - .jpg, .png"</div>
+            <div>"Enter the formats separated by comma, example - jpg, png"</div>
             <Divider/>
           </Form.Item>
           <Form.Item>
