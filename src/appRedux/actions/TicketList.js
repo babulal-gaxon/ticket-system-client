@@ -22,7 +22,7 @@ export const onGetTickets = (updatingContent, currentPage, itemsPerPage, filterT
                              selectedCustomers, selectedPriorities, selectedStatuses, archive) => {
   const start = startDate ? startDate.toDate() : '';
   const end = endDate ? endDate.toDate() : '';
-  console.log("onGetTickets", startDate, endDate);
+  console.log("onGetTickets", start, end);
   return (dispatch) => {
     if (updatingContent) {
       dispatch({type: UPDATING_CONTENT});

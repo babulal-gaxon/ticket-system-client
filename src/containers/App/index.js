@@ -45,7 +45,6 @@ class App extends PureComponent {
       Permissions.setPermissions(JSON.parse(localStorage.getItem('settings')).permissions);
       const setting = JSON.parse(localStorage.getItem('settings')).settings;
       setUserSetting(setting);
-      switchLanguage(setting.locale.default_language);
       setCompanyFavIcon()
     }
   }
@@ -58,6 +57,10 @@ class App extends PureComponent {
       axios.defaults.headers.common['Authorization'] = "Bearer " + this.props.token;
       this.props.onGetUserPermission(this.props.history)
     }
+  }
+
+  componentDidMount() {
+    switchLanguage("it");
   }
 
   componentWillReceiveProps(nextProps) {
@@ -88,7 +91,7 @@ class App extends PureComponent {
         return (<Redirect to={initURL}/>);
       }
     }
-    console.log("locale", locale)
+    console.log("locale", locale);
     const currentAppLocale = AppLocale[locale];
     console.log("currentAppLocale", currentAppLocale)
     console.log("currentAppLocale.locale", currentAppLocale.locale)
