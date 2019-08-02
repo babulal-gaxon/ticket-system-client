@@ -220,7 +220,7 @@ class TicketDetail extends Component {
               <h2 className="gx-my-2 gx-font-weight-bold">{currentTicket.title}</h2>
               <div className="gx-mb-3">
                 <span><IntlMessages id="common.createdAt"/> {getFormattedDate(currentTicket.created_at)}</span>
-                <span>  <IntlMessages id="common.updatedAt"/> {moment(currentTicket.updated_at.date).fromNow()}</span>
+                <span>  <IntlMessages id="common.updatedAt"/> {moment(currentTicket.updated_at).fromNow()}</span>
               </div>
               <div className="gx-py-3">{currentTicket.content}</div>
               {currentTicket.attachments.length > 0 ?
