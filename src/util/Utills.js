@@ -1,4 +1,5 @@
 import moment from "moment";
+import {MEDIA_BASE_URL} from "../constants/ActionTypes";
 
 let userSetting = {
   "ticket": {
@@ -106,7 +107,19 @@ export const isProductSelectionEnable = () => {
 };
 
 export const getCompanyLogo = () => {
-  return userSetting.general.logo;
+  return userSetting.general.logo.includes(".png") ? MEDIA_BASE_URL + userSetting.general.logo : null;
+};
+
+export const setCompanyFavIcon = () => {
+  const favIcon = userSetting.general.logo.includes(".ico") ? MEDIA_BASE_URL + userSetting.general.logo : null;
+
+  if (favIcon) {
+    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = favIcon;
+    document.getElementsByTagName('head')[0].appendChild(link);
+  }
 };
 
 

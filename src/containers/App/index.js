@@ -18,7 +18,7 @@ import InitialSetup from "../../routes/InitialSetup";
 import {onCheckInitialSetup} from "../../appRedux/actions/InitialSetup";
 import Permissions from "../../util/Permissions";
 import {setUserDefaultSetting, switchLanguage} from "../../appRedux/actions";
-import {setUserSetting} from "../../util/Utills";
+import {setCompanyFavIcon, setUserSetting} from "../../util/Utills";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
   <Route
@@ -46,6 +46,7 @@ class App extends PureComponent {
       const setting = JSON.parse(localStorage.getItem('settings')).settings;
       setUserSetting(setting);
       switchLanguage(setting.locale.default_language);
+      setCompanyFavIcon()
     }
   }
 
