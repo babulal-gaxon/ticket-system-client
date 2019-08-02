@@ -13,6 +13,8 @@ import {connect} from "react-redux";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import Permissions from "../../../util/Permissions";
 import CompaniesRow from "./CompanyRow";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -90,9 +92,10 @@ class Companies extends Component {
   };
 
   onShowBulkDeleteConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedCompanies.length !== 0) {
       confirm({
-        title: "Are you sure to delete the selected Company(s)?",
+        title: messages["companies.message.delete"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedCompanies
@@ -104,7 +107,7 @@ class Companies extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Company(s) first",
+        title: messages["companies.message.selectFirst"],
         onOk() {
         },
       });
@@ -116,17 +119,17 @@ class Companies extends Component {
       <Menu>
         {(Permissions.canCompanyDelete()) ?
           <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
-            Archive
+            <IntlMessages id="common.archive"/>
           </Menu.Item> : null}
         {(Permissions.canCompanyDelete()) ?
           <Menu.Item key="2" onClick={this.onShowBulkDeleteConfirm}>
-            Delete
+            <IntlMessages id="common.delete"/>
           </Menu.Item> : null}
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        Bulk Actions <Icon type="down"/>
+        <IntlMessages id="common.bulkActions"/> <Icon type="down"/>
       </Button>
     </Dropdown>
   };
@@ -148,6 +151,7 @@ class Companies extends Component {
   render() {
     const companiesList = this.props.companiesList;
     const selectedRowKeys = this.state.selectedRowKeys;
+    const {messages} = this.props.intl;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -161,26 +165,26 @@ class Companies extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading">Companies</h4>
+          <h4 className="gx-widget-heading"><IntlMessages id="companies.title"/></h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
-              <Link to="/customers">Customers</Link>
+              <Link to="/customers"><IntlMessages id="sidebar.dashboard.customers"/></Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/customers/companies" className="gx-text-primary">Companies</Link>
+              <Link to="/customers/companies" className="gx-text-primary"><IntlMessages id="companies.title"/></Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
               {(Permissions.canCompanyAdd()) ?
                 <Button type="primary" onClick={this.onAddButtonClick} style={{width: 200}}>
-                  Add New
+                  <IntlMessages id="common.addNew"/>
                 </Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
-                placeholder="Search Companies here"
+                placeholder={messages["customer.filter.searchCompany"]}
                 style={{width: 350}}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
@@ -205,7 +209,9 @@ class Companies extends Component {
                    pageSize: this.state.itemNumbers,
                    current: this.state.current,
                    total: this.props.totalItems,
-                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
+                     <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
+                     <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
                    onChange: this.onPageChange
                  }}/>
         </Widget>
@@ -239,4 +245,4 @@ export default connect(mapStateToProps, {
   fetchSuccess,
   fetchStart,
   fetchError
-})(Companies);
+})(injectIntl(Companies));

@@ -16,6 +16,8 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import FilterBar from "./FilterBar";
 import CustomersRow from "./CustomerRow";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -127,7 +129,6 @@ class AllCustomers extends Component {
     this.props.history.push('/customers/add-customers');
   };
 
-
   onDisableCustomerStatus = (customerId) => {
     this.props.onChangeCustomerStatus({ids: [customerId]}, 0, true);
   };
@@ -141,10 +142,11 @@ class AllCustomers extends Component {
   };
 
   onShowBulkDeleteConfirm = () => {
+    const {messages} = this.props.intl;
     const {filterText, itemNumbers, selectedCompanies, selectedLabels, status, current, selectedCustomers} = this.state;
     if (selectedCustomers.length !== 0) {
       confirm({
-        title: "Are you sure to delete the selected Customer(s)?",
+        title: messages["customers.message.delete"],
         onOk: () => {
           const obj = {
             ids: selectedCustomers
@@ -156,7 +158,7 @@ class AllCustomers extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Customer(s) first",
+        title: messages["customers.message.selectFirst"],
         onOk() {
         },
       });
@@ -167,16 +169,16 @@ class AllCustomers extends Component {
     const menu = (
       <Menu>
         <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
-          Archive
+          <IntlMessages id="common.archive"/>
         </Menu.Item>
         <Menu.Item key="2" onClick={this.onShowBulkDeleteConfirm}>
-          Delete
+          <IntlMessages id="common.delete"/>
         </Menu.Item>
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        Bulk Actions <Icon type="down"/>
+        <IntlMessages id="common.bulkActions"/> <Icon type="down"/>
       </Button>
     </Dropdown>
   };
@@ -191,7 +193,7 @@ class AllCustomers extends Component {
   render() {
     const {customersList, updatingContent, company, labels} = this.props;
     const {selectedRowKeys, resetPasswordModal, sideBarActive, filterText, resetPasswordCustomerId, itemNumbers, current, companyFilterText, showMoreCompany, selectedCompanies, status, selectedLabels} = this.state;
-
+    const {messages} = this.props.intl;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -204,23 +206,23 @@ class AllCustomers extends Component {
     return (
       <div className={`gx-main-content ${sideBarActive ? "gx-main-layout-has-sider" : ""}`}>
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading">Customers</h4>
+          <h4 className="gx-widget-heading"><IntlMessages id="customers.customers"/></h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
-              <Link to="/customers" className="gx-text-primary">Customers</Link>
+              <Link to="/customers" className="gx-text-primary"><IntlMessages id="customers.customers"/></Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
               {Permissions.canCustomerAdd() ?
                 <Button type="primary" onClick={this.onAddButtonClick} style={{width: 200}}>
-                  Add New Customers
+                  <IntlMessages id="customers.addNew"/>
                 </Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
-                placeholder="Search Customers here"
+                placeholder={messages["manageTickets.filterBar.searchCustomer"]}
                 value={filterText}
                 onChange={this.onFilterTextChange}
                 style={{width: 350}}/>
@@ -246,7 +248,9 @@ class AllCustomers extends Component {
                    pageSize: itemNumbers,
                    current: current,
                    total: this.props.totalItems,
-                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
+                     <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
+                     <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
                    onChange: this.onPageChange
                  }}
                  className="gx-table-responsive"
@@ -289,7 +293,7 @@ export default connect(mapPropsToState, {
   onChangeCustomerStatus,
   onResetPassword,
   onGetCustomerFilterOptions,
-})(AllCustomers);
+})(injectIntl(AllCustomers));
 
 AllCustomers.defaultProps = {
   customersList: [],

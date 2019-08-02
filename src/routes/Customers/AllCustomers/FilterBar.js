@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Checkbox, Input, Select} from "antd";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {Option} = Select;
 const Search = Input.Search;
@@ -46,21 +48,21 @@ class FilterBar extends Component {
     const {companyFilterText, showMoreCompany, selectedCompanies, status, selectedLabels, onChangeCompanyFilterText, onShowMoreCompanyToggle} = this.props;
     const companiesList = showMoreCompany ? this.onFilterCompanyName() :
       this.onFilterCompanyName().length > 5 ? this.onFilterCompanyName().slice(0, 5) : this.onFilterCompanyName();
-
+const {messages} = this.props.intl;
     return (
       <div className="gx-main-layout-sidenav gx-d-none gx-d-lg-flex">
         <div className="gx-main-layout-side">
           <div className="gx-main-layout-side-header">
-            <h4 className="gx-font-weight-medium">Filter Customers</h4>
+            <h4 className="gx-font-weight-medium"><IntlMessages id="customers.filter.filterCustomers"/></h4>
           </div>
           <div className="gx-main-layout-nav">
             <div>
               <div className="gx-d-flex gx-justify-content-between">
-                <h4>Filter By Company</h4>
+                <h4><IntlMessages id="customers.filter.byCompany"/></h4>
                 {selectedCompanies.length > 0 ?
-                  <div className="gx-link" onClick={this.onCompanyReset}>Reset</div> : null}
+                  <div className="gx-link" onClick={this.onCompanyReset}><IntlMessages id="common.reset"/></div> : null}
               </div>
-              <Search className="gx-mt-4" value={companyFilterText} placeholder="Search Company here"
+              <Search className="gx-mt-4" value={companyFilterText} placeholder={messages["customer.filter.searchCompany"]}
                       onChange={(e) => onChangeCompanyFilterText(e)}/>
               <div className="gx-my-2">
                 <Checkbox.Group onChange={this.onSelectCompanies} value={selectedCompanies}>
@@ -73,19 +75,19 @@ class FilterBar extends Component {
               <div>
                 {this.onFilterCompanyName().length > 5 ?
                   <div className="gx-link" onClick={() => onShowMoreCompanyToggle()}>
-                    {showMoreCompany ? "View Less" : `${this.onFilterCompanyName().length - 5} More`}
+                    {showMoreCompany ? <IntlMessages id="common.viewLess"/> : `${this.onFilterCompanyName().length - 5} ${messages["common.more"]}`}
                   </div> : null}
               </div>
             </div>
             <div className="gx-mt-5">
               <div className="gx-d-flex gx-justify-content-between">
-                <h4>Filter By Labels</h4>
-                {selectedLabels.length > 0 ? <div className="gx-link" onClick={this.onLabelReset}>Reset</div> : null}
+                <h4><IntlMessages id="customers.filter.byLabels"/></h4>
+                {selectedLabels.length > 0 ? <div className="gx-link" onClick={this.onLabelReset}><IntlMessages id="common.reset"/></div> : null}
               </div>
               <Select
                 mode="multiple"
                 style={{width: '100%'}}
-                placeholder="Please select Labels"
+                placeholder={messages["customers.filter.byCompany"]}
                 value={selectedLabels}
                 onSelect={this.onLabelSelect}
                 onDeselect={this.onLabelRemove}>
@@ -95,8 +97,8 @@ class FilterBar extends Component {
             <div className="gx-mt-5">
               <div className="gx-mb-3">Status</div>
               <Checkbox.Group onChange={this.onFilterStatusCustomers} value={status}>
-                <Checkbox value={0}>Disabled</Checkbox>
-                <Checkbox value={1}>Active</Checkbox>
+                <Checkbox value={0}><IntlMessages id="common.disabled"/></Checkbox>
+                <Checkbox value={1}><IntlMessages id="common.active"/></Checkbox>
               </Checkbox.Group>
             </div>
           </div>
@@ -106,4 +108,4 @@ class FilterBar extends Component {
   }
 }
 
-export default FilterBar;
+export default injectIntl(FilterBar);

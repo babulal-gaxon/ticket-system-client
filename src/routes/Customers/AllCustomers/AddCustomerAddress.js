@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Checkbox, Col, Form, Input, Modal, Row, Select} from "antd";
 import PropTypes from "prop-types";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {Option} = Select;
 
@@ -22,7 +24,6 @@ class AddCustomerAddress extends Component {
   }
 
   onSelectAddressType = checkedList => {
-    console.log("chekdlist", checkedList);
     this.setState({
       address_type: checkedList
     })
@@ -51,43 +52,44 @@ class AddCustomerAddress extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
+    const {messages} = this.props.intl;
     const {address_line_1, city, state, country_id, zip_code, address_type} = this.state;
     return (
       <div className="gx-main-layout-content">
         <Modal
-          title="Add Address"
+          title={this.props.selectedAddress === null ? <IntlMessages id="customer.address.addNew"/> : <IntlMessages id="customer.address.edit"/>}
           centered
           visible={this.props.isModalVisible}
           onOk={this.onValidationCheck}
           onCancel={() => this.props.onToggleAddressModal()}>
           <Form layout="vertical">
-            <Form.Item label="Address">
+            <Form.Item label={<IntlMessages id="common.address"/>}>
               {getFieldDecorator('address_line_1', {
                 validateTrigger: 'onBlur',
                 initialValue: address_line_1,
-                rules: [{required: true, message: 'Please Enter Address!'}],
+                rules: [{required: true, message: messages["validation.message.address"]}],
               })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({address_line_1: e.target.value})
               }}/>)}
             </Form.Item>
             <div className="gx-d-flex gx-flex-row">
               <Col sm={12} xs={24} className="gx-pl-0">
-                <Form.Item label="City">
+                <Form.Item label={<IntlMessages id="common.city"/>}>
                   {getFieldDecorator('city', {
                     initialValue: city,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message: 'Please Enter City Name!'}],
+                    rules: [{required: true, message: messages["validation.message.city"]}],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({city: e.target.value})
                   }}/>)}
                 </Form.Item>
               </Col>
               <Col sm={12} xs={24} className="gx-pr-0">
-                <Form.Item label="State">
+                <Form.Item label={<IntlMessages id="common.state"/>}>
                   {getFieldDecorator('state', {
                     initialValue: state,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message: 'Please Enter State Name!'}],
+                    rules: [{required: true, message: messages["validation.message.state"]}],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({state: e.target.value})
                   }}/>)}
@@ -96,19 +98,19 @@ class AddCustomerAddress extends Component {
             </div>
             <div className="gx-d-flex gx-flex-row">
               <Col sm={12} xs={24} className="gx-pl-0">
-                <Form.Item label="Country">
+                <Form.Item label={<IntlMessages id="common.country"/>}>
                   {getFieldDecorator('country_id', {
                     initialValue: country_id,
                     validateTrigger: 'onBlur',
                     rules: [
                       {
                         required: true,
-                        message: 'Please Enter Country Name!'
+                        message: messages["validation.message.country"]
                       }
                     ],
                   })(<Select
                     style={{width: "100%"}}
-                    placeholder="Type to search Country"
+                    placeholder={<IntlMessages id="customer.address.countrySelect"/>}
                     defaultActiveFirstOption={false}
                     showArrow={false}
                     showSearch
@@ -125,18 +127,18 @@ class AddCustomerAddress extends Component {
                 </Form.Item>
               </Col>
               <Col sm={12} xs={24} className="gx-pr-0">
-                <Form.Item label="Zip Code">
+                <Form.Item label={<IntlMessages id="common.zip"/>}>
                   {getFieldDecorator('zip_code', {
                     initialValue: zip_code,
                     validateTrigger: 'onBlur',
                     rules: [
                       {
                         required: true,
-                        message: 'Please Enter Zip Code!'
+                        message: messages["validation.message.zip"]
                       },
                       {
                         pattern: /^[0-9\b]+$/,
-                        message: 'Please enter only numerical values'
+                        message: messages["validation.message.numericalValues"]
                       }
                     ],
                   })(<Input type="text" onChange={(e) => {
@@ -145,25 +147,25 @@ class AddCustomerAddress extends Component {
                 </Form.Item>
               </Col>
             </div>
-            <Form.Item label="Select Department">
+            <Form.Item label={<IntlMessages id="manageTickets.selectDepartments"/>}>
               {getFieldDecorator('address_type', {
                 initialValue: address_type,
 
                 rules: [
                   {
                     required: true,
-                    message: 'Please Select Address Type'
+                    message: messages["validation.message.addressType"]
                   }],
               })(<Checkbox.Group onChange={this.onSelectAddressType}>
                 <Row className="gx-d-flex gx-flex-row" style={{whiteSpace: "nowrap"}}>
                   <Col span={8}>
-                    <Checkbox value="Billing">Billing</Checkbox>
+                    <Checkbox value="Billing"><IntlMessages id="common.billing"/></Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox value="Shipping">Shipping</Checkbox>
+                    <Checkbox value="Shipping"><IntlMessages id="common.shipping"/></Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox value="Other">Other</Checkbox>
+                    <Checkbox value="Other"><IntlMessages id="common.other"/></Checkbox>
                   </Col>
                 </Row>
               </Checkbox.Group>)}
@@ -177,7 +179,7 @@ class AddCustomerAddress extends Component {
 
 AddCustomerAddress = Form.create({})(AddCustomerAddress);
 
-export default AddCustomerAddress;
+export default injectIntl(AddCustomerAddress);
 
 AddCustomerAddress.defaultProps = {
   isModalVisible: false,

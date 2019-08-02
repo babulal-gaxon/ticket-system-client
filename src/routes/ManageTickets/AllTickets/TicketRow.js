@@ -75,9 +75,7 @@ const TicketRow = (context) => {
                           style={{backgroundColor: '#f56a00'}}>{record.assigned_to.first_name[0].toUpperCase()}</Avatar>}
               </Tooltip>
               :
-              <Tooltip placement="top" title="Not assigned">
-                Not assigned
-              </Tooltip>}
+              <IntlMessages id="common.notAssigned"/>}
           </div>
         )
       },

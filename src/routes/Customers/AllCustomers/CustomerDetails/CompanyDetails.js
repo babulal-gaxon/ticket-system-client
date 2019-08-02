@@ -2,13 +2,14 @@ import React from 'react';
 import {Avatar} from "antd";
 import Widget from "../../../../components/Widget";
 import {MEDIA_BASE_URL} from "../../../../constants/ActionTypes";
+import IntlMessages from "../../../../util/IntlMessages";
 
 const CompanyDetails = ({currentCustomerProfile, customerCompanyMembers}) => {
   return (
     <div>
       <Widget>
         <div className="gx-d-flex gx-justify-content-between gx-mb-5">
-          <span className="gx-widget-heading">Company Details</span>
+          <span className="gx-widget-heading"><IntlMessages id="customer.details.companyDetails"/></span>
         </div>
         {currentCustomerProfile.company ?
           <div>
@@ -20,7 +21,7 @@ const CompanyDetails = ({currentCustomerProfile, customerCompanyMembers}) => {
                         style={{backgroundColor: '#f56a00'}}>{currentCustomerProfile.company.company_name[0].toUpperCase()}</Avatar>}
               <div className="gx-media-body">
                 <span>
-                  <h3 className="gx-mb-2 gx-text-capitalize gx-font-weight-bold">
+                  <h3 className="gx-mb-2 gx-text-capitalize gx-widget-heading">
                     {currentCustomerProfile.company.company_name}
                   </h3>
                   <div>{currentCustomerProfile.company.website}</div>
@@ -29,7 +30,7 @@ const CompanyDetails = ({currentCustomerProfile, customerCompanyMembers}) => {
             </div>
             {customerCompanyMembers.length > 1 ?
               <div>
-                <div className="gx-mb-5">Other Members</div>
+                <div className="gx-mb-5"><IntlMessages id="customer.details.otherMembers"/></div>
                 <div className="gx-d-flex gx-pl-0 gx-flex-sm-wrap">
                   {customerCompanyMembers.map(member => {
                     return (member.id !== currentCustomerProfile.id) ?
@@ -52,8 +53,8 @@ const CompanyDetails = ({currentCustomerProfile, customerCompanyMembers}) => {
                   })}
                 </div>
               </div> :
-              <div className="gx-text-center">Currently No Other Members of this company is associated.</div>}
-          </div> : <div>Not associated with any Company</div>}
+              <div className="gx-text-center"><IntlMessages id="customer.details.noMembersMessage"/></div>}
+          </div> : <div><IntlMessages id="customer.details.noCompany"/></div>}
       </Widget>
     </div>
   );

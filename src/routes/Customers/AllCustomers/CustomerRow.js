@@ -2,6 +2,7 @@ import {Avatar, Dropdown, Menu, Popconfirm, Tag} from "antd";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import React from "react";
 import Permissions from "../../../util/Permissions";
+import IntlMessages from "../../../util/IntlMessages";
 
 const onShowRowDropdown = (currentCustomer, context) => {
   const menu = (
@@ -11,7 +12,7 @@ const onShowRowDropdown = (currentCustomer, context) => {
           context.props.setCurrentCustomer(currentCustomer);
           context.props.history.push('/customers/add-customers')
         }}>
-          Edit
+          <IntlMessages id="common.edit"/>
         </Menu.Item> : null}
       {(Permissions.canCustomerEdit()) ?
         <Menu.Item key="2" onClick={() => {
@@ -19,12 +20,12 @@ const onShowRowDropdown = (currentCustomer, context) => {
             context.onTogglePasswordModal()
           })
         }}>
-          Reset Password
+          <IntlMessages id="app.userAuth.resetPassword"/>
         </Menu.Item> : null}
       {(Permissions.canCustomerEdit()) ?
         <Menu.Item key="3">
           <Popconfirm
-            title={`Are you sure to ${currentCustomer.status === 1 ? "Disable" : "Enable"} this Customer?`}
+            title={`Are you sure to ${currentCustomer.status === 1 ? <IntlMessages id="common.customer"/> : <IntlMessages id="common.customer"/>} this Customer?`}
             onConfirm={() => {
               if (currentCustomer.status === 1) {
                 context.onDisableCustomerStatus(currentCustomer.id)
@@ -35,7 +36,7 @@ const onShowRowDropdown = (currentCustomer, context) => {
             }}
             okText="Yes"
             cancelText="No">
-            {currentCustomer.status === 1 ? "Disable" : "Enable"}
+            {currentCustomer.status === 1 ? <IntlMessages id="common.disable"/> : <IntlMessages id="common.enable"/>}
           </Popconfirm>
         </Menu.Item> : null}
       <Menu.Divider/>
@@ -49,7 +50,7 @@ const onShowRowDropdown = (currentCustomer, context) => {
             }}
             okText="Yes"
             cancelText="No">
-            Delete
+            <IntlMessages id="common.delete"/>
           </Popconfirm>
         </Menu.Item> : null}
     </Menu>
@@ -64,7 +65,7 @@ const onShowRowDropdown = (currentCustomer, context) => {
 const CustomersRow = (context) => {
   return [
     {
-      title: 'Customer',
+      title: <IntlMessages id="common.customer"/>,
       dataIndex: 'title',
       key: 'customer',
       render: (text, record) => {
@@ -84,7 +85,7 @@ const CustomersRow = (context) => {
       }
     },
     {
-      title: 'Email',
+      title: <IntlMessages id="common.email"/>,
       dataIndex: 'email',
       key: 'email',
       render: (text, record) => {
@@ -92,31 +93,31 @@ const CustomersRow = (context) => {
       },
     },
     {
-      title: 'Phone no.',
+      title: <IntlMessages id="common.phoneNo."/>,
       dataIndex: 'phone',
       key: 'phone',
       render: (text, record) => {
-        return <span className="gx-text-grey">{record.phone ? record.phone : "NA"}</span>
+        return <span className="gx-text-grey">{record.phone ? record.phone : <IntlMessages id="common.na"/>}</span>
       },
     },
     {
-      title: 'Labels',
+      title: <IntlMessages id="common.labels"/>,
       dataIndex: 'labels',
       key: 'labels',
       render: (text, record) => {
         return (record.labels && record.labels.length > 0) ?
           record.labels.map(label => {
             return <Tag key={label.name}>{label.name}</Tag>
-          }) : "NA"
+          }) : <IntlMessages id="common.na"/>
       },
     },
     {
-      title: 'Status',
+      title: <IntlMessages id="common.status"/>,
       dataIndex: 'status',
       key: 'status',
       render: (text, record) => {
         return <Tag color={record.status === 1 ? "green" : "red"}>
-          {record.status === 1 ? "Active" : "Disabled"}
+          {record.status === 1 ? <IntlMessages id="common.active"/> : <IntlMessages id="common.disabled"/>}
         </Tag>
       },
     },

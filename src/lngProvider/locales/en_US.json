@@ -49,6 +49,7 @@
   "manageTickets.searchTickets": "Search Tickets Here",
   "manageTickets.ticketDetail": "Ticket Detail",
   "manageTickets.assignTo": "Assign To",
+  "manageTickets.assignDate": "Assign Date",
   "manageTickets.message.delete": "Are you sure to Archive the selected Ticket(s)?",
   "manageTickets.message.selectFirst": "Please Select Ticket(s) first",
   "manageTickets.filterBar.filterTickets": "Filter Tickets",
@@ -71,15 +72,78 @@
   "manageTickets.noAttachmentAdded": "No attachments added with this ticket.",
 
 
+  "customers.message.delete": "Are you sure to delete the selected Customer(s)?",
+  "customers.message.selectFirst": "Please Select Customer(s) first",
+  "customers.customers": "Customers",
+  "customers.addNew": "Add New Customers",
+  "customers.filter.filterCustomers": "Filter Customers",
+  "customers.filter.byCompany": "Filter by Company",
+  "customer.filter.searchCompany": "Type to search Companies",
+  "customer.filter.byLabels": "Filter by Labels",
+  "customers.filter.selectLabels": "Select Labels",
+  "customer.add.addNew": "Add New Customer",
+  "customer.add.editDetail": "Edit Customer Details",
+  "customer.add.addLabels": "Add Labels",
+  "customer.address.addNew": "Add Address",
+  "customer.address.edit": "Edit Address Details",
+  "customer.address.countrySelect": "Type to select Country",
+  "customer.details": "Customer Details",
+  "customer.details.companyDetails": "Company Details",
+  "customer.details.otherMembers": "Other Members",
+  "customer.details.noMembersMessage": "Currently No Other Members of this company is associated.",
+  "customer.details.noCompany": "Not associated with any Company",
+  "customer.details.tickets": "Related Tickets",
+
+
+  "companies.message.delete": "Are you sure to delete the selected Company(s)?",
+  "companies.message.selectFirst": "Please Select Company(s) first",
+  "companies.title": "Companies",
+  "companies.companyName": "Company Name",
+  "companies.members": "Company Members",
+  "companies.addNew": "Add New Company",
+  "companies.editDetail": "Edit Company Details",
+
+
+  "labels.title": "Customer Labels",
+  "labels.addNew": "Add New Label",
+  "labels.searchLabels": "Enter keywords to search Labels",
+
+
+
+
+
+
+
 
   "validation.message.selectCustomer": "Please Select Customer!",
   "validation.message.selectTitle": "Please select title!",
   "validation.message.selectServices": "Please select Services",
   "validation.message.description": "Please enter details",
   "validation.message.priority": "Please Select Ticket Priority!",
-
-
-
+  "validation.message.inconsistentPassword": "Two passwords that you enter is inconsistent!",
+  "validation.message.inputPassword": "Please enter your password!",
+  "validation.message.confirmPassword": "Please confirm your password!",
+  "validation.message.passwordLength": "Password should be at least 8 characters long",
+  "validation.message.passwordUpdateNote": "Note: Leave it blank if you don't want to update password.",
+  "validation.message.selectImage": "Please select image first",
+  "validation.message.imageSize": "The image size is greater than allowed size!",
+  "validation.message.firstName": "Please enter first name!",
+  "validation.message.lastName": "Please enter last name!",
+  "validation.message.email": "Please enter email!",
+  "validation.message.emailFormat": "The input is not valid E-mail!",
+  "validation.message.numericalValues": "Please enter only numerical values",
+  "validation.message.address": "Please enter Address!",
+  "validation.message.city": "Please Enter City Name!",
+  "validation.message.state": "Please Enter State Name!",
+  "validation.message.country": "Please Select Country!",
+  "validation.message.zip": "Please Enter Zip Code!",
+  "validation.message.addressType": "Please Select Address Type",
+  "validation.message.companyName": "Please Enter Company Name!",
+  "validation.message.website": "Please enter Website URL!",
+  "validation.labels.active": "Are you sure to change the status of selected Label(s) to ACTIVE?",
+  "validation.labels.disable": "Are you sure to change the status of selected Label(s) to DISABLED?",
+  "validation.labels.delete": "Are you sure to delete the selected Labels?",
+  "validation.labels.selectFirst": "Please Select Label(s) first",
 
 
 
@@ -89,7 +153,7 @@
   "common.archive": "Archive",
   "common.delete": "Delete",
   "common.active": "Active",
-  "common.disabled": "Disable",
+  "common.disable": "Disable",
   "common.id": "ID",
   "common.status": "Status",
   "common.priority": "Priority",
@@ -125,5 +189,36 @@
   "common.cancel": "Cancel",
   "common.saveChanges": "Save Changes",
   "common.title": "Title",
-  "common.descriptionLength": "Description length should not exceed 250 characters"
+  "common.descriptionLength": "Description length should not exceed 250 characters",
+  "common.enable": "Enable",
+  "common.email": "Email",
+  "common.phoneNo.": "Phone Number",
+  "common.na": "NA",
+  "common.labels": "Labels",
+  "common.disabled": "Disabled",
+  "common.password": "Password",
+  "common.more": "More",
+  "common.uploadProfileImage": "Upload Profile Image",
+  "common.yes": "Yes",
+  "common.no": "No",
+  "common.firstName": "First Name",
+  "common.lastName": "Last Name",
+  "common.emailAddress": "Email Address",
+  "common.selectCompany": "Select Company",
+  "common.addNewAddress": "Add New Address",
+  "common.address": "Address",
+  "common.city": "City",
+  "common.state": "State",
+  "common.country": "Country",
+  "common.zip": "Zip Code",
+  "common.billing": "Billing",
+  "common.shipping": "Shipping",
+  "common.other": "Other",
+  "common.editProfile": "Edit Profile",
+  "common.website": "Website",
+  "common.noMember": "No Members",
+  "common.websiteFormatMessage": "Please enter website in 'http://www.example.com' format",
+  "common.uploadLogo": "Upload Logo",
+  "common.chooseFile": "Choose File...",
+  "common.browse": "Browse"
 }
