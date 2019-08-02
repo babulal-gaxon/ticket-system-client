@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Avatar, Input, Modal, Tag} from "antd";
 import PropTypes from "prop-types";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const Search = Input.Search;
 
@@ -40,8 +42,10 @@ class TicketAssigning extends Component {
   };
 
   render() {
+    const {messages} = this.props.intl;
     const {showStaffModal, filterStaffText, assignedStaff} = this.state;
     const staffList = this.onFilterData();
+
     return (
       <div className="gx-main-layout-content">
         {assignedStaff ?
@@ -56,28 +60,28 @@ class TicketAssigning extends Component {
                 className="gx-mb-0 gx-text-capitalize">{assignedStaff.first_name + " " + assignedStaff.last_name}</span>
               <div className="gx-mb-2">{assignedStaff.email}</div>
               <Tag>
-                Click to Change
+                <IntlMessages id="common.clickToChange"/>
               </Tag>
             </div>
           </div> :
           <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5" onClick={this.onToggleStaffModal}>
             <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>
             <div className="gx-media-body gx-mt-2">
-              <span className="gx-mb-0 gx-text-capitalize">Currently Unassigned</span>
+              <span className="gx-mb-0 gx-text-capitalize"><IntlMessages id="common.unassigned"/></span>
               <div className="gx-mt-2">
                 <Tag>
-                  Click to Assign
+                  <IntlMessages id="common.clickToAssign"/>
                 </Tag>
               </div>
             </div>
           </div>}
         <Modal
-          title="Select Staff"
+          title= {<IntlMessages id="common.selectStaff"/>}
           centered
           visible={showStaffModal}
           onOk={this.onAddStaff}
           onCancel={this.onToggleStaffModal}>
-          <Search value={filterStaffText} placeholder="Type here to search staff"
+          <Search value={filterStaffText} placeholder={messages["manageTickets.filterBar.searchStaff"]}
                   onChange={(e) => this.setState({filterStaffText: e.target.value})}/>
           {staffList.map(staff => {
             return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5"
@@ -98,7 +102,7 @@ class TicketAssigning extends Component {
   }
 }
 
-export default TicketAssigning;
+export default injectIntl(TicketAssigning);
 
 TicketAssigning.defaultProps = {
   staffList: [],

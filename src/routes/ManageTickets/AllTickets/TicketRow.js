@@ -3,6 +3,7 @@ import React from "react";
 import Permissions from "../../../util/Permissions";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import {getFormattedDate} from "../../../util/Utills";
+import IntlMessages from "../../../util/IntlMessages";
 
 const onShowRowDropdown = (ticketId, context) => {
   const menu = (
@@ -14,7 +15,7 @@ const onShowRowDropdown = (ticketId, context) => {
             onConfirm={() => context.props.onDeleteTicket({ids: ticketId})}
             okText="Yes"
             cancelText="No">
-            Archive
+            <IntlMessages id="manageTickets.sortBy"/>
           </Popconfirm>
         </Menu.Item> : null}
     </Menu>
@@ -30,7 +31,7 @@ const onShowRowDropdown = (ticketId, context) => {
 const TicketRow = (context) => {
   return [
     {
-      title: 'ID',
+      title: <IntlMessages id="common.id"/>,
       dataIndex: 'id',
       key: 'id',
       render: (text, record) => {
@@ -38,7 +39,7 @@ const TicketRow = (context) => {
       },
     },
     {
-      title: 'Ticket Detail',
+      title: <IntlMessages id="manageTickets.ticketDetail"/>,
       dataIndex: 'title',
       key: 'title',
       render: (text, record) => {
@@ -59,7 +60,7 @@ const TicketRow = (context) => {
       },
     },
     {
-      title: 'Assign to',
+      title: <IntlMessages id="manageTickets.assignTo"/>,
       dataIndex: 'assignTo',
       key: 'assign_to',
       render: (text, record) => {
@@ -82,7 +83,7 @@ const TicketRow = (context) => {
       },
     },
     {
-      title: 'Status',
+      title: <IntlMessages id="common.status"/>,
       dataIndex: 'status_id',
       key: 'status_id',
       render: (text, record) => {
@@ -90,7 +91,7 @@ const TicketRow = (context) => {
       },
     },
     {
-      title: 'Priority',
+      title: <IntlMessages id="common.priority"/>,
       dataIndex: 'priority_name',
       key: 'priority_name',
       render: (text, record) => {

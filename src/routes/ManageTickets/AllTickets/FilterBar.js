@@ -3,6 +3,8 @@ import CustomScrollbars from "../../../util/CustomScrollbars";
 import {Avatar, Checkbox, DatePicker, Input, Select} from "antd";
 import PropTypes from "prop-types";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {Option} = Select;
 
@@ -78,13 +80,11 @@ class FilterBar extends Component {
       endDate, showMoreStaff, selectedStaff, selectedCustomers, selectedPriorities,
       selectedStatuses, startDate, onToggleShowMoreStaff
     } = this.props;
-
+    const {messages} = this.props.intl;
     const {staffFilterText, priorityFilterText, statusFilterText} = this.state;
     const staffs = showMoreStaff ? this.onFilterStaff() :
       this.onFilterStaff().length > 5 ? this.onFilterStaff().slice(0, 5) : this.onFilterStaff();
     const customers = this.props.customersList;
-    console.log("this.props.priorities", this.props.priorities);
-    console.log("this.props.statuses", this.props.priorities);
     const priorities = this.props.priorities.filter(priority => priority.name.toLowerCase().includes(priorityFilterText.toLowerCase()));
     const statuses = this.props.statuses.filter(status => status.name.toLowerCase().includes(statusFilterText.toLowerCase()));
     return (
@@ -92,36 +92,36 @@ class FilterBar extends Component {
         <CustomScrollbars className="gx-layout-sider-scrollbar">
           <div className="gx-main-layout-side">
             <div className="gx-main-layout-side-header">
-              <h4 className="gx-font-weight-medium">Filter Tickets</h4>
+              <h4 className="gx-font-weight-medium"><IntlMessages id="manageTickets.filterBar.filterTickets"/></h4>
             </div>
             <div className="gx-main-layout-nav">
-              <h4>Filter By Date</h4>
+              <h4><IntlMessages id="manageTickets.filterBar.filterByDate"/></h4>
               <div>
                 <DatePicker
                   value={startDate}
-                  placeholder="From:"
+                  placeholder={messages["common.from"]}
                   onChange={this.onStartDateChange}
                   className="gx-my-3"
                   style={{width: "100%"}}
                   format='YYYY/MM/DD'/>
                 <DatePicker
                   value={endDate}
-                  placeholder="To:"
+                  placeholder={messages["common.to"]}
                   onChange={this.onEndDateChange}
                   style={{width: "100%"}}
                   format='YYYY/MM/DD'/>
               </div>
             </div>
             <Checkbox className="gx-my-4" onChange={this.onSetArchive}>
-              Show Archived Tickets
+              <IntlMessages id="manageTickets.filterBar.byArchived"/>
             </Checkbox>
             <div className="gx-mb-4">
               <div className="gx-d-flex gx-justify-content-between">
-                <h4>Filter By Staff</h4>
+                <h4><IntlMessages id="manageTickets.filterBar.byStaff"/></h4>
                 {selectedStaff.length > 0 ? <div className="gx-link" onClick={this.onStaffReset}>
-                  Reset</div> : null}
+                  <IntlMessages id="common.reset"/></div> : null}
               </div>
-              <Input type="text" placeholder="Type to search Staff" value={staffFilterText}
+              <Input type="text" placeholder={messages["manageTickets.filterBar.searchStaff"]} value={staffFilterText}
                      onChange={(e) => this.setState({staffFilterText: e.target.value})}/>
               <Checkbox.Group onChange={this.onSelectStaff} value={selectedStaff}>
                 {staffs.map(staff => {
@@ -138,22 +138,22 @@ class FilterBar extends Component {
               <div>
                 {this.onFilterStaff().length > 5 ?
                   <div className="gx-link" onClick={onToggleShowMoreStaff}>
-                    {showMoreStaff ? "View Less" : `${this.onFilterStaff().length - 5} More`}
+                    {showMoreStaff ? <IntlMessages id="common.viewLess"/> : `${this.onFilterStaff().length - 5}  ${<IntlMessages id="common.viewLess"/>}`}
                   </div> : null}
               </div>
             </div>
             <div className="gx-mb-4">
               <div className="gx-d-flex gx-justify-content-between">
-                <h4>Select Customer</h4>
+                <h4> <IntlMessages id="manageTickets.filterBar.byCustomer"/></h4>
                 {selectedCustomers.length > 0 ? <div className="gx-link" onClick={this.onCustomerReset}>
-                  Reset</div> : null}
+                  <IntlMessages id="common.reset"/></div> : null}
               </div>
               <Select
                 value={selectedCustomers}
                 style={{width: "100%"}}
                 mode="multiple"
                 showSearch
-                placeholder="Type to search Customers"
+                placeholder={messages["manageTickets.filterBar.searchCustomer"]}
                 defaultActiveFirstOption={false}
                 showArrow={false}
                 filterOption={false}
@@ -176,11 +176,11 @@ class FilterBar extends Component {
             </div>
             <div className="gx-mb-4">
               <div className="gx-d-flex gx-justify-content-between">
-                <h4>Priority</h4>
+                <h4><IntlMessages id="common.priority"/></h4>
                 {selectedPriorities.length > 0 ?
-                  <div className="gx-link" onClick={this.onPrioritiesReset}> Reset</div> : null}
+                  <div className="gx-link" onClick={this.onPrioritiesReset}> <IntlMessages id="common.reset"/></div> : null}
               </div>
-              <Input type="text" placeholder="Type to search Priority" value={priorityFilterText}
+              <Input type="text" placeholder={messages["manageTickets.filterBar.searchPriority"]} value={priorityFilterText}
                      onChange={(e) => this.setState({priorityFilterText: e.target.value})}/>
               <Checkbox.Group onChange={this.onSelectPriorities} value={selectedPriorities}>
                 {priorities.map(priority => {
@@ -192,11 +192,11 @@ class FilterBar extends Component {
             </div>
             <div className="gx-mb-4">
               <div className="gx-d-flex gx-justify-content-between">
-                <h4>Status</h4>
+                <h4><IntlMessages id="common.status"/></h4>
                 {selectedStatuses.length > 0 ?
-                  <div className="gx-link" onClick={this.onStatusReset}> Reset</div> : null}
+                  <div className="gx-link" onClick={this.onStatusReset}> <IntlMessages id="common.reset"/></div> : null}
               </div>
-              <Input type="text" placeholder="Type to search Status" value={statusFilterText}
+              <Input type="text" placeholder={messages["manageTickets.filterBar.searchStatus"]} value={statusFilterText}
                      onChange={(e) => this.setState({statusFilterText: e.target.value})}/>
               <Checkbox.Group onChange={this.onSelectStatuses} value={selectedStatuses}>
                 {statuses.map(status => {
@@ -214,7 +214,7 @@ class FilterBar extends Component {
   }
 }
 
-export default FilterBar;
+export default injectIntl(FilterBar);
 
 FilterBar.defaultProps = {
   current: 1,

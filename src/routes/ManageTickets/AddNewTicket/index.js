@@ -12,6 +12,8 @@ import axios from 'util/Api'
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import {isDepartmentSelectionEnable, isProductSelectionEnable, isServiceSelectionEnable} from "../../../util/Utills";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -140,32 +142,33 @@ class AddNewTicket extends Component {
     const {title, content, product_id, priority_id, department_id, service_id, user_id} = this.state;
     const {filterData, formData, customersList, tagsList} = this.props;
     const ServiceOptions = this.onServiceSelectOptions();
+    const {messages} = this.props.intl;
 
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading">Create Ticket</h4>
+          <h4 className="gx-widget-heading"><IntlMessages id="manageTickets.createTicket"/></h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
-              <Link to="/manage-tickets/all-tickets">Manage Tickets</Link>
+              <Link to="/manage-tickets/all-tickets"><IntlMessages id="sidebar.dashboard.manage.tickets"/></Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
               <Link to="/manage-tickets/add-new-ticket" className="gx-text-primary">
-                Create ticket
+                <IntlMessages id="manageTickets.createTicket"/>
               </Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <Row>
             <Col xl={18} lg={12} md={12} sm={12} xs={24}>
               <Form layout="vertical" style={{width: "60%"}}>
-                <Form.Item label="Customer">
+                <Form.Item label={<IntlMessages id="common.customer"/>}>
                   {getFieldDecorator('user_id', {
                     initialValue: user_id,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message: 'Please Select Customer!'}],
+                    rules: [{required: true, message: messages["validation.message.selectCustomer"]}],
                   })(<Select
                     showSearch
-                    placeholder="Search customer"
+                    placeholder={messages["manageTickets.filterBar.searchCustomer"]}
                     defaultActiveFirstOption={false}
                     showArrow={false}
                     filterOption={false}
@@ -186,17 +189,17 @@ class AddNewTicket extends Component {
                     })}
                   </Select>)}
                 </Form.Item>
-                <Form.Item label="Subject">
+                <Form.Item label={<IntlMessages id="common.subject"/>}>
                   {getFieldDecorator('title', {
                     initialValue: title,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message: 'Please enter title!'}],
-                  })(<Input onChange={(e) => {
+                    rules: [{required: true, message:  messages["validation.message.selectTitle"]}],
+                  })(<Input placeHolder={messages["common.subject"]} onChange={(e) => {
                     this.setState({title: e.target.value})
                   }}/>)}
                 </Form.Item>
-                {isProductSelectionEnable() ? <Form.Item label="Select Product">
-                  <Select value={product_id} onChange={(value) => {
+                {isProductSelectionEnable() ? <Form.Item label={<IntlMessages id="common.product"/>}>
+                  <Select value={product_id}  placeholder={messages["manageTickets.selectProducts"]} onChange={(value) => {
                     this.setState({product_id: value})
                   }}>
                     {formData.products.map(product => {
@@ -204,8 +207,8 @@ class AddNewTicket extends Component {
                     })}
                   </Select>
                 </Form.Item> : null}
-                {isDepartmentSelectionEnable() ? <Form.Item label="Select Department">
-                  <Select value={department_id} onChange={(value) => {
+                {isDepartmentSelectionEnable() ? <Form.Item label={<IntlMessages id="common.department"/>}>
+                  <Select value={department_id} placeholder={messages["manageTickets.selectDepartments"]} onChange={(value) => {
                     this.setState({department_id: value})
                   }}>
                     {formData.departments.map(department => {
@@ -213,36 +216,36 @@ class AddNewTicket extends Component {
                     })}
                   </Select>
                 </Form.Item> : null}
-                {isServiceSelectionEnable() ? <Form.Item label="Services">
+                {isServiceSelectionEnable() ? <Form.Item label={<IntlMessages id="common.services"/>}>
                   <Select
                     mode="multiple"
                     style={{width: '100%'}}
-                    placeholder="Please select Services"
+                    placeholder={messages["manageTickets.selectServices"]}
                     value={service_id}
                     onSelect={this.onServiceSelect}
                     onDeselect={this.onServiceRemove}>
                     {ServiceOptions}
                   </Select>
                 </Form.Item> : null}
-                <Form.Item label="Description">
+                <Form.Item label={<IntlMessages id="common.description"/>}>
                   {getFieldDecorator('content', {
                     initialValue: content,
                     validateTrigger: 'onBlur',
                     rules: [
                       {
                         required: true,
-                        message: 'Please enter the details!'
+                        message: messages["validation.message.description"]
                       }],
-                  })(<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
+                  })(<TextArea rows={4} placeHolder={messages["manageTickets.enterDescription"]} className="gx-form-control-lg" onChange={(e) => {
                     this.setState({content: e.target.value})
                   }}/>)}
                 </Form.Item>
-                <Form.Item label="Set Priority">
+                <Form.Item label={<IntlMessages id="common.setPriority"/>}>
                   {getFieldDecorator('priority_id', {
                     initialValue: priority_id,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message: 'Please Select Ticket Priority!'}],
-                  })(<Select onChange={(value) => {
+                    rules: [{required: true, message: messages["validation.message.priority"]}],
+                  })(<Select placeHolder={messages["manageTickets.setPriority"]} onChange={(value) => {
                     this.setState({priority_id: value})
                   }}>
                     {filterData.priority.map(priority =>
@@ -252,19 +255,19 @@ class AddNewTicket extends Component {
                 </Form.Item>
                 <Form.Item>
                   <Button type="primary" onClick={this.onValidationCheck}>
-                    Save
+                    <IntlMessages id="common.save"/>
                   </Button>
                 </Form.Item>
               </Form>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
               <div>
-                <div>Assign to</div>
+                <div><IntlMessages id="manageTickets.assignTo"/></div>
                 <TicketAssigning staffList={filterData.staffs}
                                  onAssignStaff={this.onAssignStaff}
                 />
-                <div className="gx-mb-3">Tags</div>
-                <Select mode="tags" style={{width: '100%'}} placeholder="Type to add tags" onChange={this.onAddTags}
+                <div className="gx-mb-3"><IntlMessages id="common.tags"/></div>
+                <Select mode="tags" style={{width: '100%'}} placeholder={messages["manageTickets.addTags"]} onChange={this.onAddTags}
                         showSearch onSearch={this.onSearchTags}
                         showArrow={false}
                         notFoundContent={null}>
@@ -273,7 +276,7 @@ class AddNewTicket extends Component {
                   })}
                 </Select>
               </div>
-              <div className="gx-my-5">Attachments</div>
+              <div className="gx-my-5"><IntlMessages id="common.attachments"/></div>
               <TicketAttachments onSelectFiles={this.onSelectFiles}/>
             </Col>
           </Row>
@@ -301,7 +304,7 @@ export default connect(mapStateToProps, {
   fetchError,
   fetchSuccess,
   onGetTagsList
-})(AddNewTicket);
+})(injectIntl(AddNewTicket));
 
 
 AddNewTicket.defaultProps = {

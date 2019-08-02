@@ -26,6 +26,8 @@ import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import qs from "qs";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import {getFormattedDate, getTicketFileExtension, getTicketFileSize} from "../../../util/Utills";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const Option = Select.Option;
 const {TextArea} = Input;
@@ -58,7 +60,6 @@ class TicketDetail extends Component {
   };
 
   componentWillReceiveProps(nextProps, nextContext) {
-    console.log("nextProps", nextProps);
     if (nextProps.currentTicket !== null && nextProps.currentTicket !== this.props.currentTicket)
       this.setState({
         currentTicket: nextProps.currentTicket,
@@ -154,7 +155,6 @@ class TicketDetail extends Component {
   };
 
   render() {
-
     const {fileList, message, showEditModal, ticketTags, currentTicket} = this.state;
     const props = {
       accept: getTicketFileExtension(),
@@ -183,17 +183,16 @@ class TicketDetail extends Component {
       fileList,
     };
     const {filterData, conversation, tagsList} = this.props;
-
-
+    const {messages} = this.props.intl;
     return (
       <div className="gx-main-layout-content">
         {currentTicket ? <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading">Tickets</h4>
+          <h4 className="gx-widget-heading"><IntlMessages id="manageTickets.tickets"/></h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
-              <Link to="/manage-tickets/all-tickets">Manage Tickets</Link>
+              <Link to="/manage-tickets/all-tickets"><IntlMessages id="sidebar.dashboard.manage.tickets"/></Link>
             </Breadcrumb.Item>
-            <Breadcrumb.Item className="gx-text-primary">Tickets</Breadcrumb.Item>
+            <Breadcrumb.Item className="gx-text-primary"><IntlMessages id="manageTickets.tickets"/></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex">
             {(Permissions.canTicketEdit()) ?
@@ -216,31 +215,31 @@ class TicketDetail extends Component {
                 <span>#{currentTicket.id}</span>
                 {(Permissions.canTicketEdit()) ?
                   <span className="gx-text-primary" onClick={this.onToggleEditModal}><i
-                    className="icon icon-edit gx-mr-2"/>Edit</span> : null}
+                    className="icon icon-edit gx-mr-2"/><IntlMessages id="common.edit"/></span> : null}
               </div>
               <h2 className="gx-my-2 gx-font-weight-bold">{currentTicket.title}</h2>
               <div className="gx-mb-3">
-                <span>created at: {getFormattedDate(currentTicket.created_at.date)}</span>
-                <span>  Last updated at: {moment(currentTicket.updated_at.date).fromNow()}</span>
+                <span><IntlMessages id="common.createdAt"/> {getFormattedDate(currentTicket.created_at.date)}</span>
+                <span>  <IntlMessages id="common.updatedAt"/> {moment(currentTicket.updated_at.date).fromNow()}</span>
               </div>
               <div className="gx-py-3">{currentTicket.content}</div>
               {currentTicket.attachments.length > 0 ?
                 <div className="gx-mt-4">
-                  <div className="gx-mb-3">Attachments</div>
+                  <div className="gx-mb-3"><IntlMessages id="common.attachments"/></div>
                   <div className="gx-d-flex">
                     {currentTicket.attachments.map(attachment => {
                       return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5"
                                   key={attachment.id}>
                         <Widget styleName="gx-card-filter gx-mr-2">
                           <div>{attachment.title}</div>
-                          <div>{attachment.size / 1000} kb</div>
+                          <div>{attachment.size / 1024} <IntlMessages id="common.kb"/></div>
                         </Widget>
                       </div>
                     })}
                   </div>
                 </div> : null}
               <div className="gx-py-3">
-                <h3 className="gx-mb-0 gx-mb-sm-1">Messages</h3>
+                <h3 className="gx-mb-0 gx-mb-sm-1"><IntlMessages id="common.messages"/></h3>
               </div>
               {conversation.map((conversation, index) =>
                 <ConversationCell key={index} conversation={conversation}/>
@@ -254,7 +253,7 @@ class TicketDetail extends Component {
                                 onChange={(e) => this.setState({message: e.target.value})}
                                 value={message}
                                 rows={4}
-                                placeholder="Type and hit enter to send message"/>
+                                placeholder={messages["manageTickets.sendMessage"]}/>
                     </div>
                   </div>
                   <div className="gx-chat-sent"
@@ -272,7 +271,7 @@ class TicketDetail extends Component {
             </Col>
             <Col xl={8} lg={12} md={12} sm={12} xs={24}>
               <div className="gx-justify-content-between gx-ml-5">
-                <div className="gx-mb-3">Customer</div>
+                <div className="gx-mb-3"><IntlMessages id="common.customer"/></div>
                 {currentTicket.assigned_by ?
                   <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
                     {currentTicket.assigned_by.avatar ?
@@ -285,29 +284,29 @@ class TicketDetail extends Component {
                     className="gx-mb-0 gx-text-capitalize">{currentTicket.assigned_by.first_name + " " + currentTicket.assigned_by.last_name}</span>
                       <div className="gx-mt-2">
                         <Tag color="#f50">
-                          Customer
+                          <IntlMessages id="common.customer"/>
                         </Tag>
                       </div>
                     </div>
                   </div> : null}
-                <div className="gx-my-3">Assigned to</div>
+                <div className="gx-my-3"><IntlMessages id="manageTickets.assignTo"/></div>
                 <TicketAssigning staffList={filterData.staffs}
                                  onAssignStaff={this.props.onAssignStaffToTicket}
                                  ticketId={currentTicket.id}
                                  assignedTo={currentTicket.assigned_to}/>
-                <span>Tags</span>
-                <Select mode="tags" style={{width: '100%'}} className="gx-mt-3" placeholder="Type to add tags"
+                <span><IntlMessages id="common.tags"/></span>
+                <Select mode="tags" style={{width: '100%'}} className="gx-mt-3" placeholder={messages["manageTickets.addTags"]}
                         value={ticketTags} onSearch={this.onSearchTags}
                         onChange={this.onEditTags}>
                   {tagsList.map(tag => {
                     return <Option key={tag.id} value={tag.title}>{tag.title}</Option>
                   })}
                 </Select>
-                <div className="gx-my-3">Attachments</div>
+                <div className="gx-my-3"><IntlMessages id="common.attachments"/></div>
                 {currentTicket.attachments.length > 0 ? currentTicket.attachments.map(attachment => {
                   return <Avatar shape="square" icon="user" key={attachment.id} src={MEDIA_BASE_URL + attachment.src}
                                  className="gx-mr-2 gx-size-100"/>
-                }) : <div>No attachments added with this ticket.</div>}
+                }) : <div><IntlMessages id="manageTickets.noAttachmentAdded"/></div>}
               </div>
             </Col>
           </Row>
@@ -344,7 +343,7 @@ export default connect(mapStateToProps, {
   fetchSuccess,
   onNullifyCurrentTicket,
   onGetTagsList
-})(TicketDetail);
+})(injectIntl(TicketDetail));
 
 
 TicketDetail.defaultProps = {
