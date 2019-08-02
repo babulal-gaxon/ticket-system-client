@@ -44,7 +44,7 @@ class EditTicketDetailsModal extends Component {
               {getFieldDecorator('name', {
                 initialValue: title,
                 validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please enter Title!'}],
+                rules: [{required: true, message: messages["validation.message.selectTitle"]}],
               })(<Input type="text" autoFocus placeholder={messages["common.title"]} onChange={(e) => {
                 this.setState({title: e.target.value})
               }}/>)}
@@ -57,7 +57,7 @@ class EditTicketDetailsModal extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Please Enter Description!'
+                      message: messages["validation.message.description"]
                     },
                   ],
                 }, {
@@ -65,11 +65,11 @@ class EditTicketDetailsModal extends Component {
                   rules: [
                     {
                       max: 250,
-                      message: 'Description length should not exceed 250 characters'
+                      message: messages["common.descriptionLength"]
                     },
                   ],
                 }],
-              })(<TextArea rows={4} onChange={(e) => {
+              })(<TextArea rows={4} placeholder={messages["manageTickets.enterDescription"]} onChange={(e) => {
                 this.setState({content: e.target.value})
               }}/>)}
             </Form.Item>

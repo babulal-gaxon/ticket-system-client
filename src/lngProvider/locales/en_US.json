@@ -124,5 +124,6 @@
   "common.editDetails": "Edit Details",
   "common.cancel": "Cancel",
   "common.saveChanges": "Save Changes",
-  "common.title": "Title"
+  "common.title": "Title",
+  "common.descriptionLength": "Description length should not exceed 250 characters"
 }
