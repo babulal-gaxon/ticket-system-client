@@ -17,14 +17,12 @@ import {
 } from "../../constants/TicketList";
 import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE, UPDATING_CONTENT} from "../../constants/ActionTypes";
 import {showErrorMessage} from "./Auth";
-import moment from "moment";
-
 
 export const onGetTickets = (updatingContent, currentPage, itemsPerPage, filterText, sortingParam, startDate, endDate, selectedStaff,
                              selectedCustomers, selectedPriorities, selectedStatuses, archive) => {
-  const start = startDate ? moment(startDate).format("YYYY/MM/DD") : '';
-  const end = endDate ? moment(endDate).format("YYYY/MM/DD") : '';
-  console.log("selectedCustomers", selectedCustomers);
+  const start = startDate ? startDate.toDate() : '';
+  const end = endDate ? endDate.toDate() : '';
+  console.log("onGetTickets", startDate, endDate);
   return (dispatch) => {
     if (updatingContent) {
       dispatch({type: UPDATING_CONTENT});

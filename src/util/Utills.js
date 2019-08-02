@@ -77,7 +77,14 @@ export const getFormattedDate = (date) => {
   return moment(date).format(userSetting.locale.date_format.toUpperCase());
 };
 export const getFormattedTime = (time) => {
-  return time;
+  const is24Hr = userSetting.locale.time_format === "24 Hours";
+  if (is24Hr) {
+    return moment(time).format("HH:mm");
+  }
+  return moment(time).format("hh:mm A");
+};
+export const getFormattedDateTime = (timeStamp) => {
+  return timeStamp//getFormattedDate(timeStamp) + " " + getFormattedTime(timeStamp);
 };
 
 export const getFileExtension = () => {
@@ -107,11 +114,11 @@ export const isProductSelectionEnable = () => {
 };
 
 export const getCompanyLogo = () => {
-  return userSetting.general.logo.includes(".png") ? MEDIA_BASE_URL + userSetting.general.logo : null;
+  return userSetting.general.company_logo && userSetting.general.company_logo.src ? MEDIA_BASE_URL + userSetting.general.company_logo.src : null;
 };
 
 export const setCompanyFavIcon = () => {
-  const favIcon = userSetting.general.logo.includes(".ico") ? MEDIA_BASE_URL + userSetting.general.logo : null;
+  const favIcon = userSetting.general.company_favicon && userSetting.general.company_favicon.src ? MEDIA_BASE_URL + userSetting.general.company_favicon.src : null;
 
   if (favIcon) {
     let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
