@@ -1,4 +1,4 @@
-import {SWITCH_LANGUAGE, TOGGLE_COLLAPSED_NAV, WINDOW_WIDTH} from "constants/ActionTypes";
+import {SWITCH_LANGUAGE, TOGGLE_COLLAPSED_NAV, WINDOW_WIDTH} from "../../constants/ActionTypes";
 import {
   LAYOUT_TYPE,
   LAYOUT_TYPE_FULL,
@@ -65,6 +65,7 @@ const settings = (state = initialSettings, action) => {
       };
 
     case SWITCH_LANGUAGE:
+      console.log("switchLanguage: action.payload", action.payload)
       return {
         ...state,
         locale: action.payload,
