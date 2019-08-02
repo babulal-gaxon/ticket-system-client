@@ -3,6 +3,8 @@ import {Button, Divider, Form, Input, message, Upload} from "antd/lib/index";
 import PropTypes from "prop-types";
 import axios from 'util/Api'
 import {getFileSize} from "../../../util/Utills";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 class GeneralDetails extends Component {
   constructor(props) {
@@ -120,6 +122,7 @@ class GeneralDetails extends Component {
   };
 
   render() {
+    const {messages} = this.props.intl;
     const {name, url, email, allowed_ext, file_upload_max_size, logoList, faviconList, cpp_url, logoName, faviconName} = this.state;
     const {getFieldDecorator} = this.props.form;
     const propsLogo = {
@@ -140,7 +143,7 @@ class GeneralDetails extends Component {
         }
         const isFileSize = file.size < getFileSize();
         if (!isFileSize) {
-          message.error('The image size is greater than allowed size!');
+          message.error(messages["validation.message.imageSize"]);
         } else {
           this.setState(state => ({
             logoList: [...state.logoList, file],
@@ -168,7 +171,7 @@ class GeneralDetails extends Component {
         }
         const isFileSize = file.size < getFileSize();
         if (!isFileSize) {
-          message.error('The image size is greater than allowed size!');
+          message.error(messages["validation.message.imageSize"]);
         } else {
           this.setState(state => ({
             faviconList: [...state.faviconList, file],
@@ -181,35 +184,35 @@ class GeneralDetails extends Component {
     return (
       <div className="gx-main-layout-content">
         <Form layout="vertical" style={{width: "50%"}}>
-          <Form.Item label="Company Name">
+          <Form.Item label={<IntlMessages id="companies.companyName"/>}>
             {getFieldDecorator('name', {
               initialValue: name,
               validateTrigger: 'onBlur',
-              rules: [{required: true, message: 'Please Enter Company Name!'}],
+              rules: [{required: true, message: messages["validation.message.companyName"]}],
             })(<Input type="text" autoFocus onChange={(e) => {
               this.setState({name: e.target.value})
             }}/>)}
           </Form.Item>
-          <Form.Item label="Company Website" extra="Please enter website in 'http://www.example.com' format">
+          <Form.Item label={<IntlMessages id="settings.companyWebsite"/>} extra={<IntlMessages id="common.websiteFormatMessage"/>}>
             {getFieldDecorator('url', {
               initialValue: url,
               validateTrigger: 'onBlur',
-              rules: [{required: true, message: 'Please Enter Company Website!'}],
+              rules: [{required: true, message: messages["validation.settings.companyURL"]}],
             })(<Input type="text" onChange={(e) => {
               this.setState({url: e.target.value})
             }}/>)}
           </Form.Item>
-          <Form.Item label="Client URl">
+          <Form.Item label={<IntlMessages id="settings.clientURL"/>}>
             {getFieldDecorator('cpp_url', {
               initialValue: cpp_url,
               validateTrigger: 'onBlur',
               rules: [{
                 required: true,
-                message: 'Please Enter Client URL!'
+                message: messages["validation.settings.clientURL"]
               }],
             })(<Input type="text" onChange={(e) => this.setState({cpp_url: e.target.value})}/>)}
           </Form.Item>
-          <Form.Item label="Company Logo"
+          <Form.Item label={<IntlMessages id="settings.clientURL"/>}
                      extra={logoName && this.state.logoList.length === 0 ? logoName : "Size should be 100X26px, Maximum image size 50kb"}>
             <Upload {...propsLogo}>
               <Input placeholder="Choose file..." addonAfter="Browse" style={{width: "270%"}}/>
@@ -287,7 +290,7 @@ class GeneralDetails extends Component {
 
 GeneralDetails = Form.create({})(GeneralDetails);
 
-export default GeneralDetails;
+export default injectIntl(GeneralDetails);
 
 GeneralDetails.defaultProps = {
   generalSettingsData: null

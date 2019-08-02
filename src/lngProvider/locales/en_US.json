@@ -116,11 +116,17 @@
   "roles.addNew": "Add New Role",
   "roles.searchPlaceHolder": "Enter keywords to search Roles",
   "roles.name": "Role Name",
+  "roles.editDetail": "Edit Role Details",
+  "roles.features": "Features and Permissions",
+  "roles.staffMembers": "Associated Staff Members",
+  "roles.noStaffMessage": "No staff member assigned to this role yet!",
 
 
 
-
-
+  "settings.generalSettings": "General Settings",
+  "settings.generalSetup": "General Setup",
+  "settings.companyWebsite": "Company Website",
+  "settings.clientURL": "Client URL",
 
 
 
@@ -155,6 +161,9 @@
   "validation.labels.selectFirst": "Please Select Label(s) first",
   "validation.labels.name": "Please enter Name!",
   "validation.labels.description": "Please enter Description!",
+  "validation.roles.name": "Please enter Role name!",
+  "validation.settings.companyURL": "Please enter Company Website!",
+  "validation.settings.clientURL": "Please select Client URL",
 
 
 
@@ -234,5 +243,16 @@
   "common.browse": "Browse",
   "common.name": "name",
   "common.lastUpdate": "Last Update",
-  "common.users": "Users"
+  "common.users": "Users",
+  "common.checkAll": "Check All",
+  "common.priorities": "Priorities",
+  "common.responses": "Responses",
+  "common.roles": "Roles",
+  "common.staffs": "Staffs",
+  "common.tickets": "Tickets",
+  "common.member": "Member Name",
+  "common.noRecord": "No Record Found!",
+  "common.setup": "Setup",
+  "common.addresses": "Addresses",
+  "common.companyLogo": "Company Logo"
 }

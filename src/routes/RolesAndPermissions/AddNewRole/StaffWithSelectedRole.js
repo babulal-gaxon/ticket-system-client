@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import Widget from "../../../components/Widget";
-import {Avatar, Input} from "antd";
+import {Avatar, Button, Input} from "antd";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const Search = Input.Search;
 
@@ -49,20 +51,21 @@ class StaffWithSelectedRole extends Component {
   };
 
   render() {
+    const {messages} = this.props.intl;
     const {filterText} = this.state;
     const staffList = this.onFilterStaffList();
     return (
       <div className="gx-main-layout-content">
-        <h5 className="gx-mb-4">Associated Staff Members</h5>
+        <h5 className="gx-mb-4"> <IntlMessages id="roles.staffMembers"/></h5>
         <div className="gx-d-flex gx-align-items-center">
           <Search
-            placeholder="Enter keywords to search roles"
+            placeholder={messages["manageTickets.filterBar.searchStaff"]}
             value={filterText}
             onChange={(e) => this.setState({filterText: e.target.value})}/>
         </div>
         {staffList.length !== 0 ?
           <div>
-            <div className="gx-mt-2 gx-mb-4">Member Name</div>
+            <div className="gx-mt-2 gx-mb-4"><IntlMessages id="common.member"/></div>
             {staffList.map(staff => {
               return <Widget key={staff.id} styleName="gx-card-filter">
                 <div className="gx-d-flex gx-justify-content-between">
@@ -88,14 +91,14 @@ class StaffWithSelectedRole extends Component {
               </Widget>
             })}
           </div> : filterText === "" ?
-            <div className="gx-justify-content-between">No staff member assigned to this role yet!</div> :
-            <div className="gx-justify-content-between">No record found</div>}
+            <div className="gx-justify-content-between"><IntlMessages id="roles.noStaffMessage"/></div> :
+            <div className="gx-justify-content-between"><IntlMessages id="common.noRecord"/></div>}
       </div>
     );
   }
 }
 
-export default StaffWithSelectedRole;
+export default injectIntl(StaffWithSelectedRole);
 
 StaffWithSelectedRole.defaultProps = {
   selectedRole: {},

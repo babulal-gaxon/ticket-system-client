@@ -9,6 +9,8 @@ import StaffDetail from "../../Staff/StaffList/StaffDetail/index";
 import StaffWithSelectedRole from "./StaffWithSelectedRole";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const Panel = Collapse.Panel;
 const customPanelStyle = {
@@ -79,7 +81,6 @@ class AddNewRole extends Component {
   onSelectCustomerPermissions = checkedList => {
     this.setState({customerPermissions: checkedList})
   };
-
 
   onSelectDepartmentPermissions = checkedList => {
     this.setState({departmentsPermissions: checkedList})
@@ -155,7 +156,6 @@ class AddNewRole extends Component {
     });
     this.setState({customerPermissions: e.target.checked ? allSelected : []});
   };
-
 
   onCheckAllDepartments = e => {
     const allSelected = this.props.userPermissions.departments.map(department => {
@@ -238,6 +238,7 @@ class AddNewRole extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
+    const {messages} = this.props.intl;
     const {
       status, currentMember, name, customerPermissions, departmentsPermissions,
       labelPermissions, prioritiesPermissions, responsesPermissions, rolesPermissions, settingsPermissions,
@@ -246,55 +247,51 @@ class AddNewRole extends Component {
     const {selectedRole, onDisableSelectedRole, userPermissions, staffList, onSetCurrentStaff, history} = this.props;
 
 
-    if (userPermissions) {
-
-    }
-
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
           <h4
-            className="gx-font-weight-bold">{selectedRole === null ? "Add New Role" : "Edit Role Details"}</h4>
+            className="gx-font-weight-bold">{selectedRole === null ? <IntlMessages id="roles.addNew"/> : <IntlMessages id="roles.editDetail"/>}</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item onClick={onDisableSelectedRole}>
-              <Link to="/roles-permissions/all">Roles & Permission</Link>
+              <Link to="/roles-permissions/all"><IntlMessages id="roles.title"/></Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item className="gx-text-primary">
               <Link
                 to="/roles-permissions/add-new"
-                className="gx-text-primary">{selectedRole === null ? "Add New Role" : "Edit Role Details"}</Link>
+                className="gx-text-primary">{selectedRole === null ? <IntlMessages id="roles.addNew"/> : <IntlMessages id="roles.editDetail"/>}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           {currentMember === null ? <Row>
             <Col xl={15} lg={12} md={12} sm={12} xs={24}>
               <Form layout="vertical" style={{width: "80%"}}>
-                <Form.Item label="Role Name">
+                <Form.Item label={<IntlMessages id="roles.name"/>}>
                   {getFieldDecorator('name', {
                     initialValue: name,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message: 'Please Enter Role Name!'}],
+                    rules: [{required: true, message:messages["validation.roles.name"]}],
                   })(<Input type="text" autoFocus onChange={(e) => this.setState({name: e.target.value})}/>)}
                 </Form.Item>
-                <Form.Item label="Status">
+                <Form.Item label={<IntlMessages id="common.status"/>}>
                   <Radio.Group value={status} onChange={(e) => {
                     this.setState({status: e.target.value})
                   }}>
-                    <Radio value={1}>Active</Radio>
-                    <Radio value={0}>Disabled</Radio>
+                    <Radio value={1}><IntlMessages id="common.active"/></Radio>
+                    <Radio value={0}><IntlMessages id="common.disabled"/></Radio>
                   </Radio.Group>
                 </Form.Item>
-                <h3 className="gx-mt-4">Features and Permissions</h3>
+                <h3 className="gx-mt-4"><IntlMessages id="roles.features"/></h3>
                 <hr/>
                 <Form.Item>
                   <Collapse bordered={false} accordion>
-                    <Panel header="Customers" key="1" showArrow={false} extra={<i className="icon icon-add-circle"/>}
+                    <Panel header={<IntlMessages id="sidebar.dashboard.customers"/>} key="1" showArrow={false} extra={<i className="icon icon-add-circle"/>}
                            style={customPanelStyle}>
                       <Checkbox className="gx-ml-auto"
                                 indeterminate={customerPermissions.length > 0
                                 && userPermissions.customers.length > customerPermissions.length}
                                 onChange={this.onCheckAllCustomers}
                                 checked={userPermissions.customers && userPermissions.customers.length === customerPermissions.length}>
-                        Check all
+                        <IntlMessages id="common.checkAl"/>
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectCustomerPermissions}
@@ -309,14 +306,14 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header="Departments" key="3" style={customPanelStyle} showArrow={false}
+                    <Panel header={<IntlMessages id="sidebar.dashboard.departments"/>} key="3" style={customPanelStyle} showArrow={false}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
                         indeterminate={departmentsPermissions.length > 0
                         && userPermissions.departments.length > departmentsPermissions.length}
                         onChange={this.onCheckAllDepartments}
                         checked={userPermissions.departments.length === departmentsPermissions.length}>
-                        Check all
+                        <IntlMessages id="common.checkAl"/>
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectDepartmentPermissions}
@@ -331,14 +328,14 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header="Labels" key="4" style={customPanelStyle} showArrow={false}
+                    <Panel header={<IntlMessages id="common.labels"/>} key="4" style={customPanelStyle} showArrow={false}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
                         indeterminate={labelPermissions.length > 0
                         && userPermissions.labels.length > labelPermissions.length}
                         onChange={this.onCheckAllLabels}
                         checked={userPermissions.labels.length === labelPermissions.length}>
-                        Check all
+                        <IntlMessages id="common.checkAl"/>
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectLabelPermissions}
@@ -353,14 +350,14 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header="Priorities" key="5" style={customPanelStyle}
+                    <Panel header={<IntlMessages id="common.priorities"/>} key="5" style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>} showArrow={false}>
                       <Checkbox
                         indeterminate={prioritiesPermissions.length > 0
                         && userPermissions.priorities.length > prioritiesPermissions.length}
                         onChange={this.onCheckAllPriorities}
                         checked={userPermissions.priorities.length === prioritiesPermissions.length}>
-                        Check all
+                        <IntlMessages id="common.checkAl"/>
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectPriorityPermissions}
@@ -375,14 +372,14 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header="Responses" key="6" style={customPanelStyle} showArrow={false}
+                    <Panel header={<IntlMessages id="common.responses"/>} key="6" style={customPanelStyle} showArrow={false}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
                         indeterminate={responsesPermissions.length > 0
                         && userPermissions.responses.length > responsesPermissions.length}
                         onChange={this.onCheckAllResponses}
                         checked={userPermissions.responses.length === responsesPermissions.length}>
-                        Check all
+                        <IntlMessages id="common.checkAl"/>
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectResponsesPermissions}
@@ -397,14 +394,14 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header="Roles" key="7" showArrow={false} style={customPanelStyle}
+                    <Panel header={<IntlMessages id="common.roles"/>} key="7" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
                         indeterminate={rolesPermissions.length > 0
                         && userPermissions.roles.length > rolesPermissions.length}
                         onChange={this.onCheckAllRoles}
                         checked={userPermissions.roles.length === rolesPermissions.length}>
-                        Check all
+                        <IntlMessages id="common.checkAl"/>
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectRolesPermissions}
@@ -419,14 +416,14 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header="Settings" key="8" showArrow={false} style={customPanelStyle}
+                    <Panel header={<IntlMessages id="sidebar.dashboard.settings"/>} key="8" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
                         indeterminate={settingsPermissions.length > 0
                         && userPermissions.settings.length > settingsPermissions.length}
                         onChange={this.onCheckAllSettings}
                         checked={userPermissions.settings.length === settingsPermissions.length}>
-                        Check all
+                        <IntlMessages id="common.checkAl"/>
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectSettingsPermissions}
@@ -441,14 +438,14 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header="Staffs" key="9" showArrow={false} style={customPanelStyle}
+                    <Panel header={<IntlMessages id="common.staffs"/>} key="9" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
                         indeterminate={staffsPermissions.length > 0
                         && userPermissions.staffs.length > staffsPermissions.length}
                         onChange={this.onCheckAllStaffs}
                         checked={userPermissions.staffs.length === staffsPermissions.length}>
-                        Check all
+                        <IntlMessages id="common.checkAl"/>
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectStaffsPermissions}
@@ -463,14 +460,14 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header="Status" key="10" showArrow={false} style={customPanelStyle}
+                    <Panel header={<IntlMessages id="common.status"/>} key="10" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
                         indeterminate={statusPermissions.length > 0
                         && userPermissions.status.length > statusPermissions.length}
                         onChange={this.onCheckAllStatus}
                         checked={userPermissions.status.length === statusPermissions.length}>
-                        Check all
+                        <IntlMessages id="common.checkAl"/>
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onSelectStatusPermissions}
@@ -485,14 +482,14 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header="Tickets" key="11" showArrow={false} style={customPanelStyle}
+                    <Panel header={<IntlMessages id="common.tickets"/>} key="11" showArrow={false} style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
                         indeterminate={ticketsPermissions.length > 0
                         && userPermissions.tickets.length > ticketsPermissions.length}
                         onChange={this.onCheckAllTickets}
                         checked={userPermissions.tickets.length === ticketsPermissions.length}>
-                        Check all
+                        <IntlMessages id="common.checkAl"/>
                       </Checkbox>
                       <Checkbox.Group style={{width: '100%'}}
                                       onChange={this.onGetTicketDetailsPermissions}
@@ -513,10 +510,10 @@ class AddNewRole extends Component {
               </Form>
               <span>
                 <Button type="primary" onClick={this.onValidationCheck}>
-                  Save
+                  <IntlMessages id="common.save"/>
                 </Button>
                      <Button onClick={() => history.goBack()}>
-                  Cancel
+                   <IntlMessages id="common.cancel"/>
                 </Button>
                 </span>
             </Col>
@@ -553,7 +550,7 @@ export default connect(mapStateToProps, {
   onGetStaff,
   onSetCurrentStaff,
   onBulkDeleteStaff
-})(AddNewRole);
+})(injectIntl(AddNewRole));
 
 AddNewRole.defaultProps = {
   selectedRole: {},

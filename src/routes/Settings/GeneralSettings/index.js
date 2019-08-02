@@ -16,6 +16,7 @@ import {
 } from "../../../appRedux/actions/GeneralSettings";
 import PropTypes from "prop-types";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
+import IntlMessages from "../../../util/IntlMessages";
 
 const {TabPane} = Tabs;
 
@@ -42,28 +43,28 @@ class GeneralSettings extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading">General Setting</h4>
+          <h4 className="gx-widget-heading"><IntlMessages id="settings.generalSettings"/></h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
-              Settings
+              <IntlMessages id="sidebar.dashboard.settings"/>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/settings/general-settings">General Settings</Link>
+              <Link to="/settings/general-settings"><IntlMessages id="settings.generalSettings"/></Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item className="gx-text-primary">
               <Link to="/settings/general-settings"
-                    className="gx-text-primary">{key === "1" ? "Setup" : "Addresses"}</Link>
+                    className="gx-text-primary">{key === "1" ? <IntlMessages id="common.setup"/> : <IntlMessages id="common.addresses"/>}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <Tabs defaultActiveKey="1" size="large" onChange={this.onTabChange}>
-            <TabPane tab="General Setup" key="1">
+            <TabPane tab={<IntlMessages id="settings.generalSettings"/>} key="1">
               <GeneralDetails onSaveGeneralDetails={this.props.onSaveGeneralDetails}
                               generalSettingsData={this.props.generalSettingsData}
                               fetchSuccess={this.props.fetchSuccess}
                               fetchStart={this.props.fetchStart}
                               fetchError={this.props.fetchError}/>
             </TabPane>
-            <TabPane tab="Addresses" key="2">
+            <TabPane tab={<IntlMessages id="common.addresses"/>} key="2">
               <Addresses countriesList={this.props.countriesList}
                          onSaveGeneralAddress={this.props.onSaveGeneralAddress}
                          generalAddress={this.props.generalAddress}
