@@ -210,7 +210,7 @@ class GeneralDetails extends Component {
             })(<Input type="text" onChange={(e) => this.setState({cpp_url: e.target.value})}/>)}
           </Form.Item>
           <Form.Item label="Company Logo"
-                     extra={logoName && this.state.logoList.length === 0 ? logoName : "Size should be 250X100px, Maximum image size 50kb"}>
+                     extra={logoName && this.state.logoList.length === 0 ? logoName : "Size should be 100X26px, Maximum image size 50kb"}>
             <Upload {...propsLogo}>
               <Input placeholder="Choose file..." addonAfter="Browse" style={{width: "270%"}}/>
             </Upload>
