@@ -128,6 +128,8 @@
   "settings.companyWebsite": "Company Website",
   "settings.clientURL": "Client URL",
   "settings.favicon": "Favicon",
+  "settings.allowedExtensions": "Allowed Extensions",
+  "settings.fileUploadSize": "File Upload Max Size",
 
 
 
@@ -167,6 +169,8 @@
   "validation.settings.clientURL": "Please select Client URL",
   "validation.settings.logoSize": "Size should be 100X26px, Maximum image size 50kb",
   "validation.settings.faviconSize": "Size should be 16X16px, Maximum image size 50kb",
+  "validation.settings.allowedExt": "Please Select Allowed Extensions!",
+  "validation.settings.fileUploadSize": "Please enter File upload size!",
 
 
 
@@ -257,5 +261,6 @@
   "common.noRecord": "No Record Found!",
   "common.setup": "Setup",
   "common.addresses": "Addresses",
-  "common.companyLogo": "Company Logo"
+  "common.companyLogo": "Company Logo",
+  "common.mb": "MB"
 }

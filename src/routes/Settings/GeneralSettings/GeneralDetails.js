@@ -223,10 +223,10 @@ class GeneralDetails extends Component {
           <Form.Item label={<IntlMessages id="settings.favicon"/>}
                      extra={faviconName && this.state.logoList.length === 0 ? faviconName : <IntlMessages id="validation.settings.faviconSize"/>}>
             <Upload {...propsFavicon}>
-              <Input placeholder="Choose file..." addonAfter="Browse" style={{width: "270%"}}/>
+              <Input placeholder={messages["common.chooseFile"]} addonAfter={<IntlMessages id="common.browse"/>} style={{width: "270%"}}/>
             </Upload>
           </Form.Item>
-          <Form.Item label="Email">
+          <Form.Item label={<IntlMessages id="common.email"/>}>
             {getFieldDecorator('email', {
               initialValue: email,
               validate: [{
@@ -234,7 +234,7 @@ class GeneralDetails extends Component {
                 rules: [
                   {
                     required: true,
-                    message: 'Please Enter Email!'
+                    message: messages["validation.message.email"]
                   },
                 ],
               }, {
@@ -242,7 +242,7 @@ class GeneralDetails extends Component {
                 rules: [
                   {
                     type: 'email',
-                    message: 'The input is not valid E-mail!',
+                    message: messages["validation.message.emailFormat"],
                   },
                 ],
               }],
@@ -250,29 +250,29 @@ class GeneralDetails extends Component {
               this.setState({email: e.target.value})
             }}/>)}
           </Form.Item>
-          <Form.Item label="Allowed Extensions">
+          <Form.Item label={<IntlMessages id="settings.allowedExtensions"/>}>
             {getFieldDecorator('allowed_ext', {
               initialValue: allowed_ext,
               validateTrigger: 'onBlur',
-              rules: [{required: true, message: 'Please Select Allowed Extensions!'}],
+              rules: [{required: true, message: messages["validation.settings.allowedExt"]}],
             })(<Input type="text" onChange={(e) => {
               this.setState({allowed_ext: e.target.value})
             }}/>)}
           </Form.Item>
-          <Form.Item label="File upload max size">
+          <Form.Item label={<IntlMessages id="settings.fileUploadSize"/>}>
             {getFieldDecorator('file_upload_max_size', {
               initialValue: file_upload_max_size,
               validateTrigger: 'onBlur',
               rules: [
                 {
                   required: true,
-                  message: 'Please Select File upload size!'
+                  message: messages["validation.settings.fileUploadSize"]
                 },
                 {
                   pattern: /^[0-9\b]+$/,
-                  message: 'Please enter only numerical values',
+                  message: messages["validation.message.numericalValues"],
                 }],
-            })(<Input type="text" addonAfter="MB" onChange={(e) => {
+            })(<Input type="text" addonAfter={<IntlMessages id="common.mb"/>} onChange={(e) => {
               this.setState({file_upload_max_size: e.target.value})
             }}/>)}
           </Form.Item>
