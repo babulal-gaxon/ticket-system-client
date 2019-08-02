@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {message, Upload} from "antd";
 import PropTypes from "prop-types";
 import {getTicketFileExtension, getTicketFileSize} from "../../../util/Utills";
+import IntlMessages from "../../../util/IntlMessages";
 
 const {Dragger} = Upload;
 
@@ -99,7 +100,7 @@ class TicketAttachments extends Component {
       <div className="gx-main-layout-content">
         <Dragger {...props}>
           {this.state.fileList.length === 0 ?
-            <span>Drag 'n' drop files to upload</span> : null}
+            <span><IntlMessages id="common.dragNDrop"/></span> : null}
           <aside style={thumbsContainer}>
             {this.onThumbShow()}
           </aside>
