@@ -107,6 +107,8 @@
   "labels.title": "Customer Labels",
   "labels.addNew": "Add New Label",
   "labels.searchLabels": "Enter keywords to search Labels",
+  "labels.editDetail": "Edit Label Details",
+  "labels.setPriority": "Set Priority",
 
 
 
@@ -144,6 +146,8 @@
   "validation.labels.disable": "Are you sure to change the status of selected Label(s) to DISABLED?",
   "validation.labels.delete": "Are you sure to delete the selected Labels?",
   "validation.labels.selectFirst": "Please Select Label(s) first",
+  "validation.labels.name": "Please enter Name!",
+  "validation.labels.description": "Please enter Description!",
 
 
 
@@ -220,5 +224,6 @@
   "common.websiteFormatMessage": "Please enter website in 'http://www.example.com' format",
   "common.uploadLogo": "Upload Logo",
   "common.chooseFile": "Choose File...",
-  "common.browse": "Browse"
+  "common.browse": "Browse",
+  "common.name": "name"
 }

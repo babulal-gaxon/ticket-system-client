@@ -1,6 +1,7 @@
 import {Popconfirm, Tag} from "antd";
 import Permissions from "../../../util/Permissions";
 import React from "react";
+import IntlMessages from "../../../util/IntlMessages";
 
 const onDeletePopUp = (recordId, context) => {
   return (
@@ -10,8 +11,8 @@ const onDeletePopUp = (recordId, context) => {
         context.props.onDeleteLabel({ids: [recordId]});
         context.onGetLabelsList(context.state.current, context.state.itemNumbers, context.state.filterText);
       }}
-      okText="Yes"
-      cancelText="No">
+      okText={<IntlMessages id="common.yes"/>}
+      cancelText={<IntlMessages id="common.no"/>}>
       <i className="icon icon-trash"/>
     </Popconfirm>
   )
@@ -24,7 +25,7 @@ const onEditLabel = (label, context) => {
 const CustomerLabelRow = (context) => {
   return [
     {
-      title: 'Id',
+      title: <IntlMessages id="common.id"/>,
       dataIndex: 'id',
       key: 'id',
       render: (text, record) => {
@@ -32,7 +33,7 @@ const CustomerLabelRow = (context) => {
       },
     },
     {
-      title: 'Name',
+      title: <IntlMessages id="common.name"/>,
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => {
@@ -40,7 +41,7 @@ const CustomerLabelRow = (context) => {
       },
     },
     {
-      title: 'Description',
+      title: <IntlMessages id="common.description"/>,
       dataIndex: 'desc',
       key: 'desc',
       render: (text, record) => {
@@ -48,12 +49,12 @@ const CustomerLabelRow = (context) => {
       },
     },
     {
-      title: 'Status',
+      title: <IntlMessages id="common.status"/>,
       dataIndex: 'status_id',
       key: 'Status',
       render: (text, record) => {
         return <Tag color={record.status === 1 ? "green" : "red"}>
-          {record.status === 1 ? "Active" : "Disabled"}
+          {record.status === 1 ? <IntlMessages id="common.active"/> : <IntlMessages id="common.disabled"/>}
         </Tag>
       },
     },

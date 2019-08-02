@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Form, Input, Modal, Radio} from "antd/lib/index";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {TextArea} = Input;
 
@@ -35,6 +37,7 @@ class AddNewLabel extends Component {
   };
 
   render() {
+    const {messages} = this.props.intl;
     const {getFieldDecorator} = this.props.form;
     const {showAddLabel, onToggleModalState} = this.props;
     const {name, desc, status} = this.state;
@@ -42,27 +45,27 @@ class AddNewLabel extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddLabel}
-          title={this.props.labelId === null ? "Add New Label" : "Edit Label Details"}
+          title={this.props.label === null ? <IntlMessages id="labels.addNew"/> : <IntlMessages id="labels.editDetail"/>}
           onCancel={() => onToggleModalState()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
-              Save
+              <IntlMessages id="common.save"/>
             </Button>,
             <Button key="cancel" onClick={() => onToggleModalState()}>
-              Cancel
+              <IntlMessages id="common.cancel"/>
             </Button>
           ]}>
           <Form layout="vertical">
-            <Form.Item label="Name">
+            <Form.Item label={<IntlMessages id="common.name"/>}>
               {getFieldDecorator('name', {
                 initialValue: name,
                 validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please input Name!'}],
-              })(<Input type="text" autoFocus placeholder="Name" onChange={(e) => {
+                rules: [{required: true, message: messages["validation.labels.name"]}],
+              })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({name: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Description">
+            <Form.Item label={<IntlMessages id="common.description"/>}>
               {getFieldDecorator('description', {
                 initialValue: desc,
                 validate: [{
@@ -70,7 +73,7 @@ class AddNewLabel extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Please Enter Description!'
+                      message: messages["validation.labels.description"]
                     },
                   ],
                 }, {
@@ -78,7 +81,7 @@ class AddNewLabel extends Component {
                   rules: [
                     {
                       max: 250,
-                      message: 'Description length should not exceed 250 characters'
+                      message: messages["common.descriptionLength"]
                     },
                   ],
                 }],
@@ -86,12 +89,12 @@ class AddNewLabel extends Component {
                 this.setState({desc: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label={"Set Priority"}>
+            <Form.Item label={<IntlMessages id="labels.setPriority"/>}>
               <Radio.Group value={status} onChange={(e) => {
                 this.setState({status: e.target.value})
               }}>
-                <Radio value={1}>Active</Radio>
-                <Radio value={0}>Disabled</Radio>
+                <Radio value={1}><IntlMessages id="common.active"/></Radio>
+                <Radio value={0}><IntlMessages id="common.disabled"/></Radio>
               </Radio.Group>
             </Form.Item>
           </Form>
@@ -103,5 +106,5 @@ class AddNewLabel extends Component {
 
 AddNewLabel = Form.create({})(AddNewLabel);
 
-export default AddNewLabel;
+export default injectIntl(AddNewLabel);
 
