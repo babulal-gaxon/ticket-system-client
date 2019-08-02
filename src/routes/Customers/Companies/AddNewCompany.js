@@ -72,6 +72,8 @@ class AddNewCompany extends Component {
           this.onCompanyAdd();
           this.setState({fileList: []})
         })
+      } else {
+        this.props.fetchError(data.errors[0])
       }
     }).catch(function (error) {
       this.props.fetchError(error.message)
@@ -115,7 +117,8 @@ class AddNewCompany extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddNewModal}
-          title={currentCompany === null ? <IntlMessages id="companies.addNew"/> : <IntlMessages id="companies.editDetail"/>}
+          title={currentCompany === null ? <IntlMessages id="companies.addNew"/> :
+            <IntlMessages id="companies.editDetail"/>}
           onCancel={() => onToggleAddCompany()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -135,7 +138,8 @@ class AddNewCompany extends Component {
                 this.setState({company_name: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label={<IntlMessages id="common.website"/>} extra={<IntlMessages id="common.websiteFormatMessage"/>}>
+            <Form.Item label={<IntlMessages id="common.website"/>}
+                       extra={<IntlMessages id="common.websiteFormatMessage"/>}>
               {getFieldDecorator('website', {
                 initialValue: website,
                 validateTrigger: 'onBlur',

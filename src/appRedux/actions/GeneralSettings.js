@@ -1,4 +1,4 @@
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE, SWITCH_LANGUAGE} from "../../constants/ActionTypes";
 import axios from 'util/Api'
 import {
   ADD_CUSTOMER_PANEL_DETAILS,
@@ -16,7 +16,6 @@ import {
   GET_TICKET_SETTINGS
 } from "../../constants/GeneralSettings";
 import {updateGeneralSetting, updateLocaleSetting, updateTicketSetting} from "../../util/Utills";
-import {switchLanguage} from "./Setting";
 
 
 export const onGetGeneralDetails = () => {
@@ -87,7 +86,7 @@ export const onSaveLocalizationDetails = (details) => {
         console.log(" sending data", data.data);
         dispatch({type: ADD_LOCALIZATION_DETAILS, payload: data.data});
         updateLocaleSetting(data.data);
-        switchLanguage(data.data.default_language);
+        dispatch({type: SWITCH_LANGUAGE, payload: data.data.default_language});
         dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});

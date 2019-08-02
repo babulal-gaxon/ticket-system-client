@@ -95,6 +95,7 @@ class AddNewTicket extends Component {
       const data = new FormData();
       data.append('file', file);
       data.append('title', file.name);
+      data.append('type', 'ticket');
       this.onUploadAttachment(data, file);
       return file;
     })
@@ -115,6 +116,8 @@ class AddNewTicket extends Component {
             this.onAddTicket();
           }
         })
+      } else {
+        this.props.fetchError(data.errors[0])
       }
     }).catch(function (error) {
       this.props.fetchError(error.message)
@@ -193,24 +196,26 @@ class AddNewTicket extends Component {
                   {getFieldDecorator('title', {
                     initialValue: title,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message:  messages["validation.message.selectTitle"]}],
+                    rules: [{required: true, message: messages["validation.message.selectTitle"]}],
                   })(<Input placeHolder={messages["common.subject"]} onChange={(e) => {
                     this.setState({title: e.target.value})
                   }}/>)}
                 </Form.Item>
                 {isProductSelectionEnable() ? <Form.Item label={<IntlMessages id="common.product"/>}>
-                  <Select value={product_id}  placeholder={messages["manageTickets.selectProducts"]} onChange={(value) => {
-                    this.setState({product_id: value})
-                  }}>
+                  <Select value={product_id} placeholder={messages["manageTickets.selectProducts"]}
+                          onChange={(value) => {
+                            this.setState({product_id: value})
+                          }}>
                     {formData.products.map(product => {
                       return <Option value={product.id} key={product.id}>{product.title}</Option>
                     })}
                   </Select>
                 </Form.Item> : null}
                 {isDepartmentSelectionEnable() ? <Form.Item label={<IntlMessages id="common.department"/>}>
-                  <Select value={department_id} placeholder={messages["manageTickets.selectDepartments"]} onChange={(value) => {
-                    this.setState({department_id: value})
-                  }}>
+                  <Select value={department_id} placeholder={messages["manageTickets.selectDepartments"]}
+                          onChange={(value) => {
+                            this.setState({department_id: value})
+                          }}>
                     {formData.departments.map(department => {
                       return <Option value={department.id} key={department.id}>{department.name}</Option>
                     })}
@@ -236,7 +241,8 @@ class AddNewTicket extends Component {
                         required: true,
                         message: messages["validation.message.description"]
                       }],
-                  })(<TextArea rows={4} placeHolder={messages["manageTickets.enterDescription"]} className="gx-form-control-lg" onChange={(e) => {
+                  })(<TextArea rows={4} placeHolder={messages["manageTickets.enterDescription"]}
+                               className="gx-form-control-lg" onChange={(e) => {
                     this.setState({content: e.target.value})
                   }}/>)}
                 </Form.Item>
@@ -267,7 +273,8 @@ class AddNewTicket extends Component {
                                  onAssignStaff={this.onAssignStaff}
                 />
                 <div className="gx-mb-3"><IntlMessages id="common.tags"/></div>
-                <Select mode="tags" style={{width: '100%'}} placeholder={messages["manageTickets.addTags"]} onChange={this.onAddTags}
+                <Select mode="tags" style={{width: '100%'}} placeholder={messages["manageTickets.addTags"]}
+                        onChange={this.onAddTags}
                         showSearch onSearch={this.onSearchTags}
                         showArrow={false}
                         notFoundContent={null}>

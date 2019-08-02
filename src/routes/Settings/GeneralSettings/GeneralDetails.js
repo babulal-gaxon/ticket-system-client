@@ -113,6 +113,8 @@ class GeneralDetails extends Component {
             this.setState({faviconList: []})
           })
         }
+      } else {
+        this.props.fetchError(data.errors[0])
       }
     }).catch(function (error) {
       this.props.fetchError(error.message)
@@ -123,7 +125,7 @@ class GeneralDetails extends Component {
     const {name, url, email, allowed_ext, file_upload_max_size, logoList, faviconList, cpp_url, logoName, faviconName} = this.state;
     const {getFieldDecorator} = this.props.form;
     const propsLogo = {
-      accept: ".png",
+      accept: ".png,.svg",
       onRemove: file => {
         this.setState(state => {
           const index = state.logoList.indexOf(file);

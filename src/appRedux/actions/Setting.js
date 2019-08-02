@@ -1,4 +1,4 @@
-import {FETCH_USER_INFO_START, TOGGLE_COLLAPSED_NAV, WINDOW_WIDTH} from "../../constants/ActionTypes";
+import {SWITCH_LANGUAGE, TOGGLE_COLLAPSED_NAV, WINDOW_WIDTH} from "../../constants/ActionTypes";
 import {LAYOUT_TYPE, NAV_STYLE, THEME_COLOR_SELECTION, THEME_TYPE} from "../../constants/ThemeSetting";
 
 
@@ -27,8 +27,6 @@ export function onLayoutTypeChange(layoutType) {
 }
 
 export function switchLanguage(locale) {
-  console.log("switchLanguage", locale)
   return (dispatch) =>
-    dispatch({type: FETCH_USER_INFO_START, payload: locale})
-
+    dispatch({type: SWITCH_LANGUAGE, payload: locale})
 }

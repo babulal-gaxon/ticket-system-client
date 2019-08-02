@@ -75,6 +75,8 @@ class AddNewProduct extends Component {
           this.onProductAdd();
           this.setState({fileList: []})
         })
+      } else {
+        this.props.fetchError(data.errors[0])
       }
     }).catch(function (error) {
       this.props.fetchError(error.message)
