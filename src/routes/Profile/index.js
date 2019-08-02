@@ -1,16 +1,15 @@
 import React, {Component} from "react"
-import {Button, Col, Form, Input, Modal, Radio, Row} from "antd/lib/index";
+import {Button, Col, Form, Input, Row} from "antd/lib/index";
 import PropTypes from "prop-types";
 import Widget from "../../components/Widget";
 import {connect} from "react-redux";
-import {onAddProfileImage, onBulkDeleteStaff, onEditSupportStaff} from "../../appRedux/actions/SupportStaff";
+import {onAddProfileImage} from "../../appRedux/actions/SupportStaff";
 import {onGetDepartments} from "../../appRedux/actions/Departments";
 import {Divider, Select} from "antd";
 import ImageUpload from "../Staff/AddNewStaff/ImageUpload";
-import {onGetRoles} from "../../appRedux/actions/RolesAndPermissions";
+import {getUserProfile, updateUserProfile} from "../../appRedux/actions";
 
 const {Option} = Select;
-const {confirm} = Modal;
 
 class Profile extends Component {
   constructor(props) {
@@ -22,17 +21,14 @@ class Profile extends Component {
       mobile: "",
       hourly_rate: "",
       departments_ids: [],
-      account_status: 1,
       profile_pic: null,
-      role_id: null,
       designation: ""
     };
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
     const authUser = nextProps.authUser;
-    console.log("authUser", authUser);
-    const {id, first_name, last_name, email, mobile, hourly_rate, account_status, role_id, avatar, designation} = authUser;
+    const {id, first_name, last_name, email, mobile, hourly_rate, avatar, designation} = authUser;
     const department_ids = authUser.departments ? authUser.departments.map(department => {
       return department.id
     }) : [];
@@ -43,25 +39,23 @@ class Profile extends Component {
       email: email,
       mobile: mobile,
       hourly_rate: hourly_rate ? parseInt(hourly_rate) : "",
-      account_status: account_status,
       departments_ids: department_ids,
-      role_id: role_id,
       profile_pic: avatar ? avatar.id : null,
       designation: designation
     });
   }
 
   componentDidMount() {
+    this.props.getUserProfile();
     this.props.onGetDepartments();
-    this.props.onGetRoles();
   }
 
-  onReturnStaffScreen = () => {
+  goPreviousScreen = () => {
     this.props.history.goBack();
   };
 
   onSaveProfile = () => {
-    this.props.onEditSupportStaff({...this.state}, this.props.history);
+    this.props.updateUserProfile({...this.state}, this.props.history);
   };
 
   updateProfilePic = (profile_pic) => {
@@ -85,19 +79,6 @@ class Profile extends Component {
     this.setState({departments_ids: updatedDepartments})
   };
 
-  onReset = () => {
-    this.setState({
-      first_name: "",
-      last_name: "",
-      email: "",
-      mobile: "",
-      hourly_rate: "",
-      department_ids: [],
-      account_status: 1,
-      role_id: null
-    })
-  };
-
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
@@ -106,27 +87,9 @@ class Profile extends Component {
     });
   };
 
-  onSelectRole = value => {
-    this.setState({role_id: value})
-  };
-
-  showDeleteConfirm = () => {
-    confirm({
-      title: 'Are you sure you want to delete this profile ?',
-      okText: "Yes, Delete Profile",
-      cancelText: "Cancel",
-      onOk: () => {
-        this.props.onBulkDeleteStaff({ids: this.props.authUser.id}, this.props.history)
-      },
-      onCancel() {
-        console.log('Cancel');
-      },
-    });
-  };
-
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {mobile, hourly_rate, account_status, departments_ids, role_id, first_name, last_name, email, designation} = this.state;
+    const {mobile, hourly_rate, departments_ids, first_name, last_name, email, designation} = this.state;
     const deptOptions = this.onDepartmentSelectOption();
     return (
       <div className="gx-main-layout-content">
@@ -191,20 +154,7 @@ class Profile extends Component {
                     this.setState({phone: e.target.value})
                   }}/>)}
                 </Form.Item>
-                <Form.Item label="Role">
-                  {getFieldDecorator('role_id', {
-                    initialValue: role_id,
-                    validateTrigger: 'onBlur',
-                    rules: [{
-                      required: true,
-                      message: 'Please Select role!'
-                    }],
-                  })(<Select onChange={this.onSelectRole} placeholder="Select a Role">
-                    {this.props.roles.map(role => {
-                      return <Option value={role.id} key={role.id}>{role.name}</Option>
-                    })}
-                  </Select>)}
-                </Form.Item>
+
                 <Form.Item label="Hourly Rate">
                   {getFieldDecorator('hourly_rate', {
                     initialValue: hourly_rate,
@@ -233,20 +183,11 @@ class Profile extends Component {
                     {deptOptions}
                   </Select>
                 </Form.Item>
-                <Form.Item label="Status">
-                  <Radio.Group value={account_status} onChange={(e) => {
-                    this.setState({account_status: e.target.value})
-                  }}>
-                    <Radio value={1}>Active</Radio>
-                    <Radio value={0}>Disabled</Radio>
-                  </Radio.Group>
-                </Form.Item>
               </Form>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
               <ImageUpload onAddProfileImage={this.props.onAddProfileImage}
-                           context={this}
-                           imageAvatar={this.state.imageAvatar}/>
+                           context={this} imageAvatar={this.state.imageAvatar}/>
             </Col>
           </Row>
           <Divider/>
@@ -255,18 +196,10 @@ class Profile extends Component {
                 <Button type="primary" onClick={this.onValidationCheck} style={{width: 150}}>
                   Save
                 </Button>
-              {this.props.authUser === null ?
-                <Button type="primary" onClick={this.onReset} style={{width: 150}}>
-                  Reset
-                </Button> : null}
-              <Button onClick={this.onReturnStaffScreen} style={{width: 150}}>
+                <Button onClick={this.goPreviousScreen} style={{width: 150}}>
                   Cancel
                 </Button>
             </span>
-            {this.props.authUser !== null ?
-              <span>
-              <Button type="danger" ghost style={{width: 150}} onClick={this.showDeleteConfirm}>Delete</Button>
-            </span> : null}
           </div>
         </Widget>
       </div>
@@ -276,19 +209,17 @@ class Profile extends Component {
 
 Profile = Form.create({})(Profile);
 
-const mapStateToProps = ({departments, auth, rolesAndPermissions}) => {
+const mapStateToProps = ({departments, auth}) => {
   const {authUser} = auth;
   const {dept} = departments;
-  const {roles} = rolesAndPermissions;
-  return {dept, authUser, roles};
+  return {dept, authUser};
 };
 
 export default connect(mapStateToProps, {
-  onEditSupportStaff,
+  updateUserProfile,
+  getUserProfile,
   onGetDepartments,
   onAddProfileImage,
-  onGetRoles,
-  onBulkDeleteStaff
 })(Profile);
 
 Profile.defaultProps = {
@@ -301,5 +232,5 @@ Profile.propTypes = {
   dept: PropTypes.array,
   authUser: PropTypes.object,
   roles: PropTypes.array,
-  onEditSupportStaff: PropTypes.func
+  updateUserProfile: PropTypes.func
 };

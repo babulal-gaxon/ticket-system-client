@@ -11,6 +11,7 @@ import {
   TAB_SIZE,
   THEME_TYPE_LITE
 } from "../../constants/ThemeSetting";
+import {getCompanyLogo} from "../../util/Utills";
 
 
 class SidebarLogo extends Component {
@@ -43,7 +44,8 @@ class SidebarLogo extends Component {
         </div> : null}
 
         <Link to="/" className="gx-site-logo">
-          <img alt="" src={require("assets/images/logo.svg")}/>
+          {getCompanyLogo() ? <img alt="" src={getCompanyLogo()}/> :
+            <img alt="" src={require("assets/images/logo.svg")}/>}
         </Link>
 
       </div>

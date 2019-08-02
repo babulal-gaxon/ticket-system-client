@@ -43,7 +43,7 @@ export const onUserSignIn = ({email, password}) => {
         dispatch({type: USER_TOKEN_SET, payload: data.token});
         dispatch({type: USER_DATA, payload: data.data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.message});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -131,7 +131,25 @@ export const getUserProfile = () => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_DATA, payload: data.data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.message});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const updateUserProfile = (profile) => {
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.put('/user/profile', profile).then(({data}) => {
+      console.info("updateUserProfile: ", data);
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: USER_DATA, payload: data.data});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -156,7 +174,7 @@ export const onResetPassword = ({email}) => {
         dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         console.info("payload: data.errors[0]", data.errors[0]);
-        dispatch({type: FETCH_ERROR, payload: data.errors.email});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -180,7 +198,7 @@ export const onSetNewPassword = (token, data, history) => {
         dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         console.info("payload: data.errors[0]", data.errors[0]);
-        dispatch({type: FETCH_ERROR, payload: data.errors.email});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
