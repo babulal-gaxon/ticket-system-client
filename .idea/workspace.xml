@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="22660aa2-fcdc-4713-8a0a-0d397dd58555" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/RoleRow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/RoleRow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -20,60 +20,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/en_US.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="236" column="24" selection-start-line="236" selection-start-column="24" selection-end-line="236" selection-end-column="24" />
+            <state relative-caret-position="362">
+              <caret line="168" column="34" selection-start-line="168" selection-start-column="23" selection-end-line="168" selection-end-column="34" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/RoleRow.js">
+        <entry file="file://$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="51" column="64" selection-start-line="51" selection-start-column="64" selection-end-line="51" selection-end-column="64" />
-              <folding>
-                <element signature="e#0#37#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="888">
-              <caret line="205" column="98" selection-start-line="205" selection-start-column="98" selection-end-line="205" selection-end-column="98" />
+            <state relative-caret-position="272">
+              <caret line="221" column="141" selection-start-line="221" selection-start-column="141" selection-end-line="221" selection-end-column="141" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
-                <element signature="n#!!block;n#componentDidMount#0;n#RolesList#0" />
-                <element signature="e#1078#1211#0" />
-                <element signature="e#1244#1395#0" />
-                <element signature="e#1436#1479#0" />
-                <element signature="e#1514#1686#0" />
-                <element signature="e#1718#2062#0" />
-                <element signature="e#2094#2345#0" />
-                <element signature="e#2380#2601#0" />
-                <element signature="e#2631#2734#0" />
-                <element signature="e#3984#4139#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/Customers/CustomersLabel/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="253" column="98" lean-forward="true" selection-start-line="251" selection-start-column="19" selection-end-line="253" selection-end-column="98" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-                <element signature="e#1158#1295#0" />
-                <element signature="e#1327#1393#0" />
-                <element signature="e#1425#1734#0" />
-                <element signature="e#1766#1986#0" />
-                <element signature="e#2019#2170#0" />
-                <element signature="e#2211#2254#0" />
-                <element signature="e#2284#2343#0" />
               </folding>
             </state>
           </provider>
@@ -83,13 +42,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getFormattedDate</find>
-      <find>Filter Customers</find>
-      <find>more</find>
-      <find>Filter by Company</find>
-      <find>Select Company</find>
-      <find>Select COm</find>
-      <find>companyId</find>
       <find>Select Labels</find>
       <find>company_id</find>
       <find>Select Dep</find>
@@ -103,12 +55,23 @@
       <find>Related Tickets</find>
       <find>Type to search Co</find>
       <find>Company Members</find>
-      <find>Company Name</find>
       <find>Customers</find>
-      <find>Labels</find>
       <find>Name</find>
       <find>Description</find>
       <find>Please enter Description</find>
+      <find>depar</find>
+      <find>Labels</find>
+      <find>Priorities</find>
+      <find>Responses</find>
+      <find>Roles</find>
+      <find>Settin</find>
+      <find>Staffs</find>
+      <find>Tickets</find>
+      <find>Type to se</find>
+      <find>Member</find>
+      <find>Settings</find>
+      <find>Company Name</find>
+      <find>Company logo</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -122,7 +85,6 @@
         <option value="$PROJECT_DIR$/src/routes/SetUp/Products/AddNewProduct.js" />
         <option value="$PROJECT_DIR$/src/routes/Staff/AddNewStaff/ImageUpload.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/TicketList.js" />
-        <option value="$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/TicketAssigning.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/TicketAttachments.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js" />
@@ -148,9 +110,13 @@
         <option value="$PROJECT_DIR$/src/routes/Customers/CustomersLabel/index.js" />
         <option value="$PROJECT_DIR$/src/routes/Customers/CustomersLabel/CustomerLabelRow.js" />
         <option value="$PROJECT_DIR$/src/routes/Customers/CustomersLabel/AddNewLabel.js" />
-        <option value="$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js" />
-        <option value="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" />
         <option value="$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/RoleRow.js" />
+        <option value="$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/StaffWithSelectedRole.js" />
+        <option value="$PROJECT_DIR$/src/routes/Settings/GeneralSettings/index.js" />
+        <option value="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" />
+        <option value="$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js" />
       </list>
     </option>
   </component>
@@ -187,29 +153,6 @@
               <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="Customers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="Customers" type="462c0819:PsiDirectoryNode" />
-              <item name="AllCustomers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="Customers" type="462c0819:PsiDirectoryNode" />
-              <item name="CustomersLabel" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
               <item name="ManageTickets" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -219,21 +162,6 @@
               <item name="routes" type="462c0819:PsiDirectoryNode" />
               <item name="ManageTickets" type="462c0819:PsiDirectoryNode" />
               <item name="AddNewTicket" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="RolesAndPermissions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="RolesAndPermissions" type="462c0819:PsiDirectoryNode" />
-              <item name="RolesList" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -300,7 +228,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1564721147704</updated>
-      <workItem from="1564721151385" duration="23312000" />
+      <workItem from="1564721151385" duration="28153000" />
     </task>
     <task id="LOCAL-00003" summary="working on localization">
       <created>1564726805770</created>
@@ -344,11 +272,25 @@
       <option name="project" value="LOCAL" />
       <updated>1564746729293</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="working on localization">
+      <created>1564747095336</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1564747095336</updated>
+    </task>
+    <task id="LOCAL-00010" summary="working on localization">
+      <created>1564751297059</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1564751297059</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25901000" />
+    <option name="totallyTimeSpent" value="30742000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -547,50 +489,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/TicketList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="146" column="41" lean-forward="true" selection-start-line="146" selection-start-column="41" selection-end-line="146" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/SetUp/Products/AddNewProduct.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="115" column="6" lean-forward="true" selection-start-line="87" selection-start-column="4" selection-end-line="115" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="133" column="12" lean-forward="true" selection-start-line="133" selection-start-column="12" selection-end-line="133" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="527" column="52" selection-start-line="527" selection-start-column="39" selection-end-line="527" selection-end-column="52" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/StaffWithSelectedRole.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="55" selection-start-line="35" selection-start-column="55" selection-end-line="35" selection-end-column="55" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -608,16 +510,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="61" column="56" selection-start-line="61" selection-start-column="18" selection-end-line="61" selection-end-column="56" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/TicketAttachments.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="107" column="12" lean-forward="true" selection-start-line="107" selection-start-column="12" selection-end-line="107" selection-end-column="12" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -690,17 +582,6 @@
           <caret line="28" column="30" lean-forward="true" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
           <folding>
             <element signature="e#0#61#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-27">
-          <caret line="152" column="106" selection-start-line="152" selection-start-column="53" selection-end-line="152" selection-end-column="106" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <element signature="n#!!block;n#componentDidMount#0;n#AddNewTicket#0" />
           </folding>
         </state>
       </provider>
@@ -958,10 +839,86 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/RoleRow.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="87">
+          <caret line="51" column="64" selection-start-line="51" selection-start-column="64" selection-end-line="51" selection-end-column="64" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="492">
+          <caret line="515" column="50" selection-start-line="515" selection-start-column="50" selection-end-line="515" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+            <element signature="n#!!block;n#constructor#0;n#AddNewRole#0" />
+            <element signature="e#3340#3399#0" />
+            <element signature="e#3452#3514#0" />
+            <element signature="e#3561#3617#0" />
+            <element signature="e#3667#3728#0" />
+            <element signature="e#3779#3839#0" />
+            <element signature="e#3886#3942#0" />
+            <element signature="e#3992#4051#0" />
+            <element signature="e#4099#4156#0" />
+            <element signature="e#4204#4261#0" />
+            <element signature="e#4313#4371#0" />
+            <element signature="e#4408#4825#0" />
+            <element signature="e#4855#5364#0" />
+            <element signature="e#5396#5592#0" />
+            <element signature="e#5627#5832#0" />
+            <element signature="e#5861#6044#0" />
+            <element signature="e#6077#6275#0" />
+            <element signature="e#6307#6503#0" />
+            <element signature="e#6531#6711#0" />
+            <element signature="e#6742#6934#0" />
+            <element signature="e#6963#7147#0" />
+            <element signature="e#7176#7358#0" />
+            <element signature="e#7388#7576#0" />
+            <element signature="e#7608#7655#0" />
+            <element signature="e#7681#7727#0" />
+            <element signature="e#7758#7874#0" />
+            <element signature="e#10539#11953#0" />
+            <element signature="e#11254#11924#0" />
+            <element signature="e#11974#13290#0" />
+            <element signature="e#12583#13261#0" />
+            <element signature="e#13311#14553#0" />
+            <element signature="e#13882#14524#0" />
+            <element signature="e#14574#15871#0" />
+            <element signature="e#15176#15842#0" />
+            <element signature="e#15892#17181#0" />
+            <element signature="e#16487#17152#0" />
+            <element signature="e#17202#18435#0" />
+            <element signature="e#17769#18406#0" />
+            <element signature="e#18456#19731#0" />
+            <element signature="e#19044#19702#0" />
+            <element signature="e#19752#20999#0" />
+            <element signature="e#20326#20970#0" />
+            <element signature="e#21020#22264#0" />
+            <element signature="e#21595#22235#0" />
+            <element signature="e#22285#23550#0" />
+            <element signature="e#22867#23521#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/StaffWithSelectedRole.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="41" column="56" lean-forward="true" selection-start-line="41" selection-start-column="56" selection-end-line="41" selection-end-column="56" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="888">
-          <caret line="205" column="98" selection-start-line="205" selection-start-column="98" selection-end-line="205" selection-end-column="98" />
+        <state relative-caret-position="-678">
+          <caret line="149" column="40" selection-start-line="149" selection-start-column="40" selection-end-line="149" selection-end-column="40" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
             <element signature="n#!!block;n#componentDidMount#0;n#RolesList#0" />
@@ -978,19 +935,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/en_US.json">
+    <entry file="file://$PROJECT_DIR$/src/routes/Settings/GeneralSettings/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="236" column="24" selection-start-line="236" selection-start-column="24" selection-end-line="236" selection-end-column="24" />
+        <state relative-caret-position="459">
+          <caret line="76" column="12" lean-forward="true" selection-start-line="76" selection-start-column="12" selection-end-line="76" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/RoleRow.js">
+    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/TicketList.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="51" column="64" selection-start-line="51" selection-start-column="64" selection-end-line="51" selection-end-column="64" />
+        <state relative-caret-position="-1462">
+          <caret line="61" column="50" lean-forward="true" selection-start-line="61" selection-start-column="50" selection-end-line="61" selection-end-column="50" />
           <folding>
-            <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="20" column="38" lean-forward="true" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+            <element signature="n#!!block;n#componentDidMount#0;n#AddNewTicket#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/TicketAttachments.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="75" column="25" lean-forward="true" selection-start-line="75" selection-start-column="25" selection-end-line="75" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/en_US.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="168" column="34" selection-start-line="168" selection-start-column="23" selection-end-line="168" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="221" column="141" selection-start-line="221" selection-start-column="141" selection-end-line="221" selection-end-column="141" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>

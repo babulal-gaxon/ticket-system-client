@@ -212,14 +212,14 @@ class GeneralDetails extends Component {
               }],
             })(<Input type="text" onChange={(e) => this.setState({cpp_url: e.target.value})}/>)}
           </Form.Item>
-          <Form.Item label={<IntlMessages id="settings.clientURL"/>}
-                     extra={logoName && this.state.logoList.length === 0 ? logoName : "Size should be 100X26px, Maximum image size 50kb"}>
+          <Form.Item label={<IntlMessages id="common.companyLogo"/>}
+                     extra={logoName && this.state.logoList.length === 0 ? logoName : <IntlMessages id="validation.settings.logoSize"/>}>
             <Upload {...propsLogo}>
-              <Input placeholder="Choose file..." addonAfter="Browse" style={{width: "270%"}}/>
+              <Input placeholder={messages["common.chooseFile"]} addonAfter={<IntlMessages id="common.browse"/>} style={{width: "270%"}}/>
             </Upload>
           </Form.Item>
-          <Form.Item label="Favicon"
-                     extra={faviconName && this.state.logoList.length === 0 ? faviconName : "Size should be 16X16px, Maximum image size 50kb"}>
+          <Form.Item label={<IntlMessages id="settings.favicon"/>}
+                     extra={faviconName && this.state.logoList.length === 0 ? faviconName : <IntlMessages id="validation.settings.faviconSize"/>}>
             <Upload {...propsFavicon}>
               <Input placeholder="Choose file..." addonAfter="Browse" style={{width: "270%"}}/>
             </Upload>

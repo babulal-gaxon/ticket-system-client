@@ -127,6 +127,7 @@
   "settings.generalSetup": "General Setup",
   "settings.companyWebsite": "Company Website",
   "settings.clientURL": "Client URL",
+  "settings.favicon": "Favicon",
 
 
 
@@ -164,6 +165,8 @@
   "validation.roles.name": "Please enter Role name!",
   "validation.settings.companyURL": "Please enter Company Website!",
   "validation.settings.clientURL": "Please select Client URL",
+  "validation.settings.logoSize": "Size should be 100X26px, Maximum image size 50kb",
+  "validation.settings.faviconSize": "Size should be 16X16px, Maximum image size 50kb",
 
 
 
