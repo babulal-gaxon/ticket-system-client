@@ -49,6 +49,24 @@
   "manageTickets.searchTickets": "Search Tickets Here",
   "manageTickets.ticketDetail": "Ticket Detail",
   "manageTickets.assignTo": "Assign To",
+  "manageTickets.message.delete": "Are you sure to Archive the selected Ticket(s)?",
+  "manageTickets.message.selectFirst": "Please Select Ticket(s) first",
+  "manageTickets.filterBar.filterTickets": "Filter Tickets",
+  "manageTickets.filterBar.filterByDate": "Filter By Date",
+  "manageTickets.filterBar.byArchived": "Show Archived Tickets",
+  "manageTickets.filterBar.byStaff": "Filter By Staff",
+  "manageTickets.filterBar.searchStaff": "Type to search Staff",
+  "manageTickets.filterBar.byCustomer": "Select Customer",
+  "manageTickets.filterBar.searchCustomer": "Type to search Customers",
+  "manageTickets.filterBar.searchPriority": "Type to search Priority",
+  "manageTickets.filterBar.searchStatus": "Type to search Status",
+  "manageTickets.createTicket": "Create Ticket",
+
+
+
+
+
+
   "common.addNew": "Add New",
   "common.bulkActions": "Bulk Actions",
   "common.archive": "Archive",
@@ -60,6 +78,10 @@
   "common.priority": "Priority",
   "common.notAssigned": "Not Assigned",
   "common.showing": "Showing",
-  "common.of": "Of",
-  "common.items": "Items"
+  "common.of": "of",
+  "common.items": "Items",
+  "common.from": "From:",
+  "common.to": "To:",
+  "common.reset": "reset",
+  "common.viewLess": "View Less"
 }

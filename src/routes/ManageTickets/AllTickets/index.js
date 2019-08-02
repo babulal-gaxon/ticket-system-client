@@ -9,6 +9,8 @@ import {connect} from "react-redux";
 import FilterBar from "./FilterBar";
 import PropTypes from "prop-types";
 import TicketRow from "./TicketRow";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const Option = Select.Option;
 const Search = Input.Search;
@@ -61,6 +63,7 @@ class AllTickets extends Component {
   onToggleShowMoreStaff = () => {
     this.setState({showMoreStaff: !this.state.showMoreStaff});
   };
+
   onSideBarActive = () => {
     this.setState({sideBarActive: !this.state.sideBarActive});
   };
@@ -120,9 +123,10 @@ class AllTickets extends Component {
   };
 
   onShowBulkDeleteConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedTickets.length !== 0) {
       confirm({
-        title: "Are you sure to delete the selected Ticket(s)?",
+        title: messages["manageTickets.message.delete"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedTickets
@@ -133,7 +137,7 @@ class AllTickets extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Ticket(s) first",
+        title: messages["manageTickets.message.selectFirst"],
         onOk() {
         },
       });
@@ -145,13 +149,13 @@ class AllTickets extends Component {
       <Menu>
         {(Permissions.canTicketView()) ?
           <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
-            Archive
+            <IntlMessages id="common.archive"/>
           </Menu.Item> : null}
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        Bulk Actions <Icon type="down"/>
+        <IntlMessages id="common.bulkActions"/> <Icon type="down"/>
       </Button>
     </Dropdown>
   };
@@ -167,20 +171,20 @@ class AllTickets extends Component {
     const menu = (
       <Menu>
         <Menu.Item key="earliest" value="earliest" onClick={(e) => this.onSetSortParam(e.key)}>
-          By Earliest
+          <IntlMessages id="manageTickets.sortByEarliest"/>
         </Menu.Item>
         <Menu.Item key="latest" onClick={(e) => this.onSetSortParam(e.key)}>
-          By latest
+          <IntlMessages id="manageTickets.sortByLatest"/>
         </Menu.Item>
         <Menu.Item key="priority" onClick={(e) => this.onSetSortParam(e.key)}>
-          By Highest Priority
+          <IntlMessages id="manageTickets.sortByPriority"/>
         </Menu.Item>
       </Menu>
     );
     return (
       <Dropdown overlay={menu} trigger={['click']}>
         <Button>
-          Sort By <Icon type="down"/>
+          <IntlMessages id="common.archive"/> <Icon type="down"/>
         </Button>
       </Dropdown>
     )
@@ -194,6 +198,7 @@ class AllTickets extends Component {
   };
 
   render() {
+    const {messages} = this.props.intl;
     const {current, filterText, itemNumbers, sortParam, endDate, selectedStaff, selectedCustomers, selectedPriorities, selectedStatuses, archive, startDate} = this.state;
     const {selectedRowKeys} = this.state;
     const {tickets, filterData, customersList} = this.props;
@@ -211,20 +216,21 @@ class AllTickets extends Component {
       <div className={`gx-main-content ${this.state.sideBarActive ? "gx-main-layout-has-sider" : ""}`}>
         <div className="gx-main-layout-content">
           <Widget styleName="gx-card-filter">
-            <h4 className="gx-widget-heading">Tickets</h4>
+            <h4 className="gx-widget-heading"><IntlMessages id="manageTickets.tickets"/></h4>
             <Breadcrumb className="gx-mb-4">
               <Breadcrumb.Item>
-                <Link to="/manage-tickets/all-tickets">Manage Tickets</Link>
+                <Link to="/manage-tickets/all-tickets"><IntlMessages id="sidebar.dashboard.manage.tickets"/></Link>
               </Breadcrumb.Item>
               <Breadcrumb.Item>
-                <Link to="/manage-tickets/all-tickets" className="gx-text-primary">Tickets</Link>
+                <Link to="/manage-tickets/all-tickets" className="gx-text-primary"><IntlMessages
+                  id="manageTickets.tickets"/></Link>
               </Breadcrumb.Item>
             </Breadcrumb>
             <div className="gx-d-flex gx-justify-content-between">
               <div className="gx-d-flex">
                 {Permissions.canTicketAdd() ?
                   <Button type="primary" onClick={this.onAddButtonClick}>
-                    Add New
+                    <IntlMessages id="common.addNew"/>
                   </Button>
                   : null}
                 <span>{this.onSelectOption()}</span>
@@ -234,7 +240,7 @@ class AllTickets extends Component {
                   {this.onSortDropdown()}
                 </div>
                 <Search
-                  placeholder="Search tickets here"
+                  placeholder={messages["manageTickets.searchTickets"]}
                   style={{width: 350}}
                   value={filterText}
                   onChange={this.onFilterTextChange}/>
@@ -265,7 +271,9 @@ class AllTickets extends Component {
                      pageSize: itemNumbers,
                      current: current,
                      total: this.props.totalItems,
-                     showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                     showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
+                       <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
+                       <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
                      onChange: this.onPageChange
                    }}
                    className="gx-table-responsive"
@@ -319,7 +327,7 @@ export default connect(mapStateToProps, {
   onSearchCustomers,
   onDeleteTicket,
   onGetFilterOptions
-})(AllTickets)
+})(injectIntl(AllTickets))
 ;
 
 AllTickets.defaultProps = {

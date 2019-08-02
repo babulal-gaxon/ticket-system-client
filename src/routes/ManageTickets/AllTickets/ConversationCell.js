@@ -4,6 +4,7 @@ import Widget from "../../../components/Widget";
 import {Avatar} from "antd";
 import PropTypes from "prop-types";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
+import {getFormattedDate} from "../../../util/Utills";
 
 
 const ConversationCell = ({conversation}) => {
@@ -21,7 +22,7 @@ const ConversationCell = ({conversation}) => {
       <div className="gx-chat-toto-info">
         <div className="gx-flex-column">
           <div className="gx-name gx-mr-2">{conversation.author.display_name}</div>
-          <div className="gx-time gx-text-muted">{moment(conversation.created_at.date).format('LLL')}</div>
+          <div className="gx-time gx-text-muted">{getFormattedDate(conversation.created_at.date)}</div>
         </div>
         <div className="gx-message gx-my-2">{conversation.message}</div>
         <div className="gx-d-flex">
