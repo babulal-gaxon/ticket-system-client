@@ -84,7 +84,7 @@ export const getFormattedTime = (time) => {
   return moment(time).format("hh:mm A");
 };
 export const getFormattedDateTime = (timeStamp) => {
-  return timeStamp//getFormattedDate(timeStamp) + " " + getFormattedTime(timeStamp);
+  return getFormattedDate(timeStamp) + " " + getFormattedTime(timeStamp);
 };
 
 export const getFileExtension = () => {
