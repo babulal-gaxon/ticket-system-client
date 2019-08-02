@@ -1,6 +1,9 @@
-import moment from "moment";
 import {MEDIA_BASE_URL} from "../constants/ActionTypes";
 
+const moment = require('moment-timezone');
+const timeZone = moment.tz.guess();
+moment.tz.setDefault("Africa/Bissau");
+console.log("timeZone", timeZone, moment.tz.guess());
 let userSetting = {
   "ticket": {
     "enable_service_selection": "1",
@@ -73,15 +76,20 @@ export const updateTicketSetting = (locale) => {
 export const setUserSetting = (setting) => {
   userSetting = setting;
 };
+
+const convertToGMT = (date) => {
+  console.log("date=>>", date);
+  return date.replace(" ", "T").replace(".000000", "Z")
+};
 export const getFormattedDate = (date) => {
-  return moment(date).format(userSetting.locale.date_format.toUpperCase());
+  return moment.tz(convertToGMT(date), timeZone).format(userSetting.locale.date_format.toUpperCase());
 };
 export const getFormattedTime = (time) => {
   const is24Hr = userSetting.locale.time_format === "24 Hours";
   if (is24Hr) {
-    return moment(time).format("HH:mm");
+    return moment(convertToGMT(time)).tz(timeZone).format("HH:mm");
   }
-  return moment(time).format("hh:mm A");
+  return moment(convertToGMT(time)).tz(timeZone).format("hh:mm A");
 };
 export const getFormattedDateTime = (timeStamp) => {
   return getFormattedDate(timeStamp) + " " + getFormattedTime(timeStamp);
