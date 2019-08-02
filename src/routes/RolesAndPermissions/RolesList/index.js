@@ -147,6 +147,7 @@ class RolesList extends Component {
   render() {
     const {current, totalItems, itemNumbers} = this.state;
     const roles = this.props.roles;
+    const {messages}  = this.props.intl;
     const selectedRowKeys = this.state.selectedRowKeys;
     let ids;
     const rowSelection = {

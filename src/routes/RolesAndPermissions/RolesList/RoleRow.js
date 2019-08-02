@@ -2,6 +2,7 @@ import {Popconfirm, Tag} from "antd";
 import Permissions from "../../../util/Permissions";
 import React from "react";
 import {getFormattedDate} from "../../../util/Utills";
+import IntlMessages from "../../../util/IntlMessages";
 
 
 const onDeletePopUp = (recordId, context) => {
@@ -11,23 +12,23 @@ const onDeletePopUp = (recordId, context) => {
       context.props.onBulkDeleteRoles({ids: [recordId]});
       context.onGetRolesData(context.state.current, context.state.itemNumbers, context.state.filterText)
     }}
-    okText="Yes"
-    cancelText="No">
+    okText={<IntlMessages id="common.yes"/>}
+    cancelText={<IntlMessages id="common.no"/>}>
     <i className="icon icon-trash"/>
   </Popconfirm>
 };
 const RoleRow = (context) => {
   return [
     {
-      title: 'Role Name',
-      dataIndex: 'id',
-      key: 'id',
+      title: <IntlMessages id="role.name"/>,
+      dataIndex: 'name',
+      key: 'name',
       render: (text, record) => {
         return <span className="gx-text-grey">{record.name}</span>
       },
     },
     {
-      title: 'Last Update',
+      title: <IntlMessages id="common.lastUpdate"/>,
       dataIndex: 'lastUpdate',
       key: 'lastUpdate',
       render: (text, record) => {
@@ -35,7 +36,7 @@ const RoleRow = (context) => {
       },
     },
     {
-      title: 'Users',
+      title: <IntlMessages id="common.users"/>,
       dataIndex: 'users',
       key: 'users',
       render: (text, record) => {
@@ -43,12 +44,12 @@ const RoleRow = (context) => {
       },
     },
     {
-      title: 'Status',
+      title:<IntlMessages id="common.status"/>,
       dataIndex: 'status',
       key: 'status',
       render: (text, record) => {
         return <Tag color={record.status === 1 ? "green" : "red"}>
-          {record.status === 1 ? "Active" : "Disabled"}
+          {record.status === 1 ? <IntlMessages id="common.active"/> : <IntlMessages id="common.disabled"/>}
         </Tag>
       },
     },

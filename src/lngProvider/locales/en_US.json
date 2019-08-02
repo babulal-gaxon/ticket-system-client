@@ -115,6 +115,7 @@
   "roles.title": "Roles & Permissions",
   "roles.addNew": "Add New Role",
   "roles.searchPlaceHolder": "Enter keywords to search Roles",
+  "roles.name": "Role Name",
 
 
 
@@ -231,5 +232,7 @@
   "common.uploadLogo": "Upload Logo",
   "common.chooseFile": "Choose File...",
   "common.browse": "Browse",
-  "common.name": "name"
+  "common.name": "name",
+  "common.lastUpdate": "Last Update",
+  "common.users": "Users"
 }
