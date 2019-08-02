@@ -13,6 +13,8 @@ import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import RoleRow from "./RoleRow";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 const ButtonGroup = Button.Group;
 const Option = Select.Option;
@@ -94,9 +96,10 @@ class RolesList extends Component {
 
 
   showBulkDeleteConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedRoles.length !== 0) {
       confirm({
-        title: "Are you sure to delete the selected Role(s)?",
+        title: messages["roles.message.delete"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedRoles
@@ -108,7 +111,7 @@ class RolesList extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Role(s) first",
+        title: messages["roles.message.selectFirst"],
         onOk() {
         },
       });
@@ -120,17 +123,17 @@ class RolesList extends Component {
       <Menu>
         {Permissions.canRoleDelete() ?
           <Menu.Item key="1" onClick={this.showBulkDeleteConfirm}>
-            Archive
+            <IntlMessages id="common.archive"/>
           </Menu.Item> : null}
         {Permissions.canRoleDelete() ?
           <Menu.Item key="2" onClick={this.showBulkDeleteConfirm}>
-            Delete
+            <IntlMessages id="common.delete"/>
           </Menu.Item> : null}
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        Bulk Actions <Icon type="down"/>
+        <IntlMessages id="common.bulkActions"/> <Icon type="down"/>
       </Button>
     </Dropdown>
   };
@@ -159,23 +162,23 @@ class RolesList extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading">Roles & Permission</h4>
+          <h4 className="gx-widget-heading"><IntlMessages id="roles.title"/></h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item className="gx-text-primary"> <Link to="/roles-permissions/all" className="gx-text-primary">
-              Roles & Permission</Link></Breadcrumb.Item>
+              <IntlMessages id="roles.title"/></Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
               {(Permissions.canRoleAdd()) ?
                 <Button type="primary" className="gx-btn-lg"
                         onClick={this.onAddButtonClick}>
-                  Add New Role
+                  <IntlMessages id="roles.addNew"/>
                 </Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
-                placeholder="Enter keywords to Search Roles"
+                placeholder={messages["roles.searchPlaceHolder"]}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}
                 style={{width: 350}}
@@ -198,7 +201,9 @@ class RolesList extends Component {
                    pageSize: itemNumbers,
                    current: current,
                    total: totalItems,
-                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
+                     <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
+                     <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
                    onChange: this.onPageChange
                  }}
                  className="gx-table-responsive"/>
@@ -220,7 +225,7 @@ export default connect(mapStateToProps, {
   onBulkDeleteRoles,
   onGetRoleDetail,
   onDisableSelectedRole
-})(RolesList);
+})(injectIntl(RolesList));
 
 RolesList.defaultProps = {
   roles: [],

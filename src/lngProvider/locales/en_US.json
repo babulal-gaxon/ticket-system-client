@@ -110,6 +110,12 @@
   "labels.editDetail": "Edit Label Details",
   "labels.setPriority": "Set Priority",
 
+  "roles.message.delete": "Are you sure to delete the selected Role(s)?",
+  "roles.messages.selectFirst": "Please Select Role(s) first",
+  "roles.title": "Roles & Permissions",
+  "roles.addNew": "Add New Role",
+  "roles.searchPlaceHolder": "Enter keywords to search Roles",
+
 
 
 
