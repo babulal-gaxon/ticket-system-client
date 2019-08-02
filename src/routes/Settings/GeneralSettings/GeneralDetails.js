@@ -216,7 +216,7 @@ class GeneralDetails extends Component {
             </Upload>
           </Form.Item>
           <Form.Item label="Favicon"
-                     extra={faviconName && this.state.logoList.length === 0 ? faviconName : "Size should be 40X40px, Maximum image size 50kb"}>
+                     extra={faviconName && this.state.logoList.length === 0 ? faviconName : "Size should be 16X16px, Maximum image size 50kb"}>
             <Upload {...propsFavicon}>
               <Input placeholder="Choose file..." addonAfter="Browse" style={{width: "270%"}}/>
             </Upload>
