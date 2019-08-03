@@ -7,6 +7,8 @@ import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import moment from "moment";
 import InfoView from "../../../components/InfoView";
 import PropTypes from "prop-types";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -73,7 +75,7 @@ class AllTickets extends Component {
   onGetTableColumns = () => {
     return [
       {
-        title: 'ID',
+        title: <IntlMessages id="tickets.id"/>,
         dataIndex: 'id',
         key: 'id',
         render: (text, record) => {
@@ -81,7 +83,7 @@ class AllTickets extends Component {
         }
       },
       {
-        title: 'Subject',
+        title: <IntlMessages id="tickets.subject"/>,
         dataIndex: 'subject',
         key: 'subject',
         render: (text, record) => {
@@ -94,7 +96,7 @@ class AllTickets extends Component {
         },
       },
       {
-        title: 'Assign to',
+        title: <IntlMessages id="tickets.assignTo"/>,
         dataIndex: 'assignTo',
         key: 'assignTo',
         render: (text, record) => {
@@ -108,14 +110,12 @@ class AllTickets extends Component {
                           style={{backgroundColor: '#f56a00'}}>{record.assigned_to.first_name[0].toUpperCase()}</Avatar>}
               </Tooltip>
               :
-              <Tooltip placement="top" title="Not assigned">
-                <Avatar className="gx-size-36"/>
-              </Tooltip>}
+              <div><IntlMessages id="tickets.notAssigned"/></div>}
           </div>)
         },
       },
       {
-        title: 'Department',
+        title: <IntlMessages id="tickets.department"/>,
         dataIndex: 'department',
         key: 'department',
         render: (text, record) => {
@@ -123,18 +123,17 @@ class AllTickets extends Component {
         },
       },
       {
-        title: 'Status',
+        title: <IntlMessages id="tickets.status"/>,
         dataIndex: 'status_id',
         key: 'Status',
         render: (text, record) => {
-
           return <Tag color="green">
             {record.status_name}
           </Tag>
         },
       },
       {
-        title: 'Last Activity',
+        title: <IntlMessages id="tickets.lastActivity"/>,
         dataIndex: 'lastActivity',
         key: 'lastActivity',
         render: (text, record) => {
@@ -169,8 +168,9 @@ class AllTickets extends Component {
   };
 
   render() {
-    const {selectedRowKeys, filterText, showAddTicket, ticketId} = this.state;
+    const {selectedRowKeys, filterText, showAddTicket} = this.state;
     const {raisedTickets, formOptions} = this.props;
+    const {messages} = this.props.intl;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -188,11 +188,11 @@ class AllTickets extends Component {
               <div className="gx-d-flex gx-justify-content-between">
                 <div className="gx-d-flex">
                   <Button type="primary" className="gx-btn-lg" onClick={this.onToggleAddTicket}>
-                    Raise a Ticket</Button>
+                    <IntlMessages id="tickets.raiseATicket"/></Button>
                 </div>
                 <div className="gx-d-flex">
                   <Search
-                    placeholder="Enter keywords to search Tickets"
+                    placeholder={messages["tickets.search.placeholder"]}
                     style={{width: 350}}
                     value={filterText}
                     onChange={this.onFilterTextChange}/>
@@ -231,9 +231,9 @@ class AllTickets extends Component {
                 alignItems: 'center',
                 minHeight: 700
               }}>
-                <div>No records Found</div>
-                <h3 className="gx-font-weight-bold gx-my-4">You have not raised any support request</h3>
-                <Button type="primary" onClick={this.onToggleAddTicket}>Raise a Ticket</Button>
+                <div><IntlMessages id="tickets.noRecordFound"/></div>
+                <h3 className="gx-font-weight-bold gx-my-4"><IntlMessages id="tickets.noTicketRaised"/></h3>
+                <Button type="primary" onClick={this.onToggleAddTicket}><IntlMessages id="tickets.raiseATicket"/></Button>
               </div>
             </div>}
           {showAddTicket ? <RaiseTicketModal formOptions={formOptions}
@@ -259,7 +259,7 @@ const mapPropsToState = ({customerDetails}) => {
 export default connect(mapPropsToState, {
   onGetRaisedTickets, onGetFormOptions, onRaiseNewTicket,
   fetchSuccess, fetchError, fetchStart
-})(AllTickets);
+})(injectIntl(AllTickets));
 
 AllTickets.defaultProps = {
   raisedTickets: [],

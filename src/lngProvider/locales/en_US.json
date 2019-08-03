@@ -347,5 +347,32 @@
   "sidebar.dashboard.about.system": "About System",
   "sidebar.dashboard.services": "Services",
   "sidebar.dashboard.products": "Products",
-  "sidebar.all.tickets": "All Tickets"
+  "sidebar.all.tickets": "All Tickets",
+
+
+
+
+
+
+
+
+
+  "tickets.id": "ID",
+  "tickets.subject": "Subject",
+  "tickets.assignTo": "Assign To",
+  "tickets.department": "Department",
+  "tickets.status": "status",
+  "tickets.lastActivity": "Last Activity",
+  "tickets.notAssigned": "Not Assigned",
+  "tickets.raiseATicket": "Raise a Ticket",
+  "tickets.search.placeholder": "Enter keywords to search Tickets",
+  "tickets.noRecordFound": "No Record Found",
+  "tickets.noTicketRaised": "You have not raised any support request"
+
+
+
+
+
+
+
 }
