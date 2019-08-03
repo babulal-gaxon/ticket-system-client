@@ -5,6 +5,7 @@ import IntlMessages from "util/IntlMessages";
 import InfoView from "../../components/InfoView";
 import {onResetPassword} from "../../appRedux/actions";
 import {Link} from "react-router-dom";
+import {injectIntl} from "react-intl";
 
 const FormItem = Form.Item;
 
@@ -19,18 +20,10 @@ class ForgetPassword extends React.Component {
     });
   };
 
-  // componentDidUpdate() {
-  //   if (this.props.token !== null) {
-  //     this.props.history.push('/dashboard');
-  //   }
-  // }
-
-  onCancelReset = () => {
-    this.props.history.goBack();
-  };
-
   render() {
     const {getFieldDecorator} = this.props.form;
+    const {messages} = this.props.intl;
+
     return (
       <div className="gx-app-login-wrap">
         <div className="gx-app-login-container">
@@ -45,14 +38,14 @@ class ForgetPassword extends React.Component {
             </div>
             <div className="gx-app-login-content">
               <Form onSubmit={this.handleSubmit} className="gx-signin-form gx-form-row0">
-                <FormItem label="Enter Registered Email Address">
+                <FormItem label={<IntlMessages id="auth.forgetPassword.enterEmail"/>}>
                   {getFieldDecorator('email', {
                     initialValue: "admin@g-axon.com",
                     rules: [{
-                      required: true, type: 'email', message: 'The input is not valid E-mail!',
+                      required: true, type: 'email', message: messages["validation.auth.email"],
                     }],
                   })(
-                    <Input placeholder="Email"/>
+                    <Input placeholder={messages["auth.email"]}/>
                   )}
                 </FormItem>
                 <FormItem>
@@ -79,4 +72,4 @@ const mapStateToProps = ({auth}) => {
   return {token}
 };
 
-export default connect(mapStateToProps, {onResetPassword})(ForgetPassword);
+export default connect(mapStateToProps, {onResetPassword})(injectIntl(ForgetPassword));

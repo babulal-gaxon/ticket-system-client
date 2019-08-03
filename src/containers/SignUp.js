@@ -7,6 +7,7 @@ import {onUserSignUp} from "../appRedux/actions/Auth";
 
 import IntlMessages from "util/IntlMessages";
 import InfoView from "components/InfoView";
+import {injectIntl} from "react-intl";
 
 const FormItem = Form.Item;
 
@@ -31,6 +32,7 @@ class SignUp extends React.Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
+    const {messages} = this.props.intl;
     return (
       <div className="gx-app-login-wrap">
         <div className="gx-app-login-container">
@@ -53,33 +55,33 @@ class SignUp extends React.Component {
               <Form onSubmit={this.onHandleSubmit} className="gx-signup-form gx-form-row0">
                 <FormItem>
                   {getFieldDecorator('first_name', {
-                    rules: [{required: true, message: 'Please input your first name!'}],
+                    rules: [{required: true, message: messages["validation.auth.firstName"]}],
                   })(
-                    <Input placeholder="First Name"/>
+                    <Input placeholder={messages["auth.firstName.placeholder"]}/>
                   )}
                 </FormItem>
                 <FormItem>
                   {getFieldDecorator('last_name', {
-                    rules: [{required: true, message: 'Please input your last name!'}],
+                    rules: [{required: true, message: messages["validation.auth.lastName"]}],
                   })(
-                    <Input placeholder="Last Name"/>
+                    <Input placeholder={messages["auth.lastName.placeholder"]}/>
                   )}
                 </FormItem>
 
                 <FormItem>
                   {getFieldDecorator('email', {
                     rules: [{
-                      required: true, type: 'email', message: 'The input is not valid E-mail!',
+                      required: true, type: 'email', message: messages["validation.auth.email"],
                     }],
                   })(
-                    <Input placeholder="Email"/>
+                    <Input placeholder={messages["auth.email"]}/>
                   )}
                 </FormItem>
                 <FormItem>
                   {getFieldDecorator('password', {
-                    rules: [{required: true, message: 'Please input your Password!'}],
+                    rules: [{required: true, message: messages["validation.auth.password"]}],
                   })(
-                    <Input type="password" placeholder="Password"/>
+                    <Input type="password" placeholder={messages["auth.password"]}/>
                   )}
                 </FormItem>
                 <FormItem>
@@ -116,4 +118,4 @@ const mapStateToProps = ({auth}) => {
   return {token}
 };
 
-export default connect(mapStateToProps, {onUserSignUp})(WrappedSignUpForm);
+export default connect(mapStateToProps, {onUserSignUp})(injectIntl(WrappedSignUpForm));

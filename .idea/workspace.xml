@@ -3,9 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="22660aa2-fcdc-4713-8a0a-0d397dd58555" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/ResetPassword/ForgetPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/ResetPassword/ForgetPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/ResetPassword/VerifyPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/ResetPassword/VerifyPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/SignIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/SignIn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/SignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/SignUp.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/RaiseTicketModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/RaiseTicketModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -22,75 +24,21 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/en_US.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="478">
-              <caret line="395" column="18" selection-start-line="395" selection-start-column="18" selection-end-line="395" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-644">
-              <caret line="223" column="37" lean-forward="true" selection-start-line="223" selection-start-column="37" selection-end-line="223" selection-end-column="37" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-                <element signature="n#!!block;n#componentDidMount#0;n#TicketDetails#0" />
-                <element signature="n#!!block;n#componentWillReceiveProps#0;n#TicketDetails#0" />
-                <element signature="n#!!block;n#componentWillUnmount#0;n#TicketDetails#0" />
-                <element signature="e#1596#1792#0" />
-                <element signature="e#1823#2013#0" />
-                <element signature="e#2042#2163#0" />
-                <element signature="e#2190#2521#0" />
-                <element signature="e#2552#2619#0" />
-                <element signature="e#2645#2878#0" />
-                <element signature="e#2907#3505#0" />
-                <element signature="e#3654#4149#0" />
-              </folding>
+            <state relative-caret-position="209">
+              <caret line="424" column="35" selection-start-line="424" selection-start-column="2" selection-end-line="424" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/EditTicketDetailsModal.js">
+        <entry file="file://$PROJECT_DIR$/src/containers/ResetPassword/VerifyPassword.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-408">
+            <state relative-caret-position="1281">
+              <caret line="114" column="18" lean-forward="true" selection-start-line="114" selection-start-column="18" selection-end-line="114" selection-end-column="18" />
               <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/RaiseTicketModal.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="190" column="73" lean-forward="true" selection-start-line="190" selection-start-column="30" selection-end-line="190" selection-end-column="73" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-                <element signature="n#!!block;n#constructor#0;n#RaiseTicketModal#0" />
-                <element signature="e#634#705#0" />
-                <element signature="e#739#881#0" />
-                <element signature="e#916#1144#0" />
-                <element signature="e#1175#1287#0" />
-                <element signature="e#1313#1431#0" />
-                <element signature="e#1457#1690#0" />
-                <element signature="e#1719#2312#0" />
-                <element signature="e#2337#2463#0" />
-                <element signature="e#2818#3313#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="529">
-              <caret line="219" column="102" selection-start-line="219" selection-start-column="102" selection-end-line="219" selection-end-column="102" />
-              <folding>
-                <element signature="n#!!block;n#componentDidMount#0;n#AllTickets#0" />
+                <element signature="e#0#26#0" expanded="true" />
+                <element signature="e#2264#2716#0" />
+                <element signature="e#2658#3207#0" />
               </folding>
             </state>
           </provider>
@@ -100,21 +48,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Message</find>
-      <find>250</find>
-      <find>Description</find>
-      <find>Please enter Des</find>
-      <find>Staffs</find>
-      <find>Email Ad</find>
-      <find>Role</find>
-      <find>reset</find>
-      <find>Department</find>
-      <find>Add</find>
-      <find>Edit Profile</find>
-      <find>Assigned Tickets</find>
-      <find>Add New</find>
-      <find>Created</find>
-      <find>Title</find>
       <find>Desc</find>
       <find>General Setup</find>
       <find>Localization Setti</find>
@@ -124,12 +57,27 @@
       <find>Pass</find>
       <find>Setting</find>
       <find>&quot;validation.setup.database&quot;</find>
-      <find>Email</find>
       <find>Confirm</find>
       <find>The ima</find>
       <find>Address</find>
       <find>common.address</find>
       <find>Back</find>
+      <find>appModule.sta</find>
+      <find>app.</find>
+      <find>app.user</find>
+      <find>Sign Up</find>
+      <find>app.userAuth.bySigning</find>
+      <find>app.userAuth.getAccount</find>
+      <find>Password</find>
+      <find>Email</find>
+      <find>appModule.iAccept</find>
+      <find>appModule.termAndCondition</find>
+      <find>app.userAuth.signUp</find>
+      <find>app.userAuth.or</find>
+      <find>app.userAuth.signIn</find>
+      <find>app.userAuth.forgetPasswordText</find>
+      <find>app.userAuth.goback</find>
+      <find>app.userAuth.resetPassword</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -143,10 +91,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/routes/Settings/TicketSettings/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/CannedResponses/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/Departments/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/Products/index.js" />
         <option value="$PROJECT_DIR$/src/routes/SetUp/Services/index.js" />
         <option value="$PROJECT_DIR$/src/routes/SetUp/TicketPriorities/index.js" />
         <option value="$PROJECT_DIR$/src/routes/SetUp/TicketStatuses/index.js" />
@@ -192,8 +136,12 @@
         <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/VerificationModal.js" />
         <option value="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/index.js" />
         <option value="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/RaiseTicketModal.js" />
-        <option value="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" />
         <option value="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js" />
+        <option value="$PROJECT_DIR$/src/containers/SignIn.js" />
+        <option value="$PROJECT_DIR$/src/containers/SignUp.js" />
+        <option value="$PROJECT_DIR$/src/containers/ResetPassword/ForgetPassword.js" />
+        <option value="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" />
+        <option value="$PROJECT_DIR$/src/containers/ResetPassword/VerifyPassword.js" />
       </list>
     </option>
   </component>
@@ -224,7 +172,7 @@
               <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="lngProvider" type="462c0819:PsiDirectoryNode" />
+              <item name="containers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
@@ -400,13 +348,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55086000" />
+    <option name="totallyTimeSpent" value="57653000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.41898528" visible="true" weight="0.1904762" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.41898528" visible="true" weight="0.1904762" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.58101475" side_tool="true" weight="0.1904762" />
       <window_info id="Favorites" order="3" sideWeight="0.5184049" side_tool="true" weight="0.16097923" />
@@ -453,11 +401,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="working on localization" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/TicketPriorities/AddNewPriority.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/TicketStatuses/AddNewStatus.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/CannedResponses/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerImageUpload.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/index.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/StaffInfo.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/TotalLoggedTime.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/TodayLoggedTime.js" />
@@ -506,20 +449,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/index.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/ConversationCell.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="529">
-          <caret line="219" column="102" selection-start-line="219" selection-start-column="102" selection-end-line="219" selection-end-column="102" />
+        <state relative-caret-position="-153">
           <folding>
-            <element signature="n#!!block;n#componentDidMount#0;n#AllTickets#0" />
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/RaiseTicketModal.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="190" column="73" lean-forward="true" selection-start-line="190" selection-start-column="30" selection-end-line="190" selection-end-column="73" />
+        <state relative-caret-position="1785">
+          <caret line="190" column="73" selection-start-line="190" selection-start-column="30" selection-end-line="190" selection-end-column="73" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
             <element signature="n#!!block;n#constructor#0;n#RaiseTicketModal#0" />
@@ -536,48 +478,93 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/en_US.json">
+    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/EditTicketDetailsModal.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="478">
-          <caret line="395" column="18" selection-start-line="395" selection-start-column="18" selection-end-line="395" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/ConversationCell.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-153">
+        <state>
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-644">
-          <caret line="223" column="37" lean-forward="true" selection-start-line="223" selection-start-column="37" selection-end-line="223" selection-end-column="37" />
+        <state relative-caret-position="1467">
+          <caret line="149" column="38" selection-start-line="149" selection-start-column="38" selection-end-line="149" selection-end-column="38" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
             <element signature="n#!!block;n#componentDidMount#0;n#TicketDetails#0" />
             <element signature="n#!!block;n#componentWillReceiveProps#0;n#TicketDetails#0" />
             <element signature="n#!!block;n#componentWillUnmount#0;n#TicketDetails#0" />
-            <element signature="e#1596#1792#0" />
-            <element signature="e#1823#2013#0" />
-            <element signature="e#2042#2163#0" />
-            <element signature="e#2190#2521#0" />
-            <element signature="e#2552#2619#0" />
-            <element signature="e#2645#2878#0" />
-            <element signature="e#2907#3505#0" />
-            <element signature="e#3654#4149#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/EditTicketDetailsModal.js">
+    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-408">
+        <state relative-caret-position="161">
+          <caret line="190" column="61" selection-start-line="190" selection-start-column="20" selection-end-line="190" selection-end-column="61" />
+          <folding>
+            <element signature="n#!!block;n#componentDidMount#0;n#AllTickets#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/SignIn.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="88" column="118" selection-start-line="88" selection-start-column="118" selection-end-line="88" selection-end-column="118" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/SignUp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1600">
+          <caret line="101" column="22" lean-forward="true" selection-start-line="101" selection-start-column="22" selection-end-line="101" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/ResetPassword/ForgetPassword.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="38" column="1" lean-forward="true" selection-start-line="38" selection-start-column="1" selection-end-line="38" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/VerifyEmail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="12" lean-forward="true" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/en_US.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="424" column="35" selection-start-line="424" selection-start-column="2" selection-end-line="424" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/ResetPassword/VerifyPassword.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1281">
+          <caret line="114" column="18" lean-forward="true" selection-start-line="114" selection-start-column="18" selection-end-line="114" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#2264#2716#0" />
+            <element signature="e#2658#3207#0" />
           </folding>
         </state>
       </provider>

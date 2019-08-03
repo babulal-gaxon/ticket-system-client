@@ -5,6 +5,7 @@ import qs from "qs";
 import IntlMessages from "util/IntlMessages";
 import InfoView from "../../components/InfoView";
 import {onSetNewPassword} from "../../appRedux/actions";
+import {injectIntl} from "react-intl";
 
 class VerifyPassword extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class VerifyPassword extends React.Component {
   };
 
   compareToFirstPassword = (rule, value, callback) => {
+    const {messages} = this.props.intl;
     const {form} = this.props;
     if (value && value !== form.getFieldValue('password')) {
       callback('Two passwords that you enter is inconsistent!');
@@ -51,6 +53,8 @@ class VerifyPassword extends React.Component {
   render() {
     const {email} = this.state;
     const {getFieldDecorator} = this.props.form;
+    const {messages} = this.props.intl;
+
     return (
       <div className="gx-app-login-wrap">
         <div className="gx-app-login-container">
@@ -65,22 +69,22 @@ class VerifyPassword extends React.Component {
             </div>
             <div className="gx-app-login-content">
               <Form onSubmit={this.handleSubmit} className="gx-signin-form gx-form-row0">
-                <Form.Item label="Enter Email Address">
+                <Form.Item label={<IntlMessages id="auth.enterEmail"/>}>
                   {getFieldDecorator('email', {
                     initialValue: email,
                     rules: [{
-                      required: true, type: 'email', message: 'The input is not valid E-mail!',
+                      required: true, type: 'email', message: messages["validation.auth.email"],
                     }],
                   })(
-                    <Input placeholder="Email" onChange={(e) => this.setState({email: e.target.value})}/>
+                    <Input placeholder={messages["auth.email"]} onChange={(e) => this.setState({email: e.target.value})}/>
                   )}
                 </Form.Item>
-                <Form.Item label="Enter new Password" hasFeedback>
+                <Form.Item label={<IntlMessages id="auth.enterNewPassword"/>} hasFeedback>
                   {getFieldDecorator('password', {
                     rules: [
                       {
                         required: true,
-                        message: 'Please input your password!',
+                        message: messages["validation.auth.password"]
                       },
                       {
                         validator: this.validateToNextPassword,
@@ -88,12 +92,12 @@ class VerifyPassword extends React.Component {
                     ],
                   })(<Input.Password onChange={(e) => this.setState({password: e.target.value})}/>)}
                 </Form.Item>
-                <Form.Item label="Confirm Password" hasFeedback>
+                <Form.Item label={<IntlMessages id="auth.confirmPassword"/>} hasFeedback>
                   {getFieldDecorator('password_confirmation', {
                     rules: [
                       {
                         required: true,
-                        message: 'Please confirm your password!',
+                        message: messages["validation.auth.confirmPassword"]
                       },
                       {
                         validator: this.compareToFirstPassword,
@@ -124,4 +128,4 @@ const mapStateToProps = ({auth}) => {
   return {token}
 };
 
-export default connect(mapStateToProps, {onSetNewPassword})(VerifyPassword);
+export default connect(mapStateToProps, {onSetNewPassword})(injectIntl(VerifyPassword));

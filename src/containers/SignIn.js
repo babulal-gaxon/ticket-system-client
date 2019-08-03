@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {onUserSignIn} from "../appRedux/actions/Auth";
 import IntlMessages from "util/IntlMessages";
 import InfoView from "../components/InfoView";
+import {injectIntl} from "react-intl";
 
 const FormItem = Form.Item;
 
@@ -35,6 +36,7 @@ class SignIn extends React.Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
+    const {messages} = this.props.intl;
 
     return (
       <div className="gx-app-login-wrap">
@@ -46,24 +48,24 @@ class SignIn extends React.Component {
               </div>
             </div>
             <div className="gx-app-login-content">
-              <h2 className="gx-font-weight-semi-bold">Login to Your account</h2>
+              <h2 className="gx-font-weight-semi-bold"><IntlMessages id="auth.signin.heading"/></h2>
               <Form onSubmit={this.handleSubmit} className="gx-signin-form gx-form-row0">
-                <FormItem label="Enter Email Address">
+                <FormItem label={<IntlMessages id="auth.enterEmail"/>}>
                   {getFieldDecorator('email', {
                     initialValue: "admin@g-axon.com",
                     rules: [{
-                      required: true, type: 'email', message: 'The input is not valid E-mail!',
+                      required: true, type: 'email', message: messages["validation.auth.email"],
                     }],
                   })(
-                    <Input placeholder="Email"/>
+                    <Input placeholder={messages["auth.email.placeholder"]}/>
                   )}
                 </FormItem>
-                <FormItem label="Enter Password">
+                <FormItem label={<IntlMessages id="auth.enterPassword"/>}>
                   {getFieldDecorator('password', {
                     initialValue: "123456",
-                    rules: [{required: true, message: 'Please input your Password!'}],
+                    rules: [{required: true, message: messages["validation.auth.password"]}],
                   })(
-                    <Input type="password" placeholder="Password"/>
+                    <Input type="password" placeholder={messages["auth.enterPassword"]}/>
                   )}
                 </FormItem>
                 <FormItem>
@@ -81,10 +83,10 @@ class SignIn extends React.Component {
                 </FormItem>
               </Form>
               <div style={{justifyContent: "center", textAlign: "center"}}>
-                <h4 className="gx-text-grey" onClick={this.onForgetPassword}>Forgot Password?</h4>
+                <h4 className="gx-text-grey" onClick={this.onForgetPassword}><IntlMessages id="auth.ForgotPassword"/></h4>
                 <div className="gx-mb-1 gx-d-flex" style={{justifyContent: "center", textAlign: "center"}}>
-                  <h4 className="gx-text-grey gx-mr-2">New To TicksUp?</h4>
-                  <h4 className="gx-text-primary" onClick={this.onSignUpClick}> Sign Up</h4></div>
+                  <h4 className="gx-text-grey gx-mr-2"><IntlMessages id="auth.newToTicksUp"/></h4>
+                  <h4 className="gx-text-primary" onClick={this.onSignUpClick}> <IntlMessages id="app.userAuth.signUp"/></h4></div>
               </div>
             </div>
             <InfoView/>
@@ -102,4 +104,4 @@ const mapStateToProps = ({auth}) => {
   return {token}
 };
 
-export default connect(mapStateToProps, {onUserSignIn})(WrappedNormalLoginForm);
+export default connect(mapStateToProps, {onUserSignIn})(injectIntl(WrappedNormalLoginForm));
