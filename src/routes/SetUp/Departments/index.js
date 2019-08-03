@@ -236,7 +236,8 @@ class Departments extends Component {
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item><IntlMessages id="common.ticketSystem"/></Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/setup/departments" className="gx-text-primary"><IntlMessages id="departments.title"/></Link></Breadcrumb.Item>
+              <Link to="/setup/departments" className="gx-text-primary"><IntlMessages
+                id="departments.title"/></Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">

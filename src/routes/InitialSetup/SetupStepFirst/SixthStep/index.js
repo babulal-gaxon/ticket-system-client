@@ -108,8 +108,10 @@ class SixthStep extends Component {
                  className="gx-mb-4" pagination={false}/>}
         <div className="gx-d-flex gx-justify-content-between">
           <div>
-            <Button type="default" onClick={() => this.props.onMoveToPrevStep()}><IntlMessages id="common.previous"/></Button>
-            <Button type="primary" onClick={() => this.props.onMoveToNextStep()}><IntlMessages id="common.next"/></Button>
+            <Button type="default" onClick={() => this.props.onMoveToPrevStep()}><IntlMessages
+              id="common.previous"/></Button>
+            <Button type="primary" onClick={() => this.props.onMoveToNextStep()}><IntlMessages
+              id="common.next"/></Button>
           </div>
           <div><Button onClick={this.onAddButtonClick}>+<IntlMessages id="common.addNew"/></Button></div>
         </div>

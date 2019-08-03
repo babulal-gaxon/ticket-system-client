@@ -93,7 +93,7 @@ class TicketPriorities extends Component {
     const {messages} = this.props.intl;
     if (this.state.selectedPriorities.length !== 0) {
       confirm({
-        title:  messages["priorities.message.active"],
+        title: messages["priorities.message.active"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedPriorities
@@ -239,7 +239,8 @@ class TicketPriorities extends Component {
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item><IntlMessages id="common.ticketSystem"/></Breadcrumb.Item>
             <Breadcrumb.Item className="gx-text-primary">
-              <Link to="/setup/ticket-priorities" className="gx-text-primary"><IntlMessages id="priorities.title"/></Link></Breadcrumb.Item>
+              <Link to="/setup/ticket-priorities" className="gx-text-primary"><IntlMessages
+                id="priorities.title"/></Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">

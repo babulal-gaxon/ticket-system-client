@@ -86,7 +86,8 @@ class CustomerPanelForm extends Component {
               <Link to="/settings/general-settings"><IntlMessages id="sidebar.dashboard.settings"/></Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/settings/customer-panel" className="gx-text-primary"><IntlMessages id="settings.customerPanel.name"/></Link>
+              <Link to="/settings/customer-panel" className="gx-text-primary"><IntlMessages
+                id="settings.customerPanel.name"/></Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <Form layout="vertical" style={{width: "50%"}}>
@@ -112,7 +113,8 @@ class CustomerPanelForm extends Component {
                 })}
               </Select>)}
             </Form.Item>
-            <Divider orientation="left" className="gx-mb-4"><IntlMessages id="settings.customerPanel.permissions"/></Divider>
+            <Divider orientation="left" className="gx-mb-4"><IntlMessages
+              id="settings.customerPanel.permissions"/></Divider>
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
                 <p><IntlMessages id="settings.customerPanel.customerRegister"/></p>
@@ -148,7 +150,8 @@ class CustomerPanelForm extends Component {
           </Form>
           <hr/>
           <div className="gx-d-flex">
-            <Button type="primary" style={{width: "150px"}} onClick={this.onValidationCheck}><IntlMessages id="common.save"/></Button>
+            <Button type="primary" style={{width: "150px"}} onClick={this.onValidationCheck}><IntlMessages
+              id="common.save"/></Button>
           </div>
         </Widget>
       </div>

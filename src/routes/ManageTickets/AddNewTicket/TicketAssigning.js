@@ -76,7 +76,7 @@ class TicketAssigning extends Component {
             </div>
           </div>}
         <Modal
-          title= {<IntlMessages id="common.selectStaff"/>}
+          title={<IntlMessages id="common.selectStaff"/>}
           centered
           visible={showStaffModal}
           onOk={this.onAddStaff}

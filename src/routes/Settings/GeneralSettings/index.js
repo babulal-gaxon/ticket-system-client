@@ -53,7 +53,8 @@ class GeneralSettings extends Component {
             </Breadcrumb.Item>
             <Breadcrumb.Item className="gx-text-primary">
               <Link to="/settings/general-settings"
-                    className="gx-text-primary">{key === "1" ? <IntlMessages id="common.setup"/> : <IntlMessages id="common.addresses"/>}</Link>
+                    className="gx-text-primary">{key === "1" ? <IntlMessages id="common.setup"/> :
+                <IntlMessages id="common.addresses"/>}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <Tabs defaultActiveKey="1" size="large" onChange={this.onTabChange}>

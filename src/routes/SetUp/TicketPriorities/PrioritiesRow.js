@@ -18,7 +18,8 @@ const PrioritiesRow = (context) => {
       dataIndex: 'description',
       key: 'description',
       render: (text, record) => {
-        return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc ? record.desc : <IntlMessages id="common.na"/>}</span>
+        return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc ? record.desc :
+          <IntlMessages id="common.na"/>}</span>
       },
     },
     {

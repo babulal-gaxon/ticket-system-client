@@ -155,13 +155,14 @@ class ThirdStep extends Component {
                   validateTrigger: 'onBlur',
                   rules: [{
                     required: true,
-                    message:  messages["validation.message.companyName"]
+                    message: messages["validation.message.companyName"]
                   }],
                 })(<Input type="text" autoFocus onChange={(e) => this.setState({name: e.target.value})}/>)}
               </Form.Item>
             </Col>
             <Col sm={12} xs={24} className="gx-pr-0">
-              <Form.Item label={<IntlMessages id="settings.companyWebsite"/>} extra={<IntlMessages id="common.websiteFormatMessage"/>}>
+              <Form.Item label={<IntlMessages id="settings.companyWebsite"/>}
+                         extra={<IntlMessages id="common.websiteFormatMessage"/>}>
                 {getFieldDecorator('url', {
                   initialValue: url,
                   validateTrigger: 'onBlur',
@@ -265,7 +266,7 @@ class ThirdStep extends Component {
                   rules: [
                     {
                       required: true,
-                      message:  messages["validation.message.country"]
+                      message: messages["validation.message.country"]
                     }],
                 })(<Select
                   showSearch

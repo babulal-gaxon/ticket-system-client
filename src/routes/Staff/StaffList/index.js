@@ -194,7 +194,7 @@ class StaffList extends Component {
             </div>
             <div className="gx-d-flex">
               <Search
-                placeholder= {messages["staff.search.placeholder"]}
+                placeholder={messages["staff.search.placeholder"]}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}
                 style={{width: 350}}

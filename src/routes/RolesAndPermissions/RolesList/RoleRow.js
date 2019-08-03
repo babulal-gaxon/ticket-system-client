@@ -44,7 +44,7 @@ const RoleRow = (context) => {
       },
     },
     {
-      title:<IntlMessages id="common.status"/>,
+      title: <IntlMessages id="common.status"/>,
       dataIndex: 'status',
       key: 'status',
       render: (text, record) => {

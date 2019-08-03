@@ -88,7 +88,7 @@ class App extends PureComponent {
         return (<Redirect to={initURL}/>);
       }
     }
-    console.log("locale", locale)
+    console.log("locale", locale);
     const currentAppLocale = AppLocale[locale];
 
     return (

@@ -39,7 +39,8 @@ class InitialSetup extends Component {
                   <div className="gx-d-flex gx-justify-content-between">
                     <div className="gx-d-flex">
                       <h1 className="gx-font-weight-semi-bold gx-mr-2"><IntlMessages id="setup.setupTheSystem"/></h1>
-                      {current === 2 ? <span className="gx-text-green">><IntlMessages id="common.completed"/></span> : null}
+                      {current === 2 ?
+                        <span className="gx-text-green">><IntlMessages id="common.completed"/></span> : null}
                     </div>
                     {current === 2 ?
                       <div>{<i className="icon icon-edit gx-mr-3" onClick={this.onMovePrevStep}/>}</div> : null}

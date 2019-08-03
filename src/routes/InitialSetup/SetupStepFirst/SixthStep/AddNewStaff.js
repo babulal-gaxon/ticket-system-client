@@ -158,7 +158,8 @@ class AddNewStaff extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddModal}
-          title={this.props.staffId === null ? <IntlMessages id="staff.addStaff"/> : <IntlMessages id="staff.editStaff"/>}
+          title={this.props.staffId === null ? <IntlMessages id="staff.addStaff"/> :
+            <IntlMessages id="staff.editStaff"/>}
           onCancel={() => onToggleAddModal()}
           footer={[
             <Button key="submit" type="primary" onClick={() => this.onValidationCheck()}>
@@ -238,7 +239,8 @@ class AddNewStaff extends Component {
             <div className="gx-d-flex gx-flex-row">
               <Col sm={12} xs={24} className="gx-pl-0">
                 <Form.Item label={<IntlMessages id="common.password"/>}
-                           extra={this.props.staffId === null ? "" : <IntlMessages id="validation.message.passwordUpdateNote"/>}>
+                           extra={this.props.staffId === null ? "" :
+                             <IntlMessages id="validation.message.passwordUpdateNote"/>}>
                   {this.props.staffId === null ?
                     getFieldDecorator('password', {
                       initialValue: password,

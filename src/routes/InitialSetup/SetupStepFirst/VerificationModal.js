@@ -37,7 +37,8 @@ class VerificationModal extends Component {
           <div style={{padding: 45, textAlign: "center"}}>
             {/*<I></I>*/}
             <h2 style={{fontSize: 28}}><IntlMessages id="setup.verifyPin.heading"/></h2>
-            <p style={{textAlign: "center", color: "#8C8C8C"}} className="gx-py-5"><IntlMessages id="setup.verifyPin.message"/></p>
+            <p style={{textAlign: "center", color: "#8C8C8C"}} className="gx-py-5"><IntlMessages
+              id="setup.verifyPin.message"/></p>
             <Form layout="vertical" style={{textAlign: "center"}}>
               <label><IntlMessages id="setup.verifyPin.enter"/> <sup className="gx-text-red">*</sup></label>
               <Form.Item hasFeedback className="gx-py-4">
@@ -50,7 +51,7 @@ class VerificationModal extends Component {
                     },
                     {
                       max: 6,
-                      message:  messages["validation.verifyPin.pinLength"],
+                      message: messages["validation.verifyPin.pinLength"],
                     },
                     {
                       pattern: /^[0-9\b]+$/,
@@ -67,7 +68,8 @@ class VerificationModal extends Component {
               <IntlMessages id="common.back"/>
             </Button>,
             <p><IntlMessages id="setup.verifyPin.notReceived"/> <Button type="link" className="gx-my-0"
-                                           onClick={() => this.props.onResendPin()}><IntlMessages id="common.resend"/></Button></p>
+                                                                        onClick={() => this.props.onResendPin()}><IntlMessages
+              id="common.resend"/></Button></p>
           </div>
         </Modal>
       </div>

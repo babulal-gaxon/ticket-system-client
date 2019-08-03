@@ -57,7 +57,8 @@ class AddCustomerAddress extends Component {
     return (
       <div className="gx-main-layout-content">
         <Modal
-          title={this.props.selectedAddress === null ? <IntlMessages id="customer.address.addNew"/> : <IntlMessages id="customer.address.edit"/>}
+          title={this.props.selectedAddress === null ? <IntlMessages id="customer.address.addNew"/> :
+            <IntlMessages id="customer.address.edit"/>}
           centered
           visible={this.props.isModalVisible}
           onOk={this.onValidationCheck}

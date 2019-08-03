@@ -113,7 +113,7 @@ class Services extends Component {
     const {messages} = this.props.intl;
     if (this.state.selectedServices.length !== 0) {
       confirm({
-        title:  messages["services.message.disable"],
+        title: messages["services.message.disable"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedServices
@@ -124,7 +124,7 @@ class Services extends Component {
       })
     } else {
       Modal.info({
-        title:  messages["services.message.selectFirst"],
+        title: messages["services.message.selectFirst"],
         onOk() {
         },
       });
@@ -135,7 +135,7 @@ class Services extends Component {
     const {messages} = this.props.intl;
     if (this.state.selectedServices.length !== 0) {
       confirm({
-        title:  messages["services.message.delete"],
+        title: messages["services.message.delete"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedServices
@@ -147,7 +147,7 @@ class Services extends Component {
       })
     } else {
       Modal.info({
-        title:  messages["services.message.selectFirst"],
+        title: messages["services.message.selectFirst"],
         onOk() {
         },
       });
@@ -233,7 +233,8 @@ class Services extends Component {
           <h4 className="gx-widget-heading"><IntlMessages id="services.title"/></h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>
-              <Link to="/setup/services" className="gx-text-primary"><IntlMessages id="services.title"/></Link></Breadcrumb.Item>
+              <Link to="/setup/services" className="gx-text-primary"><IntlMessages
+                id="services.title"/></Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">

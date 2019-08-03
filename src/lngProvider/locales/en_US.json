@@ -70,8 +70,6 @@
   "manageTickets.addTags": "Type to add Tags",
   "manageTickets.sendMessage": "Type and hit enter to send message",
   "manageTickets.noAttachmentAdded": "No attachments added with this ticket.",
-
-
   "customers.message.delete": "Are you sure to delete the selected Customer(s)?",
   "customers.message.selectFirst": "Please Select Customer(s) first",
   "customers.customers": "Customers",
@@ -93,8 +91,6 @@
   "customer.details.noMembersMessage": "Currently No Other Members of this company is associated.",
   "customer.details.noCompany": "Not associated with any Company",
   "customer.details.tickets": "Related Tickets",
-
-
   "companies.message.delete": "Are you sure to delete the selected Company(s)?",
   "companies.message.selectFirst": "Please Select Company(s) first",
   "companies.title": "Companies",
@@ -102,14 +98,11 @@
   "companies.members": "Company Members",
   "companies.addNew": "Add New Company",
   "companies.editDetail": "Edit Company Details",
-
-
   "labels.title": "Customer Labels",
   "labels.addNew": "Add New Label",
   "labels.searchLabels": "Enter keywords to search Labels",
   "labels.editDetail": "Edit Label Details",
   "labels.setPriority": "Set Priority",
-
   "roles.message.delete": "Are you sure to delete the selected Role(s)?",
   "roles.messages.selectFirst": "Please Select Role(s) first",
   "roles.title": "Roles & Permissions",
@@ -120,9 +113,6 @@
   "roles.features": "Features and Permissions",
   "roles.staffMembers": "Associated Staff Members",
   "roles.noStaffMessage": "No staff member assigned to this role yet!",
-
-
-
   "settings.generalSettings": "General Settings",
   "settings.generalSetup": "General Setup",
   "settings.companyWebsite": "Company Website",
@@ -130,9 +120,6 @@
   "settings.favicon": "Favicon",
   "settings.allowedExtensions": "Allowed Extensions",
   "settings.fileUploadSize": "File Upload Max Size",
-
-
-
   "settings.customerPanel.title": "Customer Panel Settings",
   "settings.customerPanel.name": "Customer Panel",
   "settings.customerPanel.theme": "Default Customer Theme",
@@ -142,18 +129,12 @@
   "settings.customerPanel.registration": "Require registration confirmation from administrator after customer register",
   "settings.customerPanel.billing": "Allow primary contact to view/edit billing & shipping details",
   "settings.customerPanel.deleteFiles": "Allow contacts to delete own files uploaded from customers area",
-
-
-
-
   "settings.localization.heading": "Localization Settings",
   "settings.localization.title": "Localization",
   "settings.localization.dateFormat": "Date Format",
   "settings.localization.timeFormat": "Time Format",
   "settings.localization.language": "Default Language",
   "settings.localization.languageSelection": "Language Selection for Customers",
-
-
   "settings.ticket.serviceSelection": "Enable service selection while creating a ticket",
   "settings.ticket.departmentSelection": "Enable department selection while creating a ticket",
   "settings.ticket.productSelection": "Enable product selection while creating a ticket",
@@ -169,8 +150,6 @@
   "settings.ticket.ticketStatus": "Ticket status change",
   "settings.ticket.ticketPriority": "On priority change",
   "settings.ticket.onArchive": "On Archive",
-
-
   "responses.message.active": "Are you sure to change the status of selected Response(s) to ACTIVE?",
   "responses.message.disable": "Are you sure to change the status of selected Response(s) to DISABLED?",
   "responses.message.delete": "Are you sure to delete the selected Response(s)?",
@@ -181,10 +160,6 @@
   "responses.edit": "Edit Response Details",
   "responses.shortTitle": "Short Title",
   "responses.shortCode": "Short Code",
-
-
-
-
   "departments.message.active": "Are you sure to change the status of selected Department(s) to ACTIVE?",
   "departments.message.disable": "Are you sure to change the status of selected Department(s) to DISABLED?",
   "departments.message.delete": "Are you sure to delete the selected Department(s)?",
@@ -193,8 +168,6 @@
   "departments.new": "Add New Department",
   "departments.search.placeholder": "Enter keywords to search Departments",
   "departments.edit": "Edit Department Details",
-
-
   "priorities.message.active": "Are you sure to change the status of selected Priority(s) to ACTIVE?",
   "priorities.message.disable": "Are you sure to change the status of selected Priority(s) to DISABLED?",
   "priorities.message.delete": "Are you sure to delete the selected Priority(s)?",
@@ -204,8 +177,6 @@
   "priorities.search.placeholder": "Enter keywords to search Priorities",
   "priorities.edit": "Edit Priority Details",
   "priorities.weight": "Priority Weight",
-
-
   "statuses.message.active": "Are you sure to change the status of selected Status(s) to ACTIVE?",
   "statuses.message.disable": "Are you sure to change the status of selected Status(s) to DISABLED?",
   "statuses.message.delete": "Are you sure to delete the selected Status(s)?",
@@ -216,7 +187,6 @@
   "statuses.edit": "Edit Status Details",
   "statuses.orders": "Number of Orders",
   "statuses.setAsDefault": "Set as Default",
-
   "services.message.active": "Are you sure to change the status of selected Service(s) to ACTIVE?",
   "services.message.disable": "Are you sure to change the status of selected Service(s) to DISABLED?",
   "services.message.delete": "Are you sure to delete the selected Service(s)?",
@@ -225,8 +195,6 @@
   "services.new": "Add New Service",
   "services.search.placeholder": "Enter keywords to search Services",
   "services.edit": "Edit Service Details",
-
-
   "products.message.active": "Are you sure to change the status of selected Product(s) to ACTIVE?",
   "products.message.disable": "Are you sure to change the status of selected Product(s) to DISABLED?",
   "products.message.delete": "Are you sure to delete the selected Product(s)?",
@@ -236,10 +204,7 @@
   "products.search.placeholder": "Enter keywords to search Products",
   "products.edit": "Edit Product Details",
   "products.name": "Product Name",
-
-
-
-  "staff.message.delete":  "Are you sure to delete the selected Staff(s)?",
+  "staff.message.delete": "Are you sure to delete the selected Staff(s)?",
   "staff.message.selectFirst": "Please Select Staff(s) first",
   "staff.search.placeholder": "Enter keywords to search Staff",
   "staff.addNew": "Add New Staff",
@@ -252,8 +217,6 @@
   "staff.notes.heading": "Useful Notes",
   "staff.notes.add": "Add New Note",
   "staff.notes.edit": "Edit Note Details",
-
-
   "setup.setupTheSystem": "Setup the System",
   "setup.message.instruction": "Follow the under shown steps to quickly setup the system.",
   "setup.databaseSetup": "Database Setup",
@@ -280,14 +243,6 @@
   "setup.verifyPin.message": "Enter the 6 digit verification code sent to your email address super@example.com to verify your account.",
   "setup.verifyPin.enter": "Enter Verification Code",
   "setup.verifyPin.notReceived": "Not received email?",
-
-
-
-
-
-
-
-
   "validation.message.selectCustomer": "Please Select Customer!",
   "validation.message.selectTitle": "Please enter title!",
   "validation.message.selectServices": "Please select Services",
@@ -346,11 +301,6 @@
   "validation.setup.addressLine2": "Please enter Address line 2",
   "validation.verifyPin.pinInput": "Please enter the PIN!",
   "validation.verifyPin.pinLength": "Please enter only 6 digits",
-
-
-
-
-
   "common.addNew": "Add New",
   "common.bulkActions": "Bulk Actions",
   "common.archive": "Archive",

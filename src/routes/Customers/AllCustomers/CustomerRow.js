@@ -25,7 +25,8 @@ const onShowRowDropdown = (currentCustomer, context) => {
       {(Permissions.canCustomerEdit()) ?
         <Menu.Item key="3">
           <Popconfirm
-            title={`Are you sure to ${currentCustomer.status === 1 ? <IntlMessages id="common.customer"/> : <IntlMessages id="common.customer"/>} this Customer?`}
+            title={`Are you sure to ${currentCustomer.status === 1 ? <IntlMessages id="common.customer"/> :
+              <IntlMessages id="common.customer"/>} this Customer?`}
             onConfirm={() => {
               if (currentCustomer.status === 1) {
                 context.onDisableCustomerStatus(currentCustomer.id)

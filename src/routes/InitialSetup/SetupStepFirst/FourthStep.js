@@ -125,7 +125,8 @@ class FourthStep extends Component {
             </Radio.Group>)}
           </Form.Item>
           <div className="gx-d-flex">
-            <Button type="default" onClick={() => this.props.onMoveToPrevStep()}><IntlMessages id="common.previous"/></Button>
+            <Button type="default" onClick={() => this.props.onMoveToPrevStep()}><IntlMessages
+              id="common.previous"/></Button>
             <Button type="primary" onClick={this.onValidationCheck}><IntlMessages id="common.next"/></Button>
             <Button type="link" onClick={() => this.props.onMoveToNextStep()}><IntlMessages id="common.skip"/></Button>
           </div>

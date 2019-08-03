@@ -61,7 +61,8 @@ const StaffInfo = (currentStaff, context) => {
           <Col span={6}>
             <IntlMessages id="common.status"/>
           </Col>
-          <Col>{currentStaff.account_status === 1 ? <IntlMessages id="common.active"/> : <IntlMessages id="common.disabled"/>}</Col>
+          <Col>{currentStaff.account_status === 1 ? <IntlMessages id="common.active"/> :
+            <IntlMessages id="common.disabled"/>}</Col>
         </Row>
         <Divider/>
         <Row>

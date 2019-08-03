@@ -245,7 +245,8 @@ class TicketStatuses extends Component {
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item><IntlMessages id="common.ticketSystem"/></Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/setup/ticket-Statuses" className="gx-text-primary"><IntlMessages id="statuses.title"/></Link></Breadcrumb.Item>
+              <Link to="/setup/ticket-Statuses" className="gx-text-primary"><IntlMessages
+                id="statuses.title"/></Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
