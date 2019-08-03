@@ -22,6 +22,7 @@ import InfoView from "../../../components/InfoView";
 import EditTicketDetailsModal from "./EditTicketDetailsModal";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -146,6 +147,7 @@ class TicketDetails extends Component {
       },
       fileList,
     };
+    const {messages} =this.props.intl;
 
     return (
       <div className="gx-main-layout-content">
@@ -267,7 +269,7 @@ export default connect(mapPropsToState, {
   onUpdateTicketPriority,
   onUpdateTicketStatus,
   onUpdateTickets
-})(TicketDetails);
+})(injectIntl(TicketDetails));
 
 TicketDetails.defaultProps = {
   formOptions: {
