@@ -139,7 +139,7 @@ class RaiseTicketModal extends Component {
             <Form.Item label={<IntlMessages id="tickets.subject"/>}>
               {getFieldDecorator('title', {
                 initialValue: title,
-                rules: [{required: true, message: 'Please enter ticket subject'}],
+                rules: [{required: true, message: messages["validation.tickets.subject"]}],
               })(<Input type="text" className="gx-form-control-lg" onChange={(e) => {
                 this.setState({title: e.target.value})
               }}/>)}
@@ -166,7 +166,7 @@ class RaiseTicketModal extends Component {
                 })}
               </Select>)}
             </Form.Item>
-            <Form.Item label={<IntlMessages id="tickets.lastUpdated"/>}>
+            <Form.Item label={<IntlMessages id="tickets.selectService"/>}>
               {getFieldDecorator('service_id', {
                 initialValue: service_id,
               })(<Select
@@ -182,7 +182,7 @@ class RaiseTicketModal extends Component {
                 initialValue: content,
                 rules: [{
                   min: 30,
-                  message: 'Message should be at least 30 characters long',
+                  message: messages["validation.tickets.description"],
                 }],
               })(<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                 this.setState({content: e.target.value})

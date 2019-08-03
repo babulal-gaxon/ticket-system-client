@@ -382,8 +382,21 @@
   "tickets.services.placeholder": "Select Services",
   "tickets.selectPriority": "Select Priority",
   "tickets.files.upload": "Add Files",
+  "tickets.ticketId": "Ticket Id:",
+  "tickets.edit": "Edit",
+  "tickets.assignedTo": "Assigned To",
+  "tickets.yetToAssign": "Yet to be Assigned",
+  "tickets.created": "Created",
+  "tickets.lastUpdate": "Last Update",
+  "tickets.currentStatus": "Current Status",
+  "tickets.messages": "Messages",
+  "tickets.updateTicket": "Update the Ticket",
+  "tickets.enterDetail": "Enter Detail",
+  "tickets.upload": "Upload",
+  "tickets.updateButton": "Update Ticket",
 
   "validation.tickets.subject": "Please enter Ticket Subject",
+  "validation.tickets.description": "Description should not exceed 250 characters",
 
 
 
