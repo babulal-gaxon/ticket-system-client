@@ -3,8 +3,10 @@ import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import React from "react";
 import Permissions from "../../../util/Permissions";
 import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const onShowRowDropdown = (currentCustomer, context) => {
+  const {messages} = this.props.intl;
   const menu = (
     <Menu>
       {(Permissions.canCustomerEdit()) ?
@@ -25,19 +27,14 @@ const onShowRowDropdown = (currentCustomer, context) => {
       {(Permissions.canCustomerEdit()) ?
         <Menu.Item key="3">
           <Popconfirm
-            title={`Are you sure to ${currentCustomer.status === 1 ? <IntlMessages id="common.customer"/> :
+            title={`Are you sure to ${currentCustomer.status === 1 ? messages["common.customer"] :
               <IntlMessages id="common.customer"/>} this Customer?`}
             onConfirm={() => {
-              if (currentCustomer.status === 1) {
-                context.onDisableCustomerStatus(currentCustomer.id)
-              } else {
-                context.onEnableCustomerStatus(currentCustomer.id)
-              }
-
+              context.onDisableCustomerCall(currentCustomer.id)
             }}
             okText="Yes"
             cancelText="No">
-            {currentCustomer.status === 1 ? <IntlMessages id="common.disable"/> : <IntlMessages id="common.enable"/>}
+            <span>{currentCustomer.status === 1 ? <IntlMessages id="common.disable"/> : <IntlMessages id="common.enable"/>}</span>
           </Popconfirm>
         </Menu.Item> : null}
       <Menu.Divider/>
@@ -51,7 +48,7 @@ const onShowRowDropdown = (currentCustomer, context) => {
             }}
             okText="Yes"
             cancelText="No">
-            <IntlMessages id="common.delete"/>
+            <span><IntlMessages id="common.delete"/></span>
           </Popconfirm>
         </Menu.Item> : null}
     </Menu>
@@ -138,4 +135,4 @@ const CustomersRow = (context) => {
   ];
 };
 
-export default CustomersRow;
+export default injectIntl(CustomersRow);

@@ -182,7 +182,7 @@ class Services extends Component {
   onDeletePopUp = (recordId) => {
     return (
       <Popconfirm
-        title="Are you sure to delete this Service?"
+        title={<IntlMessages id="services.message.delete"/>}
         onConfirm={() => {
           this.props.onDeleteServices({ids: [recordId]});
         }}

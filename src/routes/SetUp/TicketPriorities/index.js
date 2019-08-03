@@ -185,7 +185,7 @@ class TicketPriorities extends Component {
 
   onDeletePopUp = (recordId) => {
     return <Popconfirm
-      title="Are you sure to delete this Priority?"
+      title={<IntlMessages id="priorities.message.delete"/>}
       onConfirm={() => {
         this.props.onBulkDeletePriorities({ids: [recordId]});
         this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText);

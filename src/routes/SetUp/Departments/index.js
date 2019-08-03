@@ -183,7 +183,7 @@ class Departments extends Component {
   onDeletePopUp = (recordId) => {
     return (
       <Popconfirm
-        title="Are you sure to delete this Department?"
+        title={<IntlMessages id="departments.message.delete"/>}
         onConfirm={() => {
           this.props.onBulkDeleteDepartments({ids: [recordId]});
           this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);

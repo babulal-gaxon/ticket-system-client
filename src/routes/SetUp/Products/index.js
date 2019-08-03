@@ -183,7 +183,7 @@ class Products extends Component {
   onDeletePopUp = (recordId) => {
     return (
       <Popconfirm
-        title="Are you sure to delete this Product?"
+        title={<IntlMessages id="products.message.delete"/>}
         onConfirm={() => {
           this.props.onDeleteProduct({ids: [recordId]});
         }}

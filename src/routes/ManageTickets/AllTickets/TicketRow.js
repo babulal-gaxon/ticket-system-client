@@ -11,11 +11,11 @@ const onShowRowDropdown = (ticketId, context) => {
       {(Permissions.canTicketDelete()) ?
         <Menu.Item key="4">
           <Popconfirm
-            title="Are you sure to Archive this Ticket?"
+            title={<IntlMessages id="manageTickets.message.delete"/>}
             onConfirm={() => context.props.onDeleteTicket({ids: ticketId})}
-            okText="Yes"
-            cancelText="No">
-            <IntlMessages id="manageTickets.sortBy"/>
+            okText={<IntlMessages id="common.yes"/>}
+            cancelText={<IntlMessages id="common.no"/>}>
+            <IntlMessages id="common.archive"/>
           </Popconfirm>
         </Menu.Item> : null}
     </Menu>

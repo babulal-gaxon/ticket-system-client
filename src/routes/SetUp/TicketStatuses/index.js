@@ -191,7 +191,7 @@ class TicketStatuses extends Component {
 
   onDeletePopUp = (recordId) => {
     return <Popconfirm
-      title="Are you sure to delete this Status?"
+      title={<IntlMessages id="statuses.message.delete"/>}
       onConfirm={() => {
         this.props.onBulkDeleteStatuses({ids: [recordId]});
         this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText);

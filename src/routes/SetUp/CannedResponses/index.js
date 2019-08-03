@@ -188,7 +188,7 @@ class CannedResponses extends Component {
 
   onDeletePopUp = (recordId) => {
     return <Popconfirm
-      title="Are you sure to delete this Response?"
+      title={<IntlMessages id="responses.message.delete"/>}
       onConfirm={() => {
         this.props.onBulkDeleteResponses({ids: [recordId]});
         this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
