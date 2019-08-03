@@ -3,6 +3,7 @@ import Widget from "../../../../../components/Widget";
 import {Button, Divider, Empty, Popconfirm} from "antd";
 import AddStaffNotes from "./AddStaffNotes";
 import {getFormattedDate} from "../../../../../util/Utills";
+import IntlMessages from "../../../../../util/IntlMessages";
 
 class StaffNotesList extends Component {
   constructor(props) {
@@ -32,8 +33,8 @@ class StaffNotesList extends Component {
         onConfirm={() => {
           this.props.onDeleteStaffNotes(recordId);
         }}
-        okText="Yes"
-        cancelText="No">
+        okText={<IntlMessages id="common.yes"/>}
+        cancelText={<IntlMessages id="common.no"/>}>
         <i className="icon icon-trash"/>
       </Popconfirm>
     )
@@ -46,9 +47,9 @@ class StaffNotesList extends Component {
       <div className="gx-main-content">
         <Widget styleName="gx-card-filter">
           <div className="gx-d-flex gx-justify-content-between">
-            <span className="gx-widget-heading">Useful Notes</span>
+            <span className="gx-widget-heading"><IntlMessages id="staff.notes.heading"/></span>
             <Button type="primary" ghost onClick={this.onAddButtonClick}>
-              Add New
+              <IntlMessages id="common.addNew"/>
             </Button>
           </div>
           {staffNotes.length > 0 ? staffNotes.map(note => {
@@ -58,7 +59,7 @@ class StaffNotesList extends Component {
                   <div className="gx-font-weight-semi-bold">{note.title}</div>
                   <div className="gx-my-2">{note.content}</div>
                   <div>
-                    <span>created by: </span>
+                    <span><IntlMessages id="common.createdBy"/>: </span>
                     <span className="gx-text-primary">{note.display_name}</span>
                     <span> - {getFormattedDate(note.created_at)}</span>
                   </div>

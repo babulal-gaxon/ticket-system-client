@@ -3,6 +3,8 @@ import {Button, Col, Form, Input, message, Modal, Radio, Select, Upload} from "a
 import axios from 'util/Api'
 import PropTypes from "prop-types";
 import {getFileExtension, getFileSize} from "../../../../util/Utills";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../../util/IntlMessages";
 
 const {Option} = Select;
 
@@ -122,6 +124,7 @@ class AddNewStaff extends Component {
     const {first_name, last_name, email, password, mobile, hourly_rate, account_status, departments_ids, fileList} = this.state;
     const {showAddModal, onToggleAddModal} = this.props;
     const deptOptions = this.onDepartmentSelectOption();
+    const {messages} = this.props.intl;
     const props = {
       accept: getFileExtension(),
       onRemove: file => {
@@ -140,7 +143,7 @@ class AddNewStaff extends Component {
         }
         const isFileSize = file.size < getFileSize();
         if (!isFileSize) {
-          message.error('The image size is greater than allowed size!');
+          message.error(messages["validation.message.imageSize"]);
         } else {
           this.setState(state => ({
             fileList: [...state.fileList, file],
@@ -150,39 +153,40 @@ class AddNewStaff extends Component {
       },
       fileList,
     };
+
     return (
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddModal}
-          title={this.props.staffId === null ? "Add Staff" : "Edit Staff Details"}
+          title={this.props.staffId === null ? <IntlMessages id="staff.addStaff"/> : <IntlMessages id="staff.editStaff"/>}
           onCancel={() => onToggleAddModal()}
           footer={[
             <Button key="submit" type="primary" onClick={() => this.onValidationCheck()}>
-              Save
+              <IntlMessages id="common.save"/>
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddModal()}>
-              Cancel
+              <IntlMessages id="common.cancel"/>
             </Button>,
           ]}>
           <Form layout="vertical">
             <div className="gx-d-flex gx-flex-row">
               <Col sm={12} xs={24} className="gx-pl-0">
-                <Form.Item label="First Name">
+                <Form.Item label={<IntlMessages id="common.firstName"/>}>
                   {getFieldDecorator('first_name', {
                     initialValue: first_name,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message: 'Please Enter First Name!'}],
+                    rules: [{required: true, message: messages["validation.message.firstName"]}],
                   })(<Input type="text" autoFocus onChange={(e) => {
                     this.setState({first_name: e.target.value})
                   }}/>)}
                 </Form.Item>
               </Col>
               <Col sm={12} xs={24} className="gx-pr-0">
-                <Form.Item label="Last Name">
+                <Form.Item label={<IntlMessages id="common.lastName"/>}>
                   {getFieldDecorator('last_name', {
                     initialValue: last_name,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message: 'Please Enter Last Name!'}],
+                    rules: [{required: true, message: "validation.message.lastName"}],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({last_name: e.target.value})
                   }}/>)}
@@ -191,7 +195,7 @@ class AddNewStaff extends Component {
             </div>
             <div className="gx-d-flex gx-flex-row">
               <Col sm={12} xs={24} className="gx-pl-0">
-                <Form.Item label="Email Address">
+                <Form.Item label={<IntlMessages id="common.emailAddress"/>}>
                   {getFieldDecorator('email', {
                     initialValue: email,
                     validate: [{
@@ -199,7 +203,7 @@ class AddNewStaff extends Component {
                       rules: [
                         {
                           required: true,
-                          message: 'Please Enter Email!'
+                          message: messages["validation.message.email"]
                         },
                       ],
                     }, {
@@ -207,7 +211,7 @@ class AddNewStaff extends Component {
                       rules: [
                         {
                           type: 'email',
-                          message: 'The input is not valid E-mail!',
+                          message: messages["validation.message.emailFormat"]
                         },
                       ],
                     }],
@@ -217,13 +221,13 @@ class AddNewStaff extends Component {
                 </Form.Item>
               </Col>
               <Col sm={12} xs={24} className="gx-pr-0">
-                <Form.Item label="Phone Number">
+                <Form.Item label={<IntlMessages id="common.phoneNo."/>}>
                   {getFieldDecorator('mobile', {
                     initialValue: mobile,
                     validateTrigger: 'onBlur',
                     rules: [{
                       pattern: /^[0-9\b]+$/,
-                      message: 'Please enter only numerical values',
+                      message: messages["validation.message.numericalValues"]
                     }],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({phone: e.target.value})
@@ -233,18 +237,18 @@ class AddNewStaff extends Component {
             </div>
             <div className="gx-d-flex gx-flex-row">
               <Col sm={12} xs={24} className="gx-pl-0">
-                <Form.Item label="Password"
-                           extra={this.props.staffId === null ? "" : "Note: Leave it blank if you don't want to update password."}>
+                <Form.Item label={<IntlMessages id="common.password"/>}
+                           extra={this.props.staffId === null ? "" : <IntlMessages id="validation.message.passwordUpdateNote"/>}>
                   {this.props.staffId === null ?
                     getFieldDecorator('password', {
                       initialValue: password,
                       rules: [{
                         required: true,
-                        message: 'Please Enter Password!'
+                        message: messages["validation.message.inputPassword"]
                       },
                         {
                           min: 8,
-                          message: 'Length should be at least 8 characters long',
+                          message: messages["validation.message.passwordLength"],
                         }],
                     })(<Input.Password type="text" onChange={(e) => {
                       this.setState({password: e.target.value})
@@ -255,13 +259,13 @@ class AddNewStaff extends Component {
                 </Form.Item>
               </Col>
               <Col sm={12} xs={24} className="gx-pr-0">
-                <Form.Item label="Hourly Rate">
+                <Form.Item label={<IntlMessages id="common.hourlyRate"/>}>
                   {getFieldDecorator('hourly_rate', {
                     initialValue: hourly_rate,
                     validateTrigger: 'onBlur',
                     rules: [{
                       pattern: /^[0-9\b]+$/,
-                      message: 'Please enter only numerical values',
+                      message: messages["validation.message.numericalValues"]
                     }]
                   })(<Input type="text" addonAfter={<div>$</div>} onChange={(e) => {
                     this.setState({hourly_rate: e.target.value})
@@ -269,28 +273,28 @@ class AddNewStaff extends Component {
                 </Form.Item>
               </Col>
             </div>
-            <Form.Item label="Department">
+            <Form.Item label={<IntlMessages id="common.departmentHeading"/>}>
               <Select
                 mode="multiple"
                 style={{width: '100%'}}
-                placeholder="Please select Department"
+                pplaceholder={messages["common.department"]}
                 value={departments_ids}
                 onSelect={this.onDepartmentSelect}
                 onDeselect={this.onDepartmentRemove}>
                 {deptOptions}
               </Select>
             </Form.Item>
-            <Form.Item label="Upload Profile Picture">
+            <Form.Item label={<IntlMessages id="common.uploadProfileImage"/>}>
               <Upload {...props}>
-                <Input placeholder="Choose file..." addonAfter="Browse"/>
+                <Input placeholder={messages["common.chooseFile"]} addonAfter={<IntlMessages id="common.browse"/>}/>
               </Upload>
             </Form.Item>
-            <Form.Item label="Status">
+            <Form.Item label={<IntlMessages id="common.status"/>}>
               <Radio.Group value={account_status} onChange={(e) => {
                 this.setState({account_status: e.target.value})
               }}>
-                <Radio value={1}>Active</Radio>
-                <Radio value={0}>Disabled</Radio>
+                <Radio value={1}>{<IntlMessages id="common.active"/>}</Radio>
+                <Radio value={0}>{<IntlMessages id="common.disable"/>}</Radio>
               </Radio.Group>
             </Form.Item>
           </Form>
@@ -302,7 +306,7 @@ class AddNewStaff extends Component {
 
 AddNewStaff = Form.create({})(AddNewStaff);
 
-export default AddNewStaff;
+export default injectIntl(AddNewStaff);
 
 AddNewStaff.defaultProps = {
   showAddModal: false,

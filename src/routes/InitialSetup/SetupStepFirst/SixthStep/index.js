@@ -12,6 +12,7 @@ import {
 import {onGetDepartments} from "../../../../appRedux/actions/Departments";
 import {fetchError, fetchStart, fetchSuccess} from "../../../../appRedux/actions";
 import PropTypes from "prop-types";
+import IntlMessages from "../../../../util/IntlMessages";
 
 class SixthStep extends Component {
   constructor(props) {
@@ -42,7 +43,7 @@ class SixthStep extends Component {
   onGetTableColumns = () => {
     return [
       {
-        title: 'Name',
+        title: <IntlMessages id="common.name"/>,
         dataIndex: 'name',
         key: 'name',
         render: (text, record) => {
@@ -55,14 +56,14 @@ class SixthStep extends Component {
         }
       },
       {
-        title: 'Department',
+        title: <IntlMessages id="common.departmentHeading"/>,
         dataIndex: 'department',
         key: 'department',
         render: (text, record) => {
           return <span className="gx-email gx-d-inline-block gx-mr-2">
             {record.departments.length !== 0 ? record.departments.map(department => {
               return department.name
-            }).join() : "NA"}
+            }).join() : <IntlMessages id="common.na"/>}
             </span>
         },
       },
@@ -87,29 +88,30 @@ class SixthStep extends Component {
         this.props.onBulkDeleteStaff({ids: [recordId]});
         this.props.onGetStaff();
       }}
-      okText="Yes"
-      cancelText="No">
+      okText={<IntlMessages id="common.yes"/>}
+      cancelText={<IntlMessages id="common.no"/>}>
       <i className="icon icon-trash"/>
     </Popconfirm>
   };
 
   render() {
     const {showAddModal} = this.state;
+
     return (
       <div className="gx-flex-column gx-mt-3" style={{width: "60%"}}>
         {this.props.staffList.length === 0 ?
           <Widget styleName="gx-card-filter gx-mr-2">
-            <h3 className="gx-font-weight-bold gx-my-4">No staff member found. Get start to add your staff now!</h3>
-            <Button type="primary" onClick={this.onAddButtonClick}>Add New</Button>
+            <h3 className="gx-font-weight-bold gx-my-4"><IntlMessages id="setup.message.noStaffFound"/></h3>
+            <Button type="primary" onClick={this.onAddButtonClick}><IntlMessages id="common.addNew"/></Button>
           </Widget> :
           <Table rowKey="id" columns={this.onGetTableColumns()} dataSource={this.props.staffList}
                  className="gx-mb-4" pagination={false}/>}
         <div className="gx-d-flex gx-justify-content-between">
           <div>
-            <Button type="default" onClick={() => this.props.onMoveToPrevStep()}>Previous</Button>
-            <Button type="primary" onClick={() => this.props.onMoveToNextStep()}>Next</Button>
+            <Button type="default" onClick={() => this.props.onMoveToPrevStep()}><IntlMessages id="common.previous"/></Button>
+            <Button type="primary" onClick={() => this.props.onMoveToNextStep()}><IntlMessages id="common.next"/></Button>
           </div>
-          <div><Button onClick={this.onAddButtonClick}>+Add New</Button></div>
+          <div><Button onClick={this.onAddButtonClick}>+<IntlMessages id="common.addNew"/></Button></div>
         </div>
         {showAddModal ?
           <AddNewStaff showAddModal={showAddModal}

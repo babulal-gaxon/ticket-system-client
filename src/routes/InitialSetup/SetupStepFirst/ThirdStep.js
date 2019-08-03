@@ -6,6 +6,8 @@ import {onGetCountriesList} from "../../../appRedux/actions/GeneralSettings";
 import {onSetGeneralInfo} from "../../../appRedux/actions/InitialSetup";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import {getFileExtension, getFileSize} from "../../../util/Utills";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 const {Option} = Select;
 
@@ -110,6 +112,7 @@ class ThirdStep extends Component {
 
   render() {
     const {name, url, phone, email, address_line_1, address_line_2, city, state, country_id, zip_code, cpp_url, fileList} = this.state;
+    const {messages} = this.props.intl;
     const props = {
       accept: getFileExtension(),
       onRemove: file => {
@@ -128,7 +131,7 @@ class ThirdStep extends Component {
         }
         const isFileSize = file.size < getFileSize();
         if (!isFileSize) {
-          message.error('The image size is greater than allowed size!');
+          message.error(messages["validation.message.imageSize"]);
         }
         if (isFileSize) {
           this.setState(state => ({
@@ -140,54 +143,55 @@ class ThirdStep extends Component {
       fileList,
     };
     const {getFieldDecorator} = this.props.form;
+
     return (
       <div className="gx-flex-column gx-mt-3">
         <Form layout="vertical" style={{width: "70%"}}>
           <div className="gx-d-flex gx-flex-row">
             <Col sm={12} xs={24} className="gx-pl-0">
-              <Form.Item label="Company Name">
+              <Form.Item label={<IntlMessages id="companies.companyName"/>}>
                 {getFieldDecorator('name', {
                   initialValue: name,
                   validateTrigger: 'onBlur',
                   rules: [{
                     required: true,
-                    message: 'Please Enter Company Name!'
+                    message:  messages["validation.message.companyName"]
                   }],
                 })(<Input type="text" autoFocus onChange={(e) => this.setState({name: e.target.value})}/>)}
               </Form.Item>
             </Col>
             <Col sm={12} xs={24} className="gx-pr-0">
-              <Form.Item label="Company Website" extra="Please enter website in 'http://www.example.com' format">
+              <Form.Item label={<IntlMessages id="settings.companyWebsite"/>} extra={<IntlMessages id="common.websiteFormatMessage"/>}>
                 {getFieldDecorator('url', {
                   initialValue: url,
                   validateTrigger: 'onBlur',
                   rules: [{
                     required: true,
-                    message: 'Please Enter Company Website!'
+                    message: messages["validation.settings.companyURL"]
                   }],
                 })(<Input type="text" onChange={(e) => this.setState({url: e.target.value})}/>)}
               </Form.Item>
             </Col>
           </div>
-          <Form.Item label="Upload Logo">
+          <Form.Item label={<IntlMessages id="common.companyLogo"/>}>
             <Upload {...props}>
-              <Input placeholder="Choose file..." addonAfter="Browse"/>
+              <Input placeholder={messages["common.chooseFile"]} addonAfter={<IntlMessages id="common.browse"/>}/>
             </Upload>
           </Form.Item>
-          <Form.Item label="Client URl">
+          <Form.Item label={<IntlMessages id="settings.clientURL"/>}>
             {getFieldDecorator('cpp_url', {
               initialValue: cpp_url,
               validateTrigger: 'onBlur',
               rules: [{
                 required: true,
-                message: 'Please Enter Client URL!'
+                message: messages["validation.settings.clientURL"]
               }],
             })(<Input type="text" onChange={(e) => this.setState({cpp_url: e.target.value})}/>)}
           </Form.Item>
-          <Divider orientation="left" className="gx-mb-4">Primary Contact</Divider>
+          <Divider orientation="left" className="gx-mb-4"><IntlMessages id="setup.primaryContact"/></Divider>
           <div className="gx-d-flex gx-flex-row">
             <Col sm={12} xs={24} className="gx-pl-0">
-              <Form.Item label="Email Address">
+              <Form.Item label={<IntlMessages id="common.email"/>}>
                 {getFieldDecorator('email', {
                   initialValue: email,
                   validate: [{
@@ -195,7 +199,7 @@ class ThirdStep extends Component {
                     rules: [
                       {
                         required: true,
-                        message: 'Please Enter Email!'
+                        message: messages["validation.message.email"]
                       },
                     ],
                   }, {
@@ -203,7 +207,7 @@ class ThirdStep extends Component {
                     rules: [
                       {
                         type: 'email',
-                        message: 'The input is not valid E-mail!',
+                        message: messages["validation.message.emailFormat"],
                       },
                     ],
                   }],
@@ -213,40 +217,39 @@ class ThirdStep extends Component {
               </Form.Item>
             </Col>
             <Col sm={12} xs={24} className="gx-pr-0">
-              <Form.Item label="Phone Number">
+              <Form.Item label={<IntlMessages id="common.phoneNo."/>}>
                 {getFieldDecorator('phone', {
                   initialValue: phone,
                   validateTrigger: 'onBlur',
                   rules: [{
                     pattern: /^[0-9\b]+$/,
-                    message: 'Please enter only numerical values',
+                    message: messages["validation.message.numericalValues"],
                   }],
                 })(<Input type="text" onChange={(e) => {
                   this.setState({phone: e.target.value})
-
                 }}/>)}
               </Form.Item>
             </Col>
           </div>
-          <Divider orientation="left" className="gx-mb-4">Address</Divider>
+          <Divider orientation="left" className="gx-mb-4"><IntlMessages id="common.address"/></Divider>
           <div className="gx-d-flex gx-flex-row">
             <Col sm={12} xs={24} className="gx-pl-0">
-              <Form.Item label="Address Line 1">
+              <Form.Item label={<IntlMessages id="setup.addressLine1"/>}>
                 {getFieldDecorator('address_line_1', {
                   initialValue: address_line_1,
                   validateTrigger: 'onBlur',
-                  rules: [{required: true, message: 'Please Enter Address Line 1!'}],
+                  rules: [{required: true, message: messages["validation.setup.addressLine1"]}],
                 })(<Input type="text" onChange={(e) => {
                   this.setState({address_line_1: e.target.value})
                 }}/>)}
               </Form.Item>
             </Col>
             <Col sm={12} xs={24} className="gx-pr-0">
-              <Form.Item label="Address Line 2">
+              <Form.Item label={<IntlMessages id="setup.addressLine2"/>}>
                 {getFieldDecorator('address_line_2', {
                   initialValue: address_line_2,
                   validateTrigger: 'onBlur',
-                  rules: [{required: true, message: 'Please Enter Address Line 2!'}],
+                  rules: [{required: true, message: messages["validation.setup.addressLine1"]}],
                 })(<Input type="text" onChange={(e) => {
                   this.setState({address_line_2: e.target.value})
                 }}/>)}
@@ -255,23 +258,21 @@ class ThirdStep extends Component {
           </div>
           <div className="gx-d-flex gx-flex-row">
             <Col sm={8} xs={24} className="gx-pl-0">
-              <Form.Item label="Country">
+              <Form.Item label={<IntlMessages id="common.country"/>}>
                 {getFieldDecorator('country_id', {
                   initialValue: country_id,
                   validateTrigger: 'onBlur',
                   rules: [
                     {
                       required: true,
-                      message: 'Please Enter Country Name!'
+                      message:  messages["validation.message.country"]
                     }],
                 })(<Select
                   showSearch
                   style={{width: 200}}
-                  placeholder="Select a person"
+                  placeholder={messages["customer.address.countrySelect"]}
                   optionFilterProp="children"
                   onChange={this.onCountrySelect}
-                  // onFocus={onFocus}
-                  // onBlur={onBlur}
                   onSearch={this.onSearch}
                   filterOption={(input, option) =>
                     option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -283,40 +284,40 @@ class ThirdStep extends Component {
               </Form.Item>
             </Col>
             <Col sm={8} xs={24} className="gx-pl-0">
-              <Form.Item label="State">
+              <Form.Item label={<IntlMessages id="common.state"/>}>
                 {getFieldDecorator('state', {
                   initialValue: state,
                   validateTrigger: 'onBlur',
-                  rules: [{required: true, message: 'Please Enter State Name!'}],
+                  rules: [{required: true, message: messages["validation.message.state"]}],
                 })(<Input type="text" onChange={(e) => {
                   this.setState({state: e.target.value})
                 }}/>)}
               </Form.Item>
             </Col>
             <Col sm={8} xs={24} className="gx-pl-0 gx-pr-0">
-              <Form.Item label="City">
+              <Form.Item label={<IntlMessages id="common.city"/>}>
                 {getFieldDecorator('city', {
                   initialValue: city,
                   validateTrigger: 'onBlur',
-                  rules: [{required: true, message: 'Please Enter City Name!'}],
+                  rules: [{required: true, message: messages["validation.message.city"]}],
                 })(<Input type="text" onChange={(e) => {
                   this.setState({city: e.target.value})
                 }}/>)}
               </Form.Item>
             </Col>
           </div>
-          <Form.Item label="Zip Code">
+          <Form.Item label={<IntlMessages id="common.zip"/>}>
             {getFieldDecorator('zip_code', {
               initialValue: zip_code,
               validateTrigger: 'onBlur',
               rules: [
                 {
                   required: true,
-                  message: 'Please Enter Zip Code!'
+                  message: messages["validation.message.zip"]
                 },
                 {
                   pattern: /^[0-9\b]+$/,
-                  message: 'Please enter only numerical values'
+                  message: messages["validation.message.numericalValues"]
                 }
               ],
             })(<Input type="text" onChange={(e) => {
@@ -326,8 +327,8 @@ class ThirdStep extends Component {
           <div className="gx-d-flex">
             <Button type="default" onClick={() => {
               this.props.onMoveToPrevStep()
-            }}>Previous</Button>
-            <Button type="primary" onClick={this.onValidationCheck}>Next</Button>
+            }}><IntlMessages id="common.previous"/></Button>
+            <Button type="primary" onClick={this.onValidationCheck}><IntlMessages id="common.next"/></Button>
           </div>
         </Form>
       </div>
@@ -346,4 +347,4 @@ const mapStateToProps = ({generalSettings, auth}) => {
 export default connect(mapStateToProps, {
   onGetCountriesList, onSetGeneralInfo, fetchSuccess,
   fetchStart, fetchError
-})(ThirdStep);
+})(injectIntl(ThirdStep));

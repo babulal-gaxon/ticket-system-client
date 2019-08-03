@@ -9,6 +9,8 @@ import {
   onSaveCustomerPanelDetails
 } from "../../../appRedux/actions/GeneralSettings";
 import PropTypes from "prop-types";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {Option} = Select;
 
@@ -71,34 +73,35 @@ class CustomerPanelForm extends Component {
   };
 
   render() {
+    const {messages} = this.props.intl;
     const {getFieldDecorator} = this.props.form;
     const {theme, country, registration_enable, register_verification, allow_primary_contact_view, delete_own_files} = this.state;
     console.log("countriesList", this.props.countriesList);
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading">Customer Panel Settings</h4>
+          <h4 className="gx-widget-heading"><IntlMessages id="settings.customerPanel.title"/></h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
-              <Link to="/settings/general-settings">Settings</Link>
+              <Link to="/settings/general-settings"><IntlMessages id="sidebar.dashboard.settings"/></Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/settings/customer-panel" className="gx-text-primary">Customer Panel</Link>
+              <Link to="/settings/customer-panel" className="gx-text-primary"><IntlMessages id="settings.customerPanel.name"/></Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <Form layout="vertical" style={{width: "50%"}}>
-            <Form.Item label="Default Customer theme">
+            <Form.Item label={<IntlMessages id="settings.customerPanel.theme"/>}>
               {getFieldDecorator('theme', {
                 initialValue: theme,
                 validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please Select Theme!'}],
+                rules: [{required: true, message: messages["validation.customerPanel.theme"]}],
               })(<Input type="text" autoFocus onChange={(e) => this.setState({theme: e.target.value})}/>)}
             </Form.Item>
-            <Form.Item label="Default Country">
+            <Form.Item label={<IntlMessages id="settings.customerPanel.country"/>}>
               {getFieldDecorator('country', {
                 initialValue: country,
                 validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please Enter Country!'}],
+                rules: [{required: true, message: messages["validation.message.country"]}],
               })(<Select showSearchstyle={{width: "100%"}} onChange={this.onCountrySelect}
                          showSearch
                          filterOption={(input, option) =>
@@ -109,10 +112,10 @@ class CustomerPanelForm extends Component {
                 })}
               </Select>)}
             </Form.Item>
-            <Divider orientation="left" className="gx-mb-4">Access & Permissions</Divider>
+            <Divider orientation="left" className="gx-mb-4"><IntlMessages id="settings.customerPanel.permissions"/></Divider>
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
-                <p>Allow customer to Register</p>
+                <p><IntlMessages id="settings.customerPanel.customerRegister"/></p>
                 <Switch checked={!!registration_enable}
                         onChange={(checked) => this.setState({registration_enable: Number(checked)})}/>
               </div>
@@ -120,7 +123,7 @@ class CustomerPanelForm extends Component {
             </Form.Item>
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
-                <p>Require registration confirmation from administrator after customer register</p>
+                <p><IntlMessages id="settings.customerPanel.registration"/></p>
                 <Switch checked={!!register_verification}
                         onChange={(checked) => this.setState({register_verification: Number(checked)})}/>
               </div>
@@ -128,7 +131,7 @@ class CustomerPanelForm extends Component {
             </Form.Item>
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
-                <p>Allow primary contact to view/edit billing & shipping details</p>
+                <p><IntlMessages id="settings.customerPanel.billing"/></p>
                 <Switch checked={!!allow_primary_contact_view}
                         onChange={(checked) => this.setState({allow_primary_contact_view: Number(checked)})}/>
               </div>
@@ -136,7 +139,7 @@ class CustomerPanelForm extends Component {
             </Form.Item>
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
-                <p>Allow contacts to delete own files uploaded from customers area</p>
+                <p><IntlMessages id="settings.customerPanel.deleteFiles"/></p>
                 <Switch checked={!!delete_own_files}
                         onChange={(checked) => this.setState({delete_own_files: Number(checked)})}/>
               </div>
@@ -145,7 +148,7 @@ class CustomerPanelForm extends Component {
           </Form>
           <hr/>
           <div className="gx-d-flex">
-            <Button type="primary" style={{width: "150px"}} onClick={this.onValidationCheck}>Save</Button>
+            <Button type="primary" style={{width: "150px"}} onClick={this.onValidationCheck}><IntlMessages id="common.save"/></Button>
           </div>
         </Widget>
       </div>
@@ -164,7 +167,7 @@ export default connect(mapStateToProps, {
   onGetCustomerPanelDetails,
   onSaveCustomerPanelDetails,
   onGetCountriesList
-})(CustomerPanel);
+})(injectIntl(CustomerPanel));
 
 CustomerPanel.defaultProps = {
   countriesList: [],

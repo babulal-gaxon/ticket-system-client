@@ -3,6 +3,8 @@ import {Avatar, Button, message, Upload} from "antd";
 import PropTypes from "prop-types";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import {getFileExtension, getFileSize} from "../../../util/Utills";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 
 class ImageUpload extends Component {
@@ -14,6 +16,7 @@ class ImageUpload extends Component {
   }
 
   onLogoSelect = () => {
+    const {messages} = this.props.intl;
     let file = this.state.fileList[0];
     if (file) {
       const data = new FormData();
@@ -21,7 +24,7 @@ class ImageUpload extends Component {
       data.append('title', file.name);
       this.props.onAddProfileImage(data, this.props.context);
     } else {
-      message.warning("Please select image first!")
+      message.warning(messages["validation.message.selectImage"])
     }
   };
 
@@ -38,6 +41,7 @@ class ImageUpload extends Component {
 
   render() {
     const {fileList} = this.state;
+    const {messages} = this.props.intl;
     const props = {
       accept: getFileExtension(),
       onRemove: file => {
@@ -56,7 +60,7 @@ class ImageUpload extends Component {
         }
         const isFileSize = file.size < getFileSize();
         if (!isFileSize) {
-          message.error('The image size is greater than allowed size!');
+          message.error(messages["validation.message.imageSize"]);
         } else {
           this.setState(state => ({
             fileList: [...state.fileList, file],
@@ -73,13 +77,13 @@ class ImageUpload extends Component {
           <Avatar className="gx-size-200"
                   src={this.getImageURL()}/>
         </Upload>
-        <Button type="primary" className="gx-mt-5 gx-ml-4" onClick={this.onLogoSelect}>Add Profile Image</Button>
+        <Button type="primary" className="gx-mt-5 gx-ml-4" onClick={this.onLogoSelect}><IntlMessages id="common.uploadProfileImage"/></Button>
       </div>
     )
   }
 }
 
-export default ImageUpload;
+export default injectIntl(ImageUpload);
 
 ImageUpload.defaultProps = {
   imageAvatar: null

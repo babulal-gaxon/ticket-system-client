@@ -1,6 +1,7 @@
 import Widget from "../../../../components/Widget";
 import React from "react";
 import {Line, LineChart} from "recharts";
+import IntlMessages from "../../../../util/IntlMessages";
 
 const data = [
   {
@@ -32,7 +33,7 @@ const TotalLoggedTime = () => {
       <Widget styleName="gx-card-filter">
         <div className="gx-d-flex">
           <div className="gx-mr-2">
-            <div className="gx-mb-3">Total Logged Time</div>
+            <div className="gx-mb-3"><IntlMessages id="staff.totalLoggedTime"/></div>
             <div className="gx-font-weight-bold">8:45:00</div>
           </div>
           <div className=" gx-align-self-end">

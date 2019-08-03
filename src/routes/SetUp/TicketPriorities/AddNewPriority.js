@@ -3,6 +3,8 @@ import {Button, Form, Input, Modal, Radio} from "antd/lib/index";
 import PropTypes from "prop-types";
 import {SketchPicker} from "react-color";
 import reactCSS from 'reactcss';
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {TextArea} = Input;
 
@@ -58,6 +60,7 @@ class AddNewPriority extends Component {
     const {getFieldDecorator} = this.props.form;
     const {name, value, desc, status, color_code} = this.state;
     const {showAddPriority, onToggleAddPriority} = this.props;
+    const {messages} = this.props.intl;
     const styles = reactCSS({
       'default': {
         color: {
@@ -92,27 +95,27 @@ class AddNewPriority extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddPriority}
-          title={this.props.currentPriority === null ? "Add New Priority" : "Edit Priority Details"}
+          title={this.props.currentPriority === null ? <IntlMessages id="priorities.new"/> : <IntlMessages id="priorities.edit"/>}
           onCancel={onToggleAddPriority}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
-              Save
+              <IntlMessages id="common.save"/>
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddPriority()}>
-              Cancel
+              <IntlMessages id="common.cancel"/>
             </Button>,
           ]}>
           <Form layout="vertical">
-            <Form.Item label="Name">
+            <Form.Item label={<IntlMessages id="common.name"/>}>
               {getFieldDecorator('name', {
                 initialValue: name,
                 validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please Enter Priority Name!'}],
+                rules: [{required: true, message: messages["validation.priorities.name"]}],
               })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({name: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Color Code">
+            <Form.Item label={<IntlMessages id="common.colorCode"/>}>
               <div>
                 <div style={styles.swatch} onClick={this.handleColorClick} className="gx-d-flex">
                   <div style={styles.color} className="gx-mr-2"/>
@@ -124,7 +127,7 @@ class AddNewPriority extends Component {
                 </div> : null}
               </div>
             </Form.Item>
-            <Form.Item label="Description">
+            <Form.Item label={<IntlMessages id="common.description"/>}>
               {getFieldDecorator('desc', {
                 initialValue: desc,
                 validate: [{
@@ -132,7 +135,7 @@ class AddNewPriority extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Please Enter Description!'
+                      message: messages["validation.labels.description"]
                     },
                   ],
                 }, {
@@ -140,7 +143,7 @@ class AddNewPriority extends Component {
                   rules: [
                     {
                       max: 250,
-                      message: 'Description length should not exceed 250 characters'
+                      message: messages["common.descriptionLength"]
                     },
                   ],
                 }],
@@ -148,17 +151,17 @@ class AddNewPriority extends Component {
                 this.setState({desc: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Priority Weight">
+            <Form.Item label={<IntlMessages id="priorities.weight"/>}>
               <Input className="gx-form-control-lg" type="text" value={value} onChange={(e) => {
                 this.setState({value: e.target.value})
               }}/>
             </Form.Item>
-            <Form.Item label="Status">
+            <Form.Item label={<IntlMessages id="common.status"/>}>
               <Radio.Group value={status} onChange={(e) => {
                 this.setState({status: e.target.value})
               }}>
-                <Radio value={1}>Active</Radio>
-                <Radio value={0}>Disabled</Radio>
+                <Radio value={1}>{<IntlMessages id="common.active"/>}</Radio>
+                <Radio value={0}>{<IntlMessages id="common.disable"/>}</Radio>
               </Radio.Group>
             </Form.Item>
           </Form>
@@ -170,7 +173,7 @@ class AddNewPriority extends Component {
 
 AddNewPriority = Form.create({})(AddNewPriority);
 
-export default AddNewPriority;
+export default injectIntl(AddNewPriority);
 
 
 AddNewPriority.defaultProps = {

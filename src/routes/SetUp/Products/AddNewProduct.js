@@ -3,6 +3,8 @@ import {Button, Form, Input, message, Modal, Radio, Upload} from "antd/lib/index
 import PropTypes from "prop-types";
 import axios from 'util/Api'
 import {getFileExtension, getFileSize} from "../../../util/Utills";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 const {TextArea} = Input;
 
@@ -87,6 +89,7 @@ class AddNewProduct extends Component {
     const {title, support_enable, desc, fileList, logoName} = this.state;
     const {getFieldDecorator} = this.props.form;
     const {showAddModal, onToggleAddProduct, currentProduct} = this.props;
+    const {messages} = this.props.intl;
     const props = {
       accept: getFileExtension(),
       onRemove: file => {
@@ -120,49 +123,49 @@ class AddNewProduct extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddModal}
-          title={currentProduct === null ? "Add New Product" : "Edit Product Details"}
+          title={currentProduct === null ? <IntlMessages id="products.new"/> : <IntlMessages id="products.edit"/>}
           onCancel={() => onToggleAddProduct()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
-              Save
+              <IntlMessages id="common.save"/>
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddProduct()}>
-              Cancel
+              <IntlMessages id="common.cancel"/>
             </Button>,
           ]}>
           <Form layout="vertical">
-            <Form.Item label="Title">
+            <Form.Item label={<IntlMessages id="common.title"/>}>
               {getFieldDecorator('title', {
                 initialValue: title,
                 validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please Enter Product title!'}],
+                rules: [{required: true, message: messages["validation.products.title"]}],
               })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({title: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Description">
+            <Form.Item label={<IntlMessages id="common.description"/>}>
               {getFieldDecorator('desc', {
                 initialValue: desc,
                 validateTrigger: 'onBlur',
                 rules: [{
                   max: 250,
-                  message: 'Message length should not exceed 250 characters',
+                  message: messages["validation.message.messageLength"],
                 }],
               })(<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                 this.setState({desc: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Upload Logo" extra={fileList.length > 0 ? "" : logoName}>
+            <Form.Item label={<IntlMessages id="common.uploadLogo"/>} extra={fileList.length > 0 ? "" : logoName}>
               <Upload {...props}>
-                <Input placeholder="Choose file..." addonAfter="Browse"/>
+                <Input placeholder={messages["common.chooseFile"]} addonAfter={<IntlMessages id="common.browse"/>}/>
               </Upload>
             </Form.Item>
-            <Form.Item label="Support Enable">
+            <Form.Item label={<IntlMessages id="common.supportEnable"/>}>
               <Radio.Group value={support_enable} onChange={(e) => {
                 this.setState({support_enable: e.target.value})
               }}>
-                <Radio value={1}>Enable</Radio>
-                <Radio value={0}>Disable</Radio>
+                <Radio value={1}>{<IntlMessages id="common.enable"/>}</Radio>
+                <Radio value={0}>{<IntlMessages id="common.disable"/>}</Radio>
               </Radio.Group>
             </Form.Item>
           </Form>
@@ -174,7 +177,7 @@ class AddNewProduct extends Component {
 
 AddNewProduct = Form.create({})(AddNewProduct);
 
-export default AddNewProduct;
+export default injectIntl(AddNewProduct);
 
 
 AddNewProduct.defaultProps = {

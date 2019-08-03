@@ -110,7 +110,7 @@ class AddCustomerAddress extends Component {
                     ],
                   })(<Select
                     style={{width: "100%"}}
-                    placeholder={<IntlMessages id="customer.address.countrySelect"/>}
+                    placeholder={messages["customer.address.countrySelect"]}
                     defaultActiveFirstOption={false}
                     showArrow={false}
                     showSearch

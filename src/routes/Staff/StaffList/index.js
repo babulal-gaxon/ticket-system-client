@@ -12,6 +12,8 @@ import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Select, Table} f
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
 import StaffRow from "./StaffRow";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 
 const ButtonGroup = Button.Group;
@@ -81,9 +83,10 @@ class StaffList extends Component {
   };
 
   onShowBulkDeleteConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedStaff.length !== 0) {
       confirm({
-        title: "Are you sure to delete the selected Staffs?",
+        title: messages["staff.message.delete"],
         onOk: () => {
           this.props.onBulkDeleteStaff({ids: this.state.selectedStaff});
           this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers);
@@ -92,7 +95,7 @@ class StaffList extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Staff(s) first",
+        title: messages["staff.message.selectFirst"],
         onOk() {
         },
       });
@@ -103,18 +106,18 @@ class StaffList extends Component {
     const menu = (
       <Menu>
         <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
-          Archive
+          <IntlMessages id="common.archive"/>
         </Menu.Item>
         {(Permissions.canStaffDelete()) ?
           <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
-            Delete
+            <IntlMessages id="common.delete"/>
           </Menu.Item> : null
         }
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        Bulk Actions <Icon type="down"/>
+        <IntlMessages id="common.bulkActions"/> <Icon type="down"/>
       </Button>
     </Dropdown>
   };
@@ -127,7 +130,6 @@ class StaffList extends Component {
   onEnableStaffStatus = (staffId) => {
     this.props.onChangeStaffStatus({ids: [staffId]}, 1, true);
   };
-
 
   onSelectStaff = (currentMember) => {
     this.props.history.push(`/staff/member-detail?id=${currentMember.id}`)
@@ -162,6 +164,7 @@ class StaffList extends Component {
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;
     const staffList = this.props.staffList;
+    const {messages} = this.props.intl;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -175,10 +178,10 @@ class StaffList extends Component {
     return (
       <div className="gx-main-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading">Staffs</h4>
+          <h4 className="gx-widget-heading"><IntlMessages id="common.staffs"/></h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>
-              <Link to="/staff/all-members" className="gx-text-primary">Staffs</Link>
+              <Link to="/staff/all-members" className="gx-text-primary"><IntlMessages id="common.staffs"/></Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
@@ -186,12 +189,12 @@ class StaffList extends Component {
               {Permissions.canStaffAdd() ?
                 <Button type="primary" className="gx-btn-lg"
                         onClick={this.onAddButtonClick}>
-                  Add New Staff</Button> : null}
+                  <IntlMessages id="staff.addNew"/></Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
-                placeholder=" Search Staff Here"
+                placeholder= {messages["staff.search.placeholder"]}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}
                 style={{width: 350}}
@@ -216,7 +219,9 @@ class StaffList extends Component {
                    pageSize: this.state.itemNumbers,
                    current: this.state.currentPage,
                    total: this.props.totalItems,
-                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
+                     <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
+                     <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
                    onChange: this.onPageChange
                  }}
                  className="gx-table-responsive gx-mb-4"
@@ -248,7 +253,7 @@ export default connect(mapStateToProps, {
   onSetCurrentStaff,
   onBulkDeleteStaff,
   onChangeStaffStatus
-})(StaffList);
+})(injectIntl(StaffList));
 
 StaffList.defaultProps = {
   staffList: [],

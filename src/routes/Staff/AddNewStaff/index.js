@@ -14,6 +14,8 @@ import {Breadcrumb, Divider, Select} from "antd";
 import {Link} from "react-router-dom";
 import {onGetRoles} from "../../../appRedux/actions/RolesAndPermissions";
 import ImageUpload from "./ImageUpload";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 const {Option} = Select;
 const {confirm} = Modal;
@@ -21,7 +23,6 @@ const {confirm} = Modal;
 class AddNewStaff extends Component {
   constructor(props) {
     super(props);
-    console.log("constructoe", props.currentStaff);
     if (props.currentStaff === null) {
       this.state = {
         first_name: "",
@@ -38,7 +39,6 @@ class AddNewStaff extends Component {
       };
     } else {
       const selectedStaff = props.currentStaff;
-      console.log("selectedStaff", selectedStaff);
       const {id, first_name, last_name, email, mobile, hourly_rate, status, role_id, avatar, designation} = selectedStaff;
       const department_ids = selectedStaff.departments.map(department => {
         return department.id
@@ -127,10 +127,11 @@ class AddNewStaff extends Component {
   };
 
   showDeleteConfirm = () => {
+    const {messages} = this.props.intl;
     confirm({
-      title: 'Are you sure you want to delete this profile ?',
-      okText: "Yes, Delete Profile",
-      cancelText: "Cancel",
+      title: messages["staff.message.deleteProfile"],
+      okText: messages["common.deleteProfile"],
+      cancelText: messages["common.cancel"],
       onOk: () => {
         this.props.onBulkDeleteStaff({ids: this.props.currentStaff.id}, this.props.history)
       },
@@ -141,47 +142,47 @@ class AddNewStaff extends Component {
   };
 
   render() {
-    console.log("");
     const {getFieldDecorator} = this.props.form;
     const {mobile, hourly_rate, account_status, departments_ids, role_id, first_name, last_name, email, password, designation} = this.state;
     const deptOptions = this.onDepartmentSelectOption();
+    const {messages} = this.props.intl;
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
           <h4
-            className="ggx-widget-heading">{this.props.currentStaff === null ? "Add Staff Member" : "Edit Staff Details"}</h4>
+            className="ggx-widget-heading">{this.props.currentStaff === null ? <IntlMessages id="staff.addNew"/> : <IntlMessages id="staff.edit"/>}</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
-              <Link to="/staff/all-members">Staffs</Link>
+              <Link to="/staff/all-members"><IntlMessages id="common.staffs"/></Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
               <Link to="/staff/add-new-member"
-                    className="gx-text-primary">{this.props.currentStaff === null ? "Add Staff" : "Edit Staff"}</Link>
+                    className="gx-text-primary">{this.props.currentStaff === null ? <IntlMessages id="staff.addStaff"/> : <IntlMessages id="staff.editStaff"/>}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <hr/>
           <Row>
             <Col xl={18} lg={12} md={12} sm={12} xs={24}>
               <Form layout="vertical" style={{width: "60%"}}>
-                <Form.Item label="First Name">
+                <Form.Item label={<IntlMessages id="common.firstName"/>}>
                   {getFieldDecorator('first_name', {
                     initialValue: first_name,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message: 'Please Enter First Name!'}],
+                    rules: [{required: true, message: messages["validation.message.firstName"]}],
                   })(<Input type="text" autoFocus onChange={(e) => {
                     this.setState({first_name: e.target.value})
                   }}/>)}
                 </Form.Item>
-                <Form.Item label="Last Name">
+                <Form.Item label={<IntlMessages id="common.lastName"/>}>
                   {getFieldDecorator('last_name', {
                     initialValue: last_name,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message: 'Please Enter Last Name!'}],
+                    rules: [{required: true, message: "validation.message.lastName"}],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({last_name: e.target.value})
                   }}/>)}
                 </Form.Item>
-                <Form.Item label="Email Address">
+                <Form.Item label={<IntlMessages id="common.emailAddress"/>}>
                   {getFieldDecorator('email', {
                     initialValue: email,
                     validate: [{
@@ -189,7 +190,7 @@ class AddNewStaff extends Component {
                       rules: [
                         {
                           required: true,
-                          message: 'Please Enter Email!'
+                          message: messages["validation.message.email"]
                         },
                       ],
                     }, {
@@ -197,7 +198,7 @@ class AddNewStaff extends Component {
                       rules: [
                         {
                           type: 'email',
-                          message: 'The input is not valid E-mail!',
+                          message: messages["validation.message.emailFormat"]
                         },
                       ],
                     }],
@@ -205,25 +206,25 @@ class AddNewStaff extends Component {
                     this.setState({email: e.target.value})
                   }}/>)}
                 </Form.Item>
-                <Form.Item label="Phone Number">
+                <Form.Item label={<IntlMessages id="common.phoneNo."/>}>
                   {getFieldDecorator('mobile', {
                     initialValue: mobile,
                     validateTrigger: 'onBlur',
                     rules: [{
                       pattern: /^[0-9\b]+$/,
-                      message: 'Please enter only numerical values',
+                      message: messages["validation.message.numericalValues"]
                     }],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({phone: e.target.value})
                   }}/>)}
                 </Form.Item>
-                <Form.Item label="Role">
+                <Form.Item label={<IntlMessages id="common.role"/>}>
                   {getFieldDecorator('role_id', {
                     initialValue: role_id,
                     validateTrigger: 'onBlur',
                     rules: [{
                       required: true,
-                      message: 'Please Select role!'
+                      message: messages["validation.roles.name"]
                     }],
                   })(<Select onChange={this.onSelectRole} placeholder="Select a Role">
                     {this.props.roles.map(role => {
@@ -231,36 +232,36 @@ class AddNewStaff extends Component {
                     })}
                   </Select>)}
                 </Form.Item>
-                <Form.Item label="Hourly Rate">
+                <Form.Item label={<IntlMessages id="common.hourlyRate"/>}>
                   {getFieldDecorator('hourly_rate', {
                     initialValue: hourly_rate,
                     validateTrigger: 'onBlur',
                     rules: [{
                       pattern: /^[0-9\b]+$/,
-                      message: 'Please enter only numerical values',
+                      message: messages["validation.message.numericalValues"]
                     }]
                   })(<Input type="text" addonAfter={<div>$</div>} onChange={(e) => {
                     this.setState({hourly_rate: e.target.value})
                   }}/>)}
                 </Form.Item>
-                <Form.Item label="Designation">
+                <Form.Item label={<IntlMessages id="common.designation"/>}>
                   <Input type="text" value={designation} onChange={(e) => {
                     this.setState({designation: e.target.value})
                   }}/>
                 </Form.Item>
-                <Form.Item label="Password"
-                           extra={this.props.currentStaff === null ? "" : "Note: Leave it blank if you don't want to update password."}>
+                <Form.Item label={<IntlMessages id="common.password"/>}
+                           extra={this.props.currentStaff === null ? "" : <IntlMessages id="validation.message.passwordUpdateNote"/>}>
                   {this.props.currentStaff === null ?
                     getFieldDecorator('password', {
                       initialValue: password,
                       validateTrigger: 'onBlur',
                       rules: [{
                         required: true,
-                        message: 'Please Enter Password!'
+                        message: messages["validation.message.inputPassword"]
                       },
                         {
                           min: 8,
-                          message: 'Length should be at least 8 characters long',
+                          message: messages["validation.message.passwordLength"],
                         }],
                     })(<Input.Password type="text" onChange={(e) => {
                       this.setState({password: e.target.value})
@@ -269,23 +270,23 @@ class AddNewStaff extends Component {
                       this.setState({password: e.target.value})
                     }}/>}
                 </Form.Item>
-                <Form.Item label="Department">
+                <Form.Item label={<IntlMessages id="common.departmentHeading"/>}>
                   <Select
                     mode="multiple"
                     style={{width: '100%'}}
-                    placeholder="Please select Department"
+                    placeholder={messages["common.department"]}
                     value={departments_ids}
                     onSelect={this.onDepartmentSelect}
                     onDeselect={this.onDepartmentRemove}>
                     {deptOptions}
                   </Select>
                 </Form.Item>
-                <Form.Item label="Status">
+                <Form.Item label={<IntlMessages id="common.status"/>}>
                   <Radio.Group value={account_status} onChange={(e) => {
                     this.setState({account_status: e.target.value})
                   }}>
-                    <Radio value={1}>Active</Radio>
-                    <Radio value={0}>Disabled</Radio>
+                    <Radio value={1}>{<IntlMessages id="common.active"/>}</Radio>
+                    <Radio value={0}>{<IntlMessages id="common.disable"/>}</Radio>
                   </Radio.Group>
                 </Form.Item>
               </Form>
@@ -300,19 +301,19 @@ class AddNewStaff extends Component {
           <div className="gx-d-flex gx-justify-content-between">
             <span>
                 <Button type="primary" onClick={this.onValidationCheck} style={{width: 150}}>
-                  Save
+                  {<IntlMessages id="common.save"/>}
                 </Button>
               {this.props.currentStaff === null ?
                 <Button type="primary" onClick={this.onReset} style={{width: 150}}>
-                  Reset
+                  {<IntlMessages id="common.reset"/>}
                 </Button> : null}
               <Button onClick={this.onReturnStaffScreen} style={{width: 150}}>
-                  Cancel
+                  {<IntlMessages id="common.cancel"/>}
                 </Button>
             </span>
             {this.props.currentStaff !== null ?
               <span>
-              <Button type="danger" ghost style={{width: 150}} onClick={this.showDeleteConfirm}>Delete</Button>
+              <Button type="danger" ghost style={{width: 150}} onClick={this.showDeleteConfirm}>{<IntlMessages id="common.delete"/>}</Button>
             </span> : null}
           </div>
         </Widget>
@@ -325,7 +326,6 @@ AddNewStaff = Form.create({})(AddNewStaff);
 
 const mapStateToProps = ({departments, supportStaff, rolesAndPermissions}) => {
   const {currentStaff} = supportStaff;
-  console.log("maptoa", currentStaff);
   const {dept} = departments;
   const {roles} = rolesAndPermissions;
   return {dept, currentStaff, roles};
@@ -338,7 +338,7 @@ export default connect(mapStateToProps, {
   onAddProfileImage,
   onGetRoles,
   onBulkDeleteStaff
-})(AddNewStaff);
+})(injectIntl(AddNewStaff));
 
 AddNewStaff.defaultProps = {
   dept: [],

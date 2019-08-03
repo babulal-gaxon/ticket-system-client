@@ -4,6 +4,7 @@ import {Table} from "antd/lib/index";
 import Permissions from "../../../../../util/Permissions";
 import TicketsRow from "./TicketsRow";
 import {withRouter} from "react-router";
+import IntlMessages from "../../../../../util/IntlMessages";
 
 class AssignedTickets extends Component {
 
@@ -15,7 +16,7 @@ class AssignedTickets extends Component {
     return (
       <div className="gx-main-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading gx-mb-3">Assigned Tickets</h4>
+          <h4 className="gx-widget-heading gx-mb-3"><IntlMessages id="common.assignedTickets"/></h4>
           <Table rowKey="id" columns={TicketsRow()}
                  className="gx-mb-4" dataSource={this.props.staffTickets}
                  onRow={(record) => ({

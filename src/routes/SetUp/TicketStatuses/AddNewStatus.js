@@ -3,6 +3,8 @@ import {Button, Checkbox, Form, Input, Modal, Radio} from "antd/lib/index";
 import {SketchPicker} from "react-color";
 import PropTypes from "prop-types";
 import reactCSS from 'reactcss'
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 class AddNewStatus extends Component {
   constructor(props) {
@@ -60,6 +62,7 @@ class AddNewStatus extends Component {
     const {getFieldDecorator} = this.props.form;
     const {name, color_code, status, is_default} = this.state;
     const {showAddStatus, onToggleAddStatus} = this.props;
+    const {messages} = this.props.intl;
     const styles = reactCSS({
       'default': {
         color: {
@@ -93,28 +96,28 @@ class AddNewStatus extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddStatus}
-          title={this.props.currentStatus === null ? "Add New Ticket Status" : "Edit Ticket Status Details"}
+          title={this.props.currentStatus === null ? <IntlMessages id="statuses.new"/> : <IntlMessages id="statuses.edit"/>}
           onCancel={onToggleAddStatus}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
-              Save
+              <IntlMessages id="common.save"/>
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddStatus()}>
-              Cancel
+              <IntlMessages id="common.cancel"/>
             </Button>,
           ]}>
           <Form layout="vertical">
-            <Form.Item label="Name">
+            <Form.Item label={<IntlMessages id="common.name"/>}>
               {getFieldDecorator('name', {
                 initialValue: name,
                 validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please Enter Status Name!'}],
+                rules: [{required: true, message: messages["validation.statuses.name"]}],
               })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({name: e.target.value})
               }}/>)}
 
             </Form.Item>
-            <Form.Item label="Color Code">
+            <Form.Item label={<IntlMessages id="common.colorCode"/>}>
               <div>
                 <div style={styles.swatch} onClick={this.handleColorClick} className="gx-d-flex">
                   <div style={styles.color} className="gx-mr-2"/>
@@ -128,15 +131,15 @@ class AddNewStatus extends Component {
             </Form.Item>
             <Form.Item>
               <Checkbox className="gx-form-control-lg" checked={is_default} onChange={this.onCheckBoxChange}>
-                Set as Default
+                <IntlMessages id ="statuses.setAsDefault"/>
               </Checkbox>
             </Form.Item>
-            <Form.Item label="Status">
+            <Form.Item label={<IntlMessages id="common.status"/>}>
               <Radio.Group value={status} onChange={(e) => {
                 this.setState({status: e.target.value})
               }}>
-                <Radio value={1}>Active</Radio>
-                <Radio value={0}>Disabled</Radio>
+                <Radio value={1}>{<IntlMessages id="common.active"/>}</Radio>
+                <Radio value={0}>{<IntlMessages id="common.disable"/>}</Radio>
               </Radio.Group>
             </Form.Item>
           </Form>
@@ -148,7 +151,7 @@ class AddNewStatus extends Component {
 
 AddNewStatus = Form.create({})(AddNewStatus);
 
-export default AddNewStatus;
+export default injectIntl(AddNewStatus);
 
 
 AddNewStatus.defaultProps = {

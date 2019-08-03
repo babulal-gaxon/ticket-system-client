@@ -277,7 +277,6 @@ class AddNewCustomers extends Component {
                     }],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({phone: e.target.value})
-
                   }}/>)}
                 </Form.Item>
                 <Form.Item label={<IntlMessages id="common.selectCompany"/>}>

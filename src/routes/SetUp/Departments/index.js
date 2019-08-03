@@ -16,6 +16,8 @@ import AddNewDepartment from "./AddNewDepartment";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
 import DepartmentsRow from "./DepartmentsRow";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -87,9 +89,10 @@ class Departments extends Component {
   };
 
   onShowBulkActiveConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedDepartments.length !== 0) {
       confirm({
-        title: "Are you sure to change the status of selected departments to ACTIVE?",
+        title: messages["departments.message.active"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedDepartments
@@ -100,7 +103,7 @@ class Departments extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Department(s) first",
+        title: messages["departments.message.selectFirst"],
         onOk() {
         },
       });
@@ -108,9 +111,10 @@ class Departments extends Component {
   };
 
   onShowBulkDisableConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedDepartments.length !== 0) {
       confirm({
-        title: "Are you sure to change the status of selected departments to DISABLED?",
+        title: messages["departments.message.disable"],
         onOk: () => {
           this.props.onBulkInActiveDepartments({ids: this.state.selectedDepartments});
           this.setState({selectedRowKeys: [], selectedDepartments: []})
@@ -118,7 +122,7 @@ class Departments extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Department(s) first",
+        title: messages["departments.message.selectFirst"],
         onOk() {
         },
       });
@@ -126,9 +130,10 @@ class Departments extends Component {
   };
 
   onShowBulkDeleteConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedDepartments.length !== 0) {
       confirm({
-        title: "Are you sure to delete the selected departments?",
+        title: messages["departments.message.delete"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedDepartments
@@ -140,7 +145,7 @@ class Departments extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Department(s) first",
+        title: messages["departments.message.selectFirst"],
         onOk() {
         },
       });
@@ -152,24 +157,24 @@ class Departments extends Component {
       <Menu>
         {Permissions.canDepartmentEdit() ?
           <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
-            Active
+            <IntlMessages id="common.active"/>
           </Menu.Item> : null
         }
         {Permissions.canDepartmentEdit() ?
           <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
-            Disable
+            <IntlMessages id="common.disable"/>
           </Menu.Item> : null
         }
         {Permissions.canDepartmentDelete() ?
           <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
-            Delete
+            <IntlMessages id="common.delete"/>
           </Menu.Item> : null
         }
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        Bulk Actions <Icon type="down"/>
+        <IntlMessages id="common.bulkActions"/> <Icon type="down"/>
       </Button>
     </Dropdown>
   };
@@ -183,8 +188,8 @@ class Departments extends Component {
           this.props.onBulkDeleteDepartments({ids: [recordId]});
           this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
         }}
-        okText="Yes"
-        cancelText="No">
+        okText={<IntlMessages id="common.yes"/>}
+        cancelText={<IntlMessages id="common.no"/>}>
         <i className="icon icon-trash"/>
       </Popconfirm>
     )
@@ -213,6 +218,7 @@ class Departments extends Component {
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;
     const dept = this.props.dept;
+    const {messages} = this.props.intl;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -226,24 +232,24 @@ class Departments extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading">Departments</h4>
+          <h4 className="gx-widget-heading"><IntlMessages id="departments.title"/></h4>
           <Breadcrumb className="gx-mb-3">
-            <Breadcrumb.Item>Ticket System</Breadcrumb.Item>
+            <Breadcrumb.Item><IntlMessages id="common.ticketSystem"/></Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/setup/departments" className="gx-text-primary">Departments</Link></Breadcrumb.Item>
+              <Link to="/setup/departments" className="gx-text-primary"><IntlMessages id="departments.title"/></Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
               {(Permissions.canDepartmentAdd()) ?
                 <Button type="primary" className="gx-btn-lg"
                         onClick={this.onAddButtonClick}>
-                  Add New Department</Button> : null}
+                  <IntlMessages id="departments.new"/></Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
                 style={{width: 350}}
-                placeholder="Enter keywords to search Departments"
+                placeholder={messages["departments.search.placeholder"]}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
               <div className="gx-ml-3">
@@ -265,7 +271,9 @@ class Departments extends Component {
                    pageSize: this.state.itemNumbers,
                    current: this.state.currentPage,
                    total: this.props.totalItems,
-                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
+                     <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
+                     <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
                    onChange: this.onPageChange
                  }}/>
         </Widget>
@@ -294,7 +302,7 @@ export default connect(mapStateToProps, {
   onBulkDeleteDepartments,
   onBulkActiveDepartments,
   onBulkInActiveDepartments
-})(Departments);
+})(injectIntl(Departments));
 
 
 Departments.defaultProps = {

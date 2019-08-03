@@ -16,6 +16,8 @@ import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
 import ResponseRow from "./ResponseRow";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -90,9 +92,10 @@ class CannedResponses extends Component {
   };
 
   onShowBulkActiveConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedResponses.length !== 0) {
       confirm({
-        title: "Are you sure to change the status of selected Response(s) to ACTIVE?",
+        title: messages["responses.message.active"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedResponses
@@ -103,7 +106,7 @@ class CannedResponses extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Response(s) first",
+        title: messages["responses.message.selectFirst"],
         onOk() {
         },
       });
@@ -111,9 +114,10 @@ class CannedResponses extends Component {
   };
 
   onShowBulkDisableConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedResponses.length !== 0) {
       confirm({
-        title: "Are you sure to change the status of selected Response(s) to DISABLED?",
+        title:messages["responses.message.disable"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedResponses
@@ -124,7 +128,7 @@ class CannedResponses extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Response(s) first",
+        title: messages["responses.message.selectFirst"],
         onOk() {
         },
       });
@@ -132,9 +136,10 @@ class CannedResponses extends Component {
   };
 
   onShowBulkDeleteConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedResponses.length !== 0) {
       confirm({
-        title: "Are you sure to delete the selected Response(s)?",
+        title: messages["responses.message.delete"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedResponses
@@ -146,7 +151,7 @@ class CannedResponses extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Response(s) first",
+        title: messages["responses.message.selectFirst"],
         onOk() {
         },
       });
@@ -158,24 +163,24 @@ class CannedResponses extends Component {
       <Menu>
         {Permissions.canResponseEdit() ?
           <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
-            Active
+            <IntlMessages id="common.active"/>
           </Menu.Item> : null
         }
         {Permissions.canResponseEdit() ?
           <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
-            Disable
+            <IntlMessages id="common.disable"/>
           </Menu.Item> : null
         }
         {Permissions.canResponseDelete() ?
           <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
-            Delete
+            <IntlMessages id="common.delete"/>
           </Menu.Item> : null
         }
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        Bulk Actions <Icon type="down"/>
+        <IntlMessages id="common.bulkActions"/> <Icon type="down"/>
       </Button>
     </Dropdown>
   };
@@ -188,8 +193,8 @@ class CannedResponses extends Component {
         this.props.onBulkDeleteResponses({ids: [recordId]});
         this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
       }}
-      okText="Yes"
-      cancelText="No">
+      okText={<IntlMessages id="common.yes"/>}
+      cancelText={<IntlMessages id="common.no"/>}>
       <i className="icon icon-trash"/>
     </Popconfirm>
   };
@@ -226,26 +231,27 @@ class CannedResponses extends Component {
         this.setState({selectedResponses: ids, selectedRowKeys: selectedRowKeys})
       }
     };
+    const {messages} = this.props.intl;
 
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading">Canned Responses</h4>
+          <h4 className="gx-widget-heading"><IntlMessages id="responses.title"/></h4>
           <Breadcrumb className="gx-mb-3">
-            <Breadcrumb.Item>Ticket System</Breadcrumb.Item>
+            <Breadcrumb.Item><IntlMessages id="common.ticketSystem"/></Breadcrumb.Item>
             <Breadcrumb.Item className="gx-text-primary">
-              <Link to="/setup/canned-responses" className="gx-text-primary">Canned Responses</Link></Breadcrumb.Item>
+              <Link to="/setup/canned-responses" className="gx-text-primary"><IntlMessages id="responses.title"/></Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
               {Permissions.canResponseAdd() ?
                 <Button type="primary" className="gx-btn-lg" onClick={this.onAddButtonClick}>
-                  Add New Response</Button> : null}
+                  <IntlMessages id="responses.new"/></Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
-                placeholder="Enter keywords to search Responses"
+                placeholder={messages["responses.search.placeholder"]}
                 style={{width: 350}}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
@@ -269,7 +275,9 @@ class CannedResponses extends Component {
                    pageSize: this.state.itemNumbers,
                    current: this.state.current,
                    total: this.props.totalItems,
-                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
+                     <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
+                     <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
                    onChange: this.onPageChange
                  }}/>
           <div className="gx-d-flex gx-flex-row">
@@ -302,7 +310,7 @@ export default connect(mapStateToProps, {
   onBulkActiveResponses,
   onBulkInActiveResponses,
   onBulkDeleteResponses
-})(CannedResponses);
+})(injectIntl(CannedResponses));
 
 CannedResponses.defaultProps = {
   responses: [],

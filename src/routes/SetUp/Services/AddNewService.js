@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Button, Form, Input, Modal, Radio} from "antd/lib/index";
 import PropTypes from "prop-types";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {TextArea} = Input;
 
@@ -42,49 +44,51 @@ class AddNewService extends Component {
     const {getFieldDecorator} = this.props.form;
     const {title, support_enable, desc} = this.state;
     const {showAddModal, onToggleAddService} = this.props;
+    const {messages} = this.props.intl;
+
     return (
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddModal}
-          title={this.props.currentService === null ? "Add New Service" : "Edit Service Details"}
+          title={this.props.currentService === null ? <IntlMessages id="services.new"/> : <IntlMessages id="services.edit"/>}
           onCancel={() => onToggleAddService()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
-              Save
+              <IntlMessages id="common.save"/>
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddService()}>
-              Cancel
+              <IntlMessages id="common.cancel"/>
             </Button>,
           ]}>
           <Form layout="vertical">
-            <Form.Item label="Title">
+            <Form.Item label={<IntlMessages id="common.title"/>}>
               {getFieldDecorator('title', {
                 initialValue: title,
                 validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please Enter Service title!'}],
+                rules: [{required: true, message: messages["validation.services.title"]}],
               })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({title: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Description">
+            <Form.Item label={<IntlMessages id="common.description"/>}>
               {getFieldDecorator('desc', {
                 initialValue: desc,
                 validateTrigger: 'onBlur',
                 rules: [{
                   max: 250,
-                  message: 'Message length should not exceed 250 characters',
+                  message: messages["validation.message.messageLength"],
                 }],
               })(
                 <TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                   this.setState({desc: e.target.value})
                 }}/>)}
             </Form.Item>
-            <Form.Item label="Support Enable">
+            <Form.Item label={<IntlMessages id="common.supportEnable"/>}>
               <Radio.Group value={support_enable} onChange={(e) => {
                 this.setState({support_enable: e.target.value})
               }}>
-                <Radio value={1}>Enable</Radio>
-                <Radio value={0}>Disable</Radio>
+                <Radio value={1}>{<IntlMessages id="common.enable"/>}</Radio>
+                <Radio value={0}>{<IntlMessages id="common.disable"/>}</Radio>
               </Radio.Group>
             </Form.Item>
           </Form>
@@ -96,7 +100,7 @@ class AddNewService extends Component {
 
 AddNewService = Form.create({})(AddNewService);
 
-export default AddNewService;
+export default injectIntl(AddNewService);
 
 
 AddNewService.defaultProps = {

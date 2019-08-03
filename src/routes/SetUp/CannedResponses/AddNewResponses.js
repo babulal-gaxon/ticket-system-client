@@ -1,6 +1,8 @@
 import React, {Component} from "react"
 import {Button, Form, Input, Modal, Radio} from "antd/lib/index";
 import PropTypes from "prop-types";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {TextArea} = Input;
 
@@ -44,40 +46,41 @@ class AddNewResponses extends Component {
     const {getFieldDecorator} = this.props.form;
     const {status, short_title, short_code, message} = this.state;
     const {showAddCanned, onToggleAddCanned} = this.props;
+    const {messages} = this.props.intl;
     return (
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddCanned}
-          title={this.props.currentResponse === null ? "Add New Response" : "Edit Response Details"}
+          title={this.props.currentResponse === null ? <IntlMessages id="responses.new"/> : <IntlMessages id="responses.edit"/>}
           onCancel={() => onToggleAddCanned()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
-              Save
+              <IntlMessages id="common.save"/>
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddCanned()}>
-              Cancel
+              <IntlMessages id="common.cancel"/>
             </Button>,
           ]}>
           <Form layout="vertical">
-            <Form.Item label="Short Title">
+            <Form.Item label= {<IntlMessages id="responses.shortTitle"/>}>
               {getFieldDecorator('short_title', {
                 initialValue: short_title,
                 validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please Enter Short Title!'}],
+                rules: [{required: true, message: messages["validation.responses.shortTitle"]}],
               })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({short_title: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Short Code">
+            <Form.Item label={<IntlMessages id="responses.shortCode"/>}>
               {getFieldDecorator('short_code', {
                 initialValue: short_code,
                 validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please Enter Short Code!'}],
+                rules: [{required: true, message: messages["validation.responses.shortCode"]}],
               })(<Input type="text" onChange={(e) => {
                 this.setState({short_code: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Message">
+            <Form.Item label={<IntlMessages id="common.message"/>}>
               {getFieldDecorator('message', {
                 initialValue: message,
                 validate: [{
@@ -85,7 +88,7 @@ class AddNewResponses extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Please Enter Message!'
+                      message: messages["validation.message.message"]
                     },
                   ],
                 }, {
@@ -93,7 +96,7 @@ class AddNewResponses extends Component {
                   rules: [
                     {
                       max: 250,
-                      message: 'Message length should not exceed 250 characters'
+                      message: messages["validation.message.messageLength"]
                     },
                   ],
                 }],
@@ -101,12 +104,12 @@ class AddNewResponses extends Component {
                 this.setState({message: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Status">
+            <Form.Item label={<IntlMessages id="common.status"/>}>
               <Radio.Group value={status} onChange={(e) => {
                 this.setState({status: e.target.value})
               }}>
-                <Radio value={1}>Active</Radio>
-                <Radio value={0}>Disabled</Radio>
+                <Radio value={1}><IntlMessages id="common.active"/></Radio>
+                <Radio value={0}><IntlMessages id="common.disabled"/></Radio>
               </Radio.Group>
             </Form.Item>
           </Form>
@@ -119,7 +122,7 @@ class AddNewResponses extends Component {
 
 AddNewResponses = Form.create({})(AddNewResponses);
 
-export default AddNewResponses;
+export default injectIntl(AddNewResponses);
 
 
 AddNewResponses.defaultProps = {

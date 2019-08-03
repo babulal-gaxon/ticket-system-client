@@ -16,6 +16,8 @@ import Widget from "../../../components/Widget";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
 import StatusesRow from "./StatusesRow";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -91,9 +93,10 @@ class TicketStatuses extends Component {
   };
 
   onShowBulkActiveConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedStatus.length !== 0) {
       confirm({
-        title: "Are you sure to change the status of selected Statuses to ACTIVE?",
+        title: messages["statuses.message.active"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedStatus
@@ -104,7 +107,7 @@ class TicketStatuses extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Status(s) first",
+        title: messages["statuses.message.selectFirst"],
         onOk() {
         },
       });
@@ -112,9 +115,10 @@ class TicketStatuses extends Component {
   };
 
   onShowBulkDisableConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedStatus.length !== 0) {
       confirm({
-        title: "Are you sure to change the status of selected Statuses to DISABLED?",
+        title: messages["statuses.message.disable"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedStatus
@@ -125,7 +129,7 @@ class TicketStatuses extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Status(s) first",
+        title: messages["statuses.message.selectFirst"],
         onOk() {
         },
       });
@@ -134,9 +138,10 @@ class TicketStatuses extends Component {
   };
 
   onShowBulkDeleteConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedStatus.length !== 0) {
       confirm({
-        title: "Are you sure to delete the selected Statuses?",
+        title: messages["statuses.message.delete"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedStatus
@@ -148,7 +153,7 @@ class TicketStatuses extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Status(s) first",
+        title: messages["statuses.message.selectFirst"],
         onOk() {
         },
       });
@@ -161,24 +166,24 @@ class TicketStatuses extends Component {
       <Menu>
         {Permissions.canStatusEdit() ?
           <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
-            Active
+            <IntlMessages id="common.active"/>
           </Menu.Item> : null
         }
         {Permissions.canStatusEdit() ?
           <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
-            Disable
+            <IntlMessages id="common.disable"/>
           </Menu.Item> : null
         }
         {Permissions.canStatusDelete() ?
           <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
-            Delete
+            <IntlMessages id="common.delete"/>
           </Menu.Item> : null
         }
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        Bulk Actions <Icon type="down"/>
+        <IntlMessages id="common.bulkActions"/> <Icon type="down"/>
       </Button>
     </Dropdown>
   };
@@ -191,8 +196,8 @@ class TicketStatuses extends Component {
         this.props.onBulkDeleteStatuses({ids: [recordId]});
         this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText);
       }}
-      okText="Yes"
-      cancelText="No">
+      okText={<IntlMessages id="common.yes"/>}
+      cancelText={<IntlMessages id="common.no"/>}>
       <i className="icon icon-trash"/>
     </Popconfirm>
   };
@@ -222,6 +227,7 @@ class TicketStatuses extends Component {
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;
     const statuses = this.props.statuses;
+    const {messages} = this.props.intl;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -235,22 +241,22 @@ class TicketStatuses extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading">Ticket Status</h4>
+          <h4 className="gx-widget-heading"><IntlMessages id="statuses.title"/></h4>
           <Breadcrumb className="gx-mb-3">
-            <Breadcrumb.Item>Ticket System</Breadcrumb.Item>
+            <Breadcrumb.Item><IntlMessages id="common.ticketSystem"/></Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/setup/ticket-Statuses" className="gx-text-primary">Ticket Status</Link></Breadcrumb.Item>
+              <Link to="/setup/ticket-Statuses" className="gx-text-primary"><IntlMessages id="statuses.title"/></Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
               {Permissions.canStatusAdd() ?
                 <Button type="primary" className="gx-btn-lg" onClick={this.onAddButtonClick}>
-                  Add New Status</Button> : null}
+                  <IntlMessages id="statuses.new"/></Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
-                placeholder="Enter keywords to search Status"
+                placeholder={messages["statuses.search.placeholder"]}
                 style={{width: 350}}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}
@@ -274,7 +280,9 @@ class TicketStatuses extends Component {
                    pageSize: this.state.itemNumbers,
                    current: this.state.current,
                    total: this.props.totalItems,
-                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
+                     <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
+                     <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
                    onChange: this.onPageChange
                  }}/>
         </Widget>
@@ -303,7 +311,7 @@ export default connect(mapStateToProps, {
   onBulkActiveStatuses,
   onBulkInActiveStatuses,
   onBulkDeleteStatuses
-})(TicketStatuses);
+})(injectIntl(TicketStatuses));
 
 
 TicketStatuses.defaultProps = {

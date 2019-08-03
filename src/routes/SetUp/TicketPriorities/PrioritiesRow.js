@@ -1,11 +1,12 @@
 import {Tag} from "antd";
 import Permissions from "../../../util/Permissions";
 import React from "react";
+import IntlMessages from "../../../util/IntlMessages";
 
 const PrioritiesRow = (context) => {
   return [
     {
-      title: 'Name',
+      title: <IntlMessages id="common.name"/>,
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => {
@@ -13,15 +14,15 @@ const PrioritiesRow = (context) => {
       },
     },
     {
-      title: 'Description',
+      title: <IntlMessages id="common.description"/>,
       dataIndex: 'description',
       key: 'description',
       render: (text, record) => {
-        return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc ? record.desc : "NA"}</span>
+        return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc ? record.desc : <IntlMessages id="common.na"/>}</span>
       },
     },
     {
-      title: 'Color Code',
+      title: <IntlMessages id="common.colorCode"/>,
       dataIndex: 'colorCode',
       key: 'colorCode',
       render: (text, record) => {
@@ -30,7 +31,7 @@ const PrioritiesRow = (context) => {
       },
     },
     {
-      title: 'Priority Weight',
+      title: <IntlMessages id="priorities.weight"/>,
       dataIndex: 'priorityValue',
       key: 'priorityValue',
       render: (text, record) => {
@@ -38,7 +39,7 @@ const PrioritiesRow = (context) => {
       },
     },
     {
-      title: 'Created By',
+      title: <IntlMessages id="common.createdBy"/>,
       dataIndex: 'createdBy',
       key: 'createdBy',
       render: (text, record) => {
@@ -46,12 +47,12 @@ const PrioritiesRow = (context) => {
       },
     },
     {
-      title: 'Status',
+      title: <IntlMessages id="common.status"/>,
       dataIndex: 'status_id',
       key: 'Status',
       render: (text, record) => {
         return <Tag color={record.status ? "green" : "red"}>
-          {record.status ? "Active" : "Disabled"}
+          {record.status ? <IntlMessages id="common.active"/> : <IntlMessages id="common.disabled"/>}
         </Tag>
       },
     },

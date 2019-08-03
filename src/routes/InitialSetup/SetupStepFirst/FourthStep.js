@@ -3,6 +3,8 @@ import {Button, Form, Radio, Select} from "antd/lib/index";
 import {connect} from "react-redux";
 import {onGetLocalizationDetails, onSaveLocalizationDetails} from "../../../appRedux/actions/GeneralSettings";
 import PropTypes from "prop-types";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {Option} = Select;
 
@@ -70,6 +72,8 @@ class FourthStep extends Component {
   render() {
     const {getFieldDecorator} = this.props.form;
     const {date_format, time_format, default_language, allow_language_selection} = this.state;
+    const {messages} = this.props.intl;
+
     return (
       <div className="gx-flex-column gx-mt-3">
         <Form layout="vertical" style={{width: "50%"}}>
@@ -87,43 +91,43 @@ class FourthStep extends Component {
               <Option value="YY/MM/DD">YY/MM/DD</Option>
             </Select>)}
           </Form.Item>
-          <Form.Item label="Time Format">
+          <Form.Item label={<IntlMessages id="settings.localization.timeFormat"/>}>
             {getFieldDecorator('time_format', {
               initialValue: time_format,
               validateTrigger: 'onBlur',
-              rules: [{required: true, message: 'Please Enter State Name!'}],
+              rules: [{required: true, message: messages["validation.localization.timeFormat"]}],
             })(<Select style={{width: "100%"}} onChange={this.onTimeSelect}>
-              <Option value="24">24 Hours (20:30)</Option>
-              <Option value="12">12 Hours (08:30)</Option>
+              <Option value="24">24 <IntlMessages id="common.hours"/> (20:30)</Option>
+              <Option value="12">12 <IntlMessages id="common.hours"/> (08:30)</Option>
             </Select>)}
           </Form.Item>
-          <Form.Item label="Default Language">
+          <Form.Item label={<IntlMessages id="settings.localization.language"/>}>
             {getFieldDecorator('default_language', {
               initialValue: default_language,
               validateTrigger: 'onBlur',
-              rules: [{required: true, message: 'Please Enter State Name!'}],
+              rules: [{required: true, message: messages["validation.localization.language"]}],
             })(<Select style={{width: "100%"}} onChange={this.onLanguageSelect}>
-              <Option value="en">English</Option>
-              <Option value="ar">Arabic</Option>
-              <Option value="es">Spanish</Option>
-              <Option value="fr">French</Option>
-              <Option value="it">Italian</Option>
+              <Option value="en"><IntlMessages id="common.english"/></Option>
+              <Option value="ar"><IntlMessages id="common.arabic"/></Option>
+              <Option value="es"><IntlMessages id="common.spanish"/></Option>
+              <Option value="fr"><IntlMessages id="common.french"/></Option>
+              <Option value="it"><IntlMessages id="common.italian"/></Option>
             </Select>)}
           </Form.Item>
-          <Form.Item label="Language Selection for Customers">
+          <Form.Item label={<IntlMessages id="settings.localization.languageSelection"/>}>
             {getFieldDecorator('disable_language_selection', {
               initialValue: allow_language_selection,
               validateTrigger: 'onBlur',
               rules: [{required: true, message: 'Please Enter State Name!'}],
             })(<Radio.Group onChange={(event) => this.onChangePermission(event)}>
-              <Radio value="1">Allowed</Radio>
-              <Radio value="0">Not-Allowed</Radio>
+              <Radio value="1"><IntlMessages id="common.allowed"/></Radio>
+              <Radio value="0"><IntlMessages id="common.notAllowed"/></Radio>
             </Radio.Group>)}
           </Form.Item>
           <div className="gx-d-flex">
-            <Button type="default" onClick={() => this.props.onMoveToPrevStep()}>Previous</Button>
-            <Button type="primary" onClick={this.onValidationCheck}>Next</Button>
-            <Button type="link" onClick={() => this.props.onMoveToNextStep()}>Skip</Button>
+            <Button type="default" onClick={() => this.props.onMoveToPrevStep()}><IntlMessages id="common.previous"/></Button>
+            <Button type="primary" onClick={this.onValidationCheck}><IntlMessages id="common.next"/></Button>
+            <Button type="link" onClick={() => this.props.onMoveToNextStep()}><IntlMessages id="common.skip"/></Button>
           </div>
         </Form>
       </div>
@@ -141,7 +145,7 @@ const mapStateToProps = ({generalSettings}) => {
 export default connect(mapStateToProps, {
   onGetLocalizationDetails,
   onSaveLocalizationDetails
-})(FourthStep);
+})(injectIntl(FourthStep));
 
 FourthStep.defaultProps = {
   localizationDetails: {}

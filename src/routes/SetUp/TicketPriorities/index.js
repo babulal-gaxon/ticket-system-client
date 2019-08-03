@@ -16,6 +16,8 @@ import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
 import {Link} from "react-router-dom";
 import PrioritiesRow from "./PrioritiesRow";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -88,9 +90,10 @@ class TicketPriorities extends Component {
   };
 
   onShowBulkActiveConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedPriorities.length !== 0) {
       confirm({
-        title: "Are you sure to change the status of selected Priority(s) to ACTIVE?",
+        title:  messages["priorities.message.active"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedPriorities
@@ -101,7 +104,7 @@ class TicketPriorities extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Priority(s) first",
+        title: messages["priorities.message.selectFirst"],
         onOk() {
         },
       });
@@ -109,9 +112,10 @@ class TicketPriorities extends Component {
   };
 
   onShowBulkDisableConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedPriorities.length !== 0) {
       confirm({
-        title: "Are you sure to change the status of selected Priority(s) to DISABLED?",
+        title: messages["priorities.message.disable"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedPriorities
@@ -122,7 +126,7 @@ class TicketPriorities extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Priority(s) first",
+        title: messages["priorities.message.selectFirst"],
         onOk() {
         },
       });
@@ -130,9 +134,10 @@ class TicketPriorities extends Component {
   };
 
   onShowBulkDeleteConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedPriorities.length !== 0) {
       confirm({
-        title: "Are you sure to delete the selected Priority(s)?",
+        title: messages["priorities.message.delete"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedPriorities
@@ -144,7 +149,7 @@ class TicketPriorities extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Priority(s) first",
+        title: messages["priorities.message.selectFirst"],
         onOk() {
         },
       });
@@ -156,24 +161,24 @@ class TicketPriorities extends Component {
       <Menu>
         {Permissions.canPriorityEdit() ?
           <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
-            Active
+            <IntlMessages id="common.active"/>
           </Menu.Item> : null
         }
         {Permissions.canPriorityEdit() ?
           <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
-            Disable
+            <IntlMessages id="common.disable"/>
           </Menu.Item> : null
         }
         {Permissions.canPriorityDelete() ?
           <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
-            Delete
+            <IntlMessages id="common.delete"/>
           </Menu.Item> : null
         }
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        Bulk Actions <Icon type="down"/>
+        <IntlMessages id="common.bulkActions"/> <Icon type="down"/>
       </Button>
     </Dropdown>
   };
@@ -185,8 +190,8 @@ class TicketPriorities extends Component {
         this.props.onBulkDeletePriorities({ids: [recordId]});
         this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText);
       }}
-      okText="Yes"
-      cancelText="No">
+      okText={<IntlMessages id="common.yes"/>}
+      cancelText={<IntlMessages id="common.no"/>}>
       <i className="icon icon-trash"/>
     </Popconfirm>
   };
@@ -216,6 +221,7 @@ class TicketPriorities extends Component {
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;
     const priorities = this.props.priorities;
+    const {messages} = this.props.intl;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -229,23 +235,23 @@ class TicketPriorities extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading">Ticket Priorities</h4>
+          <h4 className="gx-widget-heading"><IntlMessages id="priorities.title"/></h4>
           <Breadcrumb className="gx-mb-3">
-            <Breadcrumb.Item>Ticket System</Breadcrumb.Item>
+            <Breadcrumb.Item><IntlMessages id="common.ticketSystem"/></Breadcrumb.Item>
             <Breadcrumb.Item className="gx-text-primary">
-              <Link to="/setup/ticket-priorities" className="gx-text-primary">Ticket Priorities</Link></Breadcrumb.Item>
+              <Link to="/setup/ticket-priorities" className="gx-text-primary"><IntlMessages id="priorities.title"/></Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
               {Permissions.canPriorityAdd() ?
                 <Button type="primary" className="gx-btn-lg" onClick={this.onAddButtonClick}>
-                  Add New Priority
+                  <IntlMessages id="priorities.new"/>
                 </Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
-                placeholder="Enter keywords to search Priorities"
+                placeholder={messages["priorities.search.placeholder"]}
                 style={{width: 350}}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
@@ -268,7 +274,9 @@ class TicketPriorities extends Component {
                    pageSize: this.state.itemNumbers,
                    current: this.state.current,
                    total: this.props.totalItems,
-                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
+                     <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
+                     <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
                    onChange: this.onPageChange
                  }}/>
         </Widget>
@@ -298,7 +306,7 @@ export default connect(mapStateToProps, {
   onBulkActivePriorities,
   onBulkInActivePriorities,
   onBulkDeletePriorities
-})(TicketPriorities);
+})(injectIntl(TicketPriorities));
 
 TicketPriorities.defaultProps = {
   priorities: [],

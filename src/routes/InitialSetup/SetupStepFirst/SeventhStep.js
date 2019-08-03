@@ -10,6 +10,7 @@ import {
   onGetTicketPriorities
 } from "../../../appRedux/actions/TicketPriorities";
 import PropTypes from "prop-types";
+import IntlMessages from "../../../util/IntlMessages";
 
 class SeventhStep extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class SeventhStep extends Component {
   onGetTableColumns = () => {
     return [
       {
-        title: 'Name',
+        title: <IntlMessages id="common.name"/>,
         dataIndex: 'name',
         key: 'name',
         render: (text, record) => {
@@ -47,15 +48,15 @@ class SeventhStep extends Component {
         },
       },
       {
-        title: 'Description',
+        title: <IntlMessages id="common.description"/>,
         dataIndex: 'description',
         key: 'description',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc ? record.desc : "NA"}</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc ? record.desc : <IntlMessages id="common.na"/>}</span>
         },
       },
       {
-        title: 'Color Code',
+        title: <IntlMessages id="common.colorCode"/>,
         dataIndex: 'colorCode',
         key: 'colorCode',
         render: (text, record) => {
@@ -64,7 +65,7 @@ class SeventhStep extends Component {
         },
       },
       {
-        title: 'Priority Weight',
+        title: <IntlMessages id="priorities.weight"/>,
         dataIndex: 'priorityValue',
         key: 'priorityValue',
         render: (text, record) => {
@@ -72,7 +73,7 @@ class SeventhStep extends Component {
         },
       },
       {
-        title: 'Created By',
+        title: <IntlMessages id="common.createdBy"/>,
         dataIndex: 'createdBy',
         key: 'createdBy',
         render: (text, record) => {
@@ -80,12 +81,12 @@ class SeventhStep extends Component {
         },
       },
       {
-        title: 'Status',
+        title: <IntlMessages id="common.status"/>,
         dataIndex: 'status_id',
         key: 'Status',
         render: (text, record) => {
           return <Tag color={record.status ? "green" : "red"}>
-            {record.status ? "Active" : "Disabled"}
+            {record.status ? <IntlMessages id="common.active"/> : <IntlMessages id="common.disabled"/>}
           </Tag>
         },
       },
@@ -110,8 +111,8 @@ class SeventhStep extends Component {
         this.props.onBulkDeletePriorities({ids: [recordId]});
         this.props.onGetTicketPriorities();
       }}
-      okText="Yes"
-      cancelText="No">
+      okText={<IntlMessages id="common.yes"/>}
+      cancelText={<IntlMessages id="common.no"/>}>
       <i className="icon icon-trash"/>
     </Popconfirm>
   };
@@ -119,15 +120,15 @@ class SeventhStep extends Component {
   render() {
     return (
       <div className="gx-flex-column gx-mt-3" style={{width: "60%"}}>
-        <Divider orientation="left" className="gx-mb-4">Default Priority List</Divider>
+        <Divider orientation="left" className="gx-mb-4"><IntlMessages id="setup.defaultPriorityList"/></Divider>
         <Table rowKey="id" columns={this.onGetTableColumns()} dataSource={this.props.priorities}
                className="gx-mb-4" pagination={false}/>
         <div className="gx-d-flex gx-justify-content-between">
           <div>
-            <Button type="default" onClick={() => this.props.onMoveToPrevStep()}>Previous</Button>
-            <Button type="primary" onClick={() => this.props.onMoveToNextStep()}>Next</Button>
+            <Button type="default" onClick={() => this.props.onMoveToPrevStep()}><IntlMessages id="common.previous"/></Button>
+            <Button type="primary" onClick={() => this.props.onMoveToNextStep()}><IntlMessages id="common.next"/></Button>
           </div>
-          <div><Button onClick={this.onAddButtonClick}>+Add New</Button></div>
+          <div><Button onClick={this.onAddButtonClick}>+<IntlMessages id="common.addNew"/></Button></div>
         </div>
         {this.state.showAddPriority ?
           <AddNewPriority showAddPriority={this.state.showAddPriority}

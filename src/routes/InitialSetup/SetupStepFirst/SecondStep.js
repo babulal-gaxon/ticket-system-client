@@ -9,6 +9,8 @@ import {
   onVerifyByPin
 } from "../../../appRedux/actions/InitialSetup";
 import VerificationModal from "./VerificationModal";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 class SecondStep extends Component {
   constructor(props) {
@@ -37,9 +39,10 @@ class SecondStep extends Component {
   };
 
   compareToFirstPassword = (rule, value, callback) => {
+    const {messages} = this.props.intl;
     const {form} = this.props;
     if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
+      callback(messages["validation.message.inconsistentPassword"]);
     } else {
       callback();
     }
@@ -71,6 +74,7 @@ class SecondStep extends Component {
 
 
   render() {
+    const {messages} = this.props.intl;
     const {getFieldDecorator} = this.props.form;
     const {first_name, last_name, email} = this.state;
     return (
@@ -78,13 +82,13 @@ class SecondStep extends Component {
         <Form layout="vertical" style={{width: "70%"}}>
           <div className="gx-d-flex gx-flex-row">
             <Col sm={12} xs={24} className="gx-pl-0">
-              <Form.Item label="First Name">
+              <Form.Item label={<IntlMessages id="common.firstName"/>}>
                 {getFieldDecorator('first_name', {
                   initialValue: first_name,
                   validateTrigger: 'onBlur',
                   rules: [{
                     required: true,
-                    message: 'Please Enter First Name!'
+                    message: messages["validation.message.firstName"]
                   }],
                 })(<Input type="text" autoFocus
                           readOnly={this.props.initialSteps.completed_steps &&
@@ -93,13 +97,13 @@ class SecondStep extends Component {
               </Form.Item>
             </Col>
             <Col sm={12} xs={24} className="gx-pr-0">
-              <Form.Item label="Last Name">
+              <Form.Item label={<IntlMessages id="common.lastName"/>}>
                 {getFieldDecorator('last_name', {
                   initialValue: last_name,
                   validateTrigger: 'onBlur',
                   rules: [{
                     required: true,
-                    message: 'Please Enter Last Name!'
+                    message: messages["validation.message.lastName"]
                   }],
                 })(<Input type="text" readOnly={this.props.initialSteps.completed_steps &&
                 this.props.initialSteps.completed_steps.account_verification_setup}
@@ -107,7 +111,7 @@ class SecondStep extends Component {
               </Form.Item>
             </Col>
           </div>
-          <Form.Item label="Email Address">
+          <Form.Item label={<IntlMessages id="common.emailAddress"/>}>
             {getFieldDecorator('email', {
               initialValue: email,
               validate: [{
@@ -115,7 +119,7 @@ class SecondStep extends Component {
                 rules: [
                   {
                     required: true,
-                    message: 'Please Enter Email!'
+                    message: messages["validation.message.email"]
                   },
                 ],
               }, {
@@ -123,7 +127,7 @@ class SecondStep extends Component {
                 rules: [
                   {
                     type: 'email',
-                    message: 'The input is not valid E-mail!',
+                    message: messages["validation.message.emailFormat"]
                   },
                 ],
               }],
@@ -136,33 +140,33 @@ class SecondStep extends Component {
           {(this.props.initialSteps.completed_steps && !this.props.initialSteps.completed_steps.account_verification_setup) ?
             <div className="gx-d-flex gx-flex-row">
               <Col sm={12} xs={24} className="gx-pl-0">
-                <Form.Item label="Password" hasFeedback>
+                <Form.Item label={<IntlMessages id="common.password"/>} hasFeedback>
                   {getFieldDecorator('password',
                     {
                       validateTrigger: 'onBlur',
                       rules: [
                         {
                           required: true,
-                          message: 'Please input your password!',
+                          message: messages["validation.message.inputPassword"]
                         },
                         {
                           validator: this.validateToNextPassword,
                         },
                         {
                           min: 8,
-                          message: 'Length should be at least 8 characters long',
+                          message: messages["validation.message.passwordLength"]
                         }],
                     })(<Input.Password onChange={(e) => this.setState({password: e.target.value})}/>)}
                 </Form.Item>
               </Col>
               <Col sm={12} xs={24} className="gx-pr-0">
-                <Form.Item label="Confirm Password" hasFeedback>
+                <Form.Item label={<IntlMessages id="app.userAuth.confirmPassword"/>} hasFeedback>
                   {getFieldDecorator('password_confirmation', {
                     validateTrigger: 'onBlur',
                     rules: [
                       {
                         required: true,
-                        message: 'Please confirm your password!',
+                        message: messages["validation.message.confirmPassword"]
                       },
                       {
                         validator: this.compareToFirstPassword,
@@ -177,17 +181,17 @@ class SecondStep extends Component {
             <Button type="default" onClick={() => {
               this.props.onMoveToPrevStep();
               this.props.onFormOpen()
-            }}>Previous</Button>
+            }}><IntlMessages id="common.previous"/></Button>
             <Button type="primary"
                     onClick={this.props.initialSteps.completed_steps &&
                     this.props.initialSteps.completed_steps.account_verification_setup ?
                       () => this.props.onMoveToNextStep() : this.onValidationCheck}
-            >Next</Button>
+            ><IntlMessages id="common.next"/></Button>
             {!this.props.initialSteps.completed_steps || (this.props.initialSteps.completed_steps &&
               this.props.initialSteps.completed_steps.account_verification_setup) ? null :
               <Button type="default" disabled={(this.props.initialSteps.completed_steps &&
                 !this.props.initialSteps.completed_steps.admin_account_setup)}
-                      onClick={() => this.props.onOpenPinModal()}>Verify PIN</Button>}
+                      onClick={() => this.props.onOpenPinModal()}><IntlMessages id="setup.verifyPin"/></Button>}
           </div>
         </Form>
         {this.props.showPinModal ? <VerificationModal showPinModal={this.props.showPinModal}
@@ -210,4 +214,4 @@ const mapStateToProps = ({initialSetup}) => {
 
 export default connect(mapStateToProps, {
   onSendSuperAdminInfo, onClosePinModal, onVerifyByPin, onResendPin, onOpenPinModal
-})(SecondStep);
+})(injectIntl(SecondStep));

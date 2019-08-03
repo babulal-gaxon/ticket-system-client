@@ -1,11 +1,12 @@
 import {Tag} from "antd";
 import Permissions from "../../../util/Permissions";
 import React from "react";
+import IntlMessages from "../../../util/IntlMessages";
 
 const ResponseRow = (context) => {
   return [
     {
-      title: 'Short Title',
+      title: <IntlMessages id="responses.shortTitle"/>,
       dataIndex: 'shortTitle',
       key: 'shortTitle',
       render: (text, record) => {
@@ -13,7 +14,7 @@ const ResponseRow = (context) => {
       }
     },
     {
-      title: 'Short Code',
+      title: <IntlMessages id="responses.shortCode"/>,
       dataIndex: 'shortCode',
       key: 'shortCode',
       render: (text, record) => {
@@ -21,7 +22,7 @@ const ResponseRow = (context) => {
       },
     },
     {
-      title: 'Message',
+      title: <IntlMessages id="common.message"/>,
       dataIndex: 'message',
       key: 'message',
       render: (text, record) => {
@@ -29,7 +30,7 @@ const ResponseRow = (context) => {
       },
     },
     {
-      title: 'Created By',
+      title: <IntlMessages id="common.createdBy"/>,
       dataIndex: 'createdBy',
       key: 'createdBy',
       render: (text, record) => {
@@ -37,13 +38,13 @@ const ResponseRow = (context) => {
       },
     },
     {
-      title: 'Status',
+      title: <IntlMessages id="common.status"/>,
       dataIndex: 'status_id',
       key: 'Status',
       render: (text, record) => {
 
         return <Tag color={record.status === 1 ? "green" : "red"}>
-          {record.status === 1 ? "Active" : "Disabled"}
+          {record.status === 1 ? <IntlMessages id="common.active"/> : <IntlMessages id="common.disabled"/>}
         </Tag>
       },
     },

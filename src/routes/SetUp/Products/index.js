@@ -16,6 +16,8 @@ import {
 import Permissions from "../../../util/Permissions";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import ProductsRow from "./ProductsRow";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -87,9 +89,10 @@ class Products extends Component {
   };
 
   onShowBulkActiveConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedProducts.length !== 0) {
       confirm({
-        title: "Are you sure to change the status of selected Product(s) to ACTIVE?",
+        title: messages["products.message.active"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedProducts
@@ -100,7 +103,7 @@ class Products extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Product(s) first",
+        title: messages["products.message.selectFirst"],
         onOk() {
         },
       });
@@ -108,9 +111,10 @@ class Products extends Component {
   };
 
   onShowBulkDisableConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedProducts.length !== 0) {
       confirm({
-        title: "Are you sure to change the status of selected Product(s) to Disabled?",
+        title: messages["products.message.disable"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedProducts
@@ -121,7 +125,7 @@ class Products extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Product(s) first",
+        title: messages["products.message.selectFirst"],
         onOk() {
         },
       });
@@ -129,9 +133,10 @@ class Products extends Component {
   };
 
   onShowBulkDeleteConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedProducts.length !== 0) {
       confirm({
-        title: "Are you sure to delete the selected Product(s)?",
+        title: messages["products.message.delete"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedProducts
@@ -143,7 +148,7 @@ class Products extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Product(s) first",
+        title: messages["products.message.selectFirst"],
         onOk() {
         },
       });
@@ -155,22 +160,22 @@ class Products extends Component {
       <Menu>
         {(Permissions.canProductEdit()) ?
           <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
-            Active
+            <IntlMessages id="common.active"/>
           </Menu.Item> : null}
         {(Permissions.canProductEdit()) ?
           <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
-            Disable
+            <IntlMessages id="common.disable"/>
           </Menu.Item> : null}
         {(Permissions.canProductDelete()) ?
           <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
-            Delete
+            <IntlMessages id="common.delete"/>
           </Menu.Item> : null}
 
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        Bulk Actions <Icon type="down"/>
+        <IntlMessages id="common.bulkActions"/> <Icon type="down"/>
       </Button>
     </Dropdown>
   };
@@ -182,8 +187,8 @@ class Products extends Component {
         onConfirm={() => {
           this.props.onDeleteProduct({ids: [recordId]});
         }}
-        okText="Yes"
-        cancelText="No">
+        okText={<IntlMessages id="common.yes"/>}
+        cancelText={<IntlMessages id="common.no"/>}>
         <i className="icon icon-trash"/>
       </Popconfirm>
     )
@@ -214,6 +219,7 @@ class Products extends Component {
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;
     const productsList = this.props.productsList;
+    const {messages} = this.props.intl;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -227,23 +233,23 @@ class Products extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading">Products</h4>
+          <h4 className="gx-widget-heading"><IntlMessages id="products.title"/></h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>
-              <Link to="/setup/products" className="gx-text-primary">Products</Link></Breadcrumb.Item>
+              <Link to="/setup/products" className="gx-text-primary"><IntlMessages id="products.title"/></Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
               {(Permissions.canProductAdd()) ?
                 <Button type="primary" className="gx-btn-lg" onClick={this.onAddButtonClick}>
-                  Add New Product
+                  <IntlMessages id="products.new"/>
                 </Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
                 style={{width: 350}}
-                placeholder="Search Products Here"
+                placeholder={messages["products.search.placeholder"]}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
               <div className="gx-ml-3">
@@ -265,7 +271,9 @@ class Products extends Component {
                    pageSize: this.state.itemNumbers,
                    current: this.state.currentPage,
                    total: this.props.totalItems,
-                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
+                     <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
+                     <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
                    onChange: this.onPageChange
                  }}/>
           <div className="gx-d-flex gx-flex-row">
@@ -301,7 +309,7 @@ export default connect(mapStateToProps, {
   fetchSuccess,
   fetchStart,
   fetchError
-})(Products);
+})(injectIntl(Products));
 
 Products.defaultProps = {
   productsList: [],

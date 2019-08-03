@@ -15,6 +15,8 @@ import {
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
 import ServicesRow from "./ServicesRow";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -86,9 +88,10 @@ class Services extends Component {
   };
 
   onShowBulkActiveConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedServices.length !== 0) {
       confirm({
-        title: "Are you sure to change the Support status of selected Service(s) to Enable?",
+        title: messages["services.message.active"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedServices
@@ -99,7 +102,7 @@ class Services extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Service(s) first",
+        title: messages["services.message.selectFirst"],
         onOk() {
         },
       });
@@ -107,9 +110,10 @@ class Services extends Component {
   };
 
   onShowBulkDisableConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedServices.length !== 0) {
       confirm({
-        title: "Are you sure to change the Support status of selected Services(s) to Disabled?",
+        title:  messages["services.message.disable"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedServices
@@ -120,7 +124,7 @@ class Services extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Service(s) first",
+        title:  messages["services.message.selectFirst"],
         onOk() {
         },
       });
@@ -128,9 +132,10 @@ class Services extends Component {
   };
 
   onShowBulkDeleteConfirm = () => {
+    const {messages} = this.props.intl;
     if (this.state.selectedServices.length !== 0) {
       confirm({
-        title: "Are you sure to delete the selected Service(s)?",
+        title:  messages["services.message.delete"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedServices
@@ -142,7 +147,7 @@ class Services extends Component {
       })
     } else {
       Modal.info({
-        title: "Please Select Service(s) first",
+        title:  messages["services.message.selectFirst"],
         onOk() {
         },
       });
@@ -154,21 +159,21 @@ class Services extends Component {
       <Menu>
         {(Permissions.canServiceEdit()) ?
           <Menu.Item key="1" onClick={this.onShowBulkActiveConfirm}>
-            Active
+            <IntlMessages id="common.active"/>
           </Menu.Item> : null}
         {(Permissions.canServiceEdit()) ?
           <Menu.Item key="2" onClick={this.onShowBulkDisableConfirm}>
-            Disable
+            <IntlMessages id="common.disable"/>
           </Menu.Item> : null}
         {(Permissions.canServiceDelete()) ?
           <Menu.Item key="3" onClick={this.onShowBulkDeleteConfirm}>
-            Delete
+            <IntlMessages id="common.delete"/>
           </Menu.Item> : null}
       </Menu>
     );
     return <Dropdown overlay={menu} trigger={['click']}>
       <Button>
-        Bulk Actions <Icon type="down"/>
+        <IntlMessages id="common.bulkActions"/> <Icon type="down"/>
       </Button>
     </Dropdown>
   };
@@ -181,12 +186,13 @@ class Services extends Component {
         onConfirm={() => {
           this.props.onDeleteServices({ids: [recordId]});
         }}
-        okText="Yes"
-        cancelText="No">
+        okText={<IntlMessages id="common.yes"/>}
+        cancelText={<IntlMessages id="common.no"/>}>
         <i className="icon icon-trash"/>
       </Popconfirm>
     )
   };
+
   onShowItemOptions = () => {
     return <Select defaultValue={10} onChange={this.onDropdownChange}>
       <Option value={10}>10</Option>
@@ -210,6 +216,7 @@ class Services extends Component {
   render() {
     const selectedRowKeys = this.state.selectedRowKeys;
     const servicesList = this.props.servicesList;
+    const {messages} = this.props.intl;
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -223,23 +230,23 @@ class Services extends Component {
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
-          <h4 className="gx-widget-heading">Services</h4>
+          <h4 className="gx-widget-heading"><IntlMessages id="services.title"/></h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>
-              <Link to="/setup/services" className="gx-text-primary">Services</Link></Breadcrumb.Item>
+              <Link to="/setup/services" className="gx-text-primary"><IntlMessages id="services.title"/></Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">
               {(Permissions.canServiceAdd()) ?
                 <Button type="primary" className="gx-btn-lg" onClick={this.onAddButtonClick}>
-                  Add New Service
+                  <IntlMessages id="services.new"/>
                 </Button> : null}
               <span>{this.onSelectOption()}</span>
             </div>
             <div className="gx-d-flex">
               <Search
                 style={{width: 350}}
-                placeholder=" Enter keywords to search Services"
+                placeholder={messages["services.search.placeholder"]}
                 value={this.state.filterText}
                 onChange={this.onFilterTextChange}/>
               <div className="gx-ml-3">
@@ -262,7 +269,9 @@ class Services extends Component {
                    pageSize: this.state.itemNumbers,
                    current: this.state.currentPage,
                    total: this.props.totalItems,
-                   showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                   showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
+                     <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
+                     <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
                    onChange: this.onPageChange
                  }}/>
           <div className="gx-d-flex gx-flex-row">
@@ -293,7 +302,7 @@ export default connect(mapStateToProps, {
   onDeleteServices,
   onBulkActiveServices,
   onBulkDisableServices
-})(Services);
+})(injectIntl(Services));
 
 Services.defaultProps = {
   servicesList: [],

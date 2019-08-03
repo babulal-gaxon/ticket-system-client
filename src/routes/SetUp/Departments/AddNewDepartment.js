@@ -1,6 +1,8 @@
 import React, {Component} from "react"
 import {Button, Form, Input, Modal, Radio} from "antd/lib/index";
 import PropTypes from "prop-types";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {TextArea} = Input;
 
@@ -23,12 +25,12 @@ class AddNewDepartment extends Component {
     if (this.props.currentDepartment === null) {
       this.props.onAddDepartment({...this.state});
       this.props.onToggleAddDepartment();
-
     } else {
       this.props.onEditDepartment({...this.state});
       this.props.onToggleAddDepartment();
     }
   };
+
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
@@ -41,49 +43,50 @@ class AddNewDepartment extends Component {
     const {getFieldDecorator} = this.props.form;
     const {name, status, desc} = this.state;
     const {showAddDepartment, onToggleAddDepartment} = this.props;
+    const {messages} = this.props.intl;
     return (
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddDepartment}
-          title={this.props.currentDepartment === null ? "Add New Department" : "Edit Department Detail"}
+          title={this.props.currentDepartment === null ? <IntlMessages id="departments.new"/> : <IntlMessages id="departments.edit"/>}
           onCancel={() => onToggleAddDepartment()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
-              Save
+              <IntlMessages id="common.save"/>
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddDepartment()}>
-              Cancel
+              <IntlMessages id="common.cancel"/>
             </Button>,
           ]}>
           <Form layout="vertical">
-            <Form.Item label="Name">
+            <Form.Item label={<IntlMessages id="common.name"/>}>
               {getFieldDecorator('name', {
                 initialValue: name,
                 validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please Enter Department Name!'}],
+                rules: [{required: true, message: messages["validation.departments.name"]}],
               })(<Input type="text" autoFocus
                         onChange={(e) => {
                           this.setState({name: e.target.value})
                         }}/>)}
             </Form.Item>
-            <Form.Item label="Description">
+            <Form.Item label={<IntlMessages id="common.description"/>}>
               {getFieldDecorator('desc', {
                 initialValue: desc,
                 validateTrigger: 'onBlur',
                 rules: [{
                   max: 250,
-                  message: 'Maximum length for description is 256 characters',
+                  message: messages["common.descriptionLength"]
                 }],
               })(<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                 this.setState({desc: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Status">
+            <Form.Item label={<IntlMessages id="common.status"/>}>
               <Radio.Group value={status} onChange={(e) => {
                 this.setState({status: e.target.value})
               }}>
-                <Radio value={1}>Active</Radio>
-                <Radio value={0}>Disabled</Radio>
+                <Radio value={1}><IntlMessages id="common.active"/></Radio>
+                <Radio value={0}><IntlMessages id="common.disabled"/></Radio>
               </Radio.Group>
             </Form.Item>
           </Form>
@@ -96,7 +99,7 @@ class AddNewDepartment extends Component {
 
 AddNewDepartment = Form.create({})(AddNewDepartment);
 
-export default AddNewDepartment;
+export default injectIntl(AddNewDepartment);
 
 
 AddNewDepartment.defaultProps = {

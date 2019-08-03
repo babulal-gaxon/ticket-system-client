@@ -1,11 +1,12 @@
 import {Tag} from "antd";
 import Permissions from "../../../util/Permissions";
 import React from "react";
+import IntlMessages from "../../../util/IntlMessages";
 
 const DepartmentsRow = (context) => {
   return [
     {
-      title: 'Name',
+      title: <IntlMessages id="common.name"/>,
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => {
@@ -13,15 +14,15 @@ const DepartmentsRow = (context) => {
       },
     },
     {
-      title: 'Description',
+      title: <IntlMessages id="common.description"/>,
       dataIndex: 'description',
       key: 'description',
       render: (text, record) => {
-        return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc === null ? "NA" : record.desc}</span>
+        return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc === null ? <IntlMessages id="common.na"/> : record.desc}</span>
       },
     },
     {
-      title: 'Created By',
+      title: <IntlMessages id="common.createdBy"/>,
       dataIndex: 'createdBy',
       key: 'createdBy',
       render: (text, record) => {
@@ -29,12 +30,12 @@ const DepartmentsRow = (context) => {
       },
     },
     {
-      title: 'Status',
+      title: <IntlMessages id="common.status"/>,
       dataIndex: 'status_id',
       key: 'Status',
       render: (text, record) => {
         return <Tag color={record.status === 1 ? "green" : "red"}>
-          {record.status === 1 ? "Active" : "Disabled"}
+          {record.status === 1 ? <IntlMessages id="common.active"/> : <IntlMessages id="common.disabled"/>}
         </Tag>
       },
     },

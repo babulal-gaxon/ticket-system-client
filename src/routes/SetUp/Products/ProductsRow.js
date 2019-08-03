@@ -2,11 +2,12 @@ import {Avatar, Tag} from "antd";
 import Permissions from "../../../util/Permissions";
 import React from "react";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
+import IntlMessages from "../../../util/IntlMessages";
 
 const ProductsRow = (context) => {
   return [
     {
-      title: 'Product Name',
+      title: <IntlMessages id="products.name"/>,
       dataIndex: 'productName',
       render: (text, record) => {
         return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
@@ -22,20 +23,20 @@ const ProductsRow = (context) => {
       }
     },
     {
-      title: 'Description',
+      title: <IntlMessages id="common.description"/>,
       dataIndex: 'description',
       key: 'description',
       render: (text, record) => {
-        return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc === null ? "NA" : record.desc}</span>
+        return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc === null ? <IntlMessages id="common.na"/> : record.desc}</span>
       },
     },
     {
-      title: 'Support',
+      title: <IntlMessages id="common.support"/>,
       dataIndex: 'support_enable',
       key: 'support',
       render: (text, record) => {
         return <Tag color={record.support_enable === 1 ? "green" : "red"}>
-          {record.support_enable === 1 ? "Enabled" : "Disabled"}
+          {record.support_enable === 1 ? <IntlMessages id="common.enabled"/> : <IntlMessages id="common.disabled"/>}
         </Tag>
       },
     },

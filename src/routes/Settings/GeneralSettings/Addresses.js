@@ -5,6 +5,7 @@ import {Button, Dropdown, Menu, Popconfirm, Tag} from "antd";
 import AddCustomerAddress from "../../Customers/AllCustomers/AddCustomerAddress";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
+import IntlMessages from "../../../util/IntlMessages";
 
 class Addresses extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class Addresses extends Component {
       <Menu>
         {(Permissions.canAddressEdit()) ?
           <Menu.Item key="2" onClick={() => this.onEditAddressDetail(address)}>
-            Edit
+            <IntlMessages id="common.edit"/>
           </Menu.Item> : null}
         {(Permissions.canAddressDelete()) ?
           <Menu.Item key="4">
@@ -36,11 +37,10 @@ class Addresses extends Component {
               title="Are you sure to delete this Address?"
               onConfirm={() => {
                 this.props.onDeleteAddress(address.id);
-                // this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
               }}
-              okText="Yes"
-              cancelText="No">
-              Delete
+              okText={<IntlMessages id="common.yes"/>}
+              cancelText={<IntlMessages id="common.no"/>}>
+              <IntlMessages id="common.delete"/>
             </Popconfirm>
           </Menu.Item> : null}
       </Menu>
@@ -61,7 +61,7 @@ class Addresses extends Component {
     return (
       <div className="gx-main-layout-content">
         <Button type="default" style={{width: "50%", color: "blue"}} onClick={this.onToggleAddressModal}>
-          <i className="icon icon-add-circle gx-mr-1"/>Add New Address</Button>
+          <i className="icon icon-add-circle gx-mr-1"/><IntlMessages id="common.addNewAddress"/></Button>
         {generalAddress.length > 0 ?
           <div className="gx-main-layout-content" style={{width: "50%"}}>
             {generalAddress.map(address => {

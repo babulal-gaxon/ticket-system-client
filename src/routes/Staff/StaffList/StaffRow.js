@@ -2,6 +2,7 @@ import {Avatar, Dropdown, Menu, Popconfirm, Tag} from "antd";
 import React from "react";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import Permissions from "../../../util/Permissions";
+import IntlMessages from "../../../util/IntlMessages";
 
 const onShowRowDropdown = (staff, context) => {
   const menu = (
@@ -11,13 +12,13 @@ const onShowRowDropdown = (staff, context) => {
           context.props.onSetCurrentStaff(staff);
           context.props.history.push('/staff/add-new-member')
         }}>
-          Edit
+          <IntlMessages id="common.edit"/>
         </Menu.Item> : null
       }
       {(Permissions.canStaffEdit()) ?
         <Menu.Item key="3">
           <Popconfirm
-            title={`Are you sure to ${staff.status === 1 ? "Disable" : "Enable"} this Staff?`}
+            title={`${<IntlMessages id="common.areYouSureTo"/>} ${staff.status === 1 ? <IntlMessages id="common.disable"/> : <IntlMessages id="common.enable"/>} ${<IntlMessages id="common.thisStaff"/>}`}
             onConfirm={() => {
               if (staff.status === 1) {
                 context.onDisableStaffStatus(staff.id)
@@ -26,9 +27,9 @@ const onShowRowDropdown = (staff, context) => {
               }
 
             }}
-            okText="Yes"
-            cancelText="No">
-            {staff.status === 1 ? "Disable" : "Enable"}
+            okText={<IntlMessages id="common.yes"/>}
+            cancelText={<IntlMessages id="common.no"/>}>
+            {staff.status === 1 ? <IntlMessages id="common.disable"/> : <IntlMessages id="common.enable"/>}
           </Popconfirm>
         </Menu.Item> : null
       }
@@ -41,9 +42,9 @@ const onShowRowDropdown = (staff, context) => {
               context.props.onBulkDeleteStaff({ids: [staff.id]});
               context.onGetStaffDataPaginated(context.state.currentPage, context.state.itemNumbers, context.state.filterText)
             }}
-            okText="Yes"
-            cancelText="No">
-            Delete
+            okText={<IntlMessages id="common.yes"/>}
+            cancelText={<IntlMessages id="common.no"/>}>
+            <IntlMessages id="common.delete"/>
           </Popconfirm>
         </Menu.Item> : null
       }
@@ -59,7 +60,7 @@ const onShowRowDropdown = (staff, context) => {
 const StaffRow = (context) => {
   return [
     {
-      title: 'Name',
+      title: <IntlMessages id="common.name"/>,
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => {
@@ -72,45 +73,45 @@ const StaffRow = (context) => {
       }
     },
     {
-      title: 'Hourly Rate',
+      title: <IntlMessages id="common.hourlyRate"/>,
       dataIndex: 'hourlyRate',
       key: 'hourlyRate',
       render: (text, record) => {
         return <span
           className="gx-email gx-d-inline-block gx-mr-2"
           style={{color: record.hourly_rate === null ? "red" : ""}}>
-            {record.hourly_rate === null ? "NA" : `$${record.hourly_rate}/Hour`}</span>
+            {record.hourly_rate === null ? <IntlMessages id="common.na"/> : `$${record.hourly_rate}/Hour`}</span>
       },
     },
     {
-      title: 'Department',
+      title: <IntlMessages id="common.departmentHeading"/>,
       dataIndex: 'department',
       key: 'department',
       render: (text, record) => {
         return <span className="gx-email gx-d-inline-block gx-mr-2">
             {record.departments.length !== 0 ? record.departments.map(department => {
               return department.name
-            }).join() : "NA"}
+            }).join() : <IntlMessages id="common.na"/>}
             </span>
       },
     },
     {
-      title: 'Designation',
+      title: <IntlMessages id="common.designation"/>,
       dataIndex: 'designation',
       key: 'designation',
       render: (text, record) => {
         return <span className="gx-email gx-d-inline-block gx-mr-2"
                      style={{color: record.designation === null ? "red" : ""}}>
-            {record.designation === null ? "NA" : record.designation}</span>
+            {record.designation === null ? <IntlMessages id="common.na"/> : record.designation}</span>
       },
     },
     {
-      title: 'Status',
+      title: <IntlMessages id="common.status"/>,
       dataIndex: 'status',
       key: 'status',
       render: (text, record) => {
         return <Tag color={record.status === 1 ? "green" : "red"}>
-          {record.status === 1 ? "Active" : "Disabled"}
+          {record.status === 1 ? <IntlMessages id="common.active"/> : <IntlMessages id="common.disabled"/>}
         </Tag>
       },
     },

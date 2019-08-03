@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Form, Input, Modal} from "antd/lib/index";
+import IntlMessages from "../../../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {TextArea} = Input;
 
@@ -36,33 +38,34 @@ class AddStaffNotes extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
+    const {messages} = this.props.intl;
     const {title, content} = this.state;
     const {addNotesModal, currentNote, onToggleAddNoteModal} = this.props;
     return (
       <div className="gx-main-layout-content">
         <Modal
           visible={addNotesModal}
-          title={currentNote === null ? "Add New Note" : "Edit Note Details"}
+          title={currentNote === null ? <IntlMessages id="staff.notes.add"/> : <IntlMessages id="staff.notes.edit"/>}
           onCancel={() => onToggleAddNoteModal()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
-              Save
+              <IntlMessages id="common.save"/>
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddNoteModal()}>
-              Cancel
+              <IntlMessages id="common.cancel"/>
             </Button>,
           ]}>
           <Form layout="vertical">
-            <Form.Item label="Title">
+            <Form.Item label={<IntlMessages id="common.title"/>}>
               {getFieldDecorator('title', {
                 initialValue: title,
                 validateTrigger: 'onBlur',
-                rules: [{required: true, message: 'Please Enter Title!'}],
+                rules: [{required: true, message: messages["validation.message.selectTitle"]}],
               })(<Input type="text" autoFocus onChange={(e) => {
                 this.setState({title: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Description">
+            <Form.Item label={<IntlMessages id="common.description"/>}>
               {getFieldDecorator('content', {
                 initialValue: content,
                 validate: [{
@@ -70,7 +73,7 @@ class AddStaffNotes extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Please Enter Description!'
+                      message: messages["validation.labels.description"]
                     },
                   ],
                 }, {
@@ -78,7 +81,7 @@ class AddStaffNotes extends Component {
                   rules: [
                     {
                       max: 250,
-                      message: 'Description length should not exceed 250 characters'
+                      message: messages["common.descriptionLength"]
                     },
                   ],
                 }],
@@ -95,4 +98,4 @@ class AddStaffNotes extends Component {
 
 AddStaffNotes = Form.create({})(AddStaffNotes);
 
-export default AddStaffNotes;
+export default injectIntl(AddStaffNotes);

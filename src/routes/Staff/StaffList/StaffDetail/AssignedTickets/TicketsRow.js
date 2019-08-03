@@ -2,22 +2,22 @@ import {Avatar, Tag, Tooltip} from "antd";
 import React from "react";
 import {MEDIA_BASE_URL} from "../../../../../constants/ActionTypes";
 import {getFormattedDate} from "../../../../../util/Utills";
+import IntlMessages from "../../../../../util/IntlMessages";
 
 const TicketsRow = () => {
   return [
     {
-      title: 'Ticket Detail',
+      title: <IntlMessages id="manageTickets.ticketDetail"/>,
       dataIndex: 'title',
       key: 'title',
       render: (text, record) => {
         return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
-            {record.assigned_by ?
               <Tooltip placement="top" title={record.assigned_by.first_name + " " + record.assigned_by.last_name}>
                 {record.assigned_by.avatar ?
                   <Avatar className="gx-mr-3 gx-size-50" src={MEDIA_BASE_URL + record.assigned_by.avatar.src}/> :
                   <Avatar className="gx-mr-3 gx-size-50"
                           style={{backgroundColor: '#f56a00'}}>{record.assigned_by.first_name[0].toUpperCase()}</Avatar>}
-              </Tooltip> : <Avatar className="gx-size-50 gx-mr-3" src="https://via.placeholder.com/150x150"/>}
+              </Tooltip>
             <div className="gx-media-body">
               <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
               <Tag className="gx-ml-2" color="blue">{record.product_name}</Tag>
@@ -28,7 +28,7 @@ const TicketsRow = () => {
       },
     },
     {
-      title: 'Assign Date',
+      title: <IntlMessages id="manageTickets.assignDate"/>,
       dataIndex: 'assignDate',
       key: 'assignDate',
       render: (text, record) => {
@@ -36,7 +36,7 @@ const TicketsRow = () => {
       },
     },
     {
-      title: 'Status',
+      title: <IntlMessages id="common.status"/>,
       dataIndex: 'status_id',
       key: 'status_id',
       render: (text, record) => {
@@ -44,7 +44,7 @@ const TicketsRow = () => {
       },
     },
     {
-      title: 'Priority',
+      title: <IntlMessages id="common.priority"/>,
       dataIndex: 'priority_name',
       key: 'priority_name',
       render: (text, record) => {
