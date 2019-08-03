@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Form, Input, Modal} from "antd";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 class VerificationModal extends Component {
   constructor(props) {
@@ -18,6 +20,7 @@ class VerificationModal extends Component {
   };
 
   render() {
+    const {messages} = this.props.intl;
     const {getFieldDecorator} = this.props.form;
     const {showPinModal, onClosePinModal} = this.props;
     return (
@@ -33,39 +36,38 @@ class VerificationModal extends Component {
         >
           <div style={{padding: 45, textAlign: "center"}}>
             {/*<I></I>*/}
-            <h2 style={{fontSize: 28}}>Verify Your Email</h2>
-            <p style={{textAlign: "center", color: "#8C8C8C"}} className="gx-py-5">Enter the 6 digit verification code
-              sent to your email address super@example.com to verify your account.</p>
+            <h2 style={{fontSize: 28}}><IntlMessages id="setup.verifyPin.heading"/></h2>
+            <p style={{textAlign: "center", color: "#8C8C8C"}} className="gx-py-5"><IntlMessages id="setup.verifyPin.message"/></p>
             <Form layout="vertical" style={{textAlign: "center"}}>
-              <label>Enter Verification Code <sup className="gx-text-red">*</sup></label>
+              <label><IntlMessages id="setup.verifyPin.enter"/> <sup className="gx-text-red">*</sup></label>
               <Form.Item hasFeedback className="gx-py-4">
                 {getFieldDecorator('pin_number', {
                   validateTrigger: 'onBlur',
                   rules: [
                     {
                       required: true,
-                      message: 'Please input the Pin!',
+                      message: messages["validation.verifyPin.pinInput"],
                     },
                     {
                       max: 6,
-                      message: 'Please enter only 6 digits'
+                      message:  messages["validation.verifyPin.pinLength"],
                     },
                     {
                       pattern: /^[0-9\b]+$/,
-                      message: 'Please enter only numerical values'
+                      message: messages["validation.message.numericalValues"]
                     }
                   ],
                 })(<Input onChange={(e) => this.setState({pin_number: e.target.value})}/>)}
               </Form.Item>
             </Form>
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
-              Verify
+              <IntlMessages id="common.verify"/>
             </Button>,
             <Button key="cancel" onClick={() => onClosePinModal()}>
-              Back
+              <IntlMessages id="common.back"/>
             </Button>,
-            <p>Not received email? <Button type="link" className="gx-my-0"
-                                           onClick={() => this.props.onResendPin()}>Resend</Button></p>
+            <p><IntlMessages id="setup.verifyPin.notReceived"/> <Button type="link" className="gx-my-0"
+                                           onClick={() => this.props.onResendPin()}><IntlMessages id="common.resend"/></Button></p>
           </div>
         </Modal>
       </div>
@@ -75,4 +77,4 @@ class VerificationModal extends Component {
 
 VerificationModal = Form.create({})(VerificationModal);
 
-export default VerificationModal;
+export default injectIntl(VerificationModal);
