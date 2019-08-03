@@ -215,7 +215,9 @@ class AllTickets extends Component {
                        pageSize: this.state.itemNumbers,
                        current: this.state.current,
                        total: this.props.totalTickets,
-                       showTotal: ((total, range) => `Showing ${range[0]}-${range[1]} of ${total} items`),
+                       showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
+                         <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
+                         <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
                        onChange: this.onPageChange,
                      }}
                      onRow={(record) => ({

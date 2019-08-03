@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Form, Input, Modal} from "antd";
 import PropTypes from "prop-types";
+import IntlMessages from "../../../util/IntlMessages";
 
 class EditTicketDetailsModal extends Component {
   constructor(props) {
@@ -23,23 +24,23 @@ class EditTicketDetailsModal extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showEditModal}
-          title="Edit Detail"
+          title={<IntlMessages id="tickets.editDetail"/>}
           onCancel={() => onToggleEditModal()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onEditDetails}>
-              Save Changes
+              <IntlMessages id="tickets.saveChanges"/>
             </Button>,
             <Button key="cancel" onClick={() => onToggleEditModal()}>
-              Cancel
+              <IntlMessages id="tickets.cancel"/>
             </Button>,
           ]}>
           <Form layout="vertical">
-            <Form.Item label="Subject">
+            <Form.Item label={<IntlMessages id="tickets.subject"/>}>
               <Input type="text" value={title} onChange={(e) => {
                 this.setState({title: e.target.value})
               }}/>
             </Form.Item>
-            <Form.Item label="Description">
+            <Form.Item label={<IntlMessages id="tickets.description"/>}>
               <Input type="text" value={content} onChange={(e) => {
                 this.setState({content: e.target.value})
               }}/>

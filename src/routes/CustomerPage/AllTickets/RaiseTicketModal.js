@@ -2,6 +2,8 @@ import React, {Component} from "react"
 import {Button, Form, Input, Modal, Select, Upload} from "antd";
 import axios from 'util/Api'
 import PropTypes from "prop-types";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../../util/IntlMessages";
 
 const {TextArea} = Input;
 const {Option} = Select;
@@ -97,6 +99,7 @@ class RaiseTicketModal extends Component {
     const serviceOptions = this.onServiceSelectOption();
     const {title, content, product_id, department_id, priority_id, service_id, fileList} = this.state;
     const {showAddTicket, onToggleAddTicket, formOptions} = this.props;
+    const {messages} = this.props.intl;
     const props = {
       multiple: true,
       onRemove: file => {
@@ -117,22 +120,24 @@ class RaiseTicketModal extends Component {
       },
       fileList,
     };
+
+
     return (
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddTicket}
-          title={this.props.departmentId === 0 ? "Add New Department" : "Edit Department Detail"}
+          title= {<IntlMessages id="tickets.addNew"/>}
           onCancel={() => onToggleAddTicket()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
-              Save
+              <IntlMessages id="tickets.save"/>
             </Button>,
             <Button key="cancel" onClick={() => onToggleAddTicket()}>
-              Cancel
+              <IntlMessages id="tickets.cancel"/>
             </Button>,
           ]}>
           <Form layout="vertical">
-            <Form.Item label="Subject">
+            <Form.Item label={<IntlMessages id="tickets.subject"/>}>
               {getFieldDecorator('title', {
                 initialValue: title,
                 rules: [{required: true, message: 'Please enter ticket subject'}],
@@ -140,7 +145,7 @@ class RaiseTicketModal extends Component {
                 this.setState({title: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Select Product">
+            <Form.Item label={<IntlMessages id="tickets.selectProduct"/>}>
               {getFieldDecorator('product', {
                 initialValue: product_id,
               })(<Select type="text" onChange={(value) => {
@@ -151,7 +156,7 @@ class RaiseTicketModal extends Component {
                 })}
               </Select>)}
             </Form.Item>
-            <Form.Item label="Select Department">
+            <Form.Item label={<IntlMessages id="tickets.selectDepartment"/>}>
               {getFieldDecorator('department_id', {
                 initialValue: department_id,
               })(<Select type="text" onChange={(value) => {
@@ -162,7 +167,7 @@ class RaiseTicketModal extends Component {
                 })}
               </Select>)}
             </Form.Item>
-            <Form.Item label="Select Service">
+            <Form.Item label={<IntlMessages id="tickets.lastUpdated"/>}>
               {getFieldDecorator('service_id', {
                 initialValue: service_id,
               })(<Select
@@ -210,7 +215,7 @@ class RaiseTicketModal extends Component {
 
 RaiseTicketModal = Form.create({})(RaiseTicketModal);
 
-export default RaiseTicketModal;
+export default injectIntl(RaiseTicketModal);
 
 
 RaiseTicketModal.defaultProps = {

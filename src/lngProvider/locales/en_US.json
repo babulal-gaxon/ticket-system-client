@@ -367,7 +367,20 @@
   "tickets.raiseATicket": "Raise a Ticket",
   "tickets.search.placeholder": "Enter keywords to search Tickets",
   "tickets.noRecordFound": "No Record Found",
-  "tickets.noTicketRaised": "You have not raised any support request"
+  "tickets.noTicketRaised": "You have not raised any support request",
+  "tickets.createdAt": "Created At:",
+  "tickets.lastUpdated": "Last Updated:",
+  "tickets.editDetail": "Edit Details",
+  "tickets.saveChanges": "Save Changes",
+  "tickets.cancel": "Cancel",
+  "tickets.description": "Description",
+  "tickets.addNew": "Add New Ticket",
+  "tickets.save": "Save",
+  "tickets.selectProduct": "Select Product",
+  "tickets.selectDepartment": "Select Department",
+  "tickets.selectService": "Select Service",
+  "tickets.services.placeholder": "Select Services",
+  "tickets.files.upload": "Add Files",
 
 
 
@@ -375,4 +388,9 @@
 
 
 
+
+"common.showing": "Showing",
+"common.of": "Of",
+"common.items": "Items",
+  "common.kb": "KB"
 }

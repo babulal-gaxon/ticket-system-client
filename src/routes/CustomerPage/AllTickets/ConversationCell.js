@@ -3,6 +3,7 @@ import moment from "moment";
 import Widget from "../../../components/Widget";
 import {Avatar, Divider} from "antd";
 import PropTypes from "prop-types";
+import IntlMessages from "../../../util/IntlMessages";
 
 
 const ConversationCell = ({conversation}) => {
@@ -17,8 +18,8 @@ const ConversationCell = ({conversation}) => {
         <div className="gx-flex-column">
           <div className="gx-name gx-mr-2">{conversation.author.display_name}</div>
           <div>
-          <span className="gx-time gx-text-muted"> Created at: {moment(conversation.created_at.date).format('LL')}</span>
-            <span className="gx-mr-2 gx-text-grey"> Last Updated: {moment(conversation.updated_at.date).fromNow()}</span>
+          <span className="gx-time gx-text-muted"> <IntlMessages id="tickets.createdAt"/> {moment(conversation.created_at.date).format('LL')}</span>
+            <span className="gx-mr-2 gx-text-grey"> <IntlMessages id="tickets.lastUpdated"/> {moment(conversation.updated_at.date).fromNow()}</span>
           </div>
         </div>
         <div className="gx-message gx-my-2">{conversation.message}</div>
@@ -27,7 +28,7 @@ const ConversationCell = ({conversation}) => {
             return <div className="gx-media gx-flex-nowrap gx-align-items-center" key={index}>
               <Widget styleName="gx-card-filter gx-mr-2">
                 <div>{attachment.title}</div>
-                <div>{attachment.size/1000} kb</div>
+                <div>{attachment.size/1000} <IntlMessages id="common.kb"/></div>
               </Widget>
             </div>
           })}
