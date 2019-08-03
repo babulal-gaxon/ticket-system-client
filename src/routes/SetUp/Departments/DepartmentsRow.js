@@ -18,7 +18,8 @@ const DepartmentsRow = (context) => {
       dataIndex: 'description',
       key: 'description',
       render: (text, record) => {
-        return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc === null ? <IntlMessages id="common.na"/> : record.desc}</span>
+        return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc === null ?
+          <IntlMessages id="common.na"/> : record.desc}</span>
       },
     },
     {

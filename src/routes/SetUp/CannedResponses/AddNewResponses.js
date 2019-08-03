@@ -51,7 +51,8 @@ class AddNewResponses extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddCanned}
-          title={this.props.currentResponse === null ? <IntlMessages id="responses.new"/> : <IntlMessages id="responses.edit"/>}
+          title={this.props.currentResponse === null ? <IntlMessages id="responses.new"/> :
+            <IntlMessages id="responses.edit"/>}
           onCancel={() => onToggleAddCanned()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -62,7 +63,7 @@ class AddNewResponses extends Component {
             </Button>,
           ]}>
           <Form layout="vertical">
-            <Form.Item label= {<IntlMessages id="responses.shortTitle"/>}>
+            <Form.Item label={<IntlMessages id="responses.shortTitle"/>}>
               {getFieldDecorator('short_title', {
                 initialValue: short_title,
                 validateTrigger: 'onBlur',

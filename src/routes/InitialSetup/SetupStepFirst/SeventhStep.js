@@ -52,7 +52,8 @@ class SeventhStep extends Component {
         dataIndex: 'description',
         key: 'description',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc ? record.desc : <IntlMessages id="common.na"/>}</span>
+          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.desc ? record.desc :
+            <IntlMessages id="common.na"/>}</span>
         },
       },
       {
@@ -125,8 +126,10 @@ class SeventhStep extends Component {
                className="gx-mb-4" pagination={false}/>
         <div className="gx-d-flex gx-justify-content-between">
           <div>
-            <Button type="default" onClick={() => this.props.onMoveToPrevStep()}><IntlMessages id="common.previous"/></Button>
-            <Button type="primary" onClick={() => this.props.onMoveToNextStep()}><IntlMessages id="common.next"/></Button>
+            <Button type="default" onClick={() => this.props.onMoveToPrevStep()}><IntlMessages
+              id="common.previous"/></Button>
+            <Button type="primary" onClick={() => this.props.onMoveToNextStep()}><IntlMessages
+              id="common.next"/></Button>
           </div>
           <div><Button onClick={this.onAddButtonClick}>+<IntlMessages id="common.addNew"/></Button></div>
         </div>

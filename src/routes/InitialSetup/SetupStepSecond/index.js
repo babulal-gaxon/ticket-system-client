@@ -95,7 +95,8 @@ class SetupStepSecond extends Component {
     return (
       <div className="gx-main-layout-content gx-mt-5">
         <Form layout="vertical" style={{width: "60%"}}>
-          <Divider orientation="left" className="gx-mb-4"><IntlMessages id="sidebar.dashboard.general.setting"/></Divider>
+          <Divider orientation="left" className="gx-mb-4"><IntlMessages
+            id="sidebar.dashboard.general.setting"/></Divider>
           <Form.Item>
             <div className="gx-d-flex gx-justify-content-between">
               <p><IntlMessages id="settings.ticket.serviceSelection"/></p>

@@ -95,7 +95,8 @@ class AddNewPriority extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddPriority}
-          title={this.props.currentPriority === null ? <IntlMessages id="priorities.new"/> : <IntlMessages id="priorities.edit"/>}
+          title={this.props.currentPriority === null ? <IntlMessages id="priorities.new"/> :
+            <IntlMessages id="priorities.edit"/>}
           onCancel={onToggleAddPriority}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>

@@ -236,7 +236,8 @@ class Products extends Component {
           <h4 className="gx-widget-heading"><IntlMessages id="products.title"/></h4>
           <Breadcrumb className="gx-mb-3">
             <Breadcrumb.Item>
-              <Link to="/setup/products" className="gx-text-primary"><IntlMessages id="products.title"/></Link></Breadcrumb.Item>
+              <Link to="/setup/products" className="gx-text-primary"><IntlMessages
+                id="products.title"/></Link></Breadcrumb.Item>
           </Breadcrumb>
           <div className="gx-d-flex gx-justify-content-between">
             <div className="gx-d-flex">

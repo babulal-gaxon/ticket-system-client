@@ -138,13 +138,14 @@ class FilterBar extends Component {
               <div>
                 {this.onFilterStaff().length > 5 ?
                   <div className="gx-link" onClick={onToggleShowMoreStaff}>
-                    {showMoreStaff ? <IntlMessages id="common.viewLess"/> : `${this.onFilterStaff().length - 5}  ${messages["common.more"]}`}
+                    {showMoreStaff ? <IntlMessages
+                      id="common.viewLess"/> : `${this.onFilterStaff().length - 5}  ${messages["common.more"]}`}
                   </div> : null}
               </div>
             </div>
             <div className="gx-mb-4">
               <div className="gx-d-flex gx-justify-content-between">
-                <h4> <IntlMessages id="manageTickets.filterBar.byCustomer"/></h4>
+                <h4><IntlMessages id="manageTickets.filterBar.byCustomer"/></h4>
                 {selectedCustomers.length > 0 ? <div className="gx-link" onClick={this.onCustomerReset}>
                   <IntlMessages id="common.reset"/></div> : null}
               </div>
@@ -178,9 +179,11 @@ class FilterBar extends Component {
               <div className="gx-d-flex gx-justify-content-between">
                 <h4><IntlMessages id="common.priority"/></h4>
                 {selectedPriorities.length > 0 ?
-                  <div className="gx-link" onClick={this.onPrioritiesReset}> <IntlMessages id="common.reset"/></div> : null}
+                  <div className="gx-link" onClick={this.onPrioritiesReset}><IntlMessages id="common.reset"/>
+                  </div> : null}
               </div>
-              <Input type="text" placeholder={messages["manageTickets.filterBar.searchPriority"]} value={priorityFilterText}
+              <Input type="text" placeholder={messages["manageTickets.filterBar.searchPriority"]}
+                     value={priorityFilterText}
                      onChange={(e) => this.setState({priorityFilterText: e.target.value})}/>
               <Checkbox.Group onChange={this.onSelectPriorities} value={selectedPriorities}>
                 {priorities.map(priority => {
@@ -194,7 +197,7 @@ class FilterBar extends Component {
               <div className="gx-d-flex gx-justify-content-between">
                 <h4><IntlMessages id="common.status"/></h4>
                 {selectedStatuses.length > 0 ?
-                  <div className="gx-link" onClick={this.onStatusReset}> <IntlMessages id="common.reset"/></div> : null}
+                  <div className="gx-link" onClick={this.onStatusReset}><IntlMessages id="common.reset"/></div> : null}
               </div>
               <Input type="text" placeholder={messages["manageTickets.filterBar.searchStatus"]} value={statusFilterText}
                      onChange={(e) => this.setState({statusFilterText: e.target.value})}/>

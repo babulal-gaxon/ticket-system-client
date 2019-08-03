@@ -48,7 +48,8 @@ class AddNewDepartment extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddDepartment}
-          title={this.props.currentDepartment === null ? <IntlMessages id="departments.new"/> : <IntlMessages id="departments.edit"/>}
+          title={this.props.currentDepartment === null ? <IntlMessages id="departments.new"/> :
+            <IntlMessages id="departments.edit"/>}
           onCancel={() => onToggleAddDepartment()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>

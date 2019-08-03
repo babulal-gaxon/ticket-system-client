@@ -117,7 +117,7 @@ class CannedResponses extends Component {
     const {messages} = this.props.intl;
     if (this.state.selectedResponses.length !== 0) {
       confirm({
-        title:messages["responses.message.disable"],
+        title: messages["responses.message.disable"],
         onOk: () => {
           const obj = {
             ids: this.state.selectedResponses

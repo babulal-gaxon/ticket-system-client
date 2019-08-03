@@ -222,7 +222,7 @@ class AddNewCustomers extends Component {
                       {getFieldDecorator('last_name', {
                         validateTrigger: 'onBlur',
                         initialValue: last_name,
-                        rules: [{required: true, message:  messages["validation.message.lastName"]}],
+                        rules: [{required: true, message: messages["validation.message.lastName"]}],
                       })(<Input type="text" onChange={(e) => {
                         this.setState({last_name: e.target.value})
                       }}/>)}
@@ -255,7 +255,8 @@ class AddNewCustomers extends Component {
                 </Form.Item>
 
                 <Form.Item label={<IntlMessages id="common.password"/>}
-                           extra={this.props.currentCustomer === null ? "" : <IntlMessages id="validation.message.passwordUpdateNote"/>}>
+                           extra={this.props.currentCustomer === null ? "" :
+                             <IntlMessages id="validation.message.passwordUpdateNote"/>}>
                   {getFieldDecorator('password', {
                     initialValue: "",
                     validateTrigger: 'onBlur',
@@ -310,7 +311,8 @@ class AddNewCustomers extends Component {
                   {(Permissions.canAddressAdd()) ?
                     <Button type="default" style={{width: "100%", color: "blue"}}
                             onClick={this.onToggleAddressModal}>
-                      <i className="icon icon-add-circle gx-mr-1"/><IntlMessages id="common.addNewAddress"/></Button> : null}
+                      <i className="icon icon-add-circle gx-mr-1"/><IntlMessages
+                      id="common.addNewAddress"/></Button> : null}
                 </Form.Item>
 
               </Form>

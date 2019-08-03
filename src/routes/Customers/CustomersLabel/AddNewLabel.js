@@ -45,7 +45,8 @@ class AddNewLabel extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddLabel}
-          title={this.props.label === null ? <IntlMessages id="labels.addNew"/> : <IntlMessages id="labels.editDetail"/>}
+          title={this.props.label === null ? <IntlMessages id="labels.addNew"/> :
+            <IntlMessages id="labels.editDetail"/>}
           onCancel={() => onToggleModalState()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>

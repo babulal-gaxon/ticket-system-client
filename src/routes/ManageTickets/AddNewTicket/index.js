@@ -197,7 +197,7 @@ class AddNewTicket extends Component {
                     initialValue: title,
                     validateTrigger: 'onBlur',
                     rules: [{required: true, message: messages["validation.message.selectTitle"]}],
-                  })(<Input placeHolder={messages["common.subject"]} onChange={(e) => {
+                  })(<Input placeholder={messages["common.subject"]} onChange={(e) => {
                     this.setState({title: e.target.value})
                   }}/>)}
                 </Form.Item>

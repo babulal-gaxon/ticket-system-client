@@ -150,14 +150,16 @@ class AddNewStaff extends Component {
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
           <h4
-            className="ggx-widget-heading">{this.props.currentStaff === null ? <IntlMessages id="staff.addNew"/> : <IntlMessages id="staff.edit"/>}</h4>
+            className="ggx-widget-heading">{this.props.currentStaff === null ? <IntlMessages id="staff.addNew"/> :
+            <IntlMessages id="staff.edit"/>}</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item>
               <Link to="/staff/all-members"><IntlMessages id="common.staffs"/></Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
               <Link to="/staff/add-new-member"
-                    className="gx-text-primary">{this.props.currentStaff === null ? <IntlMessages id="staff.addStaff"/> : <IntlMessages id="staff.editStaff"/>}</Link>
+                    className="gx-text-primary">{this.props.currentStaff === null ?
+                <IntlMessages id="staff.addStaff"/> : <IntlMessages id="staff.editStaff"/>}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <hr/>
@@ -250,7 +252,8 @@ class AddNewStaff extends Component {
                   }}/>
                 </Form.Item>
                 <Form.Item label={<IntlMessages id="common.password"/>}
-                           extra={this.props.currentStaff === null ? "" : <IntlMessages id="validation.message.passwordUpdateNote"/>}>
+                           extra={this.props.currentStaff === null ? "" :
+                             <IntlMessages id="validation.message.passwordUpdateNote"/>}>
                   {this.props.currentStaff === null ?
                     getFieldDecorator('password', {
                       initialValue: password,
@@ -313,7 +316,8 @@ class AddNewStaff extends Component {
             </span>
             {this.props.currentStaff !== null ?
               <span>
-              <Button type="danger" ghost style={{width: 150}} onClick={this.showDeleteConfirm}>{<IntlMessages id="common.delete"/>}</Button>
+              <Button type="danger" ghost style={{width: 150}} onClick={this.showDeleteConfirm}>{<IntlMessages
+                id="common.delete"/>}</Button>
             </span> : null}
           </div>
         </Widget>

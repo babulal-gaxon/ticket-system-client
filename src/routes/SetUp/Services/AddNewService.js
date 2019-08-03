@@ -50,7 +50,8 @@ class AddNewService extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddModal}
-          title={this.props.currentService === null ? <IntlMessages id="services.new"/> : <IntlMessages id="services.edit"/>}
+          title={this.props.currentService === null ? <IntlMessages id="services.new"/> :
+            <IntlMessages id="services.edit"/>}
           onCancel={() => onToggleAddService()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>

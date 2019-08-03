@@ -107,11 +107,13 @@ class TicketSettings extends Component {
               <Link to="/settings/general-settings"><IntlMessages id="sidebar.dashboard.settings"/></Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/settings/ticket-settings" className="gx-text-primary"><IntlMessages id="sidebar.dashboard.ticket.settings"/></Link>
+              <Link to="/settings/ticket-settings" className="gx-text-primary"><IntlMessages
+                id="sidebar.dashboard.ticket.settings"/></Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <Form layout="vertical" style={{width: "50%"}}>
-            <Divider orientation="left" className="gx-mb-4"><IntlMessages id="sidebar.dashboard.general.setting"/></Divider>
+            <Divider orientation="left" className="gx-mb-4"><IntlMessages
+              id="sidebar.dashboard.general.setting"/></Divider>
             <Form.Item>
               <div className="gx-d-flex gx-justify-content-between">
                 <p><IntlMessages id="settings.ticket.serviceSelection"/></p>

@@ -96,7 +96,8 @@ class AddNewStatus extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddStatus}
-          title={this.props.currentStatus === null ? <IntlMessages id="statuses.new"/> : <IntlMessages id="statuses.edit"/>}
+          title={this.props.currentStatus === null ? <IntlMessages id="statuses.new"/> :
+            <IntlMessages id="statuses.edit"/>}
           onCancel={onToggleAddStatus}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -131,7 +132,7 @@ class AddNewStatus extends Component {
             </Form.Item>
             <Form.Item>
               <Checkbox className="gx-form-control-lg" checked={is_default} onChange={this.onCheckBoxChange}>
-                <IntlMessages id ="statuses.setAsDefault"/>
+                <IntlMessages id="statuses.setAsDefault"/>
               </Checkbox>
             </Form.Item>
             <Form.Item label={<IntlMessages id="common.status"/>}>

@@ -48,7 +48,7 @@ class FilterBar extends Component {
     const {companyFilterText, showMoreCompany, selectedCompanies, status, selectedLabels, onChangeCompanyFilterText, onShowMoreCompanyToggle} = this.props;
     const companiesList = showMoreCompany ? this.onFilterCompanyName() :
       this.onFilterCompanyName().length > 5 ? this.onFilterCompanyName().slice(0, 5) : this.onFilterCompanyName();
-const {messages} = this.props.intl;
+    const {messages} = this.props.intl;
     return (
       <div className="gx-main-layout-sidenav gx-d-none gx-d-lg-flex">
         <div className="gx-main-layout-side">
@@ -62,7 +62,8 @@ const {messages} = this.props.intl;
                 {selectedCompanies.length > 0 ?
                   <div className="gx-link" onClick={this.onCompanyReset}><IntlMessages id="common.reset"/></div> : null}
               </div>
-              <Search className="gx-mt-4" value={companyFilterText} placeholder={messages["customer.filter.searchCompany"]}
+              <Search className="gx-mt-4" value={companyFilterText}
+                      placeholder={messages["customer.filter.searchCompany"]}
                       onChange={(e) => onChangeCompanyFilterText(e)}/>
               <div className="gx-my-2">
                 <Checkbox.Group onChange={this.onSelectCompanies} value={selectedCompanies}>
@@ -75,14 +76,16 @@ const {messages} = this.props.intl;
               <div>
                 {this.onFilterCompanyName().length > 5 ?
                   <div className="gx-link" onClick={() => onShowMoreCompanyToggle()}>
-                    {showMoreCompany ? <IntlMessages id="common.viewLess"/> : `${this.onFilterCompanyName().length - 5} ${messages["common.more"]}`}
+                    {showMoreCompany ? <IntlMessages
+                      id="common.viewLess"/> : `${this.onFilterCompanyName().length - 5} ${messages["common.more"]}`}
                   </div> : null}
               </div>
             </div>
             <div className="gx-mt-5">
               <div className="gx-d-flex gx-justify-content-between">
                 <h4><IntlMessages id="customers.filter.byLabels"/></h4>
-                {selectedLabels.length > 0 ? <div className="gx-link" onClick={this.onLabelReset}><IntlMessages id="common.reset"/></div> : null}
+                {selectedLabels.length > 0 ?
+                  <div className="gx-link" onClick={this.onLabelReset}><IntlMessages id="common.reset"/></div> : null}
               </div>
               <Select
                 mode="multiple"

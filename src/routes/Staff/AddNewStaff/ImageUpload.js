@@ -77,7 +77,8 @@ class ImageUpload extends Component {
           <Avatar className="gx-size-200"
                   src={this.getImageURL()}/>
         </Upload>
-        <Button type="primary" className="gx-mt-5 gx-ml-4" onClick={this.onLogoSelect}><IntlMessages id="common.uploadProfileImage"/></Button>
+        <Button type="primary" className="gx-mt-5 gx-ml-4" onClick={this.onLogoSelect}><IntlMessages
+          id="common.uploadProfileImage"/></Button>
       </div>
     )
   }

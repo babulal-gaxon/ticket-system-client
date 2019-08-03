@@ -72,7 +72,7 @@ class Localization extends Component {
   };
 
   render() {
-    const {messages} =this.props.intl;
+    const {messages} = this.props.intl;
     const {getFieldDecorator} = this.props.form;
     const {date_format, time_format, default_language, allow_language_selection} = this.state;
     return (
@@ -84,7 +84,8 @@ class Localization extends Component {
               <Link to="/settings/general-settings"><IntlMessages id="sidebar.dashboard.settings"/></Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <Link to="/settings/localization" className="gx-text-primary"><IntlMessages id="settings.localization.title"/></Link>
+              <Link to="/settings/localization" className="gx-text-primary"><IntlMessages
+                id="settings.localization.title"/></Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           <Form layout="vertical">
@@ -110,7 +111,7 @@ class Localization extends Component {
                   {getFieldDecorator('time_format', {
                     initialValue: time_format,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message:  messages["validation.localization.timeFormat"]}],
+                    rules: [{required: true, message: messages["validation.localization.timeFormat"]}],
                   })(<Select style={{width: "100%"}} onChange={this.onTimeSelect}>
                     <Option value="24 Hours">24 <IntlMessages id="common.hours"/> (20:30)</Option>
                     <Option value="12 Hours">12 <IntlMessages id="common.hours"/> (08:30)</Option>
@@ -141,7 +142,8 @@ class Localization extends Component {
             </Form.Item>
             <hr/>
             <div className="gx-d-flex">
-              <Button type="primary" style={{width: "150px"}} onClick={this.onValidationCheck}><IntlMessages id="common.save"/></Button>
+              <Button type="primary" style={{width: "150px"}} onClick={this.onValidationCheck}><IntlMessages
+                id="common.save"/></Button>
             </div>
           </Form>
         </Widget>

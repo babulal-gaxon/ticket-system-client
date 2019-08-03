@@ -24,7 +24,7 @@ class RecentCustomers extends Component {
                 className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/></span>}>
         {this.props.customersList.map(customer => {
           return (
-            <div className="gx-media gx-task-list-item gx-flex-nowrap">
+            <div key={customer.id} className="gx-media gx-task-list-item gx-flex-nowrap">
               <Avatar className="gx-mr-3 gx-size-36" src="https://via.placeholder.com/150x150"/>
               <div className="gx-media-body gx-task-item-content">
                 <div className="gx-task-item-content-left">

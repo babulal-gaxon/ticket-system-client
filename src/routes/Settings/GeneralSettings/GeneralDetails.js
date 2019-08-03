@@ -195,7 +195,8 @@ class GeneralDetails extends Component {
               this.setState({name: e.target.value})
             }}/>)}
           </Form.Item>
-          <Form.Item label={<IntlMessages id="settings.companyWebsite"/>} extra={<IntlMessages id="common.websiteFormatMessage"/>}>
+          <Form.Item label={<IntlMessages id="settings.companyWebsite"/>}
+                     extra={<IntlMessages id="common.websiteFormatMessage"/>}>
             {getFieldDecorator('url', {
               initialValue: url,
               validateTrigger: 'onBlur',
@@ -215,15 +216,19 @@ class GeneralDetails extends Component {
             })(<Input type="text" onChange={(e) => this.setState({cpp_url: e.target.value})}/>)}
           </Form.Item>
           <Form.Item label={<IntlMessages id="common.companyLogo"/>}
-                     extra={logoName && this.state.logoList.length === 0 ? logoName : <IntlMessages id="validation.settings.logoSize"/>}>
+                     extra={logoName && this.state.logoList.length === 0 ? logoName :
+                       <IntlMessages id="validation.settings.logoSize"/>}>
             <Upload {...propsLogo}>
-              <Input placeholder={messages["common.chooseFile"]} addonAfter={<IntlMessages id="common.browse"/>} style={{width: "270%"}}/>
+              <Input placeholder={messages["common.chooseFile"]} addonAfter={<IntlMessages id="common.browse"/>}
+                     style={{width: "270%"}}/>
             </Upload>
           </Form.Item>
           <Form.Item label={<IntlMessages id="settings.favicon"/>}
-                     extra={faviconName && this.state.logoList.length === 0 ? faviconName : <IntlMessages id="validation.settings.faviconSize"/>}>
+                     extra={faviconName && this.state.logoList.length === 0 ? faviconName :
+                       <IntlMessages id="validation.settings.faviconSize"/>}>
             <Upload {...propsFavicon}>
-              <Input placeholder={messages["common.chooseFile"]} addonAfter={<IntlMessages id="common.browse"/>} style={{width: "270%"}}/>
+              <Input placeholder={messages["common.chooseFile"]} addonAfter={<IntlMessages id="common.browse"/>}
+                     style={{width: "270%"}}/>
             </Upload>
           </Form.Item>
           <Form.Item label={<IntlMessages id="common.email"/>}>

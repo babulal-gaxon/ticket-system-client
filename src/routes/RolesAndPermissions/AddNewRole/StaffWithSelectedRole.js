@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Widget from "../../../components/Widget";
-import {Avatar, Button, Input} from "antd";
+import {Avatar, Input} from "antd";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
@@ -56,7 +56,7 @@ class StaffWithSelectedRole extends Component {
     const staffList = this.onFilterStaffList();
     return (
       <div className="gx-main-layout-content">
-        <h5 className="gx-mb-4"> <IntlMessages id="roles.staffMembers"/></h5>
+        <h5 className="gx-mb-4"><IntlMessages id="roles.staffMembers"/></h5>
         <div className="gx-d-flex gx-align-items-center">
           <Search
             placeholder={messages["manageTickets.filterBar.searchStaff"]}

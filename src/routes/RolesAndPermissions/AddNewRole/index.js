@@ -251,7 +251,8 @@ class AddNewRole extends Component {
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
           <h4
-            className="gx-font-weight-bold">{selectedRole === null ? <IntlMessages id="roles.addNew"/> : <IntlMessages id="roles.editDetail"/>}</h4>
+            className="gx-font-weight-bold">{selectedRole === null ? <IntlMessages id="roles.addNew"/> :
+            <IntlMessages id="roles.editDetail"/>}</h4>
           <Breadcrumb className="gx-mb-4">
             <Breadcrumb.Item onClick={onDisableSelectedRole}>
               <Link to="/roles-permissions/all"><IntlMessages id="roles.title"/></Link>
@@ -259,7 +260,8 @@ class AddNewRole extends Component {
             <Breadcrumb.Item className="gx-text-primary">
               <Link
                 to="/roles-permissions/add-new"
-                className="gx-text-primary">{selectedRole === null ? <IntlMessages id="roles.addNew"/> : <IntlMessages id="roles.editDetail"/>}</Link>
+                className="gx-text-primary">{selectedRole === null ? <IntlMessages id="roles.addNew"/> :
+                <IntlMessages id="roles.editDetail"/>}</Link>
             </Breadcrumb.Item>
           </Breadcrumb>
           {currentMember === null ? <Row>
@@ -269,7 +271,7 @@ class AddNewRole extends Component {
                   {getFieldDecorator('name', {
                     initialValue: name,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message:messages["validation.roles.name"]}],
+                    rules: [{required: true, message: messages["validation.roles.name"]}],
                   })(<Input type="text" autoFocus onChange={(e) => this.setState({name: e.target.value})}/>)}
                 </Form.Item>
                 <Form.Item label={<IntlMessages id="common.status"/>}>
@@ -284,7 +286,8 @@ class AddNewRole extends Component {
                 <hr/>
                 <Form.Item>
                   <Collapse bordered={false} accordion>
-                    <Panel header={<IntlMessages id="sidebar.dashboard.customers"/>} key="1" showArrow={false} extra={<i className="icon icon-add-circle"/>}
+                    <Panel header={<IntlMessages id="sidebar.dashboard.customers"/>} key="1" showArrow={false}
+                           extra={<i className="icon icon-add-circle"/>}
                            style={customPanelStyle}>
                       <Checkbox className="gx-ml-auto"
                                 indeterminate={customerPermissions.length > 0
@@ -306,7 +309,8 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header={<IntlMessages id="sidebar.dashboard.departments"/>} key="3" style={customPanelStyle} showArrow={false}
+                    <Panel header={<IntlMessages id="sidebar.dashboard.departments"/>} key="3" style={customPanelStyle}
+                           showArrow={false}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
                         indeterminate={departmentsPermissions.length > 0
@@ -328,7 +332,8 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header={<IntlMessages id="common.labels"/>} key="4" style={customPanelStyle} showArrow={false}
+                    <Panel header={<IntlMessages id="common.labels"/>} key="4" style={customPanelStyle}
+                           showArrow={false}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
                         indeterminate={labelPermissions.length > 0
@@ -372,7 +377,8 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header={<IntlMessages id="common.responses"/>} key="6" style={customPanelStyle} showArrow={false}
+                    <Panel header={<IntlMessages id="common.responses"/>} key="6" style={customPanelStyle}
+                           showArrow={false}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
                         indeterminate={responsesPermissions.length > 0
@@ -416,7 +422,8 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header={<IntlMessages id="sidebar.dashboard.settings"/>} key="8" showArrow={false} style={customPanelStyle}
+                    <Panel header={<IntlMessages id="sidebar.dashboard.settings"/>} key="8" showArrow={false}
+                           style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
                         indeterminate={settingsPermissions.length > 0
@@ -438,7 +445,8 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header={<IntlMessages id="common.staffs"/>} key="9" showArrow={false} style={customPanelStyle}
+                    <Panel header={<IntlMessages id="common.staffs"/>} key="9" showArrow={false}
+                           style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
                         indeterminate={staffsPermissions.length > 0
@@ -460,7 +468,8 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header={<IntlMessages id="common.status"/>} key="10" showArrow={false} style={customPanelStyle}
+                    <Panel header={<IntlMessages id="common.status"/>} key="10" showArrow={false}
+                           style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
                         indeterminate={statusPermissions.length > 0
@@ -482,7 +491,8 @@ class AddNewRole extends Component {
                         </Row>
                       </Checkbox.Group>
                     </Panel>
-                    <Panel header={<IntlMessages id="common.tickets"/>} key="11" showArrow={false} style={customPanelStyle}
+                    <Panel header={<IntlMessages id="common.tickets"/>} key="11" showArrow={false}
+                           style={customPanelStyle}
                            extra={<i className="icon icon-add-circle"/>}>
                       <Checkbox
                         indeterminate={ticketsPermissions.length > 0
