@@ -172,13 +172,13 @@ class RaiseTicketModal extends Component {
                 initialValue: service_id,
               })(<Select
                 mode="multiple"
-                placeholder="Please select Services"
+                placeholder={messages["tickets.services.placeholder"]}
                 onSelect={this.onServiceSelect}
                 onDeselect={this.onServiceRemove}>
                 {serviceOptions}
               </Select>)}
             </Form.Item>
-            <Form.Item label="Description">
+            <Form.Item label={<IntlMessages id="tickets.description"/>}>
               {getFieldDecorator('content', {
                 initialValue: content,
                 rules: [{
