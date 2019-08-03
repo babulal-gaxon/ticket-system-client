@@ -121,7 +121,6 @@ class RaiseTicketModal extends Component {
       fileList,
     };
 
-
     return (
       <div className="gx-main-layout-content">
         <Modal
@@ -189,7 +188,7 @@ class RaiseTicketModal extends Component {
                 this.setState({content: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label="Select Priority">
+            <Form.Item label={<IntlMessages id="tickets.selectPriority"/>}>
               {getFieldDecorator('priority_id', {
                 initialValue: priority_id,
               })(<Select type="text" onChange={(value) => {
@@ -202,7 +201,7 @@ class RaiseTicketModal extends Component {
             </Form.Item>
             <Form.Item>
               <Upload {...props}>
-                <Input placeholder='Add Files' prefix={<i className="icon gx-icon-attachment"/>}/>
+                <Input placeholder={messages["tickets.files.upload"]} prefix={<i className="icon gx-icon-attachment"/>}/>
               </Upload>
             </Form.Item>
           </Form>

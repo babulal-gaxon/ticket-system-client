@@ -380,7 +380,10 @@
   "tickets.selectDepartment": "Select Department",
   "tickets.selectService": "Select Service",
   "tickets.services.placeholder": "Select Services",
+  "tickets.selectPriority": "Select Priority",
   "tickets.files.upload": "Add Files",
+
+  "validation.tickets.subject": "Please enter Ticket Subject",
 
 
 
