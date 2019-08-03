@@ -2,7 +2,7 @@
 export const TOGGLE_COLLAPSED_NAV = 'TOGGLE_COLLAPSE_MENU';
 export const WINDOW_WIDTH = 'WINDOW-WIDTH';
 export const SWITCH_LANGUAGE = 'SWITCH-LANGUAGE';
-export const MEDIA_BASE_URL = 'http://gaxonlab.com/dev/ticket-system/public';
+export const MEDIA_BASE_URL = 'http://gaxonlab.com/ticket-system/public';
 
 export const FETCH_USER_INFO_START = 'fetch_user_info_start';
 export const FETCH_USER_INFO_SUCCESS = 'fetch_user_info_success';
