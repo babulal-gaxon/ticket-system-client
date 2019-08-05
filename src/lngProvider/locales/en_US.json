@@ -248,6 +248,7 @@
   "setup.verifyPin.message": "Enter the 6 digit verification code sent to your email address super@example.com to verify your account.",
   "setup.verifyPin.enter": "Enter Verification Code",
   "setup.verifyPin.notReceived": "Not received email?",
+  "profile.title": "Edit Profile Details",
   "validation.message.selectCustomer": "Please Select Customer!",
   "validation.message.selectTitle": "Please enter title!",
   "validation.message.selectServices": "Please select Services",

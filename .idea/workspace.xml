@@ -4,14 +4,7 @@
     <list default="true" id="22660aa2-fcdc-4713-8a0a-0d397dd58555" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerRow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerRow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Customers/Companies/CompanyRow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Customers/Companies/CompanyRow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Customers/CustomersLabel/CustomerLabelRow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Customers/CustomersLabel/CustomerLabelRow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketRow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketRow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/StaffNotesList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/StaffNotesList/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffRow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffRow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Profile/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Profile/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -25,49 +18,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/routes/Profile/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3485">
+              <caret line="205" column="16" lean-forward="true" selection-start-line="205" selection-start-column="16" selection-end-line="205" selection-end-column="16" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="306" column="52" lean-forward="true" selection-start-line="306" selection-start-column="17" selection-end-line="306" selection-end-column="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/en_US.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="72" column="28" selection-start-line="72" selection-start-column="2" selection-end-line="72" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="104" column="2" selection-start-line="104" selection-start-column="2" selection-end-line="104" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerRow.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-913">
-              <caret line="56" column="28" lean-forward="true" selection-start-line="56" selection-start-column="28" selection-end-line="56" selection-end-column="28" />
-              <folding>
-                <element signature="e#0#61#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1100">
-              <caret line="198" column="52" lean-forward="true" selection-start-line="198" selection-start-column="52" selection-end-line="198" selection-end-column="52" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-                <element signature="n#!!block;n#componentDidMount#0;n#AllCustomers#0" />
-                <element signature="e#1600#1839#0" />
-                <element signature="e#1866#1933#0" />
-                <element signature="e#2784#3202#0" />
-                <element signature="e#3234#3571#0" />
-              </folding>
+            <state relative-caret-position="368">
+              <caret line="250" column="17" selection-start-line="250" selection-start-column="2" selection-end-line="250" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -76,8 +52,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Email Ad</find>
-      <find>Role</find>
       <find>reset</find>
       <find>Department</find>
       <find>Add</find>
@@ -106,6 +80,8 @@
       <find>roles.message.selectFirst</find>
       <find>Note</find>
       <find>common.customer</find>
+      <find>&quot;customers.message.delete&quot;</find>
+      <find>Edit Profile Details</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -119,7 +95,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/routes/SetUp/CannedResponses/AddNewResponses.js" />
         <option value="$PROJECT_DIR$/src/routes/SetUp/Departments/AddNewDepartment.js" />
         <option value="$PROJECT_DIR$/src/routes/SetUp/Products/AddNewProduct.js" />
         <option value="$PROJECT_DIR$/src/routes/SetUp/Services/AddNewService.js" />
@@ -167,9 +142,10 @@
         <option value="$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js" />
         <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/StaffNotesList/index.js" />
         <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffRow.js" />
-        <option value="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" />
         <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" />
         <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerRow.js" />
+        <option value="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" />
+        <option value="$PROJECT_DIR$/src/routes/Profile/index.js" />
       </list>
     </option>
   </component>
@@ -199,6 +175,19 @@
               <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="lngProvider" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="lngProvider" type="462c0819:PsiDirectoryNode" />
+              <item name="locales" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -206,15 +195,22 @@
               <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="Customers" type="462c0819:PsiDirectoryNode" />
+              <item name="Profile" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
-              <item name="Customers" type="462c0819:PsiDirectoryNode" />
-              <item name="AllCustomers" type="462c0819:PsiDirectoryNode" />
+              <item name="Staff" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="Staff" type="462c0819:PsiDirectoryNode" />
+              <item name="AddNewStaff" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -297,7 +293,7 @@
       <workItem from="1564721151385" duration="28790000" />
       <workItem from="1564752701479" duration="313000" />
       <workItem from="1564807206375" duration="21173000" />
-      <workItem from="1564979030562" duration="3164000" />
+      <workItem from="1564979030562" duration="3642000" />
     </task>
     <task id="LOCAL-00003" summary="working on localization">
       <created>1564726805770</created>
@@ -383,17 +379,24 @@
       <option name="project" value="LOCAL" />
       <updated>1564841407754</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="working on localization">
+      <created>1564982291720</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1564982291720</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60646000" />
+    <option name="totallyTimeSpent" value="61124000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.41734862" visible="true" weight="0.1904762" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.41734862" visible="true" weight="0.1904762" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.5826514" side_tool="true" weight="0.1904762" />
       <window_info id="Favorites" order="3" sideWeight="0.5184049" side_tool="true" weight="0.16097923" />
@@ -440,14 +443,9 @@
     <option name="LAST_COMMIT_MESSAGE" value="working on localization" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddNewCustomers.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddCustomerAddress.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/Settings/Localization/index.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/SetUp/Departments/DepartmentsRow.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/Staff/AddNewStaff/ImageUpload.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/Customers/Companies/AddNewCompany.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SixthStep/AddNewStaff.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/ThirdStep.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/FifthStep.js" />
@@ -526,15 +524,6 @@
           <caret line="27" column="4" lean-forward="true" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="4" />
           <folding>
             <element signature="e#0#65#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Profile/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2123">
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -664,10 +653,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/en_US.json">
+    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddCustomerAddress.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="72" column="28" selection-start-line="72" selection-start-column="2" selection-end-line="72" selection-end-column="28" />
+        <state relative-caret-position="-2499" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddNewCustomers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4896" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerImageUpload.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1035">
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -677,6 +678,39 @@
           <caret line="56" column="28" lean-forward="true" selection-start-line="56" selection-start-column="28" selection-end-line="56" selection-end-column="28" />
           <folding>
             <element signature="e#0#61#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/FilterBar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-573">
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/en_US.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="250" column="17" selection-start-line="250" selection-start-column="2" selection-end-line="250" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="306" column="52" lean-forward="true" selection-start-line="306" selection-start-column="17" selection-end-line="306" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Profile/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3485">
+          <caret line="205" column="16" lean-forward="true" selection-start-line="205" selection-start-column="16" selection-end-line="205" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -8,6 +8,8 @@ import {onGetDepartments} from "../../appRedux/actions/Departments";
 import {Divider, Select} from "antd";
 import ImageUpload from "../Staff/AddNewStaff/ImageUpload";
 import {getUserProfile, updateUserProfile} from "../../appRedux/actions";
+import {injectIntl} from "react-intl";
+import IntlMessages from "../../util/IntlMessages";
 
 const {Option} = Select;
 
@@ -88,6 +90,7 @@ class Profile extends Component {
   };
 
   render() {
+    const {messages} = this.props.intl;
     const {getFieldDecorator} = this.props.form;
     const {mobile, hourly_rate, departments_ids, first_name, last_name, email, designation} = this.state;
     const deptOptions = this.onDepartmentSelectOption();
@@ -95,30 +98,30 @@ class Profile extends Component {
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
           <h4
-            className="ggx-widget-heading"> Edit Profile Details</h4>
+            className="ggx-widget-heading"><IntlMessages id="profile.title"/></h4>
           <hr/>
           <Row>
             <Col xl={18} lg={12} md={12} sm={12} xs={24}>
               <Form layout="vertical" style={{width: "60%"}}>
-                <Form.Item label="First Name">
+                <Form.Item label={<IntlMessages id="common.firstName"/>}>
                   {getFieldDecorator('first_name', {
                     initialValue: first_name,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message: 'Please Enter First Name!'}],
+                    rules: [{required: true, message: messages["validation.message.firstName"]}],
                   })(<Input type="text" autoFocus onChange={(e) => {
                     this.setState({first_name: e.target.value})
                   }}/>)}
                 </Form.Item>
-                <Form.Item label="Last Name">
+                <Form.Item label={<IntlMessages id="common.lastName"/>}>
                   {getFieldDecorator('last_name', {
                     initialValue: last_name,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message: 'Please Enter Last Name!'}],
+                    rules: [{required: true, message: "validation.message.lastName"}],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({last_name: e.target.value})
                   }}/>)}
                 </Form.Item>
-                <Form.Item label="Email Address">
+                <Form.Item label={<IntlMessages id="common.emailAddress"/>}>
                   {getFieldDecorator('email', {
                     initialValue: email,
                     validate: [{
@@ -126,7 +129,7 @@ class Profile extends Component {
                       rules: [
                         {
                           required: true,
-                          message: 'Please Enter Email!'
+                          message: messages["validation.message.email"]
                         },
                       ],
                     }, {
@@ -134,7 +137,7 @@ class Profile extends Component {
                       rules: [
                         {
                           type: 'email',
-                          message: 'The input is not valid E-mail!',
+                          message: messages["validation.message.emailFormat"]
                         },
                       ],
                     }],
@@ -142,41 +145,41 @@ class Profile extends Component {
                     this.setState({email: e.target.value})
                   }}/>)}
                 </Form.Item>
-                <Form.Item label="Phone Number">
+                <Form.Item label={<IntlMessages id="common.phoneNo."/>}>
                   {getFieldDecorator('mobile', {
                     initialValue: mobile,
                     validateTrigger: 'onBlur',
                     rules: [{
                       pattern: /^[0-9\b]+$/,
-                      message: 'Please enter only numerical values',
+                      message: messages["validation.message.numericalValues"]
                     }],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({phone: e.target.value})
                   }}/>)}
                 </Form.Item>
 
-                <Form.Item label="Hourly Rate">
+                <Form.Item label={<IntlMessages id="common.hourlyRate"/>}>
                   {getFieldDecorator('hourly_rate', {
                     initialValue: hourly_rate,
                     validateTrigger: 'onBlur',
                     rules: [{
                       pattern: /^[0-9\b]+$/,
-                      message: 'Please enter only numerical values',
+                      message: messages["validation.message.numericalValues"]
                     }]
                   })(<Input type="text" addonAfter={<div>$</div>} onChange={(e) => {
                     this.setState({hourly_rate: e.target.value})
                   }}/>)}
                 </Form.Item>
-                <Form.Item label="Designation">
+                <Form.Item label={<IntlMessages id="common.designation"/>}>
                   <Input type="text" value={designation} onChange={(e) => {
                     this.setState({designation: e.target.value})
                   }}/>
                 </Form.Item>
-                <Form.Item label="Department">
+                <Form.Item label={<IntlMessages id="common.departmentHeading"/>}>
                   <Select
                     mode="multiple"
                     style={{width: '100%'}}
-                    placeholder="Please select Department"
+                    placeholder={messages["common.department"]}
                     value={departments_ids}
                     onSelect={this.onDepartmentSelect}
                     onDeselect={this.onDepartmentRemove}>
@@ -194,10 +197,10 @@ class Profile extends Component {
           <div className="gx-d-flex gx-justify-content-between">
             <span>
                 <Button type="primary" onClick={this.onValidationCheck} style={{width: 150}}>
-                  Save
+                   {<IntlMessages id="common.save"/>}
                 </Button>
                 <Button onClick={this.goPreviousScreen} style={{width: 150}}>
-                  Cancel
+                   {<IntlMessages id="common.cancel"/>}
                 </Button>
             </span>
           </div>
@@ -220,7 +223,7 @@ export default connect(mapStateToProps, {
   getUserProfile,
   onGetDepartments,
   onAddProfileImage,
-})(Profile);
+})(injectIntl(Profile));
 
 Profile.defaultProps = {
   dept: [],
