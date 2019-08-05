@@ -1,4 +1,4 @@
-import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE} from "../../constants/ActionTypes";
+import {FETCH_ERROR, FETCH_START, FETCH_SUCCESS, SHOW_MESSAGE, UPDATING_CONTENT} from "../../constants/ActionTypes";
 import axios from 'util/Api'
 import {
   ADD_TICKET_MESSAGE,
@@ -10,9 +10,13 @@ import {
   RAISE_NEW_TICKET, UPDATE_TICKET, UPDATE_TICKET_PRIORITY, UPDATE_TICKET_STATUS
 } from "../../constants/CustomerDetails";
 
-export const onGetRaisedTickets = (currentPage, totalItems, filterText) => {
+export const onGetRaisedTickets = (currentPage, totalItems, filterText, updatingContent) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
+    if (updatingContent) {
+      dispatch({type: UPDATING_CONTENT});
+    } else {
+      dispatch({type: FETCH_START});
+    }
     axios.get(`/customer/panel/tickets`, {
       params: {
         page: currentPage,
