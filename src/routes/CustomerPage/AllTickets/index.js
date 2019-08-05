@@ -33,8 +33,8 @@ class AllTickets extends Component {
     this.props.onGetFormOptions();
   }
 
-  onGetTicketsData = (currentPage, itemsPerPage, filterData) => {
-    this.props.onGetRaisedTickets(currentPage, itemsPerPage, filterData);
+  onGetTicketsData = (currentPage, itemsPerPage, filterData, updatingContent) => {
+    this.props.onGetRaisedTickets(currentPage, itemsPerPage, filterData, updatingContent);
   };
 
   onToggleAddTicket = () => {
@@ -45,7 +45,7 @@ class AllTickets extends Component {
     const pages = Math.ceil(this.props.totalTickets / this.state.itemNumbers);
     if (this.state.current < pages) {
       this.setState({current: this.state.current + 1}, () => {
-        this.onGetTicketsData(this.state.current, this.state.itemNumbers, this.state.filterText)
+        this.onGetTicketsData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
       });
     }
   };
@@ -53,7 +53,7 @@ class AllTickets extends Component {
   onCurrentDecrement = () => {
     if (this.state.current > 1) {
       this.setState({current: this.state.current - 1}, () => {
-        this.onGetTicketsData(this.state.current, this.state.itemNumbers, this.state.filterText)
+        this.onGetTicketsData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
       });
     }
   };
@@ -64,7 +64,7 @@ class AllTickets extends Component {
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
-      this.onGetTicketsData(1, this.state.itemNumbers, this.state.filterText)
+      this.onGetTicketsData(1, this.state.itemNumbers, this.state.filterText, true)
     })
   };
 
@@ -145,7 +145,7 @@ class AllTickets extends Component {
 
   onPageChange = page => {
     this.setState({current: page}, () => {
-      this.onGetTicketsData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      this.onGetTicketsData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
     });
   };
 
@@ -159,7 +159,7 @@ class AllTickets extends Component {
 
   onDropdownChange = (value) => {
     this.setState({itemNumbers: value, current: 1}, () => {
-      this.onGetTicketsData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      this.onGetTicketsData(this.state.current, this.state.itemNumbers, this.state.filterText, true)
     })
   };
 
@@ -211,6 +211,7 @@ class AllTickets extends Component {
               </div>
               <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
                      dataSource={raisedTickets} className="gx-mb-4" rowKey="id"
+                     loading={this.props.updatingContent}
                      pagination={{
                        pageSize: this.state.itemNumbers,
                        current: this.state.current,
@@ -253,9 +254,10 @@ class AllTickets extends Component {
   }
 }
 
-const mapPropsToState = ({customerDetails}) => {
+const mapPropsToState = ({customerDetails, commonData}) => {
   const {raisedTickets, totalTickets, formOptions} = customerDetails;
-  return {raisedTickets, totalTickets, formOptions};
+  const {updatingContent} = commonData;
+  return {raisedTickets, totalTickets, formOptions, updatingContent};
 };
 
 export default connect(mapPropsToState, {
