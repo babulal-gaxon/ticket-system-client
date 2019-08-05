@@ -428,5 +428,13 @@
   "common.previous": "Precedente",
   "common.verify": "Verificare",
   "common.back": "Indietro",
-  "common.resend": "inviare di nuovo"
+  "common.resend": "inviare di nuovo",
+  "common.productHeading": "Prodotto",
+  "dashboard.ticketListing": "Elenco dei biglietti",
+  "dashboard.newTickets": "Nuovi biglietti",
+  "dashboard.snoozes": "snoozes",
+  "dashboard.viewAll": "Guarda tutto",
+  "dashboard.recentCustomers": "Clienti recenti",
+  "dashboard.topSupportStaff": "Staff di supporto superiore",
+  "customers.address.delete": "Sei sicuro di eliminare questo indirizzo?"
 }

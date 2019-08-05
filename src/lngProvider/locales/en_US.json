@@ -428,5 +428,13 @@
   "common.previous": "Previous",
   "common.verify": "Verify",
   "common.back": "Back",
-  "common.resend": "Resend"
+  "common.resend": "Resend",
+  "common.productHeading": "Product",
+  "dashboard.ticketListing": "Tickets Listing",
+  "dashboard.newTickets": "New Tickets",
+  "dashboard.snoozes": "Snoozes",
+  "dashboard.viewAll": "View All",
+  "dashboard.recentCustomers": "Recent Customers",
+  "dashboard.topSupportStaff": "Top Support Staff",
+  "customers.address.delete": "Are you sure to delete this Address?"
 }

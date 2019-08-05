@@ -169,10 +169,10 @@ class AllCustomers extends Component {
     const menu = (
       <Menu>
         <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
-          <span><IntlMessages id="common.archive"/></span>
+          <IntlMessages id="common.archive"/>
         </Menu.Item>
         <Menu.Item key="2" onClick={this.onShowBulkDeleteConfirm}>
-          <span><IntlMessages id="common.delete"/></span>
+         <IntlMessages id="common.delete"/>
         </Menu.Item>
       </Menu>
     );

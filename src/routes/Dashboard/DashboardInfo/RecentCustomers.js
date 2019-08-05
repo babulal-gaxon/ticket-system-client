@@ -5,6 +5,7 @@ import {Avatar, Button} from "antd";
 import Widget from "../../../components/Widget/index";
 import PropTypes from "prop-types";
 import {onGetCustomersData} from "../../../appRedux/actions/Customers";
+import IntlMessages from "../../../util/IntlMessages";
 
 class RecentCustomers extends Component {
   componentDidMount() {
@@ -12,12 +13,12 @@ class RecentCustomers extends Component {
   }
 
   render() {
-    console.log("inRecentCustomers", this.props.customersList);
+
     return (
       <Widget title={
         <div>
-          <h2 className="h4 gx-text-capitalize gx-mb-0">Recent Customers</h2>
-          <div className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1">last update 2 hours ago</div>
+          <h2 className="h4 gx-text-capitalize gx-mb-0"><IntlMessages id="dashboard.recentCustomers"/></h2>
+          <div className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1"><IntlMessages id="common.updatedAt"/></div>
         </div>}
               styleName="gx-card-ticketlist"
               extra={<span><i
@@ -43,7 +44,7 @@ class RecentCustomers extends Component {
             </div>
           )
         })}
-        <Button type="link">View All</Button>
+        <Button type="link"><IntlMessages id="dashboard.viewAll"/></Button>
       </Widget>
     );
   }

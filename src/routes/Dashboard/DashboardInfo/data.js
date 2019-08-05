@@ -2,31 +2,32 @@ import {Avatar, Tag, Tooltip} from "antd";
 import React from "react";
 import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import {getFormattedDate} from "../../../util/Utills";
+import IntlMessages from "../../../util/IntlMessages";
 
 
 export const ticketListcolumns = [
   {
-    title: 'ID',
+    title: <IntlMessages id="common.id"/>,
     dataIndex: 'id',
     render: (text, record) => {
       return <span className="gx-text-grey">{record.id}</span>
     },
   },
   {
-    title: 'Ticket Detail',
+    title: <IntlMessages id="manageTickets.ticketDetail"/>,
     dataIndex: 'title',
+    key: 'title',
     render: (text, record) => {
       return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
-          {record.assigned_by ?
-            <Tooltip placement="top" title={record.assigned_by.first_name + " " + record.assigned_by.last_name}>
-              {record.assigned_by.avatar ?
-                <Avatar className="gx-mr-3 gx-size-50" src={MEDIA_BASE_URL + record.assigned_by.avatar.src}/> :
-                <Avatar className="gx-mr-3 gx-size-50"
-                        style={{backgroundColor: '#f56a00'}}>{record.assigned_by.first_name[0].toUpperCase()}</Avatar>}
-            </Tooltip> : <Avatar className="gx-size-50 gx-mr-3" src="https://via.placeholder.com/150x150"/>}
+          <Tooltip placement="top" title={record.assigned_by.first_name + " " + record.assigned_by.last_name}>
+            {record.assigned_by.avatar ?
+              <Avatar className="gx-mr-3 gx-size-50 gx-fs-xl" src={MEDIA_BASE_URL + record.assigned_by.avatar.src}/> :
+              <Avatar className="gx-mr-3 gx-size-50 gx-fs-xl"
+                      style={{backgroundColor: '#f56a00'}}>{record.assigned_by.first_name[0].toUpperCase()}</Avatar>}
+          </Tooltip>
           <div className="gx-media-body">
             <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
-            <Tag className="gx-ml-2" color="blue">{record.product_name}</Tag>
+            {record.product_name ? <Tag className="gx-ml-2" color="blue">{record.product_name}</Tag> : null}
             <div>Created on {getFormattedDate(record.created_at)}</div>
           </div>
         </div>
@@ -34,17 +35,18 @@ export const ticketListcolumns = [
     },
   },
   {
-    title: 'Product',
+    title: <IntlMessages id="common.productHeading"/>,
     dataIndex: '',
     render: (text, record) => {
       return <span className="gx-email gx-d-inline-block gx-mr-2">Not from server</span>
     },
   },
   {
-    title: 'Assign to',
-    dataIndex: '',
+    title: <IntlMessages id="manageTickets.assignTo"/>,
+    dataIndex: 'assignTo',
+    key: 'assign_to',
     render: (text, record) => {
-      console.log("record", record);
+
       return (<div>
           {record.assigned_to ?
             <Tooltip placement="top" title={record.assigned_to.first_name + " " + record.assigned_to.last_name}
@@ -55,30 +57,25 @@ export const ticketListcolumns = [
                         style={{backgroundColor: '#f56a00'}}>{record.assigned_to.first_name[0].toUpperCase()}</Avatar>}
             </Tooltip>
             :
-            <Tooltip placement="top" title="Not assigned">
-              Not assigned
-            </Tooltip>}
+            <IntlMessages id="common.notAssigned"/>}
         </div>
       )
     },
   },
   {
-    title: 'Status',
+    title: <IntlMessages id="common.status"/>,
     dataIndex: 'status_id',
+    key: 'status_id',
     render: (text, record) => {
-      return <span className={`gx-badge gx-hover gx-mb-0  gx-badge-${record.status_color_code}`}>
-            {console.log("color", record.status_color_code)}
-        {record.status_name}
-        </span>
+      return <Tag color="green">{record.status_name}</Tag>
     },
   },
   {
-    title: 'Priority',
+    title: <IntlMessages id="common.priority"/>,
     dataIndex: 'priority_name',
+    key: 'priority_name',
     render: (text, record) => {
-      return <span className={`gx-badge gx-hover gx-mb-0  gx-badge-${record.priority_color_code}`}>
-          {record.priority_name}
-        </span>
+      return <Tag color={record.priority_color_code}> {record.priority_name}</Tag>
     },
   },
   {

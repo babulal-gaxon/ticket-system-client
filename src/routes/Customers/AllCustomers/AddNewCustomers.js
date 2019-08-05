@@ -158,7 +158,7 @@ class AddNewCustomers extends Component {
         {(Permissions.canAddressDelete()) ?
           <Menu.Item key="4">
             <Popconfirm
-              title="Are you sure to delete this Address?"
+              title={<IntlMessages id="customers.address.delete"/>}
               onConfirm={() => {
                 this.props.onDeleteCustomerAddress(address.id, this);
               }}

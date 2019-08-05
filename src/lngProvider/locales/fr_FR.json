@@ -428,5 +428,13 @@
   "common.previous": "Précédente",
   "common.verify": "Vérifier",
   "common.back": "Retour",
-  "common.resend": "Renvoyer"
+  "common.resend": "Renvoyer",
+  "common.productHeading": "Produit",
+  "dashboard.ticketListing": "Liste des billets",
+  "dashboard.newTickets": "Nouveaux billets",
+  "dashboard.snoozes": "Snoozes",
+  "dashboard.viewAll": "Voir tout",
+  "dashboard.recentCustomers": "Clients récents",
+  "dashboard.topSupportStaff": "Top personnel de soutien",
+  "customers.address.delete": "Êtes-vous sûr de supprimer cette adresse?"
 }

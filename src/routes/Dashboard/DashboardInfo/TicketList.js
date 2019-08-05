@@ -6,6 +6,7 @@ import {onGetTickets} from "../../../appRedux/actions/TicketList";
 import Widget from "../../../components/Widget/index";
 import {ticketListcolumns} from "./data";
 import PropTypes from "prop-types";
+import IntlMessages from "../../../util/IntlMessages";
 
 class TicketList extends Component {
   componentWillMount() {
@@ -13,29 +14,28 @@ class TicketList extends Component {
   };
 
   render() {
-    console.log("in tableListing", this.props.tickets);
     return (
       <Widget
         title={
-          <h2 className="h4 gx-text-capitalize gx-mb-0">Ticket Listing</h2>
+          <h2 className="h4 gx-text-capitalize gx-mb-0"><IntlMessages id="dashboard.ticketListing"/></h2>
         }
         extra={
           <p className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
-            <Button type="primary">New Tickets</Button>
-            <Button type="link">Snoozes</Button>
-            <Button type="link">View All</Button>
+            <Button type="primary"><IntlMessages id="dashboard.newTickets"/></Button>
+            <Button type="link"><IntlMessages id="dashboard.snoozes"/></Button>
+            <Button type="link"><IntlMessages id="dashboard.viewAll"/></Button>
           </p>
         }>
         <div>
-          <Table rowKey="ticketList" columns={ticketListcolumns} dataSource={this.props.tickets}
-                 pagination={{pageSize: 5}}/>
+          <Table rowKey="id" columns={ticketListcolumns} dataSource={this.props.tickets}
+                 pagination={false}/>
         </div>
         <div>
-          <Button type="default">View All</Button>
+          <Button type="default"><IntlMessages id="dashboard.viewAll"/></Button>
           <span>
           <i className="icon icon-schedule gx-mr-2 gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
           </span>
-          <span>Last update 2 hours ago</span>
+          <span><IntlMessages id="common.updatedAt"/> </span>
         </div>
       </Widget>
     );

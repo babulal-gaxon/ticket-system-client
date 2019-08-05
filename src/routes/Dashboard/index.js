@@ -16,7 +16,6 @@ import {incrementData} from "./DashboardInfo/data";
 const Dashboard = () => {
   return (
     <div className="gx-main-content">
-      <h2 className="title gx-mb-4"><IntlMessages id="sidebar.samplePage"/></h2>
       <div className="gx-d-flex justify-content-center">
         <Row>
           <Col xl={6} lg={12} md={12} sm={12} xs={24}>

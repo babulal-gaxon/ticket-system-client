@@ -428,5 +428,13 @@
   "common.previous": "Anterior",
   "common.verify": "Verificar",
   "common.back": "atrás",
-  "common.resend": "Reenviar"
+  "common.resend": "Reenviar",
+  "common.productHeading": "Producto",
+  "dashboard.ticketListing": "Listado de entradas",
+  "dashboard.newTickets": "Entradas nuevas",
+  "dashboard.snoozes": "Snoozes",
+  "dashboard.viewAll": "Ver todo",
+  "dashboard.recentCustomers": "Clientes recientes",
+  "dashboard.topSupportStaff": "Personal de soporte superior",
+  "customers.address.delete": "¿Estás seguro de eliminar esta dirección?"
 }
