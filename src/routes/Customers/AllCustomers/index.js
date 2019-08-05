@@ -113,7 +113,7 @@ class AllCustomers extends Component {
     this.setState({companyFilterText: e.target.value})
   };
 
-  onShowMoreCompanyToggle = (e) => {
+  onShowMoreCompanyToggle = () => {
     this.setState({showMoreCompany: !this.state.showMoreCompany})
   };
 
@@ -169,10 +169,10 @@ class AllCustomers extends Component {
     const menu = (
       <Menu>
         <Menu.Item key="1" onClick={this.onShowBulkDeleteConfirm}>
-          <IntlMessages id="common.archive"/>
+          <span><IntlMessages id="common.archive"/></span>
         </Menu.Item>
         <Menu.Item key="2" onClick={this.onShowBulkDeleteConfirm}>
-          <IntlMessages id="common.delete"/>
+          <span><IntlMessages id="common.delete"/></span>
         </Menu.Item>
       </Menu>
     );

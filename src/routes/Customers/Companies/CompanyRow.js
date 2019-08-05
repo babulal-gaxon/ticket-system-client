@@ -14,14 +14,14 @@ const onShowRowDropdown = (currentCompany, context) => {
       {(Permissions.canCompanyDelete()) ?
         <Menu.Item key="4">
           <Popconfirm
-            title="Are you sure to delete this Company?"
+            title={<IntlMessages id="companies.message.delete"/>}
             onConfirm={() => {
               context.props.onDeleteCompanies({ids: [currentCompany.id]});
               context.onGetPaginatedData(context.state.current, context.state.itemNumbers, context.state.filterText);
             }}
-            okText="Yes"
-            cancelText="No">
-            <IntlMessages id="common.delete"/>
+            okText={<IntlMessages id="common.yes"/>}
+            cancelText={<IntlMessages id="common.no"/>}>
+            <span><IntlMessages id="common.delete"/></span>
           </Popconfirm>
         </Menu.Item> : null}
     </Menu>

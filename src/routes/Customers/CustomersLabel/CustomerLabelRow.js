@@ -6,7 +6,7 @@ import IntlMessages from "../../../util/IntlMessages";
 const onDeletePopUp = (recordId, context) => {
   return (
     <Popconfirm
-      title="Are you sure to delete this Label?"
+      title={<IntlMessages id="validation.labels.delete"/>}
       onConfirm={() => {
         context.props.onDeleteLabel({ids: [recordId]});
         context.onGetLabelsList(context.state.current, context.state.itemNumbers, context.state.filterText);

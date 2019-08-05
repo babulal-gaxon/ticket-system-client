@@ -29,7 +29,7 @@ class StaffNotesList extends Component {
   onDeletePopUp = (recordId) => {
     return (
       <Popconfirm
-        title="Are you sure to delete this Note?"
+        title={<IntlMessages id="staff.notes.message.delete"/>}
         onConfirm={() => {
           this.props.onDeleteStaffNotes(recordId);
         }}

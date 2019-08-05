@@ -15,7 +15,7 @@ const onShowRowDropdown = (ticketId, context) => {
             onConfirm={() => context.props.onDeleteTicket({ids: ticketId})}
             okText={<IntlMessages id="common.yes"/>}
             cancelText={<IntlMessages id="common.no"/>}>
-            <IntlMessages id="common.archive"/>
+            <span><IntlMessages id="common.archive"/></span>
           </Popconfirm>
         </Menu.Item> : null}
     </Menu>

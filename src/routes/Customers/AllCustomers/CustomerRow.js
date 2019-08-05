@@ -14,7 +14,7 @@ const onShowRowDropdown = (currentCustomer, context) => {
           context.props.setCurrentCustomer(currentCustomer);
           context.props.history.push('/customers/add-customers')
         }}>
-          <IntlMessages id="common.edit"/>
+          <span><IntlMessages id="common.edit"/></span>
         </Menu.Item> : null}
       {(Permissions.canCustomerEdit()) ?
         <Menu.Item key="2" onClick={() => {
@@ -22,32 +22,36 @@ const onShowRowDropdown = (currentCustomer, context) => {
             context.onTogglePasswordModal()
           })
         }}>
-          <IntlMessages id="app.userAuth.resetPassword"/>
+          <span><IntlMessages id="app.userAuth.resetPassword"/></span>
         </Menu.Item> : null}
       {(Permissions.canCustomerEdit()) ?
         <Menu.Item key="3">
           <Popconfirm
-            title={`Are you sure to ${currentCustomer.status === 1 ? messages["common.customer"] :
-              <IntlMessages id="common.customer"/>} this Customer?`}
+            title={currentCustomer.status === 1 ? <IntlMessages id="customers.message.disable"/> : <IntlMessages id="customers.message.active"/>}
             onConfirm={() => {
-              context.onDisableCustomerCall(currentCustomer.id)
+              if (currentCustomer.status === 1) {
+                context.onDisableCustomerStatus(currentCustomer.id)
+              } else {
+                context.onEnableCustomerStatus(currentCustomer.id)
+              }
             }}
-            okText="Yes"
-            cancelText="No">
-            <span>{currentCustomer.status === 1 ? <IntlMessages id="common.disable"/> : <IntlMessages id="common.enable"/>}</span>
+            okText={<IntlMessages id="common.yes"/>}
+            cancelText={<IntlMessages id="common.no"/>}>
+            <span>{currentCustomer.status === 1 ? <IntlMessages id="common.disable"/> :
+              <IntlMessages id="common.enable"/>}</span>
           </Popconfirm>
         </Menu.Item> : null}
       <Menu.Divider/>
       {(Permissions.canCustomerDelete()) ?
         <Menu.Item key="4">
           <Popconfirm
-            title="Are you sure to delete this Customer?"
+            title={<IntlMessages id="customers.message.delete"/>}
             onConfirm={() => {
               context.props.onDeleteCustomers({ids: [currentCustomer.id]});
               context.onGetPaginatedData(context.state.current, context.state.itemNumbers, context.state.filterText);
             }}
-            okText="Yes"
-            cancelText="No">
+            okText={<IntlMessages id="common.yes"/>}
+            cancelText={<IntlMessages id="common.no"/>}>
             <span><IntlMessages id="common.delete"/></span>
           </Popconfirm>
         </Menu.Item> : null}

@@ -123,7 +123,7 @@ class RolesList extends Component {
       <Menu>
         {Permissions.canRoleDelete() ?
           <Menu.Item key="1" onClick={this.showBulkDeleteConfirm}>
-            <IntlMessages id="common.archive"/>
+            <span><IntlMessages id="common.archive"/></span>
           </Menu.Item> : null}
         {Permissions.canRoleDelete() ?
           <Menu.Item key="2" onClick={this.showBulkDeleteConfirm}>

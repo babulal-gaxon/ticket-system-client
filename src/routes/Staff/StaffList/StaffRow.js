@@ -18,9 +18,7 @@ const onShowRowDropdown = (staff, context) => {
       {(Permissions.canStaffEdit()) ?
         <Menu.Item key="3">
           <Popconfirm
-            title={`${<IntlMessages id="common.areYouSureTo"/>} ${staff.status === 1 ?
-              <IntlMessages id="common.disable"/> : <IntlMessages id="common.enable"/>} ${<IntlMessages
-              id="common.thisStaff"/>}`}
+            title={staff.status === 1 ? <IntlMessages id="staff.message.active"/> : <IntlMessages id="staff.message.disable"/>}
             onConfirm={() => {
               if (staff.status === 1) {
                 context.onDisableStaffStatus(staff.id)
@@ -31,7 +29,7 @@ const onShowRowDropdown = (staff, context) => {
             }}
             okText={<IntlMessages id="common.yes"/>}
             cancelText={<IntlMessages id="common.no"/>}>
-            {staff.status === 1 ? <IntlMessages id="common.disable"/> : <IntlMessages id="common.enable"/>}
+            <span>{staff.status === 1 ? <IntlMessages id="common.disable"/> : <IntlMessages id="common.enable"/>}</span>
           </Popconfirm>
         </Menu.Item> : null
       }
@@ -39,14 +37,14 @@ const onShowRowDropdown = (staff, context) => {
       {(Permissions.canStaffDelete()) ?
         <Menu.Item key="4">
           <Popconfirm
-            title="Are you sure to delete this Staff?"
+            title={<IntlMessages id="staff.message.delete"/>}
             onConfirm={() => {
               context.props.onBulkDeleteStaff({ids: [staff.id]});
               context.onGetStaffDataPaginated(context.state.currentPage, context.state.itemNumbers, context.state.filterText)
             }}
             okText={<IntlMessages id="common.yes"/>}
             cancelText={<IntlMessages id="common.no"/>}>
-            <IntlMessages id="common.delete"/>
+            <span><IntlMessages id="common.delete"/></span>
           </Popconfirm>
         </Menu.Item> : null
       }
