@@ -8,11 +8,11 @@ const wrapperStyles = {
   width: "100%",
   maxWidth: 980,
   margin: "0 auto",
-}
+};
 
 const cityScale = scaleLinear()
   .domain([0, 37843000])
-  .range([1, 25])
+  .range([1, 25]);
 
 class BubbleMap extends Component {
 

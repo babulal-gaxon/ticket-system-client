@@ -13,20 +13,20 @@ class WriteBox extends Component {
     isOpen: false,
   };
 
-  handleCancel = () => this.setState({previewVisible: false})
+  handleCancel = () => this.setState({previewVisible: false});
 
   handlePreview = (file) => {
-    console.log("previewImage", file)
+    console.log("previewImage", file);
     this.setState({
       previewImage: file.url || file.thumbUrl,
       previewVisible: true,
     });
-  }
+  };
 
   handleChange = ({fileList}) => {
-    console.log("fileList", fileList)
+    console.log("fileList", fileList);
     this.setState({fileList})
-  }
+  };
 
   handleClickImage() {
     this.setState((previousState) => ({
@@ -64,14 +64,14 @@ class WriteBox extends Component {
         <div className="gx-media gx-mb-2">
           <Avatar className="gx-size-50 gx-mr-3" src={this.props.user.image}/>
           <div className="gx-media-body">
-          <TextArea className="gx-border-0"
-                    id="exampleTextarea"
-                    value={this.state.commentText}
-                    multiline="true"
-                    rows={4}
-                    onChange={(event) => this.onChange(event)}
-                    placeholder="Whats in your mind?"
-                    margin="none"/>
+            <TextArea className="gx-border-0"
+                      id="exampleTextarea"
+                      value={this.state.commentText}
+                      multiline="true"
+                      rows={4}
+                      onChange={(event) => this.onChange(event)}
+                      placeholder="Whats in your mind?"
+                      margin="none"/>
           </div>
         </div>
 

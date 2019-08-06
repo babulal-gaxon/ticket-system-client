@@ -6,6 +6,11 @@ import TaskItem from "./TaskItem";
 const TabPane = Tabs.TabPane;
 
 class TaskList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {taskList: props.taskList}
+  }
+
   onChange = (data, index) => {
     this.setState((prevState) => ({
       taskList: prevState.taskList.map(task => {
@@ -16,11 +21,6 @@ class TaskList extends React.Component {
       })
     }))
   };
-
-  constructor(props) {
-    super(props);
-    this.state = {taskList: props.taskList}
-  }
 
   render() {
     return (

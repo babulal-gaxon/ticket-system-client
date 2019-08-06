@@ -7,7 +7,7 @@ const TimeLineItem = Timeline.Item;
 
 function getName(task, shape) {
   if (task.avatar === '') {
-    let nameSplit = task.name.split(" ")
+    let nameSplit = task.name.split(" ");
     if (task.name.split(" ").length === 1) {
       const initials = nameSplit[0].charAt(0).toUpperCase();
       return <Avatar shape={shape} className="gx-size-40 gx-bg-primary">{initials}</Avatar>
