@@ -6,7 +6,6 @@ import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
 
 const onShowRowDropdown = (currentCustomer, context) => {
-  const {messages} = this.props.intl;
   const menu = (
     <Menu>
       {(Permissions.canCustomerEdit()) ?
@@ -14,7 +13,7 @@ const onShowRowDropdown = (currentCustomer, context) => {
           context.props.setCurrentCustomer(currentCustomer);
           context.props.history.push('/customers/add-customers')
         }}>
-          <span><IntlMessages id="common.edit"/></span>
+          <IntlMessages id="common.edit"/>
         </Menu.Item> : null}
       {(Permissions.canCustomerEdit()) ?
         <Menu.Item key="2" onClick={() => {
@@ -22,7 +21,7 @@ const onShowRowDropdown = (currentCustomer, context) => {
             context.onTogglePasswordModal()
           })
         }}>
-          <span><IntlMessages id="app.userAuth.resetPassword"/></span>
+          <IntlMessages id="app.userAuth.resetPassword"/>
         </Menu.Item> : null}
       {(Permissions.canCustomerEdit()) ?
         <Menu.Item key="3">
@@ -91,7 +90,7 @@ const CustomersRow = (context) => {
       dataIndex: 'email',
       key: 'email',
       render: (text, record) => {
-        return <span className="gx-text-grey">{record.email ? record.email : "NA"}</span>
+        return <span className="gx-text-grey">{record.email ? record.email : <IntlMessages id="common.na"/>}</span>
       },
     },
     {
