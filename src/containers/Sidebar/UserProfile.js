@@ -4,6 +4,7 @@ import {Avatar, Popover} from "antd";
 import {onUserSignOut} from "appRedux/actions/Auth";
 import {withRouter} from "react-router";
 import IntlMessages from "../../util/IntlMessages";
+import {MEDIA_BASE_URL} from "../../constants/ActionTypes";
 
 class UserProfile extends Component {
 
@@ -19,8 +20,11 @@ class UserProfile extends Component {
     return (
       <div className="gx-flex-row gx-align-items-center">
         <Popover placement="bottomRight" content={userMenuOptions} trigger="click">
-          <Avatar src='https://via.placeholder.com/150x150'
-                  className="gx-size-40 gx-pointer gx-mr-3" alt=""/>
+          {authUser.avatar ?
+            <Avatar src={MEDIA_BASE_URL + authUser.avatar.src}
+                    className="gx-size-40 gx-pointer gx-mr-3" alt=""/> :
+            <Avatar src={require("assets/images/placeholder.jpg")}
+                    className="gx-size-40 gx-pointer gx-mr-3" alt=""/>}
           <span className="gx-avatar-name">{authUser ? authUser.first_name + " " + authUser.last_name : "Loading"}
             <i className="icon icon-chevron-down gx-fs-l gx-ml-2 gx-mt-2"/></span>
         </Popover>

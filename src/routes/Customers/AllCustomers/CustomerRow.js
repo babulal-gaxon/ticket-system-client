@@ -3,7 +3,6 @@ import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import React from "react";
 import Permissions from "../../../util/Permissions";
 import IntlMessages from "../../../util/IntlMessages";
-import {injectIntl} from "react-intl";
 
 const onShowRowDropdown = (currentCustomer, context) => {
   const menu = (
@@ -26,7 +25,8 @@ const onShowRowDropdown = (currentCustomer, context) => {
       {(Permissions.canCustomerEdit()) ?
         <Menu.Item key="3">
           <Popconfirm
-            title={currentCustomer.status === 1 ? <IntlMessages id="customers.message.disable"/> : <IntlMessages id="customers.message.active"/>}
+            title={currentCustomer.status === 1 ? <IntlMessages id="customers.message.disable"/> :
+              <IntlMessages id="customers.message.active"/>}
             onConfirm={() => {
               if (currentCustomer.status === 1) {
                 context.onDisableCustomerStatus(currentCustomer.id)
@@ -138,4 +138,4 @@ const CustomersRow = (context) => {
   ];
 };
 
-export default injectIntl(CustomersRow);
+export default CustomersRow;

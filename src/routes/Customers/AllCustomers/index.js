@@ -172,7 +172,7 @@ class AllCustomers extends Component {
           <IntlMessages id="common.archive"/>
         </Menu.Item>
         <Menu.Item key="2" onClick={this.onShowBulkDeleteConfirm}>
-         <IntlMessages id="common.delete"/>
+          <IntlMessages id="common.delete"/>
         </Menu.Item>
       </Menu>
     );
@@ -241,7 +241,7 @@ class AllCustomers extends Component {
                 </Button> : null}
             </div>
           </div>
-          <Table rowKey="id" rowSelection={rowSelection} columns={CustomersRow(this)}
+          <Table rowKey="id" rowSelection={rowSelection} columns={CustomersRow(this, messages)}
                  dataSource={customersList}
                  loading={updatingContent}
                  pagination={{
