@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22660aa2-fcdc-4713-8a0a-0d397dd58555" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/ConversationCell.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/ConversationCell.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/Utills.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/Utills.js" afterDir="false" />
-    </list>
+    <list default="true" id="22660aa2-fcdc-4713-8a0a-0d397dd58555" name="Default Changelist" comment="small change" />
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,42 +13,21 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-187">
-              <caret line="200" column="78" selection-start-line="200" selection-start-column="58" selection-end-line="200" selection-end-column="78" />
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/util/Utills.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="41" column="33" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="33" />
+            <state relative-caret-position="-680">
+              <caret line="41" column="15" lean-forward="true" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="15" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/ConversationCell.js">
+        <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="27" column="74" selection-start-line="27" selection-start-column="74" selection-end-line="27" selection-end-column="74" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="1292">
+              <caret line="200" column="41" lean-forward="true" selection-start-line="200" selection-start-column="41" selection-end-line="200" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -108,7 +82,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/routes/SetUp/Departments/AddNewDepartment.js" />
         <option value="$PROJECT_DIR$/src/routes/SetUp/Products/AddNewProduct.js" />
         <option value="$PROJECT_DIR$/src/routes/SetUp/Services/AddNewService.js" />
         <option value="$PROJECT_DIR$/src/routes/SetUp/TicketPriorities/AddNewPriority.js" />
@@ -159,6 +132,7 @@
         <option value="$PROJECT_DIR$/src/util/Utills.js" />
         <option value="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js" />
         <option value="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/ConversationCell.js" />
+        <option value="$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/TicketAttachments.js" />
       </list>
     </option>
   </component>
@@ -183,6 +157,33 @@
               <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="CustomerPage" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="CustomerPage" type="462c0819:PsiDirectoryNode" />
+              <item name="AllTickets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -407,14 +408,22 @@
       <option name="project" value="LOCAL" />
       <updated>1565069317845</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="small change">
+      <created>1565097682996</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1565097682996</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="61870000" />
+    <option name="totallyTimeSpent" value="61916000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.41734862" visible="true" weight="0.1904762" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -461,7 +470,8 @@
     <MESSAGE value="worked on image validations" />
     <MESSAGE value="working on localization" />
     <MESSAGE value="working on date and time format" />
-    <option name="LAST_COMMIT_MESSAGE" value="working on date and time format" />
+    <MESSAGE value="small change" />
+    <option name="LAST_COMMIT_MESSAGE" value="small change" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js" />
@@ -637,20 +647,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/Utills.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="41" column="33" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-187">
-          <caret line="200" column="78" selection-start-line="200" selection-start-column="58" selection-end-line="200" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/ConversationCell.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="359">
@@ -658,6 +654,20 @@
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/Utills.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-680">
+          <caret line="41" column="15" lean-forward="true" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1292">
+          <caret line="200" column="41" lean-forward="true" selection-start-line="200" selection-start-column="41" selection-end-line="200" selection-end-column="41" />
         </state>
       </provider>
     </entry>

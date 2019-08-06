@@ -15,15 +15,14 @@ import {
 } from "../../../appRedux/actions";
 import qs from "qs";
 import axios from 'util/Api'
-import {Avatar, Button, Divider, Input, Select, Upload} from "antd";
-import moment from "moment";
+import {Avatar, Button, Divider, Input, message, Select, Upload} from "antd";
 import ConversationCell from "./ConversationCell";
 import InfoView from "../../../components/InfoView";
 import EditTicketDetailsModal from "./EditTicketDetailsModal";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
-import {getFormattedDateTime} from "../../../util/Utills";
+import {getFormattedDateTime, getTicketFileExtension, getTicketFileSize} from "../../../util/Utills";
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -130,6 +129,7 @@ class TicketDetails extends Component {
     const {fileList, currentTicket, showEditModal, message} = this.state;
     const {ticketMessages} = this.props;
     const props = {
+      accept: getTicketFileExtension(),
       multiple: true,
       onRemove: file => {
         this.setState(state => {
@@ -139,12 +139,17 @@ class TicketDetails extends Component {
           return {
             fileList: newFileList,
           };
-        });
+        }, () => this.props.onSelectFiles(this.state.fileList));
       },
       beforeUpload: file => {
-        this.setState(state => ({
-          fileList: [...state.fileList, file],
-        }));
+        const isFileSize = file.size < getTicketFileSize();
+        if (!isFileSize) {
+          message.error(messages["validation.message.imageSize"]);
+        } else {
+          this.setState(state => ({
+            fileList: [...state.fileList, file],
+          }), () => this.props.onSelectFiles(this.state.fileList))
+        }
         return false;
       },
       fileList,
