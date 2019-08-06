@@ -143,11 +143,12 @@ export const getUserProfile = () => {
 export const updateUserProfile = (profile) => {
   return (dispatch) => {
     dispatch({type: FETCH_START});
-    axios.put('/user/profile', profile).then(({data}) => {
+    axios.post('/user/profile', profile).then(({data}) => {
       console.info("updateUserProfile: ", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_DATA, payload: data.data});
+        dispatch({type: SHOW_MESSAGE, payload: "Profile has been updated successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

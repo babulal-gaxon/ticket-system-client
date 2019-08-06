@@ -241,7 +241,7 @@ class AllCustomers extends Component {
                 </Button> : null}
             </div>
           </div>
-          <Table rowKey="id" rowSelection={rowSelection} columns={CustomersRow(this)}
+          <Table rowKey="id" rowSelection={rowSelection} columns={CustomersRow(this, messages)}
                  dataSource={customersList}
                  loading={updatingContent}
                  pagination={{

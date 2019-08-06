@@ -108,7 +108,6 @@ class FourthStep extends Component {
               rules: [{required: true, message: messages["validation.localization.language"]}],
             })(<Select style={{width: "100%"}} onChange={this.onLanguageSelect}>
               <Option value="en"><IntlMessages id="common.english"/></Option>
-              <Option value="ar"><IntlMessages id="common.arabic"/></Option>
               <Option value="es"><IntlMessages id="common.spanish"/></Option>
               <Option value="fr"><IntlMessages id="common.french"/></Option>
               <Option value="it"><IntlMessages id="common.italian"/></Option>
