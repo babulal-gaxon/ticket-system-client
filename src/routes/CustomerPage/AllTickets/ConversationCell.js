@@ -4,6 +4,7 @@ import Widget from "../../../components/Widget";
 import {Avatar, Divider} from "antd";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
+import {getFormattedDate} from "../../../util/Utills";
 
 
 const ConversationCell = ({conversation}) => {
@@ -18,7 +19,7 @@ const ConversationCell = ({conversation}) => {
         <div className="gx-flex-column">
           <div className="gx-name gx-mr-2">{conversation.author.display_name}</div>
           <div>
-          <span className="gx-time gx-text-muted"> <IntlMessages id="tickets.createdAt"/> {moment(conversation.created_at.date).format('LL')}</span>
+          <span className="gx-time gx-text-muted"> <IntlMessages id="tickets.createdAt"/> {getFormattedDate(conversation.created_at)}</span>
             <span className="gx-mr-2 gx-text-grey"> <IntlMessages id="tickets.lastUpdated"/> {moment(conversation.updated_at.date).fromNow()}</span>
           </div>
         </div>

@@ -43,8 +43,8 @@ class SignIn extends React.Component {
         <div className="gx-app-login-container">
           <div className="gx-app-login-main-content">
             <div className="gx-app-logo-content">
-              <div className="gx-app-logo">
-                {/*<img alt="example" src={require("assets/images/logo.png")}/>*/}
+              <div className="gx-app-logo-content-bg">
+                <img src='https://via.placeholder.com/272x395' alt='Neature'/>
               </div>
             </div>
             <div className="gx-app-login-content">

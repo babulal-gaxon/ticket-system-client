@@ -18,7 +18,6 @@ class AllTickets extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRowKeys: [],
       filterText: "",
       itemNumbers: 10,
       current: 1,
@@ -58,18 +57,11 @@ class AllTickets extends Component {
     }
   };
 
-  onSelectChange = selectedRowKeys => {
-    this.setState({selectedRowKeys});
-  };
 
   onFilterTextChange = (e) => {
     this.setState({filterText: e.target.value}, () => {
       this.onGetTicketsData(1, this.state.itemNumbers, this.state.filterText, true)
     })
-  };
-
-  onAddButtonClick = () => {
-    this.setState({showAddTicket: true});
   };
 
   onGetTableColumns = () => {
@@ -168,22 +160,14 @@ class AllTickets extends Component {
   };
 
   render() {
-    const {selectedRowKeys, filterText, showAddTicket} = this.state;
-    const {raisedTickets, formOptions} = this.props;
+    const  {filterText, showAddTicket} = this.state;
+    const {raisedTickets, formOptions, totalTickets} = this.props;
     const {messages} = this.props.intl;
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: (selectedRowKeys, selectedRows) => {
-        const ids = selectedRows.map(selectedRow => {
-          return selectedRow.id
-        });
-        this.setState({selectedTickets: ids, selectedRowKeys: selectedRowKeys})
-      }
-    };
+
     return (
       <div className="gx-main-layout-content">
         <div>
-          {raisedTickets.length > 0 ?
+          {totalTickets > 0 ?
             <div>
               <div className="gx-d-flex gx-justify-content-between">
                 <div className="gx-d-flex">
@@ -209,13 +193,13 @@ class AllTickets extends Component {
                   </ButtonGroup>
                 </div>
               </div>
-              <Table rowSelection={rowSelection} columns={this.onGetTableColumns()}
+              <Table columns={this.onGetTableColumns()}
                      dataSource={raisedTickets} className="gx-mb-4" rowKey="id"
                      loading={this.props.updatingContent}
                      pagination={{
                        pageSize: this.state.itemNumbers,
                        current: this.state.current,
-                       total: this.props.totalTickets,
+                       total: totalTickets,
                        showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
                          <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
                          <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),

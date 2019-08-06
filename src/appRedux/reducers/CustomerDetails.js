@@ -35,7 +35,6 @@ export default (state = initialState, action) => {
       };
 
     case RAISE_NEW_TICKET:
-      console.log("in recucser", action.payload)
       return {
         ...state,
         raisedTickets: [action.payload, ...state.raisedTickets],
