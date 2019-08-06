@@ -32,7 +32,8 @@ export const onGetCompaniesData = (currentPage, itemsPerPage, filterData, updati
   }
 };
 
-export const onAddNewCompany = (company) => {
+export const onAddNewCompany = (company, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/customer/companies', company
@@ -53,8 +54,8 @@ export const onAddNewCompany = (company) => {
   }
 };
 
-export const onEditCompany = (company) => {
-  console.log("onEditCompany", company);
+export const onEditCompany = (company, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/customer/companies/${company.id}`, company).then(({data}) => {
@@ -74,8 +75,8 @@ export const onEditCompany = (company) => {
   }
 };
 
-export const onDeleteCompanies = (companyIds) => {
-  console.log("in action", companyIds);
+export const onDeleteCompanies = (companyIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/customer/companies/delete', companyIds).then(({data}) => {

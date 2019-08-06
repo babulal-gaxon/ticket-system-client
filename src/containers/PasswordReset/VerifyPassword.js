@@ -5,6 +5,7 @@ import IntlMessages from "util/IntlMessages";
 import InfoView from "../../components/InfoView";
 import qs from "qs";
 import {onSetNewPassword} from "../../appRedux/actions";
+import {injectIntl} from "react-intl";
 
 class VerifyPassword extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class VerifyPassword extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.onSetNewPassword(queryParams.token, {...this.state}, this.props.history);
+        this.props.onSetNewPassword(queryParams.token, {...this.state}, this.props.history, this);
       }
     });
   };
@@ -32,9 +33,10 @@ class VerifyPassword extends React.Component {
   };
 
   compareToFirstPassword = (rule, value, callback) => {
+    const {messages} = this.props.intl;
     const {form} = this.props;
     if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
+      callback(messages["validation.message.inconsistentPassword"]);
     } else {
       callback();
     }
@@ -49,6 +51,7 @@ class VerifyPassword extends React.Component {
   };
 
   render() {
+    const {messages} = this.props.intl;
     const {email} = this.state;
     const {getFieldDecorator} = this.props.form;
     return (
@@ -69,7 +72,7 @@ class VerifyPassword extends React.Component {
                   {getFieldDecorator('email', {
                     initialValue: email,
                     rules: [{
-                      required: true, type: 'email', message: 'The input is not valid E-mail!',
+                      required: true, type: 'email', message: messages["validation.message.emailFormat"],
                     }],
                   })(
                     <Input placeholder="Email" onChange={(e) => this.setState({email: e.target.value})}/>
@@ -80,14 +83,14 @@ class VerifyPassword extends React.Component {
                     rules: [
                       {
                         required: true,
-                        message: 'Please input your password!',
+                        message: messages["validation.message.inputPassword"],
                       },
                       {
                         validator: this.validateToNextPassword,
                       },
                       {
                         min: 8,
-                        message: 'Length should be at least 8 characters long',
+                        message: messages["validation.message.passwordLength"],
                       }],
                   })(<Input.Password onChange={(e) => this.setState({password: e.target.value})}/>)}
                 </Form.Item>
@@ -96,7 +99,7 @@ class VerifyPassword extends React.Component {
                     rules: [
                       {
                         required: true,
-                        message: 'Please confirm your password!',
+                        message: messages["validation.message.confirmPassword"],
                       },
                       {
                         validator: this.compareToFirstPassword,
@@ -127,4 +130,4 @@ const mapStateToProps = ({auth}) => {
   return {token}
 };
 
-export default connect(mapStateToProps, {onSetNewPassword})(WrappedVerifyPasswordForm);
+export default connect(mapStateToProps, {onSetNewPassword})(injectIntl(WrappedVerifyPasswordForm));

@@ -39,8 +39,8 @@ export const onGetTicketPriorities = (currentPage, itemsPerPage, filterText, upd
   }
 };
 
-export const onAddTicketPriority = (priority) => {
-  console.log("onAddTicketPriority", priority);
+export const onAddTicketPriority = (priority, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/priorities', priority).then(({data}) => {
@@ -49,7 +49,7 @@ export const onAddTicketPriority = (priority) => {
         console.log(" sending data", data.data);
         dispatch({type: ADD_TICKET_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Priority has been added successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.priorities.add"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -60,8 +60,8 @@ export const onAddTicketPriority = (priority) => {
   }
 };
 
-export const onEditTicketPriority = (priority) => {
-  console.log("onEditTicketPriority", priority);
+export const onEditTicketPriority = (priority, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/priorities/${priority.id}`, priority).then(({data}) => {
@@ -70,7 +70,7 @@ export const onEditTicketPriority = (priority) => {
         console.log(" sending data", data.data);
         dispatch({type: EDIT_TICKET_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Priority details has been updated successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.priorities.edit"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -81,14 +81,15 @@ export const onEditTicketPriority = (priority) => {
   }
 };
 
-export const onBulkActivePriorities = (priorityIds) => {
+export const onBulkActivePriorities = (priorityIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/priorities/status/1', priorityIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_ACTIVE_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status of Priority(s) has been changed to Active successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.priorities.active"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -99,14 +100,15 @@ export const onBulkActivePriorities = (priorityIds) => {
   }
 };
 
-export const onBulkInActivePriorities = (priorityIds) => {
+export const onBulkInActivePriorities = (priorityIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/priorities/status/0', priorityIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DISABLE_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status of Priority(s) has been changed to Disabled successfully"});
+        dispatch({type: SHOW_MESSAGE, payload:messages["action.priorities.disable"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -117,14 +119,15 @@ export const onBulkInActivePriorities = (priorityIds) => {
   }
 };
 
-export const onBulkDeletePriorities = (priorityIds) => {
+export const onBulkDeletePriorities = (priorityIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/priorities/delete', priorityIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DELETE_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Priority(s) has been deleted successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.priorities.delete"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

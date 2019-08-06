@@ -20,7 +20,8 @@ export const updateSteps = (step) => {
   }
 };
 
-export const onSendDatabaseInfo = (info, nextStep) => {
+export const onSendDatabaseInfo = (info, nextStep, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/install/step/1', info
@@ -62,7 +63,8 @@ export const onCheckInitialSetup = () => {
   }
 };
 
-export const onSendSuperAdminInfo = (info) => {
+export const onSendSuperAdminInfo = (info, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/install/step/2', info
@@ -86,7 +88,8 @@ export const onSendSuperAdminInfo = (info) => {
   }
 };
 
-export const onSetGeneralInfo = (info, token, nextStep) => {
+export const onSetGeneralInfo = (info, token, nextStep, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     if (token) {
       localStorage.getItem("token");
@@ -150,7 +153,8 @@ export const onVerifyByPin = (data, nextStep) => {
   }
 };
 
-export const onResendPin = (email) => {
+export const onResendPin = (email, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/install/step/2/resend/pin', email

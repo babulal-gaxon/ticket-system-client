@@ -38,7 +38,8 @@ export const onGetServicesList = (currentPage, itemsPerPage, filterData, updatin
   }
 };
 
-export const onAddService = (service) => {
+export const onAddService = (service, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/services', service).then(({data}) => {
@@ -46,7 +47,7 @@ export const onAddService = (service) => {
       if (data.success) {
         dispatch({type: ADD_SERVICE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Service has been added successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.services.add"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -57,7 +58,8 @@ export const onAddService = (service) => {
   }
 };
 
-export const onEditService = (service) => {
+export const onEditService = (service, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/services/${service.id}`, service).then(({data}) => {
@@ -65,7 +67,7 @@ export const onEditService = (service) => {
       if (data.success) {
         dispatch({type: EDIT_SERVICE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Service details has been updated successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.services.edit"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -76,14 +78,15 @@ export const onEditService = (service) => {
   }
 };
 
-export const onDeleteServices = (serviceId) => {
+export const onDeleteServices = (serviceId, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post(`/setup/services/delete`, serviceId).then(({data}) => {
       if (data.success) {
         dispatch({type: DELETE_SERVICE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Service(s) has been deleted successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.services.delete"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -94,7 +97,8 @@ export const onDeleteServices = (serviceId) => {
   }
 };
 
-export const onBulkActiveServices = (serviceIds) => {
+export const onBulkActiveServices = (serviceIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/services/support/1', serviceIds).then(({data}) => {
@@ -103,7 +107,7 @@ export const onBulkActiveServices = (serviceIds) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({
           type: SHOW_MESSAGE,
-          payload: "The Support of selected Services(s) has been changed to Enabled successfully"
+          payload: messages["action.services.active"]
         });
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
@@ -115,7 +119,8 @@ export const onBulkActiveServices = (serviceIds) => {
   }
 };
 
-export const onBulkDisableServices = (serviceIds) => {
+export const onBulkDisableServices = (serviceIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/services/support/0', serviceIds).then(({data}) => {
@@ -124,7 +129,7 @@ export const onBulkDisableServices = (serviceIds) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({
           type: SHOW_MESSAGE,
-          payload: "The Support of selected Services(s) has been changed to Enabled successfully"
+          payload: messages["action.services.disable"]
         });
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});

@@ -97,7 +97,7 @@ class Departments extends Component {
           const obj = {
             ids: this.state.selectedDepartments
           };
-          this.props.onBulkActiveDepartments(obj);
+          this.props.onBulkActiveDepartments(obj, this);
           this.setState({selectedRowKeys: [], selectedDepartments: []})
         }
       })
@@ -116,7 +116,7 @@ class Departments extends Component {
       confirm({
         title: messages["departments.message.disable"],
         onOk: () => {
-          this.props.onBulkInActiveDepartments({ids: this.state.selectedDepartments});
+          this.props.onBulkInActiveDepartments({ids: this.state.selectedDepartments}, this);
           this.setState({selectedRowKeys: [], selectedDepartments: []})
         }
       })
@@ -138,7 +138,7 @@ class Departments extends Component {
           const obj = {
             ids: this.state.selectedDepartments
           };
-          this.props.onBulkDeleteDepartments(obj);
+          this.props.onBulkDeleteDepartments(obj, this);
           this.setState({selectedRowKeys: [], selectedDepartments: []});
           this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
         }
@@ -185,7 +185,7 @@ class Departments extends Component {
       <Popconfirm
         title={<IntlMessages id="departments.message.delete"/>}
         onConfirm={() => {
-          this.props.onBulkDeleteDepartments({ids: [recordId]});
+          this.props.onBulkDeleteDepartments({ids: [recordId]}, this);
           this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
         }}
         okText={<IntlMessages id="common.yes"/>}

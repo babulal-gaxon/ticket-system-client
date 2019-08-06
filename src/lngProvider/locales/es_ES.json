@@ -439,6 +439,7 @@
   "customers.address.delete": "¿Estás seguro de eliminar esta dirección?",
   "action.auth.resetPassword": "El enlace para restablecer contraseña se ha enviado correctamente a su dirección de correo electrónico",
   "action.auth.passwordUpdated": "La contraseña ha sido actualizada exitosamente",
+  "action.auth.profile": "El perfil ha sido actualizado exitosamente",
   "action.responses.add": "La respuesta ha sido agregada exitosamente",
   "action.responses.edit": "Los detalles de la respuesta se han actualizado correctamente",
   "action.responses.active": "El estado de las respuestas se ha cambiado a activo correctamente",

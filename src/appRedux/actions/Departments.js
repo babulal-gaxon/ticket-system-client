@@ -37,7 +37,8 @@ export const onGetDepartments = (currentPage, itemsPerPage, filterData, updating
   }
 };
 
-export const onAddDepartment = (department) => {
+export const onAddDepartment = (department, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/departments', department).then(({data}) => {
@@ -45,7 +46,7 @@ export const onAddDepartment = (department) => {
       if (data.success) {
         dispatch({type: ADD_DEPARTMENT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Department has been added successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.departments.add"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -56,14 +57,15 @@ export const onAddDepartment = (department) => {
   }
 };
 
-export const onBulkDeleteDepartments = (departmentIds) => {
+export const onBulkDeleteDepartments = (departmentIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/departments/delete', departmentIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DELETE_DEPARTMENTS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Department(s) has been deleted successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.departments.delete"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -74,14 +76,15 @@ export const onBulkDeleteDepartments = (departmentIds) => {
   }
 };
 
-export const onBulkActiveDepartments = (departmentIds) => {
+export const onBulkActiveDepartments = (departmentIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/departments/status/1', departmentIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_ACTIVE_DEPARTMENTS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status of Department(s) has been changed to Active successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.departments.active"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -92,7 +95,8 @@ export const onBulkActiveDepartments = (departmentIds) => {
   }
 };
 
-export const onBulkInActiveDepartments = (departmentIds) => {
+export const onBulkInActiveDepartments = (departmentIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/departments/status/0', departmentIds).then(({data}) => {
@@ -100,7 +104,7 @@ export const onBulkInActiveDepartments = (departmentIds) => {
         dispatch({type: BULK_INACTIVE_DEPARTMENTS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({
-          type: SHOW_MESSAGE, payload: "The Status of Department(s) has been changed to Disabled successfully"
+          type: SHOW_MESSAGE, payload: messages["action.departments.disable"]
         });
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
@@ -112,7 +116,8 @@ export const onBulkInActiveDepartments = (departmentIds) => {
   }
 };
 
-export const onEditDepartment = (department) => {
+export const onEditDepartment = (department, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/departments/${department.id}`, department).then(({data}) => {
@@ -121,7 +126,7 @@ export const onEditDepartment = (department) => {
         console.log(" sending data", data.data);
         dispatch({type: EDIT_DEPARTMENT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Department details has been updated successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.departments.edit"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

@@ -23,11 +23,10 @@ class AddNewService extends Component {
 
   onServiceAdd = () => {
     if (this.props.currentService === null) {
-      this.props.onAddService({...this.state});
+      this.props.onAddService({...this.state}, this);
       this.props.onToggleAddService();
-
     } else {
-      this.props.onEditService({...this.state});
+      this.props.onEditService({...this.state}, this);
       this.props.onToggleAddService();
     }
   };

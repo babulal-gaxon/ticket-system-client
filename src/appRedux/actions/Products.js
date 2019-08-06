@@ -38,7 +38,8 @@ export const onGetProductsList = (currentPage, itemsPerPage, filterData, updatin
   }
 };
 
-export const onAddProduct = (product) => {
+export const onAddProduct = (product, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/products', product).then(({data}) => {
@@ -46,7 +47,7 @@ export const onAddProduct = (product) => {
       if (data.success) {
         dispatch({type: ADD_PRODUCT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Product has been added successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.products.add"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -57,7 +58,8 @@ export const onAddProduct = (product) => {
   }
 };
 
-export const onEditProduct = (product) => {
+export const onEditProduct = (product, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/products/${product.id}`, product).then(({data}) => {
@@ -65,7 +67,7 @@ export const onEditProduct = (product) => {
       if (data.success) {
         dispatch({type: EDIT_PRODUCT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Product details has been updated successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.products.edit"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -76,14 +78,15 @@ export const onEditProduct = (product) => {
   }
 };
 
-export const onDeleteProduct = (productId) => {
+export const onDeleteProduct = (productId, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/products/delete', productId).then(({data}) => {
       if (data.success) {
         dispatch({type: DELETE_PRODUCT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Product(s) has been deleted successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.products.delete"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -94,14 +97,15 @@ export const onDeleteProduct = (productId) => {
   }
 };
 
-export const onBulkActiveProducts = (productIds) => {
+export const onBulkActiveProducts = (productIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/products/support/1', productIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_ACTIVE_PRODUCTS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status of Product(s) has been changed to Active successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.products.active"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -112,14 +116,15 @@ export const onBulkActiveProducts = (productIds) => {
   }
 };
 
-export const onBulkDisableProducts = (productIds) => {
+export const onBulkDisableProducts = (productIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/products/support/0', productIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DISABLE_PRODUCTS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status of Product(s) has been changed to Disabled successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.products.disable"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

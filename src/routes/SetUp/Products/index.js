@@ -97,7 +97,7 @@ class Products extends Component {
           const obj = {
             ids: this.state.selectedProducts
           };
-          this.props.onBulkActiveProducts(obj);
+          this.props.onBulkActiveProducts(obj, this);
           this.setState({selectedRowKeys: [], selectedProducts: []})
         }
       })
@@ -119,7 +119,7 @@ class Products extends Component {
           const obj = {
             ids: this.state.selectedProducts
           };
-          this.props.onBulkDisableProducts(obj);
+          this.props.onBulkDisableProducts(obj, this);
           this.setState({selectedRowKeys: [], selectedProducts: []})
         },
       })
@@ -141,7 +141,7 @@ class Products extends Component {
           const obj = {
             ids: this.state.selectedProducts
           };
-          this.props.onDeleteProduct(obj);
+          this.props.onDeleteProduct(obj, this);
           this.onGetProductsData(this.state.current, this.state.itemNumbers);
           this.setState({selectedRowKeys: [], selectedProducts: []});
         }
@@ -185,7 +185,7 @@ class Products extends Component {
       <Popconfirm
         title={<IntlMessages id="products.message.delete"/>}
         onConfirm={() => {
-          this.props.onDeleteProduct({ids: [recordId]});
+          this.props.onDeleteProduct({ids: [recordId]}, this);
         }}
         okText={<IntlMessages id="common.yes"/>}
         cancelText={<IntlMessages id="common.no"/>}>

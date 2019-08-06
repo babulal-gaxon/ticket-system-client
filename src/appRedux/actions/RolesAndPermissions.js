@@ -45,7 +45,8 @@ export const onDisableSelectedRole = () => {
 };
 
 
-export const onAddRole = (newRole, history) => {
+export const onAddRole = (newRole, history, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/roles', newRole).then(({data}) => {
@@ -66,7 +67,8 @@ export const onAddRole = (newRole, history) => {
 };
 
 
-export const onBulkDeleteRoles = (roleIds) => {
+export const onBulkDeleteRoles = (roleIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('roles/delete', roleIds).then(({data}) => {
@@ -84,7 +86,8 @@ export const onBulkDeleteRoles = (roleIds) => {
   }
 };
 
-export const onEditRole = (role, history) => {
+export const onEditRole = (role, history, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/roles/${role.id}`, role).then(({data}) => {

@@ -100,7 +100,7 @@ class CannedResponses extends Component {
           const obj = {
             ids: this.state.selectedResponses
           };
-          this.props.onBulkActiveResponses(obj);
+          this.props.onBulkActiveResponses(obj, this);
           this.setState({selectedRowKeys: [], selectedResponses: []})
         }
       })
@@ -122,7 +122,7 @@ class CannedResponses extends Component {
           const obj = {
             ids: this.state.selectedResponses
           };
-          this.props.onBulkInActiveResponses(obj);
+          this.props.onBulkInActiveResponses(obj, this);
           this.setState({selectedRowKeys: [], selectedResponses: []})
         }
       })
@@ -144,7 +144,7 @@ class CannedResponses extends Component {
           const obj = {
             ids: this.state.selectedResponses
           };
-          this.props.onBulkDeleteResponses(obj);
+          this.props.onBulkDeleteResponses(obj, this);
           this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText);
           this.setState({selectedRowKeys: [], selectedResponses: []});
         }
@@ -190,7 +190,7 @@ class CannedResponses extends Component {
     return <Popconfirm
       title={<IntlMessages id="responses.message.delete"/>}
       onConfirm={() => {
-        this.props.onBulkDeleteResponses({ids: [recordId]});
+        this.props.onBulkDeleteResponses({ids: [recordId]}, this);
         this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
       }}
       okText={<IntlMessages id="common.yes"/>}

@@ -96,7 +96,7 @@ class Services extends Component {
           const obj = {
             ids: this.state.selectedServices
           };
-          this.props.onBulkActiveServices(obj);
+          this.props.onBulkActiveServices(obj, this);
           this.setState({selectedRowKeys: [], selectedServices: []})
         },
       })
@@ -118,7 +118,7 @@ class Services extends Component {
           const obj = {
             ids: this.state.selectedServices
           };
-          this.props.onBulkDisableServices(obj);
+          this.props.onBulkDisableServices(obj, this);
           this.setState({selectedRowKeys: [], selectedServices: []})
         },
       })
@@ -140,7 +140,7 @@ class Services extends Component {
           const obj = {
             ids: this.state.selectedServices
           };
-          this.props.onDeleteServices(obj);
+          this.props.onDeleteServices(obj, this);
           this.onGetServicesData(this.state.current, this.state.itemNumbers);
           this.setState({selectedRowKeys: [], selectedServices: []});
         }
@@ -184,7 +184,7 @@ class Services extends Component {
       <Popconfirm
         title={<IntlMessages id="services.message.delete"/>}
         onConfirm={() => {
-          this.props.onDeleteServices({ids: [recordId]});
+          this.props.onDeleteServices({ids: [recordId]}, this);
         }}
         okText={<IntlMessages id="common.yes"/>}
         cancelText={<IntlMessages id="common.no"/>}>

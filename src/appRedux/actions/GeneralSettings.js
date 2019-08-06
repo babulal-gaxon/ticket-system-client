@@ -37,8 +37,8 @@ export const onGetGeneralDetails = () => {
   }
 };
 
-export const onSaveGeneralDetails = (details) => {
-  console.log("onSaveGeneralDetails", details);
+export const onSaveGeneralDetails = (details, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/settings/general', details).then(({data}) => {
@@ -76,8 +76,8 @@ export const onGetLocalizationDetails = () => {
   }
 };
 
-export const onSaveLocalizationDetails = (details) => {
-  console.log("onSaveLocalizationDetails", details);
+export const onSaveLocalizationDetails = (details, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/settings/locale', details).then(({data}) => {
@@ -117,8 +117,8 @@ export const onGetCustomerPanelDetails = () => {
   }
 };
 
-export const onSaveCustomerPanelDetails = (details) => {
-  console.log("onSaveCustomerPanelDetails", details);
+export const onSaveCustomerPanelDetails = (details, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/settings/customer/panel', details).then(({data}) => {
@@ -156,8 +156,8 @@ export const onGetGeneralAddress = () => {
   }
 };
 
-export const onSaveGeneralAddress = (details) => {
-  console.log("onSaveGeneralAddress", details);
+export const onSaveGeneralAddress = (details, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/settings/general/addresses', details).then(({data}) => {
@@ -176,7 +176,8 @@ export const onSaveGeneralAddress = (details) => {
   }
 };
 
-export const onEditAddress = (address) => {
+export const onEditAddress = (address, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/addresses/${address.id}`, address).then(({data}) => {
@@ -195,7 +196,8 @@ export const onEditAddress = (address) => {
   }
 };
 
-export const onDeleteAddress = (addressId) => {
+export const onDeleteAddress = (addressId, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.delete(`/addresses/${addressId}`).then(({data}) => {
@@ -251,7 +253,8 @@ export const onGetTicketSettings = () => {
   }
 };
 
-export const onSaveTicketSettings = (details, history) => {
+export const onSaveTicketSettings = (details, history, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post("/setup/settings/ticket", details

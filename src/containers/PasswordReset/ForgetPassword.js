@@ -5,6 +5,7 @@ import IntlMessages from "util/IntlMessages";
 import InfoView from "../../components/InfoView";
 import {onResetPassword} from "../../appRedux/actions";
 import {Link} from "react-router-dom";
+import {injectIntl} from "react-intl";
 
 const FormItem = Form.Item;
 
@@ -14,12 +15,13 @@ class ForgetPassword extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.onResetPassword(values);
+        this.props.onResetPassword(values, this);
       }
     });
   };
 
   render() {
+    const {messages} = this.props.intl;
     const {getFieldDecorator} = this.props.form;
     return (
       <div className="gx-app-login-wrap">
@@ -39,7 +41,7 @@ class ForgetPassword extends React.Component {
                   {getFieldDecorator('email', {
                     initialValue: "admin@g-axon.com",
                     rules: [{
-                      required: true, type: 'email', message: 'The input is not valid E-mail!',
+                      required: true, type: 'email', message: messages["validation.message.emailFormat"],
                     }],
                   })(
                     <Input placeholder="Email"/>
@@ -69,4 +71,4 @@ const mapStateToProps = ({auth}) => {
   return {token}
 };
 
-export default connect(mapStateToProps, {onResetPassword})(WrappedNormalPasswordForm);
+export default connect(mapStateToProps, {onResetPassword})(injectIntl(WrappedNormalPasswordForm));

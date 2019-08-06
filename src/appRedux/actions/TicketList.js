@@ -59,7 +59,8 @@ export const onGetTickets = (updatingContent, currentPage, itemsPerPage, filterT
   }
 };
 
-export const onAddTickets = (ticket, history) => {
+export const onAddTickets = (ticket, history, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/tickets', ticket).then(({data}) => {
@@ -80,7 +81,8 @@ export const onAddTickets = (ticket, history) => {
 };
 
 
-export const onUpdateTickets = (ticketId, ticket) => {
+export const onUpdateTickets = (ticketId, ticket, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/tickets/${ticketId}`, ticket)
@@ -119,7 +121,8 @@ export const onGetTicketDetail = (ticketId) => {
 };
 
 
-export const onDeleteTicket = (ticketIds, backToList) => {
+export const onDeleteTicket = (ticketIds, backToList, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/tickets/delete', ticketIds)
@@ -155,7 +158,8 @@ export const onGetFilterOptions = () => {
   }
 };
 
-export const onUpdateTicketStatus = (ticketId, statusId) => {
+export const onUpdateTicketStatus = (ticketId, statusId, context) => {
+  const {messages} = context.props.intl;
   console.log("ticket id and status", ticketId, statusId);
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -175,7 +179,8 @@ export const onUpdateTicketStatus = (ticketId, statusId) => {
   }
 };
 
-export const onUpdateTicketPriority = (ticketId, priorityId) => {
+export const onUpdateTicketPriority = (ticketId, priorityId, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post(`/tickets/${ticketId}/update/priority`, {priority_id: priorityId}).then(({data}) => {

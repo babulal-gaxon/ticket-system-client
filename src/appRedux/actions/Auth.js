@@ -140,7 +140,8 @@ export const getUserProfile = () => {
   }
 };
 
-export const updateUserProfile = (profile) => {
+export const updateUserProfile = (profile, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/user/profile', profile).then(({data}) => {
@@ -148,7 +149,7 @@ export const updateUserProfile = (profile) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_DATA, payload: data.data});
-        dispatch({type: SHOW_MESSAGE, payload: "Profile has been updated successfully"});
+        dispatch({type: SHOW_MESSAGE, payload:messages["action.auth.profile"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -159,7 +160,8 @@ export const updateUserProfile = (profile) => {
   }
 };
 
-export const onResetPassword = ({email}) => {
+export const onResetPassword = ({email}, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/forgot/password', {
@@ -169,7 +171,7 @@ export const onResetPassword = ({email}) => {
       console.info("data:", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "Reset password link has been successfully sent to your email address"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.resetPassword"]});
       } else if (data.message) {
         console.info("payload: data.errors[0]", data.message);
         dispatch({type: FETCH_ERROR, payload: data.message});
@@ -184,7 +186,8 @@ export const onResetPassword = ({email}) => {
   }
 };
 
-export const onSetNewPassword = (token, data, history) => {
+export const onSetNewPassword = (token, data, history, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post(`reset/password/${token}`, data
@@ -192,7 +195,7 @@ export const onSetNewPassword = (token, data, history) => {
       console.info("data:", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The password has been updated successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.passwordUpdated"]});
         history.replace("/signin");
       } else if (data.message) {
         console.info("payload: data.errors[0]", data.message);

@@ -101,7 +101,7 @@ class TicketStatuses extends Component {
           const obj = {
             ids: this.state.selectedStatus
           };
-          this.props.onBulkActiveStatuses(obj);
+          this.props.onBulkActiveStatuses(obj, this);
           this.setState({selectedRowKeys: [], selectedStatus: []})
         }
       })
@@ -123,7 +123,7 @@ class TicketStatuses extends Component {
           const obj = {
             ids: this.state.selectedStatus
           };
-          this.props.onBulkInActiveStatuses(obj);
+          this.props.onBulkInActiveStatuses(obj, this);
           this.setState({selectedRowKeys: [], selectedStatus: []})
         }
       })
@@ -146,7 +146,7 @@ class TicketStatuses extends Component {
           const obj = {
             ids: this.state.selectedStatus
           };
-          this.props.onBulkDeleteStatuses(obj);
+          this.props.onBulkDeleteStatuses(obj, this);
           this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText);
           this.setState({selectedRowKeys: [], selectedStatus: []});
         }
@@ -193,7 +193,7 @@ class TicketStatuses extends Component {
     return <Popconfirm
       title={<IntlMessages id="statuses.message.delete"/>}
       onConfirm={() => {
-        this.props.onBulkDeleteStatuses({ids: [recordId]});
+        this.props.onBulkDeleteStatuses({ids: [recordId]}, this);
         this.onGetStatusData(this.state.current, this.state.itemNumbers, this.state.filterText);
       }}
       okText={<IntlMessages id="common.yes"/>}

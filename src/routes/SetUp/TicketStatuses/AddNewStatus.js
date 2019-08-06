@@ -36,9 +36,9 @@ class AddNewStatus extends Component {
 
   onStatusAdd = () => {
     if (this.props.currentStatus === null) {
-      this.props.onAddTicketStatus({...this.state});
+      this.props.onAddTicketStatus({...this.state}, this);
     } else {
-      this.props.onEditTicketStatus({...this.state});
+      this.props.onEditTicketStatus({...this.state}, this);
     }
     this.props.onToggleAddStatus();
   };

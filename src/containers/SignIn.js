@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {onUserSignIn} from "../appRedux/actions/Auth";
 import IntlMessages from "util/IntlMessages";
 import InfoView from "../components/InfoView";
+import {injectIntl} from "react-intl";
 
 const FormItem = Form.Item;
 
@@ -30,6 +31,7 @@ class SignIn extends React.Component {
   };
 
   render() {
+    const {messages} = this.props.intl;
     const {getFieldDecorator} = this.props.form;
     return (
       <div className="gx-app-login-wrap">
@@ -55,7 +57,7 @@ class SignIn extends React.Component {
                   {getFieldDecorator('email', {
                     initialValue: "admin@g-axon.com",
                     rules: [{
-                      required: true, type: 'email', message: 'The input is not valid E-mail!',
+                      required: true, type: 'email', message: messages["validation.message.emailFormat"],
                     }],
                   })(
                     <Input placeholder="Email"/>
@@ -64,7 +66,7 @@ class SignIn extends React.Component {
                 <FormItem>
                   {getFieldDecorator('password', {
                     initialValue: "123456",
-                    rules: [{required: true, message: 'Please input your Password!'}],
+                    rules: [{required: true, message: messages["validation.message.inputPassword"]}],
                   })(
                     <Input type="password" placeholder="Password"/>
                   )}
@@ -100,4 +102,4 @@ const mapStateToProps = ({auth}) => {
   return {token}
 };
 
-export default connect(mapStateToProps, {onUserSignIn})(WrappedNormalLoginForm);
+export default connect(mapStateToProps, {onUserSignIn})(injectIntl(WrappedNormalLoginForm));

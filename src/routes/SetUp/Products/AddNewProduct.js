@@ -23,7 +23,7 @@ class AddNewProduct extends Component {
       const selectedProduct = props.currentProduct;
       this.state = {
         ...selectedProduct,
-        logoName: selectedProduct.avatar.title,
+        logoName: selectedProduct.avatar ? selectedProduct.avatar.title : "",
         fileList: [],
         logo: selectedProduct.avatar ? selectedProduct.avatar.id : null
       };
@@ -49,9 +49,9 @@ class AddNewProduct extends Component {
 
   onProductAdd = () => {
     if (this.props.currentProduct === null) {
-      this.props.onAddProduct({...this.state});
+      this.props.onAddProduct({...this.state}, this);
     } else {
-      this.props.onEditProduct({...this.state});
+      this.props.onEditProduct({...this.state}, this);
     }
     this.props.onToggleAddProduct();
   };
@@ -188,7 +188,7 @@ AddNewProduct.defaultProps = {
 
 AddNewProduct.propTypes = {
   productsList: PropTypes.array,
-  currentProduct: PropTypes.number,
+  currentProduct: PropTypes.object,
   showAddModal: PropTypes.bool,
   onToggleAddProduct: PropTypes.func,
   onAddProduct: PropTypes.func,

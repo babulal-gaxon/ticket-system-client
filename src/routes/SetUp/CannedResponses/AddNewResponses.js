@@ -26,10 +26,10 @@ class AddNewResponses extends Component {
 
   onResponseAdd = () => {
     if (this.props.currentResponse === null) {
-      this.props.onAddCannedResponse({...this.state});
+      this.props.onAddCannedResponse({...this.state}, this);
       this.props.onToggleAddCanned();
     } else {
-      this.props.onEditCannedResponse({...this.state});
+      this.props.onEditCannedResponse({...this.state}, this);
       this.props.onToggleAddCanned();
     }
   };

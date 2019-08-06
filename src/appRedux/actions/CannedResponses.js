@@ -38,7 +38,8 @@ export const onGetCannedResponses = (currentPage, itemsPerPage, filterData, upda
   }
 };
 
-export const onAddCannedResponse = (cannedResponse) => {
+export const onAddCannedResponse = (cannedResponse, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/canned/responses', cannedResponse).then(({data}) => {
@@ -46,7 +47,7 @@ export const onAddCannedResponse = (cannedResponse) => {
       if (data.success) {
         dispatch({type: ADD_CANNED_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Response has been added successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.responses.add"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -57,7 +58,8 @@ export const onAddCannedResponse = (cannedResponse) => {
   }
 };
 
-export const onEditCannedResponse = (cannedResponse) => {
+export const onEditCannedResponse = (cannedResponse, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/canned/responses/${cannedResponse.id}`, cannedResponse).then(({data}) => {
@@ -65,7 +67,7 @@ export const onEditCannedResponse = (cannedResponse) => {
       if (data.success) {
         dispatch({type: EDIT_CANNED_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Response details has been updated successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.responses.edit"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -76,14 +78,15 @@ export const onEditCannedResponse = (cannedResponse) => {
   }
 };
 
-export const onBulkActiveResponses = (responseIds) => {
+export const onBulkActiveResponses = (responseIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/canned/responses/status/1', responseIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_ACTIVE_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status of Response(s) has been changed to Active successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.responses.active"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -94,14 +97,15 @@ export const onBulkActiveResponses = (responseIds) => {
   }
 };
 
-export const onBulkInActiveResponses = (responseIds) => {
+export const onBulkInActiveResponses = (responseIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/canned/responses/status/0', responseIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DISABLE_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status of Response(s) has been changed to Disabled successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.responses.disable"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -112,14 +116,15 @@ export const onBulkInActiveResponses = (responseIds) => {
   }
 };
 
-export const onBulkDeleteResponses = (responseIds) => {
+export const onBulkDeleteResponses = (responseIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/canned/responses/delete', responseIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DELETE_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Response(s) has been deleted successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.responses.delete"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

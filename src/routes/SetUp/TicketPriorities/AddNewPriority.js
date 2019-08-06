@@ -29,10 +29,10 @@ class AddNewPriority extends Component {
 
   onPriorityAdd = () => {
     if (this.props.currentPriority === null) {
-      this.props.onAddTicketPriority({...this.state});
+      this.props.onAddTicketPriority({...this.state}, this);
       this.props.onToggleAddPriority();
     } else {
-      this.props.onEditTicketPriority({...this.state});
+      this.props.onEditTicketPriority({...this.state}, this);
       this.props.onToggleAddPriority();
     }
   };

@@ -39,8 +39,8 @@ export const onGetLabelData = (currentPage, itemsPerPage, searchData, updatingCo
 };
 
 
-export const onAddLabelsData = (label) => {
-  console.log("onAddLabelsData", label);
+export const onAddLabelsData = (label, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/labels', label).then(({data}) => {
@@ -60,7 +60,8 @@ export const onAddLabelsData = (label) => {
   }
 };
 
-export const onDeleteLabel = (labelId) => {
+export const onDeleteLabel = (labelId, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post(`/setup/labels/delete`, labelId).then(({data}) => {
@@ -79,7 +80,8 @@ export const onDeleteLabel = (labelId) => {
   }
 };
 
-export const onChangeToActiveStatus = (labelId) => {
+export const onChangeToActiveStatus = (labelId, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post(`/setup/labels/status/1`, labelId).then(({data}) => {
@@ -97,7 +99,8 @@ export const onChangeToActiveStatus = (labelId) => {
   }
 };
 
-export const onChangeToDisableStatus = (labelId) => {
+export const onChangeToDisableStatus = (labelId, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post(`/setup/labels/status/0`, labelId).then(({data}) => {
@@ -115,8 +118,8 @@ export const onChangeToDisableStatus = (labelId) => {
   }
 };
 
-export const onEditLabelsData = (label) => {
-  console.log("Edit label", label);
+export const onEditLabelsData = (label, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/labels/${label.id}`, label).then(({data}) => {

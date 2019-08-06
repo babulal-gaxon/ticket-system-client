@@ -23,10 +23,10 @@ class AddNewDepartment extends Component {
 
   onDepartmentAdd = () => {
     if (this.props.currentDepartment === null) {
-      this.props.onAddDepartment({...this.state});
+      this.props.onAddDepartment({...this.state}, this);
       this.props.onToggleAddDepartment();
     } else {
-      this.props.onEditDepartment({...this.state});
+      this.props.onEditDepartment({...this.state}, this);
       this.props.onToggleAddDepartment();
     }
   };

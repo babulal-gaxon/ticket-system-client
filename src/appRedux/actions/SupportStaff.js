@@ -52,7 +52,8 @@ export const onSetCurrentStaff = (staff) => {
 };
 
 
-export const onAddSupportStaff = (staffMember, history) => {
+export const onAddSupportStaff = (staffMember, history, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/staffs', staffMember).then(({data}) => {
@@ -74,7 +75,8 @@ export const onAddSupportStaff = (staffMember, history) => {
   }
 };
 
-export const onBulkDeleteStaff = (staffIds, history) => {
+export const onBulkDeleteStaff = (staffIds, history, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/staffs/delete', staffIds).then(({data}) => {
@@ -95,7 +97,8 @@ export const onBulkDeleteStaff = (staffIds, history) => {
   }
 };
 
-export const onEditSupportStaff = (staffMember, history) => {
+export const onEditSupportStaff = (staffMember, history, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/staffs/${staffMember.id}`, staffMember).then(({data}) => {
@@ -116,7 +119,8 @@ export const onEditSupportStaff = (staffMember, history) => {
   }
 };
 
-export const onChangeStaffStatus = (staffId, status, updatingContent) => {
+export const onChangeStaffStatus = (staffId, status, updatingContent, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     if (updatingContent) {
       dispatch({type: UPDATING_CONTENT});
@@ -142,6 +146,7 @@ export const onChangeStaffStatus = (staffId, status, updatingContent) => {
 };
 
 export const onAddProfileImage = (imageFile, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post("/uploads/temporary/media", imageFile, {
@@ -181,7 +186,8 @@ export const onGetStaffNotes = (staffId) => {
   }
 };
 
-export const onAddStaffNote = (staffId, Note) => {
+export const onAddStaffNote = (staffId, Note, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post(`/setup/staffs/${staffId}/notes`, Note).then(({data}) => {
@@ -200,7 +206,8 @@ export const onAddStaffNote = (staffId, Note) => {
   }
 };
 
-export const onEditStaffNotes = (note) => {
+export const onEditStaffNotes = (note, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/staffs/notes/${note.id}`, note).then(({data}) => {
@@ -218,7 +225,8 @@ export const onEditStaffNotes = (note) => {
   }
 };
 
-export const onDeleteStaffNotes = (noteId) => {
+export const onDeleteStaffNotes = (noteId, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.delete(`/setup/staffs/notes/${noteId}`).then(({data}) => {

@@ -77,7 +77,8 @@ export const setCurrentCustomer = (customer) => {
   }
 };
 
-export const onAddNewCustomer = (customer, history) => {
+export const onAddNewCustomer = (customer, history, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/customers', customer).then(({data}) => {
@@ -101,8 +102,8 @@ export const onAddNewCustomer = (customer, history) => {
   }
 };
 
-export const onEditCustomer = (customer, history) => {
-  console.log("onEditCustomer", customer);
+export const onEditCustomer = (customer, history, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/customers/${customer.id}`, customer).then(({data}) => {
@@ -123,7 +124,8 @@ export const onEditCustomer = (customer, history) => {
   }
 };
 
-export const onChangeCustomerStatus = (customerId, status, updatingContent) => {
+export const onChangeCustomerStatus = (customerId, status, updatingContent, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     if (updatingContent) {
       dispatch({type: UPDATING_CONTENT});
@@ -148,8 +150,8 @@ export const onChangeCustomerStatus = (customerId, status, updatingContent) => {
   }
 };
 
-export const onDeleteCustomers = (customerIds) => {
-  console.log("in action", customerIds);
+export const onDeleteCustomers = (customerIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/customers/delete', customerIds).then(({data}) => {
@@ -181,6 +183,7 @@ export const onGetCustomerFilterOptions = () => {
 };
 
 export const onAddImage = (imageFile, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post("/uploads/temporary/media", imageFile, {
@@ -203,7 +206,7 @@ export const onAddImage = (imageFile, context) => {
 };
 
 export const onAddCustomerAddress = (address, context) => {
-  console.log("onAddCustomerAddress", address);
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/customers/address', address).then(({data}) => {
@@ -222,7 +225,7 @@ export const onAddCustomerAddress = (address, context) => {
 };
 
 export const onEditCustomerAddress = (address, context) => {
-  console.log("onEditCustomerAddress", address);
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/addresses/${address.id}`, address).then(({data}) => {
@@ -241,6 +244,7 @@ export const onEditCustomerAddress = (address, context) => {
 };
 
 export const onDeleteCustomerAddress = (addressId, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.delete(`/addresses/${addressId}`).then(({data}) => {
@@ -294,7 +298,8 @@ export const onGetCustomerCompany = (companyId) => {
   }
 };
 
-export const onResetPassword = (currentCustomer, password) => {
+export const onResetPassword = (currentCustomer, password, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post(`/setup/customers/${currentCustomer}/reset/password`, password).then(({data}) => {

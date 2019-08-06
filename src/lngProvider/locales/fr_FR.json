@@ -439,6 +439,7 @@
   "customers.address.delete": "Êtes-vous sûr de supprimer cette adresse?",
   "action.auth.resetPassword": "Le lien de réinitialisation du mot de passe a été envoyé avec succès à votre adresse électronique.",
   "action.auth.passwordUpdated": "Le mot de passe a été mis à jour avec succès",
+  "action.auth.profile": "Le profil a été mis à jour avec succès",
   "action.responses.add": "La réponse a été ajoutée avec succès",
   "action.responses.edit": "Les détails de la réponse ont été mis à jour avec succès",
   "action.responses.active": "Le statut des réponses a été changé en actif avec succès",

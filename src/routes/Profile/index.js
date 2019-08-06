@@ -59,7 +59,7 @@ class Profile extends Component {
   };
 
   onSaveProfile = () => {
-    this.props.updateUserProfile({...this.state}, this.props.history);
+    this.props.updateUserProfile({...this.state}, this);
   };
 
   updateProfilePic = (profile_pic) => {

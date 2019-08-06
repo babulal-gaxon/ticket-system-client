@@ -38,7 +38,8 @@ export const onGetTicketStatus = (currentPage, itemsPerPage, filterText, updatin
   }
 };
 
-export const onAddTicketStatus = (status) => {
+export const onAddTicketStatus = (status, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/status', status).then(({data}) => {
@@ -46,7 +47,7 @@ export const onAddTicketStatus = (status) => {
       if (data.success) {
         dispatch({type: ADD_TICKET_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status has been added successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.statuses.add"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -57,7 +58,8 @@ export const onAddTicketStatus = (status) => {
   }
 };
 
-export const onEditTicketStatus = (status) => {
+export const onEditTicketStatus = (status, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/setup/status/${status.id}`, status).then(({data}) => {
@@ -65,7 +67,7 @@ export const onEditTicketStatus = (status) => {
       if (data.success) {
         dispatch({type: EDIT_TICKET_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status details has been updated successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.statuses.edit"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -76,14 +78,15 @@ export const onEditTicketStatus = (status) => {
   }
 };
 
-export const onBulkActiveStatuses = (statusIds) => {
+export const onBulkActiveStatuses = (statusIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/status/status/1', statusIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_ACTIVE_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status of Status(s) has been changed to Active successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.statuses.active"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -94,14 +97,15 @@ export const onBulkActiveStatuses = (statusIds) => {
   }
 };
 
-export const onBulkInActiveStatuses = (statusIds) => {
+export const onBulkInActiveStatuses = (statusIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/status/status/0', statusIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DISABLE_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status of Status(s) has been changed to Disabled successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.statuses.disable"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -112,14 +116,15 @@ export const onBulkInActiveStatuses = (statusIds) => {
   }
 };
 
-export const onBulkDeleteStatuses = (statusIds) => {
+export const onBulkDeleteStatuses = (statusIds, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/setup/status/delete', statusIds).then(({data}) => {
       if (data.success) {
         dispatch({type: BULK_DELETE_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status(s) has been deleted successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.statuses.delete"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
