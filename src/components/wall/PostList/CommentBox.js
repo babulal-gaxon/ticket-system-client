@@ -21,7 +21,7 @@ class CommentBox extends Component {
     if (e.key === 'Enter') {
       this.handleCommentToggle();
     }
-  }
+  };
 
   componentWillMount() {
     this.setState({commentData: this.props.commentData})

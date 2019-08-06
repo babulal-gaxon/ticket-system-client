@@ -7,7 +7,10 @@ import {
   GET_TICKET_DETAIL,
   GET_TICKET_MESSAGES,
   NULLIFY_TICKET,
-  RAISE_NEW_TICKET, UPDATE_TICKET, UPDATE_TICKET_PRIORITY, UPDATE_TICKET_STATUS
+  RAISE_NEW_TICKET,
+  UPDATE_TICKET,
+  UPDATE_TICKET_PRIORITY,
+  UPDATE_TICKET_STATUS
 } from "../../constants/CustomerDetails";
 
 export const onGetRaisedTickets = (currentPage, totalItems, filterText, updatingContent) => {
@@ -87,7 +90,7 @@ export const onGetTicketMessages = (ticketId) => {
     axios.get(`/customer/panel/tickets/${ticketId}/messages`).then(({data}) => {
       console.info("onGetTicketMessages: ", data);
       if (data.success) {
-        console.log("messages", data.data)
+        console.log("messages", data.data);
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_TICKET_MESSAGES, payload: data.data});
       } else {

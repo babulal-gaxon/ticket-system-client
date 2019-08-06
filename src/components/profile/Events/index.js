@@ -18,6 +18,6 @@ const Events = () => {
       </div>
     </Widget>
   );
-}
+};
 
 export default Events;

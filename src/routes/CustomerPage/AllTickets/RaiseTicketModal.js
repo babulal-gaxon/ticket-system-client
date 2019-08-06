@@ -64,6 +64,7 @@ class RaiseTicketModal extends Component {
       formData.append('file', file);
       formData.append('title', file.name);
       this.imageUpload(formData);
+      return file
     });
   };
 
@@ -125,7 +126,7 @@ class RaiseTicketModal extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddTicket}
-          title= {<IntlMessages id="tickets.addNew"/>}
+          title={<IntlMessages id="tickets.addNew"/>}
           onCancel={() => onToggleAddTicket()}
           footer={[
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
@@ -201,7 +202,8 @@ class RaiseTicketModal extends Component {
             </Form.Item>
             <Form.Item>
               <Upload {...props}>
-                <Input placeholder={messages["tickets.files.upload"]} prefix={<i className="icon gx-icon-attachment"/>}/>
+                <Input placeholder={messages["tickets.files.upload"]}
+                       prefix={<i className="icon gx-icon-attachment"/>}/>
               </Upload>
             </Form.Item>
           </Form>

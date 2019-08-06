@@ -236,7 +236,8 @@ class AllTickets extends Component {
               }}>
                 <div><IntlMessages id="tickets.noRecordFound"/></div>
                 <h3 className="gx-font-weight-bold gx-my-4"><IntlMessages id="tickets.noTicketRaised"/></h3>
-                <Button type="primary" onClick={this.onToggleAddTicket}><IntlMessages id="tickets.raiseATicket"/></Button>
+                <Button type="primary" onClick={this.onToggleAddTicket}><IntlMessages
+                  id="tickets.raiseATicket"/></Button>
               </div>
             </div>}
           {showAddTicket ? <RaiseTicketModal formOptions={formOptions}

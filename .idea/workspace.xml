@@ -1,11 +1,208 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22660aa2-fcdc-4713-8a0a-0d397dd58555" name="Default Changelist" comment="">
+    <list default="true" id="72ebf97e-8970-4775-8ec5-0b0606640859" name="Default" comment="worked on login screen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NextApp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/NextApp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/Auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/appRedux/actions/Common.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/Common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/CustomerDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/CustomerDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/Setting.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/Setting.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appRedux/reducers/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/reducers/Auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/appRedux/reducers/Common.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/reducers/Common.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/ActionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/ActionTypes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appRedux/reducers/CustomerDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/reducers/CustomerDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appRedux/reducers/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/reducers/Settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appRedux/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/reducers/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/appRedux/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/loader.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/images/loader.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/vendors/flag/sprite-flags-24x24.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/vendors/flag/sprite-flags-24x24.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/vendors/gaxon/demo-files/demo.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/demo-files/demo.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/vendors/gaxon/demo-files/demo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/demo-files/demo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/vendors/gaxon/demo.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/demo.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/vendors/gaxon/fonts/gaxon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/fonts/gaxon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/vendors/gaxon/selection.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/selection.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/vendors/gaxon/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/vendors/gaxon/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/vendors/noir-pro/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/vendors/noir-pro/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/vendors/react-notification/fonts/notification.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/vendors/react-notification/fonts/notification.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/vendors/react-notification/react-notifications.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/vendors/react-notification/react-notifications.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AppModuleHeader/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AppModuleHeader/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AppNotification/NotificationItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AppNotification/NotificationItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AppNotification/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AppNotification/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CardBox/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CardBox/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CircularProgress/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CircularProgress/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ContainerHeader/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ContainerHeader/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/InfoView/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InfoView/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MailNotification/NotificationItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MailNotification/NotificationItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MailNotification/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MailNotification/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Metric/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Metric/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Metrics/ChartCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Metrics/ChartCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Metrics/EcommerceStatus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Metrics/EcommerceStatus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Metrics/GrowthCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Metrics/GrowthCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Metrics/IconWithTextCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Metrics/IconWithTextCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Metrics/QueriesCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Metrics/QueriesCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Metrics/TotalEncomeCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Metrics/TotalEncomeCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Metrics/TrafficRaiseCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Metrics/TrafficRaiseCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Metrics/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Metrics/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SearchBox/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SearchBox/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UserInfo/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserInfo/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widget/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widget/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/WidgetHeader/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/WidgetHeader/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/AayurvedaCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/AayurvedaCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/BuildingCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/BuildingCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/CampaignCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/CampaignCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/DryFruit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/DryFruit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/FlyingBird.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/FlyingBird.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/FriendshipCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/FriendshipCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/GreenStepCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/GreenStepCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/GreenStepItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/GreenStepItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/IconCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/IconCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/IncreamentCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/IncreamentCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/NewPhotos.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/NewPhotos.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/Newsletter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/Newsletter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/PhotosCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/PhotosCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/Productivity.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/Productivity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/ProjectWidget.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/ProjectWidget.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/RoadMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/RoadMap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/RoadMapItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/RoadMapItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/SmartHomeCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/SmartHomeCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/SocialMedia.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/SocialMedia.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/ToolTheDay.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/ToolTheDay.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/UnreadMessagesCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/UnreadMessagesCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/UserCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/UserCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/WorkStatusCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/WorkStatusCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Widgets/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Widgets/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/callouts/Callouts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/callouts/Callouts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/chat/ChatUserList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/chat/ChatUserList/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/chat/ContactList/UserCell/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/chat/ContactList/UserCell/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/chat/ContactList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/chat/ContactList/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/chat/Conversation/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/chat/Conversation/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/contact/AddContact/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/contact/AddContact/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/contact/ContactCard/UserCell/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/contact/ContactCard/UserCell/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/contact/ContactCard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/contact/ContactCard/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/contact/ContactList/ContactCell/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/contact/ContactList/ContactCell/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/contact/ContactList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/contact/ContactList/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/ActivityItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/ActivityItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/BubbleMap/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/BubbleMap/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/GrowthCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/GrowthCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/IconWithTextCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/IconWithTextCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/LineIndicator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/LineIndicator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/NewCustomers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/NewCustomers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/Overview.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/Overview.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/RecentActivity.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/RecentActivity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/SiteAudience.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/SiteAudience.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/SiteVisit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/SiteVisit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/TaskByStatus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/TaskByStatus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/TaskItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/TaskItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/TaskList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/TaskList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/TicketByDepartment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/TicketByDepartment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/TicketItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/TicketItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/TicketList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/TicketList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/TotalRevenueCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/TotalRevenueCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/CRM/WelComeCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/CRM/WelComeCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/BalanceHistory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Crypto/BalanceHistory.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/ChartCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Crypto/ChartCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/CryptoNews.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Crypto/CryptoNews.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/CryptoNewsItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Crypto/CryptoNewsItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/CurrencyCalculator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Crypto/CurrencyCalculator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/DownloadMobileApps.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Crypto/DownloadMobileApps.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/LineIndicator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Crypto/LineIndicator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/OrderHistory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Crypto/OrderHistory.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/Portfolio.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Crypto/Portfolio.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/RewardCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Crypto/RewardCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Crypto/SendMoney.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Crypto/SendMoney.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Listing/ChartCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Listing/ChartCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Listing/CurrentPlan.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Listing/CurrentPlan.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Listing/DealsClosedCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Listing/DealsClosedCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Listing/PropertiesCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Listing/PropertiesCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Listing/PropertiesItemCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Listing/PropertiesItemCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Listing/RecentItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Listing/RecentItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/Listing/UserImages.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/Listing/UserImages.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/eCommerce/ProductItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/eCommerce/ProductItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/mail/Compose/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mail/Compose/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/mail/MailDetail/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mail/MailDetail/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/mail/MailList/MailListItem/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mail/MailList/MailListItem/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/mail/MailList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/mail/MailList/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/About/AboutItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/About/AboutItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/About/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/About/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/Biography/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/Biography/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/Contact/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/Contact/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/Events/EventItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/Events/EventItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/Events/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/Events/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/Friends/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/Friends/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/Photos/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/Photos/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/ProfileHeader/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/ProfileHeader/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/timeline/DefaultTimeLineItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/timeline/DefaultTimeLineItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/timeline/WithIconTimeLineItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/timeline/WithIconTimeLineItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/todo/ToDoDetail/ConversationCell.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/todo/ToDoDetail/ConversationCell.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/todo/ToDoDetail/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/todo/ToDoDetail/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/todo/ToDoList/ToDoItem/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/todo/ToDoList/ToDoItem/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/todo/ToDoList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/todo/ToDoList/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/Communities/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/Communities/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/DisplayDate/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/DisplayDate/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/Events/EventItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/Events/EventItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/Events/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/Events/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/Friends/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/Friends/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/Interests/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/Interests/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/NewsList/NewsItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/NewsList/NewsItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/NewsList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/NewsList/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/Photos/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/Photos/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/PostList/CommentBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/PostList/CommentBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/PostList/GridImage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/PostList/GridImage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/PostList/MediaList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/PostList/MediaList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/PostList/PostItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/PostList/PostItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/PostList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/PostList/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/Profile/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/Profile/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/wall/WriteBox/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/wall/WriteBox/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/App/MainApp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/App/MainApp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/ColorPicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/ColorPicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Customizer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Customizer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/ResetPassword/ForgetPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/ResetPassword/ForgetPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/ResetPassword/VerifyPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/ResetPassword/VerifyPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Sidebar/AppsNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Sidebar/AppsNavigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Sidebar/SidebarContent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Sidebar/SidebarLogo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Sidebar/SidebarLogo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Sidebar/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Sidebar/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/SignIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/SignIn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/SignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/SignUp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Topbar/AboveHeader/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Topbar/AboveHeader/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Topbar/BelowHeader/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Topbar/BelowHeader/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Topbar/HorizontalDark/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Topbar/HorizontalDark/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Topbar/HorizontalDefault/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Topbar/HorizontalDefault/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Topbar/HorizontalNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Topbar/HorizontalNav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Topbar/InsideHeader/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Topbar/InsideHeader/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Topbar/NoHeaderNotification/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Topbar/NoHeaderNotification/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Topbar/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Topbar/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/VerifyEmail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/VerifyEmail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lngProvider/entries/ar_SA.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lngProvider/entries/ar_SA.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lngProvider/entries/en-US.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lngProvider/entries/en-US.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lngProvider/entries/es_ES.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lngProvider/entries/es_ES.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lngProvider/entries/fr_FR.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lngProvider/entries/fr_FR.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lngProvider/entries/it_IT.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lngProvider/entries/it_IT.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lngProvider/entries/zh-Hans-CN.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lngProvider/entries/zh-Hans-CN.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lngProvider/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lngProvider/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/ConversationCell.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/ConversationCell.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/EditTicketDetailsModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/EditTicketDetailsModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/RaiseTicketModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/RaiseTicketModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/CustomerPage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/CustomerPage/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/apps/apps.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/apps/apps.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/global/custom-animation.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/global/custom-animation.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/layout/ant-layout.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/layout/ant-layout.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/layout/navbar.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/layout/navbar.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/layout/sidebar.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/layout/sidebar.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/pages/dashboard.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/pages/dashboard.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/ui/backTop.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/ui/backTop.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/ui/button.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/ui/button.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/ui/list.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/ui/list.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/ui/timeline.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/ui/timeline.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/Api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/CustomScrollbars.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/CustomScrollbars.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/IntlMessages.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/IntlMessages.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/asyncComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/asyncComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/config.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -20,73 +217,143 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/appRedux/actions/Common.js">
+        <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="23" column="26" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="26" />
+            <state relative-caret-position="680">
+              <caret line="48" column="7" selection-start-line="48" selection-start-column="7" selection-end-line="48" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/containers/App/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="969">
+              <caret line="73" column="47" selection-start-line="73" selection-start-column="47" selection-end-line="73" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/containers/VerifyEmail.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
               <folding>
-                <element signature="e#0#144#0" expanded="true" />
+                <element signature="e#0#39#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/Common.js">
+        <entry file="file://$PROJECT_DIR$/src/containers/ResetPassword/VerifyPassword.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="21" column="25" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="25" />
+            <state relative-caret-position="408">
+              <caret line="48" column="15" lean-forward="true" selection-start-line="48" selection-start-column="15" selection-end-line="48" selection-end-column="15" />
               <folding>
-                <element signature="e#0#143#0" expanded="true" />
+                <element signature="e#0#26#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/constants/ActionTypes.js">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/RaiseTicketModal.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
-              <caret line="37" column="51" selection-start-line="37" selection-start-column="51" selection-end-line="37" selection-end-column="51" />
+            <state relative-caret-position="374">
+              <caret line="63" column="36" lean-forward="true" selection-start-line="63" selection-start-column="36" selection-end-line="63" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="249">
+              <caret line="102" column="18" selection-start-line="102" selection-start-column="18" selection-end-line="102" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/appRedux/actions/Auth.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2227">
+              <caret line="144" column="7" selection-start-line="144" selection-start-column="7" selection-end-line="144" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>General Setup</find>
-      <find>Localization Setti</find>
-      <find>Departments</find>
-      <find>Staff Manage</find>
-      <find>Ticket Priority</find>
-      <find>Pass</find>
-      <find>Setting</find>
-      <find>&quot;validation.setup.database&quot;</find>
-      <find>Confirm</find>
-      <find>The ima</find>
-      <find>Address</find>
-      <find>common.address</find>
-      <find>Back</find>
-      <find>appModule.sta</find>
-      <find>app.</find>
-      <find>app.user</find>
-      <find>Sign Up</find>
-      <find>app.userAuth.bySigning</find>
-      <find>app.userAuth.getAccount</find>
-      <find>Password</find>
-      <find>Email</find>
-      <find>appModule.iAccept</find>
-      <find>appModule.termAndCondition</find>
-      <find>app.userAuth.signUp</find>
-      <find>app.userAuth.or</find>
-      <find>app.userAuth.signIn</find>
-      <find>app.userAuth.forgetPasswordText</find>
-      <find>app.userAuth.goback</find>
-      <find>app.userAuth.resetPassword</find>
-      <find>updatingContent</find>
+      <find>conversation</find>
+      <find>uploading</find>
+      <find>notify_archive_ticket</find>
+      <find>permissions</find>
+      <find>onGetCustomerTickets</find>
+      <find>onGetCustomerCompany</find>
+      <find>onResetPassword</find>
+      <find>onGetCustomerFilterOptions</find>
+      <find>customerTickets</find>
+      <find>currentCustomer</find>
+      <find>onEditCustomer</find>
+      <find>onAddNewCustomer</find>
+      <find>customersList</find>
+      <find>customerId</find>
+      <find>getCustomerId</find>
+      <find>customerAddress</find>
+      <find>message</find>
+      <find>ticket</find>
+      <find>console</find>
+      <find>ticketId</find>
+      <find>fetchSuccess</find>
+      <find>onGetUserInfo</find>
+      <find>SetupTicketSettings</find>
+      <find>0</find>
+      <find>roleId</find>
+      <find>companyId</find>
+      <find>Infoview</find>
+      <find>&lt;InfoView/&gt;</find>
+      <find>totalItems</find>
+      <find>staffId</find>
     </findStrings>
+    <replaceStrings>
+      <replace>price</replace>
+      <replace>TicketList</replace>
+      <replace>status</replace>
+      <replace>currentPage</replace>
+      <replace>staffList</replace>
+      <replace>onGetStaff</replace>
+      <replace>address_type</replace>
+      <replace>departments</replace>
+      <replace>currentTicket</replace>
+      <replace>enable_service_selection</replace>
+      <replace>staff_access_own_department</replace>
+      <replace>notify_raise</replace>
+      <replace>notify_reply</replace>
+      <replace>notify_status_change</replace>
+      <replace>notify_priority_change</replace>
+      <replace>notify_on_archive</replace>
+      <replace>ticket</replace>
+      <replace>message</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>E:\g-axon\project\ticket-system-client\src\routes\SetUp</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -99,57 +366,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/routes/SetUp/Departments/DepartmentsRow.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/Products/ProductsRow.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/Services/ServicesRow.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/TicketPriorities/PrioritiesRow.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/TicketStatuses/StatusesRow.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/CannedResponses/AddNewResponses.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/Departments/AddNewDepartment.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/Products/AddNewProduct.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/Services/AddNewService.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/TicketPriorities/AddNewPriority.js" />
-        <option value="$PROJECT_DIR$/src/routes/SetUp/TicketStatuses/AddNewStatus.js" />
-        <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffRow.js" />
+        <option value="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/EditTicketDetailsModal.js" />
+        <option value="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/index.js" />
+        <option value="$PROJECT_DIR$/src/appRedux/reducers/Auth.js" />
+        <option value="$PROJECT_DIR$/src/routes/SetUp/Departments/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/FifthStep.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SeventhStep.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/EighthStep.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/NinthStep.js" />
         <option value="$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/StaffInfo.js" />
-        <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/TodayLoggedTime.js" />
-        <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/TotalLoggedTime.js" />
-        <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/AssignedTickets/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/AssignedTickets/TicketsRow.js" />
-        <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/StaffNotesList/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/Staff/StaffList/StaffDetail/StaffNotesList/AddStaffNotes.js" />
-        <option value="$PROJECT_DIR$/src/routes/InitialSetup/index.js" />
+        <option value="$PROJECT_DIR$/src/appRedux/actions/SupportStaff.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SixthStep/AddNewStaff.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SixthStep/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/FourthStep.js" />
+        <option value="$PROJECT_DIR$/src/routes/Settings/TicketSettings/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupTicketSettings.js" />
+        <option value="$PROJECT_DIR$/src/routes/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepSecond/SetupTicketSettings.js" />
+        <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" />
         <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/StepFirst.js" />
         <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SecondStep.js" />
-        <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddNewCustomers.js" />
-        <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddCustomerAddress.js" />
-        <option value="$PROJECT_DIR$/src/routes/Settings/Localization/index.js" />
+        <option value="$PROJECT_DIR$/src/appRedux/actions/GeneralSettings.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/index.js" />
+        <option value="$PROJECT_DIR$/src/appRedux/reducers/RolesAndPermissions.js" />
+        <option value="$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerDetails.js" />
+        <option value="$PROJECT_DIR$/src/routes/Customers/Companies/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/Customers/Companies/AddNewCompany.js" />
+        <option value="$PROJECT_DIR$/src/util/Permissions.js" />
+        <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js" />
+        <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js" />
+        <option value="$PROJECT_DIR$/src/containers/Topbar/ForgetPassword.js" />
+        <option value="$PROJECT_DIR$/src/containers/Sidebar/ForgetPassword.js" />
+        <option value="$PROJECT_DIR$/src/containers/PasswordReset/VerifyPassword.js" />
+        <option value="$PROJECT_DIR$/src/containers/PasswordReset/ForgetPassword.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/StepFirst.js" />
+        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/FourthStep.js" />
         <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/FifthStep.js" />
-        <option value="$PROJECT_DIR$/src/routes/Staff/AddNewStaff/ImageUpload.js" />
         <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SixthStep/index.js" />
         <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SixthStep/AddNewStaff.js" />
-        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/ThirdStep.js" />
-        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/FourthStep.js" />
         <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SeventhStep.js" />
         <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/EighthStep.js" />
         <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/NinthStep.js" />
         <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepSecond/index.js" />
-        <option value="$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/VerificationModal.js" />
-        <option value="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/index.js" />
+        <option value="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" />
+        <option value="$PROJECT_DIR$/src/containers/ResetPassword/ForgetPassword.js" />
+        <option value="$PROJECT_DIR$/src/containers/SignIn.js" />
+        <option value="$PROJECT_DIR$/src/containers/App/index.js" />
+        <option value="$PROJECT_DIR$/src/appRedux/actions/Auth.js" />
+        <option value="$PROJECT_DIR$/src/containers/VerifyEmail.js" />
+        <option value="$PROJECT_DIR$/src/containers/ResetPassword/VerifyPassword.js" />
         <option value="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/RaiseTicketModal.js" />
         <option value="$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js" />
-        <option value="$PROJECT_DIR$/src/containers/SignIn.js" />
-        <option value="$PROJECT_DIR$/src/containers/SignUp.js" />
-        <option value="$PROJECT_DIR$/src/containers/ResetPassword/ForgetPassword.js" />
-        <option value="$PROJECT_DIR$/src/lngProvider/locales/en_US.json" />
-        <option value="$PROJECT_DIR$/src/containers/ResetPassword/VerifyPassword.js" />
-        <option value="$PROJECT_DIR$/src/lngProvider/locales/fr_FR.json" />
-        <option value="$PROJECT_DIR$/src/appRedux/actions/Common.js" />
-        <option value="$PROJECT_DIR$/src/appRedux/reducers/Common.js" />
-        <option value="$PROJECT_DIR$/src/constants/ActionTypes.js" />
       </list>
     </option>
   </component>
@@ -167,39 +434,13 @@
         <subPane>
           <expand>
             <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="ticket-system" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
+              <item name="ticket-system" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ticket-system" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="appRedux" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="appRedux" type="462c0819:PsiDirectoryNode" />
-              <item name="actions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="appRedux" type="462c0819:PsiDirectoryNode" />
-              <item name="reducers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="constants" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -209,9 +450,30 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="editor.config.ad.shown" value="true" />
+    <property name="last_opened_file_path" value="E:/Atul/demo/project" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="$PROJECT_DIR$/node_modules/eslint" />
+    <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
     <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2019.1.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\gaxon-product\ticket-system-client\src\assets\vendors\gaxon" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\g-axon\project\ticket-system-client\src\routes\InitialSetup\SetupStepSecond" />
+      <recent name="E:\g-axon\project\ticket-system-client\src\routes\InitialSetup\SetupStepFirst" />
+      <recent name="E:\g-axon\project\ticket-system-client\src\routes\InitialSetup" />
+      <recent name="E:\g-axon\project\ticket-system-client\src\routes\CustomerPage\AllTickets" />
+      <recent name="E:\g-axon\project\ticket-system-client\src\routes\Staff\StaffList\StaffDetail" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -250,6 +512,9 @@
       <list>
         <item itemvalue="npm.start" />
         <item itemvalue="npm.build" />
+        <item itemvalue="npm.start" />
+        <item itemvalue="npm.build" />
+        <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
   </component>
@@ -257,192 +522,493 @@
     <configuration />
   </component>
   <component name="TaskManager">
-    <task id="LOCAL-00001" summary="worked on image validations">
-      <created>1564664292980</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1564664292980</updated>
-    </task>
-    <task id="LOCAL-00002" summary="worked on image validations">
-      <created>1564664840762</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1564664840762</updated>
-    </task>
     <task active="true" id="Default" summary="Default task">
-      <changelist id="22660aa2-fcdc-4713-8a0a-0d397dd58555" name="Default Changelist" comment="" />
-      <created>1564721147704</created>
+      <created>1558163629825</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1564721147704</updated>
-      <workItem from="1564721151385" duration="28790000" />
-      <workItem from="1564752701479" duration="313000" />
-      <workItem from="1564807206375" duration="21173000" />
+      <updated>1558163629825</updated>
+      <workItem from="1558172705838" duration="4503000" />
+      <workItem from="1558177767359" duration="4423000" />
+      <workItem from="1558327173478" duration="25831000" />
+      <workItem from="1558414216036" duration="20889000" />
+      <workItem from="1558500146889" duration="25198000" />
+      <workItem from="1558586606286" duration="26552000" />
+      <workItem from="1558672982426" duration="26458000" />
+      <workItem from="1558759343059" duration="27733000" />
+      <workItem from="1558863680244" duration="24000" />
+      <workItem from="1558931957371" duration="27528000" />
+      <workItem from="1559018513175" duration="25682000" />
+      <workItem from="1559108880548" duration="24542000" />
+      <workItem from="1559191078874" duration="16942000" />
+      <workItem from="1559211285480" duration="11784000" />
+      <workItem from="1559277438647" duration="9142000" />
+      <workItem from="1559364453287" duration="5599000" />
+      <workItem from="1559538843715" duration="4632000" />
+      <workItem from="1559624422571" duration="18853000" />
+      <workItem from="1559709013325" duration="14854000" />
+      <workItem from="1559794946886" duration="28718000" />
+      <workItem from="1559882083156" duration="25536000" />
+      <workItem from="1559968561406" duration="22732000" />
+      <workItem from="1560141496537" duration="25009000" />
+      <workItem from="1560227270919" duration="25924000" />
+      <workItem from="1560319805739" duration="20109000" />
+      <workItem from="1560399239586" duration="22642000" />
+      <workItem from="1560487106813" duration="26725000" />
+      <workItem from="1560573681397" duration="13698000" />
+      <workItem from="1560590785614" duration="254000" />
+      <workItem from="1560591126862" duration="14408000" />
+      <workItem from="1560746266428" duration="28938000" />
+      <workItem from="1560778695921" duration="68000" />
+      <workItem from="1560831898170" duration="30386000" />
+      <workItem from="1560918489723" duration="31736000" />
+      <workItem from="1561005069909" duration="26656000" />
+      <workItem from="1561091258892" duration="29670000" />
+      <workItem from="1561177636762" duration="27379000" />
+      <workItem from="1561210224858" duration="41000" />
+      <workItem from="1561350828115" duration="29554000" />
+      <workItem from="1561437996857" duration="24957000" />
+      <workItem from="1561522418313" duration="30037000" />
+      <workItem from="1561556870941" duration="54000" />
+      <workItem from="1561608917323" duration="3652000" />
+      <workItem from="1561612618340" duration="3596000" />
+      <workItem from="1561616251818" duration="21369000" />
+      <workItem from="1561695792876" duration="29467000" />
+      <workItem from="1561781648999" duration="30077000" />
+      <workItem from="1561955226725" duration="20536000" />
+      <workItem from="1561982801931" duration="4473000" />
+      <workItem from="1562040795692" duration="29288000" />
+      <workItem from="1562228805391" duration="17716000" />
+      <workItem from="1562300630500" duration="28102000" />
+      <workItem from="1562387671976" duration="5288000" />
+      <workItem from="1562393554136" duration="21184000" />
+      <workItem from="1562493749310" duration="2222000" />
+      <workItem from="1562560228729" duration="29558000" />
+      <workItem from="1562646948483" duration="27612000" />
+      <workItem from="1562732686969" duration="29164000" />
+      <workItem from="1562818617279" duration="29831000" />
+      <workItem from="1562906558392" duration="29641000" />
+      <workItem from="1562991154800" duration="30207000" />
+      <workItem from="1563165036452" duration="29740000" />
+      <workItem from="1563250378654" duration="11052000" />
+      <workItem from="1563424424905" duration="244000" />
+      <workItem from="1563437513945" duration="155000" />
+      <workItem from="1563437756024" duration="2052000" />
+      <workItem from="1563770438234" duration="4421000" />
+      <workItem from="1565072393830" duration="60000" />
+      <workItem from="1565072544392" duration="387000" />
     </task>
-    <task id="LOCAL-00003" summary="working on localization">
-      <created>1564726805770</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1564726805770</updated>
-    </task>
-    <task id="LOCAL-00004" summary="working on localization">
-      <created>1564731321982</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1564731321982</updated>
-    </task>
-    <task id="LOCAL-00005" summary="working on localization">
-      <created>1564731744298</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1564731744298</updated>
-    </task>
-    <task id="LOCAL-00006" summary="working on localization">
-      <created>1564745225409</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1564745225409</updated>
-    </task>
-    <task id="LOCAL-00007" summary="working on localization">
-      <created>1564746231159</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1564746231159</updated>
-    </task>
-    <task id="LOCAL-00008" summary="working on localization">
-      <created>1564746729293</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1564746729293</updated>
-    </task>
-    <task id="LOCAL-00009" summary="working on localization">
-      <created>1564747095336</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1564747095336</updated>
-    </task>
-    <task id="LOCAL-00010" summary="working on localization">
-      <created>1564751297059</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1564751297059</updated>
-    </task>
-    <task id="LOCAL-00011" summary="working on localization">
-      <created>1564751899809</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1564751899809</updated>
-    </task>
-    <task id="LOCAL-00012" summary="working on localization">
-      <created>1564752415013</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1564752415013</updated>
-    </task>
-    <task id="LOCAL-00013" summary="working on localization">
-      <created>1564832128140</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1564832128140</updated>
-    </task>
-    <task id="LOCAL-00014" summary="working on localization">
-      <created>1564833795694</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1564833795694</updated>
-    </task>
-    <task id="LOCAL-00015" summary="working on localization">
-      <created>1564833831930</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1564833831930</updated>
-    </task>
-    <task id="LOCAL-00016" summary="working on localization">
-      <created>1564833935280</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1564833935280</updated>
-    </task>
-    <task id="LOCAL-00017" summary="working on localization">
-      <created>1565009232758</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1565009232758</updated>
-    </task>
-    <task id="LOCAL-00018" summary="working on localization">
-      <created>1565009365454</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1565009365454</updated>
-    </task>
-    <task id="LOCAL-00019" summary="working on localization">
-      <created>1565009674688</created>
+    <task id="LOCAL-00019" summary="added functionality to roles and permissions and staff section">
+      <created>1560432788400</created>
       <option name="number" value="00019" />
       <option name="presentableId" value="LOCAL-00019" />
       <option name="project" value="LOCAL" />
-      <updated>1565009674688</updated>
+      <updated>1560432788400</updated>
     </task>
-    <task id="LOCAL-00020" summary="working on localization">
-      <created>1565009739420</created>
+    <task id="LOCAL-00020" summary="Taking pull">
+      <created>1560488627549</created>
       <option name="number" value="00020" />
       <option name="presentableId" value="LOCAL-00020" />
       <option name="project" value="LOCAL" />
-      <updated>1565009739420</updated>
+      <updated>1560488627549</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Taking pull">
+      <created>1560586233850</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1560586233851</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Taking pull">
+      <created>1560746885004</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1560746885004</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Taking pull">
+      <created>1560754248503</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1560754248503</updated>
+    </task>
+    <task id="LOCAL-00024" summary="COmpleted ticket system">
+      <created>1560777945516</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1560777945516</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Applied small changes to ticket system">
+      <created>1560833046298</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1560833046298</updated>
+    </task>
+    <task id="LOCAL-00026" summary="taking pull">
+      <created>1560838002543</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1560838002543</updated>
+    </task>
+    <task id="LOCAL-00027" summary="did changes in roles and permission section">
+      <created>1560864843553</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1560864843553</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Updated Roles and Permissions section">
+      <created>1560936948855</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1560936948855</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Updated staff Section">
+      <created>1560950356455</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1560950356455</updated>
+    </task>
+    <task id="LOCAL-00030" summary="applied changes in staff section and worked on customer section">
+      <created>1561037335400</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1561037335400</updated>
+    </task>
+    <task id="LOCAL-00031" summary="worked on customers Section">
+      <created>1561123971058</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1561123971058</updated>
+    </task>
+    <task id="LOCAL-00032" summary="worked on companies Section">
+      <created>1561210252001</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1561210252001</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Taking pull">
+      <created>1561350910957</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1561350910957</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Worked on Customers Section">
+      <created>1561383188639</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1561383188639</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Worked on settings and Customer section">
+      <created>1561469510629</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1561469510629</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Taking pull">
+      <created>1561522936824</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1561522936824</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Worked on Settings Panel">
+      <created>1561556902914</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1561556902914</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Taking pull">
+      <created>1561609031240</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1561609031240</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Worked on Settings panel and created permissions for some panels">
+      <created>1561642245755</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1561642245755</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Worked on Manage Tickets and Settings Panel">
+      <created>1561728708497</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1561728708497</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Worked on Services and Products Section">
+      <created>1561815198849</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1561815198859</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Worked on manage tickets section">
+      <created>1561988095571</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1561988095571</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Worked on manage tickets section">
+      <created>1562074397463</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1562074397463</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Worked on manage tickets section">
+      <created>1562247136588</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1562247136588</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Implemented small changes in manage ticket section">
+      <created>1562301336627</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1562301336627</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Worked on Manage tickets and formatted code">
+      <created>1562333557840</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1562333557840</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Worked on formatting code and applied permissions">
+      <created>1562416568069</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1562416568069</updated>
+    </task>
+    <task id="LOCAL-00048" summary="applied small changes">
+      <created>1562419914087</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1562419914087</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Worked on manage tickets section">
+      <created>1562567571144</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1562567571144</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Worked on finalising sections">
+      <created>1562592668691</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1562592668691</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Worked on finalising sections">
+      <created>1562679171576</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1562679171576</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Worked on editing tickets and Other sections">
+      <created>1562765368730</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1562765368730</updated>
+    </task>
+    <task id="LOCAL-00053" summary="taking pull">
+      <created>1562818755939</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1562818755939</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Worked on finalising sections">
+      <created>1562851794894</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1562851794894</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Worked on finalising sections">
+      <created>1562939077775</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1562939077776</updated>
+    </task>
+    <task id="LOCAL-00056" summary="Finalised sections">
+      <created>1563024733706</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1563024733706</updated>
+    </task>
+    <task id="LOCAL-00057" summary="some small change">
+      <created>1563025106047</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1563025106047</updated>
+    </task>
+    <task id="LOCAL-00058" summary="some small change">
+      <created>1563166898151</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1563166898151</updated>
+    </task>
+    <task id="LOCAL-00059" summary="completed sections">
+      <created>1563198076847</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1563198076847</updated>
+    </task>
+    <task id="LOCAL-00060" summary="completed sections">
+      <created>1563262497563</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1563262497564</updated>
+    </task>
+    <task id="LOCAL-00061" summary="Completed basic functioning">
+      <created>1563366408063</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1563366408063</updated>
+    </task>
+    <task id="LOCAL-00062" summary="Completed basic functioning">
+      <created>1563370545252</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1563370545252</updated>
+    </task>
+    <task id="LOCAL-00063" summary="small change implemented">
+      <created>1563370753329</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1563370753329</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Applied some API's to ticket panel">
+      <created>1563429560015</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1563429560015</updated>
+    </task>
+    <task id="LOCAL-00065" summary="worked on login screen">
+      <created>1563434028093</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1563434028093</updated>
+    </task>
+    <task id="LOCAL-00066" summary="Worked on Setup panel">
+      <created>1563543092715</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1563543092715</updated>
+    </task>
+    <task id="LOCAL-00067" summary="worked on login screen">
+      <created>1563972669467</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1563972669467</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58545000" />
+    <option name="totallyTimeSpent" value="1303225000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.41898528" visible="true" weight="0.1904762" />
-      <window_info id="Structure" order="1" weight="0.25" />
-      <window_info id="npm" order="2" sideWeight="0.58101475" side_tool="true" weight="0.1904762" />
-      <window_info id="Favorites" order="3" sideWeight="0.5184049" side_tool="true" weight="0.16097923" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32733223" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32242227" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32827735" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.47135842" />
-      <window_info anchor="bottom" id="TypeScript" order="9" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32894737" />
-      <window_info anchor="bottom" id="Version Control" order="11" weight="0.4304419" />
-      <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.39116204" visible="true" weight="0.20231824" />
+      <window_info id="npm" order="1" sideWeight="0.60883796" side_tool="true" weight="0.20238096" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info id="Structure" order="3" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" order="0" weight="0.3289689" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.3289689" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.49746513" visible="true" weight="0.41170096" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" weight="0.3289689" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.6511376" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.44189852" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50253487" side_tool="true" weight="0.5040917" />
+      <window_info anchor="bottom" id="TypeScript" order="12" weight="0.3289689" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24962178" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="RECENT_FILTERS">
       <map>
         <entry key="Branch">
@@ -459,42 +1025,133 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="worked on image validations" />
-    <MESSAGE value="working on localization" />
-    <option name="LAST_COMMIT_MESSAGE" value="working on localization" />
+    <MESSAGE value="worked on customers Section" />
+    <MESSAGE value="worked on companies Section" />
+    <MESSAGE value="Worked on Customers Section" />
+    <MESSAGE value="Worked on settings and Customer section" />
+    <MESSAGE value="Worked on Settings Panel" />
+    <MESSAGE value="Taking pull" />
+    <MESSAGE value="Worked on Settings panel and created permissions for some panels" />
+    <MESSAGE value="Worked on Manage Tickets and Settings Panel" />
+    <MESSAGE value="Worked on Services and Products Section" />
+    <MESSAGE value="Implemented small changes in manage ticket section" />
+    <MESSAGE value="Worked on Manage tickets and formatted code" />
+    <MESSAGE value="Worked on formatting code and applied permissions" />
+    <MESSAGE value="applied small changes" />
+    <MESSAGE value="Worked on manage tickets section" />
+    <MESSAGE value="Worked on editing tickets and Other sections" />
+    <MESSAGE value="taking pull" />
+    <MESSAGE value="Worked on finalising sections" />
+    <MESSAGE value="Finalised sections" />
+    <MESSAGE value="some small change" />
+    <MESSAGE value="completed sections" />
+    <MESSAGE value="Completed basic functioning" />
+    <MESSAGE value="small change implemented" />
+    <MESSAGE value="Applied some API's to ticket panel" />
+    <MESSAGE value="Worked on Setup panel" />
+    <MESSAGE value="worked on login screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="worked on login screen" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/index.js</url>
+          <line>74</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/StepFirst.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SecondStep.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddNewCustomers.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddCustomerAddress.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/Settings/Localization/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/Departments/DepartmentsRow.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/Departments/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/Staff/StaffList/StaffRow.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/Staff/AddNewStaff/ImageUpload.js" />
+    <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/Labels.js" />
+    <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/Products.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/StaffWithSelectedRole.js" />
+    <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/RolesAndPermissions.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/AddNewRole/index.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/RolesAndPermissions/RolesList/index.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/Customers/index.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerDetails.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/Customers/Companies/AddNewCompany.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/Staff/AddNewStaff/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SixthStep/AddNewStaff.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/ThirdStep.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/FifthStep.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/Customers/Companies/index.js" />
+    <entry file="file://$PROJECT_DIR$/src/util/Permissions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6120">
+          <caret line="360" column="5" selection-start-line="360" selection-start-column="5" selection-end-line="360" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js" />
+    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/TicketList.js" />
+    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/Companies.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/index.js" />
+    <entry file="file://$PROJECT_DIR$/src/containers/Sidebar/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-542">
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/Topbar/ForgetPassword.js" />
+    <entry file="file://$PROJECT_DIR$/src/containers/Sidebar/ForgetPassword.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/CannedResponses/AddNewResponses.js" />
+    <entry file="file://$PROJECT_DIR$/src/containers/App/MainApp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/ResetCustomerPassword.js" />
+    <entry file="file://$PROJECT_DIR$/src/containers/PasswordReset/ForgetPassword.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/ManageTickets/AddNewTicket/index.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/FourthStep.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SixthStep/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/TicketPriorities/PrioritiesRow.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/TicketPriorities/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SeventhStep.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/TicketStatuses/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/EighthStep.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/TicketStatuses/StatusesRow.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/CannedResponses/ResponseRow.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/NinthStep.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/Settings/TicketSettings/index.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/FifthStep.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SixthStep/AddNewStaff.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/StepFirst.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepSecond/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/VerificationModal.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/Settings/TicketSettings/index.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/NinthStep.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/EighthStep.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SeventhStep.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SixthStep/index.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/index.js" />
+    <entry file="file://$PROJECT_DIR$/src/containers/ResetPassword/ForgetPassword.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/SignUp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="101" column="21" lean-forward="true" selection-start-line="101" selection-start-column="21" selection-end-line="101" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/en_US.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="158" column="79" lean-forward="true" selection-start-line="158" selection-start-column="79" selection-end-line="158" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/Products/AddNewProduct.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js" />
+    <entry file="file://$PROJECT_DIR$/src/containers/PasswordReset/VerifyPassword.js" />
+    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/Products/index.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -504,9 +1161,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/ConversationCell.js">
+    <entry file="file://$PROJECT_DIR$/src/containers/SignIn.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-153">
+        <state relative-caret-position="597">
+          <caret line="104" column="80" lean-forward="true" selection-start-line="104" selection-end-line="104" selection-end-column="80" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="48" column="7" selection-start-line="48" selection-start-column="7" selection-end-line="48" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/App/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="969">
+          <caret line="73" column="47" selection-start-line="73" selection-start-column="47" selection-end-line="73" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/Auth.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2227">
+          <caret line="144" column="7" selection-start-line="144" selection-start-column="7" selection-end-line="144" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/VerifyEmail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/ResetPassword/VerifyPassword.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="48" column="15" lean-forward="true" selection-start-line="48" selection-start-column="15" selection-end-line="48" selection-end-column="15" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -515,174 +1214,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/RaiseTicketModal.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1785">
-          <caret line="190" column="73" selection-start-line="190" selection-start-column="30" selection-end-line="190" selection-end-column="73" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#RaiseTicketModal#0" />
-            <element signature="e#634#705#0" />
-            <element signature="e#739#881#0" />
-            <element signature="e#916#1144#0" />
-            <element signature="e#1175#1287#0" />
-            <element signature="e#1313#1431#0" />
-            <element signature="e#1457#1690#0" />
-            <element signature="e#1719#2312#0" />
-            <element signature="e#2337#2463#0" />
-            <element signature="e#2818#3313#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/EditTicketDetailsModal.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="374">
+          <caret line="63" column="36" lean-forward="true" selection-start-line="63" selection-start-column="36" selection-end-line="63" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/TicketDetails.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1467">
-          <caret line="149" column="38" selection-start-line="149" selection-start-column="38" selection-end-line="149" selection-end-column="38" />
+        <state relative-caret-position="249">
+          <caret line="102" column="18" selection-start-line="102" selection-start-column="18" selection-end-line="102" selection-end-column="18" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <element signature="n#!!block;n#componentDidMount#0;n#TicketDetails#0" />
-            <element signature="n#!!block;n#componentWillReceiveProps#0;n#TicketDetails#0" />
-            <element signature="n#!!block;n#componentWillUnmount#0;n#TicketDetails#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/CustomerPage/AllTickets/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="190" column="61" selection-start-line="190" selection-start-column="20" selection-end-line="190" selection-end-column="61" />
-          <folding>
-            <element signature="n#!!block;n#componentDidMount#0;n#AllTickets#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/SignIn.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="88" column="118" selection-start-line="88" selection-start-column="118" selection-end-line="88" selection-end-column="118" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/SignUp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1600">
-          <caret line="101" column="22" lean-forward="true" selection-start-line="101" selection-start-column="22" selection-end-line="101" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/ResetPassword/ForgetPassword.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="38" column="1" lean-forward="true" selection-start-line="38" selection-start-column="1" selection-end-line="38" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/VerifyEmail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="12" lean-forward="true" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/en_US.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="424" column="35" selection-start-line="424" selection-start-column="2" selection-end-line="424" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/ResetPassword/VerifyPassword.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1281">
-          <caret line="114" column="18" lean-forward="true" selection-start-line="114" selection-start-column="18" selection-end-line="114" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#2264#2716#0" />
-            <element signature="e#2658#3207#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/CannedResponses/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-238">
-          <caret line="4" column="8" lean-forward="true" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/it_IT.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1241">
-          <caret line="73" column="19" selection-start-line="73" selection-start-column="19" selection-end-line="73" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/es_ES.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1241">
-          <caret line="73" column="18" selection-start-line="73" selection-start-column="16" selection-end-line="73" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/fr_FR.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="74" column="1" selection-start-line="74" selection-start-column="1" selection-end-line="74" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/Common.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="21" column="25" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#143#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/actions/Common.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="23" column="26" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#144#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/constants/ActionTypes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="37" column="51" selection-start-line="37" selection-start-column="51" selection-end-line="37" selection-end-column="51" />
         </state>
       </provider>
     </entry>

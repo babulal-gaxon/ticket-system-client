@@ -33,7 +33,6 @@ class VerifyPassword extends React.Component {
   };
 
   compareToFirstPassword = (rule, value, callback) => {
-    const {messages} = this.props.intl;
     const {form} = this.props;
     if (value && value !== form.getFieldValue('password')) {
       callback('Two passwords that you enter is inconsistent!');
@@ -76,7 +75,8 @@ class VerifyPassword extends React.Component {
                       required: true, type: 'email', message: messages["validation.auth.email"],
                     }],
                   })(
-                    <Input placeholder={messages["auth.email"]} onChange={(e) => this.setState({email: e.target.value})}/>
+                    <Input placeholder={messages["auth.email"]}
+                           onChange={(e) => this.setState({email: e.target.value})}/>
                   )}
                 </Form.Item>
                 <Form.Item label={<IntlMessages id="auth.enterNewPassword"/>} hasFeedback>

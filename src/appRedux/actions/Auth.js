@@ -2,7 +2,8 @@ import {
   FETCH_ERROR,
   FETCH_START,
   FETCH_SUCCESS,
-  INIT_URL, SHOW_MESSAGE,
+  INIT_URL,
+  SHOW_MESSAGE,
   SIGNOUT_USER_SUCCESS,
   USER_DATA,
   USER_TOKEN_SET
@@ -28,7 +29,10 @@ export const onUserSignUp = ({email, password, first_name, last_name}) => {
     ).then(({data}) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "An Email has been sent to entered email address, please check your email"});
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: "An Email has been sent to entered email address, please check your email"
+        });
       } else if (data.message) {
         console.info("payload: data.error", data.message);
         dispatch({type: FETCH_ERROR, payload: data.message});
@@ -103,7 +107,7 @@ export const onResetPassword = ({email}) => {
       console.info("data:", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type:SHOW_MESSAGE, payload: "Reset password link has been successfully sent to your email address"});
+        dispatch({type: SHOW_MESSAGE, payload: "Reset password link has been successfully sent to your email address"});
       } else if (data.message) {
         console.info("payload: data.error", data.message);
         dispatch({type: FETCH_ERROR, payload: data.message});

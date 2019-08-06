@@ -100,6 +100,7 @@ class TicketDetails extends Component {
       formData.append('file', file);
       formData.append('title', file.name);
       this.imageUpload(formData);
+      return file;
     });
   };
 
@@ -147,7 +148,7 @@ class TicketDetails extends Component {
       },
       fileList,
     };
-    const {messages} =this.props.intl;
+    const {messages} = this.props.intl;
 
     return (
       <div className="gx-main-layout-content">
@@ -235,10 +236,12 @@ class TicketDetails extends Component {
             <div className="gx-flex-column">
               <label><IntlMessages id="tickets.upload"/></label>
               <Upload {...props} >
-                <Input placeholder={messages["tickets.files.upload"]} className="gx-my-3" prefix={<i className="icon gx-icon-attachment"/>}/>
+                <Input placeholder={messages["tickets.files.upload"]} className="gx-my-3"
+                       prefix={<i className="icon gx-icon-attachment"/>}/>
               </Upload>
             </div>
-            <Button type="primary" className="gx-my-3" onClick={this.onSubmitMessage} disabled={message === ""}><IntlMessages id="tickets.updateButton"/></Button>
+            <Button type="primary" className="gx-my-3" onClick={this.onSubmitMessage}
+                    disabled={message === ""}><IntlMessages id="tickets.updateButton"/></Button>
           </div> : null}
         {showEditModal ?
           <EditTicketDetailsModal

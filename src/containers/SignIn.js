@@ -83,10 +83,12 @@ class SignIn extends React.Component {
                 </FormItem>
               </Form>
               <div style={{justifyContent: "center", textAlign: "center"}}>
-                <h4 className="gx-text-grey" onClick={this.onForgetPassword}><IntlMessages id="auth.ForgotPassword"/></h4>
+                <h4 className="gx-text-grey" onClick={this.onForgetPassword}><IntlMessages id="auth.ForgotPassword"/>
+                </h4>
                 <div className="gx-mb-1 gx-d-flex" style={{justifyContent: "center", textAlign: "center"}}>
                   <h4 className="gx-text-grey gx-mr-2"><IntlMessages id="auth.newToTicksUp"/></h4>
-                  <h4 className="gx-text-primary" onClick={this.onSignUpClick}> <IntlMessages id="app.userAuth.signUp"/></h4></div>
+                  <h4 className="gx-text-primary" onClick={this.onSignUpClick}><IntlMessages id="app.userAuth.signUp"/>
+                  </h4></div>
               </div>
             </div>
             <InfoView/>
