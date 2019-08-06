@@ -63,7 +63,7 @@ export const onEditCompany = (company) => {
         console.log(" sending data", data.data);
         dispatch({type: EDIT_COMPANY_DETAILS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Company details has been added successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: "The Company details has been updates successfully"});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

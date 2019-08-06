@@ -436,5 +436,97 @@
   "dashboard.viewAll": "View All",
   "dashboard.recentCustomers": "Recent Customers",
   "dashboard.topSupportStaff": "Top Support Staff",
-  "customers.address.delete": "Are you sure to delete this Address?"
+  "customers.address.delete": "Are you sure to delete this Address?",
+
+
+
+  "action.auth.resetPassword": "Reset password link has been successfully sent to your email address",
+  "action.auth.passwordUpdated": "The password has been updated successfully",
+
+
+  "action.responses.add": "The Response has been added successfully",
+  "action.responses.edit": "The Response details has been updated successfully",
+  "action.responses.active": "The Status of Response(s) has been changed to Active successfully",
+  "action.responses.disable": "The Status of Response(s) has been changed to Disabled successfully",
+  "action.responses.delete": "The Response(s) has been deleted successfully",
+
+  "action.departments.add": "The Department has been added successfully",
+  "action.departments.edit": "The Department details has been updated successfully",
+  "action.departments.active": "The Status of Department(s) has been changed to Active successfully",
+  "action.departments.disable": "The Status of Department(s) has been changed to Disabled successfully",
+  "action.departments.delete": "The Department(s) has been deleted successfully",
+
+  "action.priorities.add": "The Priority has been added successfully",
+  "action.priorities.edit": "The Priority details has been updated successfully",
+  "action.priorities.active": "The Status of Priority(s) has been changed to Active successfully",
+  "action.priorities.disable": "The Status of Priority(s) has been changed to Disabled successfully",
+  "action.priorities.delete": "The Priority(s) has been deleted successfully",
+
+  "action.statuses.add": "The Status has been added successfully",
+  "action.statuses.edit": "The Status details has been updated successfully",
+  "action.statuses.active": "The Status of Status(s) has been changed to Active successfully",
+  "action.statuses.disable": "The Status of Status(s) has been changed to Disabled successfully",
+  "action.statuses.delete": "The Status(s) has been deleted successfully",
+
+  "action.products.add": "The Product has been added successfully",
+  "action.products.edit": "The Product details has been updated successfully",
+  "action.products.active": "The Status of Product(s) has been changed to Active successfully",
+  "action.products.disable": "The Status of Product(s) has been changed to Disabled successfully",
+  "action.products.delete": "The Product(s) has been deleted successfully",
+
+  "action.services.add": "The Service has been added successfully",
+  "action.services.edit": "The Service details has been updated successfully",
+  "action.services.active": "The Status of Service(s) has been changed to Active successfully",
+  "action.services.disable": "The Status of Service(s) has been changed to Disabled successfully",
+  "action.services.delete": "The Service(s) has been deleted successfully",
+
+  "action.companies.add": "The Company has been added successfully",
+  "action.companies.edit": "The Company details has been updated successfully",
+  "action.companies.delete": "The Company(s) has been deleted successfully",
+
+
+  "action.customers.add": "The Customer has been added successfully",
+  "action.customers.edit": "The Customer details has been updated successfully",
+  "action.customers.active": "The Status of Customer(s) has been changed to Active successfully",
+  "action.customers.disable": "The Status of Customer(s) has been changed to Disabled successfully",
+  "action.customers.delete": "The Customer(s) has been deleted successfully",
+  "action.customers.profilePic": "The Profile Picture has been uploaded successfully.",
+  "action.customers.password": "The Password has been changed successfully",
+
+  "action.address.add": "The Address has been added successfully",
+  "action.address.edit": "The Address details has been updated successfully",
+  "action.address.delete": "The Address has been deleted successfully",
+
+  "action.settings.changes": "The Changes has been saved successfully.",
+
+  "action.initialSetup.database": "The Database information has been saved successfully.",
+  "action.initialSetup.admin": "The Admin details has been saved successfully.",
+  "action.initialSetup.generalInfo": "The General information has been saved successfully.",
+  "action.initialSetup.pin": "The Pin has been sent successfully to your Email address.",
+
+
+  "action.labels.add": "The Label has been added successfully",
+  "action.labels.edit": "The Label details has been updated successfully",
+  "action.labels.active": "The Status of Label(s) has been changed to Active successfully",
+  "action.labels.disable": "The Status of Label(s) has been changed to Disabled successfully",
+  "action.labels.delete": "The Label(s) has been deleted successfully",
+
+  "action.roles.add": "The Role has been added successfully",
+  "action.roles.edit": "The Role details has been updated successfully",
+  "action.roles.delete": "The Role(s) has been deleted successfully",
+
+  "action.staff.add": "The Staff has been added successfully",
+  "action.staff.edit": "The Staff details has been updated successfully",
+  "action.staff.active": "The Status of Staff(s) has been changed to Active successfully",
+  "action.staff.disable": "The Status of Staff(s) has been changed to Disabled successfully",
+  "action.staff.delete": "The Staff(s) has been deleted successfully",
+  "action.staff.noteAdd": "The Note has been added successfully",
+  "action.staff.noteEdit": "The Note details has been updated successfully",
+  "action.staff.noteDelete": "The Note has been deleted successfully",
+
+  "action.tickets.add": "The Ticket has been added successfully",
+  "action.tickets.edit": "The Ticket details has been updated successfully",
+  "action.tickets.archive": "The Ticket(s) has been deleted successfully",
+  "action.tickets.status": "The Status of Ticket has been changed successfully",
+  "action.tickets.priority": "The Priority of Ticket has been changed successfully"
 }
