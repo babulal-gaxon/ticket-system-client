@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="22660aa2-fcdc-4713-8a0a-0d397dd58555" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/Common.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/Common.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appRedux/reducers/Common.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/reducers/Common.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/ActionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/ActionTypes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/Utills.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/Utills.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -22,7 +20,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/appRedux/actions/Common.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
+            <state relative-caret-position="391">
               <caret line="23" column="26" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="26" />
               <folding>
                 <element signature="e#0#144#0" expanded="true" />
@@ -34,8 +32,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/Common.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="21" column="25" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="25" />
+            <state relative-caret-position="187">
+              <caret line="11" column="9" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="9" />
               <folding>
                 <element signature="e#0#143#0" expanded="true" />
               </folding>
@@ -44,10 +42,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/constants/ActionTypes.js">
+        <entry file="file://$PROJECT_DIR$/src/util/Utills.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
-              <caret line="37" column="51" selection-start-line="37" selection-start-column="51" selection-end-line="37" selection-end-column="51" />
+            <state relative-caret-position="187">
+              <caret line="20" column="29" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -56,7 +54,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>General Setup</find>
       <find>Localization Setti</find>
       <find>Departments</find>
       <find>Staff Manage</find>
@@ -86,6 +83,7 @@
       <find>app.userAuth.goback</find>
       <find>app.userAuth.resetPassword</find>
       <find>updatingContent</find>
+      <find>getFormattedDate</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -99,7 +97,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/routes/SetUp/Departments/DepartmentsRow.js" />
         <option value="$PROJECT_DIR$/src/routes/SetUp/Products/ProductsRow.js" />
         <option value="$PROJECT_DIR$/src/routes/SetUp/Services/ServicesRow.js" />
         <option value="$PROJECT_DIR$/src/routes/SetUp/TicketPriorities/PrioritiesRow.js" />
@@ -148,8 +145,9 @@
         <option value="$PROJECT_DIR$/src/containers/ResetPassword/VerifyPassword.js" />
         <option value="$PROJECT_DIR$/src/lngProvider/locales/fr_FR.json" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/Common.js" />
-        <option value="$PROJECT_DIR$/src/appRedux/reducers/Common.js" />
         <option value="$PROJECT_DIR$/src/constants/ActionTypes.js" />
+        <option value="$PROJECT_DIR$/src/appRedux/reducers/Common.js" />
+        <option value="$PROJECT_DIR$/src/util/Utills.js" />
       </list>
     </option>
   </component>
@@ -179,27 +177,7 @@
               <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="appRedux" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="appRedux" type="462c0819:PsiDirectoryNode" />
-              <item name="actions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="appRedux" type="462c0819:PsiDirectoryNode" />
-              <item name="reducers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ticket-system-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ticket-system-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="constants" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -248,6 +226,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.start" />
+        <item itemvalue="npm.build" />
         <item itemvalue="npm.start" />
         <item itemvalue="npm.build" />
       </list>
@@ -407,11 +387,18 @@
       <option name="project" value="LOCAL" />
       <updated>1565009739420</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="working on localization">
+      <created>1565067024268</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1565067024268</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58545000" />
+    <option name="totallyTimeSpent" value="59624000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -464,10 +451,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="working on localization" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/StepFirst.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes/InitialSetup/SetupStepFirst/SecondStep.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddNewCustomers.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/AddCustomerAddress.js" />
     <entry file="file://$PROJECT_DIR$/src/routes/Settings/GeneralSettings/GeneralDetails.js" />
@@ -624,13 +607,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/CannedResponses/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-238">
-          <caret line="4" column="8" lean-forward="true" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/SetUp/CannedResponses/index.js" />
     <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/it_IT.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1241">
@@ -659,19 +636,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/Common.js">
+    <entry file="file://$PROJECT_DIR$/src/constants/ActionTypes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="21" column="25" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="25" />
+        <state relative-caret-position="410">
+          <caret line="37" column="51" selection-start-line="37" selection-start-column="51" selection-end-line="37" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3842">
+          <caret line="245" column="41" selection-start-line="245" selection-start-column="26" selection-end-line="245" selection-end-column="41" />
           <folding>
-            <element signature="e#0#143#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="true" />
+            <element signature="n#!!block;n#componentDidMount#0;n#AllCustomers#0" />
+            <element signature="e#1600#1839#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/App/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Customers/AllCustomers/CustomerRow.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1054">
+          <caret line="67" column="5" selection-start-line="67" selection-start-column="5" selection-end-line="67" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#61#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/appRedux/actions/Common.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
+        <state relative-caret-position="391">
           <caret line="23" column="26" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="26" />
           <folding>
             <element signature="e#0#144#0" expanded="true" />
@@ -679,10 +682,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/constants/ActionTypes.js">
+    <entry file="file://$PROJECT_DIR$/src/appRedux/reducers/Common.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="37" column="51" selection-start-line="37" selection-start-column="51" selection-end-line="37" selection-end-column="51" />
+        <state relative-caret-position="187">
+          <caret line="11" column="9" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#143#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/Utills.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="20" column="29" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="29" />
         </state>
       </provider>
     </entry>
