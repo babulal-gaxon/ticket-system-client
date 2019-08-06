@@ -98,6 +98,8 @@ class TicketAttachments extends Component {
       },
       fileList,
     };
+
+
     return (
       <div className="gx-main-layout-content">
         <Dragger {...props}>
