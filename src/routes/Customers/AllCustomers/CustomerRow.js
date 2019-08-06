@@ -78,7 +78,7 @@ const CustomersRow = (context) => {
             <div className="gx-media-body">
               <span className="gx-mb-0 gx-text-capitalize">{record.first_name + " " + record.last_name}</span>
               <div className="gx-mt-1">
-                <Tag color="#fc895f">{record.company ? record.company.company_name : null}</Tag>
+                {record.company ? <Tag color="#fc895f">{record.company.company_name}</Tag> : null}
               </div>
             </div>
           </div>
