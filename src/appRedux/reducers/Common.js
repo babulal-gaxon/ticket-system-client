@@ -23,16 +23,16 @@ export default (state = INIT_STATE, action) => {
       return {...state, error: '', message: '', updatingContent: true};
     }
     case FETCH_SUCCESS: {
-      return {...state, error: '', message: action.payload, loading: false};
+      return {...state, error: '', message: action.payload, loading: false, updatingContent: false};
     }
     case SHOW_MESSAGE: {
-      return {...state, error: '', message: action.payload, loading: false};
+      return {...state, error: '', message: action.payload, loading: false, updatingContent: false};
     }
     case FETCH_ERROR: {
-      return {...state, loading: false, error: action.payload, message: ''};
+      return {...state, loading: false, error: action.payload, message: '', updatingContent: false};
     }
     case HIDE_MESSAGE: {
-      return {...state, loading: false, error: '', message: ''};
+      return {...state, loading: false, error: '', message: '', updatingContent: false};
     }
     default:
       return state;
