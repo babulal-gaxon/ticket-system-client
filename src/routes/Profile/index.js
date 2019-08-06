@@ -3,7 +3,7 @@ import {Button, Col, Form, Input, Row} from "antd/lib/index";
 import PropTypes from "prop-types";
 import Widget from "../../components/Widget";
 import {connect} from "react-redux";
-import {onAddProfileImage} from "../../appRedux/actions/Profile";
+import {onAddProfileImage} from "../../appRedux/actions/Auth";
 import {Divider, Select} from "antd";
 import ImageUpload from "./ImageUpload";
 import {getUserProfile, updateUserProfile} from "../../appRedux/actions";
@@ -222,7 +222,6 @@ const mapStateToProps = ({departments, auth}) => {
 export default connect(mapStateToProps, {
   updateUserProfile,
   getUserProfile,
-  onGetDepartments,
   onAddProfileImage,
 })(injectIntl(Profile));
 
