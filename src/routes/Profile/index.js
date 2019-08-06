@@ -24,7 +24,8 @@ class Profile extends Component {
       hourly_rate: "",
       departments_ids: [],
       profile_pic: null,
-      designation: ""
+      designation: "",
+      avatar: null
     };
   }
 
@@ -43,7 +44,8 @@ class Profile extends Component {
       hourly_rate: hourly_rate ? parseInt(hourly_rate) : "",
       departments_ids: department_ids,
       profile_pic: avatar ? avatar.id : null,
-      designation: designation
+      designation: designation,
+      avatar: avatar
     });
   }
 
@@ -92,7 +94,7 @@ class Profile extends Component {
   render() {
     const {messages} = this.props.intl;
     const {getFieldDecorator} = this.props.form;
-    const {mobile, hourly_rate, departments_ids, first_name, last_name, email, designation} = this.state;
+    const {mobile, hourly_rate, departments_ids, first_name, last_name, email, designation, avatar} = this.state;
     const deptOptions = this.onDepartmentSelectOption();
     return (
       <div className="gx-main-layout-content">
@@ -190,7 +192,7 @@ class Profile extends Component {
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
               <ImageUpload onAddProfileImage={this.props.onAddProfileImage}
-                           context={this} imageAvatar={this.state.imageAvatar}/>
+                           context={this} imageAvatar={avatar}/>
             </Col>
           </Row>
           <Divider/>
