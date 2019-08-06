@@ -172,7 +172,7 @@ class AllCustomers extends Component {
           <IntlMessages id="common.archive"/>
         </Menu.Item>
         <Menu.Item key="2" onClick={this.onShowBulkDeleteConfirm}>
-         <IntlMessages id="common.delete"/>
+          <IntlMessages id="common.delete"/>
         </Menu.Item>
       </Menu>
     );

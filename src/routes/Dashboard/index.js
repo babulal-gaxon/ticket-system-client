@@ -4,7 +4,6 @@ import {Area, AreaChart, ResponsiveContainer, Tooltip} from "recharts";
 import PropTypes from 'prop-types';
 
 import InfoView from "../../components/InfoView";
-import IntlMessages from "../../util/IntlMessages";
 import TicketList from "./DashboardInfo/TicketList";
 import ChartCard from "./DashboardInfo/ChartCard";
 import RecentCustomers from "./DashboardInfo/RecentCustomers";
