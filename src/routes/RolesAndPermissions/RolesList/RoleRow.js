@@ -9,7 +9,7 @@ const onDeletePopUp = (recordId, context) => {
   return <Popconfirm
     title="Are you sure to delete this Role?"
     onConfirm={() => {
-      context.props.onBulkDeleteRoles({ids: [recordId]});
+      context.props.onBulkDeleteRoles({ids: [recordId]}, context);
       context.onGetRolesData(context.state.current, context.state.itemNumbers, context.state.filterText)
     }}
     okText={<IntlMessages id="common.yes"/>}

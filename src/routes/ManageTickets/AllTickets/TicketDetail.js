@@ -70,13 +70,13 @@ class TicketDetail extends Component {
   onPriorityChange = value => {
     const currentTicket = this.props.currentTicket;
     this.setState({selectedPriority: value},
-      () => this.props.onUpdateTicketPriority(currentTicket.id, this.state.selectedPriority))
+      () => this.props.onUpdateTicketPriority(currentTicket.id, this.state.selectedPriority, this))
   };
 
   onStatusChange = value => {
     const currentTicket = this.props.currentTicket;
     this.setState({selectedStatus: value},
-      () => this.props.onUpdateTicketStatus(currentTicket.id, this.state.selectedStatus))
+      () => this.props.onUpdateTicketStatus(currentTicket.id, this.state.selectedStatus, this))
   };
 
   onHandleKeyPress = (e) => {

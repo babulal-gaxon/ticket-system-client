@@ -3,6 +3,7 @@ import {message, Upload} from "antd";
 import PropTypes from "prop-types";
 import {getTicketFileExtension, getTicketFileSize} from "../../../util/Utills";
 import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {Dragger} = Upload;
 
@@ -70,6 +71,7 @@ class TicketAttachments extends Component {
 
   render() {
     const {fileList} = this.state;
+    const {messages} = this.props.intl;
     const props = {
       accept: getTicketFileExtension(),
       multiple: true,
@@ -86,7 +88,7 @@ class TicketAttachments extends Component {
       beforeUpload: file => {
         const isFileSize = file.size < getTicketFileSize();
         if (!isFileSize) {
-          message.error('The image size is greater than allowed size!');
+          message.error(messages["validation.message.imageSize"]);
         } else {
           this.setState(state => ({
             fileList: [...state.fileList, file],
@@ -110,7 +112,7 @@ class TicketAttachments extends Component {
   }
 }
 
-export default TicketAttachments;
+export default injectIntl(TicketAttachments);
 
 TicketAttachments.defaultProps = {
   imageAvatar: null

@@ -34,9 +34,9 @@ class Addresses extends Component {
         {(Permissions.canAddressDelete()) ?
           <Menu.Item key="4">
             <Popconfirm
-              title="Are you sure to delete this Address?"
+              title={<IntlMessages id="customers.address.delete"/>}
               onConfirm={() => {
-                this.props.onDeleteAddress(address.id);
+                this.props.onDeleteAddress(address.id, this);
               }}
               okText={<IntlMessages id="common.yes"/>}
               cancelText={<IntlMessages id="common.no"/>}>

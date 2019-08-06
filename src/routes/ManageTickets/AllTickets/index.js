@@ -131,7 +131,7 @@ class AllTickets extends Component {
           const obj = {
             ids: this.state.selectedTickets
           };
-          this.props.onDeleteTicket(obj);
+          this.props.onDeleteTicket(obj, this);
           this.setState({selectedRowKeys: [], selectedTickets: []});
         }
       })

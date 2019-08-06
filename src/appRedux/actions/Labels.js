@@ -49,7 +49,7 @@ export const onAddLabelsData = (label, context) => {
         console.log(" sending data", data.data);
         dispatch({type: ADD_LABELS_DATA, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The New Label has been added successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.labels.add"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -69,7 +69,7 @@ export const onDeleteLabel = (labelId, context) => {
       if (data.success) {
         dispatch({type: DELETE_LABEL, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Selected Label has been deleted successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.labels.delete"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -88,7 +88,7 @@ export const onChangeToActiveStatus = (labelId, context) => {
       if (data.success) {
         dispatch({type: STATUS_TO_ACTIVE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status of Label(s) has been changed to Active successfully"});
+        dispatch({type: SHOW_MESSAGE, payload:messages["action.labels.active"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -107,7 +107,7 @@ export const onChangeToDisableStatus = (labelId, context) => {
       if (data.success) {
         dispatch({type: STATUS_TO_DISABLED, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status of Label(s) has been changed to Disabled successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.labels.disable"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -128,7 +128,7 @@ export const onEditLabelsData = (label, context) => {
         console.log(" sending data", data.data);
         dispatch({type: EDIT_LABEL_DATA, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Label details has been edited successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.labels.edit"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

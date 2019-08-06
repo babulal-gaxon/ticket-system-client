@@ -29,7 +29,7 @@ export const onSendDatabaseInfo = (info, nextStep, context) => {
       console.log("onSendDatabaseInfo", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Database information has been saved successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.initialSetup.database"]});
         nextStep();
       } else {
         dispatch({type: FETCH_ERROR, payload: data.message});
@@ -77,7 +77,7 @@ export const onSendSuperAdminInfo = (info, context) => {
         dispatch({type: ADD_ADMIN_INFO, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: OPEN_PIN_MODAL, payload: true});
-        dispatch({type: SHOW_MESSAGE, payload: "The Admin information has been saved successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.initialSetup.admin"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -103,7 +103,7 @@ export const onSetGeneralInfo = (info, token, nextStep, context) => {
         console.log(" sending data", data.data);
         dispatch({type: ADD_GENERAL_INFO, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The general information has been saved successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.initialSetup.generalInfo"]});
         nextStep();
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
@@ -163,7 +163,7 @@ export const onResendPin = (email, context) => {
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Pin has been sent successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.initialSetup.pin"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

@@ -43,13 +43,15 @@ const TicketRow = (context) => {
       dataIndex: 'title',
       key: 'title',
       render: (text, record) => {
+
         return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
-            <Tooltip placement="top" title={record.assigned_by.first_name + " " + record.assigned_by.last_name}>
+            {record.assigned_by ?
+            <Tooltip placement="top" title={record.assigned_by.display_name}>
               {record.assigned_by.avatar ?
                 <Avatar className="gx-mr-3 gx-size-50 gx-fs-xl" src={MEDIA_BASE_URL + record.assigned_by.avatar.src}/> :
                 <Avatar className="gx-mr-3 gx-size-50 gx-fs-xl"
                         style={{backgroundColor: '#f56a00'}}>{record.assigned_by.first_name[0].toUpperCase()}</Avatar>}
-            </Tooltip>
+            </Tooltip> : null}
             <div className="gx-media-body">
               <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
               {record.product_name ? <Tag className="gx-ml-2" color="blue">{record.product_name}</Tag> : null}

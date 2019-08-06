@@ -9,7 +9,7 @@ import {
 } from "../../../appRedux/actions/Labels";
 import {connect} from "react-redux";
 import Widget from "../../../components/Widget";
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Select, Table} from "antd/lib/index";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table} from "antd/lib/index";
 import {Link} from "react-router-dom";
 import AddNewLabel from "./AddNewLabel";
 import Permissions from "../../../util/Permissions";
@@ -88,7 +88,7 @@ class CustomersLabel extends Component {
           const obj = {
             ids: this.state.selectedLabels
           };
-          this.props.onChangeToActiveStatus(obj);
+          this.props.onChangeToActiveStatus(obj, this);
           this.setState({selectedRowKeys: [], selectedLabels: []})
         }
       })
@@ -107,7 +107,7 @@ class CustomersLabel extends Component {
       confirm({
         title: messages["validation.labels.disable"],
         onOk: () => {
-          this.props.onChangeToDisableStatus({ids: this.state.selectedLabels});
+          this.props.onChangeToDisableStatus({ids: this.state.selectedLabels}, this);
           this.setState({selectedRowKeys: [], selectedLabels: []})
         }
       })
@@ -129,7 +129,7 @@ class CustomersLabel extends Component {
           const obj = {
             ids: this.state.selectedLabels
           };
-          this.props.onDeleteLabel(obj);
+          this.props.onDeleteLabel(obj, this);
           this.setState({selectedRowKeys: [], selectedLabels: []});
         }
       })
@@ -167,6 +167,25 @@ class CustomersLabel extends Component {
         <IntlMessages id="common.bulkActions"/> <Icon type="down"/>
       </Button>
     </Dropdown>
+  };
+
+  onDeletePopUp = (recordId) => {
+    return (
+      <Popconfirm
+        title={<IntlMessages id="validation.labels.delete"/>}
+        onConfirm={() => {
+          this.props.onDeleteLabel({ids: [recordId]}, this);
+          this.onGetLabelsList(this.state.current, this.state.itemNumbers, this.state.filterText);
+        }}
+        okText={<IntlMessages id="common.yes"/>}
+        cancelText={<IntlMessages id="common.no"/>}>
+        <i className="icon icon-trash"/>
+      </Popconfirm>
+    )
+  };
+
+  onEditLabel = (label, context) => {
+    this.setState({label: label, showAddLabel: true});
   };
 
 

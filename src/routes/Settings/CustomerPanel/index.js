@@ -63,7 +63,7 @@ class CustomerPanelForm extends Component {
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.props.onSaveCustomerPanelDetails({...this.state});
+        this.props.onSaveCustomerPanelDetails({...this.state}, this);
       }
     });
   };

@@ -66,7 +66,7 @@ class Localization extends Component {
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.props.onSaveLocalizationDetails({...this.state});
+        this.props.onSaveLocalizationDetails({...this.state}, this);
       }
     });
   };

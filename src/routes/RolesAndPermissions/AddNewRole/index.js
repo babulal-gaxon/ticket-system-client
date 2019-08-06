@@ -138,7 +138,7 @@ class AddNewRole extends Component {
         status: this.state.status,
         permissions: this.onCollectAllPermissions()
       };
-      this.props.onAddRole(addData, this.props.history);
+      this.props.onAddRole(addData, this.props.history, this);
     } else {
       const editedData = {
         name: this.state.name,
@@ -146,7 +146,7 @@ class AddNewRole extends Component {
         permissions: this.onCollectAllPermissions(),
         id: this.state.id
       };
-      this.props.onEditRole(editedData, this.props.history)
+      this.props.onEditRole(editedData, this.props.history, this)
     }
   };
 

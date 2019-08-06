@@ -16,7 +16,7 @@ class EditTicketDetailsModal extends Component {
   }
 
   onEditDetails = () => {
-    this.props.onUpdateTickets(this.props.ticketId, {...this.state});
+    this.props.onUpdateTickets(this.props.ticketId, {...this.state}, this);
     this.props.onToggleEditModal();
   };
 

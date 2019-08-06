@@ -43,7 +43,7 @@ export const onAddNewCompany = (company, context) => {
         console.log(" sending data", data.data);
         dispatch({type: ADD_NEW_COMPANY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Company has been added successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.companies.add"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -64,7 +64,7 @@ export const onEditCompany = (company, context) => {
         console.log(" sending data", data.data);
         dispatch({type: EDIT_COMPANY_DETAILS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Company details has been updates successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.companies.edit"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -83,7 +83,7 @@ export const onDeleteCompanies = (companyIds, context) => {
       if (data.success) {
         dispatch({type: DELETE_COMPANIES, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Company has been deleted successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.companies.delete"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

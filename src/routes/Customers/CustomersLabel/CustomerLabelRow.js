@@ -3,24 +3,7 @@ import Permissions from "../../../util/Permissions";
 import React from "react";
 import IntlMessages from "../../../util/IntlMessages";
 
-const onDeletePopUp = (recordId, context) => {
-  return (
-    <Popconfirm
-      title={<IntlMessages id="validation.labels.delete"/>}
-      onConfirm={() => {
-        context.props.onDeleteLabel({ids: [recordId]});
-        context.onGetLabelsList(context.state.current, context.state.itemNumbers, context.state.filterText);
-      }}
-      okText={<IntlMessages id="common.yes"/>}
-      cancelText={<IntlMessages id="common.no"/>}>
-      <i className="icon icon-trash"/>
-    </Popconfirm>
-  )
-};
 
-const onEditLabel = (label, context) => {
-  context.setState({label: label, showAddLabel: true});
-};
 
 const CustomerLabelRow = (context) => {
   return [
@@ -64,8 +47,8 @@ const CustomerLabelRow = (context) => {
       key: 'empty',
       render: (text, record) => {
         return <span> {Permissions.canLabelEdit() ? <i className="icon icon-edit gx-mr-3"
-                                                       onClick={() => onEditLabel(record, context)}/> : null}
-          {Permissions.canLabelDelete() ? onDeletePopUp(record.id, context) : null}
+                                                       onClick={() => context.onEditLabel(record)}/> : null}
+          {Permissions.canLabelDelete() ? context.onDeletePopUp(record.id) : null}
           </span>
       },
     },

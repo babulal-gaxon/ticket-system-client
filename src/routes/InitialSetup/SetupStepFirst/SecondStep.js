@@ -59,7 +59,7 @@ class SecondStep extends Component {
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.props.onSendSuperAdminInfo({...this.state});
+        this.props.onSendSuperAdminInfo({...this.state}, this);
       }
     });
   };
@@ -69,7 +69,7 @@ class SecondStep extends Component {
   };
 
   onRequestPinAgain = () => {
-    this.props.onResendPin({email: this.state.email})
+    this.props.onResendPin({email: this.state.email}, this)
   };
 
 

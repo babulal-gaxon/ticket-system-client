@@ -21,9 +21,9 @@ class AddNewLabel extends Component {
 
   onSaveData = () => {
     if (this.props.label === null) {
-      this.props.onAddLabelsData({...this.state});
+      this.props.onAddLabelsData({...this.state}, this);
     } else {
-      this.props.onEditLabelsData({...this.state});
+      this.props.onEditLabelsData({...this.state}, this);
     }
     this.props.onToggleModalState();
   };

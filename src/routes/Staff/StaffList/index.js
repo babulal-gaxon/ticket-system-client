@@ -88,7 +88,7 @@ class StaffList extends Component {
       confirm({
         title: messages["staff.message.delete"],
         onOk: () => {
-          this.props.onBulkDeleteStaff({ids: this.state.selectedStaff});
+          this.props.onBulkDeleteStaff({ids: this.state.selectedStaff}, null, this);
           this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers);
           this.setState({selectedRowKeys: [], selectedStaff: []});
         }
@@ -124,11 +124,11 @@ class StaffList extends Component {
 
 
   onDisableStaffStatus = (staffId) => {
-    this.props.onChangeStaffStatus({ids: [staffId]}, 0, true);
+    this.props.onChangeStaffStatus({ids: [staffId]}, 0, true, this);
   };
 
   onEnableStaffStatus = (staffId) => {
-    this.props.onChangeStaffStatus({ids: [staffId]}, 1, true);
+    this.props.onChangeStaffStatus({ids: [staffId]}, 1, true, this);
   };
 
   onSelectStaff = (currentMember) => {

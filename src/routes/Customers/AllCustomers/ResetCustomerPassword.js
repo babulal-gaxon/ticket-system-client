@@ -16,7 +16,7 @@ class ResetCustomerPassword extends Component {
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.props.onResetPassword(this.props.currentCustomer, {...this.state});
+        this.props.onResetPassword(this.props.currentCustomer, {...this.state}, this);
         this.props.onTogglePasswordModal();
       }
     });

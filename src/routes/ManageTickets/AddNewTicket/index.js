@@ -50,7 +50,7 @@ class AddNewTicket extends Component {
   };
 
   onAddTicket = () => {
-    this.props.onAddTickets({...this.state}, this.props.history);
+    this.props.onAddTickets({...this.state}, this.props.history, this);
   };
 
   onServiceSelectOptions = () => {

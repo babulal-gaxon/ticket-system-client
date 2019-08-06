@@ -50,7 +50,6 @@ class AllCustomers extends Component {
   }
 
   onGetPaginatedData = (currentPage, itemsPerPage, filterText, companies, labels, status, updatingContent) => {
-    console.log("userPermissions", Permissions.canCustomerView());
     if (Permissions.canCustomerView()) {
       this.props.onGetCustomersData(currentPage, itemsPerPage, filterText, companies, labels, status, updatingContent);
     }
@@ -130,11 +129,11 @@ class AllCustomers extends Component {
   };
 
   onDisableCustomerStatus = (customerId) => {
-    this.props.onChangeCustomerStatus({ids: [customerId]}, 0, true);
+    this.props.onChangeCustomerStatus({ids: [customerId]}, 0, true, this);
   };
 
   onEnableCustomerStatus = (customerId) => {
-    this.props.onChangeCustomerStatus({ids: [customerId]}, 1, true);
+    this.props.onChangeCustomerStatus({ids: [customerId]}, 1, true, this);
   };
 
   onSelectCustomer = record => {
@@ -151,7 +150,7 @@ class AllCustomers extends Component {
           const obj = {
             ids: selectedCustomers
           };
-          this.props.onDeleteCustomers(obj);
+          this.props.onDeleteCustomers(obj, this);
           this.onGetPaginatedData(current, itemNumbers, filterText, selectedCompanies, selectedLabels, status, true);
           this.setState({selectedRowKeys: [], selectedCustomers: []});
         }

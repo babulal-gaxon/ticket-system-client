@@ -55,7 +55,7 @@ export const onAddRole = (newRole, history, context) => {
         dispatch({type: ADD_NEW_ROLE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
-        dispatch({type: SHOW_MESSAGE, payload: "The Role has been added successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.roles.add"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -75,7 +75,7 @@ export const onBulkDeleteRoles = (roleIds, context) => {
       if (data.success) {
         dispatch({type: BULK_DELETE_ROLES, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Role(s) has been deleted successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.roles.delete"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -96,7 +96,7 @@ export const onEditRole = (role, history, context) => {
         dispatch({type: EDIT_ROLE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
-        dispatch({type: SHOW_MESSAGE, payload: "The Role details has been updated successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.roles.edit"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

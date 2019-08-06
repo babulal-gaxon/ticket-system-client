@@ -61,7 +61,7 @@ export const onAddSupportStaff = (staffMember, history, context) => {
       if (data.success) {
         dispatch({type: ADD_SUPPORT_STAFF, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Staff has been added successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.staff.add"]});
         if (history) {
           history.goBack();
         }
@@ -86,7 +86,7 @@ export const onBulkDeleteStaff = (staffIds, history, context) => {
         if (history) {
           history.goBack();
         }
-        dispatch({type: SHOW_MESSAGE, payload: "The Staff(s) has been deleted successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.staff.delete"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -108,7 +108,7 @@ export const onEditSupportStaff = (staffMember, history, context) => {
         if (history) {
           history.goBack();
         }
-        dispatch({type: SHOW_MESSAGE, payload: "The Staff details has been edited successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.staff.edit"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -133,7 +133,7 @@ export const onChangeStaffStatus = (staffId, status, updatingContent, context) =
         dispatch({type: FETCH_SUCCESS});
         dispatch({
           type: SHOW_MESSAGE,
-          payload: `The Status of Staff has been changed to ${status === 0 ? "disabled" : "enabled"} successfully`
+          payload: status === 0 ? messages["action.staff.disable"] : messages["action.staff.active"]
         });
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
@@ -157,7 +157,7 @@ export const onAddProfileImage = (imageFile, context) => {
       if (data.success) {
         context.updateProfilePic(data.data);
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Profile Pic has been uploaded successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.customers.profilePic"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -195,7 +195,7 @@ export const onAddStaffNote = (staffId, Note, context) => {
       if (data.success) {
         dispatch({type: ADD_STAFF_NOTE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Notes has been added successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.customers.noteAdd"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -214,7 +214,7 @@ export const onEditStaffNotes = (note, context) => {
       if (data.success) {
         dispatch({type: EDIT_STAFF_NOTE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Note has been edited successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.customers.noteEdit"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -233,7 +233,7 @@ export const onDeleteStaffNotes = (noteId, context) => {
       if (data.success) {
         dispatch({type: DELETE_STAFF_NOTE, payload: noteId});
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Note has been Deleted successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.customers.noteDelete"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

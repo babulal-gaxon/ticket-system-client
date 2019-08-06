@@ -69,7 +69,7 @@ export const onAddTickets = (ticket, history, context) => {
         dispatch({type: ADD_TICKETS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
-        dispatch({type: SHOW_MESSAGE, payload: `The Ticket with Id #${data.data.id} has been added successfully`});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.tickets.add"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -90,7 +90,7 @@ export const onUpdateTickets = (ticketId, ticket, context) => {
         if (data.success) {
           dispatch({type: FETCH_SUCCESS});
           dispatch({type: UPDATE_TICKET, payload: data.data});
-          dispatch({type: SHOW_MESSAGE, payload: "The Ticket has been updated successfully"});
+          dispatch({type: SHOW_MESSAGE, payload: messages["action.tickets.edit"]});
         } else {
           dispatch({type: FETCH_ERROR, payload: data.errors[0]});
         }
@@ -121,7 +121,7 @@ export const onGetTicketDetail = (ticketId) => {
 };
 
 
-export const onDeleteTicket = (ticketIds, backToList, context) => {
+export const onDeleteTicket = (ticketIds, context) => {
   const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -131,10 +131,7 @@ export const onDeleteTicket = (ticketIds, backToList, context) => {
         if (data.success) {
           dispatch({type: FETCH_SUCCESS});
           dispatch({type: DELETE_TICKET, payload: data.data});
-          if (backToList) {
-            backToList();
-          }
-          dispatch({type: SHOW_MESSAGE, payload: "The Ticket has been Archived successfully"});
+          dispatch({type: SHOW_MESSAGE, payload: messages["action.tickets.archive"]});
         } else {
           dispatch({type: FETCH_ERROR, payload: data.errors[0]});
         }
@@ -168,7 +165,7 @@ export const onUpdateTicketStatus = (ticketId, statusId, context) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: UPDATE_TICKET_STATUS, payload: {statusId: data.data, ticketId: ticketId}});
-        dispatch({type: SHOW_MESSAGE, payload: "The Status of Ticket has been changed successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.tickets.status"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -188,7 +185,7 @@ export const onUpdateTicketPriority = (ticketId, priorityId, context) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: UPDATE_TICKET_PRIORITY, payload: {priorityId: data.data, ticketId: ticketId}});
-        dispatch({type: SHOW_MESSAGE, payload: "The Priority of Ticket has been changed successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.tickets.priority"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

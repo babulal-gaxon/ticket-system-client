@@ -44,9 +44,9 @@ class AddNewCompany extends Component {
 
   onCompanyAdd = () => {
     if (this.props.currentCompany === null) {
-      this.props.onAddNewCompany({...this.state});
+      this.props.onAddNewCompany({...this.state}, this);
     } else {
-      this.props.onEditCompany({...this.state});
+      this.props.onEditCompany({...this.state}, this);
     }
     this.props.onToggleAddCompany();
   };

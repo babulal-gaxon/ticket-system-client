@@ -35,7 +35,7 @@ class StepFirst extends Component {
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
       if (!err) {
-        this.props.onSendDatabaseInfo({...this.state}, this.props.onMoveToNextStep);
+        this.props.onSendDatabaseInfo({...this.state}, this.props.onMoveToNextStep, this);
       }
     });
   };

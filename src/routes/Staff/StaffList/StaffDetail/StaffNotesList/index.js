@@ -4,6 +4,7 @@ import {Button, Divider, Empty, Popconfirm} from "antd";
 import AddStaffNotes from "./AddStaffNotes";
 import {getFormattedDate} from "../../../../../util/Utills";
 import IntlMessages from "../../../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 class StaffNotesList extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class StaffNotesList extends Component {
       <Popconfirm
         title={<IntlMessages id="staff.notes.message.delete"/>}
         onConfirm={() => {
-          this.props.onDeleteStaffNotes(recordId);
+          this.props.onDeleteStaffNotes(recordId, this);
         }}
         okText={<IntlMessages id="common.yes"/>}
         cancelText={<IntlMessages id="common.no"/>}>
@@ -88,4 +89,4 @@ class StaffNotesList extends Component {
   };
 }
 
-export default StaffNotesList;
+export default injectIntl(StaffNotesList);

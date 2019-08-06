@@ -77,7 +77,7 @@ class ThirdStep extends Component {
   };
 
   onInfoAdd = () => {
-    this.props.onSetGeneralInfo({...this.state}, this.props.token, this.props.onMoveToNextStep);
+    this.props.onSetGeneralInfo({...this.state}, this.props.token, this.props.onMoveToNextStep, this);
   };
 
   onLogoSelect = () => {

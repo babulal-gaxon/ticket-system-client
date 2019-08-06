@@ -21,9 +21,9 @@ class AddStaffNotes extends Component {
 
   onNotesAdd = () => {
     if (this.props.currentNote === null) {
-      this.props.onAddStaffNote(this.props.staffId, {...this.state});
+      this.props.onAddStaffNote(this.props.staffId, {...this.state}, this);
     } else {
-      this.props.onEditStaffNotes({...this.state});
+      this.props.onEditStaffNotes({...this.state}, this);
     }
     this.props.onToggleAddNoteModal();
   };

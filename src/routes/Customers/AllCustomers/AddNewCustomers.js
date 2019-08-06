@@ -97,11 +97,11 @@ class AddNewCustomers extends Component {
     if (this.props.currentCustomer === null) {
       let {profile_pic, addresses} = this.state;
       addresses = addresses.map(address => address.id);
-      this.props.onAddNewCustomer({...this.state, profile_pic, addresses}, this.props.history)
+      this.props.onAddNewCustomer({...this.state, profile_pic, addresses}, this.props.history, this)
     } else {
       let {profile_pic, addresses} = this.state;
       addresses = addresses.map(address => address.id);
-      this.props.onEditCustomer({...this.state, profile_pic, addresses}, this.props.history)
+      this.props.onEditCustomer({...this.state, profile_pic, addresses}, this.props.history, this)
     }
   };
 

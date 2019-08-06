@@ -69,7 +69,7 @@ class GeneralDetails extends Component {
         } else if (this.state.faviconList.length > 0) {
           this.onFaviconSelect();
         } else {
-          this.props.onSaveGeneralDetails({...this.state})
+          this.props.onSaveGeneralDetails({...this.state}, this)
         }
       }
     });
@@ -105,13 +105,13 @@ class GeneralDetails extends Component {
             if (this.state.faviconList.length > 0) {
               this.onFaviconSelect();
             } else {
-              this.props.onSaveGeneralDetails({...this.state});
+              this.props.onSaveGeneralDetails({...this.state}, this);
             }
             this.setState({logoList: []})
           })
         } else {
           this.setState({favicon: data.data}, () => {
-            this.props.onSaveGeneralDetails({...this.state});
+            this.props.onSaveGeneralDetails({...this.state}, this);
             this.setState({faviconList: []})
           })
         }

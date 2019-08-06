@@ -30,7 +30,6 @@ class ImageUpload extends Component {
 
   getImageURL = () => {
     const {imageAvatar} = this.props;
-    console.log("imageAvatar", imageAvatar)
     if (this.state.fileList.length > 0) {
       return URL.createObjectURL(this.state.fileList[0]);
     } else if (imageAvatar) {

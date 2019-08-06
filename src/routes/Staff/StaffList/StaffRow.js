@@ -40,7 +40,7 @@ const onShowRowDropdown = (staff, context) => {
           <Popconfirm
             title={<IntlMessages id="staff.message.delete"/>}
             onConfirm={() => {
-              context.props.onBulkDeleteStaff({ids: [staff.id]});
+              context.props.onBulkDeleteStaff({ids: [staff.id]}, context);
               context.onGetStaffDataPaginated(context.state.currentPage, context.state.itemNumbers, context.state.filterText)
             }}
             okText={<IntlMessages id="common.yes"/>}

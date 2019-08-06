@@ -73,9 +73,9 @@ class AddNewStaff extends Component {
   onStaffAdd = () => {
     let {profile_pic} = this.state;
     if (this.props.currentStaff === null) {
-      this.props.onAddSupportStaff({...this.state, profile_pic}, this.props.history)
+      this.props.onAddSupportStaff({...this.state, profile_pic}, this.props.history, this)
     } else {
-      this.props.onEditSupportStaff({...this.state}, this.props.history);
+      this.props.onEditSupportStaff({...this.state}, this.props.history, this);
     }
   };
 

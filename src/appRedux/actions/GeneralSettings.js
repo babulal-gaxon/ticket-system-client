@@ -46,7 +46,7 @@ export const onSaveGeneralDetails = (details, context) => {
       if (data.success) {
         dispatch({type: ADD_GENERAL_DETAILS, payload: data.data});
         updateGeneralSetting(data.data);
-        dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.settings.changes"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -87,7 +87,7 @@ export const onSaveLocalizationDetails = (details, context) => {
         dispatch({type: ADD_LOCALIZATION_DETAILS, payload: data.data});
         updateLocaleSetting(data.data);
         dispatch({type: SWITCH_LANGUAGE, payload: data.data.default_language});
-        dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.settings.changes"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -126,7 +126,7 @@ export const onSaveCustomerPanelDetails = (details, context) => {
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: ADD_CUSTOMER_PANEL_DETAILS, payload: data.data});
-        dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.settings.changes"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -165,7 +165,7 @@ export const onSaveGeneralAddress = (details, context) => {
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: ADD_GENERAL_ADDRESS, payload: data.data});
-        dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.address.add"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -185,7 +185,7 @@ export const onEditAddress = (address, context) => {
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: EDIT_ADDRESS, payload: address});
-        dispatch({type: SHOW_MESSAGE, payload: "The Address has been saved successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.address.edit"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -205,7 +205,7 @@ export const onDeleteAddress = (addressId, context) => {
       if (data.success) {
         console.log(" sending data", data.data);
         dispatch({type: DELETE_ADDRESS, payload: addressId});
-        dispatch({type: SHOW_MESSAGE, payload: "The Address has been deleted successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.address.delete"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -264,7 +264,7 @@ export const onSaveTicketSettings = (details, history, context) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: ADD_TICKET_SETTINGS, payload: data.data});
         updateTicketSetting(data.data);
-        dispatch({type: SHOW_MESSAGE, payload: "The Changes has been saved successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.settings.changes"]});
         if (history) {
           history.replace('/dashboard')
         }

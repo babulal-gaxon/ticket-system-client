@@ -8,6 +8,7 @@ import {onGetTicketSettings, onSaveTicketSettings} from "../../../appRedux/actio
 import PropTypes from "prop-types";
 import {onGetFilterOptions} from "../../../appRedux/actions/TicketList";
 import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {Option} = Select;
 
@@ -88,7 +89,7 @@ class TicketSettings extends Component {
   };
 
   onAddButtonClick = () => {
-    this.props.onSaveTicketSettings({...this.state})
+    this.props.onSaveTicketSettings({...this.state}, null, this)
   };
 
   render() {
@@ -258,7 +259,7 @@ export default connect(mapStateToProps, {
   onGetTicketSettings,
   onSaveTicketSettings,
   onGetFilterOptions
-})(TicketSettings);
+})(injectIntl(TicketSettings));
 
 TicketSettings.defaultProps = {
   ticketSettings: null,
