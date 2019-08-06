@@ -6,6 +6,7 @@ import {onUserSignIn} from "../appRedux/actions/Auth";
 import IntlMessages from "util/IntlMessages";
 import InfoView from "../components/InfoView";
 import {injectIntl} from "react-intl";
+import {isUserCanRegistration} from "../util/Utills";
 
 const FormItem = Form.Item;
 
@@ -85,10 +86,11 @@ class SignIn extends React.Component {
               <div style={{justifyContent: "center", textAlign: "center"}}>
                 <h4 className="gx-text-grey" onClick={this.onForgetPassword}><IntlMessages id="auth.ForgotPassword"/>
                 </h4>
-                <div className="gx-mb-1 gx-d-flex" style={{justifyContent: "center", textAlign: "center"}}>
+                {isUserCanRegistration() ?
+                  <div className="gx-mb-1 gx-d-flex" style={{justifyContent: "center", textAlign: "center"}}>
                   <h4 className="gx-text-grey gx-mr-2"><IntlMessages id="auth.newToTicksUp"/></h4>
                   <h4 className="gx-text-primary" onClick={this.onSignUpClick}><IntlMessages id="app.userAuth.signUp"/>
-                  </h4></div>
+                  </h4></div> : null}
               </div>
             </div>
             <InfoView/>

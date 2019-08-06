@@ -15,6 +15,8 @@ import CircularProgress from "../../components/CircularProgress/index";
 import ForgetPassword from "../ResetPassword/ForgetPassword";
 import VerifyPassword from "../ResetPassword/VerifyPassword";
 import VerifyEmail from "../VerifyEmail";
+import {isUserCanRegistration, setCompanyFavIcon, setUserSetting} from "../../util/Utills";
+import {onGetUserPermission} from "../../appRedux/actions";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
   <Route
@@ -32,6 +34,18 @@ const RestrictedRoute = ({component: Component, token, ...rest}) =>
 
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    props.onGetUserPermission(props.history)
+    if (localStorage.getItem('settings')) {
+      const userSetting = JSON.parse(localStorage.getItem('settings'));
+      props.switchLanguage(userSetting.settings.locale.default_language);
+      setUserSetting(userSetting.settings);
+      props.setThemeType(userSetting.settings.customer.theme.toLowerCase());
+      setCompanyFavIcon();
+    }
+  }
 
   componentWillMount() {
     if (this.props.initURL === '') {
@@ -75,7 +89,7 @@ class App extends Component {
 
           <Switch>
             <Route exact path='/signin' component={SignIn}/>
-            <Route exact path='/signup' component={SignUp}/>
+            {isUserCanRegistration() && <Route exact path='/signup' component={SignUp}/>}
             <Route exact path='/forget-password' component={ForgetPassword}/>
             <Route exact path='/customer/panel/reset/password/' component={VerifyPassword}/>
             <Route exact path='/verify/email' component={VerifyEmail}/>
@@ -98,4 +112,5 @@ export default connect(mapStateToProps, {
   setThemeType,
   onNavStyleChange,
   onLayoutTypeChange,
+  onGetUserPermission
 })(App);

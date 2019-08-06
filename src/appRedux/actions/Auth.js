@@ -2,19 +2,62 @@ import {
   FETCH_ERROR,
   FETCH_START,
   FETCH_SUCCESS,
+  FETCH_USER_INFO_ERROR,
+  FETCH_USER_INFO_START,
   INIT_URL,
   SHOW_MESSAGE,
   SIGNOUT_USER_SUCCESS,
+  SWITCH_LANGUAGE,
   USER_DATA,
   USER_TOKEN_SET
 } from "../../constants/ActionTypes";
 import axios from 'util/Api'
+import {setUserSetting} from "../../util/Utills";
+import {THEME_TYPE} from "../../constants/ThemeSetting";
 
 export const setInitUrl = (url) => {
   return {
     type: INIT_URL,
     payload: url
   };
+};
+
+export const onGetUserPermission = (history) => {
+  console.log("onGetUserPermission");
+  return (dispatch) => {
+    dispatch({type: FETCH_USER_INFO_START});
+    axios.get('/customer/settings',
+    ).then(({data}) => {
+      console.log("onGetUserPermission: ", data);
+      if (data.success) {
+        localStorage.setItem("settings", JSON.stringify(data.data));
+        setUserSetting(data.data.settings);
+        dispatch({type: SWITCH_LANGUAGE, payload: data.data.settings.locale.default_language});
+        dispatch({type: THEME_TYPE, payload: data.data.settings.customer.theme})
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
+        dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});
+        history.push("/signin");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      }
+    }).catch((error) => {
+      if (error.response && error.response.status === 401) {
+        history.push("/signin");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        dispatch({type: USER_TOKEN_SET, payload: ''});
+        dispatch({type: USER_DATA, payload: null});
+        dispatch({type: FETCH_ERROR, payload: error.response.data.message});
+        dispatch({type: FETCH_USER_INFO_ERROR, payload: error.response.data.message});
+      } else {
+        console.log("error: ", JSON.stringify(error));
+        dispatch({type: FETCH_ERROR, payload: error.message});
+        dispatch({type: FETCH_USER_INFO_ERROR, payload: error.message});
+        console.log("Error****:", error.message);
+      }
+    });
+  }
 };
 
 export const onUserSignUp = ({email, password, first_name, last_name}) => {
