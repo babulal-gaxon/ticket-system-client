@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Widget from "../../../components/Widget";
-import {Breadcrumb, Button, Divider, Form, Input, Select, Switch} from "antd";
+import {Breadcrumb, Button, Divider, Form, Select, Switch} from "antd";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {
@@ -20,21 +20,21 @@ class CustomerPanelForm extends Component {
     if (this.props.customerPanelDetails === null) {
       this.state = {
         theme: "",
-        country: "",
+        // country: "",
         registration_enable: 0,
-        register_verification: 0,
-        allow_primary_contact_view: 0,
-        delete_own_files: 0
+        // register_verification: 0,
+        // allow_primary_contact_view: 0,
+        // delete_own_files: 0
       }
     } else {
-      const {theme, country, registration_enable, register_verification, allow_primary_contact_view, delete_own_files} = this.props.customerPanelDetails;
+      const {theme, registration_enable} = this.props.customerPanelDetails;
       this.state = {
         theme: theme,
-        country: parseInt(country),
+        // country: parseInt(country),
         registration_enable: parseInt(registration_enable),
-        register_verification: parseInt(register_verification),
-        allow_primary_contact_view: parseInt(allow_primary_contact_view),
-        delete_own_files: parseInt(delete_own_files)
+        // register_verification: parseInt(register_verification),
+        // allow_primary_contact_view: parseInt(allow_primary_contact_view),
+        // delete_own_files: parseInt(delete_own_files)
       }
     }
   }
@@ -46,15 +46,15 @@ class CustomerPanelForm extends Component {
 
   componentWillReceiveProps(nextProps, nextContext) {
     if (nextProps.customerPanelDetails) {
-      const {theme, country, registration_enable, register_verification, allow_primary_contact_view, delete_own_files} = nextProps.customerPanelDetails;
+      const {theme, registration_enable} = nextProps.customerPanelDetails;
       if (JSON.stringify(nextProps.customerPanelDetails) !== JSON.stringify(this.props.customerPanelDetails)) {
         this.setState({
           theme: theme,
-          country: parseInt(country),
+          // country: parseInt(country),
           registration_enable: parseInt(registration_enable),
-          register_verification: parseInt(register_verification),
-          allow_primary_contact_view: parseInt(allow_primary_contact_view),
-          delete_own_files: parseInt(delete_own_files)
+          // register_verification: parseInt(register_verification),
+          // allow_primary_contact_view: parseInt(allow_primary_contact_view),
+          // delete_own_files: parseInt(delete_own_files)
         })
       }
     }
@@ -72,11 +72,15 @@ class CustomerPanelForm extends Component {
     this.setState({country: value})
   };
 
+  onSelectTheme = value => {
+    this.setState({theme: value})
+  };
+
   render() {
     const {messages} = this.props.intl;
     const {getFieldDecorator} = this.props.form;
-    const {theme, country, registration_enable, register_verification, allow_primary_contact_view, delete_own_files} = this.state;
-    console.log("countriesList", this.props.countriesList);
+    const {theme, registration_enable} = this.state;
+
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -96,23 +100,28 @@ class CustomerPanelForm extends Component {
                 initialValue: theme,
                 validateTrigger: 'onBlur',
                 rules: [{required: true, message: messages["validation.customerPanel.theme"]}],
-              })(<Input type="text" autoFocus onChange={(e) => this.setState({theme: e.target.value})}/>)}
-            </Form.Item>
-            <Form.Item label={<IntlMessages id="settings.customerPanel.country"/>}>
-              {getFieldDecorator('country', {
-                initialValue: country,
-                validateTrigger: 'onBlur',
-                rules: [{required: true, message: messages["validation.message.country"]}],
-              })(<Select showSearchstyle={{width: "100%"}} onChange={this.onCountrySelect}
-                         showSearch
-                         filterOption={(input, option) =>
-                           option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                         }>
-                {this.props.countriesList.map(country => {
-                  return <Option value={country.id} key={country.id}>{country.name}</Option>
-                })}
+              })(<Select onChange={this.onSelectTheme} autoFocus>
+                <Option value="dark">DARK</Option>
+                <Option value="semi_dark">SEMI DARK</Option>
+                <Option value="light">LIGHT</Option>
               </Select>)}
             </Form.Item>
+
+            {/*<Form.Item label={<IntlMessages id="settings.customerPanel.country"/>}>*/}
+            {/*  {getFieldDecorator('country', {*/}
+            {/*    initialValue: country,*/}
+            {/*    validateTrigger: 'onBlur',*/}
+            {/*    rules: [{required: true, message: messages["validation.message.country"]}],*/}
+            {/*  })(<Select showSearchstyle={{width: "100%"}} onChange={this.onCountrySelect}*/}
+            {/*             showSearch*/}
+            {/*             filterOption={(input, option) =>*/}
+            {/*               option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0*/}
+            {/*             }>*/}
+            {/*    {this.props.countriesList.map(country => {*/}
+            {/*      return <Option value={country.id} key={country.id}>{country.name}</Option>*/}
+            {/*    })}*/}
+            {/*  </Select>)}*/}
+            {/*</Form.Item>*/}
             <Divider orientation="left" className="gx-mb-4"><IntlMessages
               id="settings.customerPanel.permissions"/></Divider>
             <Form.Item>
@@ -121,32 +130,32 @@ class CustomerPanelForm extends Component {
                 <Switch checked={!!registration_enable}
                         onChange={(checked) => this.setState({registration_enable: Number(checked)})}/>
               </div>
-              <Divider/>
+              {/*<Divider/>*/}
             </Form.Item>
-            <Form.Item>
-              <div className="gx-d-flex gx-justify-content-between">
-                <p><IntlMessages id="settings.customerPanel.registration"/></p>
-                <Switch checked={!!register_verification}
-                        onChange={(checked) => this.setState({register_verification: Number(checked)})}/>
-              </div>
-              <Divider/>
-            </Form.Item>
-            <Form.Item>
-              <div className="gx-d-flex gx-justify-content-between">
-                <p><IntlMessages id="settings.customerPanel.billing"/></p>
-                <Switch checked={!!allow_primary_contact_view}
-                        onChange={(checked) => this.setState({allow_primary_contact_view: Number(checked)})}/>
-              </div>
-              <Divider/>
-            </Form.Item>
-            <Form.Item>
-              <div className="gx-d-flex gx-justify-content-between">
-                <p><IntlMessages id="settings.customerPanel.deleteFiles"/></p>
-                <Switch checked={!!delete_own_files}
-                        onChange={(checked) => this.setState({delete_own_files: Number(checked)})}/>
-              </div>
-              <Divider/>
-            </Form.Item>
+            {/*<Form.Item>*/}
+            {/*  <div className="gx-d-flex gx-justify-content-between">*/}
+            {/*    <p><IntlMessages id="settings.customerPanel.registration"/></p>*/}
+            {/*    <Switch checked={!!register_verification}*/}
+            {/*            onChange={(checked) => this.setState({register_verification: Number(checked)})}/>*/}
+            {/*  </div>*/}
+            {/*  <Divider/>*/}
+            {/*</Form.Item>*/}
+            {/*<Form.Item>*/}
+            {/*  <div className="gx-d-flex gx-justify-content-between">*/}
+            {/*    <p><IntlMessages id="settings.customerPanel.billing"/></p>*/}
+            {/*    <Switch checked={!!allow_primary_contact_view}*/}
+            {/*            onChange={(checked) => this.setState({allow_primary_contact_view: Number(checked)})}/>*/}
+            {/*  </div>*/}
+            {/*  <Divider/>*/}
+            {/*</Form.Item>*/}
+            {/*<Form.Item>*/}
+            {/*  <div className="gx-d-flex gx-justify-content-between">*/}
+            {/*    <p><IntlMessages id="settings.customerPanel.deleteFiles"/></p>*/}
+            {/*    <Switch checked={!!delete_own_files}*/}
+            {/*            onChange={(checked) => this.setState({delete_own_files: Number(checked)})}/>*/}
+            {/*  </div>*/}
+            {/*  <Divider/>*/}
+            {/*</Form.Item>*/}
           </Form>
           <hr/>
           <div className="gx-d-flex">
