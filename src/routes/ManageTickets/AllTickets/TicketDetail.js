@@ -49,7 +49,6 @@ class TicketDetail extends Component {
 
   componentDidMount() {
     const queryParams = qs.parse(this.props.location.search, {ignoreQueryPrefix: true});
-    console.log("queryParams", queryParams);
     this.props.onGetTicketDetail(queryParams.id);
     this.props.onGetConversationList(queryParams.id);
     this.props.onGetFilterOptions();
@@ -114,7 +113,7 @@ class TicketDetail extends Component {
   onEditTags = value => {
     const currentTicket = this.props.currentTicket;
     this.setState({ticketTags: value}, () => {
-      this.props.onUpdateTickets(currentTicket.id, {tags: this.state.ticketTags})
+      this.props.onUpdateTickets(currentTicket.id, {tags: this.state.ticketTags}, this)
     })
   };
 
@@ -286,9 +285,9 @@ class TicketDetail extends Component {
                   <span
                     className="gx-mb-0 gx-text-capitalize">{currentTicket.assigned_by.first_name + " " + currentTicket.assigned_by.last_name}</span>
                       <div className="gx-mt-2">
-                        <Tag color="#f50">
-                          <IntlMessages id="common.customer"/>
-                        </Tag>
+                        {/*<Tag color="#f50">*/}
+                        {/*  <IntlMessages id="common.customer"/>*/}
+                        {/*</Tag>*/}
                       </div>
                     </div>
                   </div> : null}

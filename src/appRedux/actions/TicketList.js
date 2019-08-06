@@ -259,7 +259,7 @@ export const onAssignStaffToTicket = (ticketId, staffId) => {
     axios.post(`/tickets/${ticketId}/assign`, {user_id: staffId}).then(({data}) => {
       console.log("on get Staff assigned: ", data);
       if (data.success) {
-        dispatch({type: ASSIGN_STAFF_TO_TICKET, payload: data.data});
+        dispatch({type: ASSIGN_STAFF_TO_TICKET, payload: staffId});
         dispatch({type: FETCH_SUCCESS});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});

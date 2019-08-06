@@ -10,8 +10,7 @@ const ConversationCell = ({conversation}) => {
   return (
     <div className="gx-flex-row gx-module-detail-item gx-flex-nowrap gx-pl-0">
       <div className="gx-chat-todo-avatar">
-        {
-          conversation.author.avatar ?
+        {conversation.author.avatar ?
             <Avatar className="gx-rounded-circle gx-size-40" src={MEDIA_BASE_URL + conversation.author.avatar.src}
                     alt={conversation.author.display_name}/> :
             <Avatar className="gx-mr-3 gx-size-50"
@@ -42,7 +41,7 @@ const ConversationCell = ({conversation}) => {
 export default ConversationCell;
 
 ConversationCell.defaultProps = {
-  conversation: null
+  conversation: {}
 };
 
 ConversationCell.propTypes = {

@@ -184,7 +184,7 @@ class AllTickets extends Component {
     return (
       <Dropdown overlay={menu} trigger={['click']}>
         <Button>
-          <IntlMessages id="common.archive"/> <Icon type="down"/>
+          <IntlMessages id="manageTickets.sortBy"/> <Icon type="down"/>
         </Button>
       </Dropdown>
     )
