@@ -6,6 +6,7 @@ export const SWITCH_LANGUAGE = 'SWITCH-LANGUAGE';
 export const FETCH_USER_INFO_START = 'fetch_user_info_start';
 export const FETCH_USER_INFO_SUCCESS = 'fetch_user_info_success';
 export const FETCH_USER_INFO_ERROR = 'fetch_user_info_error';
+export const MEDIA_BASE_URL = 'http://gaxonlab.com/ticket-system/public';
 
 //Contact Module const
 export const FETCH_START = 'fetch_start';
