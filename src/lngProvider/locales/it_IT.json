@@ -24,6 +24,7 @@
   "app.userAuth.ResetPasswordText": "Inserisci e conferma la nuova password per accedere",
   "auth.enterNewPassword": "Inserire una nuova password",
   "auth.confirmPassword": "conferma password",
+  "auth.passwordError": "Due password inserite non sono coerenti!",
   "tickets.id": "ID",
   "tickets.subject": "Soggetto",
   "tickets.assignTo": "Assegnato a",
@@ -71,5 +72,14 @@
   "common.showing": "Mostrando",
   "common.of": "Di",
   "common.items": "Elementi",
-  "common.kb": "KB"
+  "common.kb": "KB",
+  "action.auth.emailSent": "Un'e-mail è stata inviata all'indirizzo e-mail inserito, controlla la tua e-mail",
+  "action.auth.resetPassword": "Il link Reimposta password è stato inviato correttamente al tuo indirizzo email",
+  "action.auth.updatePassword": "La password è stata aggiornata con successo",
+  "action.auth.emailVerified": "L'email è stata verificata correttamente",
+  "action.tickets.raise": "Il biglietto è stato raccolto con successo",
+  "action.tickets.messageSent": "Il messaggio è stato inviato con successo",
+  "action.tickets.priority": "La priorità del biglietto è stata cambiata correttamente",
+  "action.tickets.status": "Lo stato del ticket è stato modificato correttamente",
+  "action.tickets.edit": "I dettagli del biglietto sono stati aggiornati correttamente"
 }

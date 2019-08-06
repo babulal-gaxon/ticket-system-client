@@ -24,6 +24,7 @@
   "app.userAuth.ResetPasswordText": "Please enter and confirm your new password to login",
   "auth.enterNewPassword": "Enter New Password",
   "auth.confirmPassword": "Confirm Password",
+  "auth.passwordError": "Two passwords that you enter is inconsistent!",
   "tickets.id": "ID",
   "tickets.subject": "Subject",
   "tickets.assignTo": "Assign To",
@@ -71,5 +72,14 @@
   "common.showing": "Showing",
   "common.of": "Of",
   "common.items": "Items",
-  "common.kb": "KB"
+  "common.kb": "KB",
+  "action.auth.emailSent": "An Email has been sent to entered email address, please check your email",
+  "action.auth.resetPassword": "Reset password link has been successfully sent to your email address",
+  "action.auth.updatePassword": "The password has been updated successfully",
+  "action.auth.emailVerified": "The Email has been verified successfully",
+  "action.tickets.raise": "The Ticket has been raised successfully",
+  "action.tickets.messageSent": "The Message has been sent successfully",
+  "action.tickets.priority": "The Priority of Ticket has been changed successfully",
+  "action.tickets.status": "The Status of Ticket has been changed successfully",
+  "action.tickets.edit": "The Ticket details has been updated successfully"
 }
