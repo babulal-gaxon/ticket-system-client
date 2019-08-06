@@ -1,6 +1,15 @@
 const moment = require('moment-timezone');
 const timeZone = moment.tz.guess();
 
+let userSetting = {
+  "locale": {
+    "date_format": "DD/MM/YY",
+    "time_format": "24 Hours",
+    "default_language": "en",
+    "allow_language_selection": "0"
+  }
+};
+
 
 export const canEdit = () => {
   return true;

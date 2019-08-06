@@ -23,6 +23,7 @@ import EditTicketDetailsModal from "./EditTicketDetailsModal";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
+import {getFormattedDateTime} from "../../../util/Utills";
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -190,14 +191,14 @@ class TicketDetails extends Component {
                   <span
                     className="gx-mb-0 gx-text-capitalize"><IntlMessages id="tickets.created"/></span>
                 <div className="gx-mt-2">
-                  <div className="gx-time gx-text-muted">{moment(currentTicket.created_at.date).format('LLL')}</div>
+                  <div className="gx-time gx-text-muted">{getFormattedDateTime(currentTicket.created_at)}</div>
                 </div>
               </div>
               <div className="gx-media-body gx-mt-2">
                   <span
                     className="gx-mb-0 gx-text-capitalize"><IntlMessages id="tickets.lastUpdate"/></span>
                 <div className="gx-mt-2">
-                  <div className="gx-time gx-text-muted">{moment(currentTicket.updated_at.date).format('LLL')}</div>
+                  <div className="gx-time gx-text-muted">{getFormattedDateTime(currentTicket.updated_at)}</div>
                 </div>
               </div>
               <div className="gx-media-body gx-mt-2">
