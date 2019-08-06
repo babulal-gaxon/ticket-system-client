@@ -43,8 +43,8 @@ class HorizontalNav extends Component {
         mode="horizontal">
 
 
-        <Menu.Item key="customer/all-tickets">
-          <Link to="/customer/all-tickets">
+        <Menu.Item key="tickets">
+          <Link to="/tickets">
               <IntlMessages id="sidebar.all.tickets"/></Link>
           </Menu.Item>
       </Menu>
