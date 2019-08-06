@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {onGetFormOptions, onGetRaisedTickets, onRaiseNewTicket} from "../../../appRedux/actions/CustomerDetails";
 import {connect} from "react-redux";
-import {Avatar, Button, Input, Select, Table, Tag, Tooltip} from "antd";
+import {Button, Input, Select, Table} from "antd";
 import RaiseTicketModal from "./RaiseTicketModal";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
-import moment from "moment";
 import InfoView from "../../../components/InfoView";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
+import TicketsRow from "./TicketsRow";
 
 const ButtonGroup = Button.Group;
 const {Option} = Select;
@@ -64,76 +64,6 @@ class AllTickets extends Component {
     })
   };
 
-  onGetTableColumns = () => {
-    return [
-      {
-        title: <IntlMessages id="tickets.id"/>,
-        dataIndex: 'id',
-        key: 'id',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.id}</span>
-        }
-      },
-      {
-        title: <IntlMessages id="tickets.subject"/>,
-        dataIndex: 'subject',
-        key: 'subject',
-        render: (text, record) => {
-          return <div className="gx-d-flex gx-justify-content-start">
-            <span>{record.title}</span>
-            <span className="gx-ml-2">
-              <Tag color="blue">{record.product_name}</Tag>
-            </span>
-          </div>
-        },
-      },
-      {
-        title: <IntlMessages id="tickets.assignTo"/>,
-        dataIndex: 'assignTo',
-        key: 'assignTo',
-        render: (text, record) => {
-          return (<div>
-            {record.assigned_to ?
-              <Tooltip placement="top" title={record.assigned_to.first_name + " " + record.assigned_to.last_name}
-                       key={record.assigned_to.user_id}>
-                {record.assigned_to.avatar ?
-                  <Avatar className="gx-mr-3 gx-size-36" src={record.assigned_to.avatar.src}/> :
-                  <Avatar className="gx-mr-3 gx-size-36"
-                          style={{backgroundColor: '#f56a00'}}>{record.assigned_to.first_name[0].toUpperCase()}</Avatar>}
-              </Tooltip>
-              :
-              <div><IntlMessages id="tickets.notAssigned"/></div>}
-          </div>)
-        },
-      },
-      {
-        title: <IntlMessages id="tickets.department"/>,
-        dataIndex: 'department',
-        key: 'department',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.department_name}</span>
-        },
-      },
-      {
-        title: <IntlMessages id="tickets.status"/>,
-        dataIndex: 'status_id',
-        key: 'Status',
-        render: (text, record) => {
-          return <Tag color="green">
-            {record.status_name}
-          </Tag>
-        },
-      },
-      {
-        title: <IntlMessages id="tickets.lastActivity"/>,
-        dataIndex: 'lastActivity',
-        key: 'lastActivity',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{moment(record.updated_at.date).fromNow()}</span>
-        },
-      },
-    ];
-  };
 
   onPageChange = page => {
     this.setState({current: page}, () => {
@@ -160,7 +90,7 @@ class AllTickets extends Component {
   };
 
   render() {
-    const  {filterText, showAddTicket} = this.state;
+    const {filterText, showAddTicket} = this.state;
     const {raisedTickets, formOptions, totalTickets} = this.props;
     const {messages} = this.props.intl;
 
@@ -193,7 +123,7 @@ class AllTickets extends Component {
                   </ButtonGroup>
                 </div>
               </div>
-              <Table columns={this.onGetTableColumns()}
+              <Table columns={TicketsRow()}
                      dataSource={raisedTickets} className="gx-mb-4" rowKey="id"
                      loading={this.props.updatingContent}
                      pagination={{
@@ -220,7 +150,8 @@ class AllTickets extends Component {
               }}>
                 <div><IntlMessages id="tickets.noRecordFound"/></div>
                 <h3 className="gx-font-weight-bold gx-my-4"><IntlMessages id="tickets.noTicketRaised"/></h3>
-                <Button type="primary" onClick={this.onToggleAddTicket}><IntlMessages id="tickets.raiseATicket"/></Button>
+                <Button type="primary" onClick={this.onToggleAddTicket}><IntlMessages
+                  id="tickets.raiseATicket"/></Button>
               </div>
             </div>}
           {showAddTicket ? <RaiseTicketModal formOptions={formOptions}
