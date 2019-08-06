@@ -9,7 +9,7 @@ import {
   UPDATE_TICKET,
   UPDATE_TICKET_PRIORITY,
   UPDATE_TICKET_STATUS
-} from "../../constants/CustomerDetails";
+} from "../../constants/Tickets";
 
 const initialState = {
   raisedTickets: [],

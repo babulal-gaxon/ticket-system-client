@@ -9,7 +9,7 @@ import {
 } from "../../constants/ActionTypes";
 
 const INIT_STATE = {
-  token: JSON.parse(localStorage.getItem('token')),
+  token: localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : null,
   initURL: '',
   authUser: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
   loadingUser: false,

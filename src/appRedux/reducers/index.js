@@ -3,7 +3,7 @@ import {routerReducer} from "react-router-redux";
 import Settings from "./Settings";
 import Auth from "./Auth";
 import Common from "./Common";
-import CustomerDetails from "./CustomerDetails";
+import Tickets from "./Tickets";
 
 
 const reducers = combineReducers({
@@ -11,7 +11,7 @@ const reducers = combineReducers({
   settings: Settings,
   auth: Auth,
   commonData: Common,
-  customerDetails: CustomerDetails
+  ticketsData: Tickets
 
 });
 

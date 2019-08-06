@@ -4,6 +4,7 @@ import {
   FETCH_SUCCESS,
   FETCH_USER_INFO_ERROR,
   FETCH_USER_INFO_START,
+  FETCH_USER_INFO_SUCCESS,
   INIT_URL,
   SHOW_MESSAGE,
   SIGNOUT_USER_SUCCESS,
@@ -30,10 +31,11 @@ export const onGetUserPermission = (history) => {
     ).then(({data}) => {
       console.log("onGetUserPermission: ", data);
       if (data.success) {
+        dispatch({type: FETCH_USER_INFO_SUCCESS});
         localStorage.setItem("settings", JSON.stringify(data.data));
-        setUserSetting(data.data.settings);
-        dispatch({type: SWITCH_LANGUAGE, payload: data.data.settings.locale.default_language});
-        dispatch({type: THEME_TYPE, payload: data.data.settings.customer.theme})
+        setUserSetting(data.data);
+        dispatch({type: SWITCH_LANGUAGE, payload: data.data.locale.default_language});
+        dispatch({type: THEME_TYPE, payload: data.data.customer.theme})
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
         dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});
@@ -102,11 +104,11 @@ export const onUserSignIn = ({email, password}) => {
       console.info("userSignIn: ", data);
       if (data.success) {
         localStorage.setItem("token", JSON.stringify(data.token));
-        localStorage.setItem("user", JSON.stringify(data.data));
+        localStorage.setItem("user", JSON.stringify(data.user));
         axios.defaults.headers.common['access-token'] = "Bearer " + data.token;
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_TOKEN_SET, payload: data.token});
-        dispatch({type: USER_DATA, payload: data.data});
+        dispatch({type: USER_DATA, payload: data.user});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.message});
       }

@@ -49,23 +49,10 @@ let userSetting = {
   }
 };
 
-export const updateDateFormat = (dateFormat) => {
-  userSetting.locale.date_format = dateFormat;
-};
-
-export const updateLocaleSetting = (locale) => {
-  userSetting.locale = locale;
-};
-export const updateGeneralSetting = (general) => {
-  userSetting.general = general;
-  setCompanyFavIcon();
-};
-export const updateTicketSetting = (locale) => {
-  userSetting.ticket = locale;
-};
 
 export const setUserSetting = (setting) => {
   userSetting = setting;
+  console.log("userSetting", userSetting)
   setCompanyFavIcon();
 };
 
@@ -104,16 +91,6 @@ export const getTicketFileSize = () => {
 
 export const getTicketFileExtension = () => {
   return userSetting.ticket.allowed_file_ext;
-};
-
-export const isServiceSelectionEnable = () => {
-  return parseInt(userSetting.ticket.enable_service_selection) === 1;
-};
-export const isDepartmentSelectionEnable = () => {
-  return parseInt(userSetting.ticket.enable_department_selection) === 1;
-};
-export const isProductSelectionEnable = () => {
-  return parseInt(userSetting.ticket.enable_service_selection) === 1;
 };
 
 export const getCompanyLogo = () => {

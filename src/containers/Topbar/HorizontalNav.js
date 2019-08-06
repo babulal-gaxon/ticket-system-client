@@ -32,7 +32,7 @@ class HorizontalNav extends Component {
   };
 
   render() {
-    const {pathname, navStyle} = this.props;
+    const {pathname} = this.props;
     const selectedKeys = pathname.substr(1);
     const defaultOpenKeys = selectedKeys.split('/')[1];
     return (
@@ -42,13 +42,11 @@ class HorizontalNav extends Component {
         selectedKeys={[selectedKeys]}
         mode="horizontal">
 
-        <SubMenu className={this.getNavStyleSubMenuClass(navStyle)} key="main"
-                 title={<IntlMessages id="sidebar.main"/>}>
-          <Menu.Item key="sample">
-            <Link to="/customer/all-tickets"><i className="icon icon-widgets"/>
+
+        <Menu.Item key="customer/all-tickets">
+          <Link to="/customer/all-tickets">
               <IntlMessages id="sidebar.all.tickets"/></Link>
           </Menu.Item>
-        </SubMenu>
       </Menu>
 
     );

@@ -16,7 +16,7 @@ import ForgetPassword from "../ResetPassword/ForgetPassword";
 import VerifyPassword from "../ResetPassword/VerifyPassword";
 import VerifyEmail from "../VerifyEmail";
 import {isUserCanRegistration, setCompanyFavIcon, setUserSetting} from "../../util/Utills";
-import {onGetUserPermission} from "../../appRedux/actions";
+import {onGetUserPermission, switchLanguage} from "../../appRedux/actions";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
   <Route
@@ -37,12 +37,12 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    props.onGetUserPermission(props.history)
+    props.onGetUserPermission(props.history);
     if (localStorage.getItem('settings')) {
       const userSetting = JSON.parse(localStorage.getItem('settings'));
-      props.switchLanguage(userSetting.settings.locale.default_language);
-      setUserSetting(userSetting.settings);
-      props.setThemeType(userSetting.settings.customer.theme.toLowerCase());
+      props.switchLanguage(userSetting.locale.default_language);
+      setUserSetting(userSetting);
+      props.setThemeType(userSetting.customer.theme.toLowerCase());
       setCompanyFavIcon();
     }
   }
@@ -80,7 +80,7 @@ class App extends Component {
         <CircularProgress className=""/>
       </div>
     }
-    const currentAppLocale = AppLocale[locale.locale];
+    const currentAppLocale = AppLocale[locale];
     return (
       <LocaleProvider locale={currentAppLocale.antd}>
         <IntlProvider
@@ -110,6 +110,7 @@ const mapStateToProps = ({settings, auth}) => {
 export default connect(mapStateToProps, {
   setInitUrl,
   setThemeType,
+  switchLanguage,
   onNavStyleChange,
   onLayoutTypeChange,
   onGetUserPermission

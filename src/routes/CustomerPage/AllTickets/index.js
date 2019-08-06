@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {onGetFormOptions, onGetRaisedTickets, onRaiseNewTicket} from "../../../appRedux/actions/CustomerDetails";
+import {onGetFormOptions, onGetRaisedTickets, onRaiseNewTicket} from "../../../appRedux/actions/Tickets";
 import {connect} from "react-redux";
 import {Button, Input, Select, Table} from "antd";
 import RaiseTicketModal from "./RaiseTicketModal";
@@ -169,8 +169,8 @@ class AllTickets extends Component {
   }
 }
 
-const mapPropsToState = ({customerDetails, commonData}) => {
-  const {raisedTickets, totalTickets, formOptions} = customerDetails;
+const mapPropsToState = ({ticketsData, commonData}) => {
+  const {raisedTickets, totalTickets, formOptions} = ticketsData;
   const {updatingContent} = commonData;
   return {raisedTickets, totalTickets, formOptions, updatingContent};
 };

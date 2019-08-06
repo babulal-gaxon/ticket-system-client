@@ -16,7 +16,6 @@ import {
 import qs from "qs";
 import axios from 'util/Api'
 import {Avatar, Button, Divider, Input, Select, Upload} from "antd";
-import moment from "moment";
 import ConversationCell from "./ConversationCell";
 import InfoView from "../../../components/InfoView";
 import EditTicketDetailsModal from "./EditTicketDetailsModal";
@@ -260,8 +259,8 @@ class TicketDetails extends Component {
 }
 
 
-const mapPropsToState = ({customerDetails}) => {
-  const {formOptions, currentTicket, ticketMessages} = customerDetails;
+const mapPropsToState = ({ticketsData}) => {
+  const {formOptions, currentTicket, ticketMessages} = ticketsData;
   return {formOptions, currentTicket, ticketMessages};
 };
 

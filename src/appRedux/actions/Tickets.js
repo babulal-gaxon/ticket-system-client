@@ -11,7 +11,7 @@ import {
   UPDATE_TICKET,
   UPDATE_TICKET_PRIORITY,
   UPDATE_TICKET_STATUS
-} from "../../constants/CustomerDetails";
+} from "../../constants/Tickets";
 
 export const onGetRaisedTickets = (currentPage, totalItems, filterText, updatingContent) => {
   return (dispatch) => {
@@ -32,7 +32,7 @@ export const onGetRaisedTickets = (currentPage, totalItems, filterText, updating
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_RAISED_TICKETS, payload: data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -50,7 +50,7 @@ export const onGetFormOptions = () => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_FORM_OPTIONS, payload: data.data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -69,7 +69,7 @@ export const onRaiseNewTicket = (ticket) => {
         dispatch({type: RAISE_NEW_TICKET, payload: data.data});
         dispatch({type: SHOW_MESSAGE, payload: "The Ticket has been raised successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -94,7 +94,7 @@ export const onGetTicketMessages = (ticketId) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_TICKET_MESSAGES, payload: data.data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -113,7 +113,7 @@ export const onSendNewMessage = (ticketId, message) => {
         dispatch({type: ADD_TICKET_MESSAGE, payload: data.data});
         dispatch({type: SHOW_MESSAGE, payload: "The Message has been sent successfully"})
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -131,7 +131,7 @@ export const onGetTicketDetail = (ticketId) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_TICKET_DETAIL, payload: data.data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -150,7 +150,7 @@ export const onUpdateTicketPriority = (ticketId, priorityId) => {
         dispatch({type: UPDATE_TICKET_PRIORITY, payload: {priorityId: data.data, ticketId: ticketId}});
         dispatch({type: SHOW_MESSAGE, payload: "The Priority of Ticket has been changed successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -170,7 +170,7 @@ export const onUpdateTicketStatus = (ticketId, statusId) => {
         dispatch({type: UPDATE_TICKET_STATUS, payload: {statusId: data.data, ticketId: ticketId}});
         dispatch({type: SHOW_MESSAGE, payload: "The Status of Ticket has been changed successfully"});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.error});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -189,7 +189,7 @@ export const onUpdateTickets = (ticketId, ticket) => {
           dispatch({type: UPDATE_TICKET, payload: data.data});
           dispatch({type: SHOW_MESSAGE, payload: "The Ticket has been updated successfully"});
         } else {
-          dispatch({type: FETCH_ERROR, payload: data.error});
+          dispatch({type: FETCH_ERROR, payload: data.errors[0]});
         }
       }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
