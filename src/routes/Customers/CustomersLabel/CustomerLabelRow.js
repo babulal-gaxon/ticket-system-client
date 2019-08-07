@@ -1,4 +1,4 @@
-import {Popconfirm, Tag} from "antd";
+import {Tag} from "antd";
 import Permissions from "../../../util/Permissions";
 import React from "react";
 import IntlMessages from "../../../util/IntlMessages";

@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Avatar, Breadcrumb, Col, Input, Row, Select, Tag, Upload} from "antd";
+import {Avatar, Breadcrumb, Col, Input, Row, Select, Upload} from "antd";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import moment from "moment";
