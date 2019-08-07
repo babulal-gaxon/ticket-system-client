@@ -81,22 +81,24 @@ class InsideHeader extends Component {
           </div>
         </Header>
 
+        <div className="gx-header-horizontal-main">
+          <div className="gx-container">
+            <div className="gx-header-horizontal-main-flex gx-justify-content-between gx-py-5">
+              <div>
+                <div className="gx-d-flex gx-align-items-center">
+                  <h1 className="gx-text-white gx-mb-0">{currentTicket ? currentTicket.title :
+                    <IntlMessages id="header.supportRequest"/>}</h1>
+                  {currentTicket ? <span className="gx-text-white gx-pointer gx-ml-5" onClick={this.onToggleEditModal}><i
+                    className="icon icon-edit gx-mr-2"/><IntlMessages id="tickets.edit"/></span> : null}
+                </div>
+                <p
+                  className="gx-text-white">{currentTicket ? messages["header.ticketIdMessage"] + currentTicket.id :
+                  <IntlMessages id="header.ticketMessage"/>}</p>
+              </div>
 
-        <div className="gx-p-5 gx-ml-5 gx-mt-3 gx-d-flex gx-justify-content-between">
-          <div>
-            <div className="gx-d-flex">
-            <h1 className="gx-text-white">{currentTicket ? currentTicket.title :
-              <IntlMessages id="header.supportRequest"/>}</h1>
-              {currentTicket ? <span className="gx-text-primary gx-ml-5" onClick={this.onToggleEditModal}><i
-                className="icon icon-edit gx-mr-2"/><IntlMessages id="tickets.edit"/></span> : null}
+              <div>{currentTicket ? this.onShowPriorityDropdown() : null}</div>
             </div>
-            <p
-              className="gx-text-white">{currentTicket ? messages["header.ticketIdMessage"] + currentTicket.id :
-              <IntlMessages id="header.ticketMessage"/>}</p>
           </div>
-
-
-          <div>{currentTicket ? this.onShowPriorityDropdown() : null}</div>
         </div>
         {showEditModal ?
           <EditTicketDetailsModal

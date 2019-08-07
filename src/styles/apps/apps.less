@@ -447,6 +447,20 @@
   }
 }
 
+.@{class-prefix}-loader-pos {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1001;
+  background-color: rgba(@white, 0.8);
+
+  .full-scroll & {
+    height: 100%;
+  }
+}
+
 .@{class-prefix}-module-default {
   .flex-display(flex, column, nowrap);
   .justify-content(center);

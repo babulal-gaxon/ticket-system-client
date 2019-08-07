@@ -43,6 +43,12 @@
       overflow-y: scroll;
     }
 
+    .full-scroll.horizontal-layout & {
+      height: auto;
+      .flex-display(flex, column, nowrap);
+      flex: 1;
+    }
+
     & > .ant-layout {
       height: 100vh;
 
@@ -52,6 +58,12 @@
         @media screen and (max-width: @screen-md-max) {
           height: 100vh;
         }
+      }
+
+      .full-scroll.horizontal-layout & {
+        height: auto;
+        .flex-display(flex, column, nowrap);
+        flex: 1;
       }
     }
   }

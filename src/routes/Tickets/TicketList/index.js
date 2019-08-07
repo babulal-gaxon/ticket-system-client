@@ -165,8 +165,8 @@ class TicketList extends Component {
                                              fetchSuccess={this.props.fetchSuccess}
                                              fetchError={this.props.fetchError}
           /> : null}
-        <InfoView/>
-      </div>
+        </div>
+
     );
   }
 }

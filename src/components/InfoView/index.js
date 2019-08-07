@@ -22,10 +22,11 @@ class InfoView extends PureComponent {
   };
 
   render() {
-    const {error, loading, displayMessage} = this.props;
+    const {error, loading, displayMessage, styleName} = this.props;
+    console.log("styleName", styleName)
     return (
       <Auxiliary>
-        {loading && <div className="gx-loader-view">
+        {loading && <div className={`gx-loader-view ${styleName}`} >
           <CircularProgress className=""/>
         </div>}
 

@@ -28,6 +28,7 @@ body {
 
   &.full-scroll {
     overflow: inherit;
+    .flex-display(flex, column, nowrap);
   }
 }
 
@@ -45,6 +46,12 @@ body {
       .box-shadow(none) !important;
       .border-radius(0) !important;
     }
+  }
+
+  .full-scroll.horizontal-layout & {
+    height: auto;
+    .flex-display(flex, column, nowrap);
+    flex: 1;
   }
 }
 

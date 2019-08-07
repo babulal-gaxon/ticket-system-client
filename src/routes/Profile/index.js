@@ -7,7 +7,7 @@ import {onAddProfileImage} from "../../appRedux/actions/Auth";
 import {Divider, Select} from "antd";
 import ImageUpload from "./ImageUpload";
 import {getUserProfile, updateUserProfile} from "../../appRedux/actions";
-import InfoView from "../../components/InfoView";
+
 import {injectIntl} from "react-intl";
 import IntlMessages from "../../util/IntlMessages";
 
@@ -211,7 +211,7 @@ class Profile extends Component {
             </span>
           </div>
         </Widget>
-        <InfoView/>
+
       </div>
     )
   }
