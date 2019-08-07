@@ -20,7 +20,7 @@ class Profile extends Component {
       first_name: "",
       last_name: "",
       email: "",
-      mobile: "",
+      phone: "",
       hourly_rate: "",
       departments_ids: [],
       profile_pic: null,
@@ -30,23 +30,27 @@ class Profile extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    const authUser = nextProps.authUser;
-    const {id, first_name, last_name, email, mobile, hourly_rate, avatar, designation} = authUser;
-    const department_ids = authUser.departments ? authUser.departments.map(department => {
-      return department.id
-    }) : [];
-    this.setState({
-      id: id,
-      first_name: first_name,
-      last_name: last_name,
-      email: email,
-      mobile: mobile,
-      hourly_rate: hourly_rate ? parseInt(hourly_rate) : "",
-      departments_ids: department_ids,
-      profile_pic: avatar ? avatar.id : null,
-      designation: designation,
-      avatar: avatar
-    });
+    if(nextProps.authUser) {
+      const authUser = nextProps.authUser;
+      const {id, first_name, last_name, email, phone, hourly_rate, avatar, designation} = authUser;
+      const department_ids = authUser.departments ? authUser.departments.map(department => {
+        return department.id
+      }) : [];
+      if(nextProps.authUser !== this.props.authUser) {
+        this.setState({
+          id: id,
+          first_name: first_name,
+          last_name: last_name,
+          email: email,
+          phone: phone,
+          hourly_rate: hourly_rate ? parseInt(hourly_rate) : "",
+          departments_ids: department_ids,
+          profile_pic: avatar ? avatar.id : null,
+          designation: designation,
+          avatar: avatar
+        });
+      }
+    }
   }
 
   componentDidMount() {
@@ -94,7 +98,7 @@ class Profile extends Component {
   render() {
     const {messages} = this.props.intl;
     const {getFieldDecorator} = this.props.form;
-    const {mobile, hourly_rate, departments_ids, first_name, last_name, email, designation, avatar} = this.state;
+    const {phone, hourly_rate, departments_ids, first_name, last_name, email, designation, avatar} = this.state;
     const deptOptions = this.onDepartmentSelectOption();
     return (
       <div className="gx-main-layout-content">
@@ -149,7 +153,7 @@ class Profile extends Component {
                 </Form.Item>
                 <Form.Item label={<IntlMessages id="common.phoneNo."/>}>
                   {getFieldDecorator('mobile', {
-                    initialValue: mobile,
+                    initialValue: phone,
                     validateTrigger: 'onBlur',
                     rules: [{
                       pattern: /^[0-9\b]+$/,
