@@ -20,16 +20,17 @@ class UserInfo extends Component {
     return (
       <Popover overlayClassName="gx-popover-horizantal" placement="bottomRight" content={userMenuOptions}
                trigger="click">
-
+        {authUser ?
         <div style={{display: "flex"}}>
-          {authUser.avatar ? <Avatar src={MEDIA_BASE_URL + authUser.avatar.src}
+          {authUser.avatar !== null ? <Avatar src={MEDIA_BASE_URL + authUser.avatar.src}
                                      className="gx-avatar gx-pointer" alt=""/> :
             <Avatar src={require("assets/images/placeholder.jpg")}
                     className="gx-avatar gx-pointer" alt=""/>}
           <span className="gx-text-white gx-p-2">{authUser ? authUser.display_name : "Loading"}</span>
 
-        </div>
+        </div> : null}
       </Popover>
+
     )
 
   }
