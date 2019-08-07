@@ -22,8 +22,7 @@ class TicketList extends Component {
       itemNumbers: 10,
       current: 1,
       showAddTicket: false,
-      selectedTickets: [],
-      ticketId: null
+      selectedTickets: []
     };
   }
 
@@ -95,7 +94,7 @@ class TicketList extends Component {
   };
 
   render() {
-    const {filterText, showAddTicket, listInitiated, hasRecord} = this.state;
+    const {filterText, showAddTicket} = this.state;
     const {raisedTickets, formOptions} = this.props;
     const {messages} = this.props.intl;
 

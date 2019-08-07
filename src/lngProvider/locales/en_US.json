@@ -70,7 +70,7 @@
   "validation.auth.lastName": "Please enter Last Name!",
   "validation.auth.confirmPassword": "Please Confirm Password",
   "common.showing": "Showing",
-  "common.of": "Of",
+  "common.of": "of",
   "common.items": "Items",
   "common.kb": "KB",
   "action.auth.emailSent": "An Email has been sent to entered email address, please check your email",
@@ -107,6 +107,7 @@
   "header.allTickets": "All Tickets",
   "header.supportRequest": "Support Request",
   "header.ticketMessage": "Your tickets submitted to the TicksUp support team",
-  "header.ticketIdMessage": "Tickets / Ticket Id #"
+  "header.ticketIdMessage": "Tickets / Ticket Id #",
+  "profile.title": "Profile"
 }
 

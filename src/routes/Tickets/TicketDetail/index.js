@@ -16,7 +16,7 @@ import {
 import axios from 'util/Api'
 import {Avatar, Button, Divider, Input, Select, Upload} from "antd";
 import ConversationCell from "./ConversationCell";
-import EditTicketDetailsModal from "./EditTicketDetailsModal";
+import InfoView from "../../../components/InfoView";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
@@ -81,7 +81,6 @@ class TicketDetail extends Component {
   };
 
 
-
   handleUpload = () => {
     let formData = new FormData();
     this.state.fileList.map(file => {
@@ -115,7 +114,7 @@ class TicketDetail extends Component {
   };
 
   render() {
-    const {fileList, currentTicket, showEditModal, message} = this.state;
+    const {fileList, currentTicket, message} = this.state;
     const {ticketMessages} = this.props;
     const props = {
       accept: getTicketFileExtension(),
@@ -149,7 +148,6 @@ class TicketDetail extends Component {
       <div className="gx-main-layout-content">
         {currentTicket ?
           <div>
-
             <div className="gx-d-flex gx-justify-content-between gx-my-5">
               <div className="gx-media-body gx-mt-2">
                 {currentTicket.assigned_to ?
@@ -226,7 +224,6 @@ class TicketDetail extends Component {
             <Button type="primary" className="gx-my-3" onClick={this.onSubmitMessage}
                     disabled={message === ""}><IntlMessages id="tickets.updateButton"/></Button>
           </div> : null}
-
       </div>
     )
   }
