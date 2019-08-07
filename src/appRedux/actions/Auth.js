@@ -43,7 +43,7 @@ export const onUserSignIn = ({email, password}) => {
         dispatch({type: USER_TOKEN_SET, payload: data.token});
         dispatch({type: USER_DATA, payload: data.data});
       } else {
-        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
+        dispatch({type: FETCH_ERROR, payload: data.message});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});

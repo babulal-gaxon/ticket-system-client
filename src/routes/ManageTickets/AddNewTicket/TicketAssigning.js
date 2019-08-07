@@ -79,8 +79,11 @@ class TicketAssigning extends Component {
           title={<IntlMessages id="common.selectStaff"/>}
           centered
           visible={showStaffModal}
-          onOk={this.onAddStaff}
-          onCancel={this.onToggleStaffModal}>
+          onCancel={this.onToggleStaffModal}
+          footer={[
+            null,
+            null,
+          ]}>
           <Search value={filterStaffText} placeholder={messages["manageTickets.filterBar.searchStaff"]}
                   onChange={(e) => this.setState({filterStaffText: e.target.value})}/>
           {staffList.map(staff => {
