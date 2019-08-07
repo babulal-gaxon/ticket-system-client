@@ -62,8 +62,8 @@ export const onGetUserPermission = (history) => {
   }
 };
 
-export const onUserSignUp = ({email, password, first_name, last_name}) => {
-  console.info(email, password);
+export const onUserSignUp = ({email, password, first_name, last_name}, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/customer/panel/register', {
@@ -76,7 +76,7 @@ export const onUserSignUp = ({email, password, first_name, last_name}) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({
           type: SHOW_MESSAGE,
-          payload: "An Email has been sent to entered email address, please check your email"
+          payload: messages["action.auth.emailSent"]
         });
       } else if (data.message) {
         console.info("payload: data.error", data.message);
@@ -134,6 +134,7 @@ export const onUserSignOut = () => {
 
 
 export const onAddProfileImage = (imageFile, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post("/uploads/temporary/media", imageFile, {
@@ -144,7 +145,7 @@ export const onAddProfileImage = (imageFile, context) => {
       if (data.success) {
         context.updateProfilePic(data.data);
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Profile Pic has been uploaded successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.profilePic"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -174,7 +175,8 @@ export const getUserProfile = () => {
   }
 };
 
-export const updateUserProfile = (profile) => {
+export const updateUserProfile = (profile, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/user/profile', profile).then(({data}) => {
@@ -182,7 +184,7 @@ export const updateUserProfile = (profile) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_DATA, payload: data.data});
-        dispatch({type: SHOW_MESSAGE, payload: "Profile has been updated successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.profile"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -203,7 +205,8 @@ export const showErrorMessage = (error) => {
   }
 };
 
-export const onResetPassword = ({email}) => {
+export const onResetPassword = ({email},context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post('/forgot/password', {
@@ -213,7 +216,7 @@ export const onResetPassword = ({email}) => {
       console.info("data:", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "Reset password link has been successfully sent to your email address"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.resetPassword"]});
       } else if (data.message) {
         console.info("payload: data.error", data.message);
         dispatch({type: FETCH_ERROR, payload: data.message});
@@ -228,7 +231,8 @@ export const onResetPassword = ({email}) => {
   }
 };
 
-export const onSetNewPassword = (token, data, history) => {
+export const onSetNewPassword = (token, data, history, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post(`reset/password/${token}`, data
@@ -236,7 +240,7 @@ export const onSetNewPassword = (token, data, history) => {
       console.info("data:", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The password has been updated successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.updatePassword"]});
         history.replace("/signin");
       } else if (data.message) {
         console.info("payload: data.error", data.message);
@@ -252,13 +256,14 @@ export const onSetNewPassword = (token, data, history) => {
   }
 };
 
-export const onVerifyAccountEmail = (token, history) => {
+export const onVerifyAccountEmail = (token, history, context) => {
+  const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.get(`/verify/email/${token}`).then(({data}) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: "The Email has been verified successfully"});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.emailVerified"]});
         history.replace("/signin");
       } else if (data.message) {
         console.info("payload: data.error", data.message);

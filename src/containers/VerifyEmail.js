@@ -7,7 +7,7 @@ import InfoView from "../components/InfoView";
 class VerifyEmail extends Component {
   componentWillMount() {
     const queryParams = qs.parse(this.props.location.search, {ignoreQueryPrefix: true});
-    this.props.onVerifyAccountEmail(queryParams.token, this.props.history)
+    this.props.onVerifyAccountEmail(queryParams.token, this.props.history, this)
   }
 
   render() {

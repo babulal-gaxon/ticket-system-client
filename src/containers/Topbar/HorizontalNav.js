@@ -43,7 +43,7 @@ class HorizontalNav extends Component {
 
         <Menu.Item key="tickets">
           <Link to="/tickets">
-              <IntlMessages id="sidebar.all.tickets"/></Link>
+              <IntlMessages id="header.allTickets"/></Link>
           </Menu.Item>
       </Menu>
 

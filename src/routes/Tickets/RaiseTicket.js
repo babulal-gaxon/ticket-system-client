@@ -90,7 +90,7 @@ class RaiseTicket extends Component {
   };
 
   onTicketAdd = () => {
-    this.props.onRaiseNewTicket({...this.state});
+    this.props.onRaiseNewTicket({...this.state}, this);
     this.props.onToggleAddTicket();
     this.setState({fileList: []});
   };

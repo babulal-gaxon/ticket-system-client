@@ -15,7 +15,7 @@ class ForgetPassword extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.onResetPassword(values);
+        this.props.onResetPassword(values, this);
       }
     });
   };

@@ -43,7 +43,6 @@ class TicketDetail extends Component {
 
   componentDidMount() {
     const ticketId = this.props.match.params.id;
-    console.log("ticketId:", ticketId)
     this.props.onGetTicketDetail(ticketId);
     this.props.onGetTicketMessages(ticketId);
     this.props.onGetFormOptions();
@@ -61,13 +60,13 @@ class TicketDetail extends Component {
   onPriorityChange = value => {
     const currentTicket = this.props.currentTicket;
     this.setState({selectedPriority: value},
-      () => this.props.onUpdateTicketPriority(currentTicket.id, this.state.selectedPriority))
+      () => this.props.onUpdateTicketPriority(currentTicket.id, this.state.selectedPriority, this))
   };
 
   onStatusChange = value => {
     const currentTicket = this.props.currentTicket;
     this.setState({selectedStatus: value},
-      () => this.props.onUpdateTicketStatus(currentTicket.id, this.state.selectedStatus))
+      () => this.props.onUpdateTicketStatus(currentTicket.id, this.state.selectedStatus, this))
   };
 
   onSubmitMessage = () => {
@@ -85,7 +84,7 @@ class TicketDetail extends Component {
       this.props.onSendNewMessage(currentTicket.id, {
         message: this.state.message,
         attachments: attachments
-      })
+      }, this)
     }
     this.setState({message: '', attachments: []})
   };
@@ -140,7 +139,7 @@ class TicketDetail extends Component {
           return {
             fileList: newFileList,
           };
-        }, () => this.props.onSelectFiles(this.state.fileList));
+        });
       },
       beforeUpload: file => {
         const isFileSize = file.size < getTicketFileSize();
@@ -149,7 +148,7 @@ class TicketDetail extends Component {
         } else {
           this.setState(state => ({
             fileList: [...state.fileList, file],
-          }), () => this.props.onSelectFiles(this.state.fileList))
+          }))
         }
         return false;
       },

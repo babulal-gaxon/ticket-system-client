@@ -22,7 +22,7 @@ class VerifyPassword extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.onSetNewPassword(queryParams.token, {...this.state}, this.props.history);
+        this.props.onSetNewPassword(queryParams.token, {...this.state}, this.props.history, this);
       }
     });
   };

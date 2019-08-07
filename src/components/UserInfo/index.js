@@ -4,14 +4,15 @@ import {Avatar, Popover} from "antd";
 import {onUserSignOut} from "appRedux/actions/Auth";
 import {MEDIA_BASE_URL} from "../../constants/ActionTypes";
 import {withRouter} from "react-router";
+import IntlMessages from "../../util/IntlMessages";
 
 class UserInfo extends Component {
 
   render() {
     const userMenuOptions = (
       <ul className="gx-user-popover">
-        <li onClick={() => this.props.history.push("/profile")}>My Profile</li>
-        <li onClick={() => this.props.onUserSignOut()}>Logout
+        <li onClick={() => this.props.history.push("/profile")}><IntlMessages id="common.myProfile"/></li>
+        <li onClick={() => this.props.onUserSignOut()}><IntlMessages id="common.logout"/>
         </li>
       </ul>
     );

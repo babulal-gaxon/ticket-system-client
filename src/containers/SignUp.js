@@ -18,7 +18,7 @@ class SignUp extends React.Component {
     this.props.form.validateFields((err, values) => {
       console.log("values", values);
       if (!err) {
-        this.props.onUserSignUp(values);
+        this.props.onUserSignUp(values, this);
       }
     });
   };

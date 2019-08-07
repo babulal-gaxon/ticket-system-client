@@ -5,6 +5,8 @@ import UserInfo from "components/UserInfo";
 import HorizontalNav from "../HorizontalNav";
 import {Link} from "react-router-dom";
 import {switchLanguage, toggleCollapsedSideNav} from "../../../appRedux/actions/Setting";
+import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 const {Header} = Layout;
 
@@ -17,6 +19,7 @@ class InsideHeader extends Component {
 
   render() {
     const {navCollapsed, currentTicket} = this.props;
+    const {messages} = this.props.intl;
 
     return (
       <div className="gx-header-horizontal gx-header-horizontal-dark gx-inside-header-horizontal">
@@ -54,9 +57,9 @@ class InsideHeader extends Component {
 
 
         <div className="gx-p-5 gx-ml-5 gx-mt-3">
-          <h1 className="gx-text-white">{currentTicket ? currentTicket.title : "Support Request"}</h1>
+          <h1 className="gx-text-white">{currentTicket ? currentTicket.title : <IntlMessages id="header.supportRequest"/>}</h1>
           <p
-            className="gx-text-white">{currentTicket ? "Tickets / Ticket Id #" + currentTicket.id : "Your tickets submitted to the TicksUp support team"}</p>
+            className="gx-text-white">{currentTicket ? messages["header.ticketIdMessage"] + currentTicket.id : <IntlMessages id="header.ticketMessage"/>}</p>
 
 
         </div>
@@ -70,4 +73,4 @@ const mapStateToProps = ({settings, ticketsData}) => {
   const {currentTicket} = ticketsData;
   return {locale, navCollapsed, currentTicket}
 };
-export default connect(mapStateToProps, {toggleCollapsedSideNav, switchLanguage})(InsideHeader);
+export default connect(mapStateToProps, {toggleCollapsedSideNav, switchLanguage})(injectIntl(InsideHeader));

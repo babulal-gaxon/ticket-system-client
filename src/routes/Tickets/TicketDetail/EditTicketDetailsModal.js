@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, Form, Input, Modal} from "antd";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 class EditTicketDetailsModal extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class EditTicketDetailsModal extends Component {
   }
 
   onEditDetails = () => {
-    this.props.onUpdateTickets(this.props.currentTicket.id, {...this.state});
+    this.props.onUpdateTickets(this.props.currentTicket.id, {...this.state}, this);
     this.props.onToggleEditModal();
   };
 
@@ -52,7 +53,7 @@ class EditTicketDetailsModal extends Component {
   }
 }
 
-export default EditTicketDetailsModal;
+export default injectIntl(EditTicketDetailsModal);
 
 EditTicketDetailsModal.defaultProps = {
   currentTicket: null,
