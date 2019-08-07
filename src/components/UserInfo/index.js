@@ -19,18 +19,19 @@ class UserInfo extends Component {
     const {authUser} = this.props;
 
     return (
+      <div>
+        {authUser ?
       <Popover overlayClassName="gx-popover-horizantal" placement="bottomRight" content={userMenuOptions}
                trigger="click">
-        {authUser ?
         <div className="gx-d-flex gx-align-items-center">
           {authUser.avatar !== null ? <Avatar src={MEDIA_BASE_URL + authUser.avatar.src}
                                      className="gx-avatar gx-pointer" alt=""/> :
             <Avatar src={require("assets/images/placeholder.jpg")}
                     className="gx-avatar gx-pointer" alt=""/>}
           <span className="gx-text-white gx-px-2 gx-fs-md">{authUser ? authUser.display_name : "Loading"}</span>
-
-        </div> : null}
-      </Popover>
+        </div>
+      </Popover> : null}
+    </div>
 
     )
 

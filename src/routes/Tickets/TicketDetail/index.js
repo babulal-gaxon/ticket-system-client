@@ -224,8 +224,6 @@ class TicketDetail extends Component {
             <Button type="primary" className="gx-my-3" onClick={this.onSubmitMessage}
                     disabled={message === ""}><IntlMessages id="tickets.updateButton"/></Button>
           </div> : null}
-
-        <InfoView/>
       </div>
     )
   }
