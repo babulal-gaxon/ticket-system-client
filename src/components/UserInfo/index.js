@@ -24,7 +24,7 @@ class UserInfo extends Component {
       <Popover overlayClassName="gx-popover-horizantal" placement="bottomRight" content={userMenuOptions}
                trigger="click">
         <div className="gx-d-flex gx-align-items-center">
-          {authUser.avatar !== null ? <Avatar src={MEDIA_BASE_URL + authUser.avatar.src}
+          {authUser.avatar ? <Avatar src={MEDIA_BASE_URL + authUser.avatar.src}
                                      className="gx-avatar gx-pointer" alt=""/> :
             <Avatar src={require("assets/images/placeholder.jpg")}
                     className="gx-avatar gx-pointer" alt=""/>}
