@@ -141,7 +141,6 @@ export const getUserProfile = () => {
 };
 
 export const updateUserProfile = (profile, context) => {
-  console.log("profile", profile);
   const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
