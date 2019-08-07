@@ -81,5 +81,6 @@
   "action.tickets.messageSent": "The Message has been sent successfully",
   "action.tickets.priority": "The Priority of Ticket has been changed successfully",
   "action.tickets.status": "The Status of Ticket has been changed successfully",
-  "action.tickets.edit": "The Ticket details has been updated successfully",
+  "action.tickets.edit": "The Ticket details has been updated successfully"
+}
 
