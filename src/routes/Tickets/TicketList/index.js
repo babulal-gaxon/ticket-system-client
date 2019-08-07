@@ -167,7 +167,7 @@ class TicketList extends Component {
                                              fetchError={this.props.fetchError}
           /> : null}
         </div>
-      </div>
+
     );
   }
 }
