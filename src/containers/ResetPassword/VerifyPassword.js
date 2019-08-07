@@ -33,9 +33,10 @@ class VerifyPassword extends React.Component {
   };
 
   compareToFirstPassword = (rule, value, callback) => {
+    const {messages} = this.props.intl;
     const {form} = this.props;
     if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
+      callback(messages["auth.passwordError"]);
     } else {
       callback();
     }

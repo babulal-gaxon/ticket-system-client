@@ -24,6 +24,7 @@
   "app.userAuth.ResetPasswordText": "Veuillez entrer et confirmer votre nouveau mot de passe pour vous connecter",
   "auth.enterNewPassword": "Entrez un nouveau mot de passe",
   "auth.confirmPassword": "Confirmez le mot de passe",
+  "auth.passwordError": "Deux mots de passe que vous entrez sont incohérents!",
   "tickets.id": "ID",
   "tickets.subject": "Assujettir",
   "tickets.assignTo": "Affecter à",
@@ -71,5 +72,14 @@
   "common.showing": "Montrant",
   "common.of": "De",
   "common.items": "Articles",
-  "common.kb": "KB"
+  "common.kb": "KB",
+  "action.auth.emailSent": "Un email a été envoyé à l'adresse email entrée, veuillez vérifier votre email",
+  "action.auth.resetPassword": "Le lien de réinitialisation du mot de passe a été envoyé avec succès à votre adresse électronique.",
+  "action.auth.updatePassword": "Le mot de passe a été mis à jour avec succès",
+  "action.auth.emailVerified": "L'email a été vérifié avec succès",
+  "action.tickets.raise": "Le ticket a été levé avec succès",
+  "action.tickets.messageSent": "Le message a été envoyé avec succès",
+  "action.tickets.priority": "La priorité du ticket a été modifiée avec succès",
+  "action.tickets.status": "Le statut du ticket a été modifié avec succès",
+  "action.tickets.edit": "Les détails du ticket ont été mis à jour avec succès"
 }
