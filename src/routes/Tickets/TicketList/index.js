@@ -32,6 +32,11 @@ class TicketList extends Component {
     this.props.onGetFormOptions();
   }
 
+  isShowRaiseTickets = ( ) => {
+    console.log("condition", this.state.filterText === "",  this.props.raisedTickets.length === 0 , !this.props.updatingContent)
+    return this.state.filterText === "" && this.props.raisedTickets.length === 0 && !this.props.updatingContent
+  };
+
   onGetTicketsData = (currentPage, itemsPerPage, filterData, updatingContent) => {
     this.props.onGetRaisedTickets(currentPage, itemsPerPage, filterData, updatingContent);
   };
@@ -90,14 +95,13 @@ class TicketList extends Component {
   };
 
   render() {
-    const {filterText, showAddTicket} = this.state;
-    const {raisedTickets, formOptions, totalTickets} = this.props;
+    const {filterText, showAddTicket, listInitiated, hasRecord} = this.state;
+    const {raisedTickets, formOptions} = this.props;
     const {messages} = this.props.intl;
 
     return (
       <div className="gx-main-layout-content">
-        <div>
-          {totalTickets > 0 ?
+          {!this.isShowRaiseTickets() ?
             <div>
               <div className="gx-d-flex gx-justify-content-between">
                 <div className="gx-d-flex">
@@ -129,7 +133,7 @@ class TicketList extends Component {
                      pagination={{
                        pageSize: this.state.itemNumbers,
                        current: this.state.current,
-                       total: totalTickets,
+                       total: raisedTickets.length,
                        showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
                          <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
                          <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
@@ -162,7 +166,6 @@ class TicketList extends Component {
                                              fetchSuccess={this.props.fetchSuccess}
                                              fetchError={this.props.fetchError}
           /> : null}
-        </div>
         <InfoView/>
       </div>
     );

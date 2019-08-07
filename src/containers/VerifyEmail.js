@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {onVerifyAccountEmail} from "../appRedux/actions";
 import qs from "qs";
 import InfoView from "../components/InfoView";
+import {injectIntl} from "react-intl";
 
 class VerifyEmail extends Component {
   componentWillMount() {
@@ -19,4 +20,4 @@ class VerifyEmail extends Component {
   }
 }
 
-export default connect(null, {onVerifyAccountEmail})(VerifyEmail);
+export default connect(null, {onVerifyAccountEmail})(injectIntl(VerifyEmail));
