@@ -26,7 +26,7 @@ const ConversationCell = ({conversation}) => {
               <span className="gx-time gx-text-muted"> <IntlMessages
                 id="tickets.createdAt"/> {getFormattedDateTime(conversation.created_at)}</span>
               <span className="gx-mr-2 gx-text-grey"> <IntlMessages
-                id="tickets.lastUpdated"/> {moment(conversation.updated_at.date).fromNow()}</span>
+                id="tickets.lastUpdated"/> {moment(conversation.updated_at).fromNow()}</span>
             </div>
           </div>
           <div className="gx-message gx-my-2">{conversation.message}</div>
