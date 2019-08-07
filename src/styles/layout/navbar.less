@@ -695,6 +695,16 @@
 .@{class-prefix}-header-horizontal-nav {
   & .ant-menu-horizontal {
     border-bottom: 0 none;
+    line-height: 48px;
+
+    & .ant-menu-item a {
+      color: @white-color;
+
+      &:hover,
+      &:focus {
+        color: @menu-dark-highlight-color;
+      }
+    }
   }
 
   & .ant-menu-submenu-horizontal > .ant-menu-submenu-title {

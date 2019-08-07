@@ -155,7 +155,12 @@
     color: @text-color;
 
     .@{class-prefix}-header-horizontal-dark & {
-      color: @secondary-color;
+      color: @white-color;
+
+      &:hover,
+      &:focus {
+        color: @secondary-color;
+      }
     }
   }
 }
@@ -333,7 +338,11 @@
     }
 
     .@{class-prefix}-inside-header-horizontal & {
-      padding: 0;
+      padding: 25px 0;
+
+      & + .@{class-prefix}-header-horizontal-main {
+        padding: 0;
+      }
     }
   }
 

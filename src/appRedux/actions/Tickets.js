@@ -130,7 +130,7 @@ export const onGetTicketDetail = (ticketId) => {
     axios.get(`/customer/panel/tickets/${ticketId}`).then(({data}) => {
       console.info("onGetTicketDetail: ", data);
       if (data.success) {
-        dispatch({type: FETCH_SUCCESS});
+        // dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_TICKET_DETAIL, payload: data.data});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});

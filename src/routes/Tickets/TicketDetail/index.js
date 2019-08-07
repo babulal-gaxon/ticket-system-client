@@ -16,7 +16,6 @@ import {
 import axios from 'util/Api'
 import {Avatar, Button, Divider, Input, Select, Upload} from "antd";
 import ConversationCell from "./ConversationCell";
-import InfoView from "../../../components/InfoView";
 import EditTicketDetailsModal from "./EditTicketDetailsModal";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
@@ -228,7 +227,6 @@ class TicketDetail extends Component {
                     disabled={message === ""}><IntlMessages id="tickets.updateButton"/></Button>
           </div> : null}
 
-        <InfoView/>
       </div>
     )
   }
