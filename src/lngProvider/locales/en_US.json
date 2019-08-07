@@ -70,7 +70,7 @@
   "validation.auth.lastName": "Please enter Last Name!",
   "validation.auth.confirmPassword": "Please Confirm Password",
   "common.showing": "Showing",
-  "common.of": "Of",
+  "common.of": "of",
   "common.items": "Items",
   "common.kb": "KB",
   "action.auth.emailSent": "An Email has been sent to entered email address, please check your email",
