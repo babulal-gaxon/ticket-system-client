@@ -82,12 +82,14 @@ export const onAddTickets = (ticket, history, context) => {
 
 
 export const onUpdateTickets = (ticketId, ticket, context) => {
+  console.log("ticket", ticket)
   const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.put(`/tickets/${ticketId}`, ticket)
       .then(({data}) => {
         if (data.success) {
+          console.log("data.dta", data.data)
           dispatch({type: FETCH_SUCCESS});
           dispatch({type: UPDATE_TICKET, payload: data.data});
           dispatch({type: SHOW_MESSAGE, payload: messages["action.tickets.edit"]});

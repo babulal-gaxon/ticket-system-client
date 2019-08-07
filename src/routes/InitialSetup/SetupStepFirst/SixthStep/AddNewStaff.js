@@ -187,7 +187,7 @@ class AddNewStaff extends Component {
                   {getFieldDecorator('last_name', {
                     initialValue: last_name,
                     validateTrigger: 'onBlur',
-                    rules: [{required: true, message: "validation.message.lastName"}],
+                    rules: [{required: true, message: messages["validation.message.lastName"]}],
                   })(<Input type="text" onChange={(e) => {
                     this.setState({last_name: e.target.value})
                   }}/>)}
