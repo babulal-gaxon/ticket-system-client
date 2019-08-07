@@ -30,23 +30,27 @@ class Profile extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    const authUser = nextProps.authUser;
-    const {id, first_name, last_name, email, mobile, hourly_rate, avatar, designation} = authUser;
-    const department_ids = authUser.departments ? authUser.departments.map(department => {
-      return department.id
-    }) : [];
-    this.setState({
-      id: id,
-      first_name: first_name,
-      last_name: last_name,
-      email: email,
-      mobile: mobile,
-      hourly_rate: hourly_rate ? parseInt(hourly_rate) : "",
-      departments_ids: department_ids,
-      profile_pic: avatar ? avatar.id : null,
-      designation: designation,
-      avatar: avatar
-    });
+    if(nextProps.authUser) {
+      const authUser = nextProps.authUser;
+      const {id, first_name, last_name, email, mobile, hourly_rate, avatar, designation} = authUser;
+      const department_ids = authUser.departments ? authUser.departments.map(department => {
+        return department.id
+      }) : [];
+      if (nextProps.authUser !== this.props.authUser) {
+        this.setState({
+          id: id,
+          first_name: first_name,
+          last_name: last_name,
+          email: email,
+          mobile: mobile,
+          hourly_rate: hourly_rate ? parseInt(hourly_rate) : "",
+          departments_ids: department_ids,
+          profile_pic: avatar ? avatar.id : null,
+          designation: designation,
+          avatar: avatar
+        });
+      }
+    }
   }
 
   componentDidMount() {
