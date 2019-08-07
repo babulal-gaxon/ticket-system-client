@@ -52,23 +52,11 @@ class EditTicketDetailsModal extends Component {
             <Form.Item label={<IntlMessages id="common.description"/>}>
               {getFieldDecorator('content', {
                 initialValue: content,
-                validate: [{
-                  trigger: 'onBlur',
-                  rules: [
-                    {
-                      required: true,
-                      message: messages["validation.message.description"]
-                    },
-                  ],
-                }, {
-                  trigger: 'onChange',
-                  rules: [
-                    {
+                validateTrigger: 'onBlur',
+                  rules: [{
                       max: 250,
                       message: messages["common.descriptionLength"]
-                    },
-                  ],
-                }],
+                    }],
               })(<TextArea rows={4} placeholder={messages["manageTickets.enterDescription"]} onChange={(e) => {
                 this.setState({content: e.target.value})
               }}/>)}
