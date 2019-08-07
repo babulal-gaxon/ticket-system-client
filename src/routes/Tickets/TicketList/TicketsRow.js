@@ -2,6 +2,7 @@ import IntlMessages from "../../../util/IntlMessages";
 import {Avatar, Tag, Tooltip} from "antd";
 import React from "react";
 import moment from "moment";
+import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 const TicketsRow = () => {
   return [
@@ -21,7 +22,7 @@ const TicketsRow = () => {
         return <div className="gx-d-flex gx-justify-content-start">
           <span>{record.title}</span>
           <span className="gx-ml-2">
-              <Tag color="blue">{record.product_name}</Tag>
+            {record.product_name ? <Tag color="blue">{record.product_name}</Tag> : null}
             </span>
         </div>
       },
@@ -36,7 +37,7 @@ const TicketsRow = () => {
             <Tooltip placement="top" title={record.assigned_to.first_name + " " + record.assigned_to.last_name}
                      key={record.assigned_to.user_id}>
               {record.assigned_to.avatar ?
-                <Avatar className="gx-mr-3 gx-size-36" src={record.assigned_to.avatar.src}/> :
+                <Avatar className="gx-mr-3 gx-size-36" src={MEDIA_BASE_URL + record.assigned_to.avatar.src}/> :
                 <Avatar className="gx-mr-3 gx-size-36"
                         style={{backgroundColor: '#f56a00'}}>{record.assigned_to.first_name[0].toUpperCase()}</Avatar>}
             </Tooltip>
@@ -50,7 +51,7 @@ const TicketsRow = () => {
       dataIndex: 'department',
       key: 'department',
       render: (text, record) => {
-        return <span className="gx-email gx-d-inline-block gx-mr-2">{record.department_name}</span>
+        return <span className="gx-email gx-d-inline-block gx-mr-2">{record.department_name ? record.department_name : <IntlMessages id="common.na"/>}</span>
       },
     },
     {
@@ -68,7 +69,7 @@ const TicketsRow = () => {
       dataIndex: 'lastActivity',
       key: 'lastActivity',
       render: (text, record) => {
-        return <span className="gx-email gx-d-inline-block gx-mr-2">{moment(record.updated_at.date).fromNow()}</span>
+        return <span className="gx-email gx-d-inline-block gx-mr-2">{moment(record.updated_at).fromNow()}</span>
       },
     },
   ];

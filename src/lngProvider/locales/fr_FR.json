@@ -105,5 +105,7 @@
   "header.allTickets": "Tous les billets",
   "header.supportRequest": "Demande de soutien",
   "header.ticketMessage": "Vos billets soumis à l'équipe d'assistance de TicksUp",
-  "header.ticketIdMessage": "Billets / Numéro d'identification du billet"
+  "header.ticketIdMessage": "Billets / Numéro d'identification du billet",
+  "common.na": "N / A",
+  "validation.tickets.priority": "S'il vous plaît sélectionnez Ticket Priorité"
 }
