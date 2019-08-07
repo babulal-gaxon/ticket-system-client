@@ -76,7 +76,7 @@ class App extends Component {
       }
     }
 
-    console.log("themeType", themeType);
+    console.log("themeType", themeType, themeType === THEME_TYPE_DARK);
     if (themeType === THEME_TYPE_DARK) {
       document.body.classList.add('dark-theme');
     }
