@@ -11,6 +11,7 @@ export function updateWindowWidth(width) {
 }
 
 export function setThemeType(themeType) {
+  console.log("themeType: ", themeType)
   return {type: THEME_TYPE, themeType};
 }
 

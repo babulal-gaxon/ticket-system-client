@@ -51,8 +51,7 @@ let userSetting = {
 
 
 export const setUserSetting = (setting) => {
-  userSetting = setting;
-  console.log("userSetting", userSetting)
+  userSetting = setting
   setCompanyFavIcon();
 };
 
@@ -100,6 +99,8 @@ export const getCompanyLogo = () => {
 export const setCompanyFavIcon = () => {
   const favIcon = userSetting.general.company_favicon && userSetting.general.company_favicon.src ? MEDIA_BASE_URL + userSetting.general.company_favicon.src : null;
 
+  console.log("favIcon",favIcon
+  )
   if (favIcon) {
     let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
     link.type = 'image/x-icon';

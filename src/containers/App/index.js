@@ -17,6 +17,7 @@ import VerifyPassword from "../ResetPassword/VerifyPassword";
 import VerifyEmail from "../VerifyEmail";
 import {isUserCanRegistration, setCompanyFavIcon, setUserSetting} from "../../util/Utills";
 import {onGetUserPermission, switchLanguage} from "../../appRedux/actions";
+import {THEME_TYPE_DARK} from "../../constants/ThemeSetting";
 
 const RestrictedRoute = ({component: Component, token, ...rest}) =>
   <Route
@@ -64,7 +65,7 @@ class App extends Component {
   }
 
   render() {
-    const {match, location, locale, token, initURL, loadingUser} = this.props;
+    const {match, location, themeType, locale, token, initURL, loadingUser} = this.props;
     if (location.pathname === '/') {
       if (token === null) {
         return (<Redirect to={'/signin'}/>);
@@ -73,6 +74,11 @@ class App extends Component {
       } else {
         return (<Redirect to={initURL}/>);
       }
+    }
+
+    console.log("themeType", themeType);
+    if (themeType === THEME_TYPE_DARK) {
+      document.body.classList.add('dark-theme');
     }
 
     if (loadingUser) {
@@ -102,9 +108,9 @@ class App extends Component {
 }
 
 const mapStateToProps = ({settings, auth}) => {
-  const {locale} = settings;
+  const {locale, themeType} = settings;
   const {token, initURL, loadingUser} = auth;
-  return {locale, token, initURL, loadingUser}
+  return {locale, themeType, token, initURL, loadingUser}
 };
 
 export default connect(mapStateToProps, {

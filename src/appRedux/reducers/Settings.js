@@ -6,7 +6,7 @@ import {
   NAV_STYLE_INSIDE_HEADER_HORIZONTAL,
   THEME_COLOR_SELECTION,
   THEME_COLOR_SELECTION_PRESET,
-  THEME_TYPE,
+  THEME_TYPE, THEME_TYPE_DARK,
   THEME_TYPE_SEMI_DARK
 } from "../../constants/ThemeSetting";
 
@@ -14,7 +14,7 @@ const initialSettings = {
   navCollapsed: true,
   navStyle: NAV_STYLE_INSIDE_HEADER_HORIZONTAL,
   layoutType: LAYOUT_TYPE_FULL,
-  themeType: THEME_TYPE_SEMI_DARK,
+  themeType: THEME_TYPE_DARK,
   colorSelection: THEME_COLOR_SELECTION_PRESET,
 
   pathname: '',

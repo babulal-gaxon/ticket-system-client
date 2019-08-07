@@ -9,6 +9,7 @@ import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
 import {onUpdateTicketPriority, onUpdateTickets} from "../../../appRedux/actions";
 import EditTicketDetailsModal from "../../../routes/Tickets/TicketDetail/EditTicketDetailsModal";
+import {getCompanyLogo} from "../../../util/Utills";
 
 const {Header} = Layout;
 const {Option} = Select;
@@ -61,11 +62,11 @@ class InsideHeader extends Component {
                    }}
                 />
               </div>
-              <Link to="/" className="gx-d-block gx-d-lg-none gx-pointer gx-mr-xs-3 gx-pt-xs-1 gx-w-logo">
-                <img alt="" src={require("assets/images/w-logo.png")}/></Link>
-              <Link to="/" className="gx-d-none gx-d-lg-block gx-pointer gx-mr-xs-5 gx-logo">
-                <img alt="" src={require("assets/images/logo.png")}/></Link>
-
+              <Link to="/" className="gx-pointer gx-mr-xs-3 gx-pt-xs-1 gx-w-logo">
+                {getCompanyLogo() ?
+                  <img alt="TicksUp" src={getCompanyLogo()} style={{height: 26}}/>
+                  : <img alt="" src={require("assets/images/logo.svg")}/>}
+              </Link>
               <div className="gx-header-horizontal-nav gx-header-horizontal-nav-curve gx-d-none gx-d-lg-block">
                 <HorizontalNav/>
               </div>
@@ -88,8 +89,9 @@ class InsideHeader extends Component {
                 <div className="gx-d-flex gx-align-items-center">
                   <h1 className="gx-text-white gx-mb-0">{currentTicket ? currentTicket.title :
                     <IntlMessages id="header.supportRequest"/>}</h1>
-                  {currentTicket ? <span className="gx-text-white gx-pointer gx-ml-5" onClick={this.onToggleEditModal}><i
-                    className="icon icon-edit gx-mr-2"/><IntlMessages id="tickets.edit"/></span> : null}
+                  {currentTicket ?
+                    <span className="gx-text-white gx-pointer gx-ml-5" onClick={this.onToggleEditModal}><i
+                      className="icon icon-edit gx-mr-2"/><IntlMessages id="tickets.edit"/></span> : null}
                 </div>
                 <p
                   className="gx-text-white">{currentTicket ? messages["header.ticketIdMessage"] + currentTicket.id :
@@ -119,4 +121,9 @@ const mapStateToProps = ({settings, ticketsData}) => {
   const {currentTicket, formOptions} = ticketsData;
   return {locale, navCollapsed, currentTicket, formOptions}
 };
-export default connect(mapStateToProps, {toggleCollapsedSideNav, switchLanguage, onUpdateTicketPriority, onUpdateTickets})(injectIntl(InsideHeader));
+export default connect(mapStateToProps, {
+  toggleCollapsedSideNav,
+  switchLanguage,
+  onUpdateTicketPriority,
+  onUpdateTickets
+})(injectIntl(InsideHeader));

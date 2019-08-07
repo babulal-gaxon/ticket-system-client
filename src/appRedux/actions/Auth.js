@@ -132,7 +132,6 @@ export const onUserSignOut = () => {
 };
 
 
-
 export const onAddProfileImage = (imageFile, context) => {
   const {messages} = context.props.intl;
   return (dispatch) => {
@@ -205,7 +204,7 @@ export const showErrorMessage = (error) => {
   }
 };
 
-export const onResetPassword = ({email},context) => {
+export const onResetPassword = ({email}, context) => {
   const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
