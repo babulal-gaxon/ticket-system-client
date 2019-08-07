@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {onGetFormOptions, onGetRaisedTickets, onRaiseNewTicket} from "../../../appRedux/actions/Tickets";
 import {connect} from "react-redux";
 import {Button, Input, Select, Table} from "antd";
-import RaiseTicketModal from "./RaiseTicketModal";
+import RaiseTicketModal from "../RaiseTicket";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import InfoView from "../../../components/InfoView";
 import PropTypes from "prop-types";
@@ -14,7 +14,7 @@ const ButtonGroup = Button.Group;
 const {Option} = Select;
 const Search = Input.Search;
 
-class AllTickets extends Component {
+class TicketList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -86,7 +86,7 @@ class AllTickets extends Component {
   };
 
   onSelectTicket = record => {
-    this.props.history.push(`/customer/ticket-detail?id=${record.id}`);
+    this.props.history.push(`/ticket/${record.id}`);
   };
 
   render() {
@@ -178,9 +178,9 @@ const mapPropsToState = ({ticketsData, commonData}) => {
 export default connect(mapPropsToState, {
   onGetRaisedTickets, onGetFormOptions, onRaiseNewTicket,
   fetchSuccess, fetchError, fetchStart
-})(injectIntl(AllTickets));
+})(injectIntl(TicketList));
 
-AllTickets.defaultProps = {
+TicketList.defaultProps = {
   raisedTickets: [],
   totalTickets: null,
   formOptions: {
@@ -192,7 +192,7 @@ AllTickets.defaultProps = {
   },
 };
 
-AllTickets.propTypes = {
+TicketList.propTypes = {
   raisedTickets: PropTypes.array,
   totalTickets: PropTypes.number,
   formOptions: PropTypes.object

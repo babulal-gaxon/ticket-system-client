@@ -11,8 +11,6 @@ import {
 } from "../../constants/ThemeSetting";
 
 
-const SubMenu = Menu.SubMenu;
-
 class HorizontalNav extends Component {
 
   getNavStyleSubMenuClass = (navStyle) => {

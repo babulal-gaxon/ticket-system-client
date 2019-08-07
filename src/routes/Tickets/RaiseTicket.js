@@ -3,13 +3,13 @@ import {Button, Form, Input, Modal, Select, Upload} from "antd";
 import axios from 'util/Api'
 import PropTypes from "prop-types";
 import {injectIntl} from "react-intl";
-import IntlMessages from "../../../util/IntlMessages";
+import IntlMessages from "../../util/IntlMessages";
 
 const {TextArea} = Input;
 const {Option} = Select;
 
 
-class RaiseTicketModal extends Component {
+class RaiseTicket extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -214,12 +214,12 @@ class RaiseTicketModal extends Component {
 }
 
 
-RaiseTicketModal = Form.create({})(RaiseTicketModal);
+RaiseTicket = Form.create({})(RaiseTicket);
 
-export default injectIntl(RaiseTicketModal);
+export default injectIntl(RaiseTicket);
 
 
-RaiseTicketModal.defaultProps = {
+RaiseTicket.defaultProps = {
   formOptions: {
     services: [],
     departments: [],
@@ -230,7 +230,7 @@ RaiseTicketModal.defaultProps = {
   showAddTicket: false
 };
 
-RaiseTicketModal.propTypes = {
+RaiseTicket.propTypes = {
   formOptions: PropTypes.object,
   showAddTicket: PropTypes.bool
 };

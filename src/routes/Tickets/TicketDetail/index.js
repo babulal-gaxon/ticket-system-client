@@ -13,7 +13,6 @@ import {
   onUpdateTickets,
   onUpdateTicketStatus
 } from "../../../appRedux/actions";
-import qs from "qs";
 import axios from 'util/Api'
 import {Avatar, Button, Divider, Input, Select, Upload} from "antd";
 import ConversationCell from "./ConversationCell";
@@ -23,11 +22,12 @@ import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
 import {getFormattedDateTime, getTicketFileExtension, getTicketFileSize} from "../../../util/Utills";
+import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 const {Option} = Select;
 const {TextArea} = Input;
 
-class TicketDetails extends Component {
+class TicketDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,9 +42,10 @@ class TicketDetails extends Component {
   }
 
   componentDidMount() {
-    const queryParams = qs.parse(this.props.location.search, {ignoreQueryPrefix: true});
-    this.props.onGetTicketDetail(queryParams.id);
-    this.props.onGetTicketMessages(queryParams.id);
+    const ticketId = this.props.match.params.id;
+    console.log("ticketId:", ticketId)
+    this.props.onGetTicketDetail(ticketId);
+    this.props.onGetTicketMessages(ticketId);
     this.props.onGetFormOptions();
   }
 
@@ -179,9 +180,10 @@ class TicketDetails extends Component {
                 {currentTicket.assigned_to ?
                   <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
                     {currentTicket.assigned_to.avatar ?
-                      <Avatar className="gx-mr-3 gx-size-50" src={currentTicket.assigned_by.avatar.src}/> :
                       <Avatar className="gx-mr-3 gx-size-50"
-                              style={{backgroundColor: '#f56a00'}}>{currentTicket.assigned_by.first_name[0].toUpperCase()}</Avatar>}
+                              src={MEDIA_BASE_URL + currentTicket.assigned_to.avatar.src}/> :
+                      <Avatar className="gx-mr-3 gx-size-50"
+                              style={{backgroundColor: '#f56a00'}}>{currentTicket.assigned_to.first_name[0].toUpperCase()}</Avatar>}
                     <div className="gx-media-body gx-mt-2">
                   <span
                     className="gx-mb-0 gx-text-capitalize"><IntlMessages id="tickets.assignedTo"/></span>
@@ -278,9 +280,9 @@ export default connect(mapPropsToState, {
   onUpdateTicketPriority,
   onUpdateTicketStatus,
   onUpdateTickets
-})(injectIntl(TicketDetails));
+})(injectIntl(TicketDetail));
 
-TicketDetails.defaultProps = {
+TicketDetail.defaultProps = {
   formOptions: {
     services: [],
     departments: [],
@@ -292,7 +294,7 @@ TicketDetails.defaultProps = {
   ticketMessages: []
 };
 
-TicketDetails.propTypes = {
+TicketDetail.propTypes = {
   formOptions: PropTypes.object,
   currentTicket: PropTypes.object,
   ticketMessages: PropTypes.array
