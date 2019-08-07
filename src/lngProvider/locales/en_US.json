@@ -107,6 +107,7 @@
   "header.allTickets": "All Tickets",
   "header.supportRequest": "Support Request",
   "header.ticketMessage": "Your tickets submitted to the TicksUp support team",
-  "header.ticketIdMessage": "Tickets / Ticket Id #"
+  "header.ticketIdMessage": "Tickets / Ticket Id #",
+  "profile.title": "Profile"
 }
 
