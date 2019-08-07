@@ -35,7 +35,7 @@ export const onGetUserPermission = (history) => {
         localStorage.setItem("settings", JSON.stringify(data.data));
         setUserSetting(data.data);
         dispatch({type: SWITCH_LANGUAGE, payload: data.data.locale.default_language});
-        dispatch({type: THEME_TYPE, payload: data.data.customer.theme})
+        dispatch({type: THEME_TYPE, themeType: data.data.customer.theme})
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
         dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});
