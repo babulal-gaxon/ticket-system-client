@@ -23,7 +23,6 @@ class InfoView extends PureComponent {
 
   render() {
     const {error, loading, displayMessage} = this.props;
-
     return (
       <Auxiliary>
         {loading && <div className="gx-loader-view">

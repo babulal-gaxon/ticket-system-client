@@ -7,6 +7,7 @@ import {onAddProfileImage} from "../../appRedux/actions/Auth";
 import {Divider, Select} from "antd";
 import ImageUpload from "./ImageUpload";
 import {getUserProfile, updateUserProfile} from "../../appRedux/actions";
+import InfoView from "../../components/InfoView";
 import {injectIntl} from "react-intl";
 import IntlMessages from "../../util/IntlMessages";
 
@@ -50,7 +51,7 @@ class Profile extends Component {
 
   componentDidMount() {
     this.props.getUserProfile();
-    this.props.onGetDepartments();
+    // this.props.onGetDepartments();
   }
 
   goPreviousScreen = () => {
@@ -206,6 +207,7 @@ class Profile extends Component {
             </span>
           </div>
         </Widget>
+        <InfoView/>
       </div>
     )
   }
@@ -213,10 +215,9 @@ class Profile extends Component {
 
 Profile = Form.create({})(Profile);
 
-const mapStateToProps = ({departments, auth}) => {
+const mapStateToProps = ({auth}) => {
   const {authUser} = auth;
-  const {dept} = departments;
-  return {dept, authUser};
+  return {authUser};
 };
 
 export default connect(mapStateToProps, {
