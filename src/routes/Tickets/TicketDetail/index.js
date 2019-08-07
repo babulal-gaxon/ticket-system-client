@@ -35,8 +35,6 @@ class TicketDetail extends Component {
       fileList: [],
       attachments: [],
       currentTicket: null,
-      showEditModal: false,
-      selectedPriority: null,
       selectedStatus: null
     }
   }
@@ -56,12 +54,6 @@ class TicketDetail extends Component {
   componentWillUnmount() {
     this.props.onNullifyTicket();
   }
-
-  onPriorityChange = value => {
-    const currentTicket = this.props.currentTicket;
-    this.setState({selectedPriority: value},
-      () => this.props.onUpdateTicketPriority(currentTicket.id, this.state.selectedPriority, this))
-  };
 
   onStatusChange = value => {
     const currentTicket = this.props.currentTicket;
@@ -89,9 +81,7 @@ class TicketDetail extends Component {
     this.setState({message: '', attachments: []})
   };
 
-  onToggleEditModal = () => {
-    this.setState({showEditModal: !this.state.showEditModal})
-  };
+
 
   handleUpload = () => {
     let formData = new FormData();
@@ -160,20 +150,7 @@ class TicketDetail extends Component {
       <div className="gx-main-layout-content">
         {currentTicket ?
           <div>
-            <div className="gx-d-flex gx-justify-content-between">
-              <div>
-                <h2 className="gx-font-weight-bold">{currentTicket.title}</h2>
-                <div><IntlMessages id="tickets.ticketId"/> {currentTicket.id}</div>
-              </div>
-              <span className="gx-text-primary" onClick={this.onToggleEditModal}><i
-                className="icon icon-edit gx-mr-2"/><IntlMessages id="tickets.edit"/></span>
-              <Select defaultValue={currentTicket.priority_id} onChange={this.onPriorityChange} style={{width: 120}}>
-                {this.props.formOptions.priorities.map(priority => {
-                  return <Option value={priority.id} key={priority.id}>{priority.name}</Option>
-                })
-                }
-              </Select>
-            </div>
+
             <div className="gx-d-flex gx-justify-content-between gx-my-5">
               <div className="gx-media-body gx-mt-2">
                 {currentTicket.assigned_to ?
@@ -250,14 +227,6 @@ class TicketDetail extends Component {
             <Button type="primary" className="gx-my-3" onClick={this.onSubmitMessage}
                     disabled={message === ""}><IntlMessages id="tickets.updateButton"/></Button>
           </div> : null}
-        {showEditModal ?
-          <EditTicketDetailsModal
-            onToggleEditModal={this.onToggleEditModal}
-            currentTicket={currentTicket}
-            showEditModal={showEditModal}
-            onUpdateTickets={this.props.onUpdateTickets}
-          />
-          : null}
 
         <InfoView/>
       </div>

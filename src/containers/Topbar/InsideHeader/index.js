@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Layout} from 'antd';
+import {Layout, Select} from 'antd';
 import {connect} from "react-redux";
 import UserInfo from "components/UserInfo";
 import HorizontalNav from "../HorizontalNav";
@@ -7,19 +7,45 @@ import {Link} from "react-router-dom";
 import {switchLanguage, toggleCollapsedSideNav} from "../../../appRedux/actions/Setting";
 import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
+import {onUpdateTicketPriority, onUpdateTickets} from "../../../appRedux/actions";
+import EditTicketDetailsModal from "../../../routes/Tickets/TicketDetail/EditTicketDetailsModal";
 
 const {Header} = Layout;
+const {Option} = Select;
 
 class InsideHeader extends Component {
 
   state = {
     searchText: '',
+    selectedPriority: null,
+    showEditModal: false
+  };
+
+  onShowPriorityDropdown = () => {
+    const currentTicket = this.props.currentTicket;
+    return <Select defaultValue={currentTicket.priority_id} onChange={this.onPriorityChange} style={{width: 120}}>
+      {this.props.formOptions.priorities.map(priority => {
+        return <Option value={priority.id} key={priority.id}>{priority.name}</Option>
+      })
+      }
+    </Select>
+  };
+
+  onToggleEditModal = () => {
+    this.setState({showEditModal: !this.state.showEditModal})
+  };
+
+  onPriorityChange = value => {
+    const currentTicket = this.props.currentTicket;
+    this.setState({selectedPriority: value},
+      () => this.props.onUpdateTicketPriority(currentTicket.id, this.state.selectedPriority, this))
   };
 
 
   render() {
     const {navCollapsed, currentTicket} = this.props;
     const {messages} = this.props.intl;
+    const {showEditModal} = this.state;
 
     return (
       <div className="gx-header-horizontal gx-header-horizontal-dark gx-inside-header-horizontal">
@@ -56,13 +82,31 @@ class InsideHeader extends Component {
         </Header>
 
 
-        <div className="gx-p-5 gx-ml-5 gx-mt-3">
-          <h1 className="gx-text-white">{currentTicket ? currentTicket.title : <IntlMessages id="header.supportRequest"/>}</h1>
-          <p
-            className="gx-text-white">{currentTicket ? messages["header.ticketIdMessage"] + currentTicket.id : <IntlMessages id="header.ticketMessage"/>}</p>
+        <div className="gx-p-5 gx-ml-5 gx-mt-3 gx-d-flex gx-justify-content-between">
+          <div>
+            <div className="gx-d-flex">
+            <h1 className="gx-text-white">{currentTicket ? currentTicket.title :
+              <IntlMessages id="header.supportRequest"/>}</h1>
+              {currentTicket ? <span className="gx-text-primary gx-ml-5" onClick={this.onToggleEditModal}><i
+                className="icon icon-edit gx-mr-2"/><IntlMessages id="tickets.edit"/></span> : null}
+            </div>
+            <p
+              className="gx-text-white">{currentTicket ? messages["header.ticketIdMessage"] + currentTicket.id :
+              <IntlMessages id="header.ticketMessage"/>}</p>
+          </div>
 
 
+          <div>{currentTicket ? this.onShowPriorityDropdown() : null}</div>
         </div>
+        {showEditModal ?
+          <EditTicketDetailsModal
+            onToggleEditModal={this.onToggleEditModal}
+            currentTicket={currentTicket}
+            showEditModal={showEditModal}
+            onUpdateTickets={this.props.onUpdateTickets}
+          />
+          : null}
+
       </div>
     );
   }
@@ -70,7 +114,7 @@ class InsideHeader extends Component {
 
 const mapStateToProps = ({settings, ticketsData}) => {
   const {locale, navCollapsed} = settings;
-  const {currentTicket} = ticketsData;
-  return {locale, navCollapsed, currentTicket}
+  const {currentTicket, formOptions} = ticketsData;
+  return {locale, navCollapsed, currentTicket, formOptions}
 };
-export default connect(mapStateToProps, {toggleCollapsedSideNav, switchLanguage})(injectIntl(InsideHeader));
+export default connect(mapStateToProps, {toggleCollapsedSideNav, switchLanguage, onUpdateTicketPriority, onUpdateTickets})(injectIntl(InsideHeader));
