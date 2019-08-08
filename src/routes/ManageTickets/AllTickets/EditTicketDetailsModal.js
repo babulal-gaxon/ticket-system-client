@@ -20,6 +20,14 @@ class EditTicketDetailsModal extends Component {
     this.props.onToggleEditModal();
   };
 
+  onValidationCheck = () => {
+    this.props.form.validateFields(err => {
+      if (!err) {
+        this.onEditDetails();
+      }
+    });
+  };
+
   render() {
     const {messages} = this.props.intl;
     const {getFieldDecorator} = this.props.form;
@@ -32,7 +40,7 @@ class EditTicketDetailsModal extends Component {
           title={<IntlMessages id="common.editDetails"/>}
           onCancel={() => onToggleEditModal()}
           footer={[
-            <Button key="submit" type="primary" onClick={this.onEditDetails}>
+            <Button key="submit" type="primary" onClick={this.onValidationCheck}>
               <IntlMessages id="common.saveChanges"/>
             </Button>,
             <Button key="cancel" onClick={() => onToggleEditModal()}>
@@ -54,8 +62,16 @@ class EditTicketDetailsModal extends Component {
                 initialValue: content,
                 validateTrigger: 'onBlur',
                   rules: [{
+                    required: true,
+                    message: messages["validation.message.description"]
+                  },
+                    {
                       max: 250,
-                      message: messages["common.descriptionLength"]
+                      message: messages["common.descriptionLength"],
+                    },
+                    {
+                      min: 10,
+                      message: messages["validation.tickets.contentLength"],
                     }],
               })(<TextArea rows={4} placeholder={messages["manageTickets.enterDescription"]} onChange={(e) => {
                 this.setState({content: e.target.value})
@@ -69,6 +85,8 @@ class EditTicketDetailsModal extends Component {
 }
 
 EditTicketDetailsModal = Form.create({})(EditTicketDetailsModal);
+
+
 export default injectIntl(EditTicketDetailsModal);
 
 EditTicketDetailsModal.defaultProps = {

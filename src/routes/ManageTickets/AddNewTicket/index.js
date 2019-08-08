@@ -237,6 +237,13 @@ class AddNewTicket extends Component {
                       {
                         required: true,
                         message: messages["validation.message.description"]
+                      }, {
+                        max: 250,
+                        message: messages["common.descriptionLength"],
+                      },
+                      {
+                        min: 10,
+                        message: messages["validation.tickets.contentLength"],
                       }],
                   })(<TextArea rows={4} placeHolder={messages["manageTickets.enterDescription"]}
                                className="gx-form-control-lg" onChange={(e) => {

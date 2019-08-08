@@ -508,5 +508,6 @@
   "action.tickets.edit": "The Ticket details has been updated successfully",
   "action.tickets.archive": "The Ticket(s) has been deleted successfully",
   "action.tickets.status": "The Status of Ticket has been changed successfully",
-  "action.tickets.priority": "The Priority of Ticket has been changed successfully"
+  "action.tickets.priority": "The Priority of Ticket has been changed successfully",
+  "validation.tickets.contentLength": "At least 10 characters should be entered"
 }
