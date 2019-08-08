@@ -80,7 +80,8 @@ class TicketDetail extends Component {
         message: this.state.message,
         attachments: attachments
       }, this);
-      this.setState({message: '', attachments: []})
+      setTimeout(()=>
+      this.setState({message: '', attachments: []}),20)
     }
   };
 
