@@ -2,7 +2,6 @@ import IntlMessages from "../../../util/IntlMessages";
 import {Avatar, Tag, Tooltip} from "antd";
 import React from "react";
 import moment from "moment";
-import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 const TicketsRow = () => {
   return [
@@ -37,7 +36,7 @@ const TicketsRow = () => {
             <Tooltip placement="top" title={record.assigned_to.first_name + " " + record.assigned_to.last_name}
                      key={record.assigned_to.user_id}>
               {record.assigned_to.avatar ?
-                <Avatar className="gx-mr-3 gx-size-36" src={MEDIA_BASE_URL + record.assigned_to.avatar.src}/> :
+                <Avatar className="gx-mr-3 gx-size-36" src={record.assigned_to.avatar.src}/> :
                 <Avatar className="gx-mr-3 gx-size-36"
                         style={{backgroundColor: '#f56a00'}}>{record.assigned_to.first_name[0].toUpperCase()}</Avatar>}
             </Tooltip>

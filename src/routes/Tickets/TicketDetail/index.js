@@ -20,7 +20,6 @@ import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
 import {getFormattedDateTime, getTicketFileExtension, getTicketFileSize} from "../../../util/Utills";
-import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -166,7 +165,7 @@ class TicketDetail extends Component {
                   <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
                     {currentTicket.assigned_to.avatar ?
                       <Avatar className="gx-mr-3 gx-size-50"
-                              src={MEDIA_BASE_URL + currentTicket.assigned_to.avatar.src}/> :
+                              src={currentTicket.assigned_to.avatar.src}/> :
                       <Avatar className="gx-mr-3 gx-size-50"
                               style={{backgroundColor: '#f56a00'}}>{currentTicket.assigned_to.first_name[0].toUpperCase()}</Avatar>}
                     <div className="gx-media-body gx-mt-2">

@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Avatar, Popover} from "antd";
 import {onUserSignOut} from "appRedux/actions/Auth";
-import {MEDIA_BASE_URL} from "../../constants/ActionTypes";
 import {withRouter} from "react-router";
 import IntlMessages from "../../util/IntlMessages";
 
@@ -23,7 +22,7 @@ class UserInfo extends Component {
                trigger="click">
         {authUser ?
           <div className="gx-d-flex gx-align-items-center">
-            {authUser.avatar ? <Avatar src={MEDIA_BASE_URL + authUser.avatar.src}
+            {authUser.avatar ? <Avatar src={authUser.avatar.src}
                                        className="gx-avatar gx-pointer" alt=""/> :
               <Avatar src={require("assets/images/placeholder.jpg")}
                       className="gx-avatar gx-pointer" alt=""/>}

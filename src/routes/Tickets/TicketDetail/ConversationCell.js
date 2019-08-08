@@ -5,7 +5,6 @@ import {Avatar, Divider} from "antd";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
 import {getFormattedDateTime} from "../../../util/Utills";
-import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 
 
 const ConversationCell = ({conversation}) => {
@@ -15,7 +14,7 @@ const ConversationCell = ({conversation}) => {
         <div className="gx-chat-todo-avatar">
           {conversation.author.avatar ?
             <Avatar className="gx-rounded-circle gx-size-40"
-                    src={MEDIA_BASE_URL + conversation.author.avatar.src}/> :
+                    src={conversation.author.avatar.src}/> :
             <Avatar className="gx-rounded-circle gx-size-40"
                     style={{backgroundColor: '#f56a00'}}>{conversation.author.first_name[0].toUpperCase()}</Avatar>}
         </div>
