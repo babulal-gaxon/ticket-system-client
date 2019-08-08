@@ -85,9 +85,10 @@ export const onNullifyTicket = () => {
   }
 };
 
-export const onGetTicketMessages = (ticketId) => {
+export const onGetTicketMessages = (ticketId, hideLoader) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
+    if (!hideLoader)
+      dispatch({type: FETCH_START});
     axios.get(`/customer/panel/tickets/${ticketId}/messages`).then(({data}) => {
       console.info("onGetTicketMessages: ", data);
       if (data.success) {
