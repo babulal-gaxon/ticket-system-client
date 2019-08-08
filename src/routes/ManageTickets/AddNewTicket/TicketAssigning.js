@@ -65,7 +65,7 @@ class TicketAssigning extends Component {
             </div>
           </div> :
           <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5" onClick={this.onToggleStaffModal}>
-            <Avatar className="gx-mr-3 gx-size-50" src="https://via.placeholder.com/150x150"/>
+            <Avatar className="gx-mr-3 gx-size-50" src={require("assets/images/placeholder.jpg")}/>
             <div className="gx-media-body gx-mt-2">
               <span className="gx-mb-0 gx-text-capitalize"><IntlMessages id="common.unassigned"/></span>
               <div className="gx-mt-2">
