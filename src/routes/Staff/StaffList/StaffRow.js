@@ -1,6 +1,5 @@
 import {Avatar, Dropdown, Menu, Popconfirm, Tag} from "antd";
 import React from "react";
-import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import Permissions from "../../../util/Permissions";
 import IntlMessages from "../../../util/IntlMessages";
 
@@ -67,7 +66,7 @@ const StaffRow = (context) => {
       render: (text, record) => {
         return <span className="gx-email gx-d-inline-block gx-mr-2">
              {record.avatar ?
-               <Avatar className="gx-mr-3 gx-size-50" src={MEDIA_BASE_URL + record.avatar.src}/> :
+               <Avatar className="gx-mr-3 gx-size-50" src={record.avatar.src}/> :
                <Avatar className="gx-mr-3 gx-size-50"
                        style={{backgroundColor: '#f56a00'}}>{record.first_name[0].toUpperCase()}</Avatar>}
           {record.first_name + " " + record.last_name} </span>

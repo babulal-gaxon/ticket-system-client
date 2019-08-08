@@ -1,5 +1,4 @@
 import {Avatar, Dropdown, Menu, Popconfirm, Tag} from "antd";
-import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import React from "react";
 import Permissions from "../../../util/Permissions";
 import IntlMessages from "../../../util/IntlMessages";
@@ -72,7 +71,7 @@ const CustomersRow = (context) => {
       render: (text, record) => {
         return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
             {record.avatar ?
-              <Avatar className="gx-mr-3 gx-size-50" src={MEDIA_BASE_URL + record.avatar.src}/> :
+              <Avatar className="gx-mr-3 gx-size-50" src={record.avatar.src}/> :
               <Avatar className="gx-mr-3 gx-size-50"
                       style={{backgroundColor: '#f56a00'}}>{record.first_name[0].toUpperCase()}</Avatar>}
             <div className="gx-media-body">

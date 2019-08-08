@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Avatar, Table, Tag, Tooltip} from "antd";
 import Widget from "../../../../components/Widget";
 import Permissions from "../../../../util/Permissions";
-import {MEDIA_BASE_URL} from "../../../../constants/ActionTypes";
 import {getFormattedDate} from "../../../../util/Utills";
 import IntlMessages from "../../../../util/IntlMessages";
 
@@ -18,7 +17,7 @@ class RelatedTickets extends Component {
           return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
               <Tooltip placement="top" title={record.assigned_by.first_name + " " + record.assigned_by.last_name}>
                 {record.assigned_by.avatar ?
-                  <Avatar className="gx-mr-3 gx-size-50" src={MEDIA_BASE_URL + record.assigned_by.avatar.src}/> :
+                  <Avatar className="gx-mr-3 gx-size-50" src={record.assigned_by.avatar.src}/> :
                   <Avatar className="gx-mr-3 gx-size-50"
                           style={{backgroundColor: '#f56a00'}}>{record.assigned_by.first_name[0].toUpperCase()}</Avatar>}
               </Tooltip>

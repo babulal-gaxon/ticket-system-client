@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Widget from "../../../../components/Widget";
 import {Avatar, Col, Divider, Row, Tag} from "antd";
-import {MEDIA_BASE_URL} from "../../../../constants/ActionTypes";
 import Permissions from "../../../../util/Permissions";
 import IntlMessages from "../../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
@@ -31,7 +30,7 @@ class CustomerDetails extends Component {
           <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
             {currentCustomerProfile.avatar ?
               <Avatar className="gx-mr-3 gx-size-100 gx-fs-xxl"
-                      src={MEDIA_BASE_URL + currentCustomerProfile.avatar.src}/> :
+                      src={currentCustomerProfile.avatar.src}/> :
               <Avatar className="gx-mr-3 gx-size-100 gx-fs-xxl"
                       style={{backgroundColor: '#f56a00'}}>{currentCustomerProfile.first_name[0].toUpperCase()}</Avatar>}
             <div className="gx-media-body">

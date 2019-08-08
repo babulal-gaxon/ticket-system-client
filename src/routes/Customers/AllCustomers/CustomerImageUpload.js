@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Avatar, Button, message, Upload} from "antd";
 import PropTypes from "prop-types";
-import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import {getFileExtension, getFileSize} from "../../../util/Utills";
 import {injectIntl} from "react-intl";
 import IntlMessages from "../../../util/IntlMessages";
@@ -32,7 +31,7 @@ class CustomerImageUpload extends Component {
     if (this.state.fileList.length > 0) {
       return URL.createObjectURL(this.state.fileList[0]);
     } else if (imageAvatar) {
-      return MEDIA_BASE_URL + imageAvatar.src;
+      return imageAvatar.src;
     } else {
       return require("assets/images/placeholder.jpg")
     }

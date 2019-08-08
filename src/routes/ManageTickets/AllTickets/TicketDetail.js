@@ -24,7 +24,6 @@ import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import qs from "qs";
-import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import {getFormattedDate, getTicketFileExtension, getTicketFileSize} from "../../../util/Utills";
 import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
@@ -280,7 +279,7 @@ class TicketDetail extends Component {
                   <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
                     {currentTicket.assigned_by.avatar ?
                       <Avatar className="gx-mr-3 gx-size-50"
-                              src={MEDIA_BASE_URL + currentTicket.assigned_by.avatar.src}/> :
+                              src={currentTicket.assigned_by.avatar.src}/> :
                       <Avatar className="gx-mr-3 gx-size-50"
                               style={{backgroundColor: '#f56a00'}}>{currentTicket.assigned_by.first_name[0].toUpperCase()}</Avatar>}
                     <div className="gx-media-body gx-mt-2">
@@ -309,7 +308,7 @@ class TicketDetail extends Component {
                 </Select>
                 <div className="gx-my-3"><IntlMessages id="common.attachments"/></div>
                 {currentTicket.attachments.length > 0 ? currentTicket.attachments.map(attachment => {
-                  return <Avatar shape="square" icon="user" key={attachment.id} src={MEDIA_BASE_URL + attachment.src}
+                  return <Avatar shape="square" icon="user" key={attachment.id} src={attachment.src}
                                  className="gx-mr-2 gx-size-100"/>
                 }) : <div><IntlMessages id="manageTickets.noAttachmentAdded"/></div>}
               </div>

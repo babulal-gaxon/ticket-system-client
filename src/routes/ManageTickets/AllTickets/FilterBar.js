@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import CustomScrollbars from "../../../util/CustomScrollbars";
 import {Avatar, Checkbox, DatePicker, Input, Select} from "antd";
 import PropTypes from "prop-types";
-import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
 
@@ -127,7 +126,7 @@ class FilterBar extends Component {
                 {staffs.map(staff => {
                   return <div key={staff.id} className="gx-my-2"><Checkbox value={staff.id}>
                     <span>{staff.avatar ?
-                      <Avatar className=" gx-size-30" src={MEDIA_BASE_URL + staff.avatar.src}/> :
+                      <Avatar className=" gx-size-30" src={staff.avatar.src}/> :
                       <Avatar className=" gx-size-30"
                               style={{backgroundColor: '#f56a00'}}>{staff.first_name[0].toUpperCase()}</Avatar>}</span>
                     <span className="gx-mx-2">{staff.first_name + " " + staff.last_name}</span>
@@ -164,7 +163,7 @@ class FilterBar extends Component {
               >
                 {customers.map(customer => {
                   return <Option value={customer.id} style={{minHeight: 33}} key={customer.id}><span>{customer.avatar ?
-                    <Avatar className=" gx-size-30" src={MEDIA_BASE_URL + customer.avatar.src}/> :
+                    <Avatar className=" gx-size-30" src={customer.avatar.src}/> :
                     <Avatar className=" gx-size-30"
                             style={{backgroundColor: '#f56a00'}}>{customer.first_name[0].toUpperCase()}</Avatar>}</span>
                     <>

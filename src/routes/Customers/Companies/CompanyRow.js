@@ -1,5 +1,4 @@
 import {Avatar, Dropdown, Menu, Popconfirm, Tooltip} from "antd";
-import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import React from "react";
 import Permissions from "../../../util/Permissions";
 import IntlMessages from "../../../util/IntlMessages";
@@ -42,7 +41,7 @@ const CompaniesRow = (context) => {
       render: (text, record) => {
         return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
             {record.avatar ?
-              <Avatar className="gx-mr-3 gx-size-60" src={MEDIA_BASE_URL + record.avatar.src}/> :
+              <Avatar className="gx-mr-3 gx-size-60" src={record.avatar.src}/> :
               <Avatar className="gx-mr-3 gx-size-60 gx-fs-xxl"
                       style={{backgroundColor: '#f56a00'}}>{record.company_name[0].toUpperCase()}</Avatar>}
             <div className="gx-media-body">
@@ -68,7 +67,7 @@ const CompaniesRow = (context) => {
               record.members.map(member => {
                 return member.avatar ?
                   <Tooltip key={member.id} placement="top" title={member.first_name + " " + member.last_name}>
-                    <Avatar className="gx-size-50" src={MEDIA_BASE_URL + member.avatar.src}/>
+                    <Avatar className="gx-size-50" src={member.avatar.src}/>
                   </Tooltip>
                   :
                   <Tooltip key={member.id} placement="top" title={member.first_name + " " + member.last_name}>

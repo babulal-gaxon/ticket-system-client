@@ -2,7 +2,6 @@ import React from "react";
 import Widget from "../../../components/Widget";
 import {Avatar} from "antd";
 import PropTypes from "prop-types";
-import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import {getFormattedDateTime} from "../../../util/Utills";
 
 
@@ -11,8 +10,8 @@ const ConversationCell = ({conversation}) => {
     <div className="gx-flex-row gx-module-detail-item gx-flex-nowrap gx-pl-0">
       <div className="gx-chat-todo-avatar">
         {conversation.author.avatar ?
-            <Avatar className="gx-rounded-circle gx-size-40" src={MEDIA_BASE_URL + conversation.author.avatar.src}
-                    alt={conversation.author.display_name}/> :
+          <Avatar className="gx-rounded-circle gx-size-40" src={conversation.author.avatar.src}
+                  alt={conversation.author.display_name}/> :
             <Avatar className="gx-mr-3 gx-size-50"
                     style={{backgroundColor: '#f56a00'}}>{conversation.author.display_name[0].toUpperCase()}</Avatar>
         }

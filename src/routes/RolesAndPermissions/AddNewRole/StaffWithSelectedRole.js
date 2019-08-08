@@ -3,7 +3,6 @@ import Widget from "../../../components/Widget";
 import {Avatar, Input} from "antd";
 import PropTypes from "prop-types";
 import Permissions from "../../../util/Permissions";
-import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
 
@@ -71,7 +70,7 @@ class StaffWithSelectedRole extends Component {
                 <div className="gx-d-flex gx-justify-content-between">
               <span className="gx-email gx-d-inline-block gx-mr-2">
                 {staff.avatar ?
-                  <Avatar className="gx-mr-3 gx-size-50" src={MEDIA_BASE_URL + staff.avatar.src}/> :
+                  <Avatar className="gx-mr-3 gx-size-50" src={staff.avatar.src}/> :
                   <Avatar className="gx-mr-3 gx-size-50"
                           style={{backgroundColor: '#f56a00'}}>{staff.first_name[0].toUpperCase()}</Avatar>}
                 {staff.first_name + " " + staff.last_name} </span>

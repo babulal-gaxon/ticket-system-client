@@ -1,7 +1,6 @@
 import {Avatar, Tag} from "antd";
 import Permissions from "../../../util/Permissions";
 import React from "react";
-import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import IntlMessages from "../../../util/IntlMessages";
 
 const ProductsRow = (context) => {
@@ -12,7 +11,7 @@ const ProductsRow = (context) => {
       render: (text, record) => {
         return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
             {record.avatar ?
-              <Avatar className="gx-mr-3 gx-size-80" src={MEDIA_BASE_URL + record.avatar.src}/> :
+              <Avatar className="gx-mr-3 gx-size-80" src={record.avatar.src}/> :
               <Avatar className="gx-mr-3 gx-size-80"
                       style={{backgroundColor: '#f56a00'}}>{record.title[0].toUpperCase()}</Avatar>}
             <div className="gx-media-body">

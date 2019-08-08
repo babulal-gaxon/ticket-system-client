@@ -1,5 +1,3 @@
-import {MEDIA_BASE_URL} from "../constants/ActionTypes";
-
 const moment = require('moment-timezone');
 const timeZone = moment.tz.guess();
 
@@ -122,11 +120,11 @@ export const isProductSelectionEnable = () => {
 };
 
 export const getCompanyLogo = () => {
-  return userSetting.general.company_logo && userSetting.general.company_logo.src ? MEDIA_BASE_URL + userSetting.general.company_logo.src : null;
+  return userSetting.general.company_logo && userSetting.general.company_logo.src ? userSetting.general.company_logo.src : null;
 };
 
 export const setCompanyFavIcon = () => {
-  const favIcon = userSetting.general.company_favicon && userSetting.general.company_favicon.src ? MEDIA_BASE_URL + userSetting.general.company_favicon.src : null;
+  const favIcon = userSetting.general.company_favicon && userSetting.general.company_favicon.src ? userSetting.general.company_favicon.src : null;
 
   if (favIcon) {
     let link = document.querySelector("link[rel*='icon']") || document.createElement('link');

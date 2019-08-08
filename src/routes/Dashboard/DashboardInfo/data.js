@@ -1,6 +1,5 @@
 import {Avatar, Tag, Tooltip} from "antd";
 import React from "react";
-import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import {getFormattedDate} from "../../../util/Utills";
 import IntlMessages from "../../../util/IntlMessages";
 
@@ -22,7 +21,7 @@ export const ticketListcolumns = [
           {record.assigned_by ?
           <Tooltip placement="top" title={record.assigned_by.first_name + " " + record.assigned_by.last_name}>
             {record.assigned_by.avatar ?
-              <Avatar className="gx-mr-3 gx-size-50 gx-fs-xl" src={MEDIA_BASE_URL + record.assigned_by.avatar.src}/> :
+              <Avatar className="gx-mr-3 gx-size-50 gx-fs-xl" src={record.assigned_by.avatar.src}/> :
               <Avatar className="gx-mr-3 gx-size-50 gx-fs-xl"
                       style={{backgroundColor: '#f56a00'}}>{record.assigned_by.first_name[0].toUpperCase()}</Avatar>}
           </Tooltip> : null}
@@ -53,7 +52,7 @@ export const ticketListcolumns = [
             <Tooltip placement="top" title={record.assigned_to.first_name + " " + record.assigned_to.last_name}
                      key={record.assigned_to.user_id}>
               {record.assigned_to.avatar ?
-                <Avatar className="gx-mr-3 gx-size-36" src={MEDIA_BASE_URL + record.assigned_to.avatar.src}/> :
+                <Avatar className="gx-mr-3 gx-size-36" src={record.assigned_to.avatar.src}/> :
                 <Avatar className="gx-mr-3 gx-size-36"
                         style={{backgroundColor: '#f56a00'}}>{record.assigned_to.first_name[0].toUpperCase()}</Avatar>}
             </Tooltip>

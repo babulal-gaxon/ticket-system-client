@@ -2,7 +2,6 @@ import React from 'react';
 import Widget from "../../../../components/Widget";
 import {Avatar, Col, Divider, Row, Tag} from "antd";
 import Permissions from "../../../../util/Permissions";
-import {MEDIA_BASE_URL} from "../../../../constants/ActionTypes";
 import IntlMessages from "../../../../util/IntlMessages";
 
 const StaffInfo = (currentStaff, context) => {
@@ -12,7 +11,7 @@ const StaffInfo = (currentStaff, context) => {
         <i className="icon icon-arrow-left" onClick={() => context.onBackToList()}/>
         <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-4 gx-mt-3">
           {currentStaff.avatar ?
-            <Avatar className="gx-mr-3 gx-size-80" src={MEDIA_BASE_URL + currentStaff.avatar.src}/> :
+            <Avatar className="gx-mr-3 gx-size-80" src={currentStaff.avatar.src}/> :
             <Avatar className="gx-mr-3 gx-size-80"
                     style={{backgroundColor: '#f56a00'}}>{currentStaff.first_name[0].toUpperCase()}</Avatar>}
           <div className="gx-media-body">
