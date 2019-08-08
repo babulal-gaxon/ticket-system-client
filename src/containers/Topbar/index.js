@@ -5,7 +5,6 @@ import {Link, withRouter} from "react-router-dom";
 import CustomScrollbars from "util/CustomScrollbars";
 import languageData from "./languageData";
 import {switchLanguage, toggleCollapsedSideNav} from "../../appRedux/actions/Setting";
-import UserInfo from "components/UserInfo";
 import Auxiliary from "util/Auxiliary";
 
 
@@ -121,11 +120,6 @@ class Topbar extends Component {
                 </span>
               </Popover>
             </li>
-            {width >= TAB_SIZE ? null :
-              <Auxiliary>
-                <li className="gx-user-nav"><UserInfo/></li>
-              </Auxiliary>
-            }
           </ul>
         </Header>
       </Auxiliary>

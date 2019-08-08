@@ -42,8 +42,10 @@ export const onUserSignIn = ({email, password}) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_TOKEN_SET, payload: data.token});
         dispatch({type: USER_DATA, payload: data.data});
-      } else {
+      } else if (data.message) {
         dispatch({type: FETCH_ERROR, payload: data.message});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -103,6 +105,8 @@ export const onUserSignOut = () => {
     dispatch({type: FETCH_START});
     setTimeout(() => {
       localStorage.removeItem("token");
+      localStorage.removeItem("settings");
+      localStorage.removeItem("user");
       dispatch({type: FETCH_SUCCESS});
       dispatch({type: SIGNOUT_USER_SUCCESS});
     }, 2000);
@@ -149,7 +153,7 @@ export const updateUserProfile = (profile, context) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_DATA, payload: data.data});
-        dispatch({type: SHOW_MESSAGE, payload:messages["action.auth.profile"]});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.profile"]});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
