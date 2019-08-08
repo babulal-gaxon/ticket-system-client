@@ -53,13 +53,13 @@ class TicketDetail extends Component {
     this.props.onGetTicketDetail(queryParams.id);
     this.props.onGetConversationList(queryParams.id);
     this.props.onGetFilterOptions();
-    this.ref = setInterval(() => this.props.onGetConversationList(queryParams.id), 30000)
+    this.timeInterval = setInterval(() => this.props.onGetConversationList(queryParams.id), 30000)
 
   }
 
   componentWillUnmount() {
     this.props.onNullifyCurrentTicket();
-    clearInterval(ref);
+    clearInterval(this.timeInterval);
   };
 
   componentWillReceiveProps(nextProps, nextContext) {
