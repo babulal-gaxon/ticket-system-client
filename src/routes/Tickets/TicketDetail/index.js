@@ -176,7 +176,7 @@ class TicketDetail extends Component {
                       </div>
                     </div>
                   </div> : <div>
-                    <Avatar className="gx-mr-3 gx-size-50" src=""/>
+                    <Avatar className="gx-mr-3 gx-size-50" src={require("assets/images/placeholder.jpg")}/>
                     <IntlMessages id="tickets.yetToAssign"/></div>}
               </div>
               <div className="gx-media-body gx-mt-2">
