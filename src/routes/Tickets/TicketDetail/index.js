@@ -59,12 +59,6 @@ class TicketDetail extends Component {
       () => this.props.onUpdateTicketStatus(currentTicket.id, this.state.selectedStatus, this))
   };
 
-  onHandleKeyPress = (e) => {
-    if (e.charCode === 13 && !e.shiftKey) {
-      this.onSubmitMessage()
-    }
-  };
-
   onSubmitMessage = () => {
     if (this.state.fileList.length > 0) {
       this.handleUpload();
@@ -80,9 +74,9 @@ class TicketDetail extends Component {
       this.props.onSendNewMessage(currentTicket.id, {
         message: this.state.message,
         attachments: attachments
-      }, this)
+      }, this);
+      this.setState({message: '', attachments: []})
     }
-    this.setState({message: '', attachments: []})
   };
 
 
@@ -116,6 +110,10 @@ class TicketDetail extends Component {
     }).catch(function (error) {
       this.props.fetchError(error.message)
     });
+  };
+
+  onMessageEnter = (e) => {
+    this.setState({message: e.target.value})
   };
 
   render() {
@@ -215,10 +213,12 @@ class TicketDetail extends Component {
             </div>
             <div className="gx-flex-column">
               <label className="gx-mr-2"><IntlMessages id="tickets.enterDetail"/></label>
-              <TextArea rows={3} value={message} onKeyUp={this.onHandleKeyPress} className="gx-form-control-lg gx-my-3"
-                        onChange={(e) => {
-                          this.setState({message: e.target.value})
-                        }}/>
+              <TextArea value={message} onKeyPress={(event) => {
+                if (event.charCode === 13 && !event.shiftKey) {
+                  this.onSubmitMessage()
+                }
+              }} className="gx-form-control-lg gx-my-3"
+                        onChange={(e) => this.onMessageEnter(e)}/>
             </div>
             <div className="gx-flex-column">
               <label><IntlMessages id="tickets.upload"/></label>

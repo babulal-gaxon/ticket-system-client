@@ -53,7 +53,6 @@ class SignIn extends React.Component {
               <Form onSubmit={this.handleSubmit} className="gx-signin-form gx-form-row0">
                 <FormItem label={<IntlMessages id="auth.enterEmail"/>}>
                   {getFieldDecorator('email', {
-                    initialValue: "admin@g-axon.com",
                     rules: [{
                       required: true, type: 'email', message: messages["validation.auth.email"],
                     }],
@@ -63,7 +62,6 @@ class SignIn extends React.Component {
                 </FormItem>
                 <FormItem label={<IntlMessages id="auth.enterPassword"/>}>
                   {getFieldDecorator('password', {
-                    initialValue: "123456",
                     rules: [{required: true, message: messages["validation.auth.password"]}],
                   })(
                     <Input type="password" placeholder={messages["auth.enterPassword"]}/>
