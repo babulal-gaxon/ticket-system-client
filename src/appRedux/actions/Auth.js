@@ -68,6 +68,13 @@ export const onGetUserPermission = (history) => {
         Permissions.setPermissions(data.data.permissions);
         setUserSetting(data.data.settings);
         dispatch({type: SWITCH_LANGUAGE, payload: data.data.settings.locale.default_language})
+      }
+    else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
+        dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});
+        history.push("/signin");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
         dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});
@@ -134,6 +141,8 @@ export const getUserProfile = () => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_DATA, payload: data.data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -154,6 +163,8 @@ export const updateUserProfile = (profile, context) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_DATA, payload: data.data});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.profile"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

@@ -47,14 +47,6 @@ class TicketAttachments extends Component {
     }
   }
 
-  onLogoSelect = () => {
-    let file = this.state.fileList[0];
-    const data = new FormData();
-    data.append('file', file);
-    data.append('title', file.name);
-    this.props.onAddImage(data);
-  };
-
   onThumbShow = () => {
     return this.state.fileList.map(file => (
       <div style={thumb} key={file.name}>

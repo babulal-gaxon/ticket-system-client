@@ -27,6 +27,8 @@ export const onGetDepartments = (currentPage, itemsPerPage, filterData, updating
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_DEPARTMENTS, payload: data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -47,6 +49,8 @@ export const onAddDepartment = (department, context) => {
         dispatch({type: ADD_DEPARTMENT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.departments.add"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -66,6 +70,8 @@ export const onBulkDeleteDepartments = (departmentIds, context) => {
         dispatch({type: BULK_DELETE_DEPARTMENTS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.departments.delete"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -85,6 +91,8 @@ export const onBulkActiveDepartments = (departmentIds, context) => {
         dispatch({type: BULK_ACTIVE_DEPARTMENTS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.departments.active"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -106,6 +114,8 @@ export const onBulkInActiveDepartments = (departmentIds, context) => {
         dispatch({
           type: SHOW_MESSAGE, payload: messages["action.departments.disable"]
         });
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -127,6 +137,8 @@ export const onEditDepartment = (department, context) => {
         dispatch({type: EDIT_DEPARTMENT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.departments.edit"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

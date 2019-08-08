@@ -34,6 +34,8 @@ export const onGetStaff = (currentPage, itemsPerPage, filterText, updatingConten
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_SUPPORT_STAFF, payload: data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -65,6 +67,8 @@ export const onAddSupportStaff = (staffMember, history, context) => {
         if (history) {
           history.goBack();
         }
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -87,6 +91,8 @@ export const onBulkDeleteStaff = (staffIds, history, context) => {
           history.goBack();
         }
         dispatch({type: SHOW_MESSAGE, payload: messages["action.staff.delete"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -109,6 +115,8 @@ export const onEditSupportStaff = (staffMember, history, context) => {
           history.goBack();
         }
         dispatch({type: SHOW_MESSAGE, payload: messages["action.staff.edit"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -135,6 +143,8 @@ export const onChangeStaffStatus = (staffId, status, updatingContent, context) =
           type: SHOW_MESSAGE,
           payload: status === 0 ? messages["action.staff.disable"] : messages["action.staff.active"]
         });
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -158,6 +168,8 @@ export const onAddProfileImage = (imageFile, context) => {
         context.updateProfilePic(data.data);
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.customers.profilePic"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -176,6 +188,8 @@ export const onGetStaffNotes = (staffId) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_STAFF_NOTES, payload: data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -196,6 +210,8 @@ export const onAddStaffNote = (staffId, Note, context) => {
         dispatch({type: ADD_STAFF_NOTE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.customers.noteAdd"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -215,6 +231,8 @@ export const onEditStaffNotes = (note, context) => {
         dispatch({type: EDIT_STAFF_NOTE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.customers.noteEdit"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -234,6 +252,8 @@ export const onDeleteStaffNotes = (noteId, context) => {
         dispatch({type: DELETE_STAFF_NOTE, payload: noteId});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.customers.noteDelete"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -252,6 +272,8 @@ export const onGetStaffTickets = (staffId) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_STAFF_TICKETS, payload: data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -270,6 +292,8 @@ export const onGetStaffDetail = (staffId) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SELECT_CURRENT_STAFF, payload: data.data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

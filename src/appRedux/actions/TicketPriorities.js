@@ -29,6 +29,8 @@ export const onGetTicketPriorities = (currentPage, itemsPerPage, filterText, upd
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_TICKET_PRIORITIES, payload: data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -50,6 +52,8 @@ export const onAddTicketPriority = (priority, context) => {
         dispatch({type: ADD_TICKET_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.priorities.add"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -71,6 +75,8 @@ export const onEditTicketPriority = (priority, context) => {
         dispatch({type: EDIT_TICKET_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.priorities.edit"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -90,6 +96,8 @@ export const onBulkActivePriorities = (priorityIds, context) => {
         dispatch({type: BULK_ACTIVE_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.priorities.active"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -109,6 +117,8 @@ export const onBulkInActivePriorities = (priorityIds, context) => {
         dispatch({type: BULK_DISABLE_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload:messages["action.priorities.disable"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -128,6 +138,8 @@ export const onBulkDeletePriorities = (priorityIds, context) => {
         dispatch({type: BULK_DELETE_PRIORITY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.priorities.delete"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

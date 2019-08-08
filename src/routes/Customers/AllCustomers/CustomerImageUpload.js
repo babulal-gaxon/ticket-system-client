@@ -20,6 +20,7 @@ class CustomerImageUpload extends Component {
       const data = new FormData();
       data.append('file', file);
       data.append('title', file.name);
+      data.append('mime_type', file.type);
       this.props.onAddImage(data, this.props.context);
     } else {
       message.warning(messages["validation.message.selectImage"])

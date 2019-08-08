@@ -38,6 +38,8 @@ export const onGetCustomersData = (currentPage, itemsPerPage, filterData, compan
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_CUSTOMERS_DATA, payload: data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -60,6 +62,8 @@ export const onSearchCustomers = (search) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_CUSTOMERS_DATA, payload: data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -92,6 +96,8 @@ export const onAddNewCustomer = (customer, history, context) => {
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
         dispatch({type: SHOW_MESSAGE, payload: messages["action.customers.add"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -114,6 +120,8 @@ export const onEditCustomer = (customer, history, context) => {
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
         dispatch({type: SHOW_MESSAGE, payload: messages["action.customers.edit"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -140,6 +148,8 @@ export const onChangeCustomerStatus = (customerId, status, updatingContent, cont
           type: SHOW_MESSAGE,
           payload: status === 0 ? messages["action.customers.disable"] : messages["action.customers.active"]
         });
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -159,6 +169,8 @@ export const onDeleteCustomers = (customerIds, context) => {
         dispatch({type: DELETE_CUSTOMERS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.customers.delete"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -195,6 +207,8 @@ export const onAddImage = (imageFile, context) => {
         context.updateProfilePic(data.data);
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.customers.profilePic"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -214,6 +228,8 @@ export const onAddCustomerAddress = (address, context) => {
       if (data.success) {
         context.addAddress(data.data);
         dispatch({type: SHOW_MESSAGE, payload: messages["action.address.add"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -233,6 +249,8 @@ export const onEditCustomerAddress = (address, context) => {
       if (data.success) {
         context.updateAddress(data.data);
         dispatch({type: SHOW_MESSAGE, payload: messages["action.address.edit"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -252,6 +270,8 @@ export const onDeleteCustomerAddress = (addressId, context) => {
       if (data.success) {
         context.deleteAddress(addressId);
         dispatch({type: SHOW_MESSAGE, payload: messages["action.address.delete"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -270,6 +290,8 @@ export const onGetCustomerTickets = (currentCustomer) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_CUSTOMER_TICKETS, payload: data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -288,6 +310,8 @@ export const onGetCustomerCompany = (companyId) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_CUSTOMER_COMPANY, payload: data.data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -307,6 +331,8 @@ export const onResetPassword = (currentCustomer, password, context) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.customers.password"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -325,6 +351,8 @@ export const onGetCustomerDetail = (currentCustomer) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SELECT_CURRENT_CUSTOMER_PROFILE, payload: data.data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
