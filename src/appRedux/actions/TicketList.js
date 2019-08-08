@@ -86,7 +86,6 @@ export const onAddTickets = (ticket, history, context) => {
 
 
 export const onUpdateTickets = (ticketId, ticket, context) => {
-  console.log("ticket", ticket)
   const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
