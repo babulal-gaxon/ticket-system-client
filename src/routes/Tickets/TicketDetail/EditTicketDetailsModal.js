@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
 
+const {TextArea} = Input;
+
 class EditTicketDetailsModal extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +21,8 @@ class EditTicketDetailsModal extends Component {
   };
 
   render() {
+    const {messages} = this.props.intl;
+    const {getFieldDecorator} = this.props.form;
     const {title, content} = this.state;
     const {showEditModal, onToggleEditModal} = this.props;
     return (
@@ -37,14 +41,27 @@ class EditTicketDetailsModal extends Component {
           ]}>
           <Form layout="vertical">
             <Form.Item label={<IntlMessages id="tickets.subject"/>}>
-              <Input type="text" value={title} onChange={(e) => {
+              {getFieldDecorator('title', {
+                initialValue: title,
+                rules: [{required: true, message: messages["validation.tickets.subject"]}],
+              })(<Input type="text" className="gx-form-control-lg" onChange={(e) => {
                 this.setState({title: e.target.value})
-              }}/>
+              }}/>)}
             </Form.Item>
             <Form.Item label={<IntlMessages id="tickets.description"/>}>
-              <Input type="text" value={content} onChange={(e) => {
+              {getFieldDecorator('content', {
+                initialValue: content,
+                rules: [{required: true, message: messages["validation.tickets.length"]}, {
+                  max: 250,
+                  message: messages["validation.tickets.description"],
+                },
+                  {
+                    min: 10,
+                    message: messages["validation.tickets.contentLength"],
+                  }],
+              })(<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                 this.setState({content: e.target.value})
-              }}/>
+              }}/>)}
             </Form.Item>
           </Form>
         </Modal>
@@ -52,6 +69,8 @@ class EditTicketDetailsModal extends Component {
     );
   }
 }
+
+EditTicketDetailsModal = Form.create({})(EditTicketDetailsModal);
 
 export default injectIntl(EditTicketDetailsModal);
 

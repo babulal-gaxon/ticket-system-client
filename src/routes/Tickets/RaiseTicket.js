@@ -181,10 +181,14 @@ class RaiseTicket extends Component {
             <Form.Item label={<IntlMessages id="tickets.description"/>}>
               {getFieldDecorator('content', {
                 initialValue: content,
-                rules: [{
+                rules: [{required: true, message: messages["validation.tickets.length"]}, {
                   max: 250,
                   message: messages["validation.tickets.description"],
-                }],
+                },
+                  {
+                    min: 10,
+                    message: messages["validation.tickets.contentLength"],
+                  }],
               })(<TextArea rows={4} className="gx-form-control-lg" onChange={(e) => {
                 this.setState({content: e.target.value})
               }}/>)}

@@ -108,6 +108,8 @@
   "header.supportRequest": "Support Request",
   "header.ticketMessage": "Your tickets submitted to the TicksUp support team",
   "header.ticketIdMessage": "Tickets / Ticket Id #",
-  "profile.title": "Profile"
+  "profile.title": "Profile",
+  "validation.tickets.content": "Please enter ticket Content",
+  "validation.tickets.contentLength": "Please enter at least 10 characters"
 }
 

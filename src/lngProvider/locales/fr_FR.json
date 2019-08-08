@@ -108,5 +108,7 @@
   "header.ticketIdMessage": "Billets / Numéro d'identification du billet",
   "common.na": "N / A",
   "validation.tickets.priority": "S'il vous plaît sélectionnez Ticket Priorité",
-  "profile.title": "Profil"
+  "profile.title": "Profil",
+  "validation.tickets.content": "S'il vous plaît entrer le contenu du billet",
+  "validation.tickets.contentLength": "Veuillez entrer au moins 10 caractères"
 }

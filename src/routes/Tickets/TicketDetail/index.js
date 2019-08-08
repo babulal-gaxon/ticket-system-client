@@ -20,6 +20,7 @@ import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
 import {getFormattedDateTime, getTicketFileExtension, getTicketFileSize} from "../../../util/Utills";
+import TicketDescription from "./TicketDescription";
 
 const {Option} = Select;
 const {TextArea} = Input;
@@ -213,6 +214,7 @@ class TicketDetail extends Component {
             <div className="gx-py-3">
               <h3 className="gx-mb-0 gx-mb-sm-1"><IntlMessages id="tickets.messages"/></h3>
             </div>
+            <TicketDescription currentTicket={currentTicket}/>
             {ticketMessages.map((conversation, index) =>
               <ConversationCell key={index} conversation={conversation}/>
             )}
