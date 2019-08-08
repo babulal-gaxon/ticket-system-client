@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {Button, Input, Select, Table} from "antd";
 import RaiseTicketModal from "../RaiseTicket";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
-import InfoView from "../../../components/InfoView";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
@@ -31,8 +30,8 @@ class TicketList extends Component {
     this.props.onGetFormOptions();
   }
 
-  isShowRaiseTickets = ( ) => {
-    console.log("condition", this.state.filterText === "",  this.props.raisedTickets.length === 0 , !this.props.updatingContent)
+  isShowRaiseTickets = () => {
+    console.log("condition", this.state.filterText === "", this.props.raisedTickets.length === 0, !this.props.updatingContent)
     return this.state.filterText === "" && this.props.raisedTickets.length === 0 && !this.props.updatingContent
   };
 
@@ -100,72 +99,72 @@ class TicketList extends Component {
 
     return (
       <div className="gx-main-layout-content">
-          {!this.isShowRaiseTickets() ?
-            <div>
-              <div className="gx-d-flex gx-justify-content-between">
-                <div className="gx-d-flex">
-                  <Button type="primary" className="gx-btn-lg" onClick={this.onToggleAddTicket}>
-                    <IntlMessages id="tickets.raiseATicket"/></Button>
-                </div>
-                <div className="gx-d-flex">
-                  <Search
-                    placeholder={messages["tickets.search.placeholder"]}
-                    style={{width: 350}}
-                    value={filterText}
-                    onChange={this.onFilterTextChange}/>
-                  <div className="gx-ml-3">
-                    {this.onShowItemOptions()}
-                  </div>
-                  <ButtonGroup className="gx-ml-3">
-                    <Button type="default" onClick={this.onCurrentDecrement}>
-                      <i className="icon icon-long-arrow-left"/>
-                    </Button>
-                    <Button type="default" onClick={this.onCurrentIncrement}>
-                      <i className="icon icon-long-arrow-right"/>
-                    </Button>
-                  </ButtonGroup>
-                </div>
+        {!this.isShowRaiseTickets() ?
+          <div>
+            <div className="gx-d-flex gx-justify-content-between">
+              <div className="gx-d-flex">
+                <Button type="primary" className="gx-btn-lg" onClick={this.onToggleAddTicket}>
+                  <IntlMessages id="tickets.raiseATicket"/></Button>
               </div>
-              <Table columns={TicketsRow()}
-                     dataSource={raisedTickets} className="gx-mb-4" rowKey="id"
-                     loading={this.props.updatingContent}
-                     pagination={{
-                       pageSize: this.state.itemNumbers,
-                       current: this.state.current,
-                       total: raisedTickets.length,
-                       showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
-                         <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
-                         <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
-                       onChange: this.onPageChange,
-                     }}
-                     onRow={(record) => ({
-                       onClick: () => {
-                         this.onSelectTicket(record)
-                       }
-                     })}/>
-            </div> : <div className="gx-main-layout-content">
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: 700
-              }}>
-                <div><IntlMessages id="tickets.noRecordFound"/></div>
-                <h3 className="gx-font-weight-bold gx-my-4"><IntlMessages id="tickets.noTicketRaised"/></h3>
-                <Button type="primary" onClick={this.onToggleAddTicket}><IntlMessages
-                  id="tickets.raiseATicket"/></Button>
+              <div className="gx-d-flex">
+                <Search
+                  placeholder={messages["tickets.search.placeholder"]}
+                  style={{width: 350}}
+                  value={filterText}
+                  onChange={this.onFilterTextChange}/>
+                <div className="gx-ml-3">
+                  {this.onShowItemOptions()}
+                </div>
+                <ButtonGroup className="gx-ml-3">
+                  <Button type="default" onClick={this.onCurrentDecrement}>
+                    <i className="icon icon-long-arrow-left"/>
+                  </Button>
+                  <Button type="default" onClick={this.onCurrentIncrement}>
+                    <i className="icon icon-long-arrow-right"/>
+                  </Button>
+                </ButtonGroup>
               </div>
-            </div>}
-          {showAddTicket ? <RaiseTicketModal formOptions={formOptions}
-                                             onToggleAddTicket={this.onToggleAddTicket}
-                                             showAddTicket={showAddTicket}
-                                             onRaiseNewTicket={this.props.onRaiseNewTicket}
-                                             fetchStart={this.props.fetchStart}
-                                             fetchSuccess={this.props.fetchSuccess}
-                                             fetchError={this.props.fetchError}
-          /> : null}
-        </div>
+            </div>
+            <Table columns={TicketsRow()}
+                   dataSource={raisedTickets} className="gx-mb-4" rowKey="id"
+                   loading={this.props.updatingContent}
+                   pagination={{
+                     pageSize: this.state.itemNumbers,
+                     current: this.state.current,
+                     total: raisedTickets.length,
+                     showTotal: ((total, range) => <div><span>{<IntlMessages id="common.showing"/>}</span>
+                       <span>{range[0]}-{range[1]}</span> <span>{<IntlMessages id="common.of"/>} </span>
+                       <span>{total}</span> <span>{<IntlMessages id="common.items"/>}</span></div>),
+                     onChange: this.onPageChange,
+                   }}
+                   onRow={(record) => ({
+                     onClick: () => {
+                       this.onSelectTicket(record)
+                     }
+                   })}/>
+          </div> : <div className="gx-main-layout-content">
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              minHeight: 700
+            }}>
+              <div><IntlMessages id="tickets.noRecordFound"/></div>
+              <h3 className="gx-font-weight-bold gx-my-4"><IntlMessages id="tickets.noTicketRaised"/></h3>
+              <Button type="primary" onClick={this.onToggleAddTicket}><IntlMessages
+                id="tickets.raiseATicket"/></Button>
+            </div>
+          </div>}
+        {showAddTicket ? <RaiseTicketModal formOptions={formOptions}
+                                           onToggleAddTicket={this.onToggleAddTicket}
+                                           showAddTicket={showAddTicket}
+                                           onRaiseNewTicket={this.props.onRaiseNewTicket}
+                                           fetchStart={this.props.fetchStart}
+                                           fetchSuccess={this.props.fetchSuccess}
+                                           fetchError={this.props.fetchError}
+        /> : null}
+      </div>
 
     );
   }
