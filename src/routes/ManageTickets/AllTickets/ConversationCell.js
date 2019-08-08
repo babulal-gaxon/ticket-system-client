@@ -22,7 +22,10 @@ const ConversationCell = ({conversation}) => {
           <div className="gx-name gx-mr-2">{conversation.author.display_name}</div>
           <div className="gx-time gx-text-muted">{getFormattedDateTime(conversation.created_at)}</div>
         </div>
-        <div className="gx-message gx-my-2">{conversation.message}</div>
+        {conversation.message ? conversation.message.split("\n").map(message => <p
+          style={{padding: 0, margin: 0, minHeight: 15}}>
+           {message}
+        </p>) : null}
         <div className="gx-d-flex">
           {conversation.attachments.map(attachment => {
             return <div className="gx-media gx-flex-nowrap gx-align-items-center" key={attachment.id}>

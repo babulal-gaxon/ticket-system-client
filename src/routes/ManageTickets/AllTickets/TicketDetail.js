@@ -79,7 +79,7 @@ class TicketDetail extends Component {
   };
 
   onHandleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.charCode === 13 && !e.shiftKey) {
       this.onSubmitMessage();
     }
   };
