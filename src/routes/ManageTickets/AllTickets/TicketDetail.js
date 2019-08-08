@@ -78,11 +78,6 @@ class TicketDetail extends Component {
       () => this.props.onUpdateTicketStatus(currentTicket.id, this.state.selectedStatus, this))
   };
 
-  onHandleKeyPress = (e) => {
-    if (e.charCode === 13 && !e.shiftKey) {
-      this.onSubmitMessage();
-    }
-  };
 
   onSubmitMessage = () => {
     if (this.state.message !== '') {
@@ -101,9 +96,13 @@ class TicketDetail extends Component {
       this.props.onSendMessage(currentTicket.id, {
         message: this.state.message,
         attachments: attachments
-      })
+      });
+      setTimeout(() => {
+        this.setState({message: "", attachments: []}, () => {
+          console.log("message", this.state.message + "hi")
+        })
+      }, 20)
     }
-    this.setState({message: '', attachments: []})
   };
 
   onToggleEditModal = () => {
@@ -251,10 +250,13 @@ class TicketDetail extends Component {
                   <div className="gx-col">
                     <div className="gx-form-group">
                       <TextArea className="gx-border-0 ant-input gx-chat-textarea"
-                                onKeyUp={this.onHandleKeyPress}
+                                onKeyPress={(event) => {
+                                  if (event.charCode === 13 && !event.shiftKey) {
+                                    this.onSubmitMessage();
+                                  }
+                                }}
                                 onChange={(e) => this.setState({message: e.target.value})}
                                 value={message}
-                                rows={4}
                                 placeholder={messages["manageTickets.sendMessage"]}/>
                     </div>
                   </div>
