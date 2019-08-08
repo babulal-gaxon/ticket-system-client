@@ -31,8 +31,10 @@ export const onSendDatabaseInfo = (info, nextStep, context) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.initialSetup.database"]});
         nextStep();
-      } else {
+      } else if (data.message) {
         dispatch({type: FETCH_ERROR, payload: data.message});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -54,7 +56,7 @@ export const onCheckInitialSetup = () => {
         dispatch({type: ERROR_INITIAL_SETUP, payload: data.message});
       } else {
         console.info("payload: data.errors[0]", data.errors[0]);
-        dispatch({type: ERROR_INITIAL_SETUP, payload: data.errors.email});
+        dispatch({type: ERROR_INITIAL_SETUP, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: ERROR_INITIAL_SETUP, payload: error.message});
@@ -78,6 +80,8 @@ export const onSendSuperAdminInfo = (info, context) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: OPEN_PIN_MODAL, payload: true});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.initialSetup.admin"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -105,6 +109,8 @@ export const onSetGeneralInfo = (info, token, nextStep, context) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.initialSetup.generalInfo"]});
         nextStep();
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -143,8 +149,10 @@ export const onVerifyByPin = (data, nextStep) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: data.message});
         nextStep();
-      } else {
+      } else if (data.message) {
         dispatch({type: FETCH_ERROR, payload: data.message});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -164,6 +172,8 @@ export const onResendPin = (email, context) => {
         console.log(" sending data", data.data);
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.initialSetup.pin"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

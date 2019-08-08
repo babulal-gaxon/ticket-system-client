@@ -22,6 +22,8 @@ export const onGetCompaniesData = (currentPage, itemsPerPage, filterData, updati
         console.log("data of companies", data.data.items);
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_COMPANY_DATA, payload: data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -44,6 +46,8 @@ export const onAddNewCompany = (company, context) => {
         dispatch({type: ADD_NEW_COMPANY, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.companies.add"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -65,6 +69,8 @@ export const onEditCompany = (company, context) => {
         dispatch({type: EDIT_COMPANY_DETAILS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.companies.edit"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -84,6 +90,8 @@ export const onDeleteCompanies = (companyIds, context) => {
         dispatch({type: DELETE_COMPANIES, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.companies.delete"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

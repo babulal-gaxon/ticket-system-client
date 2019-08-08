@@ -28,6 +28,8 @@ export const onGetTicketStatus = (currentPage, itemsPerPage, filterText, updatin
       if (data.success) {
         dispatch({type: GET_TICKET_STATUSES, payload: data});
         dispatch({type: FETCH_SUCCESS});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -48,6 +50,8 @@ export const onAddTicketStatus = (status, context) => {
         dispatch({type: ADD_TICKET_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.statuses.add"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -68,6 +72,8 @@ export const onEditTicketStatus = (status, context) => {
         dispatch({type: EDIT_TICKET_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.statuses.edit"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -87,6 +93,8 @@ export const onBulkActiveStatuses = (statusIds, context) => {
         dispatch({type: BULK_ACTIVE_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.statuses.active"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -106,6 +114,8 @@ export const onBulkInActiveStatuses = (statusIds, context) => {
         dispatch({type: BULK_DISABLE_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.statuses.disable"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -125,6 +135,8 @@ export const onBulkDeleteStatuses = (statusIds, context) => {
         dispatch({type: BULK_DELETE_STATUS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.statuses.delete"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

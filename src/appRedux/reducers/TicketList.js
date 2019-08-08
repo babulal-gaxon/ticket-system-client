@@ -116,9 +116,14 @@ export default (state = initialState, action) => {
       };
 
     case SEND_MESSAGE:
+      let updatedTicket = state.currentTicket;
+      if(action.payload.attachments.length > 0) {
+        updatedTicket.all_attachments.message = updatedTicket.all_attachments.message.concat(action.payload.attachments.map(attachment => attachment))
+      }
       return {
         ...state,
-        conversation: state.conversation.concat(action.payload)
+        conversation: state.conversation.concat(action.payload),
+        currentTicket: updatedTicket
       };
 
     case GET_FORM_DETAILS:

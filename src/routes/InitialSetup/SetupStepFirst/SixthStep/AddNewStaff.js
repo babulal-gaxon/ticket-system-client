@@ -69,6 +69,7 @@ class AddNewStaff extends Component {
       const data = new FormData();
       data.append('file', file);
       data.append('title', file.name);
+      data.append('mime_type', file.type);
       this.onAddImage(data);
     }
   };

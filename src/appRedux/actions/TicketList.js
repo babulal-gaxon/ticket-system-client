@@ -49,6 +49,8 @@ export const onGetTickets = (updatingContent, currentPage, itemsPerPage, filterT
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_TICKETS, payload: data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -70,6 +72,8 @@ export const onAddTickets = (ticket, history, context) => {
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
         dispatch({type: SHOW_MESSAGE, payload: messages["action.tickets.add"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -93,6 +97,8 @@ export const onUpdateTickets = (ticketId, ticket, context) => {
           dispatch({type: FETCH_SUCCESS});
           dispatch({type: UPDATE_TICKET, payload: data.data});
           dispatch({type: SHOW_MESSAGE, payload: messages["action.tickets.edit"]});
+        } else if (data.message) {
+          dispatch({type: FETCH_ERROR, payload: data.message});
         } else {
           dispatch({type: FETCH_ERROR, payload: data.errors[0]});
         }
@@ -112,6 +118,8 @@ export const onGetTicketDetail = (ticketId) => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SELECT_CURRENT_TICKET, payload: data.data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -134,6 +142,8 @@ export const onDeleteTicket = (ticketIds, context) => {
           dispatch({type: FETCH_SUCCESS});
           dispatch({type: DELETE_TICKET, payload: data.data});
           dispatch({type: SHOW_MESSAGE, payload: messages["action.tickets.archive"]});
+        } else if (data.message) {
+          dispatch({type: FETCH_ERROR, payload: data.message});
         } else {
           dispatch({type: FETCH_ERROR, payload: data.errors[0]});
         }
@@ -168,6 +178,8 @@ export const onUpdateTicketStatus = (ticketId, statusId, context) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: UPDATE_TICKET_STATUS, payload: {statusId: data.data, ticketId: ticketId}});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.tickets.status"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -188,6 +200,8 @@ export const onUpdateTicketPriority = (ticketId, priorityId, context) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: UPDATE_TICKET_PRIORITY, payload: {priorityId: data.data, ticketId: ticketId}});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.tickets.priority"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -200,13 +214,11 @@ export const onUpdateTicketPriority = (ticketId, priorityId, context) => {
 
 export const onGetConversationList = ticketId => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
     axios.get(`/tickets/${ticketId}/message`).then(({data}) => {
-      console.log("on get ticket message: ", data);
       if (data.success) {
-        dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_CONVERSATION_LIST, payload: data.data});
-        dispatch({type: FETCH_SUCCESS});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -226,6 +238,8 @@ export const onSendMessage = (ticketId, message) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SEND_MESSAGE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -245,6 +259,8 @@ export const onGetFormDetails = () => {
         console.log(" in success o formDetail", data.data);
         dispatch({type: GET_FORM_DETAILS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -263,6 +279,8 @@ export const onAssignStaffToTicket = (ticketId, staffId) => {
       if (data.success) {
         dispatch({type: ASSIGN_STAFF_TO_TICKET, payload: staffId});
         dispatch({type: FETCH_SUCCESS});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -292,6 +310,8 @@ export const onGetTagsList = (tagsFilterText) => {
       if (data.success) {
         dispatch({type: GET_TAGS_LIST, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

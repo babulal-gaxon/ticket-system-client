@@ -28,6 +28,8 @@ export const onGetRoles = (currentPage, itemsPerPage, filterText, updatingConten
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_ROLES, payload: data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -56,6 +58,8 @@ export const onAddRole = (newRole, history, context) => {
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
         dispatch({type: SHOW_MESSAGE, payload: messages["action.roles.add"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -76,6 +80,8 @@ export const onBulkDeleteRoles = (roleIds, context) => {
         dispatch({type: BULK_DELETE_ROLES, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.roles.delete"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -97,6 +103,8 @@ export const onEditRole = (role, history, context) => {
         dispatch({type: FETCH_SUCCESS});
         history.goBack();
         dispatch({type: SHOW_MESSAGE, payload: messages["action.roles.edit"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -118,6 +126,8 @@ export const onGetRoleDetail = (roleId, history) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_ROLE_DETAIL, payload: data.data});
         history.push("/roles-permissions/add-new")
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

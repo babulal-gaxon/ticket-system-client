@@ -28,6 +28,7 @@ import {MEDIA_BASE_URL} from "../../../constants/ActionTypes";
 import {getFormattedDate, getTicketFileExtension, getTicketFileSize} from "../../../util/Utills";
 import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
+import AttachmentsDisplay from "./AttachmentsDisplay";
 
 const Option = Select.Option;
 const {TextArea} = Input;
@@ -52,6 +53,8 @@ class TicketDetail extends Component {
     this.props.onGetTicketDetail(queryParams.id);
     this.props.onGetConversationList(queryParams.id);
     this.props.onGetFilterOptions();
+    const ref = setInterval(() => this.props.onGetConversationList(queryParams.id), 30000)
+    clearInterval(ref);
   }
 
   componentWillUnmount() {
@@ -123,6 +126,7 @@ class TicketDetail extends Component {
       formData.append('file', file);
       formData.append('title', file.name);
       formData.append('type', 'ticket');
+      formData.append('mime_type', file.type);
       this.imageUpload(formData);
       return file;
     });
@@ -185,6 +189,7 @@ class TicketDetail extends Component {
     };
     const {filterData, conversation, tagsList} = this.props;
     const {messages} = this.props.intl;
+
     return (
       <div className="gx-main-layout-content">
         {currentTicket ? <Widget styleName="gx-card-filter">
@@ -224,21 +229,8 @@ class TicketDetail extends Component {
                 <span>  <IntlMessages id="common.updatedAt"/> {moment(currentTicket.updated_at).fromNow()}</span>
               </div>
               <div className="gx-py-3">{currentTicket.content}</div>
-              {currentTicket.attachments.length > 0 ?
-                <div className="gx-mt-4">
-                  <div className="gx-mb-3"><IntlMessages id="common.attachments"/></div>
-                  <div className="gx-d-flex">
-                    {currentTicket.attachments.map(attachment => {
-                      return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5"
-                                  key={attachment.id}>
-                        <Widget styleName="gx-card-filter gx-mr-2">
-                          <div>{attachment.title}</div>
-                          <div>{attachment.size / 1024} <IntlMessages id="common.kb"/></div>
-                        </Widget>
-                      </div>
-                    })}
-                  </div>
-                </div> : null}
+              {currentTicket.all_attachments.tickets.length > 0 ?
+                <AttachmentsDisplay attachments={currentTicket.all_attachments.tickets}/> : null}
               <div className="gx-py-3">
                 <h3 className="gx-mb-0 gx-mb-sm-1"><IntlMessages id="common.messages"/></h3>
               </div>
@@ -308,10 +300,25 @@ class TicketDetail extends Component {
                   })}
                 </Select>
                 <div className="gx-my-3"><IntlMessages id="common.attachments"/></div>
-                {currentTicket.attachments.length > 0 ? currentTicket.attachments.map(attachment => {
-                  return <Avatar shape="square" icon="user" key={attachment.id} src={MEDIA_BASE_URL + attachment.src}
-                                 className="gx-mr-2 gx-size-100"/>
-                }) : <div><IntlMessages id="manageTickets.noAttachmentAdded"/></div>}
+                {(currentTicket.all_attachments.tickets.length > 0 || currentTicket.all_attachments.message.length > 0) ?
+                  <div>
+                  <div>
+                    {currentTicket.all_attachments.tickets.length > 0 ?
+                  <div>
+                    <div>Ticket Attachments</div>
+                  <AttachmentsDisplay attachments={currentTicket.all_attachments.tickets}/>
+                  </div>: null}
+                  </div>
+                    <div>
+                      {currentTicket.all_attachments.message.length > 0 ?
+                        <div>
+                          <div>Message Attachments</div>
+                          <AttachmentsDisplay attachments={currentTicket.all_attachments.message}/>
+                        </div>: null}
+                    </div>
+                  </div>
+                      :
+                  <div><IntlMessages id="manageTickets.noAttachmentAdded"/></div>}
               </div>
             </Col>
           </Row>

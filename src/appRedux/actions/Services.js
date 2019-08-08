@@ -28,6 +28,8 @@ export const onGetServicesList = (currentPage, itemsPerPage, filterData, updatin
         console.info("onGetServicesList: ", data);
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_SERVICES_LIST, payload: data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -48,6 +50,8 @@ export const onAddService = (service, context) => {
         dispatch({type: ADD_SERVICE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.services.add"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -68,6 +72,8 @@ export const onEditService = (service, context) => {
         dispatch({type: EDIT_SERVICE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.services.edit"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -87,6 +93,8 @@ export const onDeleteServices = (serviceId, context) => {
         dispatch({type: DELETE_SERVICE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.services.delete"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -109,6 +117,8 @@ export const onBulkActiveServices = (serviceIds, context) => {
           type: SHOW_MESSAGE,
           payload: messages["action.services.active"]
         });
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -131,6 +141,8 @@ export const onBulkDisableServices = (serviceIds, context) => {
           type: SHOW_MESSAGE,
           payload: messages["action.services.disable"]
         });
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

@@ -28,6 +28,8 @@ export const onGetCannedResponses = (currentPage, itemsPerPage, filterData, upda
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_CANNED_RESPONSES, payload: data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -48,6 +50,8 @@ export const onAddCannedResponse = (cannedResponse, context) => {
         dispatch({type: ADD_CANNED_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.responses.add"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -68,6 +72,8 @@ export const onEditCannedResponse = (cannedResponse, context) => {
         dispatch({type: EDIT_CANNED_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.responses.edit"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -87,6 +93,8 @@ export const onBulkActiveResponses = (responseIds, context) => {
         dispatch({type: BULK_ACTIVE_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.responses.active"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -106,6 +114,8 @@ export const onBulkInActiveResponses = (responseIds, context) => {
         dispatch({type: BULK_DISABLE_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.responses.disable"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -125,6 +135,8 @@ export const onBulkDeleteResponses = (responseIds, context) => {
         dispatch({type: BULK_DELETE_RESPONSE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.responses.delete"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

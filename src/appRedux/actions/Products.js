@@ -28,6 +28,8 @@ export const onGetProductsList = (currentPage, itemsPerPage, filterData, updatin
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_PRODUCTS_LIST, payload: data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -48,6 +50,8 @@ export const onAddProduct = (product, context) => {
         dispatch({type: ADD_PRODUCT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.products.add"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -68,6 +72,8 @@ export const onEditProduct = (product, context) => {
         dispatch({type: EDIT_PRODUCT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.products.edit"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -87,6 +93,8 @@ export const onDeleteProduct = (productId, context) => {
         dispatch({type: DELETE_PRODUCT, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.products.delete"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -106,6 +114,8 @@ export const onBulkActiveProducts = (productIds, context) => {
         dispatch({type: BULK_ACTIVE_PRODUCTS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.products.active"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -125,6 +135,8 @@ export const onBulkDisableProducts = (productIds, context) => {
         dispatch({type: BULK_DISABLE_PRODUCTS, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.products.disable"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

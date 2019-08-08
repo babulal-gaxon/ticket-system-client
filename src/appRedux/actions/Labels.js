@@ -28,6 +28,8 @@ export const onGetLabelData = (currentPage, itemsPerPage, searchData, updatingCo
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_LABELS_DATA, payload: data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -50,6 +52,8 @@ export const onAddLabelsData = (label, context) => {
         dispatch({type: ADD_LABELS_DATA, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.labels.add"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -70,6 +74,8 @@ export const onDeleteLabel = (labelId, context) => {
         dispatch({type: DELETE_LABEL, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.labels.delete"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -89,6 +95,8 @@ export const onChangeToActiveStatus = (labelId, context) => {
         dispatch({type: STATUS_TO_ACTIVE, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload:messages["action.labels.active"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -108,6 +116,8 @@ export const onChangeToDisableStatus = (labelId, context) => {
         dispatch({type: STATUS_TO_DISABLED, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.labels.disable"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -129,6 +139,8 @@ export const onEditLabelsData = (label, context) => {
         dispatch({type: EDIT_LABEL_DATA, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.labels.edit"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

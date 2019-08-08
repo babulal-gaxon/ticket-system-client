@@ -41,9 +41,6 @@ class AddNewTicket extends Component {
     this.props.onGetFilterOptions();
   }
 
-  onReturnTicketsScreen = () => {
-    this.props.history.goBack();
-  };
 
   onAssignStaff = (id) => {
     this.setState({assign_to: id})
@@ -96,6 +93,7 @@ class AddNewTicket extends Component {
       data.append('file', file);
       data.append('title', file.name);
       data.append('type', 'ticket');
+      data.append('mime_type', file.type);
       this.onUploadAttachment(data, file);
       return file;
     })

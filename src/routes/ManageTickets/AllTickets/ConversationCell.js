@@ -22,8 +22,8 @@ const ConversationCell = ({conversation}) => {
           <div className="gx-name gx-mr-2">{conversation.author.display_name}</div>
           <div className="gx-time gx-text-muted">{getFormattedDateTime(conversation.created_at)}</div>
         </div>
-        {conversation.message ? conversation.message.split("\n").map(message => <p
-          style={{padding: 0, margin: 0, minHeight: 15}}>
+        {conversation.message ? conversation.message.split("\n").map((message, index) => <p
+          style={{padding: 0, margin: 0, minHeight: 15}} key={index}>
            {message}
         </p>) : null}
         <div className="gx-d-flex">

@@ -27,6 +27,8 @@ export const onGetGeneralDetails = () => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_GENERAL_DETAILS, payload: data.data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -47,6 +49,8 @@ export const onSaveGeneralDetails = (details, context) => {
         dispatch({type: ADD_GENERAL_DETAILS, payload: data.data});
         updateGeneralSetting(data.data);
         dispatch({type: SHOW_MESSAGE, payload: messages["action.settings.changes"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -66,6 +70,8 @@ export const onGetLocalizationDetails = () => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_LOCALIZATION_DETAILS, payload: data.data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -88,6 +94,8 @@ export const onSaveLocalizationDetails = (details, context) => {
         updateLocaleSetting(data.data);
         dispatch({type: SWITCH_LANGUAGE, payload: data.data.default_language});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.settings.changes"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -107,6 +115,8 @@ export const onGetCustomerPanelDetails = () => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_CUSTOMER_PANEL_DETAILS, payload: data.data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -127,6 +137,8 @@ export const onSaveCustomerPanelDetails = (details, context) => {
         console.log(" sending data", data.data);
         dispatch({type: ADD_CUSTOMER_PANEL_DETAILS, payload: data.data});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.settings.changes"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -146,6 +158,8 @@ export const onGetGeneralAddress = () => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_GENERAL_ADDRESS, payload: data.data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -166,6 +180,8 @@ export const onSaveGeneralAddress = (details, context) => {
         console.log(" sending data", data.data);
         dispatch({type: ADD_GENERAL_ADDRESS, payload: data.data});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.address.add"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -186,6 +202,8 @@ export const onEditAddress = (address, context) => {
         console.log(" sending data", data.data);
         dispatch({type: EDIT_ADDRESS, payload: address});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.address.edit"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -206,6 +224,8 @@ export const onDeleteAddress = (addressId, context) => {
         console.log(" sending data", data.data);
         dispatch({type: DELETE_ADDRESS, payload: addressId});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.address.delete"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -224,6 +244,8 @@ export const onGetCountriesList = () => {
       if (data.success) {
         dispatch({type: GET_COUNTRIES_LIST, payload: data.data});
         dispatch({type: FETCH_SUCCESS});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -243,6 +265,8 @@ export const onGetTicketSettings = () => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_TICKET_SETTINGS, payload: data.data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -268,6 +292,8 @@ export const onSaveTicketSettings = (details, history, context) => {
         if (history) {
           history.replace('/dashboard')
         }
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }

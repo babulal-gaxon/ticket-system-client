@@ -85,6 +85,7 @@ class ThirdStep extends Component {
     const data = new FormData();
     data.append('file', file);
     data.append('title', file.name);
+    data.append('mime_type', file.type);
     this.onAddLogo(data);
   };
 
