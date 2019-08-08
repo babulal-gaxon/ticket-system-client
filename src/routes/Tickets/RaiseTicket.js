@@ -140,6 +140,7 @@ class RaiseTicket extends Component {
             <Form.Item label={<IntlMessages id="tickets.subject"/>}>
               {getFieldDecorator('title', {
                 initialValue: title,
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: messages["validation.tickets.subject"]}],
               })(<Input type="text" className="gx-form-control-lg" onChange={(e) => {
                 this.setState({title: e.target.value})
@@ -181,6 +182,7 @@ class RaiseTicket extends Component {
             <Form.Item label={<IntlMessages id="tickets.description"/>}>
               {getFieldDecorator('content', {
                 initialValue: content,
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: messages["validation.tickets.length"]}, {
                   max: 250,
                   message: messages["validation.tickets.description"],
@@ -196,6 +198,7 @@ class RaiseTicket extends Component {
             <Form.Item label={<IntlMessages id="tickets.selectPriority"/>}>
               {getFieldDecorator('priority_id', {
                 initialValue: priority_id,
+                validateTrigger: 'onBlur',
                 rules: [{required: true, message: messages["validation.tickets.priority"]}],
               })(<Select type="text" onChange={(value) => {
                 this.setState({priority_id: value})
