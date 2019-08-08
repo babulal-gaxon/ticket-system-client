@@ -36,6 +36,12 @@ export const onGetUserPermission = (history) => {
         setUserSetting(data.data);
         dispatch({type: SWITCH_LANGUAGE, payload: data.data.locale.default_language});
         dispatch({type: THEME_TYPE, themeType: data.data.customer.theme})
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
+        dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});
+        history.push("/signin");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
         dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});
@@ -83,7 +89,7 @@ export const onUserSignUp = ({email, password, first_name, last_name}, context) 
         dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         console.info("payload: data.error", data.errors[0]);
-        dispatch({type: FETCH_ERROR, payload: data.errors.email});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -109,8 +115,10 @@ export const onUserSignIn = ({email, password}) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_TOKEN_SET, payload: data.token});
         dispatch({type: USER_DATA, payload: data.user});
-      } else {
+      } else if (data.message) {
         dispatch({type: FETCH_ERROR, payload: data.message});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -145,6 +153,8 @@ export const onAddProfileImage = (imageFile, context) => {
         context.updateProfilePic(data.data);
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.profilePic"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -164,6 +174,8 @@ export const getUserProfile = () => {
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_DATA, payload: data.data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -184,6 +196,8 @@ export const updateUserProfile = (profile, context) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: USER_DATA, payload: data.data});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.profile"]});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
@@ -221,7 +235,7 @@ export const onResetPassword = ({email}, context) => {
         dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         console.info("payload: data.error", data.errors[0]);
-        dispatch({type: FETCH_ERROR, payload: data.errors.email});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -246,7 +260,7 @@ export const onSetNewPassword = (token, data, history, context) => {
         dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         console.info("payload: data.error", data.errors[0]);
-        dispatch({type: FETCH_ERROR, payload: data.errors.email});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
@@ -269,7 +283,7 @@ export const onVerifyAccountEmail = (token, history, context) => {
         dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
         console.info("payload: data.error", data.errors[0]);
-        dispatch({type: FETCH_ERROR, payload: data.errors.email});
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
       dispatch({type: FETCH_ERROR, payload: error.message});
