@@ -4,6 +4,7 @@ import {Avatar, Col, Divider, Row, Tag} from "antd";
 import {MEDIA_BASE_URL} from "../../../../constants/ActionTypes";
 import Permissions from "../../../../util/Permissions";
 import IntlMessages from "../../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
 
 class CustomerDetails extends Component {
 
@@ -16,6 +17,7 @@ class CustomerDetails extends Component {
   };
 
   render() {
+    const {messages} = this.props.intl;
     const {showMoreAddress} = this.state;
     const {currentCustomerProfile, onEditProfile, onBackToList} = this.props;
     const addresses = showMoreAddress ? currentCustomerProfile.addresses : currentCustomerProfile.addresses.slice(0, 1);
@@ -93,7 +95,7 @@ class CustomerDetails extends Component {
                   {!showMoreAddress ?
                     <div className="gx-link"
                          onClick={this.onToggleMoreAddress}>{currentCustomerProfile.addresses.length > 1 ? `+ ${currentCustomerProfile.addresses.length - 1} 
-                         ${<IntlMessages id="common.more"/>}` : null}</div>
+                         ${messages["common.more"]}` : null}</div>
                     : <div className="gx-link" onClick={this.onToggleMoreAddress}><IntlMessages id="common.viewLess"/>
                     </div>}
                 </div>
@@ -107,4 +109,4 @@ class CustomerDetails extends Component {
 }
 
 
-export default CustomerDetails;
+export default injectIntl(CustomerDetails);
