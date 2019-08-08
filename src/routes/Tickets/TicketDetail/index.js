@@ -37,12 +37,14 @@ class TicketDetail extends Component {
     }
   }
 
+  timeInterval = null;
+
   componentDidMount() {
     const ticketId = this.props.match.params.id;
     this.props.onGetTicketDetail(ticketId);
     this.props.onGetTicketMessages(ticketId);
 
-    setInterval(() => {
+    this.timeInterval = setInterval(() => {
       this.props.onGetTicketMessages(ticketId, true);
     }, 30000);
 
@@ -56,6 +58,7 @@ class TicketDetail extends Component {
 
   componentWillUnmount() {
     this.props.onNullifyTicket();
+    clearInterval(this.timeInterval);
   }
 
   onStatusChange = value => {
@@ -80,8 +83,8 @@ class TicketDetail extends Component {
         message: this.state.message,
         attachments: attachments
       }, this);
-      setTimeout(()=>
-      this.setState({message: '', attachments: []}),20)
+      setTimeout(() =>
+        this.setState({message: '', attachments: []}), 20)
     }
   };
 

@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="add97de0-4afa-45e9-ac5b-3cc244379aa6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/appRedux/actions/Tickets.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/appRedux/actions/Tickets.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/Tickets/TicketDetail/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Tickets/TicketDetail/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
@@ -33,11 +32,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/routes/Tickets/TicketDetail/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="51" column="50" lean-forward="true" selection-start-line="51" selection-start-column="50" selection-end-line="51" selection-end-column="50" />
+            <state relative-caret-position="461">
+              <caret line="41" column="23" lean-forward="true" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -45,7 +44,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/Tickets/TicketList/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="340">
@@ -60,8 +59,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/appRedux/actions/Tickets.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="89" column="20" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="20" />
+            <state relative-caret-position="327">
+              <caret line="95" column="20" selection-start-line="95" selection-start-column="20" selection-end-line="95" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -119,7 +118,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Address</find>
       <find>common.address</find>
       <find>Back</find>
       <find>appModule.sta</find>
@@ -149,6 +147,7 @@
       <find>message</find>
       <find>GET_TICKET_MESSAGES</find>
       <find>onGetTicketMessages</find>
+      <find>onMessageEnter</find>
     </findStrings>
     <replaceStrings>
       <replace>{require(&quot;assets/&quot;)}</replace>
@@ -218,8 +217,8 @@
         <option value="$PROJECT_DIR$/src/containers/Topbar/index.js" />
         <option value="$PROJECT_DIR$/src/routes/ManageTickets/AllTickets/TicketDetail.js" />
         <option value="$PROJECT_DIR$/src/appRedux/actions/Tickets.js" />
-        <option value="$PROJECT_DIR$/src/routes/Tickets/TicketDetail/index.js" />
         <option value="$PROJECT_DIR$/src/routes/Tickets/TicketList/index.js" />
+        <option value="$PROJECT_DIR$/src/routes/Tickets/TicketDetail/index.js" />
       </list>
     </option>
   </component>
@@ -384,7 +383,7 @@
       <workItem from="1565065496209" duration="1144000" />
       <workItem from="1565152166803" duration="2101000" />
       <workItem from="1565243645085" duration="2625000" />
-      <workItem from="1565253449941" duration="2400000" />
+      <workItem from="1565253449941" duration="4325000" />
     </task>
     <task id="LOCAL-00003" summary="working on localization">
       <created>1564726805770</created>
@@ -561,11 +560,25 @@
       <option name="project" value="LOCAL" />
       <updated>1565244239666</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="working on instant message">
+      <created>1565257884585</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1565257884585</updated>
+    </task>
+    <task id="LOCAL-00029" summary="working on instant message">
+      <created>1565258131604</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1565258131604</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72746000" />
+    <option name="totallyTimeSpent" value="74671000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -577,7 +590,7 @@
       <window_info id="Favorites" order="3" sideWeight="0.5184049" side_tool="true" weight="0.16097923" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32733223" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3217768" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3217768" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -640,7 +653,8 @@
     <MESSAGE value="working on date and time format" />
     <MESSAGE value="small change" />
     <MESSAGE value="fix place holder issue" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix place holder issue" />
+    <MESSAGE value="working on instant message" />
+    <option name="LAST_COMMIT_MESSAGE" value="working on instant message" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/lngProvider/locales/fr_FR.json">
@@ -964,18 +978,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/appRedux/actions/Tickets.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="89" column="20" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes/Tickets/TicketDetail/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="51" column="50" lean-forward="true" selection-start-line="51" selection-start-column="50" selection-end-line="51" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="327">
+          <caret line="95" column="20" selection-start-line="95" selection-start-column="20" selection-end-line="95" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -985,6 +989,16 @@
           <caret line="20" column="22" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/Tickets/TicketDetail/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="461">
+          <caret line="41" column="23" lean-forward="true" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
