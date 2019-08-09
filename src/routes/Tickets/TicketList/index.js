@@ -148,8 +148,8 @@ class TicketList extends Component {
               justifyContent: 'center',
               alignItems: 'center',
               minHeight: 700
-            }}>
-              <div><IntlMessages id="tickets.noRecordFound"/></div>
+            }}><img src={require("assets/images/noTicket.png")} alt="No Record Found"/>
+              <div className="gx-mt-4"><IntlMessages id="tickets.noRecordFound"/></div>
               <h3 className="gx-font-weight-bold gx-my-4"><IntlMessages id="tickets.noTicketRaised"/></h3>
               <Button type="primary" onClick={this.onToggleAddTicket}><IntlMessages
                 id="tickets.raiseATicket"/></Button>
