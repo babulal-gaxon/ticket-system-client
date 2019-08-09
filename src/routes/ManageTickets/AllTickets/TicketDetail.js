@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Avatar, Breadcrumb, Col, Input, Row, Select, Upload} from "antd";
+import {Avatar, Breadcrumb, Col, Input, Row, Select, Tag, Upload} from "antd";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import moment from "moment";
@@ -278,13 +278,12 @@ class TicketDetail extends Component {
                   <span
                     className="gx-mb-0 gx-text-capitalize">{currentTicket.assigned_by.first_name + " " + currentTicket.assigned_by.last_name}</span>
                       <div className="gx-mt-2">
-                        {/*<Tag color="#f50">*/}
-                        {/*  <IntlMessages id="common.customer"/>*/}
-                        {/*</Tag>*/}
+                        <Tag color="#f50">
+                          <IntlMessages id="common.customer"/>
+                        </Tag>
                       </div>
                     </div>
                   </div> : null}
-                <div className="gx-my-3"><IntlMessages id="manageTickets.assignTo"/></div>
                 <TicketAssigning staffList={filterData.staffs}
                                  onAssignStaff={this.props.onAssignStaffToTicket}
                                  ticketId={currentTicket.id}

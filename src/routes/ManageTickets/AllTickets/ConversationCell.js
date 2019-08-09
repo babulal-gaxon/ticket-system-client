@@ -21,16 +21,20 @@ const ConversationCell = ({conversation}) => {
           <div className="gx-name gx-mr-2">{conversation.author.display_name}</div>
           <div className="gx-time gx-text-muted">{getFormattedDateTime(conversation.created_at)}</div>
         </div>
+        <div className="gx-mb-3">
         {conversation.message ? conversation.message.split("\n").map((message, index) => <p
           style={{padding: 0, margin: 0, minHeight: 15}} key={index}>
            {message}
         </p>) : null}
+        </div>
         <div className="gx-d-flex">
           {conversation.attachments.map(attachment => {
             return <div className="gx-media gx-flex-nowrap gx-align-items-center" key={attachment.id}>
               <Widget styleName="gx-card-filter gx-mr-2">
-                <div>{attachment.title}</div>
-                <div>{attachment.size / 1000} kb</div>
+                <a href={ attachment.src} download target="_blank">
+                  <div>{attachment.title}</div>
+                  <div>{attachment.size / 1000} kb</div>
+                </a>
               </Widget>
             </div>
           })}

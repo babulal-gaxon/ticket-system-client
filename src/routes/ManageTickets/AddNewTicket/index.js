@@ -272,7 +272,6 @@ class AddNewTicket extends Component {
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
               <div>
-                <div><IntlMessages id="manageTickets.assignTo"/></div>
                 <TicketAssigning staffList={filterData.staffs}
                                  onAssignStaff={this.onAssignStaff}
                 />

@@ -44,12 +44,17 @@ class TicketAssigning extends Component {
     const {messages} = this.props.intl;
     const {showStaffModal, filterStaffText, assignedStaff} = this.state;
     const staffList = this.onFilterData();
-
+    console.log("assigned Staff",assignedStaff);
     return (
+
       <div className="gx-main-layout-content">
         {assignedStaff ?
-          <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5"
-               onClick={this.onToggleStaffModal}>
+          <div>
+            <div className="gx-d-flex gx-justify-content-between">
+          <div className="gx-mb-2"><IntlMessages id="manageTickets.assignTo"/></div>
+              <div className="gx-link" onClick={this.onToggleStaffModal}><IntlMessages id="common.edit"/></div>
+            </div>
+          <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
             {assignedStaff.avatar ?
               <Avatar className="gx-mr-3 gx-size-50" src={assignedStaff.avatar.src}/> :
               <Avatar className="gx-mr-3 gx-size-50"
@@ -58,11 +63,12 @@ class TicketAssigning extends Component {
               <span
                 className="gx-mb-0 gx-text-capitalize">{assignedStaff.first_name + " " + assignedStaff.last_name}</span>
               <div className="gx-mb-2">{assignedStaff.email}</div>
-              <Tag>
-                <IntlMessages id="common.clickToChange"/>
-              </Tag>
+
             </div>
-          </div> :
+          </div>
+          </div>:
+          <div>
+          <div><IntlMessages id="manageTickets.assignTo"/></div>
           <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5" onClick={this.onToggleStaffModal}>
             <Avatar className="gx-mr-3 gx-size-50" src={require("assets/images/placeholder.jpg")}/>
             <div className="gx-media-body gx-mt-2">
@@ -73,6 +79,7 @@ class TicketAssigning extends Component {
                 </Tag>
               </div>
             </div>
+          </div>
           </div>}
         <Modal
           title={<IntlMessages id="common.selectStaff"/>}
