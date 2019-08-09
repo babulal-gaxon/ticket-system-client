@@ -31,7 +31,6 @@ class TicketList extends Component {
   }
 
   isShowRaiseTickets = () => {
-    console.log("condition", this.state.filterText === "", this.props.raisedTickets.length === 0, !this.props.updatingContent)
     return this.state.filterText === "" && this.props.raisedTickets.length === 0 && !this.props.updatingContent
   };
 

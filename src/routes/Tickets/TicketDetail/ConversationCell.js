@@ -34,7 +34,7 @@ const ConversationCell = ({conversation}) => {
           </p>) : null}
           <div className="gx-d-flex">
             {conversation.attachments.map((attachment, index) => {
-              return <div className="gx-media gx-flex-nowrap gx-align-items-center" key={index}>
+              return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mt-3" key={index}>
                 <Widget styleName="gx-card-filter gx-mr-2">
                   <div>{attachment.title}</div>
                   <div>{attachment.size / 1000} <IntlMessages id="common.kb"/></div>
