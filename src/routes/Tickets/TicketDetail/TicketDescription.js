@@ -30,8 +30,8 @@ const TicketDescription = ({currentTicket}) => {
                 id="tickets.lastUpdated"/> {moment(currentTicket.updated_at).fromNow()}</span>
             </div>
           </div>
-          {currentTicket.content ? currentTicket.content.split("\n").map(message => <p
-            style={{padding: 0, margin: 0, minHeight: 15}}>
+          {currentTicket.content ? currentTicket.content.split("\n").map((message,index) => <p
+            style={{padding: 0, margin: 0, minHeight: 15}} key={index}>
             {message}
           </p>) : null}
           <div className="gx-d-flex">
