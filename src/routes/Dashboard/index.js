@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {Col, Row} from "antd";
-import {Area, AreaChart, ResponsiveContainer, Tooltip} from "recharts";
 import PropTypes from 'prop-types';
 
 import InfoView from "../../components/InfoView";
@@ -8,8 +7,6 @@ import TicketList from "./DashboardInfo/TicketList";
 import RecentCustomers from "./DashboardInfo/RecentCustomers";
 import SupportStaff from "./DashboardInfo/SupportStaff";
 import Statistics from "./DashboardInfo/Statistics";
-import TicketData from "./DashboardInfo/TicketData";
-import {incrementData} from "./DashboardInfo/data";
 import SummaryDesign from "./DashboardInfo/SummaryDesign";
 import {connect} from "react-redux";
 import {onGetDashboardData} from "../../appRedux/actions/Dashboard";
@@ -23,13 +20,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const {totalTickets, totalStaff, totalCustomers, ticketsList, priorityList, recentCustomers, topStaff, staticsData} =this.props;
-    // const customerData = staticsData.map(statics => {
-    //   let staticsElement = {}
-    //   staticsElement.date = statics.date;
-    //   staticsElement.customers = statics.customers;
-    //   return staticsElement;
-    // })
+    const {totalTickets, totalStaff, totalCustomers, ticketsList, priorityList, recentCustomers, topStaff, staticsData, pendingTickets} = this.props;
     return (
 
       <div className="gx-main-content">
@@ -39,7 +30,8 @@ class Dashboard extends Component {
               <SummaryDesign icon="orders" iconColor="geekblue" title={totalTickets} subTitle="Total Tickets Raised"/>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={12} className="gx-col-full">
-              <SummaryDesign icon="revenue-new" iconColor="primary" title="2,380" subTitle="Total Tickets Pending"/>
+              <SummaryDesign icon="revenue-new" iconColor="primary" title={pendingTickets}
+                             subTitle="Total Tickets Pending"/>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={12} className="gx-col-full">
               <SummaryDesign icon="visits" iconColor="geekblue" title={totalStaff} subTitle="Total Staff"/>
@@ -48,22 +40,26 @@ class Dashboard extends Component {
               <SummaryDesign icon="queries" iconColor="geekblue" title={totalCustomers} subTitle="Total Customers"/>
             </Col>
             <Col xl={24} lg={24} md={24} sm={24} xs={24}>
-              <TicketList history={this.props.history} tickets={ticketsList} onDeleteTicket={this.props.onDeleteTicket}/>
+              <TicketList history={this.props.history} tickets={ticketsList}
+                          onDeleteTicket={this.props.onDeleteTicket}/>
             </Col>
             {priorityList.length > 0 ?
-                priorityList.map(priority => {
-                 return <Col xl={6} lg={12} md={12} sm={12} xs={24} key={priority.name}>
-                    <PrioritiesChart name={priority.name} totalTickets={priority.tickets_count} resolved={priority.resolved_tickets_count} colorCode={priority.color_code}/>
-                  </Col>
-                }) : null}
+              priorityList.map(priority => {
+                return <Col xl={6} lg={12} md={12} sm={12} xs={24} key={priority.name}>
+                  <PrioritiesChart name={priority.name} totalTickets={priority.tickets_count}
+                                   resolved={priority.resolved_tickets_count} colorCode={priority.color_code}/>
+                </Col>
+              }) : null}
             <Col xl={8} lg={12} md={12} sm={12} xs={24}>
-              <RecentCustomers recentCustomers={recentCustomers} history={this.props.history} onGetDashboardData={this.props.onGetDashboardData}/>
+              <RecentCustomers recentCustomers={recentCustomers} history={this.props.history}
+                               onGetDashboardData={this.props.onGetDashboardData}/>
             </Col>
             <Col xl={8} lg={12} md={12} sm={12} xs={24}>
               <Statistics staticsData={staticsData}/>
             </Col>
             <Col xl={8} lg={12} md={12} sm={12} xs={24}>
-              <SupportStaff topStaff={this.props.topStaff} history={this.props.history} onGetDashboardData={this.props.onGetDashboardData}/>
+              <SupportStaff topStaff={topStaff} history={this.props.history}
+                            onGetDashboardData={this.props.onGetDashboardData}/>
             </Col>
           </Row>
         </div>
@@ -74,8 +70,17 @@ class Dashboard extends Component {
 };
 
 const mapStateToProps = ({dashboard}) => {
-  const {totalTickets, totalStaff, totalCustomers, ticketsList, priorityList, recentCustomers, topStaff, staticsData} = dashboard;
-  return {totalTickets, totalStaff, totalCustomers, ticketsList, priorityList, recentCustomers, topStaff, staticsData
+  const {totalTickets, totalStaff, totalCustomers, ticketsList, priorityList, recentCustomers, topStaff, staticsData, pendingTickets} = dashboard;
+  return {
+    totalTickets,
+    totalStaff,
+    totalCustomers,
+    ticketsList,
+    priorityList,
+    recentCustomers,
+    topStaff,
+    staticsData,
+    pendingTickets
   };
 };
 

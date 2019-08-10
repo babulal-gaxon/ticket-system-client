@@ -8,15 +8,21 @@ const initialState = {
   priorityList: [],
   recentCustomers: [],
   topStaff: [],
-  staticsData:[]
+  staticsData:[],
+  pendingTickets: null
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_DASHBOARD_DATA:
-      console.log("action.payload", action.payload.status[0].tickets_count)
-      let sum = 0;
-      const total = action.payload.status.map(stat => sum + stat.tickets_count);
+      let total = 0;
+      action.payload.status.map(stat => total = total + parseInt(stat.tickets_count));
+      let pendingTickets = 0;
+      action.payload.status.map(stat => {
+        if(stat.name !== "Closed") {
+          pendingTickets = pendingTickets + parseInt(stat.tickets_count)
+        }
+      });
       return {
         ...state,
         totalStaff: action.payload.roles[0].users_count,
@@ -26,7 +32,8 @@ export default (state = initialState, action) => {
         topStaff: action.payload.top_staffs,
         priorityList: action.payload.priorities,
         staticsData: action.payload.new_ticket_customer,
-        totalTickets: total
+        totalTickets: total,
+        pendingTickets: pendingTickets
       };
 
     default: return state;
