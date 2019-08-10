@@ -1,6 +1,6 @@
 import React from "react";
 import Widget from "../../../components/Widget";
-import {Avatar} from "antd";
+import {Avatar, Icon} from "antd";
 import PropTypes from "prop-types";
 import {getFormattedDateTime} from "../../../util/Utills";
 
@@ -32,8 +32,15 @@ const ConversationCell = ({conversation}) => {
             return <div className="gx-media gx-flex-nowrap gx-align-items-center" key={attachment.id}>
               <Widget styleName="gx-card-filter gx-mr-2">
                 <a href={ attachment.src} download target="_blank">
-                  <div>{attachment.title}</div>
-                  <div>{attachment.size / 1000} kb</div>
+                  <div className="gx-d-flex">
+                    <div>
+                      <div className="gx-text-black" style={{fontSize:16}}>{attachment.title}</div>
+                      <div className="gx-text-grey">{attachment.size /1024 > 1024 ?
+                        `${(attachment.size/1024/1024).toFixed(1)} MB` : `${(attachment.size/1024).toFixed(1)} KB`
+                      }</div>
+                    </div>
+                    <div className="gx-ml-md-5 gx-ml-2"><Icon type="vertical-align-bottom" style={{fontSize:22,color:"#545454"}}/></div>
+                  </div>
                 </a>
               </Widget>
             </div>

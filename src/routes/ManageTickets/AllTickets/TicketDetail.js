@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Avatar, Breadcrumb, Col, Input, Row, Select, Tag, Upload} from "antd";
+import {Avatar, Breadcrumb, Col, Icon, Input, Row, Select, Tag, Upload} from "antd";
 import Widget from "../../../components/Widget";
 import {Link} from "react-router-dom";
 import moment from "moment";
@@ -228,8 +228,26 @@ class TicketDetail extends Component {
                 <span>  <IntlMessages id="common.updatedAt"/> {moment(currentTicket.updated_at).fromNow()}</span>
               </div>
               <div className="gx-py-3">{currentTicket.content}</div>
+              <div className="gx-d-flex">
               {currentTicket.all_attachments.tickets.length > 0 ?
-                <AttachmentsDisplay attachments={currentTicket.all_attachments.tickets}/> : null}
+                currentTicket.all_attachments.tickets.map(attachment => {
+                    return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mx-2" key={attachment.id}>
+                      <Widget styleName="gx-card-filter gx-mr-2">
+                        <a href={ attachment.src} download target="_blank">
+                          <div className="gx-d-flex">
+                            <div>
+                          <div className="gx-text-black" style={{fontSize:16}}>{attachment.title}</div>
+                              <div className="gx-text-grey">{attachment.size /1024 > 1024 ?
+                                `${(attachment.size/1024/1024).toFixed(1)} MB` : `${(attachment.size/1024).toFixed(1)} KB`
+                              }</div>
+                            </div>
+                            <div className="gx-ml-md-5 gx-ml-2"><Icon type="vertical-align-bottom" style={{fontSize:22,color:"#545454"}}/></div>
+                          </div>
+                        </a>
+                      </Widget>
+                    </div>
+                  }) : null}
+              </div>
               <div className="gx-py-3">
                 <h3 className="gx-mb-0 gx-mb-sm-1"><IntlMessages id="common.messages"/></h3>
               </div>
@@ -289,7 +307,7 @@ class TicketDetail extends Component {
                                  ticketId={currentTicket.id}
                                  assignedTo={currentTicket.assigned_to}/>
                 <span><IntlMessages id="common.tags"/></span>
-                <Select mode="tags" style={{width: '100%'}} className="gx-mt-3"
+                <Select mode="tags" style={{width: '100%'}} className="gx-my-3"
                         placeholder={messages["manageTickets.addTags"]}
                         value={ticketTags} onSearch={this.onSearchTags}
                         onChange={this.onEditTags}>
@@ -297,20 +315,19 @@ class TicketDetail extends Component {
                     return <Option key={tag.id} value={tag.title}>{tag.title}</Option>
                   })}
                 </Select>
-                <div className="gx-my-3"><IntlMessages id="common.attachments"/></div>
                 {(currentTicket.all_attachments.tickets.length > 0 || currentTicket.all_attachments.message.length > 0) ?
                   <div>
                   <div>
                     {currentTicket.all_attachments.tickets.length > 0 ?
                   <div>
-                    <div>Ticket Attachments</div>
+                    <div className="gx-widget-heading gx-mt-2">Ticket Attachments</div>
                   <AttachmentsDisplay attachments={currentTicket.all_attachments.tickets}/>
                   </div>: null}
                   </div>
                     <div>
                       {currentTicket.all_attachments.message.length > 0 ?
                         <div>
-                          <div>Message Attachments</div>
+                          <div className="gx-widget-heading gx-mt-2">Message Attachments</div>
                           <AttachmentsDisplay attachments={currentTicket.all_attachments.message}/>
                         </div>: null}
                     </div>
