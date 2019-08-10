@@ -3,6 +3,7 @@ import Widget from "../../../components/Widget";
 import {Avatar, Icon} from "antd";
 import PropTypes from "prop-types";
 import {getFormattedDateTime} from "../../../util/Utills";
+import {injectIntl} from "react-intl";
 
 
 const ConversationCell = ({conversation}) => {

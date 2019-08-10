@@ -4,7 +4,7 @@ import {getFormattedDate} from "../../../util/Utills";
 import IntlMessages from "../../../util/IntlMessages";
 
 
-export const ticketListcolumns = [
+export const ticketListColumns = [
   {
     title: <IntlMessages id="common.id"/>,
     dataIndex: 'id',

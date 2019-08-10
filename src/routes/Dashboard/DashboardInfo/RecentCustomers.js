@@ -1,69 +1,81 @@
 import React, {Component} from "react";
-import {connect} from "react-redux";
-import {Avatar, Button} from "antd";
+import {Avatar, List} from "antd";
 
 import Widget from "../../../components/Widget/index";
 import PropTypes from "prop-types";
-import {onGetCustomersData} from "../../../appRedux/actions/Customers";
 import IntlMessages from "../../../util/IntlMessages";
+import {getFormattedDate} from "../../../util/Utills";
+import moment from "moment";
 
 class RecentCustomers extends Component {
-  componentDidMount() {
-    this.props.onGetCustomersData();
-  }
+
+  onViewAllClick = () => {
+    this.props.history.push('/customers/all-customers')
+  };
+
+  onRefreshList = () => {
+    this.props.onGetDashboardData();
+  };
 
   render() {
-
     return (
-      <Widget title={
-        <div>
-          <h2 className="h4 gx-text-capitalize gx-mb-0"><IntlMessages id="dashboard.recentCustomers"/></h2>
-          <div className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1"><IntlMessages id="common.updatedAt"/></div>
-        </div>}
-              styleName="gx-card-ticketlist"
-              extra={<span><i
-                className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/></span>}>
-        {this.props.customersList.map(customer => {
-          return (
-            <div key={customer.id} className="gx-media gx-task-list-item gx-flex-nowrap">
-              <Avatar className="gx-mr-3 gx-size-36" src={require("assets/images/placeholder.jpg")}/>
-              <div className="gx-media-body gx-task-item-content">
-                <div className="gx-task-item-content-left">
-                  <h5 className="gx-text-truncate gx-task-item-title">{customer.company_name}</h5>
-                  <div>
-                    <span>
-          <i className="icon icon-schedule gx-mr-2 gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
-                     <span className="gx-text-grey gx-fs-sm gx-mb-0">{customer.created_at}</span>
-                  </span>
-                  </div>
-                </div>
-                <div className="gx-task-item-content-right">
-                  <i className="icon icon-ellipse-h gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
-                </div>
+      <div>
+        {this.props.recentCustomers && this.props.recentCustomers.length > 0 ?
+          <Widget>
+            <div className="gx-d-flex gx-justify-content-between">
+              <div>
+                <h2 className="gx-widget-heading gx-mb-0"><IntlMessages id="dashboard.recentCustomers"/></h2>
+                <div className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1 gx-mt-1">
+                  <span><IntlMessages id="tickets.lastUpdate"/>:  </span>
+                  <span>{moment(this.props.recentCustomers[0].created_at).fromNow()}</span></div>
               </div>
+              <span className="gx-cursor" onClick={this.onRefreshList}><i
+                className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/></span>
             </div>
-          )
-        })}
-        <Button type="link"><IntlMessages id="dashboard.viewAll"/></Button>
-      </Widget>
+            <List
+              itemLayout="horizontal"
+              dataSource={this.props.recentCustomers}
+              renderItem={record => (
+                <List.Item>
+                  <div className="gx-d-flex gx-justify-content-between gx-w-100">
+                    <div className="gx-media gx-flex-nowrap gx-align-items-center ">
+                      {record.profile_pic[0] ?
+                        <Avatar className="gx-mr-3 gx-size-40" src={record.profile_pic[0].src}/> :
+                        <Avatar className="gx-mr-3 gx-size-40"
+                                style={{backgroundColor: '#f56a00'}}>{record.assignee_name[0].toUpperCase()}</Avatar>}
+                      <div className="gx-media-body">
+                        <span className="gx-mb-0 gx-text-capitalize">{record.assignee_name}</span>
+                        <div className="gx-mt-1">
+                    <span className="gx-text-grey gx-fs-sm gx-mb-0">
+                      <i className="icon icon-schedule gx-mr-2"/>
+                      <span>{getFormattedDate(record.created_at)}</span></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="gx-pr-1">
+                      <i className="icon icon-ellipse-h"/>
+                    </div>
+                  </div>
+                </List.Item>
+              )}
+            />
+            <span className="gx-link gx-cursor gx-pb-0" onClick={this.onViewAllClick}><IntlMessages
+              id="dashboard.viewAll"/></span>
+          </Widget> : null}
+      </div>
     );
   }
 }
 
-const mapStateToProps = ({customers}) => {
-  const {customersList} = customers;
-  return {customersList}
-};
-
-export default connect(mapStateToProps, {onGetCustomersData})(RecentCustomers)
+export default RecentCustomers
 
 
 RecentCustomers.defaultProps = {
-  customersList: []
+  recentCustomers: []
 };
 
 RecentCustomers.propTypes = {
-  customersList: PropTypes.array
+  recentCustomers: PropTypes.array
 };
 
 

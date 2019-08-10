@@ -16,9 +16,8 @@ import qs from "qs";
 import StaffInfo from "./StaffInfo";
 import AssignedTickets from "./AssignedTickets";
 import StaffNotesList from "./StaffNotesList";
-import TotalLoggedTime from "./TotalLoggedTime";
-import TodayLoggedTime from "./TodayLoggedTime";
 import {withRouter} from "react-router";
+import SummaryDesign from "../../../Dashboard/DashboardInfo/SummaryDesign";
 
 class StaffDetail extends Component {
   constructor(props) {
@@ -47,8 +46,9 @@ class StaffDetail extends Component {
   };
 
   render() {
-    const {currentStaff, staffNotes, staffTickets} = this.props;
 
+    const {currentStaff, staffNotes, staffTickets} = this.props;
+    console.log("current staff", currentStaff);
     return (
       <div className="gx-main-layout-content">
         {currentStaff ?
@@ -60,10 +60,12 @@ class StaffDetail extends Component {
               <Col xl={12} lg={12} md={12} sm={12} xs={24}>
                 <Row>
                   <Col xl={12} lg={12} md={12} sm={12} xs={24}>
-                    {TotalLoggedTime()}
+                    <SummaryDesign icon="orders" iconColor="geekblue" title={currentStaff.assigned_tickets_count}
+                                   subTitle="Total Tickets Assigned"/>
                   </Col>
                   <Col xl={12} lg={12} md={12} sm={12} xs={24}>
-                    {TodayLoggedTime()}
+                    <SummaryDesign icon="orders" iconColor="geekblue" title={currentStaff.resolved_tickets_count}
+                                   subTitle="Total Tickets Resolved"/>
                   </Col>
                 </Row>
                 <Row>

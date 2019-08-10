@@ -53,7 +53,6 @@ class TicketDetail extends Component {
     this.props.onGetConversationList(queryParams.id);
     this.props.onGetFilterOptions();
     this.timeInterval = setInterval(() => this.props.onGetConversationList(queryParams.id), 30000)
-
   }
 
   componentWillUnmount() {
@@ -160,6 +159,7 @@ class TicketDetail extends Component {
   };
 
   render() {
+    const {messages} = this.props.intl;
     const {fileList, message, showEditModal, ticketTags, currentTicket} = this.state;
     const props = {
       accept: getTicketFileExtension(),
@@ -177,7 +177,7 @@ class TicketDetail extends Component {
       beforeUpload: file => {
         const isFileSize = file.size < getTicketFileSize();
         if (!isFileSize) {
-          message.error('The image size is greater than allowed size!');
+          message.error(messages["validation.message.imageSize"]);
         } else {
           this.setState(state => ({
             fileList: [...state.fileList, file],
@@ -188,7 +188,7 @@ class TicketDetail extends Component {
       fileList,
     };
     const {filterData, conversation, tagsList} = this.props;
-    const {messages} = this.props.intl;
+
     return (
       <div className="gx-main-layout-content">
         {currentTicket ? <Widget styleName="gx-card-filter">
@@ -238,7 +238,7 @@ class TicketDetail extends Component {
                             <div>
                           <div className="gx-text-black" style={{fontSize:16}}>{attachment.title}</div>
                               <div className="gx-text-grey">{attachment.size /1024 > 1024 ?
-                                `${(attachment.size/1024/1024).toFixed(1)} MB` : `${(attachment.size/1024).toFixed(1)} KB`
+                                `${(attachment.size/1024/1024).toFixed(1)} ${messages["common.mb"]}` : `${(attachment.size/1024).toFixed(1)} ${messages["common.kb"]}`
                               }</div>
                             </div>
                             <div className="gx-ml-md-5 gx-ml-2"><Icon type="vertical-align-bottom" style={{fontSize:22,color:"#545454"}}/></div>
@@ -320,14 +320,14 @@ class TicketDetail extends Component {
                   <div>
                     {currentTicket.all_attachments.tickets.length > 0 ?
                   <div>
-                    <div className="gx-widget-heading gx-mt-2">Ticket Attachments</div>
+                    <div className="gx-widget-heading gx-mt-2"><IntlMessages id="tickets.ticketAttachments"/></div>
                   <AttachmentsDisplay attachments={currentTicket.all_attachments.tickets}/>
                   </div>: null}
                   </div>
                     <div>
                       {currentTicket.all_attachments.message.length > 0 ?
                         <div>
-                          <div className="gx-widget-heading gx-mt-2">Message Attachments</div>
+                          <div className="gx-widget-heading gx-mt-2"><IntlMessages id="tickets.messageAttachments"/></div>
                           <AttachmentsDisplay attachments={currentTicket.all_attachments.message}/>
                         </div>: null}
                     </div>

@@ -508,5 +508,7 @@
   "action.tickets.edit": "Les détails du ticket ont été mis à jour avec succès",
   "action.tickets.archive": "Le ou les billets ont été supprimés avec succès",
   "action.tickets.status": "Le statut du ticket a été modifié avec succès",
-  "action.tickets.priority": "La priorité du ticket a été modifiée avec succès"
+  "action.tickets.priority": "La priorité du ticket a été modifiée avec succès",
+  "tickets.ticketAttachments": "Pièces jointes",
+  "tickets.messageAttachments": "Pièces jointes"
 }

@@ -508,5 +508,7 @@
   "action.tickets.edit": "I dettagli del biglietto sono stati aggiornati correttamente",
   "action.tickets.archive": "I biglietti sono stati eliminati correttamente",
   "action.tickets.status": "Lo stato del ticket è stato modificato correttamente",
-  "action.tickets.priority": "La priorità del biglietto è stata cambiata correttamente"
+  "action.tickets.priority": "La priorità del biglietto è stata cambiata correttamente",
+  "tickets.ticketAttachments": "Allegati ai biglietti",
+  "tickets.messageAttachments": "Allegati al messaggio"
 }

@@ -17,6 +17,7 @@ import GeneralSettings from "./GeneralSettings";
 import Services from "./Services";
 import Products from "./Products";
 import InitialSetup from "./InitialSetup";
+import Dashboard from "./Dashboard";
 
 
 const reducers = combineReducers({
@@ -37,7 +38,8 @@ const reducers = combineReducers({
   generalSettings: GeneralSettings,
   services: Services,
   products: Products,
-  initialSetup: InitialSetup
+  initialSetup: InitialSetup,
+  dashboard: Dashboard
 });
 
 export default reducers;

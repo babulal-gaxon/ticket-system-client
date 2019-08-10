@@ -1,60 +1,74 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {Avatar, Button} from "antd";
+import {Avatar, List} from "antd";
 
 import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
 import Widget from "../../../components/Widget/index";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
+import moment from "moment";
+
 
 class SupportStaff extends Component {
-  componentDidMount() {
-    this.props.onGetStaff()
-  }
+
+  onViewAllClick = () => {
+    this.props.history.push('/staff/all-members')
+  };
+
+  onRefreshList = () => {
+    this.props.onGetDashboardData();
+  };
 
   render() {
+
     return (
-      <Widget title={
-        <div>
-          <h2 className="h4 gx-text-capitalize gx-mb-0">
-            <IntlMessages id="dashboard.topSupportStaff"/></h2>
-          <div className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1"><IntlMessages id="common.updatedAt"/></div>
-        </div>}
-              styleName="gx-card-ticketlist"
-              extra={<span><i
-                className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
-            </span>}>
-        {this.props.staffList.map(employee => {
-          return (
-            <div key={employee.id} className="gx-media gx-task-list-item gx-flex-nowrap">
-              <Avatar className="gx-mr-3 gx-size-36" src={require("assets/images/placeholder.jpg")}/>
-              <div className="gx-media-body gx-task-item-content">
-                <div className="gx-task-item-content-left">
-                  <h5 className="gx-text-truncate gx-task-item-title">{employee.staff_name}</h5>
-                  <i
-                    className="icon icon-forward-o gx-mr-1  gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
+      <div>
+        {this.props.topStaff && this.props.topStaff.length > 0 ?
+      <Widget>
+        <div className="gx-d-flex gx-justify-content-between">
+          <div>
+            <h2 className="gx-widget-heading gx-mb-0"><IntlMessages id="dashboard.topSupportStaff"/></h2>
+            <div className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1 gx-mt-1">
+              <span><IntlMessages id="tickets.lastUpdate"/>:  </span>
+              <span>{moment(this.props.topStaff[0].created_at).fromNow()}</span></div>
+          </div>
+          <span className="gx-cursor" onClick={this.onRefreshList}><i
+            className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/></span>
+        </div>
+        <List
+          itemLayout="horizontal"
+          dataSource={this.props.topStaff}
+          renderItem={record => (
+            <List.Item>
+              <div className="gx-media gx-flex-nowrap gx-align-items-center ">
+                {record.profile_pic[0] ?
+                  <Avatar className="gx-mr-3 gx-size-40" src={record.profile_pic[0].src}/> :
+                  <Avatar className="gx-mr-3 gx-size-40"
+                          style={{backgroundColor: '#f56a00'}}>{record.assignee_name[0].toUpperCase()}</Avatar>}
+                <div className="gx-media-body">
+                  <span className="gx-mb-0 gx-text-capitalize">{record.assignee_name}</span>
+                  <div className="gx-mt-1">
+                    <span className="gx-text-grey gx-fs-sm gx-mb-0">
+                      <i
+                        className="icon icon-forward-o gx-mr-1  gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
                   <span
-                    className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1">{employee.assigned_tickets_count + " assigned"}</span>
+                    className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1">
+                    <span className="gx-text-black">{record.assigned_tickets_count}</span> <span><IntlMessages id="common.assigned"/></span></span>
                   <i
-                    className="icon icon-check-circle-o gx-mr-1 gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
-                  <span className="gx-text-grey gx-fs-sm gx-mb-0">{employee.resolved_tickets_count + " resolved"}</span>
-                </div>
-                <div className="gx-task-item-content-right">
-                  <span className={`gx-badge gx-mb-0 gx-text-white gx-badge-red`}>
-              <span>
-                    <i className="icon icon-star  gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
-                    </span>
-                    <span>4.6</span>
-            </span>
+                    className="icon icon-circle-check-o gx-mr-1 gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
+                      <span className="gx-text-grey gx-fs-sm gx-mb-0"><span className="gx-text-black">{record.resolved_tickets_count}</span>
+                        <span className="gx-ml-1"><IntlMessages id="common.resolved"/></span></span></span>
+                  </div>
                 </div>
               </div>
-            </div>
-          )
-        })}
-        <Button type="link"><IntlMessages id="dashboard.viewAll"/></Button>
-      </Widget>
+            </List.Item>
+          )}
+        />
+        <span className="gx-link gx-cursor gx-pb-0" onClick={this.onViewAllClick}><IntlMessages id="dashboard.viewAll"/></span>
+      </Widget> :null}
+      </div>
     );
-  };
+  }
 }
 
 const mapStateToProps = ({supportStaff}) => {
