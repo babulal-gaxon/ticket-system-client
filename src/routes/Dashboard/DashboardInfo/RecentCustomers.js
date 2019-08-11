@@ -1,11 +1,12 @@
 import React, {Component} from "react";
-import {Avatar, List} from "antd";
+import {Avatar, Dropdown, List, Menu, Popconfirm} from "antd";
 
 import Widget from "../../../components/Widget/index";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
 import {getFormattedDate} from "../../../util/Utills";
 import moment from "moment";
+import Permissions from "../../../util/Permissions";
 
 class RecentCustomers extends Component {
 
@@ -15,6 +16,26 @@ class RecentCustomers extends Component {
 
   onRefreshList = () => {
     this.props.onGetDashboardData();
+  };
+
+  onSelectCustomer = record => {
+    this.props.history.push(`/customers/customer-detail?id=${record.id}`)
+  };
+
+  onShowRowDropdown = (customer) => {
+    const menu = (
+        <Menu>
+          {(Permissions.canViewCustomerDetail()) ?
+              <Menu.Item key="4" onClick={() => this.onSelectCustomer(customer)}>
+                <IntlMessages id="common.viewOnly"/>
+              </Menu.Item> : null}
+        </Menu>
+    );
+    return (
+        <Dropdown overlay={menu} trigger={['click']}>
+          <i className="icon icon-ellipse-h"/>
+        </Dropdown>
+    )
   };
 
   render() {
@@ -53,7 +74,7 @@ class RecentCustomers extends Component {
                       </div>
                     </div>
                     <div className="gx-pr-1">
-                      <i className="icon icon-ellipse-h"/>
+                      {this.onShowRowDropdown(record)}
                     </div>
                   </div>
                 </List.Item>

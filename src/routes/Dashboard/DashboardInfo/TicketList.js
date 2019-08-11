@@ -20,6 +20,10 @@ class TicketList extends Component {
   onShowRowDropdown = (ticketId) => {
     const menu = (
       <Menu>
+        {(Permissions.canViewTicketDetail()) ?
+            <Menu.Item key="4" onClick={() => this.onViewTicket(ticketId)}>
+              <IntlMessages id="common.viewOnly"/>
+            </Menu.Item> : null}
         {(Permissions.canTicketDelete()) ?
           <Menu.Item key="4">
             <Popconfirm
@@ -37,6 +41,10 @@ class TicketList extends Component {
         <i className="icon icon-ellipse-h"/>
       </Dropdown>
     )
+  };
+
+  onViewTicket = ticketId => {
+    this.props.history.push(`/manage-tickets/ticket-detail?id=${ticketId}`);
   };
 
 
@@ -124,7 +132,6 @@ class TicketList extends Component {
 
   render() {
     const {tickets} =  this.props;
-    console.log("tickets", tickets)
     return (
       <div>
       {tickets && tickets.length > 0 ?

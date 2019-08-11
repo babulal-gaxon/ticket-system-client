@@ -509,6 +509,14 @@
   "action.tickets.archive": "Le ou les billets ont été supprimés avec succès",
   "action.tickets.status": "Le statut du ticket a été modifié avec succès",
   "action.tickets.priority": "La priorité du ticket a été modifiée avec succès",
+  "validation.tickets.contentLength": "Au moins 10 caractères doivent être entrés",
   "tickets.ticketAttachments": "Pièces jointes",
-  "tickets.messageAttachments": "Pièces jointes"
+  "tickets.messageAttachments": "Pièces jointes",
+  "tickets.lastUpdate": "Dernière mise à jour",
+  "common.assigned": "Attribué",
+  "common.resolved": "Résolue",
+  "common.viewOnly": "Vue",
+  "common.statics": "Moy. Statique",
+  "common.newCustomers": "nouveaux clients",
+  "common.newTickets": "Nouveaux billets"
 }

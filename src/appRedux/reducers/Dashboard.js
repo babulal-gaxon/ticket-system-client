@@ -9,7 +9,9 @@ const initialState = {
   recentCustomers: [],
   topStaff: [],
   staticsData:[],
-  pendingTickets: null
+  pendingTickets: null,
+  newTickets: null,
+  newCustomers: null
 };
 
 export default (state = initialState, action) => {
@@ -23,6 +25,10 @@ export default (state = initialState, action) => {
           pendingTickets = pendingTickets + parseInt(stat.tickets_count)
         }
       });
+      let newTickets = 0;
+      action.payload.new_ticket_customer.map(ticket => newTickets=newTickets + ticket.tickets);
+      let newCustomers = 0;
+      action.payload.new_ticket_customer.map(ticket => newCustomers=newCustomers + ticket.customers);
       return {
         ...state,
         totalStaff: action.payload.roles[0].users_count,
@@ -33,7 +39,9 @@ export default (state = initialState, action) => {
         priorityList: action.payload.priorities,
         staticsData: action.payload.new_ticket_customer,
         totalTickets: total,
-        pendingTickets: pendingTickets
+        pendingTickets: pendingTickets,
+        newCustomers: newCustomers,
+        newTickets: newTickets
       };
 
     default: return state;

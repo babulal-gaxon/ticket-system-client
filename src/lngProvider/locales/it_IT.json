@@ -509,6 +509,14 @@
   "action.tickets.archive": "I biglietti sono stati eliminati correttamente",
   "action.tickets.status": "Lo stato del ticket è stato modificato correttamente",
   "action.tickets.priority": "La priorità del biglietto è stata cambiata correttamente",
+  "validation.tickets.contentLength": "Dovrebbero essere inseriti almeno 10 caratteri",
   "tickets.ticketAttachments": "Allegati ai biglietti",
-  "tickets.messageAttachments": "Allegati al messaggio"
+  "tickets.messageAttachments": "Allegati ai messaggi",
+  "tickets.lastUpdate": "Ultimo aggiornamento",
+  "common.assigned": "Assegnato",
+  "common.resolved": "Risoluta",
+  "common.viewOnly": "vista",
+  "common.statics": "Avg. statica",
+  "common.newCustomers": "nuovi clienti",
+  "common.newTickets": "Nuovi biglietti"
 }

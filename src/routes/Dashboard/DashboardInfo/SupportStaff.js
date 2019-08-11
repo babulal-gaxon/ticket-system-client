@@ -1,12 +1,13 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {Avatar, List} from "antd";
+import {Avatar, Dropdown, List, Menu, Popconfirm} from "antd";
 
 import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
 import Widget from "../../../components/Widget/index";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
 import moment from "moment";
+import Permissions from "../../../util/Permissions";
 
 
 class SupportStaff extends Component {
@@ -19,7 +20,7 @@ class SupportStaff extends Component {
     this.props.onGetDashboardData();
   };
 
-  render() {
+    render() {
 
     return (
       <div>

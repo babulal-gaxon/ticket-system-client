@@ -509,6 +509,14 @@
   "action.tickets.archive": "Los tickets se han eliminado correctamente",
   "action.tickets.status": "El estado del ticket se ha modificado correctamente.",
   "action.tickets.priority": "La prioridad del ticket se ha cambiado correctamente.",
+  "validation.tickets.contentLength": "Se deben ingresar al menos 10 caracteres",
   "tickets.ticketAttachments": "Adjuntos de entradas",
-  "tickets.messageAttachments": "Adjuntos de mensaje"
+  "tickets.messageAttachments": "Adjuntos de mensaje",
+  "tickets.lastUpdate": "Última actualización",
+  "common.assigned": "Asignado",
+  "common.resolved": "Resuelta",
+  "common.viewOnly": "Ver",
+  "common.statics": "Media Estática",
+  "common.newCustomers": "nuevos clientes",
+  "common.newTickets": "Entradas nuevas"
 }

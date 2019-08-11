@@ -514,5 +514,9 @@
   "tickets.messageAttachments": "Message Attachments",
   "tickets.lastUpdate": "Last Update",
   "common.assigned": "Assigned",
-  "common.resolved": "Resolved"
+  "common.resolved": "Resolved",
+  "common.viewOnly": "View",
+  "common.statics": "Avg. Statics",
+  "common.newCustomers": "New Customers",
+  "common.newTickets": "New Tickets"
 }
