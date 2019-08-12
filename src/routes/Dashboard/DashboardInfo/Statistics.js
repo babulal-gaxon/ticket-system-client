@@ -2,13 +2,16 @@ import React from "react";
 import Widget from "../../../components/Widget/index";
 import {Area, AreaChart, ResponsiveContainer, Tooltip, XAxis} from "recharts";
 import IntlMessages from "../../../util/IntlMessages";
+import {Empty} from "antd";
 
 const Statistics = ({staticsData, newTickets, newCustomers}) => {
+    console.log("staticsData", staticsData)
     return (
         <div>
             {staticsData ?
                 <Widget>
                     <h2 className="gx-widget-heading gx-mb-0"><IntlMessages id="common.statics"/></h2>
+
                     <div className="gx-d-flex gx-mt-5 gx-mb-3">
                         <div className="gx-mr-5">
                             <h1 className="gx-fs-xxxl gx-font-weight-medium gx-mb-1">{newCustomers}</h1>
@@ -49,7 +52,7 @@ const Statistics = ({staticsData, newTickets, newCustomers}) => {
                                   fill="url(#colorTickets)"/>
                         </AreaChart>
                     </ResponsiveContainer>
-                </Widget> : null}
+                </Widget> : <Empty/>}
         </div>
     );
 };

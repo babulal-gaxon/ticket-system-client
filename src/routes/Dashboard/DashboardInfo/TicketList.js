@@ -135,7 +135,7 @@ class TicketList extends Component {
     const {tickets} =  this.props;
     return (
       <div>
-      {tickets && tickets.length > 0 ?
+        {tickets ?
       <Widget>
         <div className="gx-d-flex gx-justify-content-between">
         <h4 className="gx-widget-heading"><IntlMessages id="dashboard.ticketListing"/></h4>
@@ -149,14 +149,17 @@ class TicketList extends Component {
                  pagination={false}/>
         </div>
         <div>
+          {tickets.length >0  ?
+          <div>
           <Button className="gx-mt-3" type="default" onClick={this.onClickViewAll}><IntlMessages id="dashboard.viewAll"/></Button>
           <span>
           <i className="icon icon-schedule gx-mr-2 gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
           </span>
           <span><IntlMessages id="tickets.lastUpdate"/>:  </span>
           <span>{moment(getLocalTimeStamp(tickets[0].updated_at)).fromNow()}</span>
-        </div>
-      </Widget> : null}
+        </div> : null}
+          </div>
+      </Widget> :null}
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {Avatar, List} from "antd";
+import {Avatar, Empty, List} from "antd";
 
 import {onGetStaff} from "../../../appRedux/actions/SupportStaff";
 import Widget from "../../../components/Widget/index";
@@ -24,18 +24,21 @@ class SupportStaff extends Component {
 
     return (
       <div>
-        {this.props.topStaff && this.props.topStaff.length > 0 ?
+        {this.props.topStaff ?
           <Widget>
             <div className="gx-d-flex gx-justify-content-between">
               <div>
                 <h2 className="gx-widget-heading gx-mb-0"><IntlMessages id="dashboard.topSupportStaff"/></h2>
+                {this.props.topStaff && this.props.topStaff.length > 0  ?
                 <div className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1 gx-mt-1">
                   <span><IntlMessages id="tickets.lastUpdate"/>:  </span>
-                  <span>{moment(getLocalTimeStamp(this.props.topStaff[0].created_at)).fromNow()}</span></div>
+                  <span>{moment(getLocalTimeStamp(this.props.topStaff[0].created_at)).fromNow()}</span></div> : null}
               </div>
               <span className="gx-cursor" onClick={this.onRefreshList}><i
                 className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/></span>
             </div>
+            {this.props.topStaff.length > 0 ?
+          <div>
             <List
               itemLayout="horizontal"
               dataSource={this.props.topStaff}
@@ -69,6 +72,7 @@ class SupportStaff extends Component {
             />
             <span className="gx-link gx-cursor gx-pb-0" onClick={this.onViewAllClick}><IntlMessages
               id="dashboard.viewAll"/></span>
+          </div> : <Empty/>}
           </Widget> : null}
       </div>
     );

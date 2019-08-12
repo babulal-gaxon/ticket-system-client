@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Avatar, Dropdown, List, Menu} from "antd";
+import {Avatar, Dropdown, Empty, List, Menu} from "antd";
 
 import Widget from "../../../components/Widget/index";
 import PropTypes from "prop-types";
@@ -41,19 +41,22 @@ class RecentCustomers extends Component {
   render() {
     return (
       <div>
-        {this.props.recentCustomers && this.props.recentCustomers.length > 0 ?
+        {this.props.recentCustomers  ?
           <Widget>
             <div className="gx-d-flex gx-justify-content-between">
               <div>
                 <h2 className="gx-widget-heading gx-mb-0"><IntlMessages id="dashboard.recentCustomers"/></h2>
+                {this.props.recentCustomers && this.props.recentCustomers.length > 0  ?
                 <div className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1 gx-mt-1">
                   <span><IntlMessages id="tickets.lastUpdate"/>:  </span>
                   <span>{moment(getLocalTimeStamp(this.props.recentCustomers[0].created_at)).fromNow()}</span>
-                </div>
+                </div> : null}
               </div>
               <span className="gx-cursor" onClick={this.onRefreshList}><i
                 className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/></span>
             </div>
+            {this.props.recentCustomers.length >0 ?
+              <div>
             <List
               itemLayout="horizontal"
               dataSource={this.props.recentCustomers}
@@ -83,6 +86,7 @@ class RecentCustomers extends Component {
             />
             <span className="gx-link gx-cursor gx-pb-0" onClick={this.onViewAllClick}><IntlMessages
               id="dashboard.viewAll"/></span>
+              </div> :<Empty/>}
           </Widget> : null}
       </div>
     );

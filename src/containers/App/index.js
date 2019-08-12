@@ -69,23 +69,40 @@ class App extends PureComponent {
 
 
   render() {
-    const {match, location, locale, token, initURL, isSetupRequired, loadingUser} = this.props;
+
+    const {match, location, locale, token, initURL, isSetupRequired, loadingUser, totalPendingSteps} = this.props;
+    console.log("totalPendingSteps", totalPendingSteps === 1)
     if (loadingUser) {
       return <div className="gx-loader-view gx-h-100">
         <CircularProgress className=""/>
       </div>
     }
-    if (location.pathname === '/') {
+    console.log("location.pathname", location.pathname)
+    if (location.pathname === '/' || (token !== null && location.pathname === '/signin')) {
       if (isSetupRequired || token === null) {
+        console.log("token null")
         if (isSetupRequired) {
           return (<Redirect to={'/initial-setup'}/>);
         } else {
           return (<Redirect to={'/signin'}/>);
         }
       } else if (initURL === '' || initURL === '/' || initURL === '/initial-setup' || initURL === '/signin') {
-        return (<Redirect to={'/dashboard'}/>);
+        console.log("in else if")
+        if (totalPendingSteps === 1) {
+          console.log("in right position")
+          return (<Redirect to={'/settings/general-settings'}/>);
+        } else {
+          console.log("in wrong position")
+          return (<Redirect to={'/dashboard'}/>);
+        }
       } else {
-        return (<Redirect to={initURL}/>);
+        console.log("elsepenfions", totalPendingSteps)
+        if (totalPendingSteps === 1) {
+          return (<Redirect to={'/settings/general-settings'}/>);
+        } else {
+          console.log("else else")
+          return (<Redirect to={initURL}/>);
+        }
       }
     }
     console.log("locale", locale);
@@ -112,8 +129,8 @@ class App extends PureComponent {
 const mapStateToProps = ({settings, auth, initialSetup}) => {
   const {locale} = settings;
   const {token, initURL, loadingUser} = auth;
-  const {isSetupRequired} = initialSetup;
-  return {locale, token, initURL, loadingUser, isSetupRequired}
+  const {isSetupRequired, totalPendingSteps} = initialSetup;
+  return {locale, token, initURL, loadingUser, isSetupRequired, totalPendingSteps}
 };
 
 export default connect(mapStateToProps, {
@@ -124,5 +141,6 @@ export default connect(mapStateToProps, {
   onLayoutTypeChange,
   onGetUserPermission,
   setUserDefaultSetting,
-  onCheckInitialSetup
+  onCheckInitialSetup,
+
 })(App);

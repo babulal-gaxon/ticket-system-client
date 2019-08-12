@@ -67,6 +67,7 @@ export const updateGeneralSetting = (general) => {
   userSetting.general = general;
   setCompanyFavIcon();
 };
+
 export const updateTicketSetting = (locale) => {
   userSetting.ticket = locale;
 };

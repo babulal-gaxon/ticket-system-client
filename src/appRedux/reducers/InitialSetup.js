@@ -9,7 +9,8 @@ const initialState = {
   showPinModal: false,
   initialSteps: {},
   currentStep: 0,
-  isSetupRequired: false
+  isSetupRequired: false,
+  totalPendingSteps: null
 };
 
 
@@ -73,9 +74,10 @@ export default (state = initialState, action) => {
       const pendingSteps = Object.keys(action.payload.pending_steps).length;
       return {
         ...state,
-        isSetupRequired: pendingSteps > 0,
+        isSetupRequired: pendingSteps > 1,
         currentStep: getCurrentStep(pendingSteps),
         initialSteps: action.payload,
+        totalPendingSteps: pendingSteps
       }
     }
     default:
