@@ -185,7 +185,7 @@ class SecondStep extends Component {
             <Button type="primary"
                     onClick={this.props.initialSteps.completed_steps &&
                     this.props.initialSteps.completed_steps.account_verification_setup ?
-                      () => this.props.onMoveToNextStep() : this.onValidationCheck}
+                      () => this.props.onMoveToNextStep() : () => this.onValidationCheck}
             ><IntlMessages id="common.next"/></Button>
             {!this.props.initialSteps.completed_steps || (this.props.initialSteps.completed_steps &&
               this.props.initialSteps.completed_steps.account_verification_setup) ? null :

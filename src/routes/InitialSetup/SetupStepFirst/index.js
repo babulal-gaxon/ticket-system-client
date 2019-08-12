@@ -27,6 +27,7 @@ class SetupStepFirst extends Component {
   onMoveToNextStep = () => {
     const currentStep = this.props.currentStep + 1;
     this.props.updateSteps(currentStep);
+    this.setState({isFormVisible: false})
   };
 
   onMoveToPrevStep = () => {
