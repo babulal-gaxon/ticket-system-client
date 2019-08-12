@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
-import {Steps} from "antd";
+import {Divider, Steps} from "antd";
 import SetupStepFirst from "./SetupStepFirst";
 import SetupStepSecond from "./SetupStepSecond/index";
 import InfoView from "components/InfoView"
 import Auxiliary from "../../util/Auxiliary";
 import IntlMessages from "../../util/IntlMessages";
+import {Link, withRouter} from "react-router-dom";
+import UserProfile from "../../containers/Sidebar/UserProfile";
+import {connect} from "react-redux";
 
 const {Step} = Steps;
 
@@ -28,11 +31,26 @@ class InitialSetup extends Component {
 
   render() {
     const {current} = this.state;
+    const {token} = this.props;
 
     return (
       <Auxiliary>
         <div className="gx-main-layout-content full-page-scroll">
           <div className="gx-main-content-wrapper">
+            <div className="gx-d-flex gx-justify-content-between gx-my-3">
+            <div className="gx-pl-5"><img src={require(`assets/images/logo-white.svg`)}/></div>
+              <div className="gx-d-flex">
+                <div className="gx-pr-5">
+            <Link to="/">
+              <span><i className="icon icon-menu-right"/></span>
+              <span className="gx-ml-2"><IntlMessages id="topBar.dashboard.howItWorks"/></span>
+            </Link>
+                </div>
+                {token ?
+              <UserProfile/> : null}
+              </div>
+            </div>
+            <Divider/>
             <Steps direction="vertical" current={current}>
               <Step title={
                 <div className="gx-mr-5">
@@ -66,4 +84,11 @@ class InitialSetup extends Component {
   }
 }
 
-export default InitialSetup;
+const mapStateToProps = ({auth}) => {
+  const {token} = auth;
+  return {token}
+};
+
+export default withRouter(connect(mapStateToProps, {})(InitialSetup));
+
+
