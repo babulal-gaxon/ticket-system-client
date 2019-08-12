@@ -4,7 +4,7 @@ import Widget from "../../../components/Widget";
 import {Avatar, Divider, Icon} from "antd";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
-import {getFormattedDateTime} from "../../../util/Utills";
+import {getFormattedDateTime, getLocalTimeStamp} from "../../../util/Utills";
 
 
 const ConversationCell = ({conversation}) => {
@@ -25,7 +25,7 @@ const ConversationCell = ({conversation}) => {
               <span className="gx-time gx-text-muted"> <IntlMessages
                 id="tickets.createdAt"/> {getFormattedDateTime(conversation.created_at)}</span>
               <span className="gx-mr-2 gx-text-grey"> <IntlMessages
-                id="tickets.lastUpdated"/> {moment(conversation.updated_at).fromNow()}</span>
+                id="tickets.lastUpdated"/> {moment(getLocalTimeStamp(conversation.updated_at)).fromNow()}</span>
             </div>
           </div>
           {conversation.message ? conversation.message.split("\n").map(message => <p
