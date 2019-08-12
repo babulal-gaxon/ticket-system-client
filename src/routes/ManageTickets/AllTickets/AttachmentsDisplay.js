@@ -5,7 +5,7 @@ import {injectIntl} from "react-intl";
 const imageExtensions = ["jpg", "jpeg", "png", "svg", "gif", "ico"];
 const docExtensions = ["pdf", "doc", "docx", "txt", "ppt", "pptx", "xls"];
 const audioExtensions = ["mp3", "aa", "aac", "aax", "act"];
-const videoExtensions = ["mp4", "avi", "3gp", "flv", "ogg", "wmv", "webm"];
+// const videoExtensions = ["mp4", "avi", "3gp", "flv", "ogg", "wmv", "webm"];
 
 const getFileExtension = file => {
   return file.title.substring(file.title.lastIndexOf('.') + 1)
@@ -21,7 +21,7 @@ const AttachmentsDisplay = ({attachments}) => {
             if (imageExtensions.includes(getFileExtension(attachment))) {
               return (
                 <div key={index}>
-                  <a href={attachment.src} download target="_blank">
+                  <a href={attachment.src} download target="_blank" rel="noopener noreferrer">
                     <Avatar shape="square" icon="user" key={attachment.id} src={attachment.src}
                             className="gx-mr-2 gx-size-150 gx-p-1 gx-border gx-border-grey"/>
                   </a>

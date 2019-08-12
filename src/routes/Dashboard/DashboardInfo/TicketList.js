@@ -63,6 +63,7 @@ class TicketList extends Component {
         dataIndex: 'title',
         key: 'title',
         render: (text, record) => {
+          console.log("record", record.created_at);
           return (<div className="gx-media gx-flex-nowrap gx-align-items-center">
               {record.author ?
                 <Tooltip placement="top" title={record.author.display_name}>
@@ -75,7 +76,7 @@ class TicketList extends Component {
                 <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
                 <div className="gx-text-grey">{record.content}</div>
                 <div>
-                  <span>Created on {moment(getFormattedDate(record.created_at)).format('MMM YY Do')} |</span>
+                  <span>Created on {getFormattedDate(record.created_at)} |</span>
                   <span> From: {record.author.display_name}</span>
                 </div>
               </div>

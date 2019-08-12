@@ -4,7 +4,7 @@ import {Avatar, Dropdown, List, Menu} from "antd";
 import Widget from "../../../components/Widget/index";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
-import {getFormattedDate, getFormattedDateTime, getLocalTimeStamp} from "../../../util/Utills";
+import {getFormattedDate, getLocalTimeStamp} from "../../../util/Utills";
 import moment from "moment";
 import Permissions from "../../../util/Permissions";
 

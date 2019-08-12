@@ -31,7 +31,7 @@ const ConversationCell = ({conversation}) => {
           {conversation.attachments.map(attachment => {
             return <div className="gx-media gx-flex-nowrap gx-align-items-center" key={attachment.id}>
               <Widget styleName="gx-card-filter gx-mr-2">
-                <a href={attachment.src} download target="_blank">
+                <a href={attachment.src} download target="_blank" rel="noopener noreferrer">
                   <div className="gx-d-flex">
                     <div>
                       <div className="gx-text-black" style={{fontSize: 16}}>{attachment.title}</div>

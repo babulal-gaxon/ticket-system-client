@@ -201,16 +201,16 @@ class TicketDetail extends Component {
           </Breadcrumb>
           <div className="gx-d-flex">
             {(Permissions.canTicketEdit()) ?
-              <Select defaultValue={currentTicket.priority_id} onChange={this.onPriorityChange} style={{width: 120}}>
-                {filterData.priority.map(priority => {
-                  return <Option value={priority.id} key={priority.name}>{priority.name}</Option>
-                })}
-              </Select> : null}
-            {(Permissions.canTicketEdit()) ?
               <Select className="gx-mx-3" defaultValue={currentTicket.status_id} style={{width: 120}}
                       onChange={this.onStatusChange}>
                 {filterData.status.map(status => {
                   return <Option value={status.id} key={status.name}>{status.name}</Option>
+                })}
+              </Select> : null}
+            {(Permissions.canTicketEdit()) ?
+              <Select defaultValue={currentTicket.priority_id} onChange={this.onPriorityChange} style={{width: 120}}>
+                {filterData.priority.map(priority => {
+                  return <Option value={priority.id} key={priority.name}>{priority.name}</Option>
                 })}
               </Select> : null}
           </div>
@@ -225,23 +225,25 @@ class TicketDetail extends Component {
               <h2 className="gx-my-2 gx-font-weight-bold">{currentTicket.title}</h2>
               <div className="gx-mb-3">
                 <span><IntlMessages id="common.createdAt"/> {getFormattedDate(currentTicket.created_at)}</span>
-                <span>  <IntlMessages id="common.updatedAt"/> {moment(getLocalTimeStamp(currentTicket.updated_at)).fromNow()}</span>
+                <span>  <IntlMessages
+                  id="common.updatedAt"/> {moment(getLocalTimeStamp(currentTicket.updated_at)).fromNow()}</span>
               </div>
               <div className="gx-py-3">{currentTicket.content}</div>
               <div className="gx-d-flex">
-              {currentTicket.all_attachments.tickets.length > 0 ?
-                currentTicket.all_attachments.tickets.map(attachment => {
+                {currentTicket.all_attachments.tickets.length > 0 ?
+                  currentTicket.all_attachments.tickets.map(attachment => {
                     return <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mx-2" key={attachment.id}>
                       <Widget styleName="gx-card-filter gx-mr-2">
-                        <a href={ attachment.src} download target="_blank">
+                        <a href={attachment.src} download target="_blank" rel="noopener noreferrer">
                           <div className="gx-d-flex">
                             <div>
-                          <div className="gx-text-black" style={{fontSize:16}}>{attachment.title}</div>
-                              <div className="gx-text-grey">{attachment.size /1024 > 1024 ?
-                                `${(attachment.size/1024/1024).toFixed(1)} ${messages["common.mb"]}` : `${(attachment.size/1024).toFixed(1)} ${messages["common.kb"]}`
+                              <div className="gx-text-black" style={{fontSize: 16}}>{attachment.title}</div>
+                              <div className="gx-text-grey">{attachment.size / 1024 > 1024 ?
+                                `${(attachment.size / 1024 / 1024).toFixed(1)} ${messages["common.mb"]}` : `${(attachment.size / 1024).toFixed(1)} ${messages["common.kb"]}`
                               }</div>
                             </div>
-                            <div className="gx-ml-md-5 gx-ml-2"><Icon type="vertical-align-bottom" style={{fontSize:22,color:"#545454"}}/></div>
+                            <div className="gx-ml-md-5 gx-ml-2"><Icon type="vertical-align-bottom"
+                                                                      style={{fontSize: 22, color: "#545454"}}/></div>
                           </div>
                         </a>
                       </Widget>
@@ -317,22 +319,24 @@ class TicketDetail extends Component {
                 </Select>
                 {(currentTicket.all_attachments.tickets.length > 0 || currentTicket.all_attachments.message.length > 0) ?
                   <div>
-                  <div>
-                    {currentTicket.all_attachments.tickets.length > 0 ?
-                  <div>
-                    <div className="gx-widget-heading gx-mt-2"><IntlMessages id="tickets.ticketAttachments"/></div>
-                  <AttachmentsDisplay attachments={currentTicket.all_attachments.tickets}/>
-                  </div>: null}
-                  </div>
+                    <div>
+                      {currentTicket.all_attachments.tickets.length > 0 ?
+                        <div>
+                          <div className="gx-widget-heading gx-mt-2"><IntlMessages id="tickets.ticketAttachments"/>
+                          </div>
+                          <AttachmentsDisplay attachments={currentTicket.all_attachments.tickets}/>
+                        </div> : null}
+                    </div>
                     <div>
                       {currentTicket.all_attachments.message.length > 0 ?
                         <div>
-                          <div className="gx-widget-heading gx-mt-2"><IntlMessages id="tickets.messageAttachments"/></div>
+                          <div className="gx-widget-heading gx-mt-2"><IntlMessages id="tickets.messageAttachments"/>
+                          </div>
                           <AttachmentsDisplay attachments={currentTicket.all_attachments.message}/>
-                        </div>: null}
+                        </div> : null}
                     </div>
                   </div>
-                      :
+                  :
                   <div><IntlMessages id="manageTickets.noAttachmentAdded"/></div>}
               </div>
             </Col>

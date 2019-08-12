@@ -11,7 +11,8 @@ const initialState = {
   staticsData:[],
   pendingTickets: null,
   newTickets: null,
-  newCustomers: null
+  newCustomers: null,
+  todayTickets: null
 };
 
 export default (state = initialState, action) => {
@@ -21,9 +22,7 @@ export default (state = initialState, action) => {
       action.payload.status.map(stat => total = total + parseInt(stat.tickets_count));
       let pendingTickets = 0;
       action.payload.status.map(stat => {
-        if(stat.name !== "Closed") {
-          pendingTickets = pendingTickets + parseInt(stat.tickets_count)
-        }
+        return stat.name !== "Closed" ? pendingTickets = pendingTickets + parseInt(stat.tickets_count) : null
       });
       let newTickets = 0;
       action.payload.new_ticket_customer.map(ticket => newTickets=newTickets + ticket.tickets);
@@ -41,7 +40,8 @@ export default (state = initialState, action) => {
         totalTickets: total,
         pendingTickets: pendingTickets,
         newCustomers: newCustomers,
-        newTickets: newTickets
+        newTickets: newTickets,
+        todayTickets: action.payload.today_priority_tickets
       };
 
     default: return state;

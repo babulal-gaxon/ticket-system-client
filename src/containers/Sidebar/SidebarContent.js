@@ -12,6 +12,7 @@ import {
 } from "../../constants/ThemeSetting";
 import IntlMessages from "../../util/IntlMessages";
 import {withRouter} from "react-router";
+import moment from "moment";
 
 const SubMenu = Menu.SubMenu;
 
@@ -40,9 +41,14 @@ class SidebarContent extends Component {
     this.setState({key: item.key})
   };
 
+  getCurrentTimeStamp() {
+    const date = new Date();
+    return moment(date).format('LL')
+  }
+
   render() {
-    let date = new Date();
-    const {themeType, history} = this.props;
+    console.log("dater", this.getCurrentTimeStamp())
+    const {themeType, history, todayTickets} = this.props;
     const {pathname} = history.location;
     const selectedKeys = pathname.substr(1);
     const defaultOpenKeys = selectedKeys.split('/')[0];
@@ -170,24 +176,32 @@ class SidebarContent extends Component {
               </SubMenu>
 
             </Menu>
-
-            <div className="gx-d-flex gx-justify-content-between gx-px-3 gx-mt-5">
-              <div className="gx-widget-heading gx-text-white"><IntlMessages id="common.today"/></div>
-              <div>5 July, 2019</div>
-            </div>
-
-            <div className="gx-my-3 gx-px-3">
+            {todayTickets && todayTickets.length > 0 ?
               <div>
-                <i className="icon icon-circle gx-fs-sm" style={{color: "#C4C4C4", fontSize:10}}/>
-                <span className="gx-ml-2 gx-text-white">Critical</span>
-                <Progress percent={30} size="small" showInfo={false} strokeWidth={3}/>
-                <div className="gx-d-flex gx-justify-content-between">
-                  <div>455 tickets</div>
-                  <div>350 Closed</div>
+                <div className="gx-d-flex gx-justify-content-between gx-px-3 gx-mt-5">
+                  <div className="gx-widget-heading gx-text-white"><IntlMessages id="common.today"/></div>
+                  <div>{this.getCurrentTimeStamp()}</div>
                 </div>
-              </div>
-            </div>
 
+                <div className="gx-my-3 gx-px-3">
+                  {todayTickets.map(ticket => {
+                    let percent = 0;
+                    if (ticket.tickets_count !== 0) {
+                      percent = (ticket.resolved_tickets_count / ticket.tickets_count) * 100;
+                    }
+                    return <div className="gx-mb-2" key={ticket.name}>
+                      <i className="icon icon-circle gx-fs-sm" style={{color: ticket.color_code, fontSize: 10}}/>
+                      <span className="gx-ml-2 gx-text-white">{ticket.name}</span>
+                      <Progress percent={percent} size="small" showInfo={false} strokeWidth={3}
+                                strokeColor={ticket.color_code}/>
+                      <div className="gx-d-flex gx-justify-content-between">
+                        <div>{ticket.tickets_count} tickets</div>
+                        <div>{ticket.resolved_tickets_count} Closed</div>
+                      </div>
+                    </div>
+                  })}
+                </div>
+              </div> : null}
           </div>
         </CustomScrollbars>
       </div>
@@ -196,9 +210,10 @@ class SidebarContent extends Component {
 }
 
 SidebarContent.propTypes = {};
-const mapStateToProps = ({settings}) => {
+const mapStateToProps = ({settings, dashboard}) => {
   const {navStyle, themeType, locale, pathname} = settings;
-  return {navStyle, themeType, locale, pathname}
+  const {todayTickets} = dashboard;
+  return {navStyle, themeType, locale, pathname, todayTickets}
 };
 export default withRouter(connect(mapStateToProps)(SidebarContent));
 
