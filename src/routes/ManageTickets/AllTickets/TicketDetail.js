@@ -24,7 +24,7 @@ import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
 import {fetchError, fetchStart, fetchSuccess} from "../../../appRedux/actions";
 import qs from "qs";
-import {getFormattedDate, getTicketFileExtension, getTicketFileSize} from "../../../util/Utills";
+import {getFormattedDate, getLocalTimeStamp, getTicketFileExtension, getTicketFileSize} from "../../../util/Utills";
 import IntlMessages from "../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
 import AttachmentsDisplay from "./AttachmentsDisplay";
@@ -225,7 +225,7 @@ class TicketDetail extends Component {
               <h2 className="gx-my-2 gx-font-weight-bold">{currentTicket.title}</h2>
               <div className="gx-mb-3">
                 <span><IntlMessages id="common.createdAt"/> {getFormattedDate(currentTicket.created_at)}</span>
-                <span>  <IntlMessages id="common.updatedAt"/> {moment(currentTicket.updated_at).fromNow()}</span>
+                <span>  <IntlMessages id="common.updatedAt"/> {moment(getLocalTimeStamp(currentTicket.updated_at)).fromNow()}</span>
               </div>
               <div className="gx-py-3">{currentTicket.content}</div>
               <div className="gx-d-flex">

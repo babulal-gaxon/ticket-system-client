@@ -1,10 +1,10 @@
 import React, {Component} from "react";
-import {Avatar, Dropdown, List, Menu, Popconfirm} from "antd";
+import {Avatar, Dropdown, List, Menu} from "antd";
 
 import Widget from "../../../components/Widget/index";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
-import {getFormattedDate} from "../../../util/Utills";
+import {getFormattedDate, getFormattedDateTime, getLocalTimeStamp} from "../../../util/Utills";
 import moment from "moment";
 import Permissions from "../../../util/Permissions";
 
@@ -24,17 +24,17 @@ class RecentCustomers extends Component {
 
   onShowRowDropdown = (customer) => {
     const menu = (
-        <Menu>
-          {(Permissions.canViewCustomerDetail()) ?
-              <Menu.Item key="4" onClick={() => this.onSelectCustomer(customer)}>
-                <IntlMessages id="common.viewOnly"/>
-              </Menu.Item> : null}
-        </Menu>
+      <Menu>
+        {(Permissions.canViewCustomerDetail()) ?
+          <Menu.Item key="4" onClick={() => this.onSelectCustomer(customer)}>
+            <IntlMessages id="common.viewOnly"/>
+          </Menu.Item> : null}
+      </Menu>
     );
     return (
-        <Dropdown overlay={menu} trigger={['click']}>
-          <i className="icon icon-ellipse-h"/>
-        </Dropdown>
+      <Dropdown overlay={menu} trigger={['click']}>
+        <i className="icon icon-ellipse-h"/>
+      </Dropdown>
     )
   };
 
@@ -48,7 +48,8 @@ class RecentCustomers extends Component {
                 <h2 className="gx-widget-heading gx-mb-0"><IntlMessages id="dashboard.recentCustomers"/></h2>
                 <div className="gx-text-grey gx-fs-sm gx-mb-0 gx-mr-1 gx-mt-1">
                   <span><IntlMessages id="tickets.lastUpdate"/>:  </span>
-                  <span>{moment(this.props.recentCustomers[0].created_at).fromNow()}</span></div>
+                  <span>{moment(getLocalTimeStamp(this.props.recentCustomers[0].created_at)).fromNow()}</span>
+                </div>
               </div>
               <span className="gx-cursor" onClick={this.onRefreshList}><i
                 className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/></span>

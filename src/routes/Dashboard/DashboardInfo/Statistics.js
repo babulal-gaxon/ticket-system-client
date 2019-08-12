@@ -13,14 +13,14 @@ const Statistics = ({staticsData, newTickets, newCustomers}) => {
                         <div className="gx-mr-5">
                             <h1 className="gx-fs-xxxl gx-font-weight-medium gx-mb-1">{newCustomers}</h1>
                             <p className="gx-text-grey gx-mb-0">
-                                <i className="icon icon-circle gx-fs-sm gx-text-blue"/>
+                                <i className="icon icon-circle gx-fs-sm" style={{color:"#038FDE"}}/>
                                 <span className="gx-ml-2"><IntlMessages id="common.newCustomers"/></span>
                             </p>
                         </div>
                         <div>
                             <h1 className="gx-fs-xxxl gx-font-weight-medium gx-mb-1">{newTickets}</h1>
                             <p className="gx-text-grey gx-mb-0">
-                                <i className="icon icon-circle gx-fs-sm gx-text-orange"/>
+                                <i className="icon icon-circle gx-fs-sm" style={{color:"#FFC107"}}/>
                                 <span className="gx-ml-2"><IntlMessages id="common.newTickets"/></span>
                             </p>
                         </div>
