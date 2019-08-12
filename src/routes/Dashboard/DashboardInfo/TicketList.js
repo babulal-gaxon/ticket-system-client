@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
 import moment from "moment";
 import Permissions from "../../../util/Permissions";
-import {getFormattedDate} from "../../../util/Utills";
+import {getFormattedDate, getLocalTimeStamp} from "../../../util/Utills";
 import Widget from "../../../components/Widget";
 
 class TicketList extends Component {
@@ -75,7 +75,7 @@ class TicketList extends Component {
                 <span className="gx-mb-0 gx-text-capitalize">{record.title}</span>
                 <div className="gx-text-grey">{record.content}</div>
                 <div>
-                  <span>Created on {getFormattedDate(record.created_at)} |</span>
+                  <span>Created on {moment(getFormattedDate(record.created_at)).format('MMM YY Do')} |</span>
                   <span> From: {record.author.display_name}</span>
                 </div>
               </div>
@@ -153,7 +153,7 @@ class TicketList extends Component {
           <i className="icon icon-schedule gx-mr-2 gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
           </span>
           <span><IntlMessages id="tickets.lastUpdate"/>:  </span>
-          <span>{moment(tickets[0].updated_at).fromNow()}</span>
+          <span>{moment(getLocalTimeStamp(tickets[0].updated_at)).fromNow()}</span>
         </div>
       </Widget> : null}
       </div>

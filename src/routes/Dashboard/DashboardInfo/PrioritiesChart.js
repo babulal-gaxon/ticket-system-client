@@ -20,7 +20,7 @@ const PrioritiesChart = (props) => {
                              })} strokeWidth={6} backgroundPadding={10}/>
         </ResponsiveContainer>
         <div className="gx-ml-3 gx-justify-content-center gx-align-text-center">
-          <div><i className="icon icon-circle gx-fs-sm gx-text-orange"/></div>
+          <div><i className="icon icon-circle gx-fs-sm" style={{color:props.colorCode}}/></div>
           <div className="gx-font-semi-bold gx-text-black gx-my-2">{props.name} <IntlMessages id="common.priority"/></div>
           <div className="gx-text-green"><i className=" icon icon-circle-check gx-text-green"/> {props.resolved} <IntlMessages id="common.resolved"/></div>
         </div>

@@ -518,5 +518,6 @@
   "common.viewOnly": "View",
   "common.statics": "Avg. Statics",
   "common.newCustomers": "New Customers",
-  "common.newTickets": "New Tickets"
+  "common.newTickets": "New Tickets",
+  "common.today": "Today"
 }

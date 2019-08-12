@@ -93,6 +93,10 @@ export const getFormattedDateTime = (timeStamp) => {
   return getFormattedDate(timeStamp) + " " + getFormattedTime(timeStamp);
 };
 
+export const getLocalTimeStamp = (timeStamp) => {
+  return moment(convertToGMT(timeStamp)).tz(timeZone)
+};
+
 export const getFileExtension = () => {
   return userSetting.general.allowed_ext;
 };

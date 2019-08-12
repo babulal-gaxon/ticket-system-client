@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {Menu} from "antd";
+import {Menu, Progress} from "antd";
 import {Link} from "react-router-dom";
 
 import CustomScrollbars from "util/CustomScrollbars";
@@ -41,6 +41,7 @@ class SidebarContent extends Component {
   };
 
   render() {
+    let date = new Date();
     const {themeType, history} = this.props;
     const {pathname} = history.location;
     const selectedKeys = pathname.substr(1);
@@ -169,6 +170,23 @@ class SidebarContent extends Component {
               </SubMenu>
 
             </Menu>
+
+            <div className="gx-d-flex gx-justify-content-between gx-px-3 gx-mt-5">
+              <div className="gx-widget-heading gx-text-white"><IntlMessages id="common.today"/></div>
+              <div>5 July, 2019</div>
+            </div>
+
+            <div className="gx-my-3 gx-px-3">
+              <div>
+                <i className="icon icon-circle gx-fs-sm" style={{color: "#C4C4C4", fontSize:10}}/>
+                <span className="gx-ml-2 gx-text-white">Critical</span>
+                <Progress percent={30} size="small" showInfo={false} strokeWidth={3}/>
+                <div className="gx-d-flex gx-justify-content-between">
+                  <div>455 tickets</div>
+                  <div>350 Closed</div>
+                </div>
+              </div>
+            </div>
 
           </div>
         </CustomScrollbars>
