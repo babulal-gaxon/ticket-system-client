@@ -103,6 +103,7 @@ class Localization extends Component {
                     <Option value="DD/YY/MM">DD/YY/MM</Option>
                     <Option value="YY/DD/MM">YY/DD/MM</Option>
                     <Option value="YY/MM/DD">YY/MM/DD</Option>
+                    <Option value="MMM DD, YYYY">April 2, 2019</Option>
                   </Select>)}
                 </Form.Item>
               </Col>
