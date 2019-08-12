@@ -2,6 +2,7 @@ import IntlMessages from "../../../util/IntlMessages";
 import {Avatar, Tag, Tooltip} from "antd";
 import React from "react";
 import moment from "moment";
+import {getLocalTimeStamp} from "../../../util/Utills";
 
 const TicketsRow = () => {
   return [
@@ -68,7 +69,7 @@ const TicketsRow = () => {
       dataIndex: 'lastActivity',
       key: 'lastActivity',
       render: (text, record) => {
-        return <span className="gx-email gx-d-inline-block gx-mr-2">{moment(record.updated_at).fromNow()}</span>
+        return <span className="gx-email gx-d-inline-block gx-mr-2">{moment(getLocalTimeStamp(record.updated_at)).fromNow()}</span>
       },
     },
   ];
