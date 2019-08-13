@@ -145,7 +145,6 @@ class CannedResponses extends Component {
             ids: this.state.selectedResponses
           };
           this.props.onBulkDeleteResponses(obj, this);
-          this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText);
           this.setState({selectedRowKeys: [], selectedResponses: []});
         }
       })
@@ -191,7 +190,6 @@ class CannedResponses extends Component {
       title={<IntlMessages id="responses.message.delete"/>}
       onConfirm={() => {
         this.props.onBulkDeleteResponses({ids: [recordId]}, this);
-        this.onGetResponseData(this.state.current, this.state.itemNumbers, this.state.filterText)
       }}
       okText={<IntlMessages id="common.yes"/>}
       cancelText={<IntlMessages id="common.no"/>}>

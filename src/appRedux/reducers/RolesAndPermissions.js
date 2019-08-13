@@ -51,13 +51,9 @@ export default (state = initialState, action) => {
       };
 
     case BULK_DELETE_ROLES:
-      const upRoles = state.roles.filter(role => {
-        return (action.payload.indexOf(role.id) === -1) ?
-          role : null
-      });
       return {
         ...state,
-        roles: upRoles,
+        roles: state.roles.filter(role => (action.payload.indexOf(role.id) === -1)),
         totalItems: state.totalItems - action.payload.length
       };
 

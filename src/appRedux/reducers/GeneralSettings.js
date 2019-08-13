@@ -95,10 +95,9 @@ export default (state = initialState, action) => {
       };
 
     case DELETE_ADDRESS:
-      const updateAddresses = state.generalAddress.filter(address => address.id !== action.payload);
       return {
         ...state,
-        generalAddress: updateAddresses
+        generalAddress: state.generalAddress.filter(address => address.id !== action.payload)
       };
 
     case GET_TICKET_SETTINGS:

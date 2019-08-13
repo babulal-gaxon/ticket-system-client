@@ -85,10 +85,9 @@ export default (state = initialState, action) => {
       };
 
     case DELETE_STAFF_NOTE:
-      const updated = state.staffNotes.filter(note => note.id !== action.payload);
       return {
         ...state,
-        staffNotes: updated
+        staffNotes: state.staffNotes.filter(note => note.id !== action.payload)
       };
 
     case GET_STAFF_TICKETS:

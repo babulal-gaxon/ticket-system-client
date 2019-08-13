@@ -142,7 +142,7 @@ class AllCustomers extends Component {
 
   onShowBulkDeleteConfirm = () => {
     const {messages} = this.props.intl;
-    const {filterText, itemNumbers, selectedCompanies, selectedLabels, status, current, selectedCustomers} = this.state;
+    const {selectedCustomers} = this.state;
     if (selectedCustomers.length !== 0) {
       confirm({
         title: messages["customers.message.delete"],
@@ -151,7 +151,6 @@ class AllCustomers extends Component {
             ids: selectedCustomers
           };
           this.props.onDeleteCustomers(obj, this);
-          this.onGetPaginatedData(current, itemNumbers, filterText, selectedCompanies, selectedLabels, status, true);
           this.setState({selectedRowKeys: [], selectedCustomers: []});
         }
       })

@@ -6,7 +6,8 @@ const SummaryDesign = (props) => {
   const {icon, title, subTitle, iconColor} = props;
 
   return (
-    <Widget>
+    <div className="gx-main-layout-content">
+      <Widget styleName="gx-card-filter">
       <div className="gx-media gx-align-items-center gx-flex-nowrap">
         <div className="gx-mr-lg-4 gx-mr-3">
           <i className={`icon icon-${icon} gx-fs-xlxl gx-text-${iconColor} gx-d-flex`}
@@ -18,6 +19,7 @@ const SummaryDesign = (props) => {
         </div>
       </div>
     </Widget>
+    </div>
   );
 };
 

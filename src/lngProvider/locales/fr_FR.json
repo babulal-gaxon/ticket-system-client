@@ -518,5 +518,9 @@
   "common.viewOnly": "Vue",
   "common.statics": "Moy. Statique",
   "common.newCustomers": "nouveaux clients",
-  "common.newTickets": "Nouveaux billets"
+  "common.newTickets": "Nouveaux billets",
+  "dashboard.totalTicketsRaised": "Nombre total de billets collectés",
+  "dashboard.totalTickets.pending": "Nombre total de billets en attente",
+  "dashboard.totalStaff": "Total du personnel",
+  "dashboard.totalCustomers":"Total clients"
 }

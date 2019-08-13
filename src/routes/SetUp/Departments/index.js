@@ -140,7 +140,6 @@ class Departments extends Component {
           };
           this.props.onBulkDeleteDepartments(obj, this);
           this.setState({selectedRowKeys: [], selectedDepartments: []});
-          this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
         }
       })
     } else {
@@ -186,7 +185,6 @@ class Departments extends Component {
         title={<IntlMessages id="departments.message.delete"/>}
         onConfirm={() => {
           this.props.onBulkDeleteDepartments({ids: [recordId]}, this);
-          this.onGetDepartmentData(this.state.currentPage, this.state.itemNumbers, this.state.filterText);
         }}
         okText={<IntlMessages id="common.yes"/>}
         cancelText={<IntlMessages id="common.no"/>}>

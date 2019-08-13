@@ -141,7 +141,6 @@ class Services extends Component {
             ids: this.state.selectedServices
           };
           this.props.onDeleteServices(obj, this);
-          this.onGetServicesData(this.state.current, this.state.itemNumbers);
           this.setState({selectedRowKeys: [], selectedServices: []});
         }
       })

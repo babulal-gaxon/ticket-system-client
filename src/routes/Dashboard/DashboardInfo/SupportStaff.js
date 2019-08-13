@@ -23,9 +23,9 @@ class SupportStaff extends Component {
   render() {
 
     return (
-      <div>
+      <div className="gx-main-layout-content">
         {this.props.topStaff ?
-          <Widget>
+          <Widget styleName="gx-card-filter">
             <div className="gx-d-flex gx-justify-content-between">
               <div>
                 <h2 className="gx-widget-heading gx-mb-0"><IntlMessages id="dashboard.topSupportStaff"/></h2>

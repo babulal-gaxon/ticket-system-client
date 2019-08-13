@@ -36,13 +36,9 @@ export default (state = initialState, action) => {
       };
 
     case DELETE_PRODUCT:
-      const updateList = state.productsList.filter(product => {
-        return (action.payload.indexOf(product.id) === -1) ?
-          product : null
-      });
       return {
         ...state,
-        productsList: updateList,
+        productsList: state.productsList.filter(product => (action.payload.indexOf(product.id) === -1)),
         totalItems: state.totalItems - action.payload.length
       };
 

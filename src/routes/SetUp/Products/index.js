@@ -142,7 +142,6 @@ class Products extends Component {
             ids: this.state.selectedProducts
           };
           this.props.onDeleteProduct(obj, this);
-          this.onGetProductsData(this.state.current, this.state.itemNumbers);
           this.setState({selectedRowKeys: [], selectedProducts: []});
         }
       })

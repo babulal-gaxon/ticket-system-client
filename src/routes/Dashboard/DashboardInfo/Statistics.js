@@ -7,9 +7,9 @@ import {Empty} from "antd";
 const Statistics = ({staticsData, newTickets, newCustomers}) => {
     console.log("staticsData", staticsData)
     return (
-        <div>
+      <div className="gx-main-layout-content">
             {staticsData ?
-                <Widget>
+              <Widget styleName="gx-card-filter">
                     <h2 className="gx-widget-heading gx-mb-0"><IntlMessages id="common.statics"/></h2>
 
                     <div className="gx-d-flex gx-mt-5 gx-mb-3">

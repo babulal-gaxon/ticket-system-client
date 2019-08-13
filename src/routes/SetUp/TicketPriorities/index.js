@@ -143,7 +143,6 @@ class TicketPriorities extends Component {
             ids: this.state.selectedPriorities
           };
           this.props.onBulkDeletePriorities(obj, this);
-          this.onGetPriorityData(this.state.current, this.state.itemNumbers);
           this.setState({selectedRowKeys: [], selectedPriorities: []});
         }
       })
@@ -188,7 +187,6 @@ class TicketPriorities extends Component {
       title={<IntlMessages id="priorities.message.delete"/>}
       onConfirm={() => {
         this.props.onBulkDeletePriorities({ids: [recordId]}, this);
-        this.onGetPriorityData(this.state.current, this.state.itemNumbers, this.state.filterText);
       }}
       okText={<IntlMessages id="common.yes"/>}
       cancelText={<IntlMessages id="common.no"/>}>

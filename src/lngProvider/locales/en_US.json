@@ -519,5 +519,9 @@
   "common.statics": "Avg. Statics",
   "common.newCustomers": "New Customers",
   "common.newTickets": "New Tickets",
-  "common.today": "Today"
+  "common.today": "Today",
+  "dashboard.totalTicketsRaised": "Total Tickets Raised",
+  "dashboard.totalTickets.pending": "Total Tickets Pending",
+  "dashboard.totalStaff": "Total Staff",
+  "dashboard.totalCustomers":"Total Customers"
 }

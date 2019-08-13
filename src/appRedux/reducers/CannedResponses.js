@@ -36,13 +36,9 @@ export default (state = initialState, action) => {
       };
 
     case BULK_DELETE_RESPONSE:
-      const upResponses = state.responses.filter(response => {
-        return (action.payload.indexOf(response.id) === -1) ?
-          response : null
-      });
       return {
         ...state,
-        responses: upResponses,
+        responses: state.responses.filter(response => (action.payload.indexOf(response.id) === -1)),
         totalItems: state.totalItems - action.payload.length
       };
 

@@ -68,13 +68,9 @@ export default (state = initialState, action) => {
 
 
     case DELETE_CUSTOMERS:
-      const upCustomers = state.customersList.filter(customer => {
-        return (action.payload.indexOf(customer.id) === -1) ?
-          customer : null
-      });
       return {
         ...state,
-        customersList: upCustomers,
+        customersList: state.customersList.filter(customer => (action.payload.indexOf(customer.id) === -1)),
         totalItems: state.totalItems - action.payload.length
       };
 

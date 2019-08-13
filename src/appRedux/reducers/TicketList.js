@@ -99,13 +99,9 @@ export default (state = initialState, action) => {
       };
 
     case DELETE_TICKET:
-      const updated = state.tickets.filter(ticket => {
-        return (action.payload.indexOf(ticket.id) === -1) ?
-          ticket : null
-      });
       return {
         ...state,
-        tickets: updated,
+        tickets: state.tickets.filter(ticket => (action.payload.indexOf(ticket.id) === -1)),
         totalItems: state.totalItems - action.payload.length
       };
 

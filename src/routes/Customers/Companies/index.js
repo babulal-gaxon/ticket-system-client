@@ -101,7 +101,6 @@ class Companies extends Component {
             ids: this.state.selectedCompanies
           };
           this.props.onDeleteCompanies(obj, this);
-          this.onGetPaginatedData(this.state.currentPage, this.state.itemNumbers, this.state.filterText, true);
           this.setState({selectedRowKeys: [], selectedCustomers: []});
         }
       })

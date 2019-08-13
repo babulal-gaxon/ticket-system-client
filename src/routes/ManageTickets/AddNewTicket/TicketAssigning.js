@@ -90,6 +90,8 @@ class TicketAssigning extends Component {
             null,
             null,
           ]}>
+          {staffList.length >0 ?
+          <div>
           <Search value={filterStaffText} placeholder={messages["manageTickets.filterBar.searchStaff"]}
                   onChange={(e) => this.setState({filterStaffText: e.target.value})}/>
           {staffList.map(staff => {
@@ -105,6 +107,7 @@ class TicketAssigning extends Component {
               </div>
             </div>
           })}
+          </div> : <div className="gx-d-flex gx-justify-content-center">No Staff Members found</div>}
         </Modal>
       </div>
     );

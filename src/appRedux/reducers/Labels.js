@@ -29,13 +29,9 @@ export default (state = initialState, action) => {
       };
 
     case DELETE_LABEL :
-      const updatedLabels = state.labelList.filter(label => {
-        return (action.payload.indexOf(label.id) === -1) ?
-          label : null
-      });
       return {
         ...state,
-        labelList: updatedLabels,
+        labelList: state.labelList.filter(label => (action.payload.indexOf(label.id) === -1)),
         totalItems: state.totalItems - action.payload.length
       };
 

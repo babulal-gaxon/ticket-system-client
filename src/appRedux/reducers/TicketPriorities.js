@@ -36,13 +36,9 @@ export default (state = initialState, action) => {
       };
 
     case BULK_DELETE_PRIORITY:
-      const upPriorities = state.priorities.filter(priority => {
-        return (action.payload.indexOf(priority.id) === -1) ?
-          priority : null
-      });
       return {
         ...state,
-        priorities: upPriorities,
+        priorities: state.priorities.filter(priority => (action.payload.indexOf(priority.id) === -1)),
         totalItems: state.totalItems - action.payload.length
       };
 

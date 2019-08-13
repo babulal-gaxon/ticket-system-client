@@ -36,13 +36,9 @@ export default (state = initialState, action) => {
       };
 
     case BULK_DELETE_DEPARTMENTS:
-      const upDepartments = state.dept.filter(department => {
-        return (action.payload.indexOf(department.id) === -1) ?
-          department : null
-      });
       return {
         ...state,
-        dept: upDepartments,
+        dept: state.dept.filter(department => (action.payload.indexOf(department.id) === -1)),
         totalItems: state.totalItems - action.payload.length
       };
 

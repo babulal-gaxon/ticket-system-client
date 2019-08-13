@@ -9,8 +9,8 @@ import IntlMessages from "../../../util/IntlMessages";
 
 const PrioritiesChart = (props) => {
   return (
-    <div>
-    <Widget>
+    <div className="gx-main-layout-content">
+      <Widget styleName="gx-card-filter">
       <div className="gx-d-flex">
         <ResponsiveContainer height={76} width={76}>
         <CircularProgressbar value={props.resolved} text={props.totalTickets}

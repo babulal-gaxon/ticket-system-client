@@ -518,5 +518,9 @@
   "common.viewOnly": "vista",
   "common.statics": "Avg. statica",
   "common.newCustomers": "nuovi clienti",
-  "common.newTickets": "Nuovi biglietti"
+  "common.newTickets": "Nuovi biglietti",
+  "dashboard.totalTicketsRaised": "Totale biglietti raccolti",
+  "dashboard.totalTickets.pending": "Totale biglietti in sospeso",
+  "dashboard.totalStaff": "Staff totale",
+  "dashboard.totalCustomers":"Totale clienti"
 }

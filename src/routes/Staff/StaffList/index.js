@@ -89,7 +89,6 @@ class StaffList extends Component {
         title: messages["staff.message.delete"],
         onOk: () => {
           this.props.onBulkDeleteStaff({ids: this.state.selectedStaff}, null, this);
-          this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers);
           this.setState({selectedRowKeys: [], selectedStaff: []});
         }
       })

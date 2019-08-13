@@ -12,6 +12,7 @@ import {connect} from "react-redux";
 import {onGetDashboardData} from "../../appRedux/actions/Dashboard";
 import {onDeleteTicket} from "../../appRedux/actions/TicketList";
 import PrioritiesChart from "./DashboardInfo/PrioritiesChart";
+import IntlMessages from "../../util/IntlMessages";
 
 class Dashboard extends Component {
 
@@ -29,19 +30,19 @@ class Dashboard extends Component {
                     <Row>
                         <Col xl={6} lg={12} md={12} sm={12} xs={12} className="gx-col-full">
                             <SummaryDesign icon="orders" iconColor="geekblue" title={totalTickets}
-                                           subTitle="Total Tickets Raised"/>
+                                           subTitle={<IntlMessages id="dashboard.totalTicketsRaised"/>}/>
                         </Col>
                         <Col xl={6} lg={12} md={12} sm={12} xs={12} className="gx-col-full">
                             <SummaryDesign icon="revenue-new" iconColor="primary" title={pendingTickets}
-                                           subTitle="Total Tickets Pending"/>
+                                           subTitle={<IntlMessages id="dashboard.totalTickets.pending"/>}/>
                         </Col>
                         <Col xl={6} lg={12} md={12} sm={12} xs={12} className="gx-col-full">
                             <SummaryDesign icon="visits" iconColor="geekblue" title={totalStaff}
-                                           subTitle="Total Staff"/>
+                                           subTitle={<IntlMessages id="dashboard.totalStaff"/>}/>
                         </Col>
                         <Col xl={6} lg={12} md={12} sm={12} xs={12} className="gx-col-full">
                             <SummaryDesign icon="queries" iconColor="geekblue" title={totalCustomers}
-                                           subTitle="Total Customers"/>
+                                           subTitle={<IntlMessages id="dashboard.totalCustomers"/>}/>
                         </Col>
                         <Col xl={24} lg={24} md={24} sm={24} xs={24}>
                             <TicketList history={this.props.history} tickets={ticketsList}

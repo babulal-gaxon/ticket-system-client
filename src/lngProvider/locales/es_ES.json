@@ -518,5 +518,9 @@
   "common.viewOnly": "Ver",
   "common.statics": "Media Estática",
   "common.newCustomers": "nuevos clientes",
-  "common.newTickets": "Entradas nuevas"
+  "common.newTickets": "Entradas nuevas",
+  "dashboard.totalTicketsRaised": "Entradas totales recaudadas",
+  "dashboard.totalTickets.pending": "Total de entradas pendientes",
+  "dashboard.totalStaff": "Personal total",
+  "dashboard.totalCustomers":"Clientes totales"
 }

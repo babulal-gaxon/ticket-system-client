@@ -36,13 +36,9 @@ export default (state = initialState, action) => {
       };
 
     case BULK_DELETE_STATUS:
-      const upStatuses = state.statuses.filter(status => {
-        return (action.payload.indexOf(status.id) === -1) ?
-          status : null
-      });
       return {
         ...state,
-        statuses: upStatuses,
+        statuses: state.statuses.filter(status => (action.payload.indexOf(status.id) === -1)),
         totalItems: state.totalItems - action.payload.length
       };
 

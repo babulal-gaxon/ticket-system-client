@@ -134,9 +134,9 @@ class TicketList extends Component {
   render() {
     const {tickets} =  this.props;
     return (
-      <div>
+      <div className="gx-main-layout-content">
         {tickets ?
-      <Widget>
+          <Widget styleName="gx-card-filter">
         <div className="gx-d-flex gx-justify-content-between">
         <h4 className="gx-widget-heading"><IntlMessages id="dashboard.ticketListing"/></h4>
         <p className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
@@ -144,10 +144,8 @@ class TicketList extends Component {
           <Button type="link" className="gx-text-grey gx-ml-5" onClick={this.onClickViewAll}><IntlMessages id="dashboard.viewAll"/></Button>
         </p>
         </div>
-        <div>
           <Table rowKey="id" columns={this.ticketRow()} dataSource={tickets}
                  pagination={false}/>
-        </div>
         <div>
           {tickets.length >0  ?
           <div>

@@ -175,7 +175,6 @@ class CustomersLabel extends Component {
         title={<IntlMessages id="validation.labels.delete"/>}
         onConfirm={() => {
           this.props.onDeleteLabel({ids: [recordId]}, this);
-          this.onGetLabelsList(this.state.current, this.state.itemNumbers, this.state.filterText);
         }}
         okText={<IntlMessages id="common.yes"/>}
         cancelText={<IntlMessages id="common.no"/>}>
