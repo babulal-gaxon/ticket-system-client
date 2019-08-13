@@ -38,7 +38,7 @@ class InitialSetup extends Component {
         <div className="gx-main-layout-content full-page-scroll">
           <div className="gx-main-content-wrapper">
             <div className="gx-d-flex gx-justify-content-between gx-my-3">
-            <div className="gx-pl-5"><img src={require(`assets/images/logo-white.svg`)}/></div>
+            <div className="gx-pl-5"><img src={require(`assets/images/logo-white.svg`)} alt="ticksup"/></div>
               <div className="gx-d-flex">
                 <div className="gx-pr-5">
             <Link to="/">
