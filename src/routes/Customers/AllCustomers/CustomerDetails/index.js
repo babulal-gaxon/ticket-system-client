@@ -10,11 +10,11 @@ import {
 } from "../../../../appRedux/actions/Customers";
 import PropTypes from "prop-types";
 import qs from "qs";
-import CustomerDetails from "./CustomerDetails";
 import CompanyDetails from "./CompanyDetails";
 import RelatedTickets from "./RelatedTickets";
+import CustomerInfo from "./CustomerInfo";
 
-class Index extends Component {
+class CustomerDetails extends Component {
 
 
   componentDidMount() {
@@ -57,7 +57,7 @@ class Index extends Component {
           <div className="gx-main-content">
             <Row>
               <Col xl={12} lg={12} md={12} sm={12} xs={24}>
-                <CustomerDetails currentCustomerProfile={currentCustomerProfile} onEditProfile={this.onEditProfile}
+                <CustomerInfo currentCustomerProfile={currentCustomerProfile} onEditProfile={this.onEditProfile}
                                  onBackToList={this.onBackToList}/>
               </Col>
               <Col xl={12} lg={12} md={12} sm={12} xs={24}>
@@ -84,16 +84,16 @@ export default connect(mapPropsToState, {
   onGetCustomerCompany,
   onGetCustomerDetail,
   onNullifyCurrentCustomer
-})(Index);
+})(CustomerDetails);
 
-Index.defaultProps = {
+CustomerDetails.defaultProps = {
   customerTickets: [],
   currentTicket: null,
   customerCompanyMembers: [],
   currentCustomerProfile: null
 };
 
-Index.propTypes = {
+CustomerDetails.propTypes = {
   customerTickets: PropTypes.array,
   currentTicket: PropTypes.object,
   customerCompanyMembers: PropTypes.array,

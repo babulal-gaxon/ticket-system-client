@@ -20,7 +20,7 @@ class GeneralDetails extends Component {
         email: "",
         logoList: [],
         faviconList: [],
-        cpp_url: ""
+        cpp_url: window.location.origin
       }
     } else {
       const {name, url, allowed_ext, file_upload_max_size, email, cpp_url, company_favicon, company_logo} = props.generalSettingsData;
@@ -43,11 +43,11 @@ class GeneralDetails extends Component {
 
   componentWillReceiveProps(nextProps, nextContext) {
     if (nextProps.generalSettingsData) {
-      const {name, allowed_ext, file_upload_max_size, email, website, cpp_url, company_logo, company_favicon} = nextProps.generalSettingsData;
+      const {name, allowed_ext, file_upload_max_size, email, url, cpp_url, company_logo, company_favicon} = nextProps.generalSettingsData;
       if (JSON.stringify(nextProps.generalSettingsData) !== JSON.stringify(this.props.generalSettingsData)) {
         this.setState({
           name: name,
-          url: website,
+          url: url,
           logo: company_logo ? company_logo.id : null,
           favicon: company_favicon ? company_favicon.id : null,
           allowed_ext: allowed_ext,

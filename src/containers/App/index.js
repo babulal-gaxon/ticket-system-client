@@ -71,36 +71,28 @@ class App extends PureComponent {
   render() {
 
     const {match, location, locale, token, initURL, isSetupRequired, loadingUser, totalPendingSteps} = this.props;
-    console.log("totalPendingSteps", totalPendingSteps === 1)
     if (loadingUser) {
       return <div className="gx-loader-view gx-h-100">
         <CircularProgress className=""/>
       </div>
     }
-    console.log("location.pathname", location.pathname)
     if (location.pathname === '/' || (token !== null && location.pathname === '/signin')) {
       if (isSetupRequired || token === null) {
-        console.log("token null")
         if (isSetupRequired) {
           return (<Redirect to={'/initial-setup'}/>);
         } else {
           return (<Redirect to={'/signin'}/>);
         }
       } else if (initURL === '' || initURL === '/' || initURL === '/initial-setup' || initURL === '/signin') {
-        console.log("in else if")
         if (totalPendingSteps === 1) {
-          console.log("in right position")
           return (<Redirect to={'/settings/general-settings'}/>);
         } else {
-          console.log("in wrong position")
           return (<Redirect to={'/dashboard'}/>);
         }
       } else {
-        console.log("elsepenfions", totalPendingSteps)
         if (totalPendingSteps === 1) {
           return (<Redirect to={'/settings/general-settings'}/>);
         } else {
-          console.log("else else")
           return (<Redirect to={initURL}/>);
         }
       }

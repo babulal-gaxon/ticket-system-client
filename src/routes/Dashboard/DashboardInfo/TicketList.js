@@ -77,7 +77,7 @@ class TicketList extends Component {
                 <div className="gx-text-grey">{record.content}</div>
                 <div>
                   <span>Created on {getFormattedDate(record.created_at)} |</span>
-                  <span> From: {record.author.display_name}</span>
+                  <span> From: {record.author ? record.author.display_name : null}</span>
                 </div>
               </div>
             </div>

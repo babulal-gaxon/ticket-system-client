@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import Widget from "../../../../components/Widget";
 import {Avatar, Col, Divider, Row, Tag} from "antd";
 import Permissions from "../../../../util/Permissions";
 import IntlMessages from "../../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
 
-class CustomerDetails extends Component {
+class CustomerInfo extends PureComponent {
 
   state = {
     showMoreAddress: false
@@ -108,4 +108,4 @@ class CustomerDetails extends Component {
 }
 
 
-export default injectIntl(CustomerDetails);
+export default injectIntl(CustomerInfo);
