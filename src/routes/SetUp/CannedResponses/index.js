@@ -230,6 +230,7 @@ class CannedResponses extends Component {
       }
     };
     const {messages} = this.props.intl;
+    console.log("responses", responses)
 
     return (
       <div className="gx-main-layout-content">
