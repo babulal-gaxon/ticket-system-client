@@ -9,12 +9,13 @@ import {
   SHOW_MESSAGE,
   SIGNOUT_USER_SUCCESS,
   SWITCH_LANGUAGE,
+  UPDATE_USER_PERMISSION_DATA,
   USER_DATA,
   USER_TOKEN_SET
 } from "../../constants/ActionTypes";
 import axios from 'util/Api'
+import Permissions from "../../util/Permissions";
 import {setUserSetting} from "../../util/Utills";
-import {THEME_TYPE} from "../../constants/ThemeSetting";
 
 export const setInitUrl = (url) => {
   return {
@@ -23,20 +24,52 @@ export const setInitUrl = (url) => {
   };
 };
 
+
+export const onUserSignIn = ({email, password}) => {
+  console.log(email, password);
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post('/login', {
+        email: email,
+        password: password,
+      }
+    ).then(({data}) => {
+      console.info("userSignIn: ", data);
+      if (data.success) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.data));
+        axios.defaults.headers.common['access-token'] = "Bearer " + data.token;
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: USER_TOKEN_SET, payload: data.token});
+        dispatch({type: USER_DATA, payload: data.data});
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
 export const onGetUserPermission = (history) => {
   console.log("onGetUserPermission");
   return (dispatch) => {
     dispatch({type: FETCH_USER_INFO_START});
-    axios.get('/customer/settings',
+    axios.get('/settings',
     ).then(({data}) => {
       console.log("onGetUserPermission: ", data);
       if (data.success) {
         dispatch({type: FETCH_USER_INFO_SUCCESS});
+        dispatch({type: UPDATE_USER_PERMISSION_DATA, payload: data.data});
         localStorage.setItem("settings", JSON.stringify(data.data));
-        setUserSetting(data.data);
-        dispatch({type: SWITCH_LANGUAGE, payload: data.data.locale.default_language});
-        dispatch({type: THEME_TYPE, themeType: data.data.customer.theme})
-      } else if (data.message) {
+        Permissions.setPermissions(data.data.permissions);
+        setUserSetting(data.data.settings);
+        dispatch({type: SWITCH_LANGUAGE, payload: data.data.settings.locale.default_language})
+      }
+    else if (data.message) {
         dispatch({type: FETCH_ERROR, payload: data.message});
         dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});
         history.push("/signin");
@@ -67,63 +100,9 @@ export const onGetUserPermission = (history) => {
     });
   }
 };
-
-export const onUserSignUp = ({email, password, first_name, last_name}, context) => {
-  const {messages} = context.props.intl;
+export const setUserDefaultSetting = (data) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.post('/customer/panel/register', {
-        email: email,
-        password: password,
-        first_name: first_name, last_name: last_name
-      }
-    ).then(({data}) => {
-      if (data.success) {
-        dispatch({type: FETCH_SUCCESS});
-        dispatch({
-          type: SHOW_MESSAGE,
-          payload: messages["action.auth.emailSent"]
-        });
-      } else if (data.message) {
-        console.info("payload: data.error", data.message);
-        dispatch({type: FETCH_ERROR, payload: data.message});
-      } else {
-        console.info("payload: data.error", data.errors[0]);
-        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
-      }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.info("Error****:", error.message);
-    });
-  }
-};
-
-export const onUserSignIn = ({email, password}) => {
-  console.log(email, password);
-  return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.post('/customer/panel/login', {
-        email: email,
-        password: password,
-      }
-    ).then(({data}) => {
-      console.info("userSignIn: ", data);
-      if (data.success) {
-        localStorage.setItem("token", JSON.stringify(data.token));
-        localStorage.setItem("user", JSON.stringify(data.user));
-        axios.defaults.headers.common['access-token'] = "Bearer " + data.token;
-        dispatch({type: FETCH_SUCCESS});
-        dispatch({type: USER_TOKEN_SET, payload: data.token});
-        dispatch({type: USER_DATA, payload: data.user});
-      } else if (data.message) {
-        dispatch({type: FETCH_ERROR, payload: data.message});
-      } else {
-        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
-      }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.info("Error****:", error.message);
-    });
+    dispatch({type: UPDATE_USER_PERMISSION_DATA, payload: data});
   }
 };
 
@@ -133,35 +112,23 @@ export const onUserSignOut = () => {
     dispatch({type: FETCH_START});
     setTimeout(() => {
       localStorage.removeItem("token");
+      localStorage.removeItem("settings");
+      localStorage.removeItem("user");
       dispatch({type: FETCH_SUCCESS});
       dispatch({type: SIGNOUT_USER_SUCCESS});
     }, 2000);
   }
 };
 
-
-export const onAddProfileImage = (imageFile, context) => {
-  const {messages} = context.props.intl;
-  return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.post("/uploads/temporary/media", imageFile, {
-      headers: {
-        'Content-Type': "multipart/form-data"
-      }
-    }).then(({data}) => {
-      if (data.success) {
-        context.updateProfilePic(data.data);
-        dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.profilePic"]});
-      } else if (data.message) {
-        dispatch({type: FETCH_ERROR, payload: data.message});
-      } else {
-        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
-      }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.info("Error****:", error.message);
-    });
+export const showErrorMessage = (error) => {
+  console.log("error", error);
+  if (error.response.status === 401) {
+    return ({type: FETCH_ERROR, payload: error.response.data.message});
+  } else if (error.response.status === 403) {
+    return ({type: FETCH_ERROR, payload: error.response.data.message});
+  } else {
+    console.log("Error****:", error.message);
+    return ({type: FETCH_ERROR, payload: error.message});
   }
 };
 
@@ -207,16 +174,6 @@ export const updateUserProfile = (profile, context) => {
     });
   }
 };
-export const showErrorMessage = (error) => {
-  if (error.response.status === 401) {
-    return ({type: FETCH_ERROR, payload: error.response.data.message});
-  } else if (error.response.status === 403) {
-    return ({type: FETCH_ERROR, payload: error.response.data.message});
-  } else {
-    console.log("Error****:", error.message);
-    return ({type: FETCH_ERROR, payload: error.message});
-  }
-};
 
 export const onResetPassword = ({email}, context) => {
   const {messages} = context.props.intl;
@@ -231,10 +188,10 @@ export const onResetPassword = ({email}, context) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.resetPassword"]});
       } else if (data.message) {
-        console.info("payload: data.error", data.message);
+        console.info("payload: data.errors[0]", data.message);
         dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
-        console.info("payload: data.error", data.errors[0]);
+        console.info("payload: data.errors[0]", data.errors[0]);
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
@@ -253,13 +210,13 @@ export const onSetNewPassword = (token, data, history, context) => {
       console.info("data:", data);
       if (data.success) {
         dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.updatePassword"]});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.passwordUpdated"]});
         history.replace("/signin");
       } else if (data.message) {
-        console.info("payload: data.error", data.message);
+        console.info("payload: data.errors[0]", data.message);
         dispatch({type: FETCH_ERROR, payload: data.message});
       } else {
-        console.info("payload: data.error", data.errors[0]);
+        console.info("payload: data.errors[0]", data.errors[0]);
         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
       }
     }).catch(function (error) {
@@ -269,25 +226,7 @@ export const onSetNewPassword = (token, data, history, context) => {
   }
 };
 
-export const onVerifyAccountEmail = (token, history, context) => {
-  const {messages} = context.props.intl;
-  return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.get(`/verify/email/${token}`).then(({data}) => {
-      if (data.success) {
-        dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: messages["action.auth.emailVerified"]});
-        history.replace("/signin");
-      } else if (data.message) {
-        console.info("payload: data.error", data.message);
-        dispatch({type: FETCH_ERROR, payload: data.message});
-      } else {
-        console.info("payload: data.error", data.errors[0]);
-        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
-      }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.info("Error****:", error.message);
-    });
-  }
-};
+
+
+
+
