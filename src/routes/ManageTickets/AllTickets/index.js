@@ -197,6 +197,18 @@ class AllTickets extends Component {
     });
   };
 
+  onArchivePopUp = (recordId) => {
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["manageTickets.message.delete"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onDeleteTicket({ids: recordId}, this)
+      }
+    })
+  };
+
   render() {
     const {messages} = this.props.intl;
     const {current, filterText, itemNumbers, sortParam, endDate, selectedStaff, selectedCustomers, selectedPriorities, selectedStatuses, archive, startDate} = this.state;
@@ -277,6 +289,7 @@ class AllTickets extends Component {
                      onChange: this.onPageChange
                    }}
                    className="gx-table-responsive"
+                   rowClassName="gx-pointer"
                    onRow={(record) => ({
                      onClick: () => {
                        if (Permissions.canViewTicketDetail()) {

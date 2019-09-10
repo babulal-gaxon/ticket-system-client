@@ -10,24 +10,16 @@ const onShowRowDropdown = (currentCompany, context) => {
         <Menu.Item key="2" onClick={() => context.onEditCompanyOption(currentCompany)}>
           <IntlMessages id="common.edit"/>
         </Menu.Item> : null}
+
       {(Permissions.canCompanyDelete()) ?
-        <Menu.Item key="4">
-          <Popconfirm
-            title={<IntlMessages id="companies.message.delete"/>}
-            onConfirm={() => {
-              context.props.onDeleteCompanies({ids: [currentCompany.id]});
-              context.onGetPaginatedData(context.state.current, context.state.itemNumbers, context.state.filterText);
-            }}
-            okText={<IntlMessages id="common.yes"/>}
-            cancelText={<IntlMessages id="common.no"/>}>
+        <Menu.Item key="4" onClick={() => context.onDeletePopUp(currentCompany.id)}>
             <span><IntlMessages id="common.delete"/></span>
-          </Popconfirm>
         </Menu.Item> : null}
     </Menu>
   );
   return (
     <Dropdown overlay={menu} trigger={['click']}>
-      <i className="icon icon-ellipse-h"/>
+      <i className="icon icon-ellipse-h gx-pointer"/>
     </Dropdown>
   )
 };

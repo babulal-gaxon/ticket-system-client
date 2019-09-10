@@ -13,6 +13,7 @@ import {
 import IntlMessages from "../../util/IntlMessages";
 import {withRouter} from "react-router";
 import moment from "moment";
+import {getFormattedDate} from "../../util/Utills";
 
 const SubMenu = Menu.SubMenu;
 
@@ -42,9 +43,9 @@ class SidebarContent extends Component {
   };
 
   getCurrentTimeStamp() {
-    const date = new Date();
-    return moment(date).format('LL')
-  }
+    const date = moment().format('YYYY-MM-DD h:mm:ss');
+     return getFormattedDate(date)
+  };
 
   render() {
     console.log("dater", this.getCurrentTimeStamp())
@@ -119,11 +120,6 @@ class SidebarContent extends Component {
                     <IntlMessages id="sidebar.dashboard.localization"/></Link>
                 </Menu.Item>
 
-                <Menu.Item key="settings/email">
-                  <Link to="/settings/email"><i className="icon icon-mail-open"/>
-                    <IntlMessages id="sidebar.dashboard.email"/></Link>
-                </Menu.Item>
-
                 <Menu.Item key="settings/customer-panel">
                   <Link to="/settings/customer-panel"><i className="icon icon-customer-panel"/>
                     <IntlMessages id="sidebar.dashboard.customer.panel"/></Link>
@@ -157,11 +153,6 @@ class SidebarContent extends Component {
                 <Menu.Item key="setup/ticket-statuses">
                   <Link to="/setup/ticket-statuses"><i className="icon icon-assignment"/>
                     <IntlMessages id="sidebar.dashboard.ticket.statuses"/></Link>
-                </Menu.Item>
-
-                <Menu.Item key="setup/email-templates">
-                  <Link to="/setup/email-templates"><i className="icon icon-email-template"/>
-                    <IntlMessages id="sidebar.dashboard.email.templates"/></Link>
                 </Menu.Item>
 
                 <Menu.Item key="setup/services">

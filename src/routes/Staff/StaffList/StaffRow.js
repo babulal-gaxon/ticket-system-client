@@ -14,38 +14,22 @@ const onShowRowDropdown = (staff, context) => {
           <IntlMessages id="common.edit"/>
         </Menu.Item> : null
       }
-      {(Permissions.canStaffEdit()) ?
-        <Menu.Item key="3">
-          <Popconfirm
-            title={staff.status === 1 ? <IntlMessages id="staff.message.active"/> :
-              <IntlMessages id="staff.message.disable"/>}
-            onConfirm={() => {
-              if (staff.status === 1) {
-                context.onDisableStaffStatus(staff.id)
-              } else {
-                context.onEnableStaffStatus(staff.id)
-              }
 
-            }}
-            okText={<IntlMessages id="common.yes"/>}
-            cancelText={<IntlMessages id="common.no"/>}>
+      {(Permissions.canStaffEdit()) ?
+        <Menu.Item key="3" onClick={() => {
+          if (staff.status === 1) {
+            context.onDisableStaffStatus(staff.id)
+          } else {
+            context.onEnableStaffStatus(staff.id)
+          }
+        }}>
             <span>{staff.status === 1 ? <IntlMessages id="common.disable"/> : <IntlMessages id="common.enable"/>}</span>
-          </Popconfirm>
         </Menu.Item> : null
       }
       <Menu.Divider/>
       {(Permissions.canStaffDelete()) ?
-        <Menu.Item key="4">
-          <Popconfirm
-            title={<IntlMessages id="staff.message.delete"/>}
-            onConfirm={() => {
-              context.props.onBulkDeleteStaff({ids: [staff.id]}, context);
-              context.onGetStaffDataPaginated(context.state.currentPage, context.state.itemNumbers, context.state.filterText)
-            }}
-            okText={<IntlMessages id="common.yes"/>}
-            cancelText={<IntlMessages id="common.no"/>}>
-            <span><IntlMessages id="common.delete"/></span>
-          </Popconfirm>
+        <Menu.Item key="4" onClick = {() => context.onDeletePopUp(staff.id)}>
+            <IntlMessages id="common.delete"/>
         </Menu.Item> : null
       }
     </Menu>
@@ -78,8 +62,7 @@ const StaffRow = (context) => {
       key: 'hourlyRate',
       render: (text, record) => {
         return <span
-          className="gx-email gx-d-inline-block gx-mr-2"
-          style={{color: record.hourly_rate === null ? "red" : ""}}>
+          className="gx-email gx-d-inline-block gx-mr-2">
             {record.hourly_rate === null ? <IntlMessages id="common.na"/> : `$${record.hourly_rate}/Hour`}</span>
       },
     },
@@ -100,8 +83,7 @@ const StaffRow = (context) => {
       dataIndex: 'designation',
       key: 'designation',
       render: (text, record) => {
-        return <span className="gx-email gx-d-inline-block gx-mr-2"
-                     style={{color: record.designation === null ? "red" : ""}}>
+        return <span className="gx-email gx-d-inline-block gx-mr-2">
             {record.designation === null ? <IntlMessages id="common.na"/> : record.designation}</span>
       },
     },

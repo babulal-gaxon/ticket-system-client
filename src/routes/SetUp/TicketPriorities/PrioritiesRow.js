@@ -62,9 +62,9 @@ const PrioritiesRow = (context) => {
       dataIndex: '',
       key: 'empty',
       render: (text, record) => {
-        return <span>{Permissions.canPriorityEdit() ? <i className="icon icon-edit gx-mr-3"
+        return <span>{Permissions.canPriorityEdit() ? <i className="icon icon-edit gx-mr-3 gx-pointer"
                                                          onClick={() => context.onEditPriority(record)}/> : null}
-          {Permissions.canPriorityDelete() ? context.onDeletePopUp(record.id) : null}
+          {Permissions.canPriorityDelete() ? <i className="icon icon-trash gx-pointer" onClick={() => context.onDeletePopUp(record.id)}/> : null}
           </span>
       },
     },

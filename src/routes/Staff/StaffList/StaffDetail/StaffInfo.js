@@ -8,7 +8,7 @@ const StaffInfo = (currentStaff, context) => {
   return (
     <div className="gx-main-content">
       <Widget styleName="gx-card-filter">
-        <i className="icon icon-arrow-left" onClick={() => context.onBackToList()}/>
+        <i className="icon icon-arrow-left gx-pointer" onClick={() => context.onBackToList()}/>
         <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-4 gx-mt-3">
           {currentStaff.avatar ?
             <Avatar className="gx-mr-3 gx-size-80" src={currentStaff.avatar.src}/> :
@@ -35,23 +35,23 @@ const StaffInfo = (currentStaff, context) => {
           <Col span={6}>
             <IntlMessages id="common.phoneNo."/>
           </Col>
-          <Col>{currentStaff.mobile}</Col>
+          <Col>{currentStaff.mobile ? currentStaff.mobile: "NA"}</Col>
         </Row>
         <Divider/>
         <Row>
           <Col span={6}>
             <IntlMessages id="common.hourlyRate"/>
           </Col>
-          <Col>{currentStaff.hourly_rate}</Col>
+          <Col>{currentStaff.hourly_rate ? `$ ${currentStaff.hourly_rate}` : "NA"}</Col>
         </Row>
         <Divider/>
         <Row>
           <Col span={6}>
             <IntlMessages id="sidebar.dashboard.departments"/>
           </Col>
-          <Col>{currentStaff.departments.map(department => {
+          <Col>{currentStaff.departments.length > 0 ?currentStaff.departments.map(department => {
             return department.name
-          }).join()
+          }).join() : "NA"
           }
           </Col>
         </Row>
@@ -68,11 +68,11 @@ const StaffInfo = (currentStaff, context) => {
           <Col span={6}>
             <IntlMessages id="common.designation"/>
           </Col>
-          <Col>{currentStaff.designation}</Col>
+          <Col>{currentStaff.designation ? currentStaff.designation : "NA"}</Col>
         </Row>
         <Divider/>
         {(Permissions.canStaffEdit()) ?
-          <Tag color="blue" onClick={() => context.onEditProfile()}>
+          <Tag color="blue" className="gx-pointer" onClick={() => context.onEditProfile()}>
             <i className="icon icon-edit gx-mr-3"/><IntlMessages id="common.editProfile"/></Tag> : null}
       </Widget>
     </div>

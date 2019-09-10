@@ -44,11 +44,11 @@ class SignIn extends React.Component {
               <div className="gx-app-logo-wid">
                 <h1><IntlMessages id="app.userAuth.signIn"/></h1>
                 <p><IntlMessages id="app.userAuth.bySigning"/></p>
-                <p onClick={this.onForgetPassword} style={{textDecoration: 'underline'}}><IntlMessages
+                <p className="gx-pointer" onClick={this.onForgetPassword} style={{textDecoration: 'underline'}}><IntlMessages
                   id="app.userAuth.getAccount"/></p>
               </div>
               <div className="gx-app-logo">
-                {/*<img alt="example" src={require("assets/images/logo.svg")}/>*/}
+                <img alt="example" src={require("assets/images/logo.svg")}/>
               </div>
             </div>
             <div className="gx-app-login-content">

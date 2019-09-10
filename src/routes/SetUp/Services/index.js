@@ -179,17 +179,15 @@ class Services extends Component {
 
 
   onDeletePopUp = (recordId) => {
-    return (
-      <Popconfirm
-        title={<IntlMessages id="services.message.delete"/>}
-        onConfirm={() => {
-          this.props.onDeleteServices({ids: [recordId]}, this);
-        }}
-        okText={<IntlMessages id="common.yes"/>}
-        cancelText={<IntlMessages id="common.no"/>}>
-        <i className="icon icon-trash"/>
-      </Popconfirm>
-    )
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["services.message.delete"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onDeleteServices({ids: [recordId]}, this);
+      }
+    })
   };
 
   onShowItemOptions = () => {

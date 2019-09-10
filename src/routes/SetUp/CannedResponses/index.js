@@ -186,15 +186,15 @@ class CannedResponses extends Component {
 
 
   onDeletePopUp = (recordId) => {
-    return <Popconfirm
-      title={<IntlMessages id="responses.message.delete"/>}
-      onConfirm={() => {
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["responses.message.delete"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
         this.props.onBulkDeleteResponses({ids: [recordId]}, this);
-      }}
-      okText={<IntlMessages id="common.yes"/>}
-      cancelText={<IntlMessages id="common.no"/>}>
-      <i className="icon icon-trash"/>
-    </Popconfirm>
+      }
+    })
   };
 
   onPageChange = page => {

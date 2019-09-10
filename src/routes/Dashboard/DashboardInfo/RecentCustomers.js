@@ -33,7 +33,7 @@ class RecentCustomers extends Component {
     );
     return (
       <Dropdown overlay={menu} trigger={['click']}>
-        <i className="icon icon-ellipse-h"/>
+        <i className="icon icon-ellipse-h gx-pointer"/>
       </Dropdown>
     )
   };
@@ -52,7 +52,7 @@ class RecentCustomers extends Component {
                   <span>{moment(getLocalTimeStamp(this.props.recentCustomers[0].created_at)).fromNow()}</span>
                 </div> : null}
               </div>
-              <span className="gx-cursor" onClick={this.onRefreshList}><i
+              <span className="gx-cursor gx-pointer" onClick={this.onRefreshList}><i
                 className="icon icon-shuffle gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/></span>
             </div>
             {this.props.recentCustomers.length >0 ?
@@ -86,7 +86,7 @@ class RecentCustomers extends Component {
             />
             <span className="gx-link gx-cursor gx-pb-0" onClick={this.onViewAllClick}><IntlMessages
               id="dashboard.viewAll"/></span>
-              </div> :<Empty/>}
+              </div> :<Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>}
           </Widget> : null}
       </div>
     );

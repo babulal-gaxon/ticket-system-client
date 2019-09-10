@@ -137,6 +137,19 @@ class RolesList extends Component {
     </Dropdown>
   };
 
+  onDeletePopUp = (recordId) => {
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["roles.message.delete"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onBulkDeleteRoles({ids: [recordId]}, this);
+        this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText)
+      }
+    })
+  };
+
   onPageChange = page => {
     this.setState({current: page}, () => {
       this.onGetRolesData(this.state.current, this.state.itemNumbers, this.state.filterText, true)

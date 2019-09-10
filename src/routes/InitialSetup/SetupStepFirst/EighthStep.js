@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Divider, Popconfirm, Table, Tag} from "antd/lib/index";
+import {Button, Divider, Modal, Table, Tag} from "antd";
 import AddNewStatus from "../../SetUp/TicketStatuses/AddNewStatus";
 import {connect} from "react-redux";
 import {
@@ -11,13 +11,16 @@ import {
 import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
+
+const confirm = Modal.confirm;
 
 class EighthStep extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showAddStatus: false,
-      statusId: null
+      currentStatus: null
     }
   }
 
@@ -30,11 +33,11 @@ class EighthStep extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({statusId: null, showAddStatus: true});
+    this.setState({currentStatus: null, showAddStatus: true});
   };
 
-  onEditStatus = (id) => {
-    this.setState({statusId: id, showAddStatus: true});
+  onEditStatus = (status) => {
+    this.setState({currentStatus: status, showAddStatus: true});
   };
 
   onGetTableColumns = () => {
@@ -45,14 +48,6 @@ class EighthStep extends Component {
         key: 'name',
         render: (text, record) => {
           return <span className="gx-email gx-d-inline-block gx-mr-2">{record.name}</span>
-        },
-      },
-      {
-        title: <IntlMessages id="statuses.orders"/>,
-        dataIndex: 'numberOfOrders',
-        key: 'numberOfOrders',
-        render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.tickets_count}</span>
         },
       },
       {
@@ -98,9 +93,9 @@ class EighthStep extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <span> {Permissions.canStatusEdit() ? <i className="icon icon-edit gx-mr-3"
-                                                          onClick={() => this.onEditStatus(record.id)}/> : null}
-            {Permissions.canStatusDelete() ? this.onDeletePopUp(record.id) : null}
+          return <span> {Permissions.canStatusEdit() ? <i className="icon icon-edit gx-mr-3 gx-pointer"
+                                                          onClick={() => this.onEditStatus(record)}/> : null}
+            {Permissions.canStatusDelete() ? <i className="icon icon-trash gx-pointer" onClick={() => this.onDeletePopUp(record.id)}/> : null}
           </span>
         },
       },
@@ -108,16 +103,16 @@ class EighthStep extends Component {
   };
 
   onDeletePopUp = (recordId) => {
-    return <Popconfirm
-      title="Are you sure to delete this Status?"
-      onConfirm={() => {
-        this.props.onBulkDeleteStatuses({ids: [recordId]});
-        this.props.onGetTicketStatus(this.state.current, this.state.itemNumbers, this.state.filterText);
-      }}
-      okText={<IntlMessages id="common.yes"/>}
-      cancelText={<IntlMessages id="common.no"/>}>
-      <i className="icon icon-trash"/>
-    </Popconfirm>
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["statuses.message.delete"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onBulkDeleteStatuses({ids: [recordId]}, this);
+        this.props.onGetTicketStatus();
+      }
+    })
   };
 
   render() {
@@ -139,7 +134,7 @@ class EighthStep extends Component {
           <AddNewStatus showAddStatus={this.state.showAddStatus}
                         onToggleAddStatus={this.onToggleAddStatus}
                         onAddTicketStatus={this.props.onAddTicketStatus}
-                        statusId={this.state.statusId}
+                        currentStatus={this.state.currentStatus}
                         onEditTicketStatus={this.props.onEditTicketStatus}
                         statuses={this.props.statuses}/> : null}
       </div>
@@ -157,7 +152,7 @@ export default connect(mapStateToProps, {
   onAddTicketStatus,
   onEditTicketStatus,
   onBulkDeleteStatuses
-})(EighthStep);
+})(injectIntl(EighthStep));
 
 EighthStep.defaultProps = {
   statuses: []

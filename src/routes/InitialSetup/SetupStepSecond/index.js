@@ -6,6 +6,8 @@ import {onGetTicketSettings, onSaveTicketSettings} from "../../../appRedux/actio
 import {onGetFilterOptions} from "../../../appRedux/actions/TicketList";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
+
 
 const {Option} = Select;
 
@@ -15,6 +17,7 @@ class SetupStepSecond extends Component {
     if (this.props.ticketSettings === null) {
       this.state = {
         enable_service_selection: 0,
+        enable_product_selection: 0,
         enable_department_selection: 0,
         ticket_reply_order: "",
         default_status_reply: 0,
@@ -31,10 +34,11 @@ class SetupStepSecond extends Component {
       const {
         enable_service_selection, enable_department_selection,
         ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,
-        notify_reply, notify_status_change, notify_priority_change, notify_on_archive, ticket_status_close
+        notify_reply, notify_status_change, notify_priority_change, notify_on_archive, ticket_status_close, enable_product_selection
       } = this.props.ticketSettings;
       this.state = {
         enable_service_selection: parseInt(enable_service_selection),
+        enable_product_selection: parseInt(enable_product_selection),
         enable_department_selection: parseInt(enable_department_selection),
         ticket_reply_order: ticket_reply_order,
         default_status_reply: parseInt(default_status_reply),
@@ -60,7 +64,7 @@ class SetupStepSecond extends Component {
     if (nextProps.ticketSettings) {
       const {
         enable_service_selection, enable_department_selection,
-        ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,
+        ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,enable_product_selection,
         notify_reply, notify_status_change, notify_priority_change, notify_on_archive, ticket_status_close
       } = nextProps.ticketSettings;
       if (JSON.stringify(nextProps.ticketSettings) !== JSON.stringify(this.props.ticketSettings)) {
@@ -68,6 +72,7 @@ class SetupStepSecond extends Component {
           enable_service_selection: parseInt(enable_service_selection),
           enable_department_selection: parseInt(enable_department_selection),
           ticket_reply_order: ticket_reply_order,
+          enable_product_selection: parseInt(enable_product_selection),
           default_status_reply: parseInt(default_status_reply),
           allowed_file_ext: allowed_file_ext,
           max_upload_size: max_upload_size,
@@ -83,13 +88,13 @@ class SetupStepSecond extends Component {
   };
 
   onAddButtonClick = () => {
-    this.props.onSaveTicketSettings({...this.state}, this.props.history);
+    this.props.onSaveTicketSettings({...this.state}, this.props.history, this);
   };
 
   render() {
     const {
       enable_service_selection, enable_department_selection,
-      ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,
+      ticket_reply_order, default_status_reply, allowed_file_ext, max_upload_size, notify_raise,enable_product_selection,
       notify_reply, notify_status_change, notify_priority_change, notify_on_archive, ticket_status_close
     } = this.state;
     return (
@@ -110,6 +115,14 @@ class SetupStepSecond extends Component {
               <p><IntlMessages id="settings.ticket.departmentSelection"/></p>
               <Switch checked={!!enable_department_selection}
                       onChange={(checked) => this.setState({enable_department_selection: Number(checked)})}/>
+            </div>
+            <Divider/>
+          </Form.Item>
+          <Form.Item>
+            <div className="gx-d-flex gx-justify-content-between">
+              <p><IntlMessages id="settings.ticket.productSelection"/></p>
+              <Switch checked={!!enable_product_selection}
+                      onChange={(checked) => this.setState({enable_product_selection: Number(checked)})}/>
             </div>
             <Divider/>
           </Form.Item>
@@ -232,7 +245,7 @@ export default connect(mapStateToProps, {
   onGetTicketSettings,
   onSaveTicketSettings,
   onGetFilterOptions
-})(SetupStepSecond);
+})(injectIntl(SetupStepSecond));
 
 SetupStepSecond.defaultProps = {
   ticketSettings: {},

@@ -63,9 +63,9 @@ const StatusesRow = (context) => {
       dataIndex: '',
       key: 'empty',
       render: (text, record) => {
-        return <span> {Permissions.canStatusEdit() ? <i className="icon icon-edit gx-mr-3"
+        return <span> {Permissions.canStatusEdit() ? <i className="icon icon-edit gx-mr-3 gx-pointer"
                                                         onClick={() => context.onEditStatus(record)}/> : null}
-          {Permissions.canStatusDelete() ? context.onDeletePopUp(record.id) : null}
+          {Permissions.canStatusDelete() ? <i className="icon icon-trash gx-pointer" onClick={() => context.onDeletePopUp(record.id)}/> : null}
           </span>
       },
     },

@@ -11,8 +11,8 @@ const {Option} = Select;
 class AddNewStaff extends Component {
   constructor(props) {
     super(props);
-    console.log("staffList", this.props.staffList);
-    if (this.props.staffId === null) {
+    console.log("selectedStaff", props.selectedStaff)
+    if (props.selectedStaff === null) {
       this.state = {
         first_name: "",
         last_name: "",
@@ -26,9 +26,8 @@ class AddNewStaff extends Component {
         profile_pic: null
       }
     } else {
-      const selectedStaff = this.props.staffList.find(staff => staff.id === this.props.staffId);
-      const {id, first_name, last_name, email, mobile, hourly_rate, status,} = selectedStaff;
-      const department_ids = selectedStaff.departments.map(department => {
+      const {id, first_name, last_name, email, mobile, hourly_rate, status, departments, avatar} = props.selectedStaff;
+      const department_ids = departments.map(department => {
         return department.id
       });
       this.state = {
@@ -41,7 +40,8 @@ class AddNewStaff extends Component {
         account_status: status,
         departments_ids: department_ids,
         profile_pic: null,
-        fileList: []
+        fileList: [],
+        logoName: avatar.title ? avatar.title : "",
       }
     }
   }
@@ -55,10 +55,10 @@ class AddNewStaff extends Component {
   };
 
   onStaffAdd = () => {
-    if (this.props.staffId === null) {
-      this.props.onAddSupportStaff({...this.state})
+    if (this.props.selectedStaff === null) {
+      this.props.onAddSupportStaff({...this.state}, null, this)
     } else {
-      this.props.onEditSupportStaff({...this.state});
+      this.props.onEditSupportStaff({...this.state}, null, this);
     }
     this.props.onToggleAddModal();
   };
@@ -74,7 +74,7 @@ class AddNewStaff extends Component {
     }
   };
 
-  onAddImage = (file, context) => {
+  onAddImage = (file) => {
     this.props.fetchStart();
     axios.post("/uploads/temporary/media", file, {
       headers: {
@@ -82,10 +82,11 @@ class AddNewStaff extends Component {
       }
     }).then(({data}) => {
       if (data.success) {
+        console.log("data.data", data.data)
         this.props.fetchSuccess();
         this.setState({profile_pic: data.data}, () => {
           this.onStaffAdd();
-          this.setState({uploadedFile: null})
+          this.setState({fileList: []})
         })
       } else {
         this.props.fetchError(data.errors[0])
@@ -122,7 +123,7 @@ class AddNewStaff extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {first_name, last_name, email, password, mobile, hourly_rate, account_status, departments_ids, fileList} = this.state;
+    const {first_name, last_name, email, password, mobile, hourly_rate, account_status, departments_ids, fileList, logoName} = this.state;
     const {showAddModal, onToggleAddModal} = this.props;
     const deptOptions = this.onDepartmentSelectOption();
     const {messages} = this.props.intl;
@@ -159,7 +160,7 @@ class AddNewStaff extends Component {
       <div className="gx-main-layout-content">
         <Modal
           visible={showAddModal}
-          title={this.props.staffId === null ? <IntlMessages id="staff.addStaff"/> :
+          title={this.props.selectedStaff === null ? <IntlMessages id="staff.addStaff"/> :
             <IntlMessages id="staff.editStaff"/>}
           onCancel={() => onToggleAddModal()}
           footer={[
@@ -232,7 +233,7 @@ class AddNewStaff extends Component {
                       message: messages["validation.message.numericalValues"]
                     }],
                   })(<Input type="text" onChange={(e) => {
-                    this.setState({phone: e.target.value})
+                    this.setState({mobile: e.target.value})
                   }}/>)}
                 </Form.Item>
               </Col>
@@ -240,9 +241,9 @@ class AddNewStaff extends Component {
             <div className="gx-d-flex gx-flex-row">
               <Col sm={12} xs={24} className="gx-pl-0">
                 <Form.Item label={<IntlMessages id="common.password"/>}
-                           extra={this.props.staffId === null ? "" :
+                           extra={this.props.selectedStaff === null ? "" :
                              <IntlMessages id="validation.message.passwordUpdateNote"/>}>
-                  {this.props.staffId === null ?
+                  {this.props.selectedStaff === null ?
                     getFieldDecorator('password', {
                       initialValue: password,
                       rules: [{
@@ -287,9 +288,11 @@ class AddNewStaff extends Component {
                 {deptOptions}
               </Select>
             </Form.Item>
-            <Form.Item label={<IntlMessages id="common.uploadProfileImage"/>}>
+            <Form.Item label={<IntlMessages id="common.uploadProfileImage"/>}
+                       extra={fileList.length > 0 ? "" : logoName}>
               <Upload {...props}>
-                <Input placeholder={messages["common.chooseFile"]} addonAfter={<IntlMessages id="common.browse"/>}/>
+                <Input placeholder={messages["common.chooseFile"]} readOnly
+                       addonAfter={<IntlMessages id="common.browse"/>}/>
               </Upload>
             </Form.Item>
             <Form.Item label={<IntlMessages id="common.status"/>}>

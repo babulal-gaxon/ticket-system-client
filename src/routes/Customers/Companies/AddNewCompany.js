@@ -152,7 +152,7 @@ class AddNewCompany extends Component {
 
             <Form.Item label={<IntlMessages id="common.uploadLogo"/>} extra={fileList.length > 0 ? "" : logoName}>
               <Upload {...props}>
-                <Input placeholder={messages["common.chooseFile"]} addonAfter={<IntlMessages id="common.browse"/>}/>
+                <Input placeholder={messages["common.chooseFile"]} readOnly addonAfter={<IntlMessages id="common.browse"/>}/>
               </Upload>
             </Form.Item>
           </Form>

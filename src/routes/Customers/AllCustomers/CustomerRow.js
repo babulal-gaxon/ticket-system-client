@@ -1,4 +1,4 @@
-import {Avatar, Dropdown, Menu, Popconfirm, Tag} from "antd";
+import {Avatar, Dropdown, Menu, Tag} from "antd";
 import React from "react";
 import Permissions from "../../../util/Permissions";
 import IntlMessages from "../../../util/IntlMessages";
@@ -13,6 +13,7 @@ const onShowRowDropdown = (currentCustomer, context) => {
         }}>
           <IntlMessages id="common.edit"/>
         </Menu.Item> : null}
+
       {(Permissions.canCustomerEdit()) ?
         <Menu.Item key="2" onClick={() => {
           context.setState({resetPasswordCustomerId: currentCustomer.id}, () => {
@@ -21,37 +22,24 @@ const onShowRowDropdown = (currentCustomer, context) => {
         }}>
           <IntlMessages id="app.userAuth.resetPassword"/>
         </Menu.Item> : null}
+
       {(Permissions.canCustomerEdit()) ?
-        <Menu.Item key="3">
-          <Popconfirm
-            title={currentCustomer.status === 1 ? <IntlMessages id="customers.message.disable"/> :
-              <IntlMessages id="customers.message.active"/>}
-            onConfirm={() => {
-              if (currentCustomer.status === 1) {
-                context.onDisableCustomerStatus(currentCustomer.id)
-              } else {
-                context.onEnableCustomerStatus(currentCustomer.id)
-              }
-            }}
-            okText={<IntlMessages id="common.yes"/>}
-            cancelText={<IntlMessages id="common.no"/>}>
+        <Menu.Item key="3" onClick={() => {
+          if (currentCustomer.status === 1) {
+            context.onDisableCustomerStatus(currentCustomer.id)
+          } else {
+            context.onEnableCustomerStatus(currentCustomer.id)
+          }
+        }}>
             <span>{currentCustomer.status === 1 ? <IntlMessages id="common.disable"/> :
               <IntlMessages id="common.enable"/>}</span>
-          </Popconfirm>
         </Menu.Item> : null}
+
       <Menu.Divider/>
+
       {(Permissions.canCustomerDelete()) ?
-        <Menu.Item key="4">
-          <Popconfirm
-            title={<IntlMessages id="customers.message.delete"/>}
-            onConfirm={() => {
-              context.props.onDeleteCustomers({ids: [currentCustomer.id]});
-              context.onGetPaginatedData(context.state.current, context.state.itemNumbers, context.state.filterText);
-            }}
-            okText={<IntlMessages id="common.yes"/>}
-            cancelText={<IntlMessages id="common.no"/>}>
-            <span><IntlMessages id="common.delete"/></span>
-          </Popconfirm>
+        <Menu.Item key="4" onClick={() => context.onDeletePopUp(currentCustomer.id)}>
+          <IntlMessages id="common.delete"/>
         </Menu.Item> : null}
     </Menu>
   );

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Divider, Popconfirm, Table, Tag} from "antd/lib/index";
+import {Button, Divider, Modal, Table, Tag} from "antd";
 import AddNewPriority from "../../SetUp/TicketPriorities/AddNewPriority";
 import Permissions from "../../../util/Permissions";
 import {connect} from "react-redux";
@@ -11,13 +11,16 @@ import {
 } from "../../../appRedux/actions/TicketPriorities";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
+
+const confirm = Modal.confirm;
 
 class SeventhStep extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showAddPriority: false,
-      priorityId: null
+      currentPriority: null
     }
   }
 
@@ -30,11 +33,11 @@ class SeventhStep extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({priorityId: null, showAddPriority: true});
+    this.setState({currentPriority: null, showAddPriority: true});
   };
 
-  onEditPriority = (id) => {
-    this.setState({priorityId: id, showAddPriority: true});
+  onEditPriority = (priority) => {
+    this.setState({currentPriority: priority, showAddPriority: true});
   };
 
   onGetTableColumns = () => {
@@ -96,9 +99,10 @@ class SeventhStep extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <span>{Permissions.canPriorityEdit() ? <i className="icon icon-edit gx-mr-3"
-                                                           onClick={() => this.onEditPriority(record.id)}/> : null}
-            {Permissions.canPriorityDelete() ? this.onDeletePopUp(record.id) : null}
+          return <span>{Permissions.canPriorityEdit() ? <i className="icon icon-edit gx-mr-3 gx-pointer"
+                                                           onClick={() => this.onEditPriority(record)}/> : null}
+            {Permissions.canPriorityDelete() ?
+              <i className="icon icon-trash gx-pointer" onClick={() => this.onDeletePopUp(record.id)}/> : null}
           </span>
         },
       },
@@ -106,16 +110,16 @@ class SeventhStep extends Component {
   };
 
   onDeletePopUp = (recordId) => {
-    return <Popconfirm
-      title="Are you sure to delete this Priority?"
-      onConfirm={() => {
-        this.props.onBulkDeletePriorities({ids: [recordId]});
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["priorities.message.delete"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onBulkDeletePriorities({ids: [recordId]}, this);
         this.props.onGetTicketPriorities();
-      }}
-      okText={<IntlMessages id="common.yes"/>}
-      cancelText={<IntlMessages id="common.no"/>}>
-      <i className="icon icon-trash"/>
-    </Popconfirm>
+      }
+    })
   };
 
   render() {
@@ -137,7 +141,7 @@ class SeventhStep extends Component {
           <AddNewPriority showAddPriority={this.state.showAddPriority}
                           onToggleAddPriority={this.onToggleAddPriority}
                           onAddTicketPriority={this.props.onAddTicketPriority}
-                          priorityId={this.state.priorityId}
+                          currentPriority={this.state.currentPriority}
                           onEditTicketPriority={this.props.onEditTicketPriority}
                           priorities={this.props.priorities}/> : null}
       </div>
@@ -155,7 +159,7 @@ export default connect(mapStateToProps, {
   onAddTicketPriority,
   onEditTicketPriority,
   onBulkDeletePriorities
-})(SeventhStep);
+})(injectIntl(SeventhStep));
 
 SeventhStep.defaultProps = {
   priorities: []

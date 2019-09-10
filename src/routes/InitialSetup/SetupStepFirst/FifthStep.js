@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Divider, Popconfirm, Table, Tag} from "antd/lib/index";
+import {Button, Divider, Modal, Table, Tag} from "antd/lib/index";
 import AddNewDepartment from "../../SetUp/Departments/AddNewDepartment";
 import {connect} from "react-redux";
 import {
@@ -10,13 +10,16 @@ import {
 } from "../../../appRedux/actions/Departments";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
+
+const confirm = Modal.confirm;
 
 class FifthStep extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showAddDepartment: false,
-      departmentId: null,
+      currentDepartment: null,
     }
   }
 
@@ -29,11 +32,11 @@ class FifthStep extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({departmentId: null, showAddDepartment: true});
+    this.setState({currentDepartment: null, showAddDepartment: true});
   };
 
-  onEditDepartment = (id) => {
-    this.setState({departmentId: id, showAddDepartment: true});
+  onEditDepartment = (dept) => {
+    this.setState({currentDepartment: dept, showAddDepartment: true});
   };
 
   onGetTableColumns = () => {
@@ -78,9 +81,9 @@ class FifthStep extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <span> <i className="icon icon-edit gx-mr-3"
-                           onClick={() => this.onEditDepartment(record.id)}/>
-            {this.onDeletePopUp(record.id)}
+          return <span> <i className="icon icon-edit gx-mr-3 gx-pointer"
+                           onClick={() => this.onEditDepartment(record)}/>
+            <i className="icon icon-trash gx-pointer" onClick={() => this.onDeletePopUp(record.id)}/>
           </span>
         },
       },
@@ -88,18 +91,16 @@ class FifthStep extends Component {
   };
 
   onDeletePopUp = (recordId) => {
-    return (
-      <Popconfirm
-        title="Are you sure to delete this Department?"
-        onConfirm={() => {
-          this.props.onBulkDeleteDepartments({ids: [recordId]});
-          this.props.onGetDepartments();
-        }}
-        okText={<IntlMessages id="common.yes"/>}
-        cancelText={<IntlMessages id="common.no"/>}>
-        <i className="icon icon-trash"/>
-      </Popconfirm>
-    )
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["departments.message.delete"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onBulkDeleteDepartments({ids: [recordId]}, this);
+        this.props.onGetDepartments();
+      }
+    })
   };
 
   render() {
@@ -116,15 +117,14 @@ class FifthStep extends Component {
             <Button type="primary" onClick={() => this.props.onMoveToNextStep()}><IntlMessages
               id="common.next"/></Button>
           </div>
-          <div><Button onClick={this.onAddButtonClick}>+><IntlMessages id="common.addNew"/></Button></div>
+          <div><Button onClick={this.onAddButtonClick}>+<IntlMessages id="common.addNew"/></Button></div>
         </div>
         {this.state.showAddDepartment ?
           <AddNewDepartment showAddDepartment={this.state.showAddDepartment}
                             onToggleAddDepartment={this.onToggleAddDepartment}
                             onAddDepartment={this.props.onAddDepartment}
-                            departmentId={this.state.departmentId}
+                            currentDepartment={this.state.currentDepartment}
                             onEditDepartment={this.props.onEditDepartment}
-                            dept={this.props.dept}
           /> : null}
       </div>
     );
@@ -142,7 +142,7 @@ export default connect(mapStateToProps, {
   onAddDepartment,
   onEditDepartment,
   onBulkDeleteDepartments
-})(FifthStep);
+})(injectIntl(FifthStep));
 
 FifthStep.defaultProps = {
   dept: []

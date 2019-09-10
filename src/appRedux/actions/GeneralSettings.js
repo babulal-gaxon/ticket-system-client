@@ -16,6 +16,7 @@ import {
   GET_TICKET_SETTINGS
 } from "../../constants/GeneralSettings";
 import {updateGeneralSetting, updateLocaleSetting, updateTicketSetting} from "../../util/Utills";
+import {NULLIFY_PENDING_STEPS} from "../../constants/InitialSetup";
 
 
 export const onGetGeneralDetails = () => {
@@ -48,6 +49,7 @@ export const onSaveGeneralDetails = (details, context) => {
       if (data.success) {
         dispatch({type: ADD_GENERAL_DETAILS, payload: data.data});
         updateGeneralSetting(data.data);
+        dispatch({type: NULLIFY_PENDING_STEPS})
         dispatch({type: SHOW_MESSAGE, payload: messages["action.settings.changes"]});
       } else if (data.message) {
         dispatch({type: FETCH_ERROR, payload: data.message});

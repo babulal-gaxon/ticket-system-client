@@ -31,6 +31,7 @@ class TicketSettings extends Component {
         notify_on_archive: 0,
         ticket_status_close: 0
       }
+
     } else {
       const {
         enable_service_selection, enable_department_selection, enable_product_selection,

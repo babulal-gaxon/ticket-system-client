@@ -15,7 +15,7 @@ const SummaryDesign = (props) => {
         </div>
         <div className="gx-media-body">
           <h1 className="gx-fs-xxxl gx-font-weight-medium gx-mb-1">{title}</h1>
-          <p className="gx-text-grey gx-mb-0">{subTitle}</p>
+          <p className="gx-text-grey gx-mb-0 gx-text-nowrap">{subTitle}</p>
         </div>
       </div>
     </Widget>

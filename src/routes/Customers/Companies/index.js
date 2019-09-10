@@ -91,6 +91,19 @@ class Companies extends Component {
     </Select>
   };
 
+  onDeletePopUp = (companyId) => {
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["companies.message.delete"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onDeleteCompanies({ids: [companyId]}, this);
+        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
+      }
+    })
+  };
+
   onShowBulkDeleteConfirm = () => {
     const {messages} = this.props.intl;
     if (this.state.selectedCompanies.length !== 0) {

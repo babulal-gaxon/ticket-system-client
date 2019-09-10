@@ -21,6 +21,10 @@ class TicketAssigning extends Component {
     this.setState({showStaffModal: !this.state.showStaffModal})
   };
 
+  onCloseModal = () => {
+    this.setState({filterStaffText: ""})
+  };
+
   onSelectStaff = (id) => {
     const staff = this.props.staffList.find(staff => staff.id === id);
     this.setState({assignedStaff: staff});
@@ -69,7 +73,7 @@ class TicketAssigning extends Component {
           </div>:
           <div>
           <div><IntlMessages id="manageTickets.assignTo"/></div>
-          <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5" onClick={this.onToggleStaffModal}>
+          <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5 gx-pointer" onClick={this.onToggleStaffModal}>
             <Avatar className="gx-mr-3 gx-size-50" src={require("assets/images/placeholder.jpg")}/>
             <div className="gx-media-body gx-mt-2">
               <span className="gx-mb-0 gx-text-capitalize"><IntlMessages id="common.unassigned"/></span>
@@ -84,6 +88,7 @@ class TicketAssigning extends Component {
         <Modal
           title={<IntlMessages id="common.selectStaff"/>}
           centered
+          afterClose={this.onCloseModal}
           visible={showStaffModal}
           onCancel={this.onToggleStaffModal}
           footer={[
@@ -118,7 +123,7 @@ export default injectIntl(TicketAssigning);
 
 TicketAssigning.defaultProps = {
   staffList: [],
-  assignedTo: null,
+  assignedStaff: null,
   ticketId: null
 };
 

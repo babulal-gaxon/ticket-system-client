@@ -123,11 +123,40 @@ class StaffList extends Component {
 
 
   onDisableStaffStatus = (staffId) => {
-    this.props.onChangeStaffStatus({ids: [staffId]}, 0, true, this);
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["staff.message.disable"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onChangeStaffStatus({ids: [staffId]}, 0, true, this);
+      }
+    })
   };
 
   onEnableStaffStatus = (staffId) => {
-    this.props.onChangeStaffStatus({ids: [staffId]}, 1, true, this);
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["staff.message.active"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onChangeStaffStatus({ids: [staffId]}, 1, true, this);
+      }
+    })
+  };
+
+  onDeletePopUp = (staffId) => {
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["staff.message.delete"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onBulkDeleteStaff({ids: [staffId]}, this);
+        this.onGetStaffDataPaginated(this.state.currentPage, this.state.itemNumbers, this.state.filterText)
+      }
+    })
   };
 
   onSelectStaff = (currentMember) => {
@@ -224,6 +253,7 @@ class StaffList extends Component {
                    onChange: this.onPageChange
                  }}
                  className="gx-table-responsive gx-mb-4"
+                 rowClassName="gx-pointer"
                  onRow={(record) => ({
                    onClick: () => {
                      if (Permissions.canViewStaffDetail()) {

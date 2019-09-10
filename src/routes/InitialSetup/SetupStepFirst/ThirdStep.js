@@ -15,19 +15,20 @@ class ThirdStep extends Component {
   constructor(props) {
     super(props);
     if (props.initialSteps.completed_steps && props.initialSteps.completed_steps.company_setup) {
-      const {name, url, phone, email, address_line_1, address_line_2, city, state, country_id, zip_code, cpp_url} = props.initialSteps.completed_steps.company_setup;
+      const {name, url, phone, email, company_address, cpp_url} = props.initialSteps.completed_steps.company_setup;
       this.state = {
         name: name,
         url: url,
         phone: phone,
         email: email,
-        address_line_1: address_line_1,
-        address_line_2: address_line_2,
-        city: city,
-        state: state,
-        country_id: country_id,
-        zip_code: zip_code,
-        cpp_url: cpp_url
+        address_line_1: company_address.address_line_1,
+        address_line_2: company_address.address_line_2,
+        city: company_address.city,
+        state: company_address.state,
+        country_id: company_address.country_id,
+        zip_code: company_address.zip_code,
+        cpp_url: cpp_url,
+        fileList: []
       }
     } else {
       this.state = {
@@ -62,6 +63,7 @@ class ThirdStep extends Component {
 
   onValidationCheck = () => {
     this.props.form.validateFields(err => {
+      console.log("err", err)
       if (!err) {
         this.onSubmitForm();
       }
@@ -177,7 +179,7 @@ class ThirdStep extends Component {
           </div>
           <Form.Item label={<IntlMessages id="common.companyLogo"/>}>
             <Upload {...props}>
-              <Input placeholder={messages["common.chooseFile"]} addonAfter={<IntlMessages id="common.browse"/>}/>
+              <Input placeholder={messages["common.chooseFile"]} readOnly addonAfter={<IntlMessages id="common.browse"/>}/>
             </Upload>
           </Form.Item>
           <Form.Item label={<IntlMessages id="settings.clientURL"/>}>

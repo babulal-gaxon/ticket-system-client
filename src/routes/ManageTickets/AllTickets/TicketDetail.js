@@ -80,7 +80,6 @@ class TicketDetail extends Component {
       () => this.props.onUpdateTicketStatus(currentTicket.id, this.state.selectedStatus, this))
   };
 
-
   onSubmitMessage = () => {
     if (this.state.message !== '') {
       if (this.state.fileList.length > 0) {
@@ -219,7 +218,7 @@ class TicketDetail extends Component {
               <div className="gx-d-flex gx-justify-content-between gx-mt-4">
                 <span>#{currentTicket.id}</span>
                 {(Permissions.canTicketEdit()) ?
-                  <span className="gx-text-primary" onClick={this.onToggleEditModal}><i
+                  <span className="gx-text-primary gx-pointer" onClick={this.onToggleEditModal}><i
                     className="icon icon-edit gx-mr-2"/><IntlMessages id="common.edit"/></span> : null}
               </div>
               <h2 className="gx-my-2 gx-font-weight-bold">{currentTicket.title}</h2>

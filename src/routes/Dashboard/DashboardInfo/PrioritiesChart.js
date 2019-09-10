@@ -13,7 +13,7 @@ const PrioritiesChart = (props) => {
       <Widget styleName="gx-card-filter">
       <div className="gx-d-flex">
         <ResponsiveContainer height={76} width={76}>
-        <CircularProgressbar value={props.resolved} text={props.totalTickets}
+        <CircularProgressbar value={props.resolved} text={props.totalTickets > 0 ? props.totalTickets : "0" }
                              className="mr-3" maxValue={props.totalTickets}
                              styles={buildStyles({
                                pathColor: props.colorCode,
@@ -21,7 +21,7 @@ const PrioritiesChart = (props) => {
         </ResponsiveContainer>
         <div className="gx-ml-3 gx-justify-content-center gx-align-text-center">
           <div><i className="icon icon-circle gx-fs-sm" style={{color:props.colorCode}}/></div>
-          <div className="gx-font-semi-bold gx-text-black gx-my-2">{props.name} <IntlMessages id="common.priority"/></div>
+          <div className="gx-font-semi-bold gx-text-black gx-my-2 gx-text-nowrap">{props.name} <IntlMessages id="common.priority"/></div>
           <div className="gx-text-green"><i className=" icon icon-circle-check gx-text-green"/> {props.resolved} <IntlMessages id="common.resolved"/></div>
         </div>
       </div>

@@ -129,11 +129,40 @@ class AllCustomers extends Component {
   };
 
   onDisableCustomerStatus = (customerId) => {
-    this.props.onChangeCustomerStatus({ids: [customerId]}, 0, true, this);
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["customers.message.disable"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onChangeCustomerStatus({ids: [customerId]}, 0, true, this);
+      }
+    })
   };
 
   onEnableCustomerStatus = (customerId) => {
-    this.props.onChangeCustomerStatus({ids: [customerId]}, 1, true, this);
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["customers.message.disable"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onChangeCustomerStatus({ids: [customerId]}, 1, true, this);
+      }
+    })
+  };
+
+  onDeletePopUp = (customerId) => {
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["customers.message.delete"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onDeleteCustomers({ids: [customerId]}, this);
+        this.onGetPaginatedData(this.state.current, this.state.itemNumbers, this.state.filterText);
+      }
+    })
   };
 
   onSelectCustomer = record => {
@@ -252,6 +281,7 @@ class AllCustomers extends Component {
                    onChange: this.onPageChange
                  }}
                  className="gx-table-responsive"
+                 rowClassName="gx-pointer"
                  onRow={(record) => ({
                    onClick: () => {
                      if (Permissions.canViewCustomerDetail()) {

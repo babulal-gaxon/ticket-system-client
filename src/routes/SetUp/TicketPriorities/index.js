@@ -183,15 +183,15 @@ class TicketPriorities extends Component {
   };
 
   onDeletePopUp = (recordId) => {
-    return <Popconfirm
-      title={<IntlMessages id="priorities.message.delete"/>}
-      onConfirm={() => {
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["priorities.message.delete"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
         this.props.onBulkDeletePriorities({ids: [recordId]}, this);
-      }}
-      okText={<IntlMessages id="common.yes"/>}
-      cancelText={<IntlMessages id="common.no"/>}>
-      <i className="icon icon-trash"/>
-    </Popconfirm>
+      }
+    })
   };
 
   onPageChange = page => {

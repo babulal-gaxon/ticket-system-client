@@ -1,16 +1,24 @@
-import {ADD_ADMIN_INFO, ADD_DATABASE_INFO, ADD_GENERAL_INFO, OPEN_PIN_MODAL} from "../../constants/InitialSetup";
+import {
+  ADD_ADMIN_INFO,
+  ADD_DATABASE_INFO,
+  ADD_GENERAL_INFO,
+  NULLIFY_PENDING_STEPS,
+  OPEN_PIN_MODAL, PIN_VERIFIED
+} from "../../constants/InitialSetup";
 import {INITIAL_SETUP_STEPS, SETUP_COMPLETE, UPDATE_STEPS} from "../../constants/ActionTypes";
 
 
 const initialState = {
-  databaseInfo: {},
-  adminInfo: {},
   generalInfo: {},
   showPinModal: false,
-  initialSteps: {},
-  currentStep: 0,
+  initialSteps: {
+    pending_steps: {},
+    completed_steps: {}
+  },
+  currentStep: 8,
   isSetupRequired: false,
-  totalPendingSteps: null
+  totalPendingSteps: null,
+  isPinVerified: false
 };
 
 
@@ -32,21 +40,27 @@ const getCurrentStep = (pendingSteps) => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_DATABASE_INFO:
+      let steps = state.initialSteps;
+      steps.completed_steps.database_setup = action.payload;
       return {
         ...state,
-        databaseInfo: action.payload
+        initialSteps: steps
       };
 
     case ADD_ADMIN_INFO:
+      let updatedSteps = state.initialSteps;
+      updatedSteps.completed_steps.admin_account_setup = action.payload;
       return {
         ...state,
-        adminInfo: action.payload
+        initialSteps: updatedSteps
       };
 
     case ADD_GENERAL_INFO:
+      let updateSteps = state.initialSteps;
+      updateSteps.completed_steps.company_setup = action.payload;
       return {
         ...state,
-        generalInfo: action.payload
+        initialSteps: updateSteps
       };
 
     case OPEN_PIN_MODAL:
@@ -80,6 +94,19 @@ export default (state = initialState, action) => {
         totalPendingSteps: pendingSteps
       }
     }
+
+    case NULLIFY_PENDING_STEPS:
+    return {
+      ...state,
+      totalPendingSteps: 0
+    };
+
+    case PIN_VERIFIED:
+      return {
+        ...state,
+        isPinVerified: true
+      };
+
     default:
       return state;
   }

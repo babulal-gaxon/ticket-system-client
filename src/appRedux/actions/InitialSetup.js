@@ -11,7 +11,7 @@ import {
   USER_DATA,
   USER_TOKEN_SET
 } from "../../constants/ActionTypes";
-import {ADD_ADMIN_INFO, ADD_GENERAL_INFO, OPEN_PIN_MODAL} from "../../constants/InitialSetup"
+import {ADD_ADMIN_INFO, ADD_GENERAL_INFO, OPEN_PIN_MODAL, PIN_VERIFIED} from "../../constants/InitialSetup"
 import axios from 'util/Api'
 
 export const updateSteps = (step) => {
@@ -146,6 +146,7 @@ export const onVerifyByPin = (data, nextStep) => {
         axios.defaults.headers.common['access-token'] = "Bearer " + data.token;
         dispatch({type: USER_TOKEN_SET, payload: data.token});
         dispatch({type: OPEN_PIN_MODAL, payload: false});
+        dispatch({type: PIN_VERIFIED});
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: SHOW_MESSAGE, payload: data.message});
         nextStep();

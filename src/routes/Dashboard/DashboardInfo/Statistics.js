@@ -52,7 +52,7 @@ const Statistics = ({staticsData, newTickets, newCustomers}) => {
                                   fill="url(#colorTickets)"/>
                         </AreaChart>
                     </ResponsiveContainer>
-                </Widget> : <Empty/>}
+                </Widget> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>}
         </div>
     );
 };

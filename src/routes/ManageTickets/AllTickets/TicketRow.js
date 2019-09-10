@@ -8,14 +8,8 @@ const onShowRowDropdown = (ticketId, context) => {
   const menu = (
     <Menu>
       {(Permissions.canTicketDelete()) ?
-        <Menu.Item key="4">
-          <Popconfirm
-            title={<IntlMessages id="manageTickets.message.delete"/>}
-            onConfirm={() => context.props.onDeleteTicket({ids: ticketId})}
-            okText={<IntlMessages id="common.yes"/>}
-            cancelText={<IntlMessages id="common.no"/>}>
-            <span><IntlMessages id="common.archive"/></span>
-          </Popconfirm>
+        <Menu.Item key="4" onClick={() => context.onArchivePopUp(ticketId)}>
+            <IntlMessages id="common.archive"/>
         </Menu.Item> : null}
     </Menu>
   );

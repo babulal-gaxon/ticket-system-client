@@ -1,22 +1,10 @@
-import {Popconfirm, Tag} from "antd";
+import {Tag} from "antd";
 import Permissions from "../../../util/Permissions";
 import React from "react";
 import {getFormattedDate} from "../../../util/Utills";
 import IntlMessages from "../../../util/IntlMessages";
 
 
-const onDeletePopUp = (recordId, context) => {
-  return <Popconfirm
-    title="Are you sure to delete this Role?"
-    onConfirm={() => {
-      context.props.onBulkDeleteRoles({ids: [recordId]}, context);
-      context.onGetRolesData(context.state.current, context.state.itemNumbers, context.state.filterText)
-    }}
-    okText={<IntlMessages id="common.yes"/>}
-    cancelText={<IntlMessages id="common.no"/>}>
-    <i className="icon icon-trash"/>
-  </Popconfirm>
-};
 const RoleRow = (context) => {
   return [
     {
@@ -59,10 +47,11 @@ const RoleRow = (context) => {
       key: 'empty',
       render: (text, record) => {
         return <div> {!record.is_locked ?
-          <span>{Permissions.canRoleEdit() ? <i className="icon icon-edit gx-mr-3" onClick={() => {
+          <span>{Permissions.canRoleEdit() ? <i className="icon icon-edit gx-mr-3 gx-pointer" onClick={() => {
             context.props.onGetRoleDetail(record.id, context.props.history);
           }}/> : null}
-            {Permissions.canRoleDelete() ? onDeletePopUp(record.id, context) : null}
+            {Permissions.canRoleDelete() ?
+              <i className="icon icon-trash gx-pointer" onClick={() => context.onDeletePopUp(record.id)}/> : null}
           </span> : null}
         </div>
       },

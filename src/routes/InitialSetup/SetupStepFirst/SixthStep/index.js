@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Avatar, Button, Popconfirm, Table} from "antd/lib/index";
+import {Avatar, Button, Table, Modal} from "antd";
 import AddNewStaff from "./AddNewStaff";
 import Widget from "../../../../components/Widget";
 import {connect} from "react-redux";
@@ -13,13 +13,16 @@ import {onGetDepartments} from "../../../../appRedux/actions/Departments";
 import {fetchError, fetchStart, fetchSuccess} from "../../../../appRedux/actions";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
+
+const confirm = Modal.confirm;
 
 class SixthStep extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showAddModal: false,
-      staffId: null
+      selectedStaff: null
     }
   }
 
@@ -33,11 +36,11 @@ class SixthStep extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({staffId: null, showAddModal: true});
+    this.setState({selectedStaff: null, showAddModal: true});
   };
 
-  onEditStaff = (id) => {
-    this.setState({staffId: id, showAddModal: true});
+  onEditStaff = (staff) => {
+    this.setState({selectedStaff: staff, showAddModal: true});
   };
 
   onGetTableColumns = () => {
@@ -72,26 +75,27 @@ class SixthStep extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <span>  <i className="icon icon-edit gx-mr-3"
-                            onClick={() => this.onEditStaff(record.id)}/>
-            {this.onDeletePopUp(record.id)}
+          return <span>  <i className="icon icon-edit gx-mr-3 gx-pointer"
+                            onClick={() => this.onEditStaff(record)}/>
+            <i className="icon icon-trash gx-pointer" onClick={() => this.onDeletePopUp(record.id)}/>
           </span>
         },
       },
     ];
   };
 
+
   onDeletePopUp = (recordId) => {
-    return <Popconfirm
-      title="Are you sure to delete this Staff?"
-      onConfirm={() => {
-        this.props.onBulkDeleteStaff({ids: [recordId]});
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["staff.message.delete"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onBulkDeleteStaff({ids: [recordId]}, null, this);
         this.props.onGetStaff();
-      }}
-      okText={<IntlMessages id="common.yes"/>}
-      cancelText={<IntlMessages id="common.no"/>}>
-      <i className="icon icon-trash"/>
-    </Popconfirm>
+      }
+    })
   };
 
   render() {
@@ -119,9 +123,8 @@ class SixthStep extends Component {
           <AddNewStaff showAddModal={showAddModal}
                        onToggleAddModal={this.onToggleAddModal}
                        onMoveToNextStep={this.props.onMoveToNextStep}
-                       staffList={this.props.staffList}
                        dept={this.props.dept}
-                       staffId={this.state.staffId}
+                       selectedStaff={this.state.selectedStaff}
                        onEditSupportStaff={this.props.onEditSupportStaff}
                        onAddSupportStaff={this.props.onAddSupportStaff}
                        fetchSuccess={this.props.fetchSuccess}
@@ -148,7 +151,7 @@ export default connect(mapStateToProps, {
   fetchSuccess,
   fetchStart,
   fetchError
-})(SixthStep);
+})(injectIntl(SixthStep));
 
 SixthStep.defaultProps = {
   dept: [],

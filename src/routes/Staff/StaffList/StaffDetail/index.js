@@ -18,6 +18,7 @@ import AssignedTickets from "./AssignedTickets";
 import StaffNotesList from "./StaffNotesList";
 import {withRouter} from "react-router";
 import SummaryDesign from "../../../Dashboard/DashboardInfo/SummaryDesign";
+import InfoView from "../../../../components/InfoView";
 
 class StaffDetail extends Component {
   constructor(props) {
@@ -48,7 +49,6 @@ class StaffDetail extends Component {
   render() {
 
     const {currentStaff, staffNotes, staffTickets} = this.props;
-    console.log("current staff", currentStaff);
     return (
       <div className="gx-main-layout-content">
         {currentStaff ?

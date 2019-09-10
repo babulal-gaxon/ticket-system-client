@@ -522,5 +522,9 @@
   "dashboard.totalTicketsRaised": "Nombre total de billets collectés",
   "dashboard.totalTickets.pending": "Nombre total de billets en attente",
   "dashboard.totalStaff": "Total du personnel",
-  "dashboard.totalCustomers":"Total clients"
+  "dashboard.totalCustomers":"Total clients",
+  "action.customers.noteAdd": "La note sélectionnée a été ajoutée avec succès",
+  "action.customers.noteEdit": "La note sélectionnée a été modifiée avec succès",
+  "action.customers.noteDelete": "La note sélectionnée a été supprimée avec succès",
+  "role.name": "Nom de rôle"
 }

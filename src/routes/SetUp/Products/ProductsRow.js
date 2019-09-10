@@ -46,8 +46,8 @@ const ProductsRow = (context) => {
       key: 'empty',
       render: (text, record) => {
         return <span> {(Permissions.canProductEdit()) ?
-          <i className="icon icon-edit gx-mr-3" onClick={() => context.onEditProduct(record)}/> : null}
-          {(Permissions.canProductDelete()) ? context.onDeletePopUp(record.id) : null}
+          <i className="icon icon-edit gx-mr-3 gx-pointer" onClick={() => context.onEditProduct(record)}/> : null}
+          {(Permissions.canProductDelete()) ? <i className="icon icon-trash gx-pointer" onClick={() => context.onDeletePopUp(record.id)}/> : null}
           </span>
       },
     },

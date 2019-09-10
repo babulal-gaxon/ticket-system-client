@@ -45,9 +45,9 @@ const DepartmentsRow = (context) => {
       dataIndex: '',
       key: 'empty',
       render: (text, record) => {
-        return <span> {Permissions.canDepartmentEdit() ? <i className="icon icon-edit gx-mr-3"
+        return <span> {Permissions.canDepartmentEdit() ? <i className="icon icon-edit gx-mr-3 gx-pointer"
                                                             onClick={() => context.onEditDepartment(record)}/> : null}
-          {Permissions.canDepartmentDelete() ? context.onDeletePopUp(record.id) : null}
+          {Permissions.canDepartmentDelete() ? <i className="icon icon-trash gx-pointer" onClick={() => context.onDeletePopUp(record.id)}/> : null}
           </span>
       },
     },

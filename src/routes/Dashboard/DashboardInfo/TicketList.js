@@ -24,21 +24,11 @@ class TicketList extends Component {
             <Menu.Item key="4" onClick={() => this.onViewTicket(ticketId)}>
               <IntlMessages id="common.viewOnly"/>
             </Menu.Item> : null}
-        {(Permissions.canTicketDelete()) ?
-          <Menu.Item key="4">
-            <Popconfirm
-              title={<IntlMessages id="manageTickets.message.delete"/>}
-              onConfirm={() => this.props.onDeleteTicket({ids: ticketId})}
-              okText={<IntlMessages id="common.yes"/>}
-              cancelText={<IntlMessages id="common.no"/>}>
-              <span><IntlMessages id="common.archive"/></span>
-            </Popconfirm>
-          </Menu.Item> : null}
       </Menu>
     );
     return (
       <Dropdown overlay={menu} trigger={['click']}>
-        <i className="icon icon-ellipse-h"/>
+        <i className="icon icon-ellipse-h gx-pointer"/>
       </Dropdown>
     )
   };

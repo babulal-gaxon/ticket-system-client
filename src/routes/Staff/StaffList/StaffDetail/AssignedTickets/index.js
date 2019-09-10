@@ -18,6 +18,7 @@ class AssignedTickets extends Component {
         <Widget styleName="gx-card-filter">
           <h4 className="gx-widget-heading gx-mb-3"><IntlMessages id="common.assignedTickets"/></h4>
           <Table rowKey="id" columns={TicketsRow()}
+                 rowClassName="gx-pointer"
                  className="gx-mb-4" dataSource={this.props.staffTickets}
                  onRow={(record) => ({
                    onClick: () => {

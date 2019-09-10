@@ -10,13 +10,14 @@ class InfoView extends PureComponent {
     if (nextProps.error || nextProps.message || nextProps.displayMessage) {
       setTimeout(() => {
         this.props.hideMessage();
-      }, 3000);
+      }, 1000);
     }
   }
 
   showMessage = (displayMessage) => {
     message.success(displayMessage)
   };
+
   showError = (error) => {
     message.error(error)
   };

@@ -53,9 +53,9 @@ const ResponseRow = (context) => {
       dataIndex: '',
       key: 'empty',
       render: (text, record) => {
-        return <span> {Permissions.canResponseEdit() ? <i className="icon icon-edit gx-mr-3"
+        return <span> {Permissions.canResponseEdit() ? <i className="icon icon-edit gx-mr-3 gx-pointer"
                                                           onClick={() => context.onEditResponse(record)}/> : null}
-          {Permissions.canResponseDelete() ? context.onDeletePopUp(record.id) : null}
+          {Permissions.canResponseDelete() ? <i className="icon icon-trash gx-pointer" onClick={() => context.onDeletePopUp(record.id)}/> : null}
           </span>
       },
     },

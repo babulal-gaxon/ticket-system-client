@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, Suspense} from "react";
 import {Layout} from "antd";
 
 import Sidebar from "../Sidebar/index";
@@ -6,6 +6,7 @@ import Sidebar from "../Sidebar/index";
 import Topbar from "../Topbar/index";
 import App from "routes/index";
 import InfoView from "../../components/InfoView";
+import CircularProgress from "../../components/CircularProgress";
 
 const {Content} = Layout;
 
@@ -20,7 +21,9 @@ export class MainApp extends Component {
         <Layout>
           <Topbar/>
           <Content className="gx-layout-content">
-            <App match={match}/>
+            <Suspense fallback={<CircularProgress/>}>
+              <App match={match}/>
+            </Suspense>
           </Content>
           <InfoView/>
         </Layout>

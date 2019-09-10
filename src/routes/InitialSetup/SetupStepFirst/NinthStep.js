@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Divider, Popconfirm, Table, Tag} from "antd/lib/index";
+import {Button, Divider, Modal, Table, Tag} from "antd";
 import AddNewResponses from "../../SetUp/CannedResponses/AddNewResponses";
 import {connect} from "react-redux";
 import {
@@ -11,13 +11,16 @@ import {
 import Permissions from "../../../util/Permissions";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
+import {injectIntl} from "react-intl";
+
+const confirm = Modal.confirm;
 
 class NinthStep extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showAddCanned: false,
-      responseId: null,
+      currentResponse: null,
     }
   }
 
@@ -30,11 +33,11 @@ class NinthStep extends Component {
   };
 
   onAddButtonClick = () => {
-    this.setState({responseId: null, showAddCanned: true});
+    this.setState({currentResponse: null, showAddCanned: true});
   };
 
-  onEditResponse = (id) => {
-    this.setState({responseId: id, showAddCanned: true});
+  onEditResponse = (response) => {
+    this.setState({currentResponse: response, showAddCanned: true});
   };
 
   onGetTableColumns = () => {
@@ -87,9 +90,9 @@ class NinthStep extends Component {
         dataIndex: '',
         key: 'empty',
         render: (text, record) => {
-          return <span> {Permissions.canResponseEdit() ? <i className="icon icon-edit gx-mr-3"
-                                                            onClick={() => this.onEditResponse(record.id)}/> : null}
-            {Permissions.canResponseDelete() ? this.onDeletePopUp(record.id) : null}
+          return <span> {Permissions.canResponseEdit() ? <i className="icon icon-edit gx-mr-3 gx-pointer"
+                                                            onClick={() => this.onEditResponse(record)}/> : null}
+            {Permissions.canResponseDelete() ? <i className="icon icon-trash gx-pointer" onClick={() => this.onDeletePopUp(record.id)}/> : null}
           </span>
         },
       },
@@ -97,16 +100,16 @@ class NinthStep extends Component {
   };
 
   onDeletePopUp = (recordId) => {
-    return <Popconfirm
-      title="Are you sure to delete this Response?"
-      onConfirm={() => {
-        this.props.onBulkDeleteResponses({ids: [recordId]});
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["responses.message.delete"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onBulkDeleteResponses({ids: [recordId]}, this);
         this.props.onGetCannedResponses()
-      }}
-      okText={<IntlMessages id="common.yes"/>}
-      cancelText={<IntlMessages id="common.no"/>}>
-      <i className="icon icon-trash"/>
-    </Popconfirm>
+      }
+    })
   };
 
   render() {
@@ -128,7 +131,7 @@ class NinthStep extends Component {
           <AddNewResponses showAddCanned={this.state.showAddCanned}
                            onToggleAddCanned={this.onToggleAddCanned}
                            onAddCannedResponse={this.props.onAddCannedResponse}
-                           responseId={this.state.responseId}
+                           currentResponse={this.state.currentResponse}
                            onEditCannedResponse={this.props.onEditCannedResponse}
                            responses={this.props.responses}
           /> : null}
@@ -148,7 +151,7 @@ export default connect(mapStateToProps, {
   onAddCannedResponse,
   onEditCannedResponse,
   onBulkDeleteResponses
-})(NinthStep);
+})(injectIntl(NinthStep));
 
 NinthStep.defaultProps = {
   responses: []

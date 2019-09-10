@@ -99,19 +99,19 @@ class StepFirst extends Component {
               <Col span={6} className="gx-font-weight-bold">
                 <IntlMessages id="setup.hostDetails"/>
               </Col>
-              <Col>{initialSteps.completed_steps.database_setup.host}</Col>
+              <Col>{host}</Col>
             </Row>
             <Row className="gx-my-1">
               <Col span={6} className="gx-font-weight-bold">
                 <IntlMessages id="setup.databaseDetails"/>
               </Col>
-              <Col>{initialSteps.completed_steps.database_setup.database}</Col>
+              <Col>{database}</Col>
             </Row>
             <Row>
               <Col span={6} className="gx-font-weight-bold">
                 <IntlMessages id="setup.userNameDetails"/>
               </Col>
-              <Col>{initialSteps.completed_steps.database_setup.username}</Col>
+              <Col>{username}</Col>
             </Row>
           </div>}
         <div className="gx-d-flex gx-mt-3">

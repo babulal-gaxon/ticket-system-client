@@ -2,7 +2,6 @@ import React from "react";
 import {Button, Form, Input} from "antd";
 import {connect} from "react-redux";
 import IntlMessages from "util/IntlMessages";
-import InfoView from "../../components/InfoView";
 import qs from "qs";
 import {onSetNewPassword} from "../../appRedux/actions";
 import {injectIntl} from "react-intl";
@@ -117,7 +116,6 @@ class VerifyPassword extends React.Component {
             </div>
           </div>
         </div>
-        <InfoView/>
       </div>
     );
   }

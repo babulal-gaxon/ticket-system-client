@@ -522,5 +522,9 @@
   "dashboard.totalTicketsRaised": "Totale biglietti raccolti",
   "dashboard.totalTickets.pending": "Totale biglietti in sospeso",
   "dashboard.totalStaff": "Staff totale",
-  "dashboard.totalCustomers":"Totale clienti"
+  "dashboard.totalCustomers":"Totale clienti",
+  "action.customers.noteAdd": "La nota selezionata è stata aggiunta correttamente",
+  "action.customers.noteEdit": "La nota selezionata è stata modificata con successo",
+  "action.customers.noteDelete": "La nota selezionata è stata eliminata correttamente",
+  "role.name": "Nome del ruolo"
 }

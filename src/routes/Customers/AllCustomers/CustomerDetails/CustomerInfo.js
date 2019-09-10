@@ -25,7 +25,7 @@ class CustomerInfo extends PureComponent {
         <Widget>
           <div className="gx-d-flex gx-justify-content-between gx-mb-5">
             <span className="gx-widget-heading">  <IntlMessages id="customer.details"/></span>
-            <i className="icon icon-arrow-left" onClick={onBackToList}/>
+            <i className="icon icon-arrow-left gx-pointer" onClick={onBackToList}/>
           </div>
           <div className="gx-media gx-flex-nowrap gx-align-items-center gx-mb-lg-5">
             {currentCustomerProfile.avatar ?
@@ -38,7 +38,7 @@ class CustomerInfo extends PureComponent {
                     <span className="gx-mb-0 gx-text-capitalize gx-font-weight-bold">
                       {currentCustomerProfile.first_name + " " + currentCustomerProfile.last_name}</span>
                 {(Permissions.canCustomerEdit()) ?
-                  <span><Tag color="blue" onClick={onEditProfile}>
+                  <span><Tag color="blue" className="gx-pointer" onClick={onEditProfile}>
                 <i className="icon icon-edit gx-mr-3"/><IntlMessages id="common.editProfile"/></Tag></span> : null}
               </div>
               <div className="gx-mt-2">

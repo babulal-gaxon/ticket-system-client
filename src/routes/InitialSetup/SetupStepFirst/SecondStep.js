@@ -74,6 +74,7 @@ class SecondStep extends Component {
 
 
   render() {
+    const {initialSteps, isPinVerified} = this.props;
     const {messages} = this.props.intl;
     const {getFieldDecorator} = this.props.form;
     const {first_name, last_name, email} = this.state;
@@ -91,8 +92,8 @@ class SecondStep extends Component {
                     message: messages["validation.message.firstName"]
                   }],
                 })(<Input type="text" autoFocus
-                          readOnly={this.props.initialSteps.completed_steps &&
-                          this.props.initialSteps.completed_steps.account_verification_setup}
+                          readOnly={initialSteps.completed_steps &&
+                          initialSteps.completed_steps.admin_account_setup && isPinVerified}
                           onChange={(e) => this.setState({first_name: e.target.value})}/>)}
               </Form.Item>
             </Col>
@@ -105,8 +106,8 @@ class SecondStep extends Component {
                     required: true,
                     message: messages["validation.message.lastName"]
                   }],
-                })(<Input type="text" readOnly={this.props.initialSteps.completed_steps &&
-                this.props.initialSteps.completed_steps.account_verification_setup}
+                })(<Input type="text" readOnly={initialSteps.completed_steps &&
+                initialSteps.completed_steps.admin_account_setup && isPinVerified}
                           onChange={(e) => this.setState({last_name: e.target.value})}/>)}
               </Form.Item>
             </Col>
@@ -131,19 +132,18 @@ class SecondStep extends Component {
                   },
                 ],
               }],
-            })(<Input type="text" readOnly={this.props.initialSteps.completed_steps &&
-            this.props.initialSteps.completed_steps.account_verification_setup}
+            })(<Input type="text" readOnly={initialSteps.completed_steps &&
+            initialSteps.completed_steps.admin_account_setup && isPinVerified}
                       onChange={(e) => {
                         this.setState({email: e.target.value})
                       }}/>)}
           </Form.Item>
-          {(this.props.initialSteps.completed_steps && !this.props.initialSteps.completed_steps.account_verification_setup) ?
+          {!isPinVerified ?
             <div className="gx-d-flex gx-flex-row">
               <Col sm={12} xs={24} className="gx-pl-0">
                 <Form.Item label={<IntlMessages id="common.password"/>} hasFeedback>
                   {getFieldDecorator('password',
                     {
-                      validateTrigger: 'onBlur',
                       rules: [
                         {
                           required: true,
@@ -162,7 +162,6 @@ class SecondStep extends Component {
               <Col sm={12} xs={24} className="gx-pr-0">
                 <Form.Item label={<IntlMessages id="app.userAuth.confirmPassword"/>} hasFeedback>
                   {getFieldDecorator('password_confirmation', {
-                    validateTrigger: 'onBlur',
                     rules: [
                       {
                         required: true,
@@ -183,15 +182,18 @@ class SecondStep extends Component {
               this.props.onFormOpen()
             }}><IntlMessages id="common.previous"/></Button>
             <Button type="primary"
-                    onClick={this.props.initialSteps.completed_steps &&
-                    this.props.initialSteps.completed_steps.account_verification_setup ?
-                      () => this.props.onMoveToNextStep() : this.onValidationCheck}
-            ><IntlMessages id="common.next"/></Button>
-            {!this.props.initialSteps.completed_steps || (this.props.initialSteps.completed_steps &&
-              this.props.initialSteps.completed_steps.account_verification_setup) ? null :
-              <Button type="default" disabled={(this.props.initialSteps.completed_steps &&
-                !this.props.initialSteps.completed_steps.admin_account_setup)}
-                      onClick={() => this.props.onOpenPinModal()}><IntlMessages id="setup.verifyPin"/></Button>}
+                    onClick={() => {
+                      if (initialSteps.completed_steps &&
+                        initialSteps.completed_steps.admin_account_setup && isPinVerified) {
+                        this.props.onMoveToNextStep()
+                      } else {
+                        this.onValidationCheck()
+                      }
+                    }}><IntlMessages id="common.next"/></Button>
+            {(initialSteps.completed_steps &&
+              initialSteps.completed_steps.admin_account_setup && !isPinVerified) ?
+              <Button type="default" onClick={() => this.props.onOpenPinModal()}>
+                <IntlMessages id="setup.verifyPin"/></Button> : null}
           </div>
         </Form>
         {this.props.showPinModal ? <VerificationModal showPinModal={this.props.showPinModal}
@@ -207,8 +209,8 @@ class SecondStep extends Component {
 SecondStep = Form.create({})(SecondStep);
 
 const mapStateToProps = ({initialSetup}) => {
-  const {showPinModal} = initialSetup;
-  return {showPinModal};
+  const {showPinModal, isPinVerified} = initialSetup;
+  return {showPinModal, isPinVerified};
 };
 
 

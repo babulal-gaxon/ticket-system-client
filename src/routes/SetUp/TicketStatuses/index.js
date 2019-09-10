@@ -189,15 +189,15 @@ class TicketStatuses extends Component {
 
 
   onDeletePopUp = (recordId) => {
-    return <Popconfirm
-      title={<IntlMessages id="statuses.message.delete"/>}
-      onConfirm={() => {
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["statuses.message.delete"],
+      okText: messages["common.yes"],
+    cancelText: messages["common.no"],
+      onOk: () => {
         this.props.onBulkDeleteStatuses({ids: [recordId]}, this);
-      }}
-      okText={<IntlMessages id="common.yes"/>}
-      cancelText={<IntlMessages id="common.no"/>}>
-      <i className="icon icon-trash"/>
-    </Popconfirm>
+      }
+    })
   };
 
   onPageChange = page => {

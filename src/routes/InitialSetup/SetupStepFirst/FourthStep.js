@@ -11,7 +11,7 @@ const {Option} = Select;
 class FourthStep extends Component {
   constructor(props) {
     super(props);
-    if (this.props.localizationDetails === null) {
+    if (props.localizationDetails === null) {
       this.state = {
         date_format: "",
         time_format: "",
@@ -19,7 +19,7 @@ class FourthStep extends Component {
         allow_language_selection: "0"
       }
     } else {
-      const {date_format, time_format, default_language, allow_language_selection} = this.props.localizationDetails;
+      const {date_format, time_format, default_language, allow_language_selection} = props.localizationDetails;
       this.state = {
         date_format: date_format,
         time_format: time_format,
@@ -61,9 +61,11 @@ class FourthStep extends Component {
   };
 
   onValidationCheck = () => {
+    console.log("i am here")
     this.props.form.validateFields(err => {
       if (!err) {
-        this.props.onSaveLocalizationDetails({...this.state});
+        console.log("err", err)
+        this.props.onSaveLocalizationDetails({...this.state}, this);
         this.props.onMoveToNextStep();
       }
     });
@@ -127,7 +129,6 @@ class FourthStep extends Component {
             <Button type="default" onClick={() => this.props.onMoveToPrevStep()}><IntlMessages
               id="common.previous"/></Button>
             <Button type="primary" onClick={this.onValidationCheck}><IntlMessages id="common.next"/></Button>
-            <Button type="link" onClick={() => this.props.onMoveToNextStep()}><IntlMessages id="common.skip"/></Button>
           </div>
         </Form>
       </div>

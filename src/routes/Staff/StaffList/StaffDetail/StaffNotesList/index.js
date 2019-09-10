@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import Widget from "../../../../../components/Widget";
-import {Button, Divider, Empty, Popconfirm} from "antd";
+import {Button, Divider, Empty, Modal} from "antd";
 import AddStaffNotes from "./AddStaffNotes";
 import {getFormattedDate} from "../../../../../util/Utills";
 import IntlMessages from "../../../../../util/IntlMessages";
 import {injectIntl} from "react-intl";
+
+const confirm = Modal.confirm;
 
 class StaffNotesList extends Component {
   constructor(props) {
@@ -28,17 +30,15 @@ class StaffNotesList extends Component {
   };
 
   onDeletePopUp = (recordId) => {
-    return (
-      <Popconfirm
-        title={<IntlMessages id="staff.notes.message.delete"/>}
-        onConfirm={() => {
-          this.props.onDeleteStaffNotes(recordId, this);
-        }}
-        okText={<IntlMessages id="common.yes"/>}
-        cancelText={<IntlMessages id="common.no"/>}>
-        <i className="icon icon-trash"/>
-      </Popconfirm>
-    )
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["staff.notes.message.delete"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onDeleteStaffNotes(recordId, this);
+      }
+    })
   };
 
   render() {
@@ -66,14 +66,14 @@ class StaffNotesList extends Component {
                   </div>
                 </div>
                 <div className="gx-d-flex gx-justify-content-end">
-                      <span onClick={() => this.onEditClick(note)}><i className="icon icon-edit gx-mr-3"/>
+                      <span onClick={() => this.onEditClick(note)}><i className="icon icon-edit gx-mr-3 gx-pointer"/>
                        </span>
-                  {this.onDeletePopUp(note.id)}
+                  <i className="icon icon-trash gx-pointer" onClick={() => this.onDeletePopUp(note.id)}/>
                 </div>
               </div>
               <Divider/>
             </div>
-          }) : <Empty/>}
+          }) : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>}
         </Widget>
         {addNotesModal ?
           <AddStaffNotes

@@ -299,7 +299,6 @@ export const onNullifyCurrentTicket = () => {
 
 export const onGetTagsList = (tagsFilterText) => {
   return (dispatch) => {
-    dispatch({type: FETCH_START});
     axios.get('/tags', {
       params: {
         search: tagsFilterText
@@ -308,7 +307,6 @@ export const onGetTagsList = (tagsFilterText) => {
       console.log("on add tags: ", data);
       if (data.success) {
         dispatch({type: GET_TAGS_LIST, payload: data.data});
-        dispatch({type: FETCH_SUCCESS});
       } else if (data.message) {
         dispatch({type: FETCH_ERROR, payload: data.message});
       } else {

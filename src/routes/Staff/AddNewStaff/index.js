@@ -217,7 +217,7 @@ class AddNewStaff extends Component {
                       message: messages["validation.message.numericalValues"]
                     }],
                   })(<Input type="text" onChange={(e) => {
-                    this.setState({phone: e.target.value})
+                    this.setState({mobile: e.target.value})
                   }}/>)}
                 </Form.Item>
                 <Form.Item label={<IntlMessages id="common.role"/>}>

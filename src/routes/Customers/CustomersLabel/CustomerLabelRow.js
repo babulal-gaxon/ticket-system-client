@@ -4,7 +4,6 @@ import React from "react";
 import IntlMessages from "../../../util/IntlMessages";
 
 
-
 const CustomerLabelRow = (context) => {
   return [
     {
@@ -46,9 +45,10 @@ const CustomerLabelRow = (context) => {
       dataIndex: '',
       key: 'empty',
       render: (text, record) => {
-        return <span> {Permissions.canLabelEdit() ? <i className="icon icon-edit gx-mr-3"
+        return <span> {Permissions.canLabelEdit() ? <i className="icon icon-edit gx-mr-3 gx-pointer"
                                                        onClick={() => context.onEditLabel(record)}/> : null}
-          {Permissions.canLabelDelete() ? context.onDeletePopUp(record.id) : null}
+          {Permissions.canLabelDelete() ?
+            <i className="icon icon-trash gx-pointer" onClick={() => context.onDeletePopUp(record.id)}/> : null}
           </span>
       },
     },

@@ -169,21 +169,21 @@ class CustomersLabel extends Component {
     </Dropdown>
   };
 
+
   onDeletePopUp = (recordId) => {
-    return (
-      <Popconfirm
-        title={<IntlMessages id="validation.labels.delete"/>}
-        onConfirm={() => {
-          this.props.onDeleteLabel({ids: [recordId]}, this);
-        }}
-        okText={<IntlMessages id="common.yes"/>}
-        cancelText={<IntlMessages id="common.no"/>}>
-        <i className="icon icon-trash"/>
-      </Popconfirm>
-    )
+    const {messages} = this.props.intl;
+    confirm({
+      title: messages["customers.message.delete"],
+      okText: messages["common.yes"],
+      cancelText: messages["common.no"],
+      onOk: () => {
+        this.props.onDeleteLabel({ids: [recordId]}, this);
+        this.onGetLabelsList(this.state.current, this.state.itemNumbers, this.state.filterText, true);
+      }
+    })
   };
 
-  onEditLabel = (label, context) => {
+  onEditLabel = (label) => {
     this.setState({label: label, showAddLabel: true});
   };
 

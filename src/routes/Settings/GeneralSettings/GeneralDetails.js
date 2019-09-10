@@ -221,16 +221,18 @@ class GeneralDetails extends Component {
                      extra={logoName && this.state.logoList.length === 0 ? logoName :
                        <IntlMessages id="validation.settings.logoSize"/>}>
             <Upload {...propsLogo}>
-              <Input placeholder={messages["common.chooseFile"]} addonAfter={<IntlMessages id="common.browse"/>}
-                     style={{width: "270%"}}/>
+              <Input placeholder={messages["common.chooseFile"]} readOnly
+                     addonAfter={<IntlMessages id="common.browse"/>}
+                     style={{width: "205%"}}/>
             </Upload>
           </Form.Item>
           <Form.Item label={<IntlMessages id="settings.favicon"/>}
                      extra={faviconName && this.state.logoList.length === 0 ? faviconName :
                        <IntlMessages id="validation.settings.faviconSize"/>}>
             <Upload {...propsFavicon}>
-              <Input placeholder={messages["common.chooseFile"]} addonAfter={<IntlMessages id="common.browse"/>}
-                     style={{width: "270%"}}/>
+              <Input placeholder={messages["common.chooseFile"]} readOnly
+                     addonAfter={<IntlMessages id="common.browse"/>}
+                     style={{width: "205%"}}/>
             </Upload>
           </Form.Item>
           <Form.Item label={<IntlMessages id="common.email"/>}>

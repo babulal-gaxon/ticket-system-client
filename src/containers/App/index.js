@@ -51,7 +51,7 @@ class App extends PureComponent {
   }
 
   componentWillMount() {
-    if (this.props.initURL === '') {
+    if (this.props.initURL === '' && !this.props.history.location.pathname.startsWith('/reset/password')) {
       this.props.setInitUrl(this.props.history.location.pathname);
     }
     if (this.props.token) {
@@ -77,7 +77,7 @@ class App extends PureComponent {
       </div>
     }
     if (location.pathname === '/' || (token !== null && location.pathname === '/signin')) {
-      if (isSetupRequired || token === null) {
+      if (token === null) {
         if (isSetupRequired) {
           return (<Redirect to={'/initial-setup'}/>);
         } else {
@@ -97,7 +97,6 @@ class App extends PureComponent {
         }
       }
     }
-    console.log("locale", locale);
     const currentAppLocale = AppLocale[locale];
 
     return (

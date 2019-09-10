@@ -258,7 +258,7 @@
   "validation.message.inputPassword": "Please enter password!",
   "validation.message.confirmPassword": "Please confirm password!",
   "validation.message.passwordLength": "Password should be at least 8 characters long",
-  "validation.message.passwordUpdateNote": "Note: Leave it blank if you don't want to update password.",
+  "validation.message.passwordUpdateNote": "Note: Leave it blank if you do not want to update password.",
   "validation.message.selectImage": "Please select image first",
   "validation.message.imageSize": "The image size is greater than allowed size!",
   "validation.message.firstName": "Please enter first name!",
@@ -523,5 +523,9 @@
   "dashboard.totalTicketsRaised": "Total Tickets Raised",
   "dashboard.totalTickets.pending": "Total Tickets Pending",
   "dashboard.totalStaff": "Total Staff",
-  "dashboard.totalCustomers":"Total Customers"
+  "dashboard.totalCustomers":"Total Customers",
+  "action.customers.noteAdd": "The Selected Note has been Added successfully",
+  "action.customers.noteEdit": "The Selected Note has been Edited successfully",
+  "action.customers.noteDelete": "The Selected Note has been Deleted successfully",
+  "role.name": "Role Name"
 }
