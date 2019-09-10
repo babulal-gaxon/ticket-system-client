@@ -15,7 +15,7 @@ const initialState = {
     pending_steps: {},
     completed_steps: {}
   },
-  currentStep: 8,
+  currentStep: 0,
   isSetupRequired: false,
   totalPendingSteps: null,
   isPinVerified: false
