@@ -9,7 +9,7 @@ import {
 } from "../../../appRedux/actions/Labels";
 import {connect} from "react-redux";
 import Widget from "../../../components/Widget";
-import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Popconfirm, Select, Table} from "antd/lib/index";
+import {Breadcrumb, Button, Dropdown, Icon, Input, Menu, Modal, Select, Table} from "antd/lib/index";
 import {Link} from "react-router-dom";
 import AddNewLabel from "./AddNewLabel";
 import Permissions from "../../../util/Permissions";

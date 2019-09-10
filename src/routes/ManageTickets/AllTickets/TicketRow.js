@@ -1,4 +1,4 @@
-import {Avatar, Dropdown, Menu, Popconfirm, Tag, Tooltip} from "antd";
+import {Avatar, Dropdown, Menu, Tag, Tooltip} from "antd";
 import React from "react";
 import Permissions from "../../../util/Permissions";
 import {getFormattedDate} from "../../../util/Utills";

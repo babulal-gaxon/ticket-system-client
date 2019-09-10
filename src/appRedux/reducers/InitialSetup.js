@@ -60,7 +60,8 @@ export default (state = initialState, action) => {
       updateSteps.completed_steps.company_setup = action.payload;
       return {
         ...state,
-        initialSteps: updateSteps
+        initialSteps: updateSteps,
+        isSetupRequired: false
       };
 
     case OPEN_PIN_MODAL:

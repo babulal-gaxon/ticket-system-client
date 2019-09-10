@@ -526,5 +526,6 @@
   "action.customers.noteAdd": "La note sélectionnée a été ajoutée avec succès",
   "action.customers.noteEdit": "La note sélectionnée a été modifiée avec succès",
   "action.customers.noteDelete": "La note sélectionnée a été supprimée avec succès",
-  "role.name": "Nom de rôle"
+  "role.name": "Nom de rôle",
+  "response.code.note": "Remarque: Code court devrait être un mot simple!"
 }

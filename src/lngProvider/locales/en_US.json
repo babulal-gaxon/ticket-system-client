@@ -527,5 +527,6 @@
   "action.customers.noteAdd": "The Selected Note has been Added successfully",
   "action.customers.noteEdit": "The Selected Note has been Edited successfully",
   "action.customers.noteDelete": "The Selected Note has been Deleted successfully",
-  "role.name": "Role Name"
+  "role.name": "Role Name",
+  "response.code.note": "Note: Short Code should be a single word!"
 }

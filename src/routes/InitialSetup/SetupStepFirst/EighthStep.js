@@ -95,7 +95,8 @@ class EighthStep extends Component {
         render: (text, record) => {
           return <span> {Permissions.canStatusEdit() ? <i className="icon icon-edit gx-mr-3 gx-pointer"
                                                           onClick={() => this.onEditStatus(record)}/> : null}
-            {Permissions.canStatusDelete() ? <i className="icon icon-trash gx-pointer" onClick={() => this.onDeletePopUp(record.id)}/> : null}
+            {Permissions.canStatusDelete() ?
+              <i className="icon icon-trash gx-pointer" onClick={() => this.onDeletePopUp(record.id)}/> : null}
           </span>
         },
       },

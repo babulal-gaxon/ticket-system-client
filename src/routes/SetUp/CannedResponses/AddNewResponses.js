@@ -72,7 +72,8 @@ class AddNewResponses extends Component {
                 this.setState({short_title: e.target.value})
               }}/>)}
             </Form.Item>
-            <Form.Item label={<IntlMessages id="responses.shortCode"/>}>
+            <Form.Item label={<IntlMessages id="responses.shortCode"/>} extra={
+              <IntlMessages id="response.code.note"/>}>
               {getFieldDecorator('short_code', {
                 initialValue: short_code,
                 validateTrigger: 'onBlur',

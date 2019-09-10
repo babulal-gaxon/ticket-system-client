@@ -1,4 +1,4 @@
-import {Avatar, Dropdown, Menu, Popconfirm, Tooltip} from "antd";
+import {Avatar, Dropdown, Menu, Tooltip} from "antd";
 import React from "react";
 import Permissions from "../../../util/Permissions";
 import IntlMessages from "../../../util/IntlMessages";
@@ -13,7 +13,7 @@ const onShowRowDropdown = (currentCompany, context) => {
 
       {(Permissions.canCompanyDelete()) ?
         <Menu.Item key="4" onClick={() => context.onDeletePopUp(currentCompany.id)}>
-            <span><IntlMessages id="common.delete"/></span>
+          <span><IntlMessages id="common.delete"/></span>
         </Menu.Item> : null}
     </Menu>
   );

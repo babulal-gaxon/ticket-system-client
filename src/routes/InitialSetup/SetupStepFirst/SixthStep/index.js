@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Avatar, Button, Table, Modal} from "antd";
+import {Avatar, Button, Modal, Table} from "antd";
 import AddNewStaff from "./AddNewStaff";
 import Widget from "../../../../components/Widget";
 import {connect} from "react-redux";

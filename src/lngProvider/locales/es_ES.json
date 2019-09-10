@@ -526,5 +526,6 @@
   "action.customers.noteAdd": "La nota seleccionada se ha agregado correctamente",
   "action.customers.noteEdit": "La nota seleccionada se ha editado correctamente",
   "action.customers.noteDelete": "La nota seleccionada se ha eliminado correctamente",
-  "role.name": "Nombre de rol"
+  "role.name": "Nombre de rol",
+  "response.code.note": "Nota: ¡El código corto debe ser una sola palabra!"
 }

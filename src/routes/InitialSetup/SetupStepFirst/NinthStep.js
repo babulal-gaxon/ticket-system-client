@@ -92,7 +92,8 @@ class NinthStep extends Component {
         render: (text, record) => {
           return <span> {Permissions.canResponseEdit() ? <i className="icon icon-edit gx-mr-3 gx-pointer"
                                                             onClick={() => this.onEditResponse(record)}/> : null}
-            {Permissions.canResponseDelete() ? <i className="icon icon-trash gx-pointer" onClick={() => this.onDeletePopUp(record.id)}/> : null}
+            {Permissions.canResponseDelete() ?
+              <i className="icon icon-trash gx-pointer" onClick={() => this.onDeletePopUp(record.id)}/> : null}
           </span>
         },
       },

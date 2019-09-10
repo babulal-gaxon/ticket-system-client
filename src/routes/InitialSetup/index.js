@@ -78,7 +78,7 @@ class InitialSetup extends Component {
             </Steps>
           </div>
         </div>
-        <InfoView/>
+
       </Auxiliary>
     );
   }

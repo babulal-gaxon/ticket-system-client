@@ -179,7 +179,8 @@ class ThirdStep extends Component {
           </div>
           <Form.Item label={<IntlMessages id="common.companyLogo"/>}>
             <Upload {...props}>
-              <Input placeholder={messages["common.chooseFile"]} readOnly addonAfter={<IntlMessages id="common.browse"/>}/>
+              <Input placeholder={messages["common.chooseFile"]} readOnly
+                     addonAfter={<IntlMessages id="common.browse"/>}/>
             </Upload>
           </Form.Item>
           <Form.Item label={<IntlMessages id="settings.clientURL"/>}>

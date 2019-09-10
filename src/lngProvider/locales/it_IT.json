@@ -526,5 +526,6 @@
   "action.customers.noteAdd": "La nota selezionata è stata aggiunta correttamente",
   "action.customers.noteEdit": "La nota selezionata è stata modificata con successo",
   "action.customers.noteDelete": "La nota selezionata è stata eliminata correttamente",
-  "role.name": "Nome del ruolo"
+  "role.name": "Nome del ruolo",
+  "response.code.note": "Nota: il codice funzione dovrebbe essere una sola parola!"
 }

@@ -41,7 +41,7 @@ class AddNewStaff extends Component {
         departments_ids: department_ids,
         profile_pic: null,
         fileList: [],
-        logoName: avatar.title ? avatar.title : "",
+        logoName: avatar && avatar.title ? avatar.title : "",
       }
     }
   }

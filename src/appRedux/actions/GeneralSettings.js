@@ -280,6 +280,7 @@ export const onGetTicketSettings = () => {
 };
 
 export const onSaveTicketSettings = (details, history, context) => {
+  console.log("history in redux", history)
   const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
@@ -290,10 +291,11 @@ export const onSaveTicketSettings = (details, history, context) => {
         dispatch({type: FETCH_SUCCESS});
         dispatch({type: ADD_TICKET_SETTINGS, payload: data.data});
         updateTicketSetting(data.data);
-        dispatch({type: SHOW_MESSAGE, payload: messages["action.settings.changes"]});
         if (history) {
           history.replace('/dashboard')
         }
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.settings.changes"]});
+
       } else if (data.message) {
         dispatch({type: FETCH_ERROR, payload: data.message});
       } else {

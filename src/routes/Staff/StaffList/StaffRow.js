@@ -1,4 +1,4 @@
-import {Avatar, Dropdown, Menu, Popconfirm, Tag} from "antd";
+import {Avatar, Dropdown, Menu, Tag} from "antd";
 import React from "react";
 import Permissions from "../../../util/Permissions";
 import IntlMessages from "../../../util/IntlMessages";
@@ -23,13 +23,13 @@ const onShowRowDropdown = (staff, context) => {
             context.onEnableStaffStatus(staff.id)
           }
         }}>
-            <span>{staff.status === 1 ? <IntlMessages id="common.disable"/> : <IntlMessages id="common.enable"/>}</span>
+          <span>{staff.status === 1 ? <IntlMessages id="common.disable"/> : <IntlMessages id="common.enable"/>}</span>
         </Menu.Item> : null
       }
       <Menu.Divider/>
       {(Permissions.canStaffDelete()) ?
-        <Menu.Item key="4" onClick = {() => context.onDeletePopUp(staff.id)}>
-            <IntlMessages id="common.delete"/>
+        <Menu.Item key="4" onClick={() => context.onDeletePopUp(staff.id)}>
+          <IntlMessages id="common.delete"/>
         </Menu.Item> : null
       }
     </Menu>

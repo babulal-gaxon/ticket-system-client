@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Avatar, Button, Dropdown, Menu, Popconfirm, Table, Tag, Tooltip} from "antd";
+import {Avatar, Button, Dropdown, Menu, Table, Tag, Tooltip} from "antd";
 import PropTypes from "prop-types";
 import IntlMessages from "../../../util/IntlMessages";
 import moment from "moment";
@@ -21,9 +21,9 @@ class TicketList extends Component {
     const menu = (
       <Menu>
         {(Permissions.canViewTicketDetail()) ?
-            <Menu.Item key="4" onClick={() => this.onViewTicket(ticketId)}>
-              <IntlMessages id="common.viewOnly"/>
-            </Menu.Item> : null}
+          <Menu.Item key="4" onClick={() => this.onViewTicket(ticketId)}>
+            <IntlMessages id="common.viewOnly"/>
+          </Menu.Item> : null}
       </Menu>
     );
     return (
@@ -38,7 +38,7 @@ class TicketList extends Component {
   };
 
 
-   ticketRow = () => {
+  ticketRow = () => {
     return [
       {
         title: <IntlMessages id="common.id"/>,
@@ -86,7 +86,9 @@ class TicketList extends Component {
         dataIndex: 'assignTo',
         key: 'assign_to',
         render: (text, record) => {
-          return <span className="gx-email gx-d-inline-block gx-mr-2">{record.assigned_to ? record.assigned_to.display_name : <IntlMessages id="common.notAssigned"/>}</span>
+          return <span
+            className="gx-email gx-d-inline-block gx-mr-2">{record.assigned_to ? record.assigned_to.display_name :
+            <IntlMessages id="common.notAssigned"/>}</span>
         },
       },
       {
@@ -122,32 +124,35 @@ class TicketList extends Component {
   };
 
   render() {
-    const {tickets} =  this.props;
+    const {tickets} = this.props;
     return (
       <div className="gx-main-layout-content">
         {tickets ?
           <Widget styleName="gx-card-filter">
-        <div className="gx-d-flex gx-justify-content-between">
-        <h4 className="gx-widget-heading"><IntlMessages id="dashboard.ticketListing"/></h4>
-        <p className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
-          <Button type="primary" onClick={this.onNewTicketClick}><IntlMessages id="dashboard.newTickets"/></Button>
-          <Button type="link" className="gx-text-grey gx-ml-5" onClick={this.onClickViewAll}><IntlMessages id="dashboard.viewAll"/></Button>
-        </p>
-        </div>
-          <Table rowKey="id" columns={this.ticketRow()} dataSource={tickets}
-                 pagination={false}/>
-        <div>
-          {tickets.length >0  ?
-          <div>
-          <Button className="gx-mt-3" type="default" onClick={this.onClickViewAll}><IntlMessages id="dashboard.viewAll"/></Button>
-          <span>
+            <div className="gx-d-flex gx-justify-content-between">
+              <h4 className="gx-widget-heading"><IntlMessages id="dashboard.ticketListing"/></h4>
+              <p className="gx-text-primary gx-mb-0 gx-pointer gx-d-none gx-d-sm-block">
+                <Button type="primary" onClick={this.onNewTicketClick}><IntlMessages
+                  id="dashboard.newTickets"/></Button>
+                <Button type="link" className="gx-text-grey gx-ml-5" onClick={this.onClickViewAll}><IntlMessages
+                  id="dashboard.viewAll"/></Button>
+              </p>
+            </div>
+            <Table rowKey="id" columns={this.ticketRow()} dataSource={tickets}
+                   pagination={false}/>
+            <div>
+              {tickets.length > 0 ?
+                <div>
+                  <Button className="gx-mt-3" type="default" onClick={this.onClickViewAll}><IntlMessages
+                    id="dashboard.viewAll"/></Button>
+                  <span>
           <i className="icon icon-schedule gx-mr-2 gx-fs-sm gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
           </span>
-          <span><IntlMessages id="tickets.lastUpdate"/>:  </span>
-          <span>{moment(getLocalTimeStamp(tickets[0].updated_at)).fromNow()}</span>
-        </div> : null}
-          </div>
-      </Widget> :null}
+                  <span><IntlMessages id="tickets.lastUpdate"/>:  </span>
+                  <span>{moment(getLocalTimeStamp(tickets[0].updated_at)).fromNow()}</span>
+                </div> : null}
+            </div>
+          </Widget> : null}
       </div>
     );
   }
