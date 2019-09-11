@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {getFileExtension, getFileSize} from "../../util/Utills";
 import {injectIntl} from "react-intl";
 import IntlMessages from "../../util/IntlMessages";
+import axios from 'util/Api';
 
 
 class ImageUpload extends Component {
@@ -21,10 +22,29 @@ class ImageUpload extends Component {
       const data = new FormData();
       data.append('file', file);
       data.append('title', file.name);
-      this.props.onAddProfileImage(data, this.props.context);
+      this.onAddImage(data);
     } else {
       message.warning(messages["validation.message.selectImage"])
     }
+  };
+
+  onAddImage = (file) => {
+    this.props.fetchStart();
+    axios.post("/uploads/temporary/media", file, {
+      headers: {
+        'Content-Type': "multipart/form-data"
+      }
+    }).then(({data}) => {
+      if (data.success) {
+        this.props.fetchSuccess();
+          this.onProductAdd();
+          this.setState({fileList: []})
+      } else {
+        this.props.fetchError(data.errors[0])
+      }
+    }).catch(function (error) {
+      this.props.fetchError(error.message)
+    });
   };
 
   getImageURL = () => {

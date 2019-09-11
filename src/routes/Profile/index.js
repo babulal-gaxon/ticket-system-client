@@ -3,10 +3,9 @@ import {Button, Col, Form, Input, Row} from "antd/lib/index";
 import PropTypes from "prop-types";
 import Widget from "../../components/Widget";
 import {connect} from "react-redux";
-import {onAddProfileImage} from "../../appRedux/actions/Auth";
 import {Divider, Select} from "antd";
 import ImageUpload from "./ImageUpload";
-import {getUserProfile, updateUserProfile} from "../../appRedux/actions";
+import {fetchError, fetchStart, fetchSuccess, getUserProfile, updateUserProfile} from "../../appRedux/actions";
 
 import {injectIntl} from "react-intl";
 import IntlMessages from "../../util/IntlMessages";
@@ -30,13 +29,13 @@ class Profile extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if(nextProps.authUser) {
+    if (nextProps.authUser) {
       const authUser = nextProps.authUser;
       const {id, first_name, last_name, email, phone, hourly_rate, avatar, designation} = authUser;
       const department_ids = authUser.departments ? authUser.departments.map(department => {
         return department.id
       }) : [];
-      if(nextProps.authUser !== this.props.authUser) {
+      if (nextProps.authUser !== this.props.authUser) {
         this.setState({
           id: id,
           first_name: first_name,
@@ -195,8 +194,12 @@ class Profile extends Component {
               </Form>
             </Col>
             <Col xl={6} lg={12} md={12} sm={12} xs={24}>
-              <ImageUpload onAddProfileImage={this.props.onAddProfileImage}
-                           context={this} imageAvatar={avatar}/>
+              <ImageUpload updateProfilePic={this.updateProfilePic}
+                           imageAvatar={avatar}
+                           fetchError={this.props.fetchError}
+                           fetchStart={this.props.fetchStart}
+                           fetchSuccess={this.props.fetchSuccess}
+              />
             </Col>
           </Row>
           <Divider/>
@@ -227,7 +230,9 @@ const mapStateToProps = ({auth}) => {
 export default connect(mapStateToProps, {
   updateUserProfile,
   getUserProfile,
-  onAddProfileImage,
+  fetchStart,
+  fetchSuccess,
+  fetchError
 })(injectIntl(Profile));
 
 Profile.defaultProps = {
