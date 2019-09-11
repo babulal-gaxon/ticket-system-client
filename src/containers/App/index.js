@@ -38,7 +38,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    props.onGetUserPermission(props.history);
+    // props.onGetUserPermission(props.history);
     if (localStorage.getItem('settings')) {
       const userSetting = JSON.parse(localStorage.getItem('settings'));
       props.switchLanguage(userSetting.locale.default_language);
@@ -58,7 +58,6 @@ class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("componentWillReceiveProps: ", nextProps.token);
     if (nextProps.token !== this.props.token) {
       axios.defaults.headers.common['Authorization'] = "Bearer " + nextProps.token;
     }

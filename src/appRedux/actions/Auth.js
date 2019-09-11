@@ -14,7 +14,6 @@ import {
   USER_TOKEN_SET
 } from "../../constants/ActionTypes";
 import axios from 'util/Api'
-import Permissions from "../../util/Permissions";
 import {setUserSetting} from "../../util/Utills";
 
 export const setInitUrl = (url) => {
@@ -22,6 +21,36 @@ export const setInitUrl = (url) => {
     type: INIT_URL,
     payload: url
   };
+};
+
+export const onUserSignUp = ({email, password, first_name, last_name}, context) => {
+  const {messages} = context.props.intl;
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post('/customer/panel/register', {
+        email: email,
+        password: password,
+        first_name: first_name, last_name: last_name
+      }
+    ).then(({data}) => {
+      if (data.success) {
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: messages["action.auth.emailSent"]
+        });
+      } else if (data.message) {
+        console.info("payload: data.error", data.message);
+        dispatch({type: FETCH_ERROR, payload: data.message});
+      } else {
+        console.info("payload: data.error", data.errors[0]);
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
 };
 
 
@@ -54,52 +83,52 @@ export const onUserSignIn = ({email, password}) => {
   }
 };
 
-export const onGetUserPermission = (history) => {
-  console.log("onGetUserPermission");
-  return (dispatch) => {
-    dispatch({type: FETCH_USER_INFO_START});
-    axios.get('/settings',
-    ).then(({data}) => {
-      console.log("onGetUserPermission: ", data);
-      if (data.success) {
-        dispatch({type: FETCH_USER_INFO_SUCCESS});
-        dispatch({type: UPDATE_USER_PERMISSION_DATA, payload: data.data});
-        localStorage.setItem("settings", JSON.stringify(data.data));
-        Permissions.setPermissions(data.data.permissions);
-        setUserSetting(data.data.settings);
-        dispatch({type: SWITCH_LANGUAGE, payload: data.data.settings.locale.default_language})
-      }
-    else if (data.message) {
-        dispatch({type: FETCH_ERROR, payload: data.message});
-        dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});
-        history.push("/signin");
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-      } else {
-        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
-        dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});
-        history.push("/signin");
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-      }
-    }).catch((error) => {
-      if (error.response && error.response.status === 401) {
-        history.push("/signin");
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        dispatch({type: USER_TOKEN_SET, payload: ''});
-        dispatch({type: USER_DATA, payload: null});
-        dispatch({type: FETCH_ERROR, payload: error.response.data.message});
-        dispatch({type: FETCH_USER_INFO_ERROR, payload: error.response.data.message});
-      } else {
-        console.log("error: ", JSON.stringify(error));
-        dispatch({type: FETCH_ERROR, payload: error.message});
-        dispatch({type: FETCH_USER_INFO_ERROR, payload: error.message});
-        console.log("Error****:", error.message);
-      }
-    });
-  }
-};
+// export const onGetUserPermission = (history) => {
+//   console.log("onGetUserPermission");
+//   return (dispatch) => {
+//     dispatch({type: FETCH_USER_INFO_START});
+//     axios.get('/settings',
+//     ).then(({data}) => {
+//       console.log("onGetUserPermission: ", data);
+//       if (data.success) {
+//         dispatch({type: FETCH_USER_INFO_SUCCESS});
+//         dispatch({type: UPDATE_USER_PERMISSION_DATA, payload: data.data});
+//         localStorage.setItem("settings", JSON.stringify(data.data));
+//         setUserSetting(data.data.settings);
+//         dispatch({type: SWITCH_LANGUAGE, payload: data.data.settings.locale.default_language})
+//       }
+//     else if (data.message) {
+//         dispatch({type: FETCH_ERROR, payload: data.message});
+//         dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});
+//         history.push("/signin");
+//         localStorage.removeItem("token");
+//         localStorage.removeItem("user");
+//       } else {
+//         dispatch({type: FETCH_ERROR, payload: data.errors[0]});
+//         dispatch({type: FETCH_USER_INFO_ERROR, payload: data.errors[0]});
+//         history.push("/signin");
+//         localStorage.removeItem("token");
+//         localStorage.removeItem("user");
+//       }
+//     }).catch((error) => {
+//       if (error.response && error.response.status === 401) {
+//         history.push("/signin");
+//         localStorage.removeItem("token");
+//         localStorage.removeItem("user");
+//         dispatch({type: USER_TOKEN_SET, payload: ''});
+//         dispatch({type: USER_DATA, payload: null});
+//         dispatch({type: FETCH_ERROR, payload: error.response.data.message});
+//         dispatch({type: FETCH_USER_INFO_ERROR, payload: error.response.data.message});
+//       } else {
+//         console.log("error: ", JSON.stringify(error));
+//         dispatch({type: FETCH_ERROR, payload: error.message});
+//         dispatch({type: FETCH_USER_INFO_ERROR, payload: error.message});
+//         console.log("Error****:", error.message);
+//       }
+//     });
+//   }
+// };
+
 export const setUserDefaultSetting = (data) => {
   return (dispatch) => {
     dispatch({type: UPDATE_USER_PERMISSION_DATA, payload: data});
