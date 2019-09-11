@@ -38,17 +38,15 @@ class SidebarContent extends Component {
   };
 
   menuClickHandle = (item) => {
-    console.log("key", item.key);
     this.setState({key: item.key})
   };
 
   getCurrentTimeStamp() {
-    const date = moment().format('YYYY-MM-DD h:mm:ss');
+    const date = moment().format('LL');
      return getFormattedDate(date)
   };
 
   render() {
-    console.log("dater", this.getCurrentTimeStamp())
     const {themeType, history, todayTickets} = this.props;
     const {pathname} = history.location;
     const selectedKeys = pathname.substr(1);
