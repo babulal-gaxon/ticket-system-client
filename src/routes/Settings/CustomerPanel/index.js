@@ -20,21 +20,13 @@ class CustomerPanelForm extends Component {
     if (this.props.customerPanelDetails === null) {
       this.state = {
         theme: "",
-        // country: "",
-        registration_enable: 0,
-        // register_verification: 0,
-        // allow_primary_contact_view: 0,
-        // delete_own_files: 0
+        registration_enable: 0
       }
     } else {
       const {theme, registration_enable} = this.props.customerPanelDetails;
       this.state = {
         theme: theme,
-        // country: parseInt(country),
-        registration_enable: parseInt(registration_enable),
-        // register_verification: parseInt(register_verification),
-        // allow_primary_contact_view: parseInt(allow_primary_contact_view),
-        // delete_own_files: parseInt(delete_own_files)
+        registration_enable: parseInt(registration_enable)
       }
     }
   }
@@ -50,11 +42,7 @@ class CustomerPanelForm extends Component {
       if (JSON.stringify(nextProps.customerPanelDetails) !== JSON.stringify(this.props.customerPanelDetails)) {
         this.setState({
           theme: theme,
-          // country: parseInt(country),
-          registration_enable: parseInt(registration_enable),
-          // register_verification: parseInt(register_verification),
-          // allow_primary_contact_view: parseInt(allow_primary_contact_view),
-          // delete_own_files: parseInt(delete_own_files)
+          registration_enable: parseInt(registration_enable)
         })
       }
     }
@@ -68,19 +56,16 @@ class CustomerPanelForm extends Component {
     });
   };
 
-  onCountrySelect = value => {
-    this.setState({country: value})
-  };
-
   onSelectTheme = value => {
     this.setState({theme: value})
   };
 
   render() {
+    console.log("hello")
     const {messages} = this.props.intl;
     const {getFieldDecorator} = this.props.form;
     const {theme, registration_enable} = this.state;
-
+    console.log("registration_enable", registration_enable, !!registration_enable)
     return (
       <div className="gx-main-layout-content">
         <Widget styleName="gx-card-filter">
@@ -106,22 +91,6 @@ class CustomerPanelForm extends Component {
                 <Option value="light">LIGHT</Option>
               </Select>)}
             </Form.Item>
-
-            {/*<Form.Item label={<IntlMessages id="settings.customerPanel.country"/>}>*/}
-            {/*  {getFieldDecorator('country', {*/}
-            {/*    initialValue: country,*/}
-            {/*    validateTrigger: 'onBlur',*/}
-            {/*    rules: [{required: true, message: messages["validation.message.country"]}],*/}
-            {/*  })(<Select showSearchstyle={{width: "100%"}} onChange={this.onCountrySelect}*/}
-            {/*             showSearch*/}
-            {/*             filterOption={(input, option) =>*/}
-            {/*               option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0*/}
-            {/*             }>*/}
-            {/*    {this.props.countriesList.map(country => {*/}
-            {/*      return <Option value={country.id} key={country.id}>{country.name}</Option>*/}
-            {/*    })}*/}
-            {/*  </Select>)}*/}
-            {/*</Form.Item>*/}
             <Divider orientation="left" className="gx-mb-4"><IntlMessages
               id="settings.customerPanel.permissions"/></Divider>
             <Form.Item>
@@ -130,32 +99,7 @@ class CustomerPanelForm extends Component {
                 <Switch checked={!!registration_enable}
                         onChange={(checked) => this.setState({registration_enable: Number(checked)})}/>
               </div>
-              {/*<Divider/>*/}
             </Form.Item>
-            {/*<Form.Item>*/}
-            {/*  <div className="gx-d-flex gx-justify-content-between">*/}
-            {/*    <p><IntlMessages id="settings.customerPanel.registration"/></p>*/}
-            {/*    <Switch checked={!!register_verification}*/}
-            {/*            onChange={(checked) => this.setState({register_verification: Number(checked)})}/>*/}
-            {/*  </div>*/}
-            {/*  <Divider/>*/}
-            {/*</Form.Item>*/}
-            {/*<Form.Item>*/}
-            {/*  <div className="gx-d-flex gx-justify-content-between">*/}
-            {/*    <p><IntlMessages id="settings.customerPanel.billing"/></p>*/}
-            {/*    <Switch checked={!!allow_primary_contact_view}*/}
-            {/*            onChange={(checked) => this.setState({allow_primary_contact_view: Number(checked)})}/>*/}
-            {/*  </div>*/}
-            {/*  <Divider/>*/}
-            {/*</Form.Item>*/}
-            {/*<Form.Item>*/}
-            {/*  <div className="gx-d-flex gx-justify-content-between">*/}
-            {/*    <p><IntlMessages id="settings.customerPanel.deleteFiles"/></p>*/}
-            {/*    <Switch checked={!!delete_own_files}*/}
-            {/*            onChange={(checked) => this.setState({delete_own_files: Number(checked)})}/>*/}
-            {/*  </div>*/}
-            {/*  <Divider/>*/}
-            {/*</Form.Item>*/}
           </Form>
           <hr/>
           <div className="gx-d-flex">

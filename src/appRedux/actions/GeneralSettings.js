@@ -130,6 +130,7 @@ export const onGetCustomerPanelDetails = () => {
 };
 
 export const onSaveCustomerPanelDetails = (details, context) => {
+  console.log("details", details)
   const {messages} = context.props.intl;
   return (dispatch) => {
     dispatch({type: FETCH_START});
