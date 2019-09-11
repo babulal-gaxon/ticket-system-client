@@ -29,20 +29,24 @@ class ImageUpload extends Component {
   };
 
   onAddImage = (file) => {
+    console.log("file is coming", file)
     this.props.fetchStart();
     axios.post("/uploads/temporary/media", file, {
       headers: {
         'Content-Type': "multipart/form-data"
       }
     }).then(({data}) => {
+      console.log("data of adding", data)
       if (data.success) {
         this.props.fetchSuccess();
-          this.onProductAdd();
+        message.success("The Image has been uploaded successfully")
+          this.props.updateProfilePic(data.data);
           this.setState({fileList: []})
       } else {
         this.props.fetchError(data.errors[0])
       }
     }).catch(function (error) {
+      console.log("errow in adding", error)
       this.props.fetchError(error.message)
     });
   };

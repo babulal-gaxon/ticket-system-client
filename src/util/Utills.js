@@ -47,7 +47,6 @@ let userSetting = {
   }
 };
 
-
 export const setUserSetting = (setting) => {
   userSetting = setting
   setCompanyFavIcon();
@@ -60,9 +59,11 @@ export const isUserCanRegistration = () => {
 const convertToGMT = (date) => {
   return date.replace(" ", "T").concat("Z")
 };
+
 export const getFormattedDate = (date) => {
   return moment.tz(convertToGMT(date), timeZone).format(userSetting.locale.date_format.toUpperCase());
 };
+
 export const getFormattedTime = (time) => {
   const is24Hr = userSetting.locale.time_format === "24 Hours";
   if (is24Hr) {
@@ -70,6 +71,7 @@ export const getFormattedTime = (time) => {
   }
   return moment(convertToGMT(time)).tz(timeZone).format("hh:mm A");
 };
+
 export const getFormattedDateTime = (timeStamp) => {
   return getFormattedDate(timeStamp) + " " + getFormattedTime(timeStamp);
 };

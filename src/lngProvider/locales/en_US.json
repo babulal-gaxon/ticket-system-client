@@ -110,6 +110,7 @@
   "header.ticketIdMessage": "Tickets / Ticket Id #",
   "profile.title": "Profile",
   "validation.tickets.content": "Please enter ticket Content",
-  "validation.tickets.contentLength": "Please enter at least 10 characters"
+  "validation.tickets.contentLength": "Please enter at least 10 characters",
+  "app.userAuth.send" : "Send"
 }
 

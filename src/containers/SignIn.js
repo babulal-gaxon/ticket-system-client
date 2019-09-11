@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import {Button, Checkbox, Form, Input} from "antd";
 import {connect} from "react-redux";
 
@@ -10,7 +10,7 @@ import {isUserCanRegistration} from "../util/Utills";
 
 const FormItem = Form.Item;
 
-class SignIn extends React.Component {
+class SignIn extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -82,12 +82,12 @@ class SignIn extends React.Component {
                 </FormItem>
               </Form>
               <div style={{justifyContent: "center", textAlign: "center"}}>
-                <h4 className="gx-text-grey" onClick={this.onForgetPassword}><IntlMessages id="auth.ForgotPassword"/>
+                <h4 className="gx-text-grey gx-pointer" onClick={this.onForgetPassword}><IntlMessages id="auth.ForgotPassword"/>
                 </h4>
                 {isUserCanRegistration() ?
                   <div className="gx-mb-1 gx-d-flex" style={{justifyContent: "center", textAlign: "center"}}>
                   <h4 className="gx-text-grey gx-mr-2"><IntlMessages id="auth.newToTicksUp"/></h4>
-                  <h4 className="gx-text-primary" onClick={this.onSignUpClick}><IntlMessages id="app.userAuth.signUp"/>
+                  <h4 className="gx-text-primary gx-pointer" onClick={this.onSignUpClick}><IntlMessages id="app.userAuth.signUp"/>
                   </h4></div> : null}
               </div>
             </div>

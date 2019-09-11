@@ -110,5 +110,6 @@
   "validation.tickets.priority": "Por favor seleccione Prioridad de ticket",
   "profile.title": "Perfil",
   "validation.tickets.content": "Por favor, introduzca el contenido del ticket",
-  "validation.tickets.contentLength": "Por favor ingrese al menos 10 caracteres"
+  "validation.tickets.contentLength": "Por favor ingrese al menos 10 caracteres",
+  "app.userAuth.send" : "Enviar"
 }

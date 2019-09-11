@@ -110,5 +110,6 @@
   "validation.tickets.priority": "Seleziona Priorità ticket",
   "profile.title": "Profilo",
   "validation.tickets.content": "Inserisci il contenuto del biglietto",
-  "validation.tickets.contentLength": "Inserisci almeno 10 caratteri"
+  "validation.tickets.contentLength": "Inserisci almeno 10 caratteri",
+  "app.userAuth.send" : "Inviare"
 }
