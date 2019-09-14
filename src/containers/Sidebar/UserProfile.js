@@ -8,6 +8,7 @@ import IntlMessages from "../../util/IntlMessages";
 class UserProfile extends Component {
 
   render() {
+    console.log("authuser in topabar", this.props.authUser)
     const {authUser} = this.props;
     const userMenuOptions = (
       <ul className="gx-user-popover">

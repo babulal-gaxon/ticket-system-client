@@ -11,35 +11,18 @@ import {
   USER_DATA,
   USER_TOKEN_SET
 } from "../../constants/ActionTypes";
-import {ADD_ADMIN_INFO, ADD_GENERAL_INFO, OPEN_PIN_MODAL, PIN_VERIFIED} from "../../constants/InitialSetup"
+import {
+  ADD_ADMIN_INFO,
+  ADD_DATABASE_INFO,
+  ADD_GENERAL_INFO,
+  OPEN_PIN_MODAL,
+  PIN_VERIFIED
+} from "../../constants/InitialSetup"
 import axios from 'util/Api'
 
 export const updateSteps = (step) => {
   return (dispatch) => {
     dispatch({type: UPDATE_STEPS, payload: step});
-  }
-};
-
-export const onSendDatabaseInfo = (info, nextStep, context) => {
-  const {messages} = context.props.intl;
-  return (dispatch) => {
-    dispatch({type: FETCH_START});
-    axios.post('/install/step/1', info
-    ).then(({data}) => {
-      console.log("onSendDatabaseInfo", data);
-      if (data.success) {
-        dispatch({type: FETCH_SUCCESS});
-        dispatch({type: SHOW_MESSAGE, payload: messages["action.initialSetup.database"]});
-        nextStep();
-      } else if (data.message) {
-        dispatch({type: FETCH_ERROR, payload: data.message});
-      } else {
-        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
-      }
-    }).catch(function (error) {
-      dispatch({type: FETCH_ERROR, payload: error.message});
-      console.info("Error****:", error.message);
-    });
   }
 };
 
@@ -60,6 +43,30 @@ export const onCheckInitialSetup = () => {
       }
     }).catch(function (error) {
       dispatch({type: ERROR_INITIAL_SETUP, payload: error.message});
+      console.info("Error****:", error.message);
+    });
+  }
+};
+
+export const onSendDatabaseInfo = (info, nextStep, context) => {
+  const {messages} = context.props.intl;
+  return (dispatch) => {
+    dispatch({type: FETCH_START});
+    axios.post('/install/step/1', info
+    ).then(({data}) => {
+      console.log("onSendDatabaseInfo", data);
+      if (data.success) {
+        dispatch({type: ADD_DATABASE_INFO, payload: data.data});
+        dispatch({type: FETCH_SUCCESS});
+        dispatch({type: SHOW_MESSAGE, payload: messages["action.initialSetup.database"]});
+        nextStep();
+      } else if (data.message) {
+        dispatch({type: FETCH_ERROR, payload: data.message});
+      } else {
+        dispatch({type: FETCH_ERROR, payload: data.errors[0]});
+      }
+    }).catch(function (error) {
+      dispatch({type: FETCH_ERROR, payload: error.message});
       console.info("Error****:", error.message);
     });
   }

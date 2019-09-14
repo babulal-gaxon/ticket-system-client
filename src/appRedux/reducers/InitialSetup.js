@@ -3,7 +3,8 @@ import {
   ADD_DATABASE_INFO,
   ADD_GENERAL_INFO,
   NULLIFY_PENDING_STEPS,
-  OPEN_PIN_MODAL, PIN_VERIFIED
+  OPEN_PIN_MODAL,
+  PIN_VERIFIED
 } from "../../constants/InitialSetup";
 import {INITIAL_SETUP_STEPS, SETUP_COMPLETE, UPDATE_STEPS} from "../../constants/ActionTypes";
 
@@ -39,6 +40,7 @@ const getCurrentStep = (pendingSteps) => {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+
     case ADD_DATABASE_INFO:
       let steps = state.initialSteps;
       steps.completed_steps.database_setup = action.payload;
