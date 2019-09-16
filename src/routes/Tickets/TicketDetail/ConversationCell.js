@@ -28,8 +28,8 @@ const ConversationCell = ({conversation}) => {
                 id="tickets.lastUpdated"/> {moment(getLocalTimeStamp(conversation.updated_at)).fromNow()}</span>
             </div>
           </div>
-          {conversation.message ? conversation.message.split("\n").map(message => <p
-            style={{padding: 0, margin: 0, minHeight: 15}}>
+          {conversation.message ? conversation.message.split("\n").map((message, index) => <p
+            style={{padding: 0, margin: 0, minHeight: 15}} key={index}>
             {message}
           </p>) : null}
           <div className="gx-d-flex">

@@ -19,7 +19,7 @@ class Profile extends Component {
       first_name: "",
       last_name: "",
       email: "",
-      phone: "",
+      mobile: "",
       hourly_rate: "",
       departments_ids: [],
       profile_pic: null,
@@ -31,7 +31,7 @@ class Profile extends Component {
   componentWillReceiveProps(nextProps, nextContext) {
     if (nextProps.authUser) {
       const authUser = nextProps.authUser;
-      const {id, first_name, last_name, email, phone, hourly_rate, avatar, designation} = authUser;
+      const {id, first_name, last_name, email, mobile, hourly_rate, avatar, designation} = authUser;
       const department_ids = authUser.departments ? authUser.departments.map(department => {
         return department.id
       }) : [];
@@ -41,7 +41,7 @@ class Profile extends Component {
           first_name: first_name,
           last_name: last_name,
           email: email,
-          phone: phone,
+          mobile: mobile,
           hourly_rate: hourly_rate ? parseInt(hourly_rate) : "",
           departments_ids: department_ids,
           profile_pic: avatar ? avatar.id : null,
@@ -97,7 +97,7 @@ class Profile extends Component {
   render() {
     const {messages} = this.props.intl;
     const {getFieldDecorator} = this.props.form;
-    const {phone, hourly_rate, departments_ids, first_name, last_name, email, designation, avatar} = this.state;
+    const {mobile, hourly_rate, departments_ids, first_name, last_name, email, designation, avatar} = this.state;
     const deptOptions = this.onDepartmentSelectOption();
     return (
       <div className="gx-main-layout-content">
@@ -152,14 +152,14 @@ class Profile extends Component {
                 </Form.Item>
                 <Form.Item label={<IntlMessages id="common.phoneNo."/>}>
                   {getFieldDecorator('mobile', {
-                    initialValue: phone,
+                    initialValue: mobile,
                     validateTrigger: 'onBlur',
                     rules: [{
                       pattern: /^[0-9\b]+$/,
                       message: messages["validation.message.numericalValues"]
                     }],
                   })(<Input type="text" onChange={(e) => {
-                    this.setState({phone: e.target.value})
+                    this.setState({mobile: e.target.value})
                   }}/>)}
                 </Form.Item>
 

@@ -127,6 +127,7 @@ class TicketList extends Component {
             <Table columns={TicketsRow()}
                    dataSource={raisedTickets} className="gx-mb-4" rowKey="id"
                    loading={this.props.updatingContent}
+                   rowClassName="gx-pointer"
                    pagination={{
                      pageSize: this.state.itemNumbers,
                      current: this.state.current,

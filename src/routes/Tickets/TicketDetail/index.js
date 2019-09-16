@@ -236,8 +236,8 @@ class TicketDetail extends Component {
             <div className="gx-flex-column">
               <label><IntlMessages id="tickets.upload"/></label>
               <Upload {...props} >
-                <Input placeholder={messages["tickets.files.upload"]} className="gx-my-3"
-                       prefix={<i className="icon gx-icon-attachment"/>}/>
+                <Input placeholder={messages["tickets.files.upload"]} readOnly className="gx-my-3"
+                       prefix={<span><i className="icon icon-attachment"/></span>}/>
               </Upload>
             </div>
             <Button type="primary" className="gx-my-3" onClick={this.onSubmitMessage}

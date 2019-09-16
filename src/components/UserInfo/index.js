@@ -16,7 +16,6 @@ class UserInfo extends Component {
       </ul>
     );
     const {authUser} = this.props;
-    console.log("authUser", authUser)
     return (
       <Popover overlayClassName="gx-popover-horizontal" placement="bottomRight" content={userMenuOptions}
                trigger="click">

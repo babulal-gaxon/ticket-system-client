@@ -141,7 +141,7 @@ export const onGetTicketDetail = (ticketId) => {
     axios.get(`/customer/panel/tickets/${ticketId}`).then(({data}) => {
       console.info("onGetTicketDetail: ", data);
       if (data.success) {
-        // dispatch({type: FETCH_SUCCESS});
+        dispatch({type: FETCH_SUCCESS});
         dispatch({type: GET_TICKET_DETAIL, payload: data.data});
       } else if (data.message) {
         dispatch({type: FETCH_ERROR, payload: data.message});
@@ -179,7 +179,6 @@ export const onUpdateTicketPriority = (ticketId, priorityId, context) => {
 
 export const onUpdateTicketStatus = (ticketId, statusId, context) => {
   const {messages} = context.props.intl;
-  console.log("ticket id and status", ticketId, statusId);
   return (dispatch) => {
     dispatch({type: FETCH_START});
     axios.post(`/customer/panel/tickets/${ticketId}/update/status`, {status_id: statusId}).then(({data}) => {
