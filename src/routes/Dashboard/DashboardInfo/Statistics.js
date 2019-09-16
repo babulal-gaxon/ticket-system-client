@@ -5,7 +5,6 @@ import IntlMessages from "../../../util/IntlMessages";
 import {Empty} from "antd";
 
 const Statistics = ({staticsData, newTickets, newCustomers}) => {
-    console.log("staticsData", staticsData)
     return (
       <div className="gx-main-layout-content">
             {staticsData ?

@@ -22,7 +22,6 @@ class SidebarLogo extends Component {
     if (width < TAB_SIZE && navStyle === NAV_STYLE_FIXED) {
       navStyle = NAV_STYLE_DRAWER;
     }
-    console.log("navStyle", navStyle);
     return (
       <div className="gx-layout-sider-header">
 

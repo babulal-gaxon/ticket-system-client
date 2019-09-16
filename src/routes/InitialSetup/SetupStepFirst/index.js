@@ -12,6 +12,7 @@ import NinthStep from "./NinthStep";
 import {connect} from "react-redux";
 import {onCheckInitialSetup, updateSteps} from "../../../appRedux/actions";
 import IntlMessages from "../../../util/IntlMessages";
+import InfoView from "../../../components/InfoView";
 
 const {Step} = Steps;
 
@@ -80,6 +81,7 @@ class SetupStepFirst extends Component {
                                                               onMoveToPrevStep={this.onMoveToPrevStep}/> : null}/>
           </Steps>
         </div>
+        <InfoView/>
       </div>
     );
   }

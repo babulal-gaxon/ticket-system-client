@@ -307,6 +307,7 @@
   "validation.setup.addressLine2": "Please enter Address line 2",
   "validation.verifyPin.pinInput": "Please enter the PIN!",
   "validation.verifyPin.pinLength": "Please enter only 6 digits",
+  "validation.pinLength": "The length of Pin should be 6 digits",
   "common.addNew": "Add New",
   "common.bulkActions": "Bulk Actions",
   "common.archive": "Archive",

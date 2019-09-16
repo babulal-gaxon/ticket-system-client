@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Button, Form, Input, Modal} from "antd";
+import {Button, Form, Modal, message} from "antd";
 import {injectIntl} from "react-intl";
 import IntlMessages from "../../../util/IntlMessages";
+import ReactCodeInput from "react-code-input";
 
 class VerificationModal extends Component {
   constructor(props) {
@@ -12,9 +13,14 @@ class VerificationModal extends Component {
   }
 
   onValidationCheck = () => {
+    const {messages} = this.props.intl;
     this.props.form.validateFields(err => {
       if (!err) {
-        this.props.onVerifyEmail(this.state.pin_number);
+        if (this.state.pin_number.length === 6) {
+          this.props.onVerifyEmail(this.state.pin_number);
+        } else {
+          message.error(messages["validation.pinLength"])
+        }
       }
     });
   };
@@ -42,23 +48,11 @@ class VerificationModal extends Component {
             <Form layout="vertical" style={{textAlign: "center"}}>
               <label><IntlMessages id="setup.verifyPin.enter"/> <sup className="gx-text-red">*</sup></label>
               <Form.Item hasFeedback className="gx-py-4">
-                {getFieldDecorator('pin_number', {
-                  validateTrigger: 'onBlur',
-                  rules: [
-                    {
-                      required: true,
-                      message: messages["validation.verifyPin.pinInput"],
-                    },
-                    {
-                      max: 6,
-                      message: messages["validation.verifyPin.pinLength"],
-                    },
-                    {
-                      pattern: /^[0-9\b]+$/,
-                      message: messages["validation.message.numericalValues"]
-                    }
-                  ],
-                })(<Input onChange={(e) => this.setState({pin_number: e.target.value})}/>)}
+
+                <ReactCodeInput type='password' fields={6} onChange={(pin) => {
+                  this.setState({pin_number: pin})
+                }}/>
+
               </Form.Item>
             </Form>
             <Button key="submit" type="primary" onClick={this.onValidationCheck}>
